@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Authorization With Stormpath &mdash; Stormpath 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Stormpath 0.0.1 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Stormpath Documentation’s documentation!" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="authorization-with-stormpath">
+<h1>Authorization With Stormpath<a class="headerlink" href="#authorization-with-stormpath" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-authorization">
+<h2>What is Authorization?<a class="headerlink" href="#what-is-authorization" title="Permalink to this headline">¶</a></h2>
+<p>Authorization is simply the way in which we determine the permissions
+someone has to do something. In contrast to Authentication, which is how
+we determine who a person is, authorization is how we determine what
+they are or aren&#8217;t able to do. Perhaps the most accessible example of
+this process is at the airport, where a security person first checks
+your passport to make sure that you are who you say you are, and a
+separate person later checks that you have a valid plane ticket, which
+authorizes you to board the plane.</p>
+<p>In the Stormpath context, once a user has entered in a valid login and
+password (authentication), they must then be assigned permissions
+(authorization) which dictate what access rights they have to your
+system resources. Permissions, at their most basic, are statements of
+functionality that define a resource and what actions are possible for
+that resource. Going back to our airport scenario, the permission could
+be to perform the &#8220;board&#8221; action onto a specific flight number.</p>
+<p>The many ways Stormpath allows you to define, assign, and manage these
+permissions is the subject of this guide. Additionally, the last
+sections of this guide also include information about authorizing
+someone to use your app using Social and LDAP login.</p>
+</div>
+<div class="section" id="how-do-i-use-groups-to-model-authorization">
+<h2>How do I use Groups to model Authorization?<a class="headerlink" href="#how-do-i-use-groups-to-model-authorization" title="Permalink to this headline">¶</a></h2>
+<p>The Group resource is central to controlling authorization with
+Stormpath. Among other things, you can use Groups can to set implicit
+permissions, permission hierarchies, and create user roles that span
+every tenant that is using your application.</p>
+<div class="section" id="explicit-and-implicit-authorization">
+<h3>Explicit and Implicit Authorization<a class="headerlink" href="#explicit-and-implicit-authorization" title="Permalink to this headline">¶</a></h3>
+<p>Stormpath comes out-of-the-box with support for both explicit and
+implicit authorization. Explicit authorization is the
+individually-specified permission of a user to do something, whereas
+implicit authorization can be thought of as permissions inherited by
+virtue of belonging to a certain Group. Both explicit and implicit
+authorization are available in Stormpath, via either explicit Account
+Permissions or implicit Group Permissions (for Role-Based Access
+Control).</p>
+<p>Explicit user permissions are set on the Account level. This type of
+authorization is best suited for fine-grained permissions that are
+unique to a user.</p>
+<p>As we have already said, you can think of Groups as labels applied to
+Accounts via the GroupMembership resource. Much in the same way that a
+label can be used to define an officer&#8217;s rank (and thereby what he is
+authorized to do), Groups are how Roles are defined in Stormpath for the
+purposes of Role-Based Access Control. If a user Group can be thought of
+as a collection of Users, then a role Group can be thought of as a
+collection or permissions. An Account can be associated with multiple
+Groups and will inherit permissions from all of them.</p>
+<p>More information about creating custom permissions on both the Account
+and Group level can be found in the Custom Permissions section found
+<a class="reference external" href="#customperms">below</a>.</p>
+</div>
+<div class="section" id="group-hierarchies">
+<h3>Group Hierarchies<a class="headerlink" href="#group-hierarchies" title="Permalink to this headline">¶</a></h3>
+<p>In the context of Stormpath&#8217;s database, Groups, like labels, are
+inherently &#8220;flat&#8221;. This means that they do not by default include any
+kind of hierarchy. If a hierarchical or nested structure is desired, it
+can be simulated in one of two ways: Either, using the Group resource&#8217;s
+<code class="docutils literal"><span class="pre">description</span></code> field, or with the Group&#8217;s associated customData
+resource. A geographical region can, for example, be represented as
+<code class="docutils literal"><span class="pre">&quot;SysAdmin/SpaceAdmin/User&quot;</span></code> in the Group&#8217;s <code class="docutils literal"><span class="pre">&quot;description&quot;</span></code> field,
+allowing for queries to be made using simple pattern-matching queries.
+It can also be included in the customData resource, as a series of
+key-value relations. The downside to this second approach is that
+customData resources are not currently searchable in the same manner as
+the Group&#8217;s <code class="docutils literal"><span class="pre">description</span></code> field is.</p>
+<p>For more information on this, please see <a class="reference external" href="https://support.stormpath.com/hc/en-us/articles/203697466-How-do-I-model-nested-or-hierarchical-Groups-">How do I model nested or
+hierarchical
+groups?</a>.</p>
+</div>
+<div class="section" id="application-wide-groups">
+<h3>Application-Wide Groups<a class="headerlink" href="#application-wide-groups" title="Permalink to this headline">¶</a></h3>
+<p>In a SaaS application, it is easy to imagine a scenario where you might
+want to have user Accounts segregated based upon the organization that
+they belong to, while at the same time defining permissions based on
+broader, application-wide role Groups. In the Stormpath data model, it
+is recommended to model every organization (or &#8220;Tenant&#8221;) that uses your
+Application as a Group (this is further explained below in the
+<a class="reference external" href="#multitenant">Multi-Tenancy</a> chapter). However, even with a Tenant
+Group for every organization, it is also possible to define
+Application-wide Groups that allow for roles that span the entire
+Application, regardless of which Tenant Group a user&#8217;s Account is
+associated with.</p>
+<p>For example, your Application resource has a single Directory assigned
+to it, and multiple Groups assigned to that, one for each Tenant using
+the application. So there is an &#8220;OrganizationA&#8221; Group, and another
+&#8220;OrganizationB&#8221; Group. If you want your Application to have &#8220;Regular
+User&#8221; and &#8220;Admin&#8221; Roles with their own permissions defined for all of
+your Application&#8217;s users, this is simply a matter of creating two role
+Groups with their own customData permissions defined. Then any Account,
+regardless of the Tenant Group that they are assigned to, can also be
+assigned to the Application-wide &#8220;Regular User&#8221; or &#8220;Admin&#8221; role Group.</p>
+<p>More information about the APIs that allow you to create, retrieve and
+search an Application&#8217;s groups can be found in the <a class="reference external" href="http://docs.stormpath.com/rest/product-guide/#application-groups">REST API Product
+Guide</a>,
+while more information about Multi-Tenancy can be found
+<a class="reference external" href="#multitenant">below</a> and in the <a class="reference external" href="http://docs.stormpath.com/guides/multi-tenant/">Guide to SaaS User
+Management</a>.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-use-customdata-to-model-fine-grained-permissions">
+<h2>How do I use customData to model fine-grained permissions?<a class="headerlink" href="#how-do-i-use-customdata-to-model-fine-grained-permissions" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned in the Data Model section above, Stormpath resources like
+Accounts and Groups are created along with a linked <code class="docutils literal"><span class="pre">customData</span></code>
+resource. This resource is very useful for implementing both explicit
+Account permissions and implicit role Group permissions. Essentially,
+any user-level permissions are defined in a <code class="docutils literal"><span class="pre">customData</span></code> resource
+linked to a user Account, while any role-level permissions are defined
+in a <code class="docutils literal"><span class="pre">customData</span></code> resource linked to a role Group. This allows for
+Stormpath to model user-unique permissions as well as permissions
+inherited by virtue of a user having one (or more) roles.</p>
+<p>The permissions themselves are then contained in these separate
+<code class="docutils literal"><span class="pre">customData</span></code> resources. Permissions, you&#8217;ll remember, are statements
+of functionality that define a resource and what actions are possible
+for that resource. Permissions in Stormpath can be modelled as an array
+inside the <code class="docutils literal"><span class="pre">customData</span></code> resource. They can be as simple as a key-value
+pair, or more complex objects.</p>
+<p>To expand on the scenario from the <a class="reference external" href="#appgroups">Application-Wide
+Groups</a> section above, a user Account for the user
+&#8220;Riker&#8221; could have their user-unique permissions defined in a
+<code class="docutils literal"><span class="pre">customData</span></code> resource linked to from their Account. At the same time,
+their Account would be linked to the application-wide &#8220;Admin&#8221; Group
+which would have its own linked <code class="docutils literal"><span class="pre">customData</span></code> resource that would
+contain definitions of the permissions of all the users with the Admin
+role in your application.</p>
+<p>For more information about working with Custom Data please see the
+<a class="reference external" href="http://docs.stormpath.com/rest/product-guide/#custom-data">Product
+Guide</a>,
+and for more information specifically about managing permissions with
+Custom Data please see <a class="reference external" href="https://stormpath.com/blog/fine-grained-permissions-with-customData/">this blog
+post</a>.
+#Authorization With Stormpath</p>
+</div>
+<div class="section" id="id1">
+<h2>What is Authorization?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Authorization is simply the way in which we determine the permissions
+someone has to do something. In contrast to Authentication, which is how
+we determine who a person is, authorization is how we determine what
+they are or aren&#8217;t able to do. Perhaps the most accessible example of
+this process is at the airport, where a security person first checks
+your passport to make sure that you are who you say you are, and a
+separate person later checks that you have a valid plane ticket, which
+authorizes you to board the plane.</p>
+<p>In the Stormpath context, once a user has entered in a valid login and
+password (authentication), they must then be assigned permissions
+(authorization) which dictate what access rights they have to your
+system resources. Permissions, at their most basic, are statements of
+functionality that define a resource and what actions are possible for
+that resource. Going back to our airport scenario, the permission could
+be to perform the &#8220;board&#8221; action onto a specific flight number.</p>
+<p>The many ways Stormpath allows you to define, assign, and manage these
+permissions is the subject of this guide. Additionally, the last
+sections of this guide also include information about authorizing
+someone to use your app using Social and LDAP login.</p>
+</div>
+<div class="section" id="id2">
+<h2>How do I use Groups to model Authorization?<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>The Group resource is central to controlling authorization with
+Stormpath. Among other things, you can use Groups can to set implicit
+permissions, permission hierarchies, and create user roles that span
+every tenant that is using your application.</p>
+<div class="section" id="id3">
+<h3>Explicit and Implicit Authorization<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Stormpath comes out-of-the-box with support for both explicit and
+implicit authorization. Explicit authorization is the
+individually-specified permission of a user to do something, whereas
+implicit authorization can be thought of as permissions inherited by
+virtue of belonging to a certain Group. Both explicit and implicit
+authorization are available in Stormpath, via either explicit Account
+Permissions or implicit Group Permissions (for Role-Based Access
+Control).</p>
+<p>Explicit user permissions are set on the Account level. This type of
+authorization is best suited for fine-grained permissions that are
+unique to a user.</p>
+<p>As we have already said, you can think of Groups as labels applied to
+Accounts via the GroupMembership resource. Much in the same way that a
+label can be used to define an officer&#8217;s rank (and thereby what he is
+authorized to do), Groups are how Roles are defined in Stormpath for the
+purposes of Role-Based Access Control. If a user Group can be thought of
+as a collection of Users, then a role Group can be thought of as a
+collection or permissions. An Account can be associated with multiple
+Groups and will inherit permissions from all of them.</p>
+<p>More information about creating custom permissions on both the Account
+and Group level can be found in the Custom Permissions section found
+<a class="reference external" href="#customperms">below</a>.</p>
+</div>
+<div class="section" id="id4">
+<h3>Group Hierarchies<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>In the context of Stormpath&#8217;s database, Groups, like labels, are
+inherently &#8220;flat&#8221;. This means that they do not by default include any
+kind of hierarchy. If a hierarchical or nested structure is desired, it
+can be simulated in one of two ways: Either, using the Group resource&#8217;s
+<code class="docutils literal"><span class="pre">description</span></code> field, or with the Group&#8217;s associated customData
+resource. A geographical region can, for example, be represented as
+<code class="docutils literal"><span class="pre">&quot;SysAdmin/SpaceAdmin/User&quot;</span></code> in the Group&#8217;s <code class="docutils literal"><span class="pre">&quot;description&quot;</span></code> field,
+allowing for queries to be made using simple pattern-matching queries.
+It can also be included in the customData resource, as a series of
+key-value relations. The downside to this second approach is that
+customData resources are not currently searchable in the same manner as
+the Group&#8217;s <code class="docutils literal"><span class="pre">description</span></code> field is.</p>
+<p>For more information on this, please see <a class="reference external" href="https://support.stormpath.com/hc/en-us/articles/203697466-How-do-I-model-nested-or-hierarchical-Groups-">How do I model nested or
+hierarchical
+groups?</a>.</p>
+</div>
+<div class="section" id="id5">
+<h3>Application-Wide Groups<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>In a SaaS application, it is easy to imagine a scenario where you might
+want to have user Accounts segregated based upon the organization that
+they belong to, while at the same time defining permissions based on
+broader, application-wide role Groups. In the Stormpath data model, it
+is recommended to model every organization (or &#8220;Tenant&#8221;) that uses your
+Application as a Group (this is further explained below in the
+<a class="reference external" href="#multitenant">Multi-Tenancy</a> chapter). However, even with a Tenant
+Group for every organization, it is also possible to define
+Application-wide Groups that allow for roles that span the entire
+Application, regardless of which Tenant Group a user&#8217;s Account is
+associated with.</p>
+<p>For example, your Application resource has a single Directory assigned
+to it, and multiple Groups assigned to that, one for each Tenant using
+the application. So there is an &#8220;OrganizationA&#8221; Group, and another
+&#8220;OrganizationB&#8221; Group. If you want your Application to have &#8220;Regular
+User&#8221; and &#8220;Admin&#8221; Roles with their own permissions defined for all of
+your Application&#8217;s users, this is simply a matter of creating two role
+Groups with their own customData permissions defined. Then any Account,
+regardless of the Tenant Group that they are assigned to, can also be
+assigned to the Application-wide &#8220;Regular User&#8221; or &#8220;Admin&#8221; role Group.</p>
+<p>More information about the APIs that allow you to create, retrieve and
+search an Application&#8217;s groups can be found in the <a class="reference external" href="http://docs.stormpath.com/rest/product-guide/#application-groups">REST API Product
+Guide</a>,
+while more information about Multi-Tenancy can be found
+<a class="reference external" href="#multitenant">below</a> and in the <a class="reference external" href="http://docs.stormpath.com/guides/multi-tenant/">Guide to SaaS User
+Management</a>.</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>How do I use customData to model fine-grained permissions?<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned in the Data Model section above, Stormpath resources like
+Accounts and Groups are created along with a linked <code class="docutils literal"><span class="pre">customData</span></code>
+resource. This resource is very useful for implementing both explicit
+Account permissions and implicit role Group permissions. Essentially,
+any user-level permissions are defined in a <code class="docutils literal"><span class="pre">customData</span></code> resource
+linked to a user Account, while any role-level permissions are defined
+in a <code class="docutils literal"><span class="pre">customData</span></code> resource linked to a role Group. This allows for
+Stormpath to model user-unique permissions as well as permissions
+inherited by virtue of a user having one (or more) roles.</p>
+<p>The permissions themselves are then contained in these separate
+<code class="docutils literal"><span class="pre">customData</span></code> resources. Permissions, you&#8217;ll remember, are statements
+of functionality that define a resource and what actions are possible
+for that resource. Permissions in Stormpath can be modelled as an array
+inside the <code class="docutils literal"><span class="pre">customData</span></code> resource. They can be as simple as a key-value
+pair, or more complex objects.</p>
+<p>To expand on the scenario from the <a class="reference external" href="#appgroups">Application-Wide
+Groups</a> section above, a user Account for the user
+&#8220;Riker&#8221; could have their user-unique permissions defined in a
+<code class="docutils literal"><span class="pre">customData</span></code> resource linked to from their Account. At the same time,
+their Account would be linked to the application-wide &#8220;Admin&#8221; Group
+which would have its own linked <code class="docutils literal"><span class="pre">customData</span></code> resource that would
+contain definitions of the permissions of all the users with the Admin
+role in your application.</p>
+<p>For more information about working with Custom Data please see the
+<a class="reference external" href="http://docs.stormpath.com/rest/product-guide/#custom-data">Product
+Guide</a>,
+and for more information specifically about managing permissions with
+Custom Data please see <a class="reference external" href="https://stormpath.com/blog/fine-grained-permissions-with-customData/">this blog
+post</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Authorization With Stormpath</a><ul>
+<li><a class="reference internal" href="#what-is-authorization">What is Authorization?</a></li>
+<li><a class="reference internal" href="#how-do-i-use-groups-to-model-authorization">How do I use Groups to model Authorization?</a><ul>
+<li><a class="reference internal" href="#explicit-and-implicit-authorization">Explicit and Implicit Authorization</a></li>
+<li><a class="reference internal" href="#group-hierarchies">Group Hierarchies</a></li>
+<li><a class="reference internal" href="#application-wide-groups">Application-Wide Groups</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-do-i-use-customdata-to-model-fine-grained-permissions">How do I use customData to model fine-grained permissions?</a></li>
+<li><a class="reference internal" href="#id1">What is Authorization?</a></li>
+<li><a class="reference internal" href="#id2">How do I use Groups to model Authorization?</a><ul>
+<li><a class="reference internal" href="#id3">Explicit and Implicit Authorization</a></li>
+<li><a class="reference internal" href="#id4">Group Hierarchies</a></li>
+<li><a class="reference internal" href="#id5">Application-Wide Groups</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">How do I use customData to model fine-grained permissions?</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Stormpath Documentation&#8217;s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/authz.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Jakub Swiatczak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/authz.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

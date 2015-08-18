@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quickstart &mdash; Stormpath 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Stormpath 0.0.1 documentation" href="index.html" />
+    <link rel="prev" title="Authorization With Stormpath" href="authz.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This quickstart will get you up and running with Stormpath in about 7
+minutes and give you a good initial feel for the Stormpath REST API.
+During this quickstart, you will do the following:</p>
+<ul class="simple">
+<li>Create an API Key that allows you to make REST API calls with Stormpath.</li>
+<li>Register an Application.</li>
+<li>Create a User Account.</li>
+<li>Authenticate a User Account.</li>
+</ul>
+<p>Stormpath also can do a lot more (like Groups, Multitenancy, Social
+Integration, and Security workflows) which you can learn more about at
+the end of this quickstart.</p>
+<p>Let&#8217;s get started!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This quickstart uses cURL. cURL is pre-installed on many
+Linux and Mac systems. Windows users can download a version at
+curl.haxx.se/. When using HTTPS on Windows, ensure that your system
+meets the cURL requirements for SSL. {% enddocs %}</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="get-an-api-key">
+<h2>Get an API Key<a class="headerlink" href="#get-an-api-key" title="Permalink to this headline">¶</a></h2>
+<p>All requests to Stormpath must be authenticated with an API Key.</p>
+<ol class="arabic simple">
+<li>If you haven&#8217;t already, <a class="reference external" href="https://api.stormpath.com/register">Sign up for Stormpath
+here</a>. You&#8217;ll be sent a
+verification email.</li>
+<li>Click the link in the verification email.</li>
+<li>Log in to the <a class="reference external" href="https://api.stormpath.com">Stormpath Admin Console</a>
+using the email address and password you used to register with
+Stormpath.</li>
+<li>Click the <strong>Create API Key</strong> or <strong>Manage Existing Keys</strong> button in
+the middle of the page.</li>
+<li>Under <strong>Security Credentials</strong>, click <strong>Create API Key</strong>.</li>
+</ol>
+<p>This will generate your API Key and download it to your computer as an
+<code class="docutils literal"><span class="pre">apiKey.properties</span></code> file. If you open the file in a text editor, you
+will see something similar to the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>apiKey.id = 144JVZINOF5EBNCMG9EXAMPLE
+apiKey.secret = lWxOiKqKPNwJmSldbiSkEbkNjgh2uRSNAb+AEXAMPLE
+</pre></div>
+</div>
+<ol class="arabic" start="6">
+<li><p class="first">Save this file in a secure location, such as your home directory, in
+a hidden <code class="docutils literal"><span class="pre">.stormpath</span></code> directory. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir ~/.stormpath
+$ mv ~/Downloads/apiKey.properties ~/.stormpath/
+</pre></div>
+</div>
+</li>
+<li><p class="first">Change the file permissions to ensure only you can read this file.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ chmod go-rwx ~/.stormpath/apiKey.properties
+</pre></div>
+</div>
+</li>
+</ol>
+<p>The <code class="docutils literal"><span class="pre">apiKey.properties</span></code> file holds your API key information, and can
+be used to easily authenticate with the Stormpath library.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="retrieve-your-application">
+<h2>Retrieve your Application<a class="headerlink" href="#retrieve-your-application" title="Permalink to this headline">¶</a></h2>
+<p>Before you can create user Accounts you&#8217;ll need to retrieve your
+Stormpath Application. An Application in Stormpath is the same thing as
+a project. If you&#8217;re building a web app named &#8220;Lightsabers Galore&#8221;,
+you&#8217;d want to name your Stormpath Application &#8220;Lightsabers Galore&#8221; as
+well. By default, your Stormpath account will have an application
+already created for you to use. We will use this application for the
+quickstart.</p>
+<p>Before you can get your Application, you must get the location of your
+tenant from Stormpath, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -i --user $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
+  &#39;https://api.stormpath.com/v1/tenants/current&#39;
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">$YOUR_API_KEY_ID</span></code> is the <code class="docutils literal"><span class="pre">apiKey.id</span></code> value in
+<code class="docutils literal"><span class="pre">apiKey.properties</span></code> and</li>
+<li><code class="docutils literal"><span class="pre">$YOUR_API_KEY_SECRET</span></code> is the <code class="docutils literal"><span class="pre">apiKey.secret</span></code> value in
+<code class="docutils literal"><span class="pre">apiKey.properties</span></code></li>
+</ul>
+<p>This will return the header for the call:</p>
+<div class="highlight-python"><div class="highlight"><pre>HTTP/1.1 302 Found
+Location: https://api.stormpath.com/v1/tenants/7g91YMBXFbu0KAFK
+Content-Length: 0
+Connection: keep-alive
+</pre></div>
+</div>
+<p>Make note of the <code class="docutils literal"><span class="pre">Location</span></code> header. This is the location of your
+tenant in Stormpath.</p>
+<p>From here, using the location of the tenant, you can get your
+Application by performing a search for the application by name:</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -u $API_KEY_ID:$API_KEY_SECRET \
+    -H &quot;Accept: application/json&quot; \
+    &#39;$TENANT_HREF/applications?name=My%20Application&#39;
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li>$TENANT_HREF is the location of your found tenant from the previous
+cURL</li>
+</ul>
+<p>Here&#8217;s an example response to the above REST request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/tenants/7g91YMBXFbu0KAFK/applications&quot;</span><span class="p">,</span>
+  <span class="s">&quot;offset&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+  <span class="s">&quot;limit&quot;</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span>
+  <span class="s">&quot;items&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/applications/aLoNGrAnDoMAppIdHeRe&quot;</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;My Application&quot;</span><span class="p">,</span>
+      <span class="s">&quot;description&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+      <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="s">&quot;ENABLED&quot;</span><span class="p">,</span>
+      <span class="s">&quot;tenant&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/tenants/sOmELoNgRaNDoMIdHeRe&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;accounts&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/applications/aLoNGrAnDoMAppIdHeRe/accounts&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/applications/aLoNGrAnDoMAppIdHeRe/groups&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;loginAttempts&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/applications/aLoNGrAnDoMAppIdHeR/loginAttempts&quot;</span>
+      <span class="p">},</span>
+      <span class="s">&quot;passwordResetTokens&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/applications/aLoNGrAnDoMAppIdHeRe/passwordResetTokens&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Make note of the <code class="docutils literal"><span class="pre">accounts</span></code> and <code class="docutils literal"><span class="pre">loginAttempts</span></code> <code class="docutils literal"><span class="pre">href</span></code> URLs in the
+above response. We&#8217;re going to use those URLs next to create a new
+account and then authenticate it.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="create-a-user-account">
+<h2>Create a User Account<a class="headerlink" href="#create-a-user-account" title="Permalink to this headline">¶</a></h2>
+<p>Now that we&#8217;ve created an <code class="docutils literal"><span class="pre">Application</span></code>, let&#8217;s create an <code class="docutils literal"><span class="pre">Account</span></code>
+so someone can log in to (i.e. authenticate with) the Application.
+<code class="docutils literal"><span class="pre">POST</span></code> a new <code class="docutils literal"><span class="pre">Account</span></code> resource to the <code class="docutils literal"><span class="pre">accounts</span></code> <code class="docutils literal"><span class="pre">href</span></code> value
+returned in the JSON response that you received when you created your
+<code class="docutils literal"><span class="pre">Application</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -X POST --user $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
+    -H &quot;Accept: application/json&quot; \
+    -H &quot;Content-Type: application/json&quot; \
+    -d &#39;{
+        &quot;givenName&quot;: &quot;Joe&quot;,
+        &quot;surname&quot;: &quot;Stormtrooper&quot;,
+        &quot;username&quot;: &quot;tk421&quot;,
+        &quot;email&quot;: &quot;tk421@stormpath.com&quot;,
+        &quot;password&quot;:&quot;Changeme1&quot;,
+        &quot;customData&quot;: {
+            &quot;favoriteColor&quot;: &quot;white&quot;
+        }
+    }&#39; \
+&quot;https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/accounts&quot;
+</pre></div>
+</div>
+<p>{% docs note %} Don&#8217;t forget to change <code class="docutils literal"><span class="pre">$YOUR_APPLICATION_ID</span></code> in the
+URL above to match your application&#8217;s <code class="docutils literal"><span class="pre">accounts</span></code> <code class="docutils literal"><span class="pre">href</span></code> URL! {%
+enddocs %}</p>
+<p>Stormpath Accounts have several basic fields (<code class="docutils literal"><span class="pre">givenName</span></code>,
+<code class="docutils literal"><span class="pre">surname</span></code>, <code class="docutils literal"><span class="pre">email</span></code>, etc...), but also support storing schema-less
+JSON data through the <code class="docutils literal"><span class="pre">customData</span></code> field. <code class="docutils literal"><span class="pre">customData</span></code> allows you to
+store any user profile information (<em>up to 10MB per user!</em>).</p>
+<p>{% docs note %} The required fields are: <code class="docutils literal"><span class="pre">givenName</span></code>, <code class="docutils literal"><span class="pre">surname</span></code>,
+<code class="docutils literal"><span class="pre">email</span></code>, and <code class="docutils literal"><span class="pre">password</span></code>. {% enddocs %}</p>
+<p>This will create the account. Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId&quot;</span><span class="p">,</span>
+  <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;tk421&quot;</span><span class="p">,</span>
+  <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="s">&quot;tk421@stormpath.com&quot;</span><span class="p">,</span>
+  <span class="s">&quot;fullName&quot;</span><span class="p">:</span> <span class="s">&quot;Joe Stormtrooper&quot;</span><span class="p">,</span>
+  <span class="s">&quot;givenName&quot;</span><span class="p">:</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span>
+  <span class="s">&quot;middleName&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">&quot;surname&quot;</span><span class="p">:</span> <span class="s">&quot;Stormtrooper&quot;</span><span class="p">,</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="s">&quot;ENABLED&quot;</span><span class="p">,</span>
+  <span class="s">&quot;customData&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/accounts/78zeDydHRroJkiAD9XRQ9j/customData&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;groups&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId/groups&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;groupMemberships&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId/groupMemberships&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;directory&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/directories/sOmERaNdOmDiReCtORyId&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;tenant&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span><span class="s">&quot;https://api.stormpath.com/v1/tenants/sOmERaNdOmTeNaNtId&quot;</span>
+  <span class="p">},</span>
+  <span class="s">&quot;emailVerificationToken&quot;</span><span class="p">:</span> <span class="n">null</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="authenticate-a-user-account">
+<h2>Authenticate a User Account<a class="headerlink" href="#authenticate-a-user-account" title="Permalink to this headline">¶</a></h2>
+<p>Now we have an account that can use your application. But how do you
+authenticate an account logging in to the application? You <code class="docutils literal"><span class="pre">POST</span></code> a
+<code class="docutils literal"><span class="pre">Login</span> <span class="pre">Attempt</span></code> to your application&#8217;s <code class="docutils literal"><span class="pre">loginAttempts</span></code> <code class="docutils literal"><span class="pre">href</span></code>.</p>
+<p>A <code class="docutils literal"><span class="pre">Login</span> <span class="pre">Attempt</span></code> resource has two attributes: <code class="docutils literal"><span class="pre">type</span></code> and <code class="docutils literal"><span class="pre">value</span></code>.</p>
+<p>The <code class="docutils literal"><span class="pre">type</span></code> attribute must equal <code class="docutils literal"><span class="pre">basic</span></code>. The <code class="docutils literal"><span class="pre">value</span></code> attribute
+must equal the result of the following (pseudo code) logic:</p>
+<div class="highlight-python"><div class="highlight"><pre>String concatenated = username + &#39;:&#39; + plain_text_password;
+byte[] bytes = concatenated.to_byte_array();
+String value = base64_encode( bytes );
+</pre></div>
+</div>
+<p>For example, if you used the the <code class="docutils literal"><span class="pre">tk421</span></code> username and <code class="docutils literal"><span class="pre">Changeme1</span></code>
+password above when creating your first account, you might compute the
+<code class="docutils literal"><span class="pre">value</span></code> using <a class="reference external" href="http://www.openssl.org/">OpenSSL</a> this way:</p>
+<div class="highlight-python"><div class="highlight"><pre>echo -n &quot;tk421:Changeme1&quot; | openssl base64
+</pre></div>
+</div>
+<p>This would produce the following Base64 result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dGs0MjE6Q2hhbmdlbWUx</span>
+</pre></div>
+</div>
+<p>Use the Base64 result to <code class="docutils literal"><span class="pre">POST</span></code> a <code class="docutils literal"><span class="pre">Login</span> <span class="pre">Attempt</span></code> to your
+application&#8217;s <code class="docutils literal"><span class="pre">loginAttempts</span></code> <code class="docutils literal"><span class="pre">href</span></code> (the JSON <code class="docutils literal"><span class="pre">value</span></code> attribute
+is the Base64 result):</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -X POST --user $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
+    -H &quot;Accept: application/json&quot; \
+    -H &quot;Content-Type: application/json&quot; \
+    -d &#39;{
+        &quot;type&quot;: &quot;basic&quot;,
+        &quot;value&quot;: &quot;dGs0MjE6Q2hhbmdlbWUx&quot;
+    }&#39; \
+&quot;https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts&quot;
+</pre></div>
+</div>
+<p>{% docs note %} Don&#8217;t forget to change <code class="docutils literal"><span class="pre">$YOUR_APPLICATION_ID</span></code> in the
+URL above to match your application&#8217;s <code class="docutils literal"><span class="pre">accounts</span></code> <code class="docutils literal"><span class="pre">href</span></code> URL! {%
+enddocs %}</p>
+<p>If the authentication attempt is successful (the username and password
+match and were Base64-encoded correctly), a link to the successfully
+authenticated account will be returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;account&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;href&quot;</span><span class="p">:</span> <span class="s">&quot;https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can use the returned <code class="docutils literal"><span class="pre">href</span></code> to <code class="docutils literal"><span class="pre">GET</span></code> the account&#8217;s details
+(first name, last name, email, etc).</p>
+<p>If the authentication attempt fails, you will see an <a class="reference external" href="/rest/product-guide#errors">error
+response</a> instead:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;status&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;code&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+  <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Invalid username or password.&quot;</span><span class="p">,</span>
+  <span class="s">&quot;developerMessage&quot;</span><span class="p">:</span> <span class="s">&quot;Invalid username or password.&quot;</span><span class="p">,</span>
+  <span class="s">&quot;moreInfo&quot;</span><span class="p">:</span> <span class="s">&quot;mailto:support@stormpath.com&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="other-things-you-can-do-with-stormpath">
+<h2>Other Things You Can Do with Stormpath<a class="headerlink" href="#other-things-you-can-do-with-stormpath" title="Permalink to this headline">¶</a></h2>
+<p>In addition to user registration and login, Stormpath can do a lot more!</p>
+<ul class="simple">
+<li>Create and manage user groups.</li>
+<li>Partition multi-tenant SaaS account data.</li>
+<li>Simplify social login with providers like Google and Facebook.</li>
+<li>Manage developer API keys and access tokens.</li>
+<li>Verify new users via email.</li>
+<li>Automatically provide secure password reset functionality.</li>
+<li>Centralize your user store across multiple applications.</li>
+<li>Plug into your favorite language or web framework.</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>We hope you found this Quickstart helpful!</p>
+<p>You&#8217;ve just scratched the surface of what you can do with Stormpath.
+Want to learn more? Here are a few other helpful resources you can jump
+into.</p>
+<ul class="simple">
+<li>Dig in deeper with the <a class="reference external" href="/rest/product-guide">Official REST API Product
+Guide</a>.</li>
+<li>Try out Stormpath in your favorite programming language with our
+<a class="reference external" href="https://stormpath.com/tutorial">7-Minute Tutorial</a>.</li>
+<li>Learn to easily partition user data with our <a class="reference external" href="/guides/multi-tenant/">Guide to Building
+Multitenant SaaS Applications</a>.</li>
+<li>Easily support Google and Facebook Login with our new <a class="reference external" href="/guides/social-integrations/">Social Login &amp;
+Integration Guide</a>.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#get-an-api-key">Get an API Key</a></li>
+<li><a class="reference internal" href="#retrieve-your-application">Retrieve your Application</a></li>
+<li><a class="reference internal" href="#create-a-user-account">Create a User Account</a></li>
+<li><a class="reference internal" href="#authenticate-a-user-account">Authenticate a User Account</a></li>
+<li><a class="reference internal" href="#other-things-you-can-do-with-stormpath">Other Things You Can Do with Stormpath</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="authz.html" title="previous chapter">Authorization With Stormpath</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/rest_quickstart.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Jakub Swiatczak.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/rest_quickstart.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
