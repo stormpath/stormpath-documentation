@@ -1,5 +1,6 @@
-Quickstart
-----
+*************
+3. Quickstart
+*************
 
 This quickstart will get you up and running with Stormpath in about 7
 minutes and give you a good initial feel for the Stormpath REST API.

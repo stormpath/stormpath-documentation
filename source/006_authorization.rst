@@ -1,5 +1,6 @@
-Authorization With Stormpath
-============================
+*******************************
+6. Authorization With Stormpath
+*******************************
 
 What is Authorization?
 ----------------------

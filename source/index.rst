@@ -11,8 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   rest_quickstart
-   authz
+   002_setup
+   003_quickstart
+   006_authorization
 
 
 
