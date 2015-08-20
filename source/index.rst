@@ -11,8 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   001_about
    002_setup
    003_quickstart
+   004_accnt_mgmt
    006_authorization
 
 
