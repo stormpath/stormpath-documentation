@@ -20,7 +20,7 @@ This section will give a high-level overview of the Stormpath data model, with m
 
 An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.  
 
-The top-level container for both Users and Groups is referred to as a **Directory**. Directories can either be hosted inside Stormpath, or can be used to mirror outside user directories, as in the case of Active Directory. Security policies, like password strength, are defined on a Directory level. An Application can access multiple Directories, and multiple Applications can also access the same Directory.
+The top-level container resource for both Users and Groups is referred to as a **Directory**. Directories can either be hosted inside Stormpath, or can be used to replicate outside user directories, as in the case of Active Directory or Facebook. Security policies, like password strength, are defined on a Directory level. An Application can access multiple Directories, and multiple Applications can also access the same Directory.
 
 Users are modelled inside Stormpath as **Accounts**. Every Account is unique within a Directory, with this uniqueness usually tied to an email address.
 
