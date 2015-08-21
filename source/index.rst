@@ -15,7 +15,8 @@ Contents:
    002_setup
    003_quickstart
    004_accnt_mgmt
-   006_authorization
+   005_auth_n
+   006_auth_z
 
 
 

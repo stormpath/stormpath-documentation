@@ -195,7 +195,7 @@ would create the user Account and return this response::
       "emailVerificationToken": null
     }
 
---------------
+You'll notice here that this user Account has a ``directory`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well. 
 
 Authenticate a User Account
 ===========================
