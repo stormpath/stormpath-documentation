@@ -5,16 +5,14 @@
 a. Modeling Your User Base
 ===========================
 
-The first question that we need to address is how we are going to model our users inside the Stormpath database. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and **Groups**. 
+The first question that we need to address is how we are going to model our users inside the Stormpath database. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
 
-All of your users will have to be associated with at least one Directory resource, so we can start there.  
+All of your Accounts will have to be associated with at least one Directory resource, so we can start there.  
 
 i. Directories
 --------------
     
-The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Allowing users to log in to an application is simply a matter of creating an AccountStoreMapping that maps the Directory resource that contains them to the Application resource that you want them to access. 
-
-Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
+The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
 Additionally:
 
@@ -59,7 +57,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``status``
 	  - String (Enum)
 	  - ``enabled`` , ``disabled``
-	  - Enabled directories can be used as account stores for applications. Disabled directories cannot be used for login.
+	  - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
 	
 	* - ``accounts``
 	  - Link
@@ -80,7 +78,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	  - Link
 	  - N/A
 	  - A link to the Directory’s Account Creation Policy
-	
+
 	* - ``passwordPolicy``
 	  - Link
 	  - N/A
@@ -89,15 +87,19 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``createdAt``
 	  - String (ISO-8601 Datetime)
 	  - N/A
-	  - An ISO-8601 Datetime value that represents when this resource was created.
+	  - When this resource was created.
 	
 	* - ``modifiedAt``
 	  - String (ISO-8601 Datetime)
 	  - N/A
-	  - An ISO-8601 Datetime value that represents when this resource’s attributes were last modified.
+	  - When this resource’s attributes were last modified.
+	    
+.. todo::
 
+	The JSON example below also returns ``applicationMappings`` and ``applications``, which are not included in the table in the REST API Guide. 
 
-
+Types of Directories
+^^^^^^^^^^^^^^^^^^^^
 Stormpath supports three types of Directories:
 
 1. Natively-hosted Cloud Directories that originate in Stormpath
@@ -108,12 +110,64 @@ You can add as many Directories of each type as you require.
 
 .. note::
 
-	Multiple Directories are a more advanced feature of Stormpath. If you have one or more Applications that all access the same user Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
+	Multiple Directories are a more advanced feature of Stormpath. If you have one or more Applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-	If however, your Application(s) needs to support login for external third-party user Accounts like those in Active Directory, or you have more complex Account segmentation needs, Directories will be a powerful tool to manage your application's user base.
+	If however, your Application(s) needs to support login for external third-party accounts like those in Active Directory, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
+The standard, default Directory resource. They can be created using a simple POST API.
+
+How To Make A Cloud Directory
+"""""""""""""""""""""""""""""
+
+The following API request::
+
+	POST https://api.stormpath.com/v1/directories
+	Content-Type: application/json;charset=UTF-8
+
+	{
+	  "name" : "Captains",
+	  "description" : "Captains from a variety of stories"
+	}
+
+Would yield the following response::
+
+	{
+	  "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp",
+	  "name": "Captains",
+	  "description": "Captains from a variety of stories",
+	  "status": "ENABLED",
+	  "createdAt": "2015-08-24T15:32:23.079Z",
+	  "modifiedAt": "2015-08-24T15:32:23.079Z",
+	  "tenant": {
+	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	  },
+	  "provider": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/provider"
+	  },
+	  "customData": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/customData"
+	  },
+	  "passwordPolicy": {
+	    "href": "https://api.stormpath.com/v1/passwordPolicies/2SKhstu8Plaekcai8lghrp"
+	  },
+	  "accountCreationPolicy": {
+	    "href": "https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8Plaekcai8lghrp"
+	  },
+	  "accounts": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts"
+	  },
+	  "applicationMappings": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applicationMappings"
+	  },
+	  "applications": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applications"
+	  },
+	  "groups": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups"
+	  }
+	}
 
 Mirror Directories
 ^^^^^^^^^^^^^^^^^^ 
@@ -133,7 +187,12 @@ User Accounts and Groups in mirrored directories are automatically deleted when 
 - The LDAP/AD directory is deleted.
 
 The big benefit is that your Stormpath-enabled applications still use the same convenient REST+JSON API – they do not need to know anything about things like LDAP or legacy connection protocols.
- 
+
+How To Make A Mirror Directory
+""""""""""""""""""""""""""""""
+
+Presently, Mirror Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
+
 Social Directories
 ^^^^^^^^^^^^^^^^^^
 
@@ -147,22 +206,263 @@ This approach has two major benefits: It allows for a user to have one unified i
 
 For both Mirror and Social Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
 
+How To Make A Social Directory
+""""""""""""""""""""""""""""""
+
+Presently, Social Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
+
 ii. Groups
 ----------
 
-**Groups** are collections of Accounts found within a directory. They can be thought of as labels applied to Accounts. 
+**Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. 
 
-The relation between every Account and its Group is contained in a **GroupMembership** resource. If you imagine Groups as labels for Accounts, the GroupMembership object contains information about which labels have been applied to which Accounts. 
+An individual Group resource may be accessed via its Resource URI:
 
-Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin/User"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's `description` field is.
+**Group URI**
+
+``/v1/groups/:groupId``
+
+**Group Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	 
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URI
+	
+	* - ``name``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The name of the Group. Must be unique within a Directory.
+		
+	* - ``description``
+	  - String
+	  - 1 < N <= 1000 characters
+	  - The description of the Group.
+
+	* - ``status``
+	  - String (Enum)
+	  - ``enabled``, ``disabled``
+	  - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
+
+	* - ``customData``
+	  - Link 
+	  - N/A
+	  - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
+
+	* - ``tenant``
+	  - Link
+	  - N/A
+	  - The Tenant that owns the Directory containing this Group.
+
+	* - ``directory``
+	  - Link
+	  - N/A
+	  - A link to the Directory resource that the Group belongs to. 
+
+	* - ``accounts``
+	  - Link 
+	  - N/A
+	  - A link to a collection of the Accounts that are contained within this Group. 
+
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - When this resource was created.
+
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - When this resource’s properties were last modified.
+
+Modeling User Hierarchies Using Groups
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested user structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
+
+A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin/User"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries::
+
+	GET https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
+
+It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's `description` field is.
+
+How To Create A Group
+"""""""""""""""""""""
+
+The following API request::
+
+	POST https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpbCDRb2Q/groups
+	Content-Type: application/json;charset=UTF-8
+
+	{
+	  "name" : "Aquanauts",
+	  "description" : "Sea Voyagers",
+	  "status" : "enabled"
+	}
+
+Would yield this response::
+
+	{
+	  "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB",
+	  "name": "Aquanauts",
+	  "description": "Sea Voyagers",
+	  "status": "ENABLED",
+	  "createdAt": "2015-08-24T16:14:18.430Z",
+	  "modifiedAt": "2015-08-24T16:14:18.430Z",
+	  "customData": {
+	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/customData"
+	  },
+	  "directory": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+	  },
+	  "tenant": {
+	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	  },
+	  "accounts": {
+	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/accounts"
+	  },
+	  "accountMemberships": {
+	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/accountMemberships"
+	  },
+	  "applications": {
+	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/applications"
+	  }
+	}
 
 b. How to Store Accounts in Stormpath
 =====================================
 
+An **Account** is a unique identity within a Directory, with a unique ``username`` and/or ``email``. An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory and may be in multiple Groups owned by that Directory. 
+
+An individual Account resource may be accessed via its Resource URI:
+
+**Group URI**
+
+``/v1/accounts/:accountId``
+
+**Account Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URI
+
+	* - ``username``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The username for the Account. Must be unique across the owning Directory. If not specified, the username will default to the ``email`` field.
+	 
+	* - ``email``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The email address for the Account. Must be unique across the owning Directory.	 
+	  
+	* - ``password``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The password for the Account. Only include this Attribute if setting or changing the Account password.
+
+	* - ``fullName``
+	  - String
+	  - N/A
+	  - The full name for the account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
+	 
+	* - ``givenName``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The given (first) name for the Account holder.	
+	
+	* - ``middleName``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The middle (second) name for the Account holder.
+
+	* - ``surname``
+	  - String
+	  - 1 < N <= 255 characters
+	  - The surname (last name) for the Account holder.
+	 
+	* - ``status``
+	  - String (Enum)
+	  - ``enabled``,``disabled``,``unverified``
+	  - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.	 
+	    
+	* - ``customData``
+	  - Link
+	  - 
+	  - .
+	
+	* - ``groups``
+	  - Link
+	  -
+	  - .
+	
+	* - ``groupMemberships``
+	  - Link
+	  -
+	  - .
+	
+	* - ``directory``
+	  - Link
+	  -
+	  - .
+	    
+	* - ``tenant``
+	  - Link
+	  -
+	  - .  
+	    
+	* - ``emailVerificationToken``
+	  - Link
+	  -
+	  -
+
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  -
+	  -
+
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  -
+	  -
+
 New Account Creation
 --------------------
 
+aasdf
 
+
+Add a new Account to a Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Directory: 2SKhstu8Plaekcai8lghrp
+
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application. 
+
+This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
+
+Add a new Account to a Group
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Group: 1L1fiXUXzXE4TucxegUYtB
 
 Importing Accounts
 ------------------
@@ -176,3 +476,4 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 Accounts With Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+aasdf
