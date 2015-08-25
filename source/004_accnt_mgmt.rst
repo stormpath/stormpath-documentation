@@ -58,45 +58,61 @@ An individual Directory resource may be accessed via its Resource URI:
 	  - String (Enum)
 	  - ``enabled`` , ``disabled``
 	  - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
-	
-	* - ``accounts``
-	  - Link
+
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
 	  - N/A
-	  - A link to the Accounts owned by this Directory.
+	  - Indicates when this resource was created.
 	
-	* - ``groups``
-	  - Link
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
 	  - N/A
-	  - A link to the Groups owned by this Directory.
+	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``tenant``
 	  - Link
 	  - N/A
 	  - A link to the owning Tenant.
-	
-	* - ``accountCreationPolicy``
+
+	* - ``provider``
 	  - Link
 	  - N/A
-	  - A link to the Directory’s Account Creation Policy
+	  - A link to the Directory's Provider. 
+
+	* - ``customData``
+	  - Link 
+	  - N/A
+	  - A link to the Directory's customData resource that you can use to store your own Directory-specific custom fields.
 
 	* - ``passwordPolicy``
 	  - Link
 	  - N/A
 	  - A link to the Directory’s Password Policy
-	
-	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - When this resource was created.
-	
-	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - When this resource’s attributes were last modified.
 	    
-.. todo::
+	* - ``accountCreationPolicy``
+	  - Link
+	  - N/A
+	  - A link to the Directory’s Account Creation Policy
 
-	The JSON example below also returns ``applicationMappings`` and ``applications``, which are not included in the table in the REST API Guide. 
+	* - ``accounts``
+	  - Link
+	  - N/A
+	  - A link to the Accounts owned by this Directory.
+	
+	* - ``applicationMappings``
+	  - Link
+	  - N/A
+	  - A link to any Application Mapping resources for this Directory.
+	    
+	* - ``applications``
+	  - Link
+	  - N/A
+	  - A link to a collection of all the Applications mapped to this Directory. 
+
+	* - ``groups``
+	  - Link
+	  - N/A
+	  - A link to the Groups owned by this Directory.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -253,35 +269,45 @@ An individual Group resource may be accessed via its Resource URI:
 	  - ``enabled``, ``disabled``
 	  - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
 
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource was created.
+
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource’s properties were last modified.
+
 	* - ``customData``
 	  - Link 
 	  - N/A
 	  - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
 
-	* - ``tenant``
-	  - Link
-	  - N/A
-	  - The Tenant that owns the Directory containing this Group.
-
 	* - ``directory``
 	  - Link
 	  - N/A
 	  - A link to the Directory resource that the Group belongs to. 
+	
+	* - ``tenant``
+	  - Link
+	  - N/A
+	  - A link to the Tenant that owns the Directory containing this Group.
 
 	* - ``accounts``
 	  - Link 
 	  - N/A
 	  - A link to a collection of the Accounts that are contained within this Group. 
 
-	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
+	* - ``accountMemberships``
+	  - Link
 	  - N/A
-	  - When this resource was created.
-
-	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
+	  - A link to any Account Memberships for this Group.
+        
+	* - ``applications``
+	  - Link
 	  - N/A
-	  - When this resource’s properties were last modified.
+	  - A link to any Applications associated with this Group.
 
 Modeling User Hierarchies Using Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -344,7 +370,7 @@ An **Account** is a unique identity within a Directory, with a unique ``username
 
 An individual Account resource may be accessed via its Resource URI:
 
-**Group URI**
+**Account URI**
 
 ``/v1/accounts/:accountId``
 
@@ -379,16 +405,11 @@ An individual Account resource may be accessed via its Resource URI:
 	  - 1 < N <= 255 characters
 	  - The password for the Account. Only include this Attribute if setting or changing the Account password.
 
-	* - ``fullName``
-	  - String
-	  - N/A
-	  - The full name for the account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
-	 
 	* - ``givenName``
 	  - String
 	  - 1 < N <= 255 characters
 	  - The given (first) name for the Account holder.	
-	
+
 	* - ``middleName``
 	  - String
 	  - 1 < N <= 255 characters
@@ -398,71 +419,227 @@ An individual Account resource may be accessed via its Resource URI:
 	  - String
 	  - 1 < N <= 255 characters
 	  - The surname (last name) for the Account holder.
+	
+	* - ``fullName``
+	  - String
+	  - N/A
+	  - The full name for the account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
 	 
 	* - ``status``
 	  - String (Enum)
 	  - ``enabled``,``disabled``,``unverified``
 	  - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.	 
-	    
-	* - ``customData``
-	  - Link
-	  - 
-	  - .
 	
-	* - ``groups``
-	  - Link
-	  -
-	  - .
-	
-	* - ``groupMemberships``
-	  - Link
-	  -
-	  - .
-	
-	* - ``directory``
-	  - Link
-	  -
-	  - .
-	    
-	* - ``tenant``
-	  - Link
-	  -
-	  - .  
-	    
-	* - ``emailVerificationToken``
-	  - Link
-	  -
-	  -
-
 	* - ``createdAt``
 	  - String (ISO-8601 Datetime)
-	  -
-	  -
+	  - N/A
+	  - Indicates when this resource was created.
 
 	* - ``modifiedAt``
 	  - String (ISO-8601 Datetime)
-	  -
-	  -
+	  - N/A
+	  - Indicates when this resource’s properties were last modified.
+
+	* - ``emailVerificationToken``
+	  - Link
+	  - N/A
+	  - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
+
+	* - ``customData``
+	  - Link
+	  - N/A
+	  - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
+	
+	* - ``providerData``
+	  - Link
+	  - N/A
+	  - A link to the information from the owner Directory's Provider.
+	    
+	* - ``directory``
+	  - Link
+	  - N/A
+	  - A link to the Account's Directory.
+
+	* - ``tenant``
+	  - Link
+	  - N/A
+	  - A link to the Tenant that owns the Account’s Directory.  
+
+	* - ``groups``
+	  - Link
+	  - N/A
+	  - A link to the Groups that the Account belongs to. 
+	    
+	* - ``groupMemberships``
+	  - Link
+	  - N/A
+	  - A link to the Group Memberships that the Account belongs to.
+
+	* - ``applications``
+	  - Link
+	  - N/A
+	  - A link to the Applications that the Account belongs to.
+	    
+	* - ``apiKeys``
+	  - Link
+	  - N/A
+	  - A link to the apiKeys for this Account.
+	
+	* - ``accessTokens``
+	  - Link
+	  - N/A
+	  - JSON Web Tokens for token-based authentication.
+	
+	* - ``refreshTokens``
+	  - Link
+	  - N/A
+	  - Tokens to generate additional ``accessTokens`` for token-based authentication. 
 
 New Account Creation
 --------------------
 
-aasdf
+The basic steps for creating a new Account are covered in the [Quick Start]. In that example, we cover how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
 
-
-Add a new Account to a Directory
+Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Directory: 2SKhstu8Plaekcai8lghrp
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the [Quick Start]. 
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application. 
+.. note::
 
-This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
+	This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
 
-Add a new Account to a Group
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8Plaekcai8lghrp``. The following API request::
 
-Group: 1L1fiXUXzXE4TucxegUYtB
+	POST https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts
+	Content-Type: application/json;charset=UTF-8
+
+	{
+	  "username" : "jlpicard",
+	  "email" : "capt@enterprise.com",
+	  "givenName" : "Jean-Luc",
+	  "surname" : "Picard",
+	  "password" : "uGhd%a8Kl!"
+	}
+
+Would yield this response::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+	  "username": "jlpicard",
+	  "email": "capt@enterprise.com",
+	  "givenName": "Jean-Luc",
+	  "middleName": null,
+	  "surname": "Picard",
+	  "fullName": "Jean-Luc Picard",
+	  "status": "ENABLED",
+	  "createdAt": "2015-08-25T19:57:05.976Z",
+	  "modifiedAt": "2015-08-25T19:57:05.976Z",
+	  "emailVerificationToken": null,
+	  "customData": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+	  },
+	  "providerData": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/providerData"
+	  },
+	  "directory": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+	  },
+	  "tenant": {
+	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	  },
+	  "groups": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/groups"
+	  },
+	  "applications": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/applications"
+	  },
+	  "groupMemberships": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/groupMemberships"
+	  },
+	  "apiKeys": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/apiKeys"
+	  },
+	  "accessTokens": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
+	  },
+	  "refreshTokens": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/refreshTokens"
+	  }
+	}
+
+
+Add an Existing Account to a Group
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captains" Directory, we would have to link the Account Resource to a Group Resource. This is done via a *groupMembership** resource that store this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
+
+**groupMembership URI**
+
+``v1/groupMemberships/:groupMembershipId``
+
+**groupMembership Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URI.
+	
+	* - ``account``
+	  - Link 
+	  - N/A
+	  - A link to the Account for this Group Membership. 
+	 
+	* - ``group``
+	  - Link
+	  - N/A
+	  - A link to the Group for this Group Membership.
+	
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource was created.
+	
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource’s properties were last modified
+	    
+So let's say we want to add "Jean-Luc Picard" to "Starfleet Officers" Group inside the "Captains" Directory.
+
+We make the following request::
+
+	{
+	  "account" : {
+	      "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+	   },
+	   "group" : {
+	       "href" : "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc"
+	   }
+	}
+
+And get the following response::
+
+	HTTP/1.1 201 Created
+
+	{
+	  "href": "https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0",
+	  "account": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+	  },
+	  "group": {
+	    "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc"
+	  }
+	}
 
 Importing Accounts
 ------------------
