@@ -323,45 +323,47 @@ It can also be included in the customData resource, as a series of key-value rel
 How To Create A Group
 """""""""""""""""""""
 
+So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory. 
+
 The following API request::
 
-	POST https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpbCDRb2Q/groups
+	POST https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups
 	Content-Type: application/json;charset=UTF-8
 
 	{
-	  "name" : "Aquanauts",
-	  "description" : "Sea Voyagers",
+	  "name" : "Starfleet Officers",
+	  "description" : "Commissioned officers in Starfleet",
 	  "status" : "enabled"
 	}
 
 Would yield this response::
 
 	{
-	  "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB",
-	  "name": "Aquanauts",
-	  "description": "Sea Voyagers",
-	  "status": "ENABLED",
-	  "createdAt": "2015-08-24T16:14:18.430Z",
-	  "modifiedAt": "2015-08-24T16:14:18.430Z",
-	  "customData": {
-	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/customData"
-	  },
-	  "directory": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-	  },
-	  "tenant": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-	  },
-	  "accounts": {
-	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/accounts"
-	  },
-	  "accountMemberships": {
-	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/accountMemberships"
-	  },
-	  "applications": {
-	    "href": "https://api.stormpath.com/v1/groups/1L1fiXUXzXE4TucxegUYtB/applications"
-	  }
-	}
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
+      "name": "Starfleet Officers",
+      "description": "Commissioned officers in Starfleet",
+      "status": "ENABLED",
+      "createdAt": "2015-08-25T20:09:23.698Z",
+      "modifiedAt": "2015-08-25T20:09:23.698Z",
+      "customData": {
+        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
+      },
+      "directory": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+      },
+      "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      },
+      "accounts": {
+        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
+      },
+      "accountMemberships": {
+        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
+      },
+      "applications": {
+        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
+      }
+    }
 
 b. How to Store Accounts in Stormpath
 =====================================
@@ -646,11 +648,53 @@ Importing Accounts
 
 Stormpath also makes it very easy to transfer your existing user directory into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
 
-1. **Existing Passwords in Plaintext:** If you stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
-2. **Existing Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are available here.
-3. **Existing Passwords With Non-MCF Hash:** If you hashed passwords in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to use their passwords to login.
-   
-Accounts With Plaintext Passwords
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1. **Passwords in Plaintext:** If you stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
+2. **Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are detailed [below].
+3. **Passwords With Non-MCF Hash:** If you hashed passwords in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to use their passwords to login.
 
-aasdf
+.. note::
+
+	To import user accounts from an LDAP or Social Directory, please see the [above section].
+
+Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
+   
+Importing Accounts With Plaintext Passwords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
+
+	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?registrationWorkflowEnabled=false
+
+
+Importing Accounts With MCF Hash Passwords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string. 
+This works as follows:
+
+1. Create the Account specifying the password hash instead of a plain text password.
+Stormpath will use the password hash to authenticate the Account’s login attempt.
+
+2. If the login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
+   
+Supported Hashing Algorithms
+""""""""""""""""""""""""""""
+
+Stormpath only supports password hashes that use the following algorithms:
+
+- bcrypt: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
+- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash.
+  
+Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
+
+	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?passwordFormat=mcf
+
+The Stormpath2 Hashing Algorithm
+++++++++++++++++++++++++++++++++
+
+stormpath2 has a format which allows you to derive an MCF hash that Stormpath can read to understand how to recreate the password hash to use during a login attempt. stormpath2 hash format is formatted as::
+
+	$stormpath2$ALGORITHM_NAME$ITERATION_COUNT$BASE64_SALT$BASE64_PASSWORD_HASH
+
+Importing Accounts With Non-MCF Hash Passwords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
