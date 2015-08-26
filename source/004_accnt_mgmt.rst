@@ -365,6 +365,8 @@ Would yield this response::
       }
     }
 
+-----
+
 b. How to Store Accounts in Stormpath
 =====================================
 
@@ -390,7 +392,7 @@ An individual Account resource may be accessed via its Resource URI:
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI
+	  - The resource's fully qualified location URI.
 
 	* - ``username``
 	  - String
@@ -683,18 +685,319 @@ Supported Hashing Algorithms
 Stormpath only supports password hashes that use the following algorithms:
 
 - bcrypt: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
-- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash.
+- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see [below].
   
 Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
 	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?passwordFormat=mcf
 
-The Stormpath2 Hashing Algorithm
+The stormpath2 Hashing Algorithm
 ++++++++++++++++++++++++++++++++
 
 stormpath2 has a format which allows you to derive an MCF hash that Stormpath can read to understand how to recreate the password hash to use during a login attempt. stormpath2 hash format is formatted as::
 
 	$stormpath2$ALGORITHM_NAME$ITERATION_COUNT$BASE64_SALT$BASE64_PASSWORD_HASH
 
+.. list-table:: 
+	:widths: 20 20 20 
+	:header-rows: 1
+
+	* - Property
+	  - Description
+	  - Valid Values
+	
+	* - ``ALGORITHM_NAME``
+	  - The name of the hashing algorithm used to generate the ``BASE64_PASSWORD_HASH``.
+	  - ``MD5``, ``SHA-1``, ``SHA-256``, ``SHA-384``, ``SHA-512``
+	
+	* - ``ITERATION_COUNT``
+	  - The number of iterations executed when generating the ``BASE64_PASSWORD_HASH``
+	  - Integer > 0
+	
+	* - ``BASE64_SALT``
+	  - The salt byte array used to salt the first hash iteration.
+	  - String (Base64). If your password hashes do you have salt, you can leave it out entirely. 
+
+	* - ``BASE64_PASSWORD_HASH``
+	  - The computed hash byte array.
+	  - String (Base64)
+
+
 Importing Accounts With Non-MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. For more information, please see the [Password Reset section below].
+
+
+How To Store Additional User Information As Custom Data
+-------------------------------------------------------
+
+While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
+
+One example of this could be if we wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+
+For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint. 
+
+So if we were to POST the following REST API::
+
+	https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData
+
+With the following payload::
+
+	{
+		"currentAssignment": "USS Enterprise (NCC-1701-E)"
+	}
+
+We would get this response::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+	  "createdAt": "2015-08-25T19:57:05.976Z",
+	  "modifiedAt": "2015-08-26T19:25:27.936Z",
+	  "currentAssignment": "USS Enterprise (NCC-1701-E)"
+	}
+
+This information can also be appended as part of the initial Account creation payload. 
+
+For more information about the customData resource, please see [here].
+
+----
+
+**************************************
+c. How To Manage an Account's Password
+**************************************
+
+In Stormpath, password policies is defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behaviour of all Accounts that are included in this Directory. 
+
+**passwordPolicy URI**
+
+``/v1/passwordPolicies/:passwordPolicyID``
+
+**passwordPolicy Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URI.
+	  
+	* - ``resetTokenTtl``
+	  - Integer
+	  - A positive integer, less than 169 (0 < i < 169). Default is 24.
+	  - An integer that defines how long the password reset token is valid for during the password reset email workflow.
+	  
+	* - ``resetEmailStatus``
+	  - String
+	  - ``ENABLED`` or ``DISABLED``
+	  - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
+	  	  
+	* - ``strength``
+	  - Link
+	  - N/A 
+	  - A link to the password strength requirements for the Directory.
+	
+	* - ``resetEmailTemplates``
+	  - Link
+	  - N/A
+	  - A collection of email templates that can be used for sending the password reset email. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+	  
+	* - ``resetSuccessEmailStatus``
+	  - String
+	  - ``ENABLED`` or ``DISABLED``
+	  - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
+	  
+	* - ``resetSuccessEmailTemplates``
+	  - Link
+	  - N/A
+	  - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+
+.. todo::
+	
+	These don't actually return, but should!
+	  
+	* - ``createdAt``
+	* - String (ISO-8601 Datetime)
+	* - N/A
+	* - Indicates when this resource was created.
+	  
+	* - ``modifiedAt``
+	* - String (ISO-8601 Datetime)
+	* - N/A
+	* - Indicates when this resource’s attributes were last modified.
+
+For a Directory's password policies, you can modify:
+
+- The Password Strength policy
+- The Password Reset Workflow 
+
+Password Strength
+=================
+
+The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` property.
+
+**strength Properties**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Property
+	  - Type
+	  - Valid Value(s)
+	  - Description
+
+	* - ``maxLength``
+	  - Integer
+	  - Default is 100
+	  - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
+	    
+	* - ``minLength``
+	  - Integer
+	  - Default is 8
+	  - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
+	    
+	* - ``minLowerCase``
+	  - Integer	
+	  - Default is 1
+	  - Represents the minimum number of lower case characters required for the password. characters	
+	  
+	* - ``minNumeric``		
+	  - Integer	
+	  - Default is 1
+	  - Represents the minimum number of numeric characters required for the password. 
+	
+	* - ``minSymbol``	
+	  - Integer	
+	  - Default is 0
+	  - Represents the minimum number of symbol characters required for the password. 
+
+	* - minUpperCase	
+	  - Integer	
+	  - Default is 1
+	  - Represents the minimum number of upper case characters required for the password. 
+
+	* - minDiacritic	
+	  - Integer	
+	  - Default is 0
+	  - Represents the minimum number of diacritic characters required for the password.
+
+Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and also password changes on existing Accounts in that Directory. To update Password Strength, simple HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
+
+This call::
+
+	https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength
+
+with this body::
+
+	{
+	  "minLength": 1,
+	  "maxLength": 24,
+	  "minSymbol": 1
+	}
+
+would result in the following response::
+
+	{
+	  "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength", 
+	  "maxLength": 24, 
+	  "minDiacritic": 0, 
+	  "minLength": 1, 
+	  "minLowerCase": 1, 
+	  "minNumeric": 1, 
+	  "minSymbol": 1, 
+	  "minUpperCase": 1
+	}
+
+Password Reset
+==============
+
+The Password Reset Email is configurable for a Directory. There is a set of properties that define its behavior, including ``resetEmailStatus`` and the ``resetEmailTemplates`` for the initial password reset email that is sent to the Account’s email address with a link to reset the Account’s password. The properties ``resetSuccessEmailStatus`` and ``resetSuccessEmailTemplates`` for the resulting email that is sent when the password reset is successful through the email workflow.
+
+Enable Password Reset Emails 
+----------------------------
+
+To control whether an email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following POST::
+
+	https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID
+
+*Body*::
+
+	{
+       "resetEmailStatus": "ENABLED"
+    }'
+
+Email templates
+---------------
+
+To modify the emails that get sent during the password reset workflow, let’s take a look at the email templates for the password reset. Email templates in Stormpath have common properties that can be modified to change the appearance of the emails. The properties below apply to both email templates that reside in the password policy (resetEmailTemplate and resetSuccessEmailTemplate).
+
+**EmailTemplate Properties**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Property
+	  - Type
+	  - Valid Value(s)
+	  - Description
+
+	* - fromEmailAddress		
+	  - String	
+	  - N/A
+	  - The address that appears in the email’s "from" field.
+	    
+	* - fromName		
+	  - String 
+	  - N/A
+  	  - The name that appears in the email’s "from" field 
+ 
+	* - subject		
+	  - String 
+	  - N/A
+  	  - The subject that appears in the email’s subject field				
+
+	* - htmlBody		
+	  - String	
+	  - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}
+	  - The body of the email in HTML format. This body is only sent when the mimeType for the template is set to text/html. This body can take valid HTML snippets.
+	    
+	* - textBody	
+	  - String
+	  - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}.
+	  - The body of the email is plain text format. This body is only sent when the mimeType for the template is set to text/plain.
+
+
+	* - mimeType
+	  - String	
+	  - ``text/plain`` or ``text/html``
+	  - A property that defines whether Stormpath will send an email with the mime type of text/plain or text/html.	
+
+
+	* - defaultModel	
+	  - Object	
+	  - Object that includes one property linkBaseUrl that is a String
+	  - An object that defines the model of the email template. The defaultModel currently holds one value, which is the linkBaseUrl. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a url that includes the linkBaseUrl and the sptoken used in password reset workflows	
+
+Changing any of these is as simple as sending an HTTP POST with the desired property in the payload body.
+
+----
+
+***********************************
+d. How To Verify an Account's Email 
+***********************************
+
+
+
+
+*************************
+e. How To Search Accounts
+*************************
