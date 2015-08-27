@@ -126,9 +126,9 @@ You can add as many Directories of each type as you require.
 
 .. note::
 
-	Multiple Directories are a more advanced feature of Stormpath. If you have one or more Applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
+	Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-	If however, your Application(s) needs to support login for external third-party accounts like those in Active Directory, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
+	If however, your application(s) needs to support login for external third-party accounts like those in Active Directory, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
@@ -216,7 +216,7 @@ Stormpath works with user Accounts pulled from social login providers (currently
 
 Stormpath also simplifies the authorization process by doing things like automating Google's access token exchange flow. All you do is POST the authorization code from the end-user and Stormpath returns a new or updated user Account, along with the Google access token which you can use for any further API calls. 
 
-Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your Application. So, how this works in practice is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
+Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. So, how this works in practice is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
 
 This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
@@ -763,11 +763,21 @@ For more information about the customData resource, please see [here].
 
 ----
 
+*************************
+c. How To Search Accounts
+*************************
+
+
+
 **************************************
-c. How To Manage an Account's Password
+d. How To Manage an Account's Password
 **************************************
 
-In Stormpath, password policies is defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behaviour of all Accounts that are included in this Directory. 
+In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. 
+
+.. note::
+
+	This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `this section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_. 
 
 **passwordPolicy URI**
 
@@ -975,29 +985,91 @@ To modify the emails that get sent during the password reset workflow, let’s t
 	  - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}.
 	  - The body of the email is plain text format. This body is only sent when the mimeType for the template is set to text/plain.
 
-
 	* - mimeType
 	  - String	
 	  - ``text/plain`` or ``text/html``
-	  - A property that defines whether Stormpath will send an email with the mime type of text/plain or text/html.	
+	  - A property that defines whether Stormpath will send an email with the mime type of ``text/plain`` or ``text/html``.	
 
 
 	* - defaultModel	
 	  - Object	
-	  - Object that includes one property linkBaseUrl that is a String
-	  - An object that defines the model of the email template. The defaultModel currently holds one value, which is the linkBaseUrl. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a url that includes the linkBaseUrl and the sptoken used in password reset workflows	
+	  - Object that includes one property ``linkBaseUrl`` which is itself a String
+	  - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in password reset workflows.
 
 Changing any of these is as simple as sending an HTTP POST with the desired property in the payload body.
 
 ----
 
 ***********************************
-d. How To Verify an Account's Email 
+e. How To Verify an Account's Email 
 ***********************************
 
+If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
+
+Understanding the Email Verification Workflow
+=============================================
+
+This workflow involves 3 parties: your application's end-user, your application, and the Stormpath API server.
+
+1. When the Account is created in a Directory that has “Verification” enabled, Stormpath will automatically send an email to the Account's email address.
+2. The end-user opens their email and clicks the verification link. This link comes with a token.
+3. With the token, your application calls back to the Stormpath API server to complete the process.
+
+If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications.
+
+.. note::
+
+	Accounts created in a Directory that has the Verification workflow enabled will have an ``UNVERIFIED`` status by default. ``UNVERIFIED`` is the same as ``DISABLED``, but additionally indicates why the Account is disabled. When the email link is clicked, the Account's status will change ``ENABLED``.
 
 
+The Account Verification Base URL 
+---------------------------------
 
-*************************
-e. How To Search Accounts
-*************************
+It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application web server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
+
+.. note::
+
+	The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
+
+Configuring The Verification Workflow
+=====================================
+
+This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <https://stormpath.com/docs/console/product-guide#!ManageWorkflowAutomation>`_ for complete instructions.
+
+Triggering the Verification Email (Creating A Token)
+====================================================
+
+In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you simply create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
+
+Verifying the Email Address (Consuming The Token)
+=================================================
+
+The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
+
+	http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
+
+The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
+
+	/v1/accounts/emailVerificationsToken/:verificationToken
+
+To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point::
+
+	POST https://api.stormpath.com/v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl
+
+Which will return a result that looks like this::
+
+	HTTP/1.1 200 OK
+	Content-Type: application/json;charset=UTF-8;
+
+	{
+	  href: "https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V"
+	}
+
+If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
+
+If the verification token is not found, a "404 Not Found" error is returned with a payload explaining why the attempt failed.
+
+.. note::
+
+	For more about Account Authentication please see [below].
+
