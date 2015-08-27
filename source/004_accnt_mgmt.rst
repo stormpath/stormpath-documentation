@@ -767,7 +767,25 @@ For more information about the customData resource, please see [here].
 c. How To Search Accounts
 *************************
 
+You can search Stormpath Accounts, just like all Resource Collections, using one of two search methods: 
 
+*Filter Search:* 
+
+This searches across all attributes on all resources within the specified Collection and finds any attribute that matches the specified query parameter ``q``. 
+
+Example: All instances where the string "path" is found in any attribute in the specified Collection of Accounts).
+
+``https://api.stormpath.com/v1/applications/someAppId/accounts?q=path``
+
+*Attribute Search:* 
+
+This searches across the specified attribute on all resources within the specified Collection and finds any matches of specific resource attributes. 
+
+Example: All instances where the string "path" is found in the ``email`` attribute in the specified Collection of Accounts.
+
+``https://api.stormpath.com/v1/applications/someAppId/accounts?email=path``
+
+For more information about how search works in Stormpath, please see the [Search Section] of the REST Reference section.
 
 **************************************
 d. How To Manage an Account's Password
