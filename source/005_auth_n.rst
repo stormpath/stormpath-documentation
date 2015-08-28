@@ -12,7 +12,33 @@ After an Account has been created, you can authenticate it given an input of a `
 
 Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so these values are not passed as clear text.
 
-So, if we had a new user Account "Han Solo" added to the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
+**loginAttempts Properties**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Property
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	    
+	* - ``type``
+	  - String (Enum)
+	  - N/A
+	  - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
+
+	* - ``value``
+	  - String (Base64)
+	  - N/A
+	  - The Base64 encoded username:plaintextPassword pair.
+	    
+	* - ``accountStore``
+	  - Link
+	  - N/A
+	  - An optional link to the Application’s Account Store (Directory or Group) that you are certain contains the account attempting to login. Specifying this attribute can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
+	 
+So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
 We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBVa6tfR``:
 
@@ -41,7 +67,7 @@ Both **Directory** and **Group** resources are what are called **Account Stores*
 
 You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's AccountStoreMapping resources. 
 
-An individual Directory resource may be accessed via its Resource URI:
+An individual Account Store resource may be accessed via its Resource URI:
 
 **accountStoreMapping URI**
 
@@ -86,7 +112,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - accountStore
 	  - Link 
 	  - N/A
-	  - A link to the mapping’s Account Store (either a Group or Directory) containing Accounts that may login to the application. **Required.** 
+	  - A link to the mapping's Account Store (either a Group or Directory) containing Accounts that may login to the application. **Required.** 
 
 .. todo::
 
@@ -102,8 +128,6 @@ An individual Directory resource may be accessed via its Resource URI:
 	  - String (ISO-8601 Datetime)
 	  - N/A
 	  - Indicates when this resource’s attributes were last modified.
-	    
-
 
 How Login Attempts Work 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,7 +152,58 @@ You can assign multiple Account Stores to an Application, but only one is requir
 b. How to Retrieve Additional Account Data On Authentication 
 ============================================================
 
-Lorem ipsum.
+Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+
+	``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+
+If we had done this with our "Han Solo" Account from above, our JSON response would have looked like this::
+
+	{
+	  "account": {
+	    "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
+	    "username": "first2shoot",
+	    "email": "han@newrepublic.gov",
+	    "givenName": "Han",
+	    "middleName": null,
+	    "surname": "Solo",
+	    "fullName": "Han Solo",
+	    "status": "ENABLED",
+	    "createdAt": "2015-08-28T16:07:38.347Z",
+	    "modifiedAt": "2015-08-28T16:07:38.347Z",
+	    "emailVerificationToken": null,
+	    "customData": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/customData"
+	    },
+	    "providerData": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/providerData"
+	    },
+	    "directory": {
+	      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+	    },
+	    "tenant": {
+	      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	    },
+	    "groups": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/groups"
+	    },
+	    "applications": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/applications"
+	    },
+	    "groupMemberships": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/groupMemberships"
+	    },
+	    "apiKeys": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/apiKeys"
+	    },
+	    "accessTokens": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/accessTokens"
+	    },
+	    "refreshTokens": {
+	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/refreshTokens"
+	    }
+	  }
+	}
+
 
 c. How Token Authentication Works
 =================================
