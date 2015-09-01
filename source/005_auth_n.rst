@@ -183,7 +183,7 @@ If we had done this with our "Han Solo" Account from above, our JSON response wo
 	  }
 	}
 
-At the end of this JSON we see two interesting links that we can now cover: access and refresh tokens. 
+At the end of this JSON we see two interesting links that we can now cover: Access and Refresh tokens. 
 
 c. How Token-Based Authentication Works
 =======================================
@@ -236,15 +236,23 @@ Configuring Token-Based Authentication
 
 Stormpath is configurable so you can set the time to live (TTL) for both the Access and Refresh tokens. This is important for many applications because it gives the ability to define how the tokens expire. For example, you could decide that your application requires a user to log in daily, but the access should only live for 10 minutes. Or, you could decide that for your application, users should be able to stay logged-in for two months and the access token expires in an hour.
 
-Each Application resource in Stormpath has an ``oAuthPolicy`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
+Each Application resource in Stormpath has an ``oAuthPolicy/:applicationId`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
 
 	{
-	    "href": "https://api.stormpath.com/v1/oAuthPolicies/5r0klomitodnOCuvESIP5z",
-	    "tokenEndpoint": { 
-	            "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oauth/token"
-	    },
-	    "accessTokenTtl": "PT1H",
-	    "refreshTokenTtl": "P60D"
+	  "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+	  "accessTokenTtl": "PT1H",
+	  "refreshTokenTtl": "P60D",
+	  "createdAt": "2015-08-18T20:46:36.063Z",
+	  "modifiedAt": "2015-08-18T20:46:36.063Z",
+	  "tokenEndpoint": {
+	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
+	  },
+	  "application": {
+	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+	  },
+	  "tenant": {
+	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	  }
 	}
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
@@ -259,24 +267,24 @@ If we wanted to change the TTL for the Access Token to 30 minutes and the Refres
 And we would get the following response::
 
 	{
-	    "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oAuthPolicy",
-	    "tokenEndpoint": { 
-	            "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oauth/token"
-	    },
-	    "accessTokenTtl": "PT30M",
-	    "refreshTokenTtl": "P7D"
+	  "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+	  "accessTokenTtl": "PT30M",
+	  "refreshTokenTtl": "P7D",
+	  [...]
 	}
-
-.. todo::
-
-	update with real responses
 
 .. note::
 
-	Refresh tokens are optional, if you would like to disable the refresh token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
+	Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
 
 Generating An OAuth 2.0 Access Token
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 Password Grant flow. Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
+
+	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+
+
 
 Validating Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
