@@ -171,30 +171,9 @@ If we had done this with our "Han Solo" Account from above, our JSON response wo
 	    "createdAt": "2015-08-28T16:07:38.347Z",
 	    "modifiedAt": "2015-08-28T16:07:38.347Z",
 	    "emailVerificationToken": null,
-	    "customData": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/customData"
-	    },
-	    "providerData": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/providerData"
-	    },
-	    "directory": {
-	      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-	    },
-	    "tenant": {
-	      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-	    },
-	    "groups": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/groups"
-	    },
-	    "applications": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/applications"
-	    },
-	    "groupMemberships": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/groupMemberships"
-	    },
-	    "apiKeys": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/apiKeys"
-	    },
+	    
+	    [...]
+
 	    "accessTokens": {
 	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/accessTokens"
 	    },
@@ -204,11 +183,110 @@ If we had done this with our "Han Solo" Account from above, our JSON response wo
 	  }
 	}
 
+At the end of this JSON we see two interesting links that we can now cover: access and refresh tokens. 
 
-c. How Token Authentication Works
-=================================
+c. How Token-Based Authentication Works
+=======================================
 
-Lorem ipsum.
+In this guide, we will discuss how to use Stormpath to use Stormpath to generate and manage OAuth 2.0 Access Token.
+
+Introduction to Token-Based Authentication
+------------------------------------------
+
+Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this required **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
+
+**Token-based authentication** is a alternate, stateless strategy. With token-based authentication, you secure an application based on a security token that is generated for the user on authentication and then stored on the client-side. Token-based Authentication is all about removing the need to store information on the server while giving extra security to keep the token secure on the client. This help you as a developer build stateless and scalable applications.
+
+Stormpath's approach to token-based authentication has two elements: JSON Web Tokens (JWTs) for authentication, and OAuth 2.0 for authorization. 
+
+Why OAuth 2.0?
+^^^^^^^^^^^^^^
+
+OAuth 2.0 is an authorization framework and provides a protocol to how to interact with a service that can delegate authentication or provide authorization. Its primary advantage as a standard is its wide adoption rate across many mobile and web applications today. If you have ever logged-in to a website using Facebook or Google, you have used one of OAuth 2.0 many authorization flows. You can read more about the different OAuth 2.0 authorization flows or grant types in depth on `Stormpath’s blog <https://stormpath.com/blog/what-the-heck-is-oauth/>`_.
+
+Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
+
+**Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
+**Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
+**Client Credentials Grant Type**: Provides the ability to exchange an API Key for the Access Token. This is supported through the API Key Management feature.
+
+To understand how to use Token-based Authentication, we need to talk about the different types of tokens that are available.
+
+What Tokens are available for Token-Based Authentication?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For Token Based Authentication, there are a two different types of tokens that need to be managed. These are:
+
+- Access Token
+- Refresh Token
+
+The **Access Token** is what grants access to a protected resource. The Access Token that Stormpath generates for Accounts on authentication is a **JSON Web Token**, or JWT. The JWT has security built-in to make sure that the Access Token is not tampered with on the client, and is only valid for a specified duration. 
+
+The **Refresh Token** is a special token that is used to generate additional Access Tokens. This allows you to have an short-lived Access Token without having to collect credentials every single time you need a new Access Token.
+
+When using OAuth 2.0, the Access Token and Refresh Token are returned in the same response during the token exchange, this is called an **Access Token Response**.
+
+How To Use Stormpath for Token-Based Authentication
+---------------------------------------------------
+
+Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
+
+Configuring Token-Based Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stormpath is configurable so you can set the time to live (TTL) for both the Access and Refresh tokens. This is important for many applications because it gives the ability to define how the tokens expire. For example, you could decide that your application requires a user to log in daily, but the access should only live for 10 minutes. Or, you could decide that for your application, users should be able to stay logged-in for two months and the access token expires in an hour.
+
+Each Application resource in Stormpath has an ``oAuthPolicy`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
+
+	{
+	    "href": "https://api.stormpath.com/v1/oAuthPolicies/5r0klomitodnOCuvESIP5z",
+	    "tokenEndpoint": { 
+	            "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oauth/token"
+	    },
+	    "accessTokenTtl": "PT1H",
+	    "refreshTokenTtl": "P60D"
+	}
+
+The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
+
+If we wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, we could simply make a POST request to the ``/oAuthPolicies/:applicationId`` endpoint with the following payload::
+
+	{
+        "accessTokenTtl": "PT30M",
+        "refreshTokenTtl": "P7D"
+    }
+
+And we would get the following response::
+
+	{
+	    "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oAuthPolicy",
+	    "tokenEndpoint": { 
+	            "href": "https://api.stormpath.com/v1/applications/5r0klomitodnOCuvESIP5z/oauth/token"
+	    },
+	    "accessTokenTtl": "PT30M",
+	    "refreshTokenTtl": "P7D"
+	}
+
+.. todo::
+
+	update with real responses
+
+.. note::
+
+	Refresh tokens are optional, if you would like to disable the refresh token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
+
+Generating An OAuth 2.0 Access Token
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Validating Access Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Refreshing Access Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Revoking Access and Refresh Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 d. How Social Authentication Works
 ==================================
