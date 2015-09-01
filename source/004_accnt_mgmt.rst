@@ -712,7 +712,7 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 	
 	* - ``ITERATION_COUNT``
 	  - The number of iterations executed when generating the ``BASE64_PASSWORD_HASH``
-	  - Integer > 0
+	  - Number > 0
 	
 	* - ``BASE64_SALT``
 	  - The salt byte array used to salt the first hash iteration.
@@ -818,7 +818,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	  - The resource's fully qualified location URI.
 	  
 	* - ``resetTokenTtl``
-	  - Integer
+	  - Number
 	  - A positive integer, less than 169 (0 < i < 169). Default is 24.
 	  - An integer that defines how long the password reset token is valid for during the password reset email workflow.
 	  
@@ -883,37 +883,37 @@ The Password Strength Policy for a Directory can be modified through the Adminis
 	  - Description
 
 	* - ``maxLength``
-	  - Integer
+	  - Number
 	  - Default is 100
 	  - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
 	    
 	* - ``minLength``
-	  - Integer
+	  - Number
 	  - Default is 8
 	  - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
 	    
 	* - ``minLowerCase``
-	  - Integer	
+	  - Number	
 	  - Default is 1
 	  - Represents the minimum number of lower case characters required for the password. characters	
 	  
 	* - ``minNumeric``		
-	  - Integer	
+	  - Number	
 	  - Default is 1
 	  - Represents the minimum number of numeric characters required for the password. 
 	
 	* - ``minSymbol``	
-	  - Integer	
+	  - Number	
 	  - Default is 0
 	  - Represents the minimum number of symbol characters required for the password. 
 
 	* - minUpperCase	
-	  - Integer	
+	  - Number	
 	  - Default is 1
 	  - Represents the minimum number of upper case characters required for the password. 
 
 	* - minDiacritic	
-	  - Integer	
+	  - Number	
 	  - Default is 0
 	  - Represents the minimum number of diacritic characters required for the password.
 

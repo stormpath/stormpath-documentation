@@ -90,7 +90,7 @@ An individual Account Store resource may be accessed via its Resource URI:
 	  - The resource's fully qualified location URI.
 	    
 	* - listIndex
-	  - Integer
+	  - Number
 	  - 0 <= N < list size
 	  - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
 	    
@@ -113,10 +113,6 @@ An individual Account Store resource may be accessed via its Resource URI:
 	  - Link 
 	  - N/A
 	  - A link to the mapping's Account Store (either a Group or Directory) containing Accounts that may login to the application. **Required.** 
-
-.. todo::
-
-	The following don't actually appear...
 	  
 	* - ``createdAt``
 	  - String (ISO-8601 Datetime)
@@ -129,12 +125,27 @@ An individual Account Store resource may be accessed via its Resource URI:
 	  - N/A
 	  - Indicates when this resource’s attributes were last modified.
 
+A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp`` would return the following::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+	  "listIndex": 1,
+	  "isDefaultAccountStore": true,
+	  "isDefaultGroupStore": true,
+	  "application": {
+	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+	  },
+	  "accountStore": {
+	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+	  }
+	}
+
 How Login Attempts Work 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 When the "Han Solo" Account tried to log in to the Application, the user submitted a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned Account Stores (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
-Let’s look at an example to illustrate this behavior. Assume that two Account Stores, a ‘Customers’ Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
+Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
 
 The following flow chart shows what happens when an account attempts to login to the Foo application:
 
@@ -280,21 +291,243 @@ And we would get the following response::
 Generating An OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 Password Grant flow. Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
+Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Password Grant** flow. Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
 
 	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
+This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described above in `How Login Attempts Work`_.
 
+Your application will act as a proxy to the Stormpath API. For example:
+
+- The user inputs their credentials (e.g. ``username`` and ``password``) into a form and submits them.
+- Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
+- When Stormpath returns with the Access Token Response, you can then return the Access Token and/or the Refresh Token to the client.
+
+So you would send a POST to the following URL::
+
+	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+
+With the following header, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``:
+
+	Content-Type: application/x-www-form-urlencoded
+
+And the following body::
+
+	grant_type=password&username=tom@stormpath.com&password=Secret1
+
+This would result in the following response::
+
+	{
+	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k",
+	  "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
+	  "token_type": "Bearer",
+	  "expires_in": 1800,
+	  "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqAFf2XsV"
+	}
+
+This is an **OAuth 2.0 Access Token Response** and includes the following:
+
+.. list-table:: 
+	:widths: 15 10 60
+	:header-rows: 1
+
+	* - Property
+	  - Type
+	  - Description
+	
+	* - access_token
+	  - String (JSON Web Token)
+	  - The access token for the response.
+	
+	* - refresh_token
+	  - String (JSON Web Token)
+	  - The refresh token that can be used to get refreshed Access Tokens.
+	    
+	* - token_type
+	  - String
+	  - The type of token returned.
+	
+	* - expires_in
+	  - Number
+	  - The time in seconds before the token expires.
+	
+	* - stormpath_access_token_href 
+	  - String
+	  - The href location of the token in Stormpath.
+
+.. note::
+
+	Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
+
+		grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
 
 Validating Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+Once an ``access_token`` has been generated, we have taken care of the Authentication part of our workflow. Now, the OAuth token can be used to authorize individual requests that the user makes. To do this, the client will need to pass it to your application.
+
+For example, if you have a route ``https://yourapplication.com/secure-resource``, the client would request authorization to access the resource by passing the access token::
+
+	HTTP/1.1
+	GET /secure-resource
+	Host: https://yourapplication.com
+	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+
+Once your application receives the request, the first thing to do is to validate the token, either using Stormpath, or using local application-side logic. The benefit of using Stormpath to validate the token through the REST API (or an SDK that is using the REST API) is that Stormpath can validate the token against the state of your Application and Account resources. To illustrate the difference:
+
+.. list-table:: 
+	:widths: 60 15 15
+	:header-rows: 1
+
+	* - Validation Criteria
+	  - Locally
+	  - Stormpath
+	
+	* - Token hasn't been tampered with
+	  - Yes
+	  - Yes
+	    
+	* - Token hasn't expired
+	  - Yes
+	  - Yes
+	
+	* - Token hasn't been revoked
+	  - No
+	  - Yes
+	    
+	* - Account hasn't been disabled or deleted
+	  - No
+	  - Yes
+	
+	* - Issuer is Stormpath
+	  - Yes
+	  - Yes
+	    
+	* - Issuing Application is still enabled, and hasn't been deleted
+	  - No
+	  - Yes
+	
+	* - Account is still in an Account Store for the issuing Application
+	  - No
+	  - Yes
+
+It is up to you to determine which kind of validation is important for your application. If you need to validate the state of the Account and/or Application resources, or if you need to use token revocation, then using Stormpath to validate the token is the obvious choice. If you only require that the token has not expired and has not been tampered with, you can validate the token locally and minimize the network requests to Stormpath.
+
+Using Stormpath to Validate Tokens
+""""""""""""""""""""""""""""""""""
+To see how to validate tokens with the Stormpath REST API, let’s go back to the example where a user has already generated an access token. 
+
+To recap, we have done the following: 
+
+1. We have sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type we wanted, as well as our user's username and password.
+2. We received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header::
+
+	HTTP/1.1
+	GET /secure-resource
+	Host: https://yourapplication.com
+	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+
+The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
+
+	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+
+If the access token can be validated, Stormpath will return a 302 to the Access Token resource::
+
+	HTTP/1.1 302 Location Found
+	Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+
+With the confirmation that token is valid, you can now allow the user access to the secured resource that they requested.
+
+Validating The Token Locally
+""""""""""""""""""""""""""""
+
+Local validation would also begin at the point of the request to a secure resource:: 
+
+	HTTP/1.1
+	GET /secure-resource
+	Host: https://yourapplication.com
+	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+
+The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token. This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please ...
+
+.. todo::
+
+	So for the REST Guide, you would direct them to a specific integration. For any of the integrations that will use this structure, you would put your own, relevant steps here. 
+
 Refreshing Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-inputting their credentials. To use this Refresh Token, simply make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
+
+So a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` along with this header::
+
+	Content-Type: application/x-www-form-urlencoded
+
+And this in the body:
+
+	grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
+
+Will receive this response::
+
+	{
+	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
+	  "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
+	  "token_type": "Bearer",
+	  "expires_in": 1800,
+	  "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
+	}
+
+Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
+
 
 Revoking Access and Refresh Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+There are cases where you might want to revoke the Access and Refresh Tokens that you have generated for a user. For example:
+
+- The user has explicitly logged out, and your application needs to revoke their access, requiring re-authentication.
+- The application, device, and/or client has been compromised and you need to revoke tokens for an Account.
+
+To revoke the tokens, simply delete the Account's ``/accessTokens/:accessTokenId`` resource. 
+
+To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+	  "username": "jlpicard",
+	  
+	  [...]
+	  
+	  "accessTokens": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
+	  },
+	  "refreshTokens": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/refreshTokens"
+	  }
+	}
+
+If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens",
+	  "offset": 0,
+	  "limit": 25,
+	  "size": 1,
+	  "items": [
+	    {
+	      "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr",
+	      [...]
+	    }
+	  ]
+	}
+
+To revoke the token, simply issue an HTTP Delete::
+
+	DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
+
+You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
 
 d. How Social Authentication Works
 ==================================
