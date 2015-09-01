@@ -140,6 +140,20 @@ A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808
 	  }
 	}
 
+To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
+
+	curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
+     -H "Content-Type: application/json;charset=UTF-8" \
+     -d '{
+           "application": {
+             "href": "YOUR_APPLICATION_HREF"
+           },
+           "accountStore": {
+             "href": "YOUR_DIRECTORY_HREF"
+           }
+         }' \
+     'https://api.stormpath.com/v1/accountStoreMappings'
+
 How Login Attempts Work 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -529,13 +543,69 @@ To revoke the token, simply issue an HTTP Delete::
 
 You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
 
+.. _social-authn:
+
 d. How Social Authentication Works
 ==================================
 
 i. Google
 ---------
 
-Lorem ipsum.
+Integrating Stormpath with Google requires the following steps:
+
+- Create a Social Directory for Google
+- Map the Directory as an Account Store to an Application
+- Access an Account with Google Tokens
+
+Step 1: Create A Social Directory For Google
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+A Directory is a top-level storage container of Accounts in Stormpath. A Directory also manages security policies (like password strength) for the Accounts it contains. Google Directories are a special type of Directory that holds Accounts for Google.
+
+.. note::
+
+	Before you can create a Directory for Google, it is important that you gather information regarding your application from Google. This information includes Client ID, Client Secret, and the Redirect URL, and can be acquired from the `Google Developer Console <https://console.developers.google.com/>`_.
+
+Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST . 
+
+.. note::
+
+	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the " Authorized redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
+
+Step 2: Map The Directory As An Account Store For Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Once a Google Directory has been created, it must be mapped to an Application as an Account Store. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
+
+Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+
+Step 3: Access An Account With Google Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To access or create an Account in your new Google Directory, you must gather a Google Authorization Code or Access Token on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
+
+Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_.
+
+Once the Authorization Code is gathered, you can ask the Application to get or create the Account by passing Provider Data. The ``providerData`` object specifies the type of provider and the authorization code::
+
+	"providerId": "google",
+	"code": "%ACCESS_CODE_FROM_GOOGLE%"
+
+.. note::
+
+	It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
+
+So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+
+	{
+        "providerData": {
+          "providerId": "google",
+          "code": "YOUR_GOOGLE_AUTH_CODE"
+        }
+      }'
+
+Stormpath will use the ``code`` provided to retrieve information about your Google Account. The HTTP Status code will tell you if the account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+
+
 
 ii. Facebook
 ------------

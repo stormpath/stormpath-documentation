@@ -209,6 +209,10 @@ How To Make A Mirror Directory
 
 Presently, Mirror Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
 
+.. todo::
+
+	This is out-of-date. Need to get instructions for how to do this using REST API. 
+
 Social Directories
 ^^^^^^^^^^^^^^^^^^
 
@@ -225,7 +229,7 @@ For both Mirror and Social Directories, since the relationship with the outside 
 How To Make A Social Directory
 """"""""""""""""""""""""""""""
 
-Presently, Social Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
+Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see [here]. For more information about creating them using REST API, please see :ref:`social-authn`. 
 
 ii. Groups
 ----------
@@ -763,9 +767,8 @@ For more information about the customData resource, please see [here].
 
 ----
 
-*************************
 c. How To Search Accounts
-*************************
+=========================
 
 You can search Stormpath Accounts, just like all Resource Collections, using one of two search methods: 
 
@@ -787,9 +790,8 @@ Example: All instances where the string "path" is found in the ``email`` attribu
 
 For more information about how search works in Stormpath, please see the [Search Section] of the REST Reference section.
 
-**************************************
 d. How To Manage an Account's Password
-**************************************
+======================================
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. 
 
@@ -847,19 +849,15 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	  - N/A
 	  - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
-.. todo::
-	
-	These don't actually return, but should!
-	  
 	* - ``createdAt``
-	* - String (ISO-8601 Datetime)
-	* - N/A
-	* - Indicates when this resource was created.
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource was created.
 	  
 	* - ``modifiedAt``
-	* - String (ISO-8601 Datetime)
-	* - N/A
-	* - Indicates when this resource’s attributes were last modified.
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource’s attributes were last modified.
 
 For a Directory's password policies, you can modify:
 
@@ -867,7 +865,7 @@ For a Directory's password policies, you can modify:
 - The Password Reset Workflow 
 
 Password Strength
-=================
+-----------------
 
 The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` property.
 
@@ -945,12 +943,12 @@ would result in the following response::
 	}
 
 Password Reset
-==============
+--------------
 
 The Password Reset Email is configurable for a Directory. There is a set of properties that define its behavior, including ``resetEmailStatus`` and the ``resetEmailTemplates`` for the initial password reset email that is sent to the Account’s email address with a link to reset the Account’s password. The properties ``resetSuccessEmailStatus`` and ``resetSuccessEmailTemplates`` for the resulting email that is sent when the password reset is successful through the email workflow.
 
 Enable Password Reset Emails 
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To control whether an email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following POST::
 
@@ -962,8 +960,8 @@ To control whether an email is sent or not is simply a matter of setting the app
        "resetEmailStatus": "ENABLED"
     }'
 
-Email templates
----------------
+Email Templates
+^^^^^^^^^^^^^^^
 
 To modify the emails that get sent during the password reset workflow, let’s take a look at the email templates for the password reset. Email templates in Stormpath have common properties that can be modified to change the appearance of the emails. The properties below apply to both email templates that reside in the password policy (resetEmailTemplate and resetSuccessEmailTemplate).
 
@@ -1018,14 +1016,13 @@ Changing any of these is as simple as sending an HTTP POST with the desired prop
 
 ----
 
-***********************************
 e. How To Verify an Account's Email 
-***********************************
+===================================
 
 If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
 Understanding the Email Verification Workflow
-=============================================
+---------------------------------------------
 
 This workflow involves 3 parties: your application's end-user, your application, and the Stormpath API server.
 
@@ -1041,7 +1038,7 @@ If you create a new Account in a Directory with both Account Registration and Ve
 
 
 The Account Verification Base URL 
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application web server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
 
@@ -1050,17 +1047,17 @@ It is also expected that the workflow’s **Account Verification Base URL** has 
 	The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
 
 Configuring The Verification Workflow
-=====================================
+-------------------------------------
 
 This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <https://stormpath.com/docs/console/product-guide#!ManageWorkflowAutomation>`_ for complete instructions.
 
 Triggering the Verification Email (Creating A Token)
-====================================================
+----------------------------------------------------
 
 In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you simply create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
 
 Verifying the Email Address (Consuming The Token)
-=================================================
+-------------------------------------------------
 
 The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
 
