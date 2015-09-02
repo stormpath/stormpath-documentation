@@ -134,7 +134,7 @@ Cloud Directories
 ^^^^^^^^^^^^^^^^^
 The standard, default Directory resource. They can be created using a simple POST API.
 
-How To Make A Cloud Directory
+How to Make a Cloud Directory
 """""""""""""""""""""""""""""
 
 The following API request::
@@ -204,7 +204,7 @@ User Accounts and Groups in mirrored directories are automatically deleted when 
 
 The big benefit is that your Stormpath-enabled applications still use the same convenient REST+JSON API – they do not need to know anything about things like LDAP or legacy connection protocols.
 
-How To Make A Mirror Directory
+How to Make a Mirror Directory
 """"""""""""""""""""""""""""""
 
 Presently, Mirror Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
@@ -226,7 +226,7 @@ This approach has two major benefits: It allows for a user to have one unified i
 
 For both Mirror and Social Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
 
-How To Make A Social Directory
+How to Make a Social Directory
 """"""""""""""""""""""""""""""
 
 Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see [here]. For more information about creating them using REST API, please see :ref:`social-authn`. 
@@ -324,7 +324,7 @@ A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin
 
 It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's `description` field is.
 
-How To Create A Group
+How to Create a Group
 """""""""""""""""""""
 
 So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory. 
@@ -370,6 +370,8 @@ Would yield this response::
     }
 
 -----
+
+.. _account-creation:
 
 b. How to Store Accounts in Stormpath
 =====================================
@@ -664,7 +666,7 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
    
-Importing Accounts With Plaintext Passwords
+Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
@@ -672,7 +674,7 @@ In this case, it is recommended that you suppress Account Verification emails. T
 	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?registrationWorkflowEnabled=false
 
 
-Importing Accounts With MCF Hash Passwords
+Importing Accounts with MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string. 
@@ -727,13 +729,13 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 	  - String (Base64)
 
 
-Importing Accounts With Non-MCF Hash Passwords
+Importing Accounts with Non-MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. For more information, please see the [Password Reset section below].
 
 
-How To Store Additional User Information As Custom Data
+How to Store Additional User Information as Custom Data
 -------------------------------------------------------
 
 While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
@@ -767,7 +769,7 @@ For more information about the customData resource, please see [here].
 
 ----
 
-c. How To Search Accounts
+c. How to Search Accounts
 =========================
 
 You can search Stormpath Accounts, just like all Resource Collections, using one of two search methods: 
@@ -790,7 +792,7 @@ Example: All instances where the string "path" is found in the ``email`` attribu
 
 For more information about how search works in Stormpath, please see the [Search Section] of the REST Reference section.
 
-d. How To Manage an Account's Password
+d. How to Manage an Account's Password
 ======================================
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. 
@@ -1016,7 +1018,7 @@ Changing any of these is as simple as sending an HTTP POST with the desired prop
 
 ----
 
-e. How To Verify an Account's Email 
+e. How to Verify an Account's Email 
 ===================================
 
 If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
@@ -1046,7 +1048,7 @@ It is also expected that the workflow’s **Account Verification Base URL** has 
 
 	The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
 
-Configuring The Verification Workflow
+Configuring the Verification Workflow
 -------------------------------------
 
 This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <https://stormpath.com/docs/console/product-guide#!ManageWorkflowAutomation>`_ for complete instructions.

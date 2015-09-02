@@ -2,7 +2,10 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
-a. How Password Authentication works in Stormpath
+
+
+
+a. How Password Authentication Works in Stormpath
 =================================================
 
 Authenticating An Account
@@ -174,8 +177,8 @@ As you can see, Stormpath tries to find the Account in the "Customers" Directory
 
 You can assign multiple Account Stores to an Application, but only one is required to enable login for an Application. Assigning multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your various Applications.
 
-b. How to Retrieve Additional Account Data On Authentication 
-============================================================
+How to Retrieve Additional Account Data on Authentication 
+------------------------------------------------------------
 
 Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
 
@@ -210,10 +213,10 @@ If we had done this with our "Han Solo" Account from above, our JSON response wo
 
 At the end of this JSON we see two interesting links that we can now cover: Access and Refresh tokens. 
 
-c. How Token-Based Authentication Works
+b. How Token-Based Authentication Works
 =======================================
 
-In this guide, we will discuss how to use Stormpath to use Stormpath to generate and manage OAuth 2.0 Access Token.
+In this section, we will discuss how to use Stormpath to use Stormpath to generate and manage OAuth 2.0 Access Token.
 
 Introduction to Token-Based Authentication
 ------------------------------------------
@@ -237,7 +240,7 @@ Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath c
 
 To understand how to use Token-based Authentication, we need to talk about the different types of tokens that are available.
 
-What Tokens are available for Token-Based Authentication?
+What Tokens Are Available for Token-Based Authentication?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For Token Based Authentication, there are a two different types of tokens that need to be managed. These are:
@@ -251,7 +254,7 @@ The **Refresh Token** is a special token that is used to generate additional Acc
 
 When using OAuth 2.0, the Access Token and Refresh Token are returned in the same response during the token exchange, this is called an **Access Token Response**.
 
-How To Use Stormpath for Token-Based Authentication
+How to Use Stormpath for Token-Based Authentication
 ---------------------------------------------------
 
 Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
@@ -302,7 +305,7 @@ And we would get the following response::
 
 	Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
 
-Generating An OAuth 2.0 Access Token
+Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Password Grant** flow. Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
@@ -321,7 +324,7 @@ So you would send a POST to the following URL::
 
 	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
-With the following header, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``:
+With the following header, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``::
 
 	Content-Type: application/x-www-form-urlencoded
 
@@ -329,7 +332,7 @@ And the following body::
 
 	grant_type=password&username=tom@stormpath.com&password=Secret1
 
-This would result in the following response::
+This would result in this response::
 
 	{
 	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k",
@@ -429,7 +432,7 @@ It is up to you to determine which kind of validation is important for your appl
 
 Using Stormpath to Validate Tokens
 """"""""""""""""""""""""""""""""""
-To see how to validate tokens with the Stormpath REST API, let’s go back to the example where a user has already generated an access token. 
+To see how to validate tokens with the Stormpath REST API, let's go back to the example where a user has already generated an access token. 
 
 To recap, we have done the following: 
 
@@ -454,7 +457,7 @@ If the access token can be validated, Stormpath will return a 302 to the Access 
 
 With the confirmation that token is valid, you can now allow the user access to the secured resource that they requested.
 
-Validating The Token Locally
+Validating the Token Locally
 """"""""""""""""""""""""""""
 
 Local validation would also begin at the point of the request to a secure resource:: 
@@ -479,7 +482,7 @@ So a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oa
 
 	Content-Type: application/x-www-form-urlencoded
 
-And this in the body:
+And this in the body::
 
 	grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
 
@@ -545,7 +548,7 @@ You will get back a ``204 No Content`` response back from Stormpath when the cal
 
 .. _social-authn:
 
-d. How Social Authentication Works
+c. How Social Authentication Works
 ==================================
 
 i. Google
@@ -557,7 +560,7 @@ Integrating Stormpath with Google requires the following steps:
 - Map the Directory as an Account Store to an Application
 - Access an Account with Google Tokens
 
-Step 1: Create A Social Directory For Google
+Step 1: Create a Social Directory for Google
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
 A Directory is a top-level storage container of Accounts in Stormpath. A Directory also manages security policies (like password strength) for the Accounts it contains. Google Directories are a special type of Directory that holds Accounts for Google.
@@ -566,19 +569,29 @@ A Directory is a top-level storage container of Accounts in Stormpath. A Directo
 
 	Before you can create a Directory for Google, it is important that you gather information regarding your application from Google. This information includes Client ID, Client Secret, and the Redirect URL, and can be acquired from the `Google Developer Console <https://console.developers.google.com/>`_.
 
-Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST . 
+Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
+
+	{
+        "name" : "my-google-directory",
+        "description" : "A Google directory",
+        "provider": {
+          "providerId": "google",
+          "clientId":"YOUR_GOOGLE_CLIENT_ID",
+          "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
+          "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
+    } 
 
 .. note::
 
 	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the " Authorized redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
-Step 2: Map The Directory As An Account Store For Your Application
+Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Once a Google Directory has been created, it must be mapped to an Application as an Account Store. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
 Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
 
-Step 3: Access An Account With Google Tokens
+Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To access or create an Account in your new Google Directory, you must gather a Google Authorization Code or Access Token on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
@@ -601,16 +614,76 @@ So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR
           "providerId": "google",
           "code": "YOUR_GOOGLE_AUTH_CODE"
         }
-      }'
+    }
 
-Stormpath will use the ``code`` provided to retrieve information about your Google Account. The HTTP Status code will tell you if the account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
-
-
+Stormpath will use the ``code`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
 ii. Facebook
 ------------
 
-Lorem ipsum.
+The instructions for integrating Stormpath with Facebook are for the most part the same as integrating with Google:
+
+- Create a Social Directory for Facebook
+- Map the Directory as an Account Store to an Application
+- Access an Account with Facebook Tokens
+
+The primary differences here are:
+
+- Facebook uses a "User Access Token" instead of Google's Access Code.
+- How you retrieve this token from Facebook
+
+Step 1: Create a Social Directory for Facebook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+Facebook Directories are a special type of Directory that holds Accounts for Facebook.
+
+.. note::
+
+	Before you can create a Directory for Facebook, it is important that you gather information regarding your application from Facebook. This information includes Client ID / Client Secret and can be acquired from `The Facebook Developer Console <https://developers.facebook.com/>`_.
+
+Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
+
+	{
+        "name" : "my-facebook-directory",
+        "description" : "A Facebook directory",
+        "provider": {
+          "providerId": "facebook",
+          "clientId":"YOUR_FACEBOOK_CLIENT_ID",
+          "clientSecret":"YOUR_FACEBOOK_CLIENT_SECRET"
+        }
+    }
+
+Step 2: Map the Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Once a Facebook Directory has been created, it must be mapped to an Application as an Account Store. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
+
+Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+
+Step 3: Access an Account with Facebook Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To access or create an Account in your new Facebook Directory, you need to gather a User Access Token from Facebook before submitting it to Stormpath. This is possible either by using a `Facebook SDK Library <https://developers.facebook.com/docs/facebook-login/access-tokens/#usertokens>`_, or `Facebook’s Graph Explorer <https://developers.facebook.com/tools/explorer>`_ for testing.
+
+Once the User Access Token is gathered, you can ask the Application to get or create the Account by passing Provider Data. The ``providerData`` object specifies the type of provider and the Access Token::
+
+	"providerId": "facebook",
+	"accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
+
+.. note::
+
+	It is required that your Facebook application requests the ``email`` permissions from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
+
+So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+
+	{
+	    "providerData": {
+	      "providerId": "facebook",
+	      "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
+	    }
+	  }
+
+Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+
 
 iii. Github
 -----------
@@ -622,15 +695,56 @@ iv. LinkedIn
 
 Lorem ipsum.
 
-e. How API Authentication Works
-===============================
+d. How API Key Authentication Works
+===================================
 
-Lorem ipsum.
+In this section, we will explain how to set up and use Stormpath for Developer API Key Management and Authentication.
+
+We will use the following words with very specific meanings. They will be capitalized to indicate that they have a specific meaning in the Stormpath context.
+
+**Admin** or **Administrator** – Someone on your team who has access to the Stormpath API and/or Administration Console. In turn, they will typically have the ability to create and manage user Accounts, Applications, API keys, etc.
+
+**Developer** – A consumer of your API. They are the people that will be using the API keys that you are generating and distributing.
+
+**OAuth 2.0 Access Token** – An Access Token is a string representation of authorization issued to a client. This access token is issued by an authority and grants access to a protected or gated resource. These tokens are opaque to the client.
+
+**Bearer Token** – A Bearer token is a specific type of OAuth 2.0 Access Token. A Bearer token is used with the Bearer Authorization Scheme in HTTP. A client wanting to access a protected service is required to locate a trusted entity to generate a Bearer Token. In this document, a Bearer Token represents an Access Token.
+
+**API Keys** – Represents an API Key Id and Secret pair which is generated for a developer integrating with your API.
 
 i. How to Use API Keys and Secret Authentication
 ------------------------------------------------
 
-Lorem ipsum.
+In order to implement API Authentication with Stormpath you'll need to do the following:
+
+- Create a User Account for each of your Developers
+- Create / Manage API Keys for the Developers' Accounts
+- Use the Stormpath SDK to Authenticate and Generate Tokens for your API
+  
+Create an Account in Stormpath for Your Developers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First, you will need Accounts in Stormpath to represent your Developers. Accounts can not only represent Developers, but also can be used to represent services, daemons, processes, or any "entity" that needs to log in to a Stormpath-secured API.
+
+By assigning API keys directly to a user Account, as opposed to a general organization-wide set of keys, you get full traceability and accountability back to a specific individual in the event of an accident or breach on their end.
+
+Stormpath Accounts can be used to keep a variety of Developer information including name, email address, password, and any other custom data you would like to store.
+
+You will mostly likely create a Stormpath Account when a Developer signs up for access to your API. For more information on creating Accounts please see :ref:`account-creation`.
+
+
+Create and Manage API Keys for your Developers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After you create an Account for a Developer, you will need to generate one-or-more API Keys to be used when accessing your API. Each Account will have an ``apiKeys`` property that contains a collection of API Keys. There will also be a list of API keys on a Account’s profile in the `Stormpath Admin Console <http://docs.stormpath.com/console/product-guide/#edit-an-account>`_. Key creation and management can be done either via the REST API or through the Admin Console.
+
+Creating API Keys For An Account
+""""""""""""""""""""""""""""""""
+
+Authenticate and Generate Tokens for your API Keys
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lorem ipsum
 
 ii. How to Authenticate Using HTTP Basic
 ----------------------------------------
