@@ -230,7 +230,7 @@ Stormpath's approach to token-based authentication has two elements: JSON Web To
 Why OAuth 2.0?
 ^^^^^^^^^^^^^^
 
-OAuth 2.0 is an authorization framework and provides a protocol to how to interact with a service that can delegate authentication or provide authorization. Its primary advantage as a standard is its wide adoption rate across many mobile and web applications today. If you have ever logged-in to a website using Facebook or Google, you have used one of OAuth 2.0 many authorization flows. You can read more about the different OAuth 2.0 authorization flows or grant types in depth on `Stormpath’s blog <https://stormpath.com/blog/what-the-heck-is-oauth/>`_.
+OAuth 2.0 is an authorization framework and provides a protocol to interact with a service that can delegate authentication or provide authorization. Its primary advantage as a standard is its wide adoption rate across many mobile and web applications today. If you have ever logged-in to a website using Facebook or Google, you have used one of OAuth 2.0's many authorization flows. You can read more about the different OAuth 2.0 authorization flows or grant types in depth on `Stormpath’s blog <https://stormpath.com/blog/what-the-heck-is-oauth/>`_.
 
 Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
 
@@ -594,6 +594,8 @@ Creating an Account Store Mapping can be done through the REST API, as described
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+**GOOGLE NOW RECOMMENDS THAT YOU DON'T USE REDIRECT, BUT INSTEAD USE JS POP-UPS** 
+
 To access or create an Account in your new Google Directory, you must gather a Google Authorization Code or Access Token on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
 
 Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_.
@@ -671,7 +673,7 @@ Once the User Access Token is gathered, you can ask the Application to get or cr
 
 .. note::
 
-	It is required that your Facebook application requests the ``email`` permissions from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
+	It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
 
 So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 

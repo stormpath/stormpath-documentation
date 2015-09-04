@@ -5,7 +5,7 @@
 a. Modeling Your User Base
 ===========================
 
-The first question that we need to address is how we are going to model our users inside the Stormpath database. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
+The first question that we need to address is how we are going to model our users inside Stormpath. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
 
 All of your Accounts will have to be associated with at least one Directory resource, so we can start there.  
 
@@ -42,7 +42,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI
+	  - The resource's fully qualified location URL
 	
 	* - ``name``
 	  - String
@@ -256,7 +256,7 @@ An individual Group resource may be accessed via its Resource URI:
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI
+	  - The resource's fully qualified location URL
 	
 	* - ``name``
 	  - String
@@ -398,7 +398,7 @@ An individual Account resource may be accessed via its Resource URI:
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI.
+	  - The resource's fully qualified location URL.
 
 	* - ``username``
 	  - String
@@ -602,7 +602,7 @@ If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captai
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI.
+	  - The resource's fully qualified location URL.
 	
 	* - ``account``
 	  - Link 
@@ -819,7 +819,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	* - ``href``
 	  - String
 	  - N/A
-	  - The resource's fully qualified location URI.
+	  - The resource's fully qualified location URL.
 	  
 	* - ``resetTokenTtl``
 	  - Number
