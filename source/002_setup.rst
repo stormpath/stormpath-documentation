@@ -40,7 +40,4 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 		$ chmod go-rwx ~/.stormpath/apiKey.properties
 
-*{Integration-only section for SDK Installation}*
-
-c. Install Your SDK
-===================
+With these steps complete, you are now ready for the :doc:`Quickstart <003_quickstart>`.

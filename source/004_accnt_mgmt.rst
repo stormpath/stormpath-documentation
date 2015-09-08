@@ -498,12 +498,12 @@ An individual Account resource may be accessed via its Resource URI:
 	* - ``accessTokens``
 	  - Link
 	  - N/A
-	  - JSON Web Tokens for token-based authentication.
+	  - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
 	
 	* - ``refreshTokens``
 	  - Link
 	  - N/A
-	  - Tokens to generate additional ``accessTokens`` for token-based authentication. 
+	  - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. 
 
 New Account Creation
 --------------------
@@ -732,7 +732,7 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 Importing Accounts with Non-MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. For more information, please see the [Password Reset section below].
+In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the [Password Reset section below].
 
 
 How to Store Additional User Information as Custom Data
@@ -772,13 +772,13 @@ For more information about the customData resource, please see [here].
 c. How to Search Accounts
 =========================
 
-You can search Stormpath Accounts, just like all Resource Collections, using one of two search methods: 
+You can search Stormpath Accounts, just like all Resource Collections, using one of three search methods: 
 
 *Filter Search:* 
 
 This searches across all attributes on all resources within the specified Collection and finds any attribute that matches the specified query parameter ``q``. 
 
-Example: All instances where the string "path" is found in any attribute in the specified Collection of Accounts).
+Example: All instances where the string "path" is found in any attribute in the specified collection of Accounts.
 
 ``https://api.stormpath.com/v1/applications/someAppId/accounts?q=path``
 
@@ -789,6 +789,22 @@ This searches across the specified attribute on all resources within the specifi
 Example: All instances where the string "path" is found in the ``email`` attribute in the specified Collection of Accounts.
 
 ``https://api.stormpath.com/v1/applications/someAppId/accounts?email=path``
+
+**Datetime Search**
+
+It is also possible to search the ``createdAt`` and ``modifiedAt`` properties found on many Stormpath resources.  The ``datetime`` range is denoted as::
+
+	createdAt|modifiedAt=[ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME]
+
+So, if you want wanted to get all Accounts created between Jan 12, 2015 and Jan 14, 2015 you would request:
+
+	https://api.stormpath.com/v1/applications/someAppId/accounts?createdAt=[2015-01-12, 2015-01-14]
+
+The response would be a collection of Accounts created between the two days. 
+
+.. note::
+
+	Omitting the beginning or ending date is valid for requests. Omitting the start ``datetime`` range (e.g. ``createdAt=[,ISO-8601-END-DATETIME]``) would include all resources created or modified before the ending datetime. Omitting the end datetime range (e.g. ``createdAt=[ISO-8601-BEGIN-DATETIME,]``) would include all resources created or modified after the specified beginning datetime.
 
 For more information about how search works in Stormpath, please see the [Search Section] of the REST Reference section.
 
@@ -907,12 +923,12 @@ The Password Strength Policy for a Directory can be modified through the Adminis
 	  - Default is 0
 	  - Represents the minimum number of symbol characters required for the password. 
 
-	* - minUpperCase	
+	* - ``minUpperCase``	
 	  - Number	
 	  - Default is 1
 	  - Represents the minimum number of upper case characters required for the password. 
 
-	* - minDiacritic	
+	* - ``minDiacritic``	
 	  - Number	
 	  - Default is 0
 	  - Represents the minimum number of diacritic characters required for the password.
@@ -959,8 +975,8 @@ To control whether an email is sent or not is simply a matter of setting the app
 *Body*::
 
 	{
-       "resetEmailStatus": "ENABLED"
-    }'
+	  "resetEmailStatus": "ENABLED"
+	}'
 
 Email Templates
 ^^^^^^^^^^^^^^^

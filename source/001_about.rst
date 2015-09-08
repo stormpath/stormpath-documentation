@@ -371,6 +371,6 @@ To expand one or more links, simply add an ``expand`` query parameter with one o
 
 .. note::
 
-	It is currently only possible to expand a resource’s immediate links. It is not currently possible to expand links of links.
+	It is currently only possible to expand a resource’s immediate links but not fruther links inside those links.
 
 
