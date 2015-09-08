@@ -774,7 +774,7 @@ c. How to Search Accounts
 
 You can search Stormpath Accounts, just like all Resource Collections, using one of three search methods: 
 
-*Filter Search:* 
+**Filter Search:** 
 
 This searches across all attributes on all resources within the specified Collection and finds any attribute that matches the specified query parameter ``q``. 
 
@@ -782,7 +782,7 @@ Example: All instances where the string "path" is found in any attribute in the 
 
 ``https://api.stormpath.com/v1/applications/someAppId/accounts?q=path``
 
-*Attribute Search:* 
+**Attribute Search:** 
 
 This searches across the specified attribute on all resources within the specified Collection and finds any matches of specific resource attributes. 
 

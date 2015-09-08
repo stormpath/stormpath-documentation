@@ -7,11 +7,14 @@ In this "About" section, we will discuss some general topics about both Stormpat
 What is Stormpath?
 ==================
 
+What you can do with Stormpath
+------------------------------
+
 Features
-========
+--------
 
 Who should use Stormpath
-========================
+------------------------
 
 
 The Stormpath Data Model
@@ -47,18 +50,18 @@ REST API Core Concepts
 ======================
 
 Base URL
-^^^^^^^^
+--------
 
 All URLs referenced in the API documentation begin with the following base URL::
 
 	https://api.stormpath.com/v1
 
 Resource Format 
-^^^^^^^^^^^^^^^
+---------------
 The Stormpath REST API currently only supports JSON resource representations. If you would like other formats supported, please email us at support@stormpath.com to let us know!
 
 Authentication
-^^^^^^^^^^^^^^
+--------------
 
 Every request to the Stormpath REST API must be authenticated with an **API key** over **HTTPS**. HTTP is not supported. If you want to make a REST request to Stormpath, we assume you have already:
 
@@ -73,7 +76,7 @@ When you have an API key, you can choose one of two ways to authenticate with St
 - Digest authentication
 
 Basic Authentication over HTTPS
-"""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Most clients (including web browsers) show a dialog or prompt for you to provide a username and password for HTTP Basic authentication.
 
@@ -89,7 +92,7 @@ For example, if using curl::
 	     -L https://api.stormpath.com/v1/tenants/current
 
 Digest Authentication
-"""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^
 
 Stormpath also supports a more secure authentication scheme known as **Digest authentication**. This approach computes a cryptographic digest of the request and sends the digest value along with the request. If the transmitted digest matches what the Stormpath API server computes for the same request, the request is authenticated.
 
@@ -114,12 +117,12 @@ If you port the algorithm to other languages, please let us know. We are happy t
 	The Stormpath SAuthc1 digest algorithm is NOT the same as `RFC 2617 <http://www.ietf.org/rfc/rfc2617.txt>`_ HTTP Digest authentication. The Stormpath SAuthc1 digest-based authentication scheme is more secure than standard HTTP Digest authentication.
 
 Creating, Retrieving, Updating, and Deleting Resources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------------------
 
 Stormpath entities have a full set of creation, retrieval, update and deletion (CRUD) actions associated with them. Here we give some information about all of these actions. For a complete description of every resource and the actions that can be performed with it, please see the [Reference section]. 
 
 Creating Resources
-""""""""""""""""""
+^^^^^^^^^^^^^^^^^^
 
 You create a resource by submitting an HTTP **POST** to a resource URI. Any POST body must be represented as **JSON**. Requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
 
@@ -174,7 +177,7 @@ Responses to your create POST calls will contain:
 	  - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 Retrieving Resources
-""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^
 
 You can retrieve a resource representation by sending a GET. 
 
@@ -224,7 +227,7 @@ Responses to your GET calls will contain:
 	  - We are temporarily unable to service the request. Please wait for a bit and try again.
 	    
 Updating Resources
-""""""""""""""""""
+^^^^^^^^^^^^^^^^^^
 
 If you want to update a resource, submit an HTTP POST to the resource's URI. Any POST body must be represented as JSON. You must submit at least one attribute. As with the creation POST calls, requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
 
@@ -277,7 +280,7 @@ Responses to your update POST calls will contain:
 	  - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 Deleting Resources
-""""""""""""""""""
+^^^^^^^^^^^^^^^^^^
 
 To delete a resource, make an HTTP DELETE request to the resource URL. Note that not all Stormpath REST API resources support delete.
 
@@ -321,7 +324,7 @@ To delete a resource, make an HTTP DELETE request to the resource URL. Note that
 	  - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 REST Error Responses
-""""""""""""""""""""
+--------------------
 
 REST API responses indicating an error or warning are represented by a proper response HTTP status code (403, 404, etc) along with a response body containing the following information:
 
@@ -354,7 +357,8 @@ REST API responses indicating an error or warning are represented by a proper re
 	  - A fully qualified URL that may be accessed to obtain more information about the error.
 
 Links
-"""""
+-----
+
 REST resources that reference other resources, such as an Account referencing its parent Directory, represent the references as a **Link** object.
 
 A Link is an object nested within an existing resource representation that has, at a minimum, an ``href`` attribute.

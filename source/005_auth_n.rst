@@ -4,7 +4,6 @@
 
 
 
-
 a. How Password Authentication Works in Stormpath
 =================================================
 
@@ -34,7 +33,7 @@ Once you have the Application resource you may attempt authentication by sending
 	* - ``value``
 	  - String (Base64)
 	  - N/A
-	  - The Base64 encoded username:plaintextPassword pair.
+	  - The Base64 encoded ``username``:``plaintextPassword`` pair.
 	    
 	* - ``accountStore``
 	  - Link
@@ -178,7 +177,7 @@ As you can see, Stormpath tries to find the Account in the "Customers" Directory
 You can assign multiple Account Stores to an Application, but only one is required to enable login for an Application. Assigning multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your various Applications.
 
 How to Retrieve Additional Account Data on Authentication 
-------------------------------------------------------------
+---------------------------------------------------------
 
 Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
 
@@ -254,7 +253,7 @@ The **Refresh Token** is a special token that is used to generate additional Acc
 
 When using OAuth 2.0, the Access Token and Refresh Token are returned in the same response during the token exchange, this is called an **Access Token Response**.
 
-How to Use Stormpath for Token-Based Authentication
+Using Stormpath for Token-Based Authentication
 ---------------------------------------------------
 
 Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
@@ -378,8 +377,8 @@ This is an **OAuth 2.0 Access Token Response** and includes the following:
 
 		grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
 
-Validating Access Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^
+Validating an Access Token
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once an ``access_token`` has been generated, we have taken care of the Authentication part of our workflow. Now, the OAuth token can be used to authorize individual requests that the user makes. To do this, the client will need to pass it to your application.
 
@@ -551,23 +550,51 @@ You will get back a ``204 No Content`` response back from Stormpath when the cal
 c. How Social Authentication Works
 ==================================
 
+Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are: Google, Facebook, Github, and LinkedIn. In general, what will happen is as follows: 
+
+1. The user who wishes to authenticate will click a "Log in with x" link.
+
+2. The user will be asked by the Provider to accept the permissions required by your app.
+
+3. The Provider will return the user to your application with an access token.
+
+4. Stormpath will take this access token and use it to query the provider for: an email address, a first name, and a last name
+
+5. Stormpath will first search for a Directory that matches the provider of the access token. If one is not found, an error will return.
+
+6. Once the Directory is location, Stormpath will look for an Account in your application's Directories that matches this information.
+
+   a. If a matching Account is found, Stormpath will return the existing Account's ``href``.
+
+   b. If a matching Account is not found, Stormpath will create one and return the new Account's ``href``.
+
+7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
+
+As a developer, integrating Social Login into your application only requires three steps:
+
+1. Create a Social Directory for your Provider.
+
+2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
+
+3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to Google) 
+
 i. Google
 ---------
 
-Integrating Stormpath with Google requires the following steps:
+.. todo::
 
-- Create a Social Directory for Google
-- Map the Directory as an Account Store to an Application
-- Access an Account with Google Tokens
+	Some intro text here!
 
 Step 1: Create a Social Directory for Google
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
-A Directory is a top-level storage container of Accounts in Stormpath. A Directory also manages security policies (like password strength) for the Accounts it contains. Google Directories are a special type of Directory that holds Accounts for Google.
+Before you can create a Directory for Google, it is important that you gather the following information regarding your application from Google:
 
-.. note::
-
-	Before you can create a Directory for Google, it is important that you gather information regarding your application from Google. This information includes Client ID, Client Secret, and the Redirect URL, and can be acquired from the `Google Developer Console <https://console.developers.google.com/>`_.
+- **Client ID**
+- **Client Secret**
+- **Redirect URL**
+  
+All of these can an be acquired from the `Google Developer Console <https://console.developers.google.com/>`_.
 
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
@@ -587,29 +614,21 @@ Creating this Directory for Google requires that you provide information from Go
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Once a Google Directory has been created, it must be mapped to an Application as an Account Store. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
 Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**GOOGLE NOW RECOMMENDS THAT YOU DON'T USE REDIRECT, BUT INSTEAD USE JS POP-UPS** 
+To access or create an Account in your new Google Directory, you must gather a Google **Authorization Code** on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
 
-To access or create an Account in your new Google Directory, you must gather a Google Authorization Code or Access Token on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
-
-Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_.
-
-Once the Authorization Code is gathered, you can ask the Application to get or create the Account by passing Provider Data. The ``providerData`` object specifies the type of provider and the authorization code::
-
-	"providerId": "google",
-	"code": "%ACCESS_CODE_FROM_GOOGLE%"
+Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_, under "Server flow".
 
 .. note::
 
 	It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
 
-So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+Once the Authorization Code is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
         "providerData": {
