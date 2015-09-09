@@ -576,25 +576,29 @@ As a developer, integrating Social Login into your application only requires thr
 
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to Google) 
+3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider) 
 
 i. Google
 ---------
 
-.. todo::
+Before you integrate Google Login with Stormpath, you must complete the following steps:
 
-	Some intro text here!
+- Create an application in the `Google Developer Console <https://console.developers.google.com/>`_
+
+- Enable Google Login for your Google application
+
+- Retrieve your OAuth Credentials (Client ID and Secret) for your Google application
+
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
+  
+.. note::
+
+	Be sure to only enter the Redirect URL you’re currently using. So, if you’re running your app in development mode, set it to your local URL, and if you’re running your app in production mode, set it to your production URL
+  
+For more information, please see the `Google OAuth 2.0 documentation <https://developers.google.com/identity/protocols/OAuth2>`_.
 
 Step 1: Create a Social Directory for Google
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  
-Before you can create a Directory for Google, it is important that you gather the following information regarding your application from Google:
-
-- **Client ID**
-- **Client Secret**
-- **Redirect URL**
-  
-All of these can an be acquired from the `Google Developer Console <https://console.developers.google.com/>`_.
 
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
@@ -610,19 +614,19 @@ Creating this Directory for Google requires that you provide information from Go
 
 .. note::
 
-	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the " Authorized redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
+	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To access or create an Account in your new Google Directory, you must gather a Google **Authorization Code** on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OpenIDConnect>`_ and the user’s consent for your application’s permissions.
+To access or create an Account in your new Google Directory, you must gather a Google **Authorization Code** on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OAuth2>`_ and the user’s consent for your application’s permissions.
 
-Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_, under "Server flow".
+Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code** or **Acess Token**. This is documented in detail `here <https://developers.google.com/identity/protocols/OpenIDConnect#authenticatingtheuser>`_.
 
 .. note::
 
@@ -642,25 +646,18 @@ Stormpath will use the ``code`` provided to retrieve information about your Goog
 ii. Facebook
 ------------
 
-The instructions for integrating Stormpath with Facebook are for the most part the same as integrating with Google:
+Before you integrate Facebook Login with Stormpath, you must complete the following steps:
 
-- Create a Social Directory for Facebook
-- Map the Directory as an Account Store to an Application
-- Access an Account with Facebook Tokens
+- Create an application in the `Facebook Developer Site <https://developers.facebook.com/>`_
 
-The primary differences here are:
+- Retrieve your OAuth credentials (App ID and App Secret)
 
-- Facebook uses a "User Access Token" instead of Google's Access Code.
-- How you retrieve this token from Facebook
+- Add your application's private and public root URLs
+  
+For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
 Step 1: Create a Social Directory for Facebook
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  
-Facebook Directories are a special type of Directory that holds Accounts for Facebook.
-
-.. note::
-
-	Before you can create a Directory for Facebook, it is important that you gather information regarding your application from Facebook. This information includes Client ID / Client Secret and can be acquired from `The Facebook Developer Console <https://developers.facebook.com/>`_.
 
 Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
@@ -669,32 +666,26 @@ Creating this Directory requires that you provide information from Facebook as a
         "description" : "A Facebook directory",
         "provider": {
           "providerId": "facebook",
-          "clientId":"YOUR_FACEBOOK_CLIENT_ID",
-          "clientSecret":"YOUR_FACEBOOK_CLIENT_SECRET"
+          "clientId":"YOUR_FACEBOOK_APP_ID",
+          "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
         }
     }
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Once a Facebook Directory has been created, it must be mapped to an Application as an Account Store. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-Creating an Account Store Mapping can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
 
 Step 3: Access an Account with Facebook Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To access or create an Account in your new Facebook Directory, you need to gather a User Access Token from Facebook before submitting it to Stormpath. This is possible either by using a `Facebook SDK Library <https://developers.facebook.com/docs/facebook-login/access-tokens/#usertokens>`_, or `Facebook’s Graph Explorer <https://developers.facebook.com/tools/explorer>`_ for testing.
 
-Once the User Access Token is gathered, you can ask the Application to get or create the Account by passing Provider Data. The ``providerData`` object specifies the type of provider and the Access Token::
-
-	"providerId": "facebook",
-	"accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
-
 .. note::
 
-	It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token.
+	It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
 
-So upon sending an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+Once the User Access Token is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
 	    "providerData": {
@@ -709,75 +700,109 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
 iii. Github
 -----------
 
-Lorem ipsum.
+Before you integrate GitHub Login with Stormpath, you must complete the following steps:
+
+- Create an application in the `GitHub Developer Site <https://developer.github.com/>`_
+
+- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application
+
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
+  
+For more information, please see the `GitHub documentation <https://developer.github.com/guides/basics-of-authentication/#registering-your-app>`_.
+
+Step 1: Create a Social Directory for GitHub
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
+
+	{
+        "name" : "my-github-directory",
+        "description" : "A GitHub directory",
+        "provider": {
+          "providerId": "github",
+          "clientId":"YOUR_GITHUB_APP_ID",
+          "clientSecret":"YOUR_GITHUB_APP_SECRET"
+        }
+    }
+
+Step 2: Map the Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+
+Step 3: Access an Account with GitHub Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Just like with Google, to access or create an Account in your new Github Directory, you must gather a Github **Authorization Code** on behalf of the user. This requires leveraging `Github's OAuth 2.0 protocol <https://developer.github.com/v3/oauth>`_ and the user’s consent for your application’s permissions.
+
+Generally, this will include embedding a link in your site that will send an authentication request to Github. Once the user has authenticated, Github will redirect the response to your application, including the **Authorization Code**. This is documented in detail `here <https://developer.github.com/v3/oauth/#web-application-flow>`_.
+
+.. note::
+
+	It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about GitHub access scopes, see `here <https://developer.github.com/v3/oauth/#scopes>`_. 
+
+Once the Authorization Code is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+
+	{
+	    "providerData": {
+	      "providerId": "github",
+	      "code": "USER_ACCESS_CODE_FROM_GITHUB"
+	    }
+	  }
+
+Stormpath will use the ``accessToken`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
 iv. LinkedIn
 ------------
 
-Lorem ipsum.
+Before you integrate LinkedIn Login with Stormpath, you must complete the following steps:
 
-d. How API Key Authentication Works
-===================================
+- Create an application in the `LinkedIn Developer Site <https://www.linkedin.com/secure/developer?newapp=>`_
 
-In this section, we will explain how to set up and use Stormpath for Developer API Key Management and Authentication.
+- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication.
 
-We will use the following words with very specific meanings. They will be capitalized to indicate that they have a specific meaning in the Stormpath context.
-
-**Admin** or **Administrator** – Someone on your team who has access to the Stormpath API and/or Administration Console. In turn, they will typically have the ability to create and manage user Accounts, Applications, API keys, etc.
-
-**Developer** – A consumer of your API. They are the people that will be using the API keys that you are generating and distributing.
-
-**OAuth 2.0 Access Token** – An Access Token is a string representation of authorization issued to a client. This access token is issued by an authority and grants access to a protected or gated resource. These tokens are opaque to the client.
-
-**Bearer Token** – A Bearer token is a specific type of OAuth 2.0 Access Token. A Bearer token is used with the Bearer Authorization Scheme in HTTP. A client wanting to access a protected service is required to locate a trusted entity to generate a Bearer Token. In this document, a Bearer Token represents an Access Token.
-
-**API Keys** – Represents an API Key Id and Secret pair which is generated for a developer integrating with your API.
-
-i. How to Use API Keys and Secret Authentication
-------------------------------------------------
-
-In order to implement API Authentication with Stormpath you'll need to do the following:
-
-- Create a User Account for each of your Developers
-- Create / Manage API Keys for the Developers' Accounts
-- Use the Stormpath SDK to Authenticate and Generate Tokens for your API
+- Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
   
-Create an Account in Stormpath for Your Developers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+For more information, please see the `LinkedIn documentation <https://developer.linkedin.com/docs/oauth2>`_.
 
-First, you will need Accounts in Stormpath to represent your Developers. Accounts can not only represent Developers, but also can be used to represent services, daemons, processes, or any "entity" that needs to log in to a Stormpath-secured API.
-
-By assigning API keys directly to a user Account, as opposed to a general organization-wide set of keys, you get full traceability and accountability back to a specific individual in the event of an accident or breach on their end.
-
-Stormpath Accounts can be used to keep a variety of Developer information including name, email address, password, and any other custom data you would like to store.
-
-You will mostly likely create a Stormpath Account when a Developer signs up for access to your API. For more information on creating Accounts please see :ref:`account-creation`.
-
-
-Create and Manage API Keys for your Developers
+Step 1: Create a Social Directory for LinkedIn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-After you create an Account for a Developer, you will need to generate one-or-more API Keys to be used when accessing your API. Each Account will have an ``apiKeys`` property that contains a collection of API Keys. There will also be a list of API keys on a Account’s profile in the `Stormpath Admin Console <http://docs.stormpath.com/console/product-guide/#edit-an-account>`_. Key creation and management can be done either via the REST API or through the Admin Console.
+Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
-Creating API Keys For An Account
-""""""""""""""""""""""""""""""""
+	{
+        "name" : "my-linkedin-directory",
+        "description" : "A LinkedIn Directory",
+        "provider": {
+          "providerId": "github",
+          "clientId":"YOUR_LINKEDIN_APP_ID",
+          "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
+        }
+    }
 
-Authenticate and Generate Tokens for your API Keys
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Map the Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Lorem ipsum
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
 
-ii. How to Authenticate Using HTTP Basic
-----------------------------------------
+Step 3: Access an Account with LinkedIn Tokens
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Lorem ipsum.
+To access or create an Account in your new LinkedIn Directory, you must gather a LinkedIn **Access Token** on behalf of the user. This requires leveraging `LinkedIn's OAuth 2.0 protocol <https://developer.linkedin.com/docs/oauth2>`_ and the user’s consent for your application’s permissions.
 
-iii. How to Authenticate Using Bearer Tokens
---------------------------------------------
+Generally, this will include embedding a link in your site that will send an authentication request to LinkedIn. Once the user has authenticated, LinkedIn will redirect the response to your application, including the Authorization Code that you will exchange for the Access Token. This is documented in detail `here <https://developer.linkedin.com/docs/oauth2#hero-par_longformtext_3_longform-text-content-par_resourceparagraph_3>`_.
 
-Lorem ipsum.
+.. note::
 
-iv. How to use Tokens With API Authentication
----------------------------------------------
+	It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes from LinkedIn. If the access token does not grant these scopes, you will not be able to get an Account with an access token. For more information about LinkedIn scopes, see `here <https://developer.linkedin.com/docs/fields>`_.
 
-Lorem ipsum.
+Once the Access Token is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
+
+	{
+	    "providerData": {
+	      "providerId": "linkedin",
+	      "accessToken": "TOKEN_FROM_LINKEDIN"
+	    }
+	  }
+
+Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
