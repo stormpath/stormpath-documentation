@@ -560,7 +560,33 @@ Download your Agent by following the ``download`` link.
    
 2. Configure 
    
-3. Start   
+a. Make sure Java 1.8 is installed
+
+b. Unzip to a location in your file system, for example ``C:\stormpath\agent`` in Windows or ``/opt/stormpath/agent`` in Unix.
+
+In the same location, open the file ``dapper.properties`` from the config folder and replace this line::
+
+	agent.id = PutAgentSpecificIdHere
+
+With this line::
+
+ 	agent.id  = 72MlbWz6C4dLo1oBhgjjTt
+
+Follow the instructions in the ``dapper.properties`` file to reference your account's API authentication.
+   
+3. Start
+
+In Windows::
+
+	(cd to your agent directory, for example C:\stormpath\agent)
+	C:\stormpath\agent>cd bin
+	C:\stormpath\agent\bin>startup.bat
+
+In Unix::
+
+	(cd to your agent directory, for example /opt/stormpath/agent)
+	$ cd bin
+	$ startup.sh
 	  
 Social Directories
 ^^^^^^^^^^^^^^^^^^
