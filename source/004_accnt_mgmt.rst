@@ -185,6 +185,70 @@ Would yield the following response::
 	  }
 	}
 
+Of particular interest here is the `provider` resource referenced here. Different types of Directories have different types of Provider resources as well.
+
+.. _provider-resource:
+
+The Provider Resource
+""""""""""""""""""""""
+
+An individual Provider resource may be accessed via its Resource URI:
+
+**Provider URI**
+
+``/v1/directories/:directoryId/provider``
+
+**Provider Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	 
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URL
+
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource was created.
+	
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource’s attributes were last modified.
+	
+	* - ``providerId``
+	  - String
+	  - ``stormpath`` (for a Cloud Directory), ``ad`` or ``ldap`` (for Mirror Directories), ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories)
+	  - Specifies the type of Provider for the associated Directory.
+	
+	* - ``clientId``
+	  - String
+	  - N/A
+	  - The OAuth 2.0 Client ID for this Provider. Only used for Social providers.
+	
+	* - ``clientSecret``
+	  - String
+	  - N/A
+	  - The OAuth 2.0 Client Secret for this Provider. Only used for Social providers.
+	
+	* - ``redirectUri``
+	  - String 
+	  - A valid URL
+	  - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
+	
+	* - ``agent``
+	  - Link 
+	  - N/A
+	  - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`make-mirror-dir`.
+
 Mirror Directories
 ^^^^^^^^^^^^^^^^^^ 
 
@@ -204,15 +268,300 @@ User Accounts and Groups in mirrored directories are automatically deleted when 
 
 The big benefit is that your Stormpath-enabled applications still use the same convenient REST+JSON API – they do not need to know anything about things like LDAP or legacy connection protocols.
 
+Mirror Directories have associated Provider resources with either the ``ldap`` or ``ad`` ``providerId``, and that Provider resource contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
+
+The Agent Resource
+""""""""""""""""""
+
+An Agents collection may be accessed via its Resource URI:
+
+**Agents URI**
+
+``/v1/agents/:directoryId``
+
+**Agent Attributes**
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	 
+	* - ``href``
+	  - String
+	  - N/A
+	  - The resource's fully qualified location URL
+	
+	* - ``id``
+	  - String
+	  - N/A
+	  - A unique alphanumberic identifier for this Agent.
+	  
+	* - ``status``
+	  - String
+	  - ?
+	  - The Agent's status.
+	
+	* - ``config``
+	  - Object
+	  - N/A
+	  - The configuration information for this Agent, as an embedded ``config`` object. (see below)
+	
+	* - ``createdAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource was created.
+	
+	* - ``modifiedAt``
+	  - String (ISO-8601 Datetime)
+	  - N/A
+	  - Indicates when this resource’s attributes were last modified.
+	
+	* - ``directory``
+	  - Link
+	  - N/A
+	  - A link to the Directory resource that the Agent belongs to. 
+	
+	* - ``download``
+	  - Link
+	  - N/A
+	  - A link that allows this Agent to be downloaded for installation.
+	
+	* - ``tenant``
+	  - Link
+	  - N/A
+	  - A link to the Tenant that owns the Directory this Agent belongs to.
+
+**Config Attributes**
+
+The ``config`` object is found inside an Agent resource. It corresponds with the "Agent Configuration" tab in the Stormpath Admin Console "Agents" section.
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	 
+	* - ``directoryHost``
+	  - String
+	  - N/A
+	  - The IP address or Host name of the LDAP directory server to connect to. 
+	
+	* - ``directoryPort``
+	  - Number
+	  - N/A
+	  - The port to use when connecting to the LDAP directory server.
+	
+	* - ``sslRequired``
+	  - Boolean
+	  - .
+	  - Indicates whether the Agent socket connection to the directory uses SSL encryption. 
+	
+	* - ``agentUserDn``
+	  - String
+	  - N/A
+	  - The username that the Agent will use to connect to your LDAP directory.
+	
+	* - ``agentUserDnPassword``
+	  - String
+	  - N/A
+	  - The password that the Agent will use to connect to your LDAP directory. 
+
+	* - ``baseDn``
+	  - String
+	  - N/A
+	  - The base DN (Distinguished Name) to use when querying the directory.
+	
+	* - ``pollInterval``
+	  - Number
+	  - N/A
+	  - How often (in minutes) to poll Directory Services to detect directory object changes.
+	    
+	* - ``accountConfig``
+	  - Object
+	  - N/A
+	  - The Account configuration information for this Agent, as an embedded ``accountConfig`` object. (see below)
+	    
+	* - ``groupConfig``
+	  - Object
+	  - N/A
+	  - The Group configuration information for this Agent, as an embedded ``groupConfig`` object. (see below)
+	
+	* - ``referralMode``
+	  - String
+	  - ``follow``, ``ignore``
+	  - Prevents referral problems for Active Directory servers that are not configured properly for DNS.
+	
+	* - ``ignoreReferralIssues``
+	  - Boolean
+	  - N/A
+	  - Referral issues can arise when querying an Active Directory server without proper DNS. Setting this as true ignores referral exceptions and allows (potentially partial) results to be returned.
+
+**accountConfig Attributes**
+
+The ``accountConfig`` object is found inside a ``config`` object. It corresponds with the "Account Configuration" tab in the Stormpath Admin Console "Agents" section.
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - Attribute
+	  - Type
+	  - Valid Value(s)
+	  - Description
+	 
+	* - ``dnSuffix``
+	  - String
+	  - N/A
+	  - Optional value appended to the Base DN when accessing accounts. If left unspecified, account searches will stem from the Base DN.
+	
+	* - ``objectClass``
+	  - String
+	  - N/A
+	  - The LDAP object class to use when when loading accounts.
+	
+	* - ``objectFilter``
+	  - String
+	  - N/A
+	  - LDAP query filter to use when searching for user accounts.
+	
+	* - ``emailRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's email address.
+	
+	* - ``givenNameRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's first name (aka 'Given Name').
+	
+	* - ``middleNameRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's middle name.
+	    
+	* - ``surnameRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's last name (aka 'Family Name' or 'Surname').
+	    
+	* - ``usernameRnd``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's login name.
+	
+	* - ``passwordRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for an account's password. 
+
+**groupConfig Attributes**
+
+The ``groupConfig`` object is found inside a ``config`` object.
+
+.. list-table:: 
+	:widths: 15 10 20 60
+	:header-rows: 1
+
+	* - ``dnSuffix``
+	  - String
+	  - N/A
+	  - Optional value appended to the Base DN when accessing groups. If left unspecified, group searches will stem from the Base DN.
+	
+	* - ``objectClass``
+	  - String
+	  - N/A
+	  - The LDAP object class to use when when loading accounts. 
+	
+	* - ``objectFilter``
+	  - String
+	  - N/A
+	  - LDAP query filter to use when searching for groups.
+	
+	* - ``nameRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for a group's name. For example cn. Please note: group names must be unique within a directory.
+	
+	* - ``descriptionRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute for a group's description.
+	
+	* - ``membersRdn``
+	  - String
+	  - N/A
+	  - The name of the attribute that lists the group members.
+
+.. _make-mirror-dir:
+
 How to Make a Mirror Directory
 """"""""""""""""""""""""""""""
 
-Presently, Mirror Directories can only be made via the Stormpath Admin Console. For more information, please see [this section of the Admin Console Guide].
+Presently, Mirror Directories be made via the Stormpath Admin Console, or using REST API. If you'd like to do it with REST APIs, read on. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-.. todo::
+To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above <provider-resource>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
 
-	This is out-of-date. Need to get instructions for how to do this using REST API. 
+	{
+	    "name":"My LDAP Directory",
+	    "description": "An LDAP Directory created with the Stormpath API",
+	    "provider": {
+	        "providerId": "ldap",
+	        "agent": {
+	            "config": {
+	                "directoryHost": "ldap.local",
+	                "directoryPort": "636",
+	                "sslRequired": true,
+	                "agentUserDn": "tom@stormpath.com",
+	                "agentUserDnPassword": "StormpathRulez",
+	                "baseDn": "dc=example,dc=com",
+	                "pollInterval": 60,
+	                "referralMode": "ignore",
+	                "ignoreReferralIssues": false,
+	                "accountConfig": {
+	                    "dnSuffix": "ou=employees",
+	                    "objectClass": "person",
+	                    "objectFilter": "(cn=finance)",
+	                    "emailRdn": "email",
+	                    "givenNameRdn": "givenName",
+	                    "middleNameRdn": "middleName",
+	                    "surnameRdn": "sn",
+	                    "usernameRdn": "uid",
+	                    "passwordRdn": "userPassword",
+	                },
+	                "groupConfig": {
+	                    "dnSuffix": "ou=groups",
+	                    "objectClass": "groupOfUniqueNames",
+	                    "objectFilter": "(ou=*-group)",
+	                    "nameRdn": "cn",
+	                    "descriptionRdn": "description",
+	                    "membersRdn": "uniqueMember"
+	                }
+	            }
+	        }
+	    }
+	}
 
+
+Installing Your Agent
++++++++++++++++++++++
+
+Installing your Agent is done in three steps.
+
+1. Download 
+
+Download your Agent by following the ``download`` link.
+   
+2. Configure 
+   
+3. Start   
+	  
 Social Directories
 ^^^^^^^^^^^^^^^^^^
 
@@ -229,7 +578,7 @@ For both Mirror and Social Directories, since the relationship with the outside 
 How to Make a Social Directory
 """"""""""""""""""""""""""""""
 
-Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see [here]. For more information about creating them using REST API, please see :ref:`social-authn`. 
+Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
 
 ii. Groups
 ----------
@@ -508,12 +857,12 @@ An individual Account resource may be accessed via its Resource URI:
 New Account Creation
 --------------------
 
-The basic steps for creating a new Account are covered in the [Quick Start]. In that example, we cover how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
+The basic steps for creating a new Account are covered in the :doc: . In that example, we cover how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
 
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the [Quick Start]. 
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :doc:`Quickstart </003_quickstart>`. 
 
 .. note::
 
@@ -657,12 +1006,12 @@ Importing Accounts
 Stormpath also makes it very easy to transfer your existing user directory into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
 
 1. **Passwords in Plaintext:** If you stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
-2. **Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are detailed [below].
+2. **Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are detailed :ref:`below <importing-mcf>`.
 3. **Passwords With Non-MCF Hash:** If you hashed passwords in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to use their passwords to login.
 
 .. note::
 
-	To import user accounts from an LDAP or Social Directory, please see the [above section].
+	To import user accounts from an LDAP or Social Directory, please see the :ref:`above section <make-mirror-dir>`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
    
@@ -673,6 +1022,7 @@ In this case, it is recommended that you suppress Account Verification emails. T
 
 	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?registrationWorkflowEnabled=false
 
+.. _importing-mcf:
 
 Importing Accounts with MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -691,11 +1041,13 @@ Supported Hashing Algorithms
 Stormpath only supports password hashes that use the following algorithms:
 
 - bcrypt: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
-- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see [below].
+- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
   
 Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
 	https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?passwordFormat=mcf
+
+.. _stormpath2-hash:
 
 The stormpath2 Hashing Algorithm
 ++++++++++++++++++++++++++++++++
@@ -732,7 +1084,7 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 Importing Accounts with Non-MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the [Password Reset section below].
+In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
 
 
 How to Store Additional User Information as Custom Data
@@ -765,9 +1117,7 @@ We would get this response::
 
 This information can also be appended as part of the initial Account creation payload. 
 
-For more information about the customData resource, please see [here].
-
-----
+For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide .
 
 c. How to Search Accounts
 =========================
@@ -806,7 +1156,7 @@ The response would be a collection of Accounts created between the two days.
 
 	Omitting the beginning or ending date is valid for requests. Omitting the start ``datetime`` range (e.g. ``createdAt=[,ISO-8601-END-DATETIME]``) would include all resources created or modified before the ending datetime. Omitting the end datetime range (e.g. ``createdAt=[ISO-8601-BEGIN-DATETIME,]``) would include all resources created or modified after the specified beginning datetime.
 
-For more information about how search works in Stormpath, please see the [Search Section] of the REST Reference section.
+For more information about how search works in Stormpath, please see the `Search section <http://docs.stormpath.com/rest/product-guide/#search>`_ of the REST API Product Guide.
 
 d. How to Manage an Account's Password
 ======================================
@@ -815,7 +1165,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 .. note::
 
-	This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `this section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_. 
+	This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_. 
 
 **passwordPolicy URI**
 
@@ -960,6 +1310,8 @@ would result in the following response::
 	  "minUpperCase": 1
 	}
 
+.. _password-reset-flow:
+
 Password Reset
 --------------
 
@@ -1032,8 +1384,6 @@ To modify the emails that get sent during the password reset workflow, let’s t
 
 Changing any of these is as simple as sending an HTTP POST with the desired property in the payload body.
 
-----
-
 e. How to Verify an Account's Email 
 ===================================
 
@@ -1104,5 +1454,5 @@ If the verification token is not found, a "404 Not Found" error is returned with
 
 .. note::
 
-	For more about Account Authentication please see [below].
+	For more about Account Authentication you can read :doc:`the next chapter </005_auth_n>`.
 

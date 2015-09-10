@@ -245,9 +245,7 @@ If the authentication attempt is successful (the username and password match and
 
 You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
-If the authentication attempt fails, you will see an `error response </rest/product-guide#errors>`_ instead:
-
-::
+If the authentication attempt fails, you will see an `error response </rest/product-guide#errors>`_ instead::
 
     {
       "status": 400,
@@ -256,26 +254,6 @@ If the authentication attempt fails, you will see an `error response </rest/prod
       "developerMessage": "Invalid username or password.",
       "moreInfo": "mailto:support@stormpath.com"
     }
-
---------------
-
-Other Things You Can Do with Stormpath
-======================================
-
-.. todo::
-
-  Revise below text with assistance from Marketing
-
-In addition to user registration and login, Stormpath can do a lot more!
-
--  Create and manage user groups.
--  Partition multi-tenant SaaS account data.
--  Simplify social login with providers like Google and Facebook.
--  Manage developer API keys and access tokens.
--  Verify new users via email.
--  Automatically provide secure password reset functionality.
--  Centralize your user store across multiple applications.
--  Plug into your favorite language or web framework.
 
 --------------
 
@@ -288,15 +266,11 @@ You've just scratched the surface of what you can do with Stormpath.
 Want to learn more? Here are a few other helpful resources you can jump
 into.
 
-.. todo::
+.. todo:
 
-  Fix URLs below.
+  Update links once the documentation is complete.
 
--  Dig in deeper with the `Official REST API Product
-   Guide </rest/product-guide>`__.
--  Try out Stormpath in your favorite programming language with our
-   `7-Minute Tutorial <https://stormpath.com/tutorial>`__.
--  Learn to easily partition user data with our `Guide to Building
-   Multitenant SaaS Applications </guides/multi-tenant/>`__.
--  Easily support Google and Facebook Login with our new `Social Login &
-   Integration Guide </guides/social-integrations/>`__.
+- Try out Stormpath in your favorite programming language with our `7-Minute Tutorial <https://stormpath.com/tutorial>`_.
+- Learn to easily partition user data with our `Guide to Building Multitenant SaaS Applications <http://docs.stormpath.com/guides/multi-tenant/>`_.
+- Easily support Google and Facebook Login with our new :ref:`Social Login & Integration Guide <social-authn>`.
+- Or simply jump into the next section and learn about :doc:`Account Management </004_accnt_mgmt>`.

@@ -55,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Stormpath'
-copyright = u'2015, Jakub Swiatczak'
+copyright = u'2015, Stormpath, Inc.'
 author = u'Jakub Swiatczak'
 
 # The version info for the project you're documenting, acts as replacement for

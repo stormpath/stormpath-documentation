@@ -11,7 +11,7 @@ a. Sign-up for Stormpath
 
 1. First, go to `https://api.stormpath.com/register <https://api.stormpath.com/register>`_ and complete the form.
 2. You will receive a confirmation email with an activation link. 
-3. Once you click the link, Stormpath will create a Stormpath Account along with a Tenant. Your Tenant name will be a unique pair of two randomly-generated words separated by a hyphen (i.e. "iron-troop"). 
+3. Once you click the link, Stormpath will create a Stormpath Account along with a Tenant. Your Tenant name will be a unique pair of two randomly-generated words separated by a hyphen (e.g. "iron-troop"). 
 
 .. note::
 
