@@ -20,7 +20,7 @@ By offloading user management and authentication to Stormpath, developers can br
 What you can do with Stormpath
 ------------------------------
 
-Stormpath manages the following tasks for your application:
+Stormpath is used as a simple REST API, over HTTP. This means that we can operate in almost any software environment. For instance, if you wanted to create a new user account with a given an email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
 
 In addition to user registration and login, Stormpath can do a lot more!
 
@@ -35,43 +35,34 @@ In addition to user registration and login, Stormpath can do a lot more!
 - Centralize your user store across multiple applications.
 - Plug into your favorite language or web framework.
 
-- Create & Edit user accounts and user data.
-- Organize users with groups and roles.
-- Store data on user objects.
-- Securely store all user data (compliance)
-- Customize group permissions (groups, roles, etc.).
-- Handle complex authentication and authorization patterns.
-- Log users in via social login.
-- Generate and authenticate OAuth2 password grant tokens.
+.. todo:
 
-Stormpath is used as a simple REST API, over HTTP. This means that we can operate in almost any software environment. For instance, if you wanted to create a new user account with a given an email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
-
-Features
---------
+	Add "Features" section?
 
 Who should use Stormpath
 ------------------------
 
 You might want to use Stormpath if:
 
-You want to make user creation, management, and security as simple as possible (you can get started with Express-Stormpath with only one line of code excluding settings)!
-User security is a top priority. We’re known for our security.
-Scaling your userbase is a potential problem (Stormpath handles scaling your users transparently).
-You need to store custom user data along with your user’s basic information (email, password).
-You would like to have automatic email verification for new user accounts.
-You would like to configure and customize password strength rules.
-You’d like to keep your user data separate from your other applications to increase platform stability / availability.
-You are building a service oriented application, in which multiple independent services need access to the same user data.
-You are a big organization who would like to use Stormpath, but need to host it yourself (Stormpath has an on-premise system you can use internally).
+- You want to make user creation, management, and security as simple as possible
+- User security is a top priority.
+- Scaling your userbase is a potential problem
+- You need to store custom user data along with your user’s basic information.
+- You would like to have automatic email verification for new user accounts.
+- You would like to configure and customize password strength rules.
+- You’d like to keep your user data separate from your other applications to increase platform stability and availability.
+- You are building a service-oriented application, in which multiple independent services need access to the same user data.
+- You are a big organization who would like to use Stormpath, but need to host it yourself (Stormpath has an on-premise system you can use internally).
+
 Basically, Stormpath is a great match for applications of any size where security, speed, and simplicity are top priorities.
 
-You might NOT want to use Stormpath if:
+You might not want to use Stormpath if:
 
-You are building an application that does not need user accounts.
-Your application is meant for internal-only usage.
-You aren’t worried about user data / security much.
-You aren’t worried about application availability / redundancy.
-You want to roll your own custom user authentication.
+- You are building an application that does not need user accounts.
+- Your application is meant for internal-only usage.
+- You aren’t worried about user data and security.
+- You aren’t worried about application availability and redundancy.
+- You want to roll your own custom user authentication.
 
 
 The Stormpath Data Model

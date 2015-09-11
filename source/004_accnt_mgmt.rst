@@ -587,6 +587,9 @@ In Unix::
 	(cd to your agent directory, for example /opt/stormpath/agent)
 	$ cd bin
 	$ startup.sh
+
+The Agent will start synchronizing immediately, pushing the configured data to Stormpath. You will see the synchronized user Accounts and Groups appear in the Stormpath Directory, and the Accounts will be able to log in to any Stormpath-enabled application that you assign. When the Agent detects local changes, additions or deletions to the mirrored Accounts or Groups, it will automatically propagate those changes to Stormpath.
+
 	  
 Social Directories
 ^^^^^^^^^^^^^^^^^^

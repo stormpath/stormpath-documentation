@@ -2,7 +2,9 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
+.. todo:
 
+	Might want to add some preamble here?
 
 a. How Password Authentication Works in Stormpath
 =================================================

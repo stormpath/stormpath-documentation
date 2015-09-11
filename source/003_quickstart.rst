@@ -31,8 +31,6 @@ Stormpath also can do a lot more (like Groups, Multitenancy, Social Integration,
 
 Let's get started!
 
---------------
-
 Retrieve your Application
 =========================
 
