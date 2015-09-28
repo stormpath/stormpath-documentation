@@ -612,7 +612,7 @@ Presently, Social Directories can only be made via the Stormpath Admin Console o
 ii. Groups
 ----------
 
-**Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. 
+**Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. Aside from the relatively simple task of grouping together Accounts, Groups can also be used to implement "roles" for authorization purposes. For more information about this, please see :ref:`rbac`. 
 
 An individual Group resource may be accessed via its Resource URI:
 
@@ -694,16 +694,18 @@ An individual Group resource may be accessed via its Resource URI:
 Modeling User Hierarchies Using Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested user structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
+Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
 
-A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin/User"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries::
+A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin/User"`` in the Group's ``"description"`` field, allowing for queries to be made using simple pattern-matching queries.
 
-	GET https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
+.. todo:
 
-It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's `description` field is.
+	Add examples of how to do this. Same information stored using both methods, and (at least for description) how you'd search
+
+It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
 
 How to Create a Group
-"""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^
 
 So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory. 
 
@@ -747,7 +749,6 @@ Would yield this response::
       }
     }
 
------
 
 .. _account-creation:
 

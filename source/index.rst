@@ -16,6 +16,8 @@ Contents:
    003_quickstart
    004_accnt_mgmt
    005_auth_n
+   006_auth_z
+
 
 
 
