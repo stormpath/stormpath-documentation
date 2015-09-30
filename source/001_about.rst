@@ -7,13 +7,9 @@ In this "About" section, we will discuss some general topics about both Stormpat
 What is Stormpath?
 ==================
 
-Stormpath is a hosted API service for creating and managing user accounts. 
+Stormpath is a hosted API service for creating and managing user accounts. It is the first easy and secure user management and authentication service for developers.
 
-Stormpath is the first easy, secure user management and authentication service for developers.
-
-Fast and intuitive to use, Stormpath enables plug-and-play security and accelerates application development on any platform.
-
-Built for developers, it offers an easy API, open source SDKs, and an active community. The flexible cloud service can manage millions of users with a scalable pricing model that is ideal for projects of any size.
+Built for developers, it offers an easy API, open source SDKs, web-based administration console, and an active community. All of this for a flexible cloud service that can manage millions of users with a scalable pricing model that is ideal for projects of any size.
 
 By offloading user management and authentication to Stormpath, developers can bring new applications to market faster, reduce development and operations costs, and protect their users with best-in-class security.
 
@@ -46,24 +42,15 @@ You might want to use Stormpath if:
 
 - You want to make user creation, management, and security as simple as possible
 - User security is a top priority.
-- Scaling your userbase is a potential problem
+- Scaling your user base is a potential problem
 - You need to store custom user data along with your user’s basic information.
 - You would like to have automatic email verification for new user accounts.
 - You would like to configure and customize password strength rules.
 - You’d like to keep your user data separate from your other applications to increase platform stability and availability.
 - You are building a service-oriented application, in which multiple independent services need access to the same user data.
-- You are a big organization who would like to use Stormpath, but need to host it yourself (Stormpath has an on-premise system you can use internally).
+- You are a big organization who would like to use Stormpath, but need to host it yourself (Stormpath offers private deployments).
 
 Basically, Stormpath is a great match for applications of any size where security, speed, and simplicity are top priorities.
-
-You might not want to use Stormpath if:
-
-- You are building an application that does not need user accounts.
-- Your application is meant for internal-only usage.
-- You aren’t worried about user data and security.
-- You aren’t worried about application availability and redundancy.
-- You want to roll your own custom user authentication.
-
 
 The Stormpath Data Model
 ========================
@@ -76,7 +63,7 @@ This section will give a high-level overview of the Stormpath data model, with m
 
 Entities inside Stormpath are referred to as **resources**. Each Stormpath resource has a unique ``href`` link associated with it, and contains one or more "attributes". For example, an Account resource has an "email" attribute, which contains the value for the email address.
 
-The **Tenant** resource represents the Stormpath customer. When you sign up for Stormpath, a private data "space" is created for you. This space is represented as a Tenant resource in the Stormpath REST API. As a Stormpath Tenant (customer), you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
+When you sign up for Stormpath, a private data space is created for you, which is represented as a **Tenant** resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
 
 An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.  
 
@@ -88,9 +75,9 @@ Users are modeled inside Stormpath as **Accounts**. Every Account is unique with
 
 The relation between every Account and its Group is contained in a **GroupMembership** resource. If you imagine Groups as labels for Accounts, the GroupMembership object contains information about which labels have been applied to which Accounts. 
 
-Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Both of these can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment. 
+Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Account Stores can be mapped to Application resources to allow your Accounts to log-in to those applications. Both Directories and Groups can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment. 
 
-Resources that contain other sources are known as **Collection** resources. These support additional behavior specific to Collections, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href`` links.
+A resources that contains other resources is known as a **Collection**. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href`` links.
 
 Stormpath uses the **customData** resource to store custom information. It is a schema-less map object that is automatically created at the same time as, and linked to, another Stormpath resource, such as an Account, Group, or Directory.
 

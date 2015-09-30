@@ -2,7 +2,7 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
-.. todo:
+.. todo::
 
 	Might want to add some preamble here?
 

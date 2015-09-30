@@ -691,16 +691,20 @@ An individual Group resource may be accessed via its Resource URI:
 	  - N/A
 	  - A link to any Applications associated with this Group.
 
+.. _hierarchy-groups:
+
 Modeling User Hierarchies Using Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
 
-A geographical region can, for example, be represented as ``"SysAdmin/SpaceAdmin/User"`` in the Group's ``"description"`` field, allowing for queries to be made using simple pattern-matching queries.
+A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``"description"`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
 
-.. todo:
+	https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
 
-	Add examples of how to do this. Same information stored using both methods, and (at least for description) how you'd search
+Or, to find all Groups in the US East region only, you would GET::
+
+	https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US%20East*
 
 It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
 
