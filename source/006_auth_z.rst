@@ -1,11 +1,12 @@
 *******************************
 6. Authorization With Stormpath
 *******************************
-
 .. _authz:
 
+This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions 
+
 a. What is Authorization?
--------------------------
+=========================
 
 Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. Perhaps the most accessible example of this process is at the airport, where a security person first checks your passport to make sure that you are who you say you are, and a separate person later checks that you are allowed to actually board the plane.
 
@@ -14,12 +15,12 @@ Once a user has entered in a valid login and password (authentication), there ar
 One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. Put differently, part of modeling authorization is determining whether you will define a permission around your users, or around the resources that they are accessing. To go back to our airport scenario, we can imagine the airline has two options. 
 
 i. Simple Authorization
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 First, the airline can have at the gate a master list of all passengers who are allowed to board the plane. This is equivalent to hard-coding permission checks into your application, and then tying them in some way to a user. This means that your authorization logic can be based on checks of a user's particular identity (e.g. ``if (user("jsmith") {...``) or their membership in a particular Group (e.g. ``if (user.group("passengers") {...``).  This simple authorization is perfectly sufficient for many applications, but has some downsides. One downside is that it can result in authorization rules that are much difficult to change dynamically. Another downside is that any change in authorization rules can end-up requiring a lot of refactoring of code, test cases, etc. A more dynamic and powerful way of handling authorization is through the use of permissions.
 
 ii. Permissions-based Authorization
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 Permissions, at their most basic, are statements of functionality that define a resource and what actions are possible for that resource. Going back to our airport scenario, an alternative to the boarding master list is that the airline sets a requirement: every passenger who wants to board the plan must bring a boarding pass. This pass comes with permission to perform the "board" action onto a specific flight number. So now, instead of basing authorization around a particular user identifier, we could require a certain permission to perform an action on a resource (e.g. ``if (user.isPermitted("flight:board:ac232"))``). This approach has many advantages, including more flexibility with regards to your security model, and separating your application logic from your data model.
 
@@ -28,55 +29,138 @@ Permissions, at their most basic, are statements of functionality that define a 
 	A concrete example of this advantage NEEDS to be included here.  
 
 b. Modeling Authorization in Stormpath
----------------------------------------
+======================================
 
 From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. 
 
+This authorization data is extremely important to your overall security model.
+
+
+.. _rbac:
+
 i. How to Use Groups to Model Authorization Roles
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------
 
-The Group resource is central to controlling authorization with Stormpath. Among other things, you can use Groups to set permissions and permission hierarchies, as well as create user roles that span every tenant that is using your application.
+The Group resource is central to many of the more advanced forms of authorization available with Stormpath. Among other things, you can use Groups for things like :ref:`modelling hierarchies <hierarchy-groups>`, as well as creating user roles that span every organization that is using your application.
 
-As we have already said, you can think of Groups as labels applied to Accounts via the GroupMembership resource. Much in the same way that a label can be used to define an officer's rank (and thereby what he is authorized to do), Groups allow you to define "roles" in Stormpath for the purposes of role-based access control. If a user Group can be thought of as a collection of Users, then a role Group can be thought of as a collection of permissions. If we associate an Account with a certain role Group, then that Account will inherit all of the permissions defined for that Group. 
+As we have already said, you can think of Groups as labels applied to Accounts via the GroupMembership resource. They can be used to organize users, like having all Accounts belonging to users from Tatooine associated with a "Tatooine" user Group resource. However, much in the same way that a label can be used to define an officer's rank (and thereby what he is authorized to do), Groups can also be used to model "roles" in Stormpath for the purposes of role-based access control. If we associate an Account with a certain role Group, then that Account will have all the authorizations defined for that Group. Moreover, if an Account is associated with multiple Groups then it will inherit authorization from all of them.
 
-.. note::
+Note that we are not discussing a new type of Group resource here, but just pointing out that the Group resource can be used to model roles for the purposes of authorization. So that "Tatooine" Group could be used to find all Accounts for users residing in Tatooine, but it could also come with some sort of authorization permissions associated with it as well. A more common scenario would be having a Group called something like "administrators", and that could be used to organize everyone with the permissions required for an administrator in your application. 
 
-	An Account can be associated with multiple Groups and will inherit permissions from all of them.
+Also roles do not require you to use permissions-based authorization. You can still include checks in your code along the lines of ``if (user.group("authRole") {...``.
 
-More information about creating custom permissions on both the Account and Group level can be found in the Custom Permissions section found :ref:`below <custom-perms>`.
+Now that we have some understanding of authorization roles in Stormpath, we can discussion another powerful use of Stormpath's flexible data model.
 
-ii. Application-Wide Groups
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Application-Wide Roles
+^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo:: 
+In a multi-tenant SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the tenant that they belong to, while at the same time defining authorization based on broader, application-wide roles. In Stormpath, we recommended that you model every tenant that uses your Application using the **Organization** resource. The Organization resource is a container for Directory resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the [multi-tenancy section later in this guide].
 
-	This has to be completely rewritten because at the time that this was written the Organization resource didn't exist. Also explanatory text needs to be added about the Organization resource.
+Alongside these Organizations, it is also possible to define application-wide Groups that allow for roles that span across Organizations, regardless of where a user's Account is found.
 
-In a SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the organization that they belong to, while at the same time defining permissions based on broader, application-wide roles. In the Stormpath data model, it is recommended to model every organization that uses your Application using the **Organization** resource. The Organization resource is a container for Directory resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the [multi-tenancy section later in this guide].
+An example: So let's assume that your "InterGalactic Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of Aargau", "InterGalactic Bank of Kuat", etc), each modeled as an Organization resource. Each of those subsidiaries, in turn, could contain a Directory resource for each of its branches, and each branch could have departmental Groups. However, you can still define roles that span the entire "InterGalactic Banking" application, regardless of which tenant (Organization), branch (Directory), or department (Group) the Account is associated with.
 
-Along with these Organizations, it is also possible to define application-wide Groups that allow for roles that span the entire application, regardless of which Organization a user's Account is associated with.
+For example, your Application could have "Teller" and "Bank Administrator" roles for all of your Application's users. All this requires is that you create two Groups and assign the users you want to those Groups. Any Account, regardless of the Organization, Directory, or Group that they are assigned to, can also be assigned to the "Teller" or "Bank Administrator" Group.
 
-So let's assume that your "InterGalactic Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of Aargau", "InterGalactic Bank of Kuat", etc), each modeled as an Organization resource. Each of those subsidiaries, in turn, could contain a Directory resource for each of its branches. However, you can still define roles that span the entire "InterGalactic Banking" application, regardless of which tenant (Organization) and branch (Directory) the Account is associated with.
+The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks. 
 
-If you want your Application to have "Teller" and "Bank Administrator" roles with their own permissions defined for all of your Application's users, this is simply a matter of creating two role Groups with their own customData permissions defined. Then any Account, regardless of the Organization (or Directory) that they are assigned to, can also be assigned to the Application-wide "Teller" or "Bank Administrator" role Group.
+More information about the APIs that allow you to create, retrieve and search an Application's groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about Multi-Tenancy can be found [in the multi-tenancy section]
 
-More information about the APIs that allow you to create, retrieve and search an Application's groups can be found in the [?], while more information about Multi-Tenancy can be found [?]
+ii. Using Permissions
+---------------------
+
+If you have decided that your application requires the more advanced authorization modelling possible with permissions, then the first question with every permission is whether it will be tied to an Account or a Group.
+
+**User-unique permissions:** Any permissions that are are unique to a user should be tied to that user's Account resource.
+
+**Role permissions:** Permissions that will be shared among a number of users are better bundled together in roles, that is Groups, which many individual Accounts while be associated to.
+
+The next question is: what will your permissions look like?
 
 .. _custom-perms:
 
-iii. How to Model Fine-Grained Permissions
-------------------------------------------
+How to Model Fine-Grained Permissions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-	
-	Fix linking in the following section. Also, is there stuff that would be good to bring in from that blogpost?
+Stormpath also gives you an enormous amount of flexibility with what these permissions look like. A permission in Stormpath can be as simple as::
 
-As mentioned earlier, Stormpath resources like Accounts and Groups are created along with a linked ``customData`` resource. This resource is very useful for implementing both explicit Account permissions and implicit role Group permissions. Essentially, any user-level permissions are defined in a ``customData`` resource linked to a user Account, while any role-level permissions are defined in a ``customData`` resource linked to a role Group. This allows for Stormpath to model user-unique permissions as well as permissions inherited by virtue of a user having one (or more) roles.
+	"create_admin”: “yes”
 
-Permissions in Stormpath can be modeled as an array inside the ``customData`` resource. They can be as simple as a key-value pair, or more complex objects. To expand on the scenario from the `Application-Wide Groups <#appgroups>`__ section above, a user Account for the user "Riker" could have their user-unique permissions defined in a ``customData`` resource linked to from their Account. At the same time, their Account would be linked to the application-wide "Admin" Group which would have its own linked ``customData`` resource that would contain definitions of the permissions of all the users with the Admin role in your application.
+Or as complex as::
 
-For more information about working with Custom Data please see the `Product Guide <http://docs.stormpath.com/rest/product-guide/#custom-data>`__,
-and for more information specifically about managing permissions with Custom Data please see `this blog post <https://stormpath.com/blog/fine-grained-permissions-with-customData/>`__. #Authorization With Stormpath
+	{
+	    "name": "create-admin",
+	    "description": "This permission allows the account to create an admin"
+	    "action": "read",
+	    "resource": "/admin/create",
+	    "effect": "allow"
+	}
 
-d. How to check if an Account has Groups or customData for authorization
--------------------------------------------------------------------------
+How is this flexibility possible? One word: customData.
+
+As mentioned earlier, Stormpath resources like Accounts and Groups are created along with a linked **customData** resource. This resource is very useful for implementing both Account permissions and role (or Group) permissions. Essentially, any user-level permissions are defined in a ``customData`` resource linked to a user Account, while any role-level permissions are defined in a ``customData`` resource linked to a role Group. This allows for Stormpath to model user-unique permissions as well as permissions inherited by virtue of a user having one (or more) roles.
+
+Permissions in Stormpath can be modeled as an array inside the ``customData`` resource. They can be as simple as a key-value pair, or more complex objects. A user Account could have their user-unique permissions defined in a ``customData`` resource linked to from their Account. At the same time, their Account would be linked to the application-wide "Admin" Group which would have its own linked ``customData`` resource that would contain definitions of the permissions of all the users with the Admin role in your application.
+
+For more information about working with Custom Data please see the `Product Guide <http://docs.stormpath.com/rest/product-guide/#custom-data>`.
+
+Checking User and Role Permissions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Since authorization enforcement is handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the REST API is in retrieving a user's permissions. These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+
+Checking User Permissions
+"""""""""""""""""""""""""
+
+To check a user's unique permissions, you must retrieve their Account's customData. You can do this in one of two ways: 
+
+You can either retrieve the Account along with the expanded customData, by sending an HTTP GET to::
+
+	https://api.stormpath.com/v1/accounts/:AccountId?expand=customData
+
+This will return the Account resource along with the expanded customData::
+
+	{
+      "username" : "jlpicard",
+      "email" : "capt@enterprise.com",
+      "givenName" : "Jean-Luc",
+      "surname" : "Picard",
+      "customData": {
+	      “permissions”:
+	       “crew_quarters”: “&nbsp;9-3601”,
+	       "lock_override”: “all”,
+	       "command_bridge”: {
+	          “type”: “vessel:bridge”,
+	          “identifier”: “NCC-1701-D”,
+	          “action”: “lockout”,
+	          "control_key”: "173467321476C32789777643T732V73117888732476789764376",
+	       }
+	    }
+    }
+
+Or you can retrieve only the customData by sending a GET to::
+
+	https://api.stormpath.com/v1/accounts/:AccountId/customData
+
+Which would return only the customData::
+
+	{
+      “permissions”:
+       “crew_quarters”: “&nbsp;9-3601”,
+       "lock_override”: “all”,
+       "command_bridge”: {
+          “type”: “vessel:bridge”,
+          “identifier”: “NCC-1701-D”,
+          “action”: “lockout”,
+          "control_key”: "173467321476C32789777643T732V73117888732476789764376",
+       }
+	} 
+
+Checking Role Permissions
+"""""""""""""""""""""""""
+
+This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve their associated Groups, for example by sending a GET to::
+
+	https://api.stormpath.com/v1/accounts/:accountId/groups
+
+From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` namespace. 

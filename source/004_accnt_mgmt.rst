@@ -2,12 +2,16 @@
 4. Account Management
 **********************
 
+.. _account-mgmt-header:
+
 a. Modeling Your User Base
 ===========================
 
 The first question that we need to address is how we are going to model our users inside Stormpath. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
 
 All of your Accounts will have to be associated with at least one Directory resource, so we can start there.  
+
+.. _directory-mgmt:
 
 i. Directories
 --------------
@@ -47,12 +51,12 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``name``
 	  - String
 	  - 1 < N <= 255 characters
-	  - Name of the Directory. Must be unique within a tenant.
+	  - Name of the Directory. Must be unique within a Tenant.
 	
 	* - ``description``
 	  - String
 	  - 0 < N <= 1000 characters
-	  - The Description of the directory.
+	  - The description of the Directory.
 	
 	* - ``status``
 	  - String (Enum)
@@ -112,7 +116,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``groups``
 	  - Link
 	  - N/A
-	  - A link to the Groups owned by this Directory.
+	  - A link to a collection the Groups owned by this Directory.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -608,6 +612,8 @@ How to Make a Social Directory
 """"""""""""""""""""""""""""""
 
 Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
+
+.. _group-mgmt:
 
 ii. Groups
 ----------
