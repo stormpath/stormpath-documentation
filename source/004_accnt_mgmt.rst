@@ -1126,6 +1126,7 @@ Importing Accounts with Non-MCF Hash Passwords
 
 In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
 
+.. _add-user-customdata:
 
 How to Store Additional User Information as Custom Data
 -------------------------------------------------------

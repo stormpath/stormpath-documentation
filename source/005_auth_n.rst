@@ -2,6 +2,8 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
+.. _authn-header:
+
 .. todo::
 
 	Might want to add some preamble here?
