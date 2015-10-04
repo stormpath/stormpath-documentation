@@ -12,6 +12,10 @@ b. Modelling Tenants in Stormpath
 
 In our :ref:`Account Management <account-mgmt-header>` section we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional **Organization** resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
 
+.. note::
+
+	A Directory or Group can be added to multiple Organizations.
+
 Organizations
 -------------
 
@@ -67,7 +71,7 @@ An individual Organization resource may be accessed via its Resource URI:
 	* - ``status``
 	  - Enum
 	  - ``ENABLED``, ``DISABLED``
-	  - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications. Disabled Organizations cannot be used as Account Stores.
+	  - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
 	
 	* - ``description``
 	  - String
@@ -103,7 +107,7 @@ An individual Organization resource may be accessed via its Resource URI:
 	* - ``accounts``
 	  - Link
 	  - N/A
-	  - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log in to the Organization.
+	  - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
 
 	* - ``tenant``
 	  - Link
@@ -163,12 +167,12 @@ Which would return the following::
 	  }
 	}
 
-Notice here that both the Default Account Store and Group Store are blank which means that Groups and Accounts added using to the Organization (e.g. A POST to ``/v1/organizations/:organizationId/groups``) would fail. 
+Notice here that both the Default Account Store and Group Store are blank which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/:organizationId/groups``) would fail. 
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn-header>`). But before you do this, you must first map some Account Stores to your Organization.
+Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn-header>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
 
 First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a POST to the ``/v1/accountStoreMappings`` endpoint::
 
@@ -196,16 +200,16 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 			"href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
 		},
 		"accountStore": {
-			"href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf" 
+			"href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT" 
 		},
 		"isDefaultAccountStore":true,
 		"isDefaultGroupStore":true
 	}
 
-Which would result in the following 201 Created response::
+Which would result in the following ``201 Created`` response::
 
 	{
-	  "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/9Xs3WhNZFv8BekCUK4HNY",
+	  "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWxiPDKdk",
 	  "listIndex": 0,
 	  "isDefaultAccountStore": true,
 	  "isDefaultGroupStore": true,
@@ -213,33 +217,32 @@ Which would result in the following 201 Created response::
 	    "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
 	  },
 	  "accountStore": {
-	    "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
+	    "href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT"
 	  }
 	}
+
+So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
 Registering an Organization as an Account Store for an Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+As described in :ref:`the Authentication chapter <authn-header>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. Since we are building a multi-tenant app, and the Organization is itself an Account Store, we can map our Organization resource to our Application resource, and thereby enable login for Accounts inside that Organization. 
 
-
-
-Directories VS Groups
----------------------
-
-Sub-Heading L4
-^^^^^^^^^^^^^^
-
-Sub-Heading L5
-""""""""""""""
+To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
 c. Authenticating an Account against an Organization
 ====================================================
 
-Sub-Heading L3
---------------
+Authenticating an Account against an Organization works essentially the same way as described in :ref:`how-login-works`. The only difference is that adding the Organization resource allows for an additional level of Account Stores. 
 
-Sub-Heading L4
-^^^^^^^^^^^^^^
+When a login attempt is made against an Application’s ``/loginAttempts`` endpoint without specifying an Account Store, Stormpath will iterate through the index of Account Stores mapped to the Application, in priority order. For every Account Store entry:
 
-Sub-Heading L5
-""""""""""""""
+- If it is a Directory or Group, attempt to log in on that resource.
+
+- If it is an Organization:
+	
+  - Iterate through the index of Account Stores mapped to the Organization, in priority order. For every Account Store entry:
+	
+    - If it is a Directory or Group, attempt to log in on that resource.
+
+If the login attempt does specify an Organization, then we simply jump to that point in the steps, and the Organization's Account Stores are iterated through as described above. 

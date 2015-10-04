@@ -620,6 +620,9 @@ ii. Groups
 
 **Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. Aside from the relatively simple task of grouping together Accounts, Groups can also be used to implement "roles" for authorization purposes. For more information about this, please see :ref:`rbac`. 
 
+The Group Resource
+^^^^^^^^^^^^^^^^^^
+
 An individual Group resource may be accessed via its Resource URI:
 
 **Group URI**
@@ -765,7 +768,13 @@ Would yield this response::
 b. How to Store Accounts in Stormpath
 =====================================
 
+Accounts
+--------
+
 An **Account** is a unique identity within a Directory, with a unique ``username`` and/or ``email``. An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory and may be in multiple Groups owned by that Directory. 
+
+The Account Resource
+^^^^^^^^^^^^^^^^^^^^
 
 An individual Account resource may be accessed via its Resource URI:
 

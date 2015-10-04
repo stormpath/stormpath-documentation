@@ -16,7 +16,7 @@ Authenticating An Account
 
 After an Account has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating a user within a specific Application against the Application’s Directories and Groups (more on these [below]). That being said, the Application resource is the starting point for authentication attempts.
 
-Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so these values are not passed as clear text.
+Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text.
 
 **loginAttempts Properties**
 
@@ -67,13 +67,18 @@ Which would return the ``href`` for the "Han Solo" Account::
 
 Now the reason why this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what grants this Account the authorization to log in to the Application. 
 
+.. _account-store-mapping:
+
 Account Store Mappings 
 ----------------------
 Both **Directory** and **Group** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
 
 You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's AccountStoreMapping resources. 
 
-An individual Account Store resource may be accessed via its Resource URI:
+The accountStoreMapping Resource
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An individual Account Store Mapping resource may be accessed via its Resource URI:
 
 **accountStoreMapping URI**
 
@@ -146,19 +151,7 @@ A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808
 	  }
 	}
 
-To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
-
-	curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
-     -H "Content-Type: application/json;charset=UTF-8" \
-     -d '{
-           "application": {
-             "href": "YOUR_APPLICATION_HREF"
-           },
-           "accountStore": {
-             "href": "YOUR_DIRECTORY_HREF"
-           }
-         }' \
-     'https://api.stormpath.com/v1/accountStoreMappings'
+.. _how-login-works:
 
 How Login Attempts Work 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -178,7 +171,26 @@ The following flow chart shows what happens when an account attempts to login to
 
 As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
 
-You can assign multiple Account Stores to an Application, but only one is required to enable login for an Application. Assigning multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your various Applications.
+You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log-in to your Application.
+
+.. _create-asm:
+
+Creating A New Account Store Mapping
+""""""""""""""""""""""""""""""""""""
+
+To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
+
+	curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
+     -H "Content-Type: application/json;charset=UTF-8" \
+     -d '{
+           "application": {
+             "href": "YOUR_APPLICATION_HREF"
+           },
+           "accountStore": {
+             "href": "YOUR_DIRECTORY_HREF"
+           }
+         }' \
+     'https://api.stormpath.com/v1/accountStoreMappings'
 
 How to Retrieve Additional Account Data on Authentication 
 ---------------------------------------------------------
