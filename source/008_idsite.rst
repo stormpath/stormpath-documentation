@@ -5,27 +5,27 @@
 a. What is an ID Site?
 ======================
 
-Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — login, registration, and password reset. ID Site can be accessed via your own custom domain like id.mydomain.com and shared across multiple applications to create centralized authentication if needed.
+Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication.
 
-The screens, and even the functionality, of ID site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, adding JavaScript code, adding screens, removing screens, and even changing how the screens behave.
+The screens and functionality of ID Site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, JavaScript code, screens, removing screens, and even changing how the screens behave.
 
 Why should I use Stormpath ID Site?
 -----------------------------------
 
-Building, securing, and maintaining identity screens for your users is time consuming, full of security concerns, and often more complex than many developers estimate. Stormpath ID Site gives you and your development team peace of mind that you will have best in class user security quickly and easily, with very little code— minimizing risk to your project timeline.
+Building, securing, and maintaining identity screens for your users is time consuming, full of security concerns, and often more complex than many developers estimate. Stormpath ID Site gives you and your development team peace of mind that you will have best in class user security quickly and easily, with very little code — minimizing risk to your project timeline.
 
 Stormpath ID Site fully decouples your identity screens from your applications, making it incredibly easy to provide the same login / registration pages for multiple applications — achieving centralized user management and authentication with a clean and easy user experience.
 
 b. How does ID Site Work?
 =========================
 
-To demonstrate how the SDK works, we’ll use an example. Imagine you are building a Stormtrooper application for managing Stormtrooper equipment — like awesome helmets and blasters. The application is trooperapp.com and is using Stormpath ID Site for login and registration.
+To demonstrate how the SDK works, we’ll use an example. Imagine you are building an application for managing Stormtrooper equipment — like awesome helmets and blasters. The application is "Imperial Exchange", available at http://imperialxchange.com/, and it uses Stormpath ID Site for login and registration.
 
-Once trooperapp.com is rendered by the browser, login and registration buttons are available for the unauthenticated user. Clicking on these buttons will call your server-side application at specific endpoints. For illustration, the login button will invoke /login and registration will invoke /register. Your application using the Stormpath SDK will securely redirect the user to the ID Site along with a cryptographically signed JSON Web Token (JWT) that includes information like the Callback URI, Path to a specific ID Site page, and any State you think is important for your application.
+Once ImperialXchange.com is rendered by the browser, login and registration buttons are available for the unauthenticated user. Clicking on these buttons will call your server-side application at specific endpoints. For illustration, the login button will invoke ``/login`` and registration will invoke ``/register``. Your application using the Stormpath SDK will securely redirect the user to the ID Site along with a cryptographically signed JSON Web Token (JWT) that includes information like the Callback URI, the path to a specific ID Site page, and any State you think is important for your application.
 
 On the ID Site, the user will enter their data and complete the appropriate action, like login. ID Site will automatically detect any Workflow or Social Login configurations set in Stormpath and show the appropriate buttons, messaging, and behavior.
 
-After the user has logged in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be http://trooperapp.com/handle-id-site-redirect. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to /handle-id-site-redirect, validate that the JWT is correct, and return an ID Site Account Result. The ID Site Account Result will include the Stormpath Account object and additional information, such as any state that was passed by your application or if the account returned is newly created.
+After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be http://imperialxchange.com/handle-id-site-redirect. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to /handle-id-site-redirect, validate that the JWT is correct, and return an ID Site Account Result. The ID Site Account Result will include the Stormpath Account object and additional information, such as any state that was passed by your application or if the account returned is newly created.
 
 c. ID Site Set-up
 =================
@@ -94,7 +94,7 @@ Based on your ID Site requirements, you may need to more extensively customize t
 
 .. note::
 
-ID Site Customization requires features that are available on Lite Plans and above. More information about pricing can be found here
+	ID Site Customization requires features that are available on Lite Plans and above. More information about pricing can be found here
 
 Prerequisites
 ------------- 
