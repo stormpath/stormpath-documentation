@@ -25,36 +25,140 @@ Once ImperialXchange.com is rendered by the browser, login and registration butt
 
 On the ID Site, the user will enter their data and complete the appropriate action, like login. ID Site will automatically detect any Workflow or Social Login configurations set in Stormpath and show the appropriate buttons, messaging, and behavior.
 
-After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be http://imperialxchange.com/handle-id-site-redirect. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to /handle-id-site-redirect, validate that the JWT is correct, and return an ID Site Account Result. The ID Site Account Result will include the Stormpath Account object and additional information, such as any state that was passed by your application or if the account returned is newly created.
+After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be ``https://imperialxchange.com/idSiteResult``. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to ``/idSiteResult``, validate that the JWT is correct, and return an ``ID Site Account Result``. The ``ID Site Account Result`` will include the Stormpath Account object and additional information, such as any state that was passed by your application or whether or not the Account returned is newly created.
 
-c. ID Site Set-up
+.. image:: http://docs.stormpath.com/images/docs/ID-diagram.png
+
+c. ID Site Set Up
 =================
 
-Setting-up Your ID Site
+Setting Up Your ID Site
 -----------------------
+
+Your ID Site uses a default configuration for testing purposes, but can be fully configured to host customized code or to use your own custom domain.
+
+To set up your ID Site, log into the `Administrator Console <https://api.stormpath.com/>`_ and:
+
+1. Click on the "ID Site" Tab.
+2. Add your application URLs that will be allowed to process the callbacks from the ID Site to the "Authorized Redirect URIs" property. These URLs will be hosted by your application and will use the Stormpath SDK to process the security assertions about the user that ID Site sends back.
+3. Click the "Update" button at the bottom of the page.
+   
+Once you configure your ID site, a default subdomain will be created on ``stormpath.io``. The default ID Site URL follows the format of ``tenant-name.id.stormpath.io`` where ``tenant-name`` is the name of your Stormpath Tenant.
+
+.. warning::
+
+	Your ID Site URL can only be accessed via a redirect from a Stormpath-enabled application because ID Site expects a cryptographically signed token with specific data in it. Simply visiting your ID Site URL in a browser will give you an error.
+
+For more advanced configurations, there are additional properties in the ID Site configuration that can help:
+
+- Set a Logo to appear at the top of the default ID Site
+- Set a custom domain name (like id.mydomain.com) and SSL certificate to host your ID Site from your domain, securely
+- Set a custom GitHub repo to host your ID Site (to host custom code)
 
 Setting Your Own Custom Domain Name and SSL Certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Getting a Domain Name and a Subdomain
-"""""""""""""""""""""""""""""""""""""
+By default, the address of your ID Site is ``tenant-name.id.stormpath.io``. However, you can change the address to a subdomain of your own website, such as ``id.mysite.com``. The Stormtrooper equipment application’s main website is ``imperialxchange.com``, so the initial address of the ID Site might be something like ``happy-rebel.id.stormpath.io``. You can change the ID Site’s address to a subdomain of your company website, like ``id.trooperxchange.com``. In our example, ImperialXchange.com is actually part of a family of sites owned by the parent company Galactic Gear. Galactic Gear wants single-sign-on across its family of websites, so the ID Site is actually found at ``id.galacticgear.co``.
 
-Making the Subdomain an Alias of your ID Site on Stormpath
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+The workflow for changing the address consists of the following steps:
 
-Enabling the Custom Domain in Stormpath's ID Site Configuration 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+1. Get a domain name and a subdomain (if you have not already)
+2. Configure the subdomain as an alias of your ID Site 
+3. Enable the custom domain in Stormpath’s ID Site configuration
+4. Input SSL information for Stormpath to host
+
+For more information on each of these steps, read on.
+
+1. Get a Domain Name and a Subdomain
+""""""""""""""""""""""""""""""""""""
+
+Purchase and register a domain name with a domain registrar. You can purchase and register a domain name from any domain registrar, including GoDaddy, Yahoo! Domains, 1&1, Netregistry, or Register.com. For instructions, see the Help on the registrar’s website.
+
+Create a subdomain for your domain for your ID Site. See the Help on the registrar’s website for instructions on adding a subdomain. You can call the subdomain “id”, “login” or something similar. Example: "id.galacticgear.com".
+
+2. Make the Subdomain an Alias of your ID Site on Stormpath
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+The next step is to make your subdomain an alias of your ID Site on Stormpath. An alias is simply an alternate address for a website. For example, you can make the addresses “id.galacticgear.com” and “happy-rebel.id.stormpath.io” interchangeable as far as web browsers are concerned.
+
+To make your subdomain an alias of your ID Site website on Stormpath, you must use your domain registrar’s tools and UI. These steps will generally require you to:
+
+- Log in to your domain registrar’s control panel.
+- Look for the option to change DNS records.
+- Locate or create the CNAME records for your domain.
+- Point the CNAME record from your subdomain (ex. “id” or “login”) to your ID Site subdomain (ex. happy-rebel.id.stormpath.io)
+
+.. note::
+
+	It takes time for changes to the DNS system to be implemented. Typically, it can take anywhere from a few hours to a day, depending on your Time To Live (TTL) settings in the registrar’s control panel.
 
 
+3. Enable the Custom Domain in Stormpath's ID Site Configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Setting up your Application to use an ID Site
----------------------------------------------
+After making your subdomain an alias of your ID Site on Stormpath, you must enable a custom domain in the Stormpath Admin Console. If you omit this step, your subdomain will point to a error page rather than your ID Site.
 
-Sending A User to the ID Site to Authenticate/Sign-up 
+To set up a custom domain on ID Site, log into the Administrator Console and:
+
+- Click on the "ID Site" Tab
+- Click the "Custom" option under "Domain Name".
+- Type in the subdomain for your ID Site (ex: id.galacticgear.com)
+- Click the "Update" button at the bottom of the page
+
+4. Set up SSL on your ID Site
+"""""""""""""""""""""""""""""
+
+Since Stormpath is hosting the ID Site under your custom subdomain, to secure it using SSL you must provide the SSL certificate information to Stormpath. Creating SSL certificates is an involved task which requires working with a certificate authority such as Verisign and includes:
+
+- Generating a certificate request (CSR) with a Distinguished Name (DN) that matches your subdomain (ex. id.galacticgear.com)
+- Provide the CSR file to a certificate authority such as Verisign. The certificate authority generates a SSL certificate and gives it to you so that it can be installed on Stormpath’s servers.
+
+Once the SSL certificate is retrieved from the certificate authority, you can log-in to the Administrator Console and configure SSL:
+
+- Click on the ID Site Tab
+- Open the zip to retrieve your .pem file if needed.
+- Copy the text for the SSL certificate and Private Key to the appropriate text boxes on the ID Site Tab
+- Click the Update button at the bottom of the page
+- When the ID Site is updated, the SSL information is uploaded to Stormpath and will update your ID Site automatically.
+
+Setting up your Application to use ID Site
+------------------------------------------
+
+In order to set up your application to use ID Site, you will need to install the Stormpath SDK and register the application in Stormpath. The Stormpath SDK and hosted ID Site will do most of the work for your application, including signing and unpacking secure communication between themselves. With the SDK installed, you will need to implement two steps:
+
+1. Send a User to the ID Site to Login, Register, etc.
+2. Consume responses from the ID Site to your Application
+
+1. Send A User to the ID Site to Authenticate/Sign-up 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Consuming Responses from the ID Site to Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When a user wants to log in to or register for your application, you will need to redirect them to your ID Site. The Stormpath SDK will generate a secure URL for the HTTP redirect on your application’s behalf and include data needed by ID Site.
+
+A typical set of steps in your application are as follows:
+
+1. You render your application with a login button
+2. The user clicks the login button which will send a request to your server
+3. Your server will use the Stormpath SDK to get the redirection URL for the ID Site
+4. Your server responds with an HTTP 302 which redirects the user to the ID Site URL
+
+To build an ID Site URL for redirection, you must ask the Stormpath Application object for an ``ID Site URL Builder``. From the builder, you can set important properties to pass information and make sure the ID Site can call back to your application.
+
+.. todo::
+
+	In the original guide, code examples go here.
+
+The ID Site URL Builder will allow you to configure the URL to include:
+
+- ``Callback URI`` (required) – The callback URI will be called by ID Site when a successful login or registration event occurs. The Callback URI is required for the builder and it must match an Authorized Redirect URI in the Admin Console’s ID Site settings. See the Setting up your ID Site section in this guide.
+
+- ``Path`` (optional) – a relative link to a page in your ID Site. The default ID Site does not require a path and will default to the login page. If you would like to send the user to a specific page in ID site, like the registration page or the forgot password page, you would set that in the Path. If you are using the default ID Site, the URLs are:
+  - Registration – ``/#/register``
+  - Forgot Password – ``/#/forgot``
+
+- ``State`` (optional) – a string that stores information that your application needs after the user is redirected back to your application. You may need to store information about what page the user was on, or any variables that are important for your application.
+
+2. Consume Responses from the ID Site to Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Handling Errors from ID Site
 """"""""""""""""""""""""""""
