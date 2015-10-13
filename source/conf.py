@@ -122,10 +122,22 @@ html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-# html_theme_options = {}
+html_theme_options = {
+  
+# Render the next and previous page links in navbar. (Default: true)
+'navbar_sidebarrel': True,
 
-# Add any paths that contain custom themes here, relative to this directory.
-# html_theme_path =
+# Render the current pages TOC in the navbar. (Default: true)
+'navbar_pagenav': True,
+
+# Tab name for the current pages TOC. (Default: "Page")
+'navbar_pagenav_name': "Page",
+
+# Global TOC depth for "site" navbar tab. (Default: 1)
+# Switching to -1 shows all levels.
+'globaltoc_depth': 2,
+
+}
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -163,8 +175,9 @@ html_static_path = ['_static']
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-   '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-   'using/windows': ['windowssidebar.html', 'searchbox.html'],
+   'index': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+   '**': ['localtoc.html', 'sourcelink.html', 'searchbox.html'],
+   'using/windows': ['windowssidebar.html', 'searchbox.html']
 }
 
 # Additional templates that should be rendered to pages, maps page names to
@@ -279,8 +292,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, 'Stormpath', u'Stormpath Documentation',
-   author, 'StormpathDocumentation', 'One line description of project.',
-   'Miscellaneous'),
+   author, 'Stormpath', 'Documentation for the Stormpath REST API'),
 ]
 
 # Documents to append as an appendix to all manuals.
