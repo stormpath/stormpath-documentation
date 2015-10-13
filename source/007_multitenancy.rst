@@ -1,6 +1,7 @@
-****************************
-Multi-Tenancy with Stormpath
-****************************
+*******************************
+7. Multi-Tenancy with Stormpath
+*******************************
+.. _multitenancy-header:
 
 a. What Is a Multi-Tenant Application? 
 ======================================

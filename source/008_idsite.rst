@@ -128,303 +128,126 @@ Once the SSL certificate is retrieved from the certificate authority, you can lo
 Setting up your Application to use ID Site
 ------------------------------------------
 
-In order to set up your application to use ID Site, you will need to install the Stormpath SDK and register the application in Stormpath. The Stormpath SDK and hosted ID Site will do most of the work for your application, including signing and unpacking secure communication between themselves. With the SDK installed, you will need to implement two steps:
-
-1. Send a User to the ID Site to Login, Register, etc.
-2. Consume responses from the ID Site to your Application
-
-1. Send A User to the ID Site to Authenticate/Sign-up 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-When a user wants to log in to or register for your application, you will need to redirect them to your ID Site. The Stormpath SDK will generate a secure URL for the HTTP redirect on your application’s behalf and include data needed by ID Site.
-
-A typical set of steps in your application are as follows:
-
-1. You render your application with a login button
-2. The user clicks the login button which will send a request to your server
-3. Your server will use the Stormpath SDK to get the redirection URL for the ID Site
-4. Your server responds with an HTTP 302 which redirects the user to the ID Site URL
-
-To build an ID Site URL for redirection, you must ask the Stormpath Application object for an ``ID Site URL Builder``. From the builder, you can set important properties to pass information and make sure the ID Site can call back to your application.
-
-.. todo::
-
-	In the original guide, code examples go here.
-
-The ID Site URL Builder will allow you to configure the URL to include:
-
-- ``Callback URI`` (required) – The callback URI will be called by ID Site when a successful login or registration event occurs. The Callback URI is required for the builder and it must match an Authorized Redirect URI in the Admin Console’s ID Site settings. See the Setting up your ID Site section in this guide.
-
-- ``Path`` (optional) – a relative link to a page in your ID Site. The default ID Site does not require a path and will default to the login page. If you would like to send the user to a specific page in ID site, like the registration page or the forgot password page, you would set that in the Path. If you are using the default ID Site, the URLs are:
-  - Registration – ``/#/register``
-  - Forgot Password – ``/#/forgot``
-
-- ``State`` (optional) – a string that stores information that your application needs after the user is redirected back to your application. You may need to store information about what page the user was on, or any variables that are important for your application.
-
-2. Consume Responses from the ID Site to Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once the user has logged in, created, or verified an account, the ID Site will redirect the user along with a security assertion back to your application. ID Site will use the Callback URI you included when you first redirected the user. The Stormpath SDK will verify the cryptographic signature on the assertion and unpack the user information.
-
-.. todo::
-
-	More code examples here in the original...
-
-The ``AccountResult`` will be able to give your application the ability to understand:
-
-- The Account resource for the successful authentication result
-- A boolean that will return ``true`` for a newly created account
-- A String of the state that was set when using the ID Site URL Builder
-
-Once the account is retrieved, you can get access to additional account properties that are important to your application, such as Groups or CustomData.
-
-Handling Errors from ID Site
-""""""""""""""""""""""""""""
-
-During communication from your application to ID Site, there are specific errors that can occur. These errors will redirect back to your application through the specified callbackUri. Your application has the ability to handle these errors or even send the user back to ID Site.
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Error Code
-	  - Message
-	  - Developer Message
-	  - Explanation
-
-	* - ``10011``
-	  - "Token is invalid"
-	  - "Token is no longer valid because it has expired"
-	  - Stormpath uses a token with signed information to take the user from your application to ID Site, if the redirect takes too long, the token will expire. This usually can occur if your user experiencing severe internet connectivity problems.
-
-	* - ``11001``
-	  - "Token is invalid"
-	  - "Token is invalid because the specified Organization nameKey does not exist in your Stormpath Tenant"
-	  - When using ID Site for multitenancy, if you specify an ``organizationNameKey`` for an organization that does not exist, this error will occur.
-
-	* - ``11002``
-	  - "Token is invalid"
-	  - "Token is invalid because the specified Organization is disabled"
-	  - When using ID Site for multitenancy, if you specify an ``organizationNameKey`` for an organization that is disabled, this error will occur. Disabled organizations can not be logged into.
-
-	* - ``11003``
-	  - "Token is invalid"
-	  - "Token is invalid because the specified organization nameKey is not one of the Application’s assigned Account Stores"
-	  - When using ID Site for multitenancy, if you specify an ``organizationNameKey`` for an organization that isn’t an account store for the application, this error will occur.
-
-	* - ``12001``
-	  - "The session on ID Site has timed out."
-	  - "The session on ID Site has timed out. This can occur if the user stays on ID Site without logging in, registering, or resetting a password."
-	  - When your user arrives at ID Site, there is a 5 minute session where they need to take an action (login, register, or reset their password). If they timeout, the next action will redirect to your ``callbackUri`` with this error.
-
-Single-Sign-On For Multiple Applications 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-ID Site supports single-sign-on (SSO) for multiple applications. SSO allows your user to log-in to ID Site once, and allows ID Site to send a cryptographically signed JSON Web Token (JWT) to other applications.
-
-The way that SSO works is that ID Site will keep a configurable session for authenticated users. When a user is sent from your application to ID Site, if ID Site can confirm that the session is still valid for the user, they will be automatically redirected to the ``callbackUri``. This ``callbackUri`` can be the originating application or any application supported by a Stormpath SDK.
-
-To enable these applications for SSO, there is some configuration needed in the Admin Console. This includes setting up the Authorized Redirect URIs and configuring session properties.
-
-To set up the Authorized Redirect URIs, log into the Admin Console and:
-
-- Click on the "ID Site" tab
-- Add Authorized Redirect URIs for each of your applications you want to use for SSO. This allows Stormpath to only redirect the user to applications that you configured.
-
-When on the ID Site tab, configure the "Session Max Age" and "Session Time to Live" to meet your application’s needs.
-
-- Session Max Age – The maximum time the session is allowed to be valid, regardless on how often the user visits ID Site.
-- Session Time to Live – The maximum time that the session is allowed to idle.
-
-.. todo::
-
-	Here, once again, there's more code samples...
-
-
-Logging-out of ID Site
-^^^^^^^^^^^^^^^^^^^^^^
-
-Since ID Site keeps a session for a user if the ``Session Max Age`` and ``Session Idle Time`` are configured, ID Site also gives you the ability to log the user out. This will ultimately remove the session from ID Site.
-
-.. todo::
-
-	Original has code samples here.
-
-Once the user is logged out of ID Site, they are automatically redirected to the ``callbackUri`` which was specified using the ``ID Site URL Builder``. Your application will know that the user logged out because the resulting ``ID Site Account Result`` will contain a status claim of ``LOGOUT``. From here, your application can let the user know they have successfully logged out or show them a homepage.
-
-Using ID Site for Multitenancy
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-When a user wants to log in to your application, you may want to specify an tenant for the user to log in to. Stormpath ID Site is configurable to support multitenancy with Organization resources. An Organization in Stormpath is a resource used to group together Account Stores for an Application and can represent a tenant for your application. These Organization resources can be mapped to your Application as Account Stores.
-
-To imagine how this works, we can go back to our previous example. You are building a trooper application, ImperialXchange.com where you have three different Organizations:
-
-- Stormtroopers
-- Snowtroopers
-- Sandtroopers
-
-Each of these types of troopers can only access their own Organization. To be able to support this, you create three Organization resources in Stormpath, specifying the ``nameKey`` that matches the subdomain.
-
-Once these Organizations are mapped to your Application as Account Stores, you can use ID Site in a multitenant fashion. Including:
-
-- Specifying the organization, which forces the user to log in to a particular Organization.
-- Allowing the user to specify their organization, which gives an additional login form field for the user to fill out while logging in or resetting their password.
-
-Specifying The Organization
-"""""""""""""""""""""""""""
-
-In the case where you are using a subdomain to designate the Organization, you can tell ID Site which Organization the user is logging in to. For example, when the user is logging in to the subdomain of ``stormtropper.trooperapp.com``, they would be logging into the Organization with the ``nameKey`` value ``stormtrooper``.
-
-.. todo::
-
-	Code samples here 
-
-Allowing the User to Specify their Organization on ID Site
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-In some cases, you may want your users to specify the organization when they are on ID Site. This will require that your users know their organization name key when logging into ID Site. 
-
-.. todo::
-
-	To achieve this, you need code samples
-
-Using Subdomains
-""""""""""""""""
-
-.. todo::
-
-	Almost nothing here but code samples.
-
-Using ID Site to Generate OAuth 2.0 Access Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-NOT DOCUMENTED - https://stormpath.atlassian.net/wiki/display/AM/ID+Site+OAuth+Access+Token+Grant+Type
-
-Using ID Site as your Password Reset page for your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-NOT DOCUMENTED - 
-
-Customizing ID Site
-===================
-
-Your ID Site can be customized to have your own look and feel. Simple customization, like adding a logo, can be done via Stormpath’s Admin Console.
-
-Based on your ID Site requirements, you may need to more extensively customize the ID Site’s look and feel or use the default ID site as a base for enhancements. This section will explain how you can leverage the existing Stormpath ID Site source code to make modifications.
-
-.. note::
-
-	ID Site Customization requires features that are available on Lite Plans and above. More information about pricing can be found `here <https://stormpath.com/pricing/>`_.
-
-Prerequisites
-------------- 
-Customizing and creating your own ID Site requires that you have already follow the set-up steps described :ref:`earlier in this guide <idsite-set-up>`. Having ID Site set up and working with the default Stormpath ID Site is required to work with this guide.
-
-The other installation prerequisites are:
-
-- `NodeJS <http://nodejs.org/download/>`_
-- `Bower <http://bower.io/>`_
-
-Getting Set Up 
---------------
-
-Stormpath hosts the ID Site’s source on `Github <https://github.com/stormpath/idsite-src>`_. This repository is the development environment for the Stormpath-hosted ID Site. You can use this repository to build the same single page application that Stormpath provides, or you can modify it to suit your needs. The single page application uses `AngularJS <https://angularjs.org/>`_ and `Browserify <http://browserify.org/>`_. It is built using `Grunt <http://gruntjs.com/>`_ and `Yeoman <http://yeoman.io/>`_.
-
-The ID Site contains all the HTML, CSS, JavaScript assets, as well as scripts needed to build and maintain your own ID Site. To get started, there are four steps required:
-
-1. Set up a fork of ID Site in Github to clone locally
-2. Install dependencies and build the ID Site using Grunt
-3. Host the built ID Site on Github
-4. Configure Stormpath to use your ID Site
-  
-Set-up a Fork of ID Site in Github to Clone Locally
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-First, it is required to fork Stormpath’s ID Site source git repository. This will allow you to have a fork of the git repository that you can modify when customizing. To fork a Github repository it is required that you have a Github account.
-
-To fork the ID Site source git repository, click here and select the destination for the fork.
-
-Once Github forks the repository, you can clone it locally by running this command from the terminal::
-
-	git clone https://github.com/YOUR_USERNAME/idsite-src/
-
-Install Dependencies and Build the ID Site Using Grunt 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once you have a local clone of a fork of the ID Site source repository, you need to install the dependencies required to build and run the ID Site. To accomplish this, in your terminal:
-
-1. Install grunt if necessary: ``npm install -g grunt-cli``
-2. Navigate to the local ``idsite-src`` folder
-3. Run: ``npm install``
-4. Run: ``bower install``
-
-After installing the dependencies, you can build the site by running::
-
-	grunt build
-
-This will produce a ``dist`` folder with the compiled and minified ID Site.
-
-Host the Built ID Site on GitHub
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once the ID Site is built to the ``dist`` folder, it needs to be hosted on Github. This will allow Stormpath to clone and host the ID Site once configured in the Admin Console.
-
-To host the built ID Site on Github:
-
-1. Create a new Github repo by visiting this link: https://github.com/new
- 
-   - Make sure the git repository is marked as public
-   - Once created – note the URL for the git repo (it will end with .git). It will be used in the next couple steps
-
-2. Create a new git repo for the build ID Site
-
-   - Navigate into the ``dist`` folder
-   - Run: ``git init`` to initialize the git repository
-   - Run: ``git add .`` to add the built files to staging
-   - Run: ``git commit`` to commit these to the repository
-
-3. Create a remote for your dist git repo for Github and push your ID Site to Github
-
-   - Run: ``git remote add origin YOUR_GIT_REPO_URL``
-   - Run: ``git push -u origin master``
-
-Configure Stormpath to use your ID Site
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Once the built ID Site is hosted on Github, you can use the Stormpath Administrator Console to point to your git repository.
-
-To update your ID Site configuration to use your fork:
-
-1. Log in to the Stormpath Admin Console
-
-2. Click on the "ID Site" tab
-
-3. Under "Git Repository HTTPS URL"
-
-   - Click the Custom radio button
-   - Add your Github repository URL to the textbox. Ex: https://github.com/stormpath/my-custom-id-site.git
-
-4. Scroll to the bottom of the dialog and click Update
-
-Once the configuration is updated, Stormpath will clone your repository and host it on Stormpath infrastructure to provide your ID Site.
-
-.. note::
-
-	Stormpath can also be pointed to a specific branch to use for the ID Site, by default Stormpath uses the master branch. To configure this, update the Git Repository Branch Name property of the ID Site confguration page in the Administrator Console
-
-Once the ID Site configuration is updated, you can view it by visiting a web application that was set up to use ID Site using the :ref:`instructions for setting up an application to use an ID Site <idsite-app-set-up>`.
-
-Building an ID Site with stormpath.js
-=====================================
-
-Stormpath provides a library to enable developers to build their own ID Site outside of Stormpath’s default AngularJS ID Site. This is `hosted on Github <https://github.com/stormpath/stormpath.js>`_ with installation and instructions. This is useful for developers that want to Stormpath to host your login and user management screens but require full control of the site or want to leverage another JavaScript framework for building out their site.
-
-Getting a User to ID Site
--------------------------
-
-Handling the Callback to your Application From ID Site
-------------------------------------------------------
-
-Logging-out of ID Site with REST 
---------------------------------
+In order to set up your application to use ID Site, you will need to install the Stormpath SDK and register the application in Stormpath. The Stormpath SDK and hosted ID Site will do most of the work for your application, including signing and unpacking secure communication between themselves. For more information, please see [the relevant Stormpath SDK documentation].
 
 Using ID Site Without an SDK
 ============================
+
+The Stormpath SDKs help developers quickly integrate communication from Stormpath's ID Site to their application. However, It is possible to use ID Site without an Stormpath SDK using the REST API. To use ID Site with the REST API, it is required to understand how to generate and sign JSON Web Tokens (JWT).
+
+Below are language specific libraries that Stormpath has sanity tested with ID Site.
+
+.NET JWT - https://github.com/johnsheehan/jwt
+Ruby JWT - https://github.com/progrium/ruby-jwt
+Go JWT - https://github.com/dgrijalva/jwt-go
+PHP JWT - https://github.com/firebase/php-jwt
+Python JWT - https://github.com/jpadilla/pyjwt
+Java JWT - https://github.com/jwtk/jjwt
+Node JWT - https://github.com/jwtk/njwt
+
+To use ID Site without an Stormpath SDK there are two flows that need to be implemented:
+
+1. Getting a user to ID Site
+2. Handling the Callback to your Application from ID Site
+
+So, let's show you how to do exactly that!
+
+1. Getting a User to ID Site
+----------------------------
+
+When a user wants to login to or register for your application, you will need to redirect them to your ID Site.
+
+A typical set of steps in your application are as follows:
+
+#. You render your application with a login button
+#. The user clicks the login button which will send a request to your server
+#. Your server will generate a JWT and include the valid information
+#. Your server responds with an HTTP 302 which redirects the user to the ID Site SSO endpoint
+#. Stormpath will redirect the user to your ID Site
+
+The JWT must meet these specifications
+
+- Signed using your Stormpath API Key Secret
+- Signed using the HS256 algorithm
+
+The claims for the JWT are as follows:
+
+.. list-table::
+	:widths: 15 10 60
+	:header-rows: 1
+
+	* - Claim Name 
+	  - Required?
+	  - Valid Value(s)
+
+	* - ``iat``
+	  - Yes
+	  - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
+
+	* - ``iss``
+	  - Yes
+	  - The issuer of the token. You should put your Stormpath API Key ID here.
+
+	* - ``sub``
+	  - Yes
+	  - The subject of the token. You should put your Stormpath Application resource's href here.
+
+	* - ``cb_uri``
+	  - Yes
+	  - The callback URI to use once the user takes an action on the ID Site. This must match a "Authorized Redirect URI" in the Stormpath ID Site configuration.
+
+	* - ``jti``
+	  - Yes
+	  - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
+
+	* - ``path``
+	  - No
+	  - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, or ``/#/forgot`` for the password reset page.
+
+	* - ``state``
+	  - No
+	  - The state of the application that you need to pass through the ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
+
+	* - ``organizationNameKey``
+	  - No
+	  - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+
+	* - ``showOrganizationField``
+	  - No 
+	  - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
+
+Once the JWT is generated by your server, you must respond with or send the browser to::
+
+	HTTP/1.1 302 Found
+	Location: https://api.stormpath.com/sso?jwtRequest=%GENERATED_JWT%
+
+The Stormpath ``/sso`` endpoint will validate the JWT, and redirect the user to your ID Site.
+
+2. Handling the Callback to your Application from ID Site
+---------------------------------------------------------
+
+Once the user signs up or logs in to your application, they will be redirected back to your application using the ``cb_uri`` callback property that was set in the JWT. In addition to the callback URI, ID Site will include a ``jwtResponse`` parameter in the query. For example, if the specified ``cb_uri`` is "https://yourapp.com/dashboard" then the user will be redirected to::
+
+	https://yourapp.com/dashboard?jwtResponse={GENERATED_ID_SITE_ASSERTION_JWT}
+
+The ``jwtResponse`` represents a JWT that provides a signed security assertion about who the user is and what they did on ID Site.
+
+Before you trust any of the information in the JWT, you MUST:
+
+- Validate the signature with your API Key Secret from Stormpath. This will prove that the information stored in the JWT has not been tampered with during transit.
+- Validate that the JWT has not expired
+
+.. note::
+
+	If you are using a library to generate a JWT, these usually have methods to help you validate the JWT. Some libraries will only validate the signature, but not the expiration time. Please review your JWT library to verify its capabilities.
+
+
+
+
+
+
+
+
+
+Logging Out of ID Site with REST 
+--------------------------------
