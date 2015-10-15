@@ -40,7 +40,7 @@ Once you have the Application resource you may attempt authentication by sending
 	  - The Base64 encoded ``username``:``plaintextPassword`` pair.
 	    
 	* - ``accountStore``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - An optional link to the Application’s Account Store (Directory or Group) that you are certain contains the account attempting to login. Specifying this attribute can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
 	 
@@ -116,12 +116,12 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
 	  - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
 	
 	* - application
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the mapping’s Application. **Required.**
 
 	* - accountStore
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the mapping's Account Store (either a Group or Directory) containing Accounts that may login to the application. **Required.** 
 	  

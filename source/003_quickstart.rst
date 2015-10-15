@@ -243,7 +243,7 @@ If the authentication attempt is successful (the username and password match and
 
 You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
-If the authentication attempt fails, you will see an `error response </rest/product-guide#errors>`_ instead::
+If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/rest/product-guide/#errors>`_ instead::
 
     {
       "status": 400,

@@ -80,38 +80,38 @@ An individual Organization resource may be accessed via its Resource URI:
 	  - The description of the Organization.
 
 	* - ``customData``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
 
 	* - ``defaultAccountStoreMapping``
-	  - Link
+	  - String (Link)
 	  - ``null`` or Link
 	  - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
 
 	* - ``defaultGroupStoreMapping``
-	  - Link
+	  - String (Link)
 	  - ``null`` or Link
 	  - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
 	
 
 	* - ``accountStoreMappings``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
 
 	* - ``groups``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to a collection of the Groups wrapped by this Organization.
 
 	* - ``accounts``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
 
 	* - ``tenant``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Stormpath Tenant that owns this Organization.
 

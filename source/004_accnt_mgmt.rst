@@ -74,47 +74,47 @@ An individual Directory resource may be accessed via its Resource URI:
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``tenant``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the owning Tenant.
 
 	* - ``provider``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Directory's Provider. 
 
 	* - ``customData``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the Directory's customData resource that you can use to store your own Directory-specific custom fields.
 
 	* - ``passwordPolicy``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Directory’s Password Policy
 	    
 	* - ``accountCreationPolicy``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Directory’s Account Creation Policy
 
 	* - ``accounts``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Accounts owned by this Directory.
 	
 	* - ``applicationMappings``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to any Application Mapping resources for this Directory.
 	    
 	* - ``applications``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to a collection of all the Applications mapped to this Directory. 
 
 	* - ``groups``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to a collection the Groups owned by this Directory.
 
@@ -249,7 +249,7 @@ An individual Provider resource may be accessed via its Resource URI:
 	  - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
 	
 	* - ``agent``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`make-mirror-dir`.
 
@@ -325,17 +325,17 @@ An Agents collection may be accessed via its Resource URI:
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``directory``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Directory resource that the Agent belongs to. 
 	
 	* - ``download``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link that allows this Agent to be downloaded for installation.
 	
 	* - ``tenant``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Tenant that owns the Directory this Agent belongs to.
 
@@ -671,32 +671,32 @@ An individual Group resource may be accessed via its Resource URI:
 	  - Indicates when this resource’s properties were last modified.
 
 	* - ``customData``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
 
 	* - ``directory``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Directory resource that the Group belongs to. 
 	
 	* - ``tenant``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Tenant that owns the Directory containing this Group.
 
 	* - ``accounts``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to a collection of the Accounts that are contained within this Group. 
 
 	* - ``accountMemberships``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to any Account Memberships for this Group.
         
 	* - ``applications``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to any Applications associated with this Group.
 
@@ -849,57 +849,57 @@ An individual Account resource may be accessed via its Resource URI:
 	  - Indicates when this resource’s properties were last modified.
 
 	* - ``emailVerificationToken``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
 
 	* - ``customData``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
 	
 	* - ``providerData``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the information from the owner Directory's Provider.
 	    
 	* - ``directory``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Account's Directory.
 
 	* - ``tenant``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Tenant that owns the Account’s Directory.  
 
 	* - ``groups``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Groups that the Account belongs to. 
 	    
 	* - ``groupMemberships``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Group Memberships that the Account belongs to.
 
 	* - ``applications``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Applications that the Account belongs to.
 	    
 	* - ``apiKeys``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the apiKeys for this Account.
 	
 	* - ``accessTokens``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
 	
 	* - ``refreshTokens``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. 
 
@@ -1003,12 +1003,12 @@ If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captai
 	  - The resource's fully qualified location URL.
 	
 	* - ``account``
-	  - Link 
+	  - String (Link) 
 	  - N/A
 	  - A link to the Account for this Group Membership. 
 	 
 	* - ``group``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A link to the Group for this Group Membership.
 	
@@ -1248,12 +1248,12 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	  - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
 	  	  
 	* - ``strength``
-	  - Link
+	  - String (Link)
 	  - N/A 
 	  - A link to the password strength requirements for the Directory.
 	
 	* - ``resetEmailTemplates``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A collection of email templates that can be used for sending the password reset email. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 	  
@@ -1263,7 +1263,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	  - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
 	  
 	* - ``resetSuccessEmailTemplates``
-	  - Link
+	  - String (Link)
 	  - N/A
 	  - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
