@@ -116,7 +116,7 @@ An individual Directory resource may be accessed via its Resource URI:
 	* - ``groups``
 	  - String (Link)
 	  - N/A
-	  - A link to a collection the Groups owned by this Directory.
+	  - A link to a collection the Groups mapped to this Directory.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
