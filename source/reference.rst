@@ -330,7 +330,7 @@ If you want to interact with multiple resources, you must do so with a Collectio
 .. _about-pagination:
 
 Pagination 
-----------
+^^^^^^^^^^
 
 If a Collection Resource represents a large enough number of resource instances, it will not include them all in a single response. Instead a technique known as pagination is used to break up the results into one or more pages of data. You can request additional pages as separate requests.
 
@@ -341,15 +341,105 @@ There are two optional query parameters that may be specified to control paginat
 - ``offset``: The zero-based starting index in the entire collection of the first item to return. Default is 0.
 - ``limit``: The maximum number of collection items to return for a single request. Minimum value is 1. Maximum value is 100. Default is 25.
 
+*Usage*
+
+This following request will retrieve a Tenant’s Applications Collection Resource from the server with page results starting at index 10 (the 11th element), with a maximum of 40 total elements::
+
+	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+
+This would result in the following response::
+
+	HTTP/1.1 200 OK
+
+	{
+	  "href": "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+	  "offset": 10,
+	  "limit": 40,
+	  "items" : [
+	    [...]
+	  ]
+	}
+
 .. _about-sorting:
 
 Sorting
--------
+^^^^^^^^^^
+A request for a Collection Resource can contain an optional ``orderBy`` query parameter. The query parameter value is a URL-encoded comma-delimited list of ordering statements. Each ordering statement identifies a **sortable attribute**, and whether you would like the sorting to be **ascending or descending**.
+
+For example, a sorted request (where %2C is the URL encoding for the comma character) might look like this::
+
+	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+
+When URL-decoded, the URL looks like this::
+
+	https://api.stormpath.com/v1/accounts?orderBy=orderStatement1,orderStatement2,...,orderStatementN
+
+Each ``orderStatement`` is defined as follows::
+
+	``sortableAttributeName optionalAscendingOrDescendingStatement``
+
+- ``sortableAttributeName`` is the name of a sortable attribute of a resource in the Collection. Sortable attributes are non-complex and non-link attributes, such as integers and strings.
+- ``optionalAscendingOrDescendingStatement`` is composed of the following:
+   - a space character (``%20`` when URL encoded) followed by:
+   - ``asc`` (ascending) or ``desc`` (descending)
+   - If not included, ``asc`` is assumed by default 
+
+So, putting this all together now. If we wanted to sort all Accounts associated with an Application by Surname ascending and given name descending:
+
+- our two ``sortableAttributeName`` parameters are: ``surname`` and ``givenName``
+- our ``optionalAscendingOrDescendingStatement`` is ``asc`` for ``surname`` and ``desc`` for ``givenName``
+
+Which would look like this::
+
+	orderBy=surname,givenName desc
+
+Properly URL encoded it would look like this::
+
+	https://api.stormpath.com/v1/applications/someRandomId/accounts?orderBy=surname%20asc%2CgivenName%20desc
+
+.. note::
+
+	Since ``asc`` is the default, we could actually omit it::
+
+		?orderBy=surname%2CgivenName%20desc
 
 .. _about-search:
 
 Search 
-------
+^^^^^^^^^^
+
+Search in the contest of the Stormpath REST API means retrieving only the members of a Collection that match a specific query. You search by sending a GET for a Collection, along with query parameters, and Stormpath returns only the resources from the Collection that match your parameters. 
+
+There are currently three different types of searches that might be performed: 
+
+#. A generic :ref:`filter-based search <search-filter>` 
+#. A more targeted :ref:`attribute-based search <search-attribute>`. 
+#. An even more targeted kind of attribute search, the :ref:`Datetime <search-datetime>` search.
+
+The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
+
+.. _search-filter:
+
+Filter Search
+"""""""""""""
+
+A filter search consists of specifying a query parameter ``q`` and a corresponding search value on a Collection Resource URL::
+
+	/v1/someCollection?q=some+criteria
+
+For example, to search across an Application’s Accounts for any Account that has a searchable attribute containing the text ‘Joe’:
+
+	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
+
+.. _search-attribute:
+
+Attribute Search
+""""""""""""""""
+
+.. _search-datetime:
+
+Datetime Search 
+"""""""""""""""
 
 .. _about-links:
 

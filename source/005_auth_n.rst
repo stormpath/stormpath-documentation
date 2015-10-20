@@ -46,9 +46,9 @@ Once you have the Application resource you may attempt authentication by sending
 	 
 So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
-We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBVa6tfR``:
+We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBVa6tfR``::
 
-``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts``
+	https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts
 
 With the following body, using the Base64 encoded ``value`` from above::
 
@@ -65,7 +65,7 @@ Which would return the ``href`` for the "Han Solo" Account::
 	  }
 	}
 
-Now the reason why this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what grants this Account the authorization to log in to the Application. 
+Now the reason why this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application. 
 
 .. _account-store-mapping:
 
@@ -156,7 +156,7 @@ A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808
 How Login Attempts Work 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-When the "Han Solo" Account tried to log in to the Application, the user submitted a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned Account Stores (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
+When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned Account Stores (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
 Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
 
@@ -236,7 +236,7 @@ In this section, we will discuss how to use Stormpath to use Stormpath to genera
 Introduction to Token-Based Authentication
 ------------------------------------------
 
-Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this required **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
+Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this requires **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
 
 **Token-based authentication** is a alternate, stateless strategy. With token-based authentication, you secure an application based on a security token that is generated for the user on authentication and then stored on the client-side. Token-based Authentication is all about removing the need to store information on the server while giving extra security to keep the token secure on the client. This help you as a developer build stateless and scalable applications.
 
@@ -249,9 +249,11 @@ OAuth 2.0 is an authorization framework and provides a protocol to interact with
 
 Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
 
-**Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
-**Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
-**Client Credentials Grant Type**: Provides the ability to exchange an API Key for the Access Token. This is supported through the API Key Management feature.
+- **Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
+
+- **Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
+
+- **Client Credentials Grant Type**: Provides the ability to exchange an API Key for the Access Token. This is supported through the API Key Management feature.
 
 To understand how to use Token-based Authentication, we need to talk about the different types of tokens that are available.
 
@@ -339,7 +341,7 @@ So you would send a POST to the following URL::
 
 	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
-With the following header, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``::
+And, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``, we would include the following header::
 
 	Content-Type: application/x-www-form-urlencoded
 
@@ -398,7 +400,7 @@ Validating an Access Token
 
 Once an ``access_token`` has been generated, we have taken care of the Authentication part of our workflow. Now, the OAuth token can be used to authorize individual requests that the user makes. To do this, the client will need to pass it to your application.
 
-For example, if you have a route ``https://yourapplication.com/secure-resource``, the client would request authorization to access the resource by passing the access token::
+For example, if you have a route ``https://yourapplication.com/secure-resource``, the client would request authorization to access the resource by passing the access token as follows::
 
 	HTTP/1.1
 	GET /secure-resource
@@ -451,26 +453,26 @@ To see how to validate tokens with the Stormpath REST API, let's go back to the 
 
 To recap, we have done the following: 
 
-1. We have sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type we wanted, as well as our user's username and password.
-2. We received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type we wanted, as well as our user's username and password.
+2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
 The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header::
 
 	HTTP/1.1
 	GET /secure-resource
 	Host: https://yourapplication.com
-	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+	Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
 The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
 
-	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
 
 If the access token can be validated, Stormpath will return a 302 to the Access Token resource::
 
 	HTTP/1.1 302 Location Found
 	Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
 
-With the confirmation that token is valid, you can now allow the user access to the secured resource that they requested.
+With the confirmation that the token is valid, you can now allow the user access to the secured resource that they requested.
 
 Validating the Token Locally
 """"""""""""""""""""""""""""
@@ -480,7 +482,7 @@ Local validation would also begin at the point of the request to a secure resour
 	HTTP/1.1
 	GET /secure-resource
 	Host: https://yourapplication.com
-	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+	Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
 The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token. This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of our `Integration Guides <https://docs.stormpath.com/home/>`_.
 
@@ -497,7 +499,7 @@ And this in the body::
 
 	grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
 
-Will receive this response::
+Would receive this response::
 
 	{
 	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
