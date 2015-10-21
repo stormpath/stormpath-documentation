@@ -70,11 +70,11 @@ All Stormpath SDKs (currently Java, Ruby, PHP, and Python) use this more secure 
 
 Finally, if you would like to use Stormpath Digest authentication in a programming language that Stormpath does not yet support, you can attempt to port the algorithm to that language. You can try to replicate the algorithm and use Stormpath existing code as examples or the documented algorithm:
 
-- Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`__ (the **authenticate** method)
-- Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`__
-- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Stormpath/Http/Authc/Sauthc1RequestSigner.php>`__ (the **signRequest** method)
-- Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
-- Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`__ (the **sign_request** method)
+- Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`_ (the **authenticate** method)
+- Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`_
+- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Stormpath/Http/Authc/Sauthc1RequestSigner.php>`_ (the **signRequest** method)
+- Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`_ (the **call** method)
+- Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`_ (the **sign_request** method)
 
 If you port the algorithm to other languages, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
 
@@ -449,9 +449,9 @@ So the following query::
 Returns all Accounts where:
 
 - Each Account is owned by the caller’s Tenant AND
-- The Account's ``givenName`` equals or contains ‘joe’ (case insensitive) OR
-- The Account's ``middlename`` equals or contains ‘joe’ (case insensitive) OR
-- The Account's ``email`` equals or contains ‘joe’ (case insensitive) OR
+- The Account's ``givenName`` equals or contains "joe" (case insensitive) OR
+- The Account's ``middlename`` equals or contains "joe" (case insensitive) OR
+- The Account's ``email`` equals or contains "joe" (case insensitive) OR
 … etc (for more information about which Account attributes are searchable, please see [here])
 
 Aach attribute comparison is similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
@@ -465,6 +465,8 @@ Aach attribute comparison is similar to a ‘like’ operation in a traditional 
 
 Attribute Search
 """"""""""""""""
+
+In the above example, our query returned all Accounts that had any searchable attribute 
 
 .. note::
 
