@@ -2,6 +2,10 @@
 REST API Reference
 ******************
 
+.. todo::
+
+	Clear up the cURL commands, include line breaks.
+
 This section covers the Core Concepts of the Stormpath REST API, as well as serving as a complete reference for all of the interactions that are possible with the various Stormpath resources. 
 
 .. _rest-concepts:
@@ -412,7 +416,7 @@ Search in the contest of the Stormpath REST API means retrieving only the member
 
 There are currently three different types of searches that might be performed: 
 
-#. A generic :ref:`filter-based search <search-filter>` 
+#. A generic :ref:`filter-based search <search-filter>`.
 #. A more targeted :ref:`attribute-based search <search-attribute>`. 
 #. An even more targeted kind of attribute search, the :ref:`Datetime <search-datetime>` search.
 
@@ -431,10 +435,40 @@ For example, to search across an Application’s Accounts for any Account that h
 
 	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
 
+Matching Logic
+++++++++++++++
+
+A resource will return for a filter search when the following criteria are met:
+
+Stormpath will perform a case-insensitive matching query on all viewable attributes in all the resources in the Collection. Note that "viewable" means that the attribute can be viewed by the current caller.
+
+So the following query::
+
+	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?q=Joe'
+
+Returns all Accounts where:
+
+- Each Account is owned by the caller’s Tenant AND
+- The Account's ``givenName`` equals or contains ‘joe’ (case insensitive) OR
+- The Account's ``middlename`` equals or contains ‘joe’ (case insensitive) OR
+- The Account's ``email`` equals or contains ‘joe’ (case insensitive) OR
+… etc (for more information about which Account attributes are searchable, please see [here])
+
+Aach attribute comparison is similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
+
+	select * from my_tenant_accounts where
+	    (lower(givenName) like '%joe%' OR
+	     lower(surname) like '%joe%' OR
+	     lower(email) like '%joe%' OR ... );
+
 .. _search-attribute:
 
 Attribute Search
 """"""""""""""""
+
+.. note::
+
+	For resources with a ``status`` attribute, status query values must be the exact value. For example, ``enabled`` or ``disabled`` must be passed, while fragments such as ``ena``, ``dis``, ``bled`` are not acceptable.
 
 .. _search-datetime:
 
