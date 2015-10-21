@@ -70,11 +70,11 @@ All Stormpath SDKs (currently Java, Ruby, PHP, and Python) use this more secure 
 
 Finally, if you would like to use Stormpath Digest authentication in a programming language that Stormpath does not yet support, you can attempt to port the algorithm to that language. You can try to replicate the algorithm and use Stormpath existing code as examples or the documented algorithm:
 
-- Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`_ (the **authenticate** method)
-- Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`_
-- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Stormpath/Http/Authc/Sauthc1RequestSigner.php>`_ (the **signRequest** method)
-- Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`_ (the **call** method)
-- Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`_ (the **sign_request** method)
+- Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`__ (the **authenticate** method)
+- Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`__
+- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Stormpath/Http/Authc/Sauthc1RequestSigner.php>`__ (the **signRequest** method)
+- Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
+- Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`__ (the **sign_request** method)
 
 If you port the algorithm to other languages, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
 
@@ -452,9 +452,9 @@ Returns all Accounts where:
 - The Account's ``givenName`` equals or contains "joe" (case insensitive) OR
 - The Account's ``middlename`` equals or contains "joe" (case insensitive) OR
 - The Account's ``email`` equals or contains "joe" (case insensitive) OR
-… etc (for more information about which Account attributes are searchable, please see [here])
+- And so on. For more information about which Account attributes are searchable, please see [here]
 
-Aach attribute comparison is similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
+It may help to think about each attribute comparison as similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
 
 	select * from my_tenant_accounts where
 	    (lower(givenName) like '%joe%' OR
@@ -466,7 +466,39 @@ Aach attribute comparison is similar to a ‘like’ operation in a traditional 
 Attribute Search
 """"""""""""""""
 
-In the above example, our query returned all Accounts that had any searchable attribute 
+In the above example, our query returned all Accounts that had any [searchable attribute] with the query in it. It is also possible to tell Stormpath to only return matches from a particular attribute::
+
+	/v1/someCollection?anAttribute=someValue&anotherAttribute=anotherValue
+
+For example, to search an Application’s Accounts for an Account with a ``givenName`` of ``Joe``::
+
+	/v1/applications/someAppId/accounts?givenName=Joe
+
+
+Matching Logic
+++++++++++++++
+
+Attribute-based queries use standard URI query parameters and function as follows:
+
+- Each query parameter name is the same name of a searchable attribute on an instance in the Collection Resource.
+- A query parameter value triggers one of four types of matching criteria:
+   #. No asterisk at the beginning or end of the value indicates a direct case-insensitive match.
+   #. An asterisk only at the beginning of the value indicates that the case-insensitive value is at the end.
+   #. An asterisk only at the end of the value indicates that the case-insensitive value is at the beginning.
+   #. An asterisk at the end AND at the beginning of the value indicates the value is contained in the string.
+
+So the following query::
+
+	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled'
+
+Returns all accounts where:
+
+- Each Account is owned by the caller Tenant.
+- The Account's ``givenName`` is equal to "Joe" (case insensitive) AND
+- The Account's ``middleName`` ends with "aul" (case insensitive) AND
+- The Account's ``surname`` equals or contains "mit" (case insensitive) AND
+- The Account's ``email`` starts with with "joePaul" (case insensitive) AND
+- The Account's ``status`` equals "disabled" (case insensitive).
 
 .. note::
 
@@ -476,6 +508,77 @@ In the above example, our query returned all Accounts that had any searchable at
 
 Datetime Search 
 """""""""""""""
+
+The Datetime search is a sub-type of the attribute search that allows you to filter or search collections that were created or modified at a particular time. 
+
+Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes::
+
+	{
+	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+	  [...]
+	  "createdAt": "2015-08-25T19:57:05.976Z",
+	  "modifiedAt": "2015-08-25T19:57:05.976Z",
+	  "emailVerificationToken": null,
+	  "customData": {
+	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+	  },
+	  [...]
+	}
+
+Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ which is human readable and has common support across all languages. The timezone is coordinated universal time (UTC). So a datetime range would look like this::
+
+	[ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME
+
+.. note::
+
+	Omitting the beginning or ending date is valid for requests. Omitting the begin datetime range [,ISO-8601-END-DATETIME] would include all resources created or modified before the end datetime. Omitting the end datetime range [ISO-8601-BEGIN-DATETIME,] would include all resources created or modified after the the begin datetime.
+
+As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this::
+
+	/v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14]
+
+The response would be a Collection of Accounts created between the two days. 
+
+Exclusion vs Inclusion
+++++++++++++++++++++++
+
+The square brackets [] denote **inclusion**, but ``createdAt`` and ``modifiedAt`` also support **exclusion** with parentheses (). For example, if you wanted to get all accounts created between Jan 12, 2015 and Jan 14, 2015 not including the 14th, your request would look like this::
+
+	v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14)
+
+Precision
++++++++++
+
+The precision of your query is controlled by the granularity of the `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ Datetime that you specify. 
+
+For example, if you need precision in seconds::
+
+	?createdAt=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
+
+And, if you need precision in years::
+
+	?createdAt=[2014, 2015]
+
+Shorthand
++++++++++
+
+It is also possible to use shorthand with ranges of ``createdAt`` and ``modifiedAt`` to simplify the query parameter. This is useful for queries where the range can be encapsulated in a particular year, month, day, hour, minute or second.
+
+For example if you wanted all accounts created in Jan 2015, instead of::
+
+	?createdAt=[2015-01-01T00:00:00.000Z,2015-02-01T00:00:00.000)
+
+You could just write::
+
+	?createdAt=2015-01
+
+And if you want all Accounts modified on the 12th hour UTC on Feb 03, 2015, instead of this query::
+
+	?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
+
+You can simply write::
+
+	?modifiedAt=2015-02-03T12
 
 .. _about-links:
 
