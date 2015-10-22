@@ -431,7 +431,7 @@ A filter search consists of specifying a query parameter ``q`` and a correspondi
 
 	/v1/someCollection?q=some+criteria
 
-For example, to search across an Application’s Accounts for any Account that has a searchable attribute containing the text ‘Joe’:
+For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text ‘Joe’:
 
 	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
 
@@ -466,7 +466,7 @@ It may help to think about each attribute comparison as similar to a ‘like’ 
 Attribute Search
 """"""""""""""""
 
-In the above example, our query returned all Accounts that had any [searchable attribute] with the query in it. It is also possible to tell Stormpath to only return matches from a particular attribute::
+In the above example, our query returned all Accounts that had any searchable attribute with the query in it. It is also possible to tell Stormpath to only return matches from a particular attribute::
 
 	/v1/someCollection?anAttribute=someValue&anotherAttribute=anotherValue
 
@@ -474,14 +474,42 @@ For example, to search an Application’s Accounts for an Account with a ``given
 
 	/v1/applications/someAppId/accounts?givenName=Joe
 
+.. _searchable-attributes:
+
+Searchable Attributes 
++++++++++++++++++++++
+
+The following attributes can be filtered by and searched for:
+
+.. list-table::
+	:widths: 15 30
+	:header-rows: 1
+
+	* - Resource 
+	  - Searchable Attributes 
+
+	* - Application 
+	  - ``name``, ``description``, ``status`` 
+
+	* - Directory 
+	  - ``name``, ``description``, ``status``
+
+	* - Account 
+	  - ``givenName``, ``middleName``, ``surname``, ``username``, ``email`` 
+
+	* - Group 
+	  - ``name``, ``description``, ``status``
+
 
 Matching Logic
 ++++++++++++++
 
 Attribute-based queries use standard URI query parameters and function as follows:
 
-- Each query parameter name is the same name of a searchable attribute on an instance in the Collection Resource.
+- Each query parameter name is the same name of a :ref:`searchable attribute <searchable-attributes>` on an instance in the Collection Resource.
+
 - A query parameter value triggers one of four types of matching criteria:
+   
    #. No asterisk at the beginning or end of the value indicates a direct case-insensitive match.
    #. An asterisk only at the beginning of the value indicates that the case-insensitive value is at the end.
    #. An asterisk only at the end of the value indicates that the case-insensitive value is at the beginning.
@@ -747,7 +775,7 @@ Get A Specified Tenant
 
 If you know your Tenant ID, you can use the following call::
 
-	GET /v1/tenants/:tenantId
+	GET https://api.stormpath.com/v1/tenants/:tenantId
 
 **Request Parameters**
 
@@ -800,7 +828,7 @@ Get The Current Tenant
 
 If you do not know, or do not want to use, your Tenant ID, you can instead send the following call to retrieve the Tenant associated with the API Key that you are using::
 
-	GET /v1/tenants/current
+	GET https://api.stormpath.com/v1/tenants/current
 
 **Request Parameters**
 
@@ -843,137 +871,106 @@ List All of a Tenant's Applications
 
 If you just want a list of all of a Tenant's applications, send this request to the Tenant's ``/applications`` endpoint::
 
-	GET /v1/tenants/:tenantId/applications
+	GET https://api.stormpath.com/v1/tenants/:tenantId/applications
 
 **Request Parameters**
 
 :ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-**Example Request & Response**
-
-Request::
-
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:API_KEY_SECRET" -H "Accept: application/json" 'https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/applications'
-
-Response::
-
-	{
-	  "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/applications",
-	  "offset": 0,
-	  "limit": 25,
-	  "size": 2,
-	  "items": [
-	    {
-	      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
-	      "name": "My Application",
-	      [...]
-	    },
-	    {
-	      "href": "https://api.stormpath.com/v1/applications/1gDDswrSeoAppLDb3GWzzx",
-	      "name": "Stormpath",
-	      [...]
-	    }
-	  ]
-	}
-
 Search A Tenant's Applications
 +++++++++++++++++++++++++++++++++++
 
-If you would like to search the Applications associated with the Tenant, you can use [search query parameters], and any matching Application resources will be returned as a paginated list::
+If you would like to search the Applications associated with the Tenant, you can use :ref:`search query parameters <about-search>`, and any matching Application resources will be returned as a :ref:`paginated <about-pagination>` list::
 
-	GET /v1/tenants/:tenantId/applications?searchParams
+	GET https://api.stormpath.com/v1/tenants/:tenantId/applications?searchParams
 
 **Request Parameters**
 
-In addition to [pagination] and [sorting parameters], the following Application attributes are searchable via filter and attribute searches:
-
-- ``name``
-- ``description``
-- ``status``
-
-**Example Request & Response**
-
-We could send the following query to find all applications with the string "stormpath" in their ``name`` attribute.
-
-Request::
-
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:API_KEY_SECRET" -H "Accept: application/json" 'https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/applications?name=stormpath&offset=0&limit=5'
-
-Response::
-
-	{
-	  "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/applications",
-	  "offset": 0,
-	  "limit": 5,
-	  "size": 1,
-	  "items": [
-	    {
-	      "href": "https://api.stormpath.com/v1/applications/1gDDswrSeoAppLDb3GWzzx",
-	      "name": "Stormpath",
-	      [...]
-	    }
-	  ]
-	}
+In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Application resource :ref:`here <searchable-attributes>`.
 
 Get A Tenant's Directories
 """"""""""""""""""""""""""
 
-(short description)::
+You can retrieve the Directory resources associated with a Tenant by going to this endpoint::
 
-	callItself
+	/v1/tenants/:tenantId/directories 
+
+List A Tenant's Directories
++++++++++++++++++++++++++++
+
+You can list your Tenant’s Directories by sending a GET request to your Tenant’s Directories Collection resource ``href``::
+
+	GET https://api.stormpath.com/v1/tenants/:tenantId/directories
 
 **Request Parameters**
 
-(params go here)
+:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-**Example Request & Response**
+Search A Tenant's Directories
++++++++++++++++++++++++++++++
 
-Request::
+Instead of just retrieving a list of the Directories, it is also possible to search within the Collection and retrieve only the Directories that match your query::
 
-	cURL goes here
+	GET https://api.stormpath.com/v1/tenants/:tenantId/directories?q=queryText
 
-Response::
+**Request Parameters**
 
-	Response JSON goes here
+In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for a Directory resource :ref:`here <searchable-attributes>`.
 
 Get A Tenant's Accounts
 """""""""""""""""""""""
 
-(short description)::
+You can retrieve the Account resources associated with a Tenant by going to this endpoint::
 
-	callItself
+	/v1/tenants/:tenantId/accounts  
+
+List A Tenant's Accounts 
+++++++++++++++++++++++++
+
+You can list your Tenant’s Accounts by sending a GET request to your Tenant’s Accounts Collection resource ``href``::
+
+	GET https://api.stormpath.com/v1/tenants/:tenantId/accounts
 
 **Request Parameters**
 
-(params go here)
+:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-**Example Request & Response**
+Search A Tenant's Accounts 
+++++++++++++++++++++++++++
 
-Request::
+Instead of just retrieving a list of the Accounts, it is also possible to search within the Collection and retrieve only the Accounts that match your query::
 
-	cURL goes here
+	GET https://api.stormpath.com/v1/tenants/:tenantId/accounts?q=queryText
 
-Response::
+**Request Parameters**
 
-	Response JSON goes here
+In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Account resource :ref:`here <searchable-attributes>`.
 
 Get A Tenant's Groups
 """"""""""""""""""""""""""""""""""
 
-(short description)::
+You can retrieve the Group resources associated with a Tenant by going to this endpoint::
 
-	callItself
+	/v1/tenants/:tenantId/groups  
+
+List A Tenant's Groups 
+++++++++++++++++++++++++
+
+You can list your Tenant’s Groups by sending a GET request to your Tenant’s Groups Collection resource ``href``::
+
+	GET https://api.stormpath.com/v1/tenants/:tenantId/groups
 
 **Request Parameters**
 
-(params go here)
+:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-**Example Request & Response**
+Search A Tenant's Groups 
+++++++++++++++++++++++++++
 
-Request::
+Instead of just retrieving a list of the Groups, it is also possible to search within the Collection and retrieve only the Groups that match your query::
 
-	cURL goes here
+	GET https://api.stormpath.com/v1/tenants/:tenantId/groups?q=queryText
 
-Response::
+**Request Parameters**
 
-	Response JSON goes here
+In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for a Group resource :ref:`here <searchable-attributes>`.
