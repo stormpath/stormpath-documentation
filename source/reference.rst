@@ -489,17 +489,19 @@ The following attributes can be filtered by and searched for:
 	  - Searchable Attributes 
 
 	* - Application 
-	  - ``name``, ``description``, ``status`` 
+	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
 	* - Directory 
-	  - ``name``, ``description``, ``status``
+	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
 	* - Account 
-	  - ``givenName``, ``middleName``, ``surname``, ``username``, ``email`` 
+	  - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``createdAt``, ``modifiedAt`` 
 
 	* - Group 
-	  - ``name``, ``description``, ``status``
+	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
+	* - Organization 
+	  - ``name``, ``nameKey``, ``status``, ``description``, ``createdAt``, ``modifiedAt``	
 
 Matching Logic
 ++++++++++++++
@@ -758,6 +760,10 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 Tenant Operations
 -----------------
+
+.. contents::
+	:local:
+	:depth: 2
 
 Get A Tenant
 ^^^^^^^^^^^^^^^^^^^

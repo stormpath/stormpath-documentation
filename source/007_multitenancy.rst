@@ -70,7 +70,7 @@ An individual Organization resource may be accessed via its Resource URI:
 	  - A name key that represents the Organization. Must be unique across all organizations within your Stormpath tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: a-z, A-Z, 0-9, and -. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
 
 	* - ``status``
-	  - Enum
+	  - String (Enum)
 	  - ``ENABLED``, ``DISABLED``
 	  - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
 	

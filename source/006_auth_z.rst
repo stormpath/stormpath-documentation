@@ -3,7 +3,7 @@
 *******************************
 .. _authz-header:
 
-This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions 
+This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions.
 
 a. What is Authorization?
 =========================

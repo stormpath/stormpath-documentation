@@ -2,6 +2,10 @@
 3. Quickstart
 *************
 
+.. todo::
+
+  How we do the placeholders here ($PLACEHOLDER_NAME) is inconsistent withe way we do it in the rest of the doc (e.g. :tenantId)
+
 This quickstart will get you up and running with Stormpath in about 7
 minutes and give you a good initial feel for the Stormpath REST API.
 
@@ -15,7 +19,7 @@ This quickstart assumes that you have already completed the steps in the :doc:`F
   
 - A Stormpath Tenant resource. The following associated resources were also automatically created:
 
-  - An Application resource called "My Application"
+  - Two Application resources: One called "My Application", and the other called "Stormpath"
    
   - Two Directory resources: "My Application Directory" and "Stormpath Administrators"
   
@@ -65,14 +69,15 @@ would return this header::
 
 Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
 
-From here, using the location of the Tenant, you can get your Application by performing a search for the Application by name::
+From here, using the location of the Tenant, you can get your Application by performing a search for the Application by name, with $TENANT_HREF replaced with the ``href`` of your Tenant from the previous cURL::
 
     curl -u $API_KEY_ID:$API_KEY_SECRET \
         -H "Accept: application/json" \
         $TENANT_HREF/applications?name=My%20Application'
 
--  $TENANT_HREF is the location of your Tenant from the previous
-   cURL
+.. note::
+
+  If you leave off the ``?name=My%20Application'`` query at the end of the request, it will instead retrieve a list of all Applications for this Tenant.
 
 So this command::
 
@@ -113,8 +118,6 @@ would return this example response::
     }
 
 Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
-
---------------
 
 Create a User Account
 =====================
@@ -188,7 +191,7 @@ would create the user Account and return this response::
       "emailVerificationToken": null
     }
 
-You'll notice here that this user Account has a ``directory`` ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well. 
+You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well. 
 
 Authenticate a User Account
 ===========================
@@ -253,8 +256,6 @@ If the authentication attempt fails, you will see an `error response <http://doc
       "moreInfo": "mailto:support@stormpath.com"
     }
 
---------------
-
 Next Steps
 ==========
 
@@ -268,7 +269,7 @@ into.
 
   Update links once the documentation is complete.
 
-- Try out Stormpath in your favorite programming language with our `7-Minute Tutorial <https://stormpath.com/tutorial>`_.
+- Try out Stormpath in your favorite programming language with one of our language-specific `quickstarts <https://stormpath.com/tutorial>`_. Simply choose the integration of your choice, and then click on Quickstart.
 - Learn to easily partition user data with our `Guide to Building Multitenant SaaS Applications <http://docs.stormpath.com/guides/multi-tenant/>`_.
 - Easily support Google and Facebook Login with our new :ref:`Social Login & Integration Guide <social-authn>`.
 - Or simply jump into the next section and learn about :doc:`Account Management </004_accnt_mgmt>`.
