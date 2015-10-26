@@ -9,7 +9,7 @@ Now that you've decided that Stormpath is right for you, let's jump right in and
 a. Sign-up for Stormpath
 ========================
 
-1. First, go to `https://api.stormpath.com/register <https://api.stormpath.com/register>`_ and complete the form.
+1. Go to `https://api.stormpath.com/register <https://api.stormpath.com/register>`_ and complete the form.
 2. You will receive a confirmation email with an activation link. 
 3. Once you click the link, Stormpath will create a Stormpath Account along with a Tenant. Your Tenant name will be a unique pair of two randomly-generated words separated by a hyphen (e.g. "iron-troop"). 
 
@@ -17,7 +17,7 @@ a. Sign-up for Stormpath
 
 	Note your tenant name! You will need this in the future in order to log-in to your Account's Admin Console. 
 
-4. From this screen, re-enter your password and click "Log In" to enter the Admin Console. From here you will be able to perform all of the administrative functions required for your Stormpath Account. Let's start by creating an API key.
+4. On this screen, re-enter your password and click "Log In" to enter the Admin Console. From here you will be able to perform all of the administrative functions required for your Stormpath Account. You should start by creating an API key.
 
 
 b. Create an API Key Pair

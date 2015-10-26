@@ -124,7 +124,7 @@ Stormpath supports three types of Directories:
 
 1. Natively-hosted Cloud Directories that originate in Stormpath
 2. Mirror Directories that act as secure replicas of existing LDAP user directories outside of Stormpath, for example those on Active Directory servers.
-3. Social Directories that pull-in account information from four sites that support social login: Google, Facebook, Github and LinkedIn.
+3. Social Directories that pull in account information from four sites that support social login: Google, Facebook, Github and LinkedIn.
    
 You can add as many Directories of each type as you require.
 
@@ -196,7 +196,7 @@ Of particular interest here is the `provider` resource referenced here. Differen
 The Provider Resource
 """"""""""""""""""""""
 
-An individual Provider resource may be accessed via its Resource URI:
+The Provider resource contains information about the source of the information found in its associated Directory resource. For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
 
 **Provider URI**
 
@@ -279,7 +279,7 @@ The Agent Resource
 
 An Agents collection may be accessed via its Resource URI:
 
-**Agents URI**
+**Agentho URI**
 
 ``/v1/agents/:directoryId``
 
@@ -510,7 +510,7 @@ How to Make a Mirror Directory
 
 Presently, Mirror Directories be made via the Stormpath Admin Console, or using REST API. If you'd like to do it with REST APIs, read on. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above <provider-resource>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
+To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above :ref:<provider-resource>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
 
 	{
 	    "name":"My LDAP Directory",

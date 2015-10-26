@@ -16,7 +16,7 @@ By offloading user management and authentication to Stormpath, developers can br
 What you can do with Stormpath
 ------------------------------
 
-Stormpath is used as a simple REST API, over HTTP. This means that we can operate in almost any software environment. For instance, if you wanted to create a new user account with a given an email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
+Stormpath is used as a simple REST API, over HTTP. This means you can use Stormpath from any software environment. For instance, if you wanted to create a new user account with a given an email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
 
 In addition to user registration and login, Stormpath can do a lot more!
 
@@ -30,10 +30,6 @@ In addition to user registration and login, Stormpath can do a lot more!
 - Automatically provide secure password reset functionality.
 - Centralize your user store across multiple applications.
 - Plug into your favorite language or web framework.
-
-.. todo:
-
-	Add "Features" section?
 
 Who should use Stormpath
 ------------------------
@@ -56,14 +52,14 @@ The Stormpath Data Model
 ========================
 .. todo::
 
-	This section should link to the relevant sections of the guide.
+	This section should link to the relevant sections of the guide. Also, it needs to mention Organizations. 
 
 
 This section will give a high-level overview of the Stormpath data model, with more in-depth information to follow later in this guide.
 
-Entities inside Stormpath are referred to as **resources**. Each Stormpath resource has a unique ``href`` link associated with it, and contains one or more "attributes". For example, an Account resource has an "email" attribute, which contains the value for the email address.
+Entities inside Stormpath are referred to as **resources**. Each Stormpath resource has a unique ``href`` associated with it, and contains one or more "attributes". For example, an Account resource has an ``email`` attribute, which contains the value for the email address.
 
-When you sign up for Stormpath, a private data space is created for you, which is represented as a :ref:`ref-tenant` resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
+When you :doc:`sign up </002_setup>` for Stormpath, a private data space is created for you, which is represented as a :ref:`ref-tenant` resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
 
 An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.  
 
@@ -77,7 +73,7 @@ The relation between every Account and its Group is contained in a **GroupMember
 
 Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Account Stores can be mapped to Application resources to allow your Accounts to log-in to those applications. Both Directories and Groups can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment. 
 
-A resources that contains other resources is known as a **Collection**. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href`` links.
+A resources that contains other resources is known as a **Collection**. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href``.
 
 Stormpath uses the **customData** resource to store custom information. It is a schema-less map object that is automatically created at the same time as, and linked to, another Stormpath resource, such as an Account, Group, or Directory.
 
