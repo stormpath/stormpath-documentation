@@ -279,7 +279,7 @@ The Agent Resource
 
 An Agents collection may be accessed via its Resource URI:
 
-**Agentho URI**
+**Agent URI**
 
 ``/v1/agents/:directoryId``
 
@@ -602,11 +602,13 @@ Stormpath works with user Accounts pulled from social login providers (currently
 
 Stormpath also simplifies the authorization process by doing things like automating Google's access token exchange flow. All you do is POST the authorization code from the end-user and Stormpath returns a new or updated user Account, along with the Google access token which you can use for any further API calls. 
 
-Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. So, how this works in practice is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
+Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. So, the default Stormpath behavior is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
 
 This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
-For both Mirror and Social Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
+.. note::
+
+	For both Mirror and Social Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
 
 How to Make a Social Directory
 """"""""""""""""""""""""""""""
@@ -707,13 +709,17 @@ Modeling User Hierarchies Using Groups
 
 Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
 
-A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``"description"`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
+A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
 
 	https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
 
 Or, to find all Groups in the US East region only, you would GET::
 
 	https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US%20East*
+
+.. note::
+
+	URL encoding will change a space into "%20".
 
 It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
 
@@ -736,31 +742,31 @@ The following API request::
 Would yield this response::
 
 	{
-      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
-      "name": "Starfleet Officers",
-      "description": "Commissioned officers in Starfleet",
-      "status": "ENABLED",
-      "createdAt": "2015-08-25T20:09:23.698Z",
-      "modifiedAt": "2015-08-25T20:09:23.698Z",
-      "customData": {
-        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
-      },
-      "directory": {
-        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-      },
-      "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-      },
-      "accounts": {
-        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
-      },
-      "accountMemberships": {
-        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
-      },
-      "applications": {
-        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
-      }
-    }
+		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
+		"name": "Starfleet Officers",
+		"description": "Commissioned officers in Starfleet",
+		"status": "ENABLED",
+		"createdAt": "2015-08-25T20:09:23.698Z",
+		"modifiedAt": "2015-08-25T20:09:23.698Z",
+		"customData": {
+		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
+		},
+		"directory": {
+		"href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+		},
+		"tenant": {
+		"href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+		},
+		"accounts": {
+		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
+		},
+		"accountMemberships": {
+		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
+		},
+		"applications": {
+		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
+		}
+	}
 
 
 .. _account-creation:
@@ -771,7 +777,7 @@ b. How to Store Accounts in Stormpath
 Accounts
 --------
 
-An **Account** is a unique identity within a Directory, with a unique ``username`` and/or ``email``. An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory and may be in multiple Groups owned by that Directory. 
+An **Account** is a unique identity within a Directory, with a unique ``username`` and/or ``email``. An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
 
 The Account Resource
 ^^^^^^^^^^^^^^^^^^^^
@@ -835,7 +841,7 @@ An individual Account resource may be accessed via its Resource URI:
 	 
 	* - ``status``
 	  - String (Enum)
-	  - ``enabled``,``disabled``,``unverified``
+	  - ``enabled``, ``disabled``, ``unverified``
 	  - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.	 
 	
 	* - ``createdAt``
@@ -906,7 +912,9 @@ An individual Account resource may be accessed via its Resource URI:
 New Account Creation
 --------------------
 
-The basic steps for creating a new Account are covered in the :doc: . In that example, we cover how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
+.. todo:: Change this link to an appropriate section in the Reference chapter.
+
+The basic steps for creating a new Account are covered in the :doc:`Quickstart</003_quickstart>` chapter. In that example, we cover how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
 
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -980,7 +988,7 @@ Would yield this response::
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captains" Directory, we would have to link the Account Resource to a Group Resource. This is done via a *groupMembership** resource that store this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
+If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captains" Directory, we would have to link the Account Resource to a Group Resource. This is done via a **groupMembership** resource that stores this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
 
 **groupMembership URI**
 
@@ -1079,8 +1087,7 @@ Importing Accounts with MCF Hash Passwords
 If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string. 
 This works as follows:
 
-1. Create the Account specifying the password hash instead of a plain text password.
-Stormpath will use the password hash to authenticate the Account’s login attempt.
+1. Create the Account specifying the password hash instead of a plain text password. Stormpath will use the password hash to authenticate the Account’s login attempt.
 
 2. If the login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
    
@@ -1159,10 +1166,10 @@ With the following payload::
 We would get this response::
 
 	{
-	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
-	  "createdAt": "2015-08-25T19:57:05.976Z",
-	  "modifiedAt": "2015-08-26T19:25:27.936Z",
-	  "currentAssignment": "USS Enterprise (NCC-1701-E)"
+		"href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+		"createdAt": "2015-08-25T19:57:05.976Z",
+		"modifiedAt": "2015-08-26T19:25:27.936Z",
+		"currentAssignment": "USS Enterprise (NCC-1701-E)"
 	}
 
 This information can also be appended as part of the initial Account creation payload. 
@@ -1172,41 +1179,7 @@ For more information about the customData resource, please see the `customData s
 c. How to Search Accounts
 =========================
 
-You can search Stormpath Accounts, just like all Resource Collections, using one of three search methods: 
-
-**Filter Search:** 
-
-This searches across all attributes on all resources within the specified Collection and finds any attribute that matches the specified query parameter ``q``. 
-
-Example: All instances where the string "path" is found in any attribute in the specified collection of Accounts.
-
-``https://api.stormpath.com/v1/applications/someAppId/accounts?q=path``
-
-**Attribute Search:** 
-
-This searches across the specified attribute on all resources within the specified Collection and finds any matches of specific resource attributes. 
-
-Example: All instances where the string "path" is found in the ``email`` attribute in the specified Collection of Accounts.
-
-``https://api.stormpath.com/v1/applications/someAppId/accounts?email=path``
-
-**Datetime Search**
-
-It is also possible to search the ``createdAt`` and ``modifiedAt`` properties found on many Stormpath resources.  The ``datetime`` range is denoted as::
-
-	createdAt|modifiedAt=[ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME]
-
-So, if you want wanted to get all Accounts created between Jan 12, 2015 and Jan 14, 2015 you would request:
-
-	https://api.stormpath.com/v1/applications/someAppId/accounts?createdAt=[2015-01-12, 2015-01-14]
-
-The response would be a collection of Accounts created between the two days. 
-
-.. note::
-
-	Omitting the beginning or ending date is valid for requests. Omitting the start ``datetime`` range (e.g. ``createdAt=[,ISO-8601-END-DATETIME]``) would include all resources created or modified before the ending datetime. Omitting the end datetime range (e.g. ``createdAt=[ISO-8601-BEGIN-DATETIME,]``) would include all resources created or modified after the specified beginning datetime.
-
-For more information about how search works in Stormpath, please see the `Search section <http://docs.stormpath.com/rest/product-guide/#search>`_ of the REST API Product Guide.
+You can search Stormpath Accounts, just like all Resource Collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
 
 d. How to Manage an Account's Password
 ======================================
