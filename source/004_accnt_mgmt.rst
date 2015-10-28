@@ -266,9 +266,9 @@ Mirror Directories are a big benefit to Stormpath customers who need LDAP direct
   
 User Accounts and Groups in mirrored directories are automatically deleted when any of the following things happen:
 
-- The original object is deleted from the LDAP or AD directory service.
-- The original LDAP/AD object information no longer matches the account filter criteria configured for the agent.
-- The LDAP/AD directory is deleted.
+- The original object is deleted from the LDAP directory service.
+- The original LDAP object information no longer matches the account filter criteria configured for the agent.
+- The LDAP directory is deleted.
 
 The big benefit is that your Stormpath-enabled applications still use the same convenient REST+JSON API – they do not need to know anything about things like LDAP or legacy connection protocols.
 
@@ -1351,12 +1351,12 @@ To control whether an email is sent or not is simply a matter of setting the app
 
 	{
 	  "resetEmailStatus": "ENABLED"
-	}'
+	}
 
 Email Templates
 ^^^^^^^^^^^^^^^
 
-To modify the emails that get sent during the password reset workflow, let’s take a look at the email templates for the password reset. Email templates in Stormpath have common properties that can be modified to change the appearance of the emails. The properties below apply to both email templates that reside in the password policy (resetEmailTemplate and resetSuccessEmailTemplate).
+To modify the emails that get sent during the password reset workflow, let’s take a look at the email templates for the password reset. Email templates in Stormpath have common properties that can be modified to change the appearance of the emails. The properties below apply to both email templates that reside in the password policy (``resetEmailTemplate`` and ``resetSuccessEmailTemplate``).
 
 **EmailTemplate Properties**
 
@@ -1382,7 +1382,7 @@ To modify the emails that get sent during the password reset workflow, let’s t
 	* - subject		
 	  - String 
 	  - N/A
-  	  - The subject that appears in the email’s subject field				
+  	  - The subject that appears in the email’s subject field
 
 	* - htmlBody		
 	  - String	
@@ -1473,7 +1473,7 @@ Which will return a result that looks like this::
 
 If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
 
-If the verification token is not found, a "404 Not Found" error is returned with a payload explaining why the attempt failed.
+If the verification token is not found, a ``404 Not Found`` error is returned with a payload explaining why the attempt failed.
 
 .. note::
 

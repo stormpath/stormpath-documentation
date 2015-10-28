@@ -8,7 +8,7 @@ This section will provide you with a quick introduction to Authorization with St
 a. What is Authorization?
 =========================
 
-Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. Perhaps the most accessible example of this process is at the airport, where a security person first checks your passport to make sure that you are who you say you are, and a separate person later checks that you are allowed to actually board the plane.
+Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. Going back to the airport example from the last chapter, Perhaps the most accessible example of this process is at the airport, once a security person has checked your passport to make sure that you are who you say you are, a separate person later checks that you are allowed to actually board the plane.
 
 Once a user has entered in a valid login and password (authentication), there are the permission checks (authorization) that can be performed which dictate what access rights they have to your system resources. Going back to our airport scenario, once you have proven who you are with your passport, the airline also checks that you are permitted to board the plane by checking that you have a valid boarding pass. 
 

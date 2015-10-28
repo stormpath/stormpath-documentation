@@ -431,7 +431,7 @@ A filter search consists of specifying a query parameter ``q`` and a correspondi
 
 	/v1/someCollection?q=some+criteria
 
-For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text ‘Joe’::
+For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe"::
 
 	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
 

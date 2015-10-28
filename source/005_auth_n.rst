@@ -4,17 +4,21 @@
 
 .. _authn-header:
 
-.. todo::
+Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight. 
 
-	Might want to add some preamble here?
+In this chapter we will cover three of the ways that Stormpath allows you to authenticate users: :ref:`password authentication <password-authn>`, `token authentication <token-authn>`, and `social authentication <social-authn>`.
+
+.. _password-authn:
 
 a. How Password Authentication Works in Stormpath
 =================================================
 
+Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
+
 Authenticating An Account
 -------------------------
 
-After an Account has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating a user within a specific Application against the Application’s Directories and Groups (more on these [below]). That being said, the Application resource is the starting point for authentication attempts.
+After an Account has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating a user within a specific Application against the Application’s Directories and Groups (more on these :ref:`below <how-login-works>`). That being said, the Application resource is the starting point for authentication attempts.
 
 Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text.
 
@@ -65,7 +69,29 @@ Which would return the ``href`` for the "Han Solo" Account::
 	  }
 	}
 
-Now the reason why this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application. 
+The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application. 
+
+.. _how-login-works:
+
+How Login Attempts Work 
+^^^^^^^^^^^^^^^^^^^^^^^
+
+When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
+
+Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
+
+The following flow chart shows what happens when an account attempts to login to the Foo application:
+
+.. figure:: images/auth_n/LoginAttemptFlow.png
+	:align: center
+	:scale: 100%
+	:alt: Login Attempt Flow 
+
+	*The Login Attempt Flow* 
+
+As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
+
+You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log-in to your Application.
 
 .. _account-store-mapping:
 
@@ -73,7 +99,7 @@ Account Store Mappings
 ----------------------
 Both **Directory** and **Group** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
 
-You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's AccountStoreMapping resources. 
+You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's accountStoreMapping resources. 
 
 The accountStoreMapping Resource
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,28 +177,6 @@ A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808
 	  }
 	}
 
-.. _how-login-works:
-
-How Login Attempts Work 
-^^^^^^^^^^^^^^^^^^^^^^^
-
-When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned Account Stores (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
-
-Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
-
-The following flow chart shows what happens when an account attempts to login to the Foo application:
-
-.. figure:: images/auth_n/LoginAttemptFlow.png
-	:align: center
-	:scale: 100%
-	:alt: Login Attempt Flow 
-
-	*The Login Attempt Flow* 
-
-As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
-
-You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log-in to your Application.
-
 .. _create-asm:
 
 Creating A New Account Store Mapping
@@ -228,6 +232,8 @@ If we had done this with our "Han Solo" Account from above, our JSON response wo
 
 At the end of this JSON we see two interesting links that we can now cover: Access and Refresh tokens. 
 
+.. _token-authn:
+
 b. How Token-Based Authentication Works
 =======================================
 
@@ -238,7 +244,7 @@ Introduction to Token-Based Authentication
 
 Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this requires **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
 
-**Token-based authentication** is a alternate, stateless strategy. With token-based authentication, you secure an application based on a security token that is generated for the user on authentication and then stored on the client-side. Token-based Authentication is all about removing the need to store information on the server while giving extra security to keep the token secure on the client. This help you as a developer build stateless and scalable applications.
+**Token-based authentication** is a alternate, stateless strategy. With token-based authentication, you secure an application based on a security token that is generated for the user on authentication and then stored on the client-side. Token-based Authentication is all about removing the need to store information on the server while giving extra security to keep the token secure on the client. This helps you as a developer build stateless and scalable applications.
 
 Stormpath's approach to token-based authentication has two elements: JSON Web Tokens (JWTs) for authentication, and OAuth 2.0 for authorization. 
 
@@ -284,20 +290,20 @@ Stormpath is configurable so you can set the time to live (TTL) for both the Acc
 Each Application resource in Stormpath has an ``oAuthPolicy/:applicationId`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
 
 	{
-	  "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
-	  "accessTokenTtl": "PT1H",
-	  "refreshTokenTtl": "P60D",
-	  "createdAt": "2015-08-18T20:46:36.063Z",
-	  "modifiedAt": "2015-08-18T20:46:36.063Z",
-	  "tokenEndpoint": {
-	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
-	  },
-	  "application": {
-	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-	  },
-	  "tenant": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-	  }
+		"href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+		"accessTokenTtl": "PT1H",
+		"refreshTokenTtl": "P60D",
+		"createdAt": "2015-08-18T20:46:36.063Z",
+		"modifiedAt": "2015-08-18T20:46:36.063Z",
+		"tokenEndpoint": {
+			"href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
+		},
+		"application": {
+			"href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+		},
+		"tenant": {
+			"href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+		}
 	}
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
@@ -489,7 +495,7 @@ The token specified in the Authorization header has been digitally signed with t
 Refreshing Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-inputting their credentials. To use this Refresh Token, simply make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
+In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-entering their credentials. To use this Refresh Token, simply make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
 
 So a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` along with this header::
 
@@ -572,11 +578,11 @@ Social authentication essentially means using the "Log in with x" button in your
 
 3. The Provider will return the user to your application with an access token.
 
-4. Stormpath will take this access token and use it to query the provider for: an email address, a first name, and a last name
+4. Stormpath will take this access token and use it to query the provider for: an email address, a first name, and a last name.
    
 .. note::
 
-	If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value.
+	If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
 
 5. Stormpath will first search for a Directory that matches the provider of the access token. If one is not found, an error will return.
 
@@ -621,14 +627,15 @@ Step 1: Create a Social Directory for Google
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
 	{
-        "name" : "my-google-directory",
-        "description" : "A Google directory",
-        "provider": {
-          "providerId": "google",
-          "clientId":"YOUR_GOOGLE_CLIENT_ID",
-          "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
-          "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
-    } 
+		"name" : "my-google-directory",
+		"description" : "A Google directory",
+		"provider": {
+			"providerId": "google",
+			"clientId":"YOUR_GOOGLE_CLIENT_ID",
+			"clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
+			"redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
+		} 
+	}
 
 .. note::
 
@@ -653,20 +660,20 @@ Generally, this will include embedding a link in your site that will send an aut
 Once the Authorization Code is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
-        "providerData": {
-          "providerId": "google",
-          "code": "YOUR_GOOGLE_AUTH_CODE"
-        }
-    }
+		"providerData": {
+		  "providerId": "google",
+		  "code": "YOUR_GOOGLE_AUTH_CODE"
+		}
+	}
 
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion::
 
 	{
-        "providerData": {
+		"providerData": {
 		  "providerId": "google",
 		  "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
-        }
-    }
+		}
+	}
 
 Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
@@ -689,14 +696,14 @@ Step 1: Create a Social Directory for Facebook
 Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
 	{
-        "name" : "my-facebook-directory",
-        "description" : "A Facebook directory",
-        "provider": {
-          "providerId": "facebook",
-          "clientId":"YOUR_FACEBOOK_APP_ID",
-          "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
-        }
-    }
+		"name" : "my-facebook-directory",
+		"description" : "A Facebook directory",
+		"provider": {
+		  "providerId": "facebook",
+		  "clientId":"YOUR_FACEBOOK_APP_ID",
+		  "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
+		}
+	}
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -715,11 +722,11 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 Once the User Access Token is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
-	    "providerData": {
-	      "providerId": "facebook",
-	      "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
-	    }
-	  }
+		"providerData": {
+		  "providerId": "facebook",
+		  "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
+		}
+	}
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
@@ -743,14 +750,14 @@ Step 1: Create a Social Directory for GitHub
 Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
 	{
-        "name" : "my-github-directory",
-        "description" : "A GitHub directory",
-        "provider": {
-          "providerId": "github",
-          "clientId":"YOUR_GITHUB_CLIENT_ID",
-          "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
-        }
-    }
+		"name" : "my-github-directory",
+		"description" : "A GitHub directory",
+		"provider": {
+		  "providerId": "github",
+		  "clientId":"YOUR_GITHUB_CLIENT_ID",
+		  "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
+		}
+	}
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -798,14 +805,14 @@ Step 1: Create a Social Directory for LinkedIn
 Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
 	{
-        "name" : "my-linkedin-directory",
-        "description" : "A LinkedIn Directory",
-        "provider": {
-          "providerId": "github",
-          "clientId":"YOUR_LINKEDIN_APP_ID",
-          "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
-        }
-    }
+		"name" : "my-linkedin-directory",
+		"description" : "A LinkedIn Directory",
+		"provider": {
+		  "providerId": "linkedin",
+		  "clientId":"YOUR_LINKEDIN_APP_ID",
+		  "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
+		}
+	}
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
