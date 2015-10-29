@@ -33,7 +33,6 @@ b. Modeling Authorization in Stormpath
 
 From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
 
-
 .. _rbac:
 
 i. How to Use Groups to Model Authorization Roles
@@ -87,11 +86,11 @@ Stormpath also gives you an enormous amount of flexibility with what these permi
 Or as complex as::
 
 	{
-	    "name": "create-admin",
-	    "description": "This permission allows the account to create an admin"
-	    "action": "read",
-	    "resource": "/admin/create",
-	    "effect": "allow"
+    "name": "create-admin",
+    "description": "This permission allows the account to create an admin"
+    "action": "read",
+    "resource": "/admin/create",
+    "effect": "allow"
 	}
 
 How is this flexibility possible? Two words: Custom Data.

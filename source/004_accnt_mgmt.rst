@@ -513,43 +513,43 @@ Presently, Mirror Directories be made via the Stormpath Admin Console, or using 
 To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above :ref:<provider-resource>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
 
 	{
-	    "name":"My LDAP Directory",
-	    "description": "An LDAP Directory created with the Stormpath API",
-	    "provider": {
-	        "providerId": "ldap",
-	        "agent": {
-	            "config": {
-	                "directoryHost": "ldap.local",
-	                "directoryPort": "636",
-	                "sslRequired": true,
-	                "agentUserDn": "tom@stormpath.com",
-	                "agentUserDnPassword": "StormpathRulez",
-	                "baseDn": "dc=example,dc=com",
-	                "pollInterval": 60,
-	                "referralMode": "ignore",
-	                "ignoreReferralIssues": false,
-	                "accountConfig": {
-	                    "dnSuffix": "ou=employees",
-	                    "objectClass": "person",
-	                    "objectFilter": "(cn=finance)",
-	                    "emailRdn": "email",
-	                    "givenNameRdn": "givenName",
-	                    "middleNameRdn": "middleName",
-	                    "surnameRdn": "sn",
-	                    "usernameRdn": "uid",
-	                    "passwordRdn": "userPassword",
-	                },
-	                "groupConfig": {
-	                    "dnSuffix": "ou=groups",
-	                    "objectClass": "groupOfUniqueNames",
-	                    "objectFilter": "(ou=*-group)",
-	                    "nameRdn": "cn",
-	                    "descriptionRdn": "description",
-	                    "membersRdn": "uniqueMember"
-	                }
-	            }
+	  "name":"My LDAP Directory",
+	  "description":"An LDAP Directory created with the Stormpath API",
+	  "provider":{
+	    "providerId":"ldap",
+	    "agent":{
+	      "config":{
+	        "directoryHost":"ldap.local",
+	        "directoryPort":"636",
+	        "sslRequired":true,
+	        "agentUserDn":"tom@stormpath.com",
+	        "agentUserDnPassword":"StormpathRulez",
+	        "baseDn":"dc=example,dc=com",
+	        "pollInterval":60,
+	        "referralMode":"ignore",
+	        "ignoreReferralIssues":false,
+	        "accountConfig":{
+	          "dnSuffix":"ou=employees",
+	          "objectClass":"person",
+	          "objectFilter":"(cn=finance)",
+	          "emailRdn":"email",
+	          "givenNameRdn":"givenName",
+	          "middleNameRdn":"middleName",
+	          "surnameRdn":"sn",
+	          "usernameRdn":"uid",
+	          "passwordRdn":"userPassword"
+	        },
+	        "groupConfig":{
+	          "dnSuffix":"ou=groups",
+	          "objectClass":"groupOfUniqueNames",
+	          "objectFilter":"(ou=*-group)",
+	          "nameRdn":"cn",
+	          "descriptionRdn":"description",
+	          "membersRdn":"uniqueMember"
 	        }
+	      }
 	    }
+	  }
 	}
 
 
@@ -742,30 +742,30 @@ The following API request::
 Would yield this response::
 
 	{
-		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
-		"name": "Starfleet Officers",
-		"description": "Commissioned officers in Starfleet",
-		"status": "ENABLED",
-		"createdAt": "2015-08-25T20:09:23.698Z",
-		"modifiedAt": "2015-08-25T20:09:23.698Z",
-		"customData": {
-		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
-		},
-		"directory": {
-		"href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-		},
-		"tenant": {
-		"href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-		},
-		"accounts": {
-		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
-		},
-		"accountMemberships": {
-		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
-		},
-		"applications": {
-		"href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
-		}
+	  "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
+	  "name":"Starfleet Officers",
+	  "description":"Commissioned officers in Starfleet",
+	  "status":"ENABLED",
+	  "createdAt":"2015-08-25T20:09:23.698Z",
+	  "modifiedAt":"2015-08-25T20:09:23.698Z",
+	  "customData":{
+	    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
+	  },
+	  "directory":{
+	    "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+	  },
+	  "tenant":{
+	    "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+	  },
+	  "accounts":{
+	    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
+	  },
+	  "accountMemberships":{
+	    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
+	  },
+	  "applications":{
+	    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
+	  }
 	}
 
 
@@ -1159,18 +1159,18 @@ So if we were to POST the following REST API::
 
 With the following payload::
 
-	{
-		"currentAssignment": "USS Enterprise (NCC-1701-E)"
-	}
+  {
+    "currentAssignment": "USS Enterprise (NCC-1701-E)"
+  }
 
 We would get this response::
 
-	{
-		"href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
-		"createdAt": "2015-08-25T19:57:05.976Z",
-		"modifiedAt": "2015-08-26T19:25:27.936Z",
-		"currentAssignment": "USS Enterprise (NCC-1701-E)"
-	}
+  {
+    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+    "createdAt": "2015-08-25T19:57:05.976Z",
+    "modifiedAt": "2015-08-26T19:25:27.936Z",
+    "currentAssignment": "USS Enterprise (NCC-1701-E)"
+  }
 
 This information can also be appended as part of the initial Account creation payload. 
 
@@ -1347,7 +1347,7 @@ To control whether an email is sent or not is simply a matter of setting the app
 
 	https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID
 
-*Body*::
+With the following body::
 
 	{
 	  "resetEmailStatus": "ENABLED"

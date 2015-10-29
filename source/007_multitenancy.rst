@@ -6,9 +6,9 @@
 a. What Is a Multi-Tenant Application? 
 ======================================
 
-Unlike most web applications that support a single company or organization with a tightly-coupled database, a **multi-tenant application** is a single application that services multiple organizations or tenants simultaneously. For privacy and security purposes, its very important that each tenant have its own private data partition. At Stormpath, this data partioning is baked-in to our data model. How do we do this? Well, it starts with an Organization.
+The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, its very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model. How do we do this? Well, it starts with an Organization.
 
-b. Modelling Tenants in Stormpath
+b. Modeling Tenants in Stormpath
 =================================
 
 In our :ref:`Account Management <account-mgmt-header>` section we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional **Organization** resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
@@ -168,7 +168,7 @@ Which would return the following::
 	  }
 	}
 
-Notice here that both the Default Account Store and Group Store are blank which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/:organizationId/groups``) would fail. 
+Notice here that both the Default Account Store and Group Store are blank which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/:organizationId/groups``) would fail until a default Account Store is added. 
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -178,12 +178,12 @@ Like other Account Stores, an Organization can be mapped to an Application so th
 First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a POST to the ``/v1/accountStoreMappings`` endpoint::
 
 	{
-		"organization": {
-			"href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
-		},
-		"accountStore": {
-			"href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf" 
-		}
+	  "organization": {
+	    "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
+	  },
+	  "accountStore": {
+	    "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf" 
+	  } 
 	}
 
 These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
@@ -196,38 +196,38 @@ These two attributes, ``organization`` and ``accountStore`` are required, though
 
 In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups::
 
-	{
-		"organization": {
-			"href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
-		},
-		"accountStore": {
-			"href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT" 
-		},
-		"isDefaultAccountStore":true,
-		"isDefaultGroupStore":true
-	}
+  {
+    "organization": {
+      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
+    },
+    "accountStore": {
+      "href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT" 
+    },
+    "isDefaultAccountStore":true,
+    "isDefaultGroupStore":true
+  }
 
 Which would result in the following ``201 Created`` response::
 
-	{
-	  "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWxiPDKdk",
-	  "listIndex": 0,
-	  "isDefaultAccountStore": true,
-	  "isDefaultGroupStore": true,
-	  "organization": {
-	    "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
-	  },
-	  "accountStore": {
-	    "href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT"
-	  }
-	}
+  {
+    "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWxiPDKdk",
+    "listIndex": 0,
+    "isDefaultAccountStore": true,
+    "isDefaultGroupStore": true,
+    "organization": {
+      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofPWaR3TR"
+    },
+    "accountStore": {
+      "href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT"
+    }
+  }
 
 So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
 Registering an Organization as an Account Store for an Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described in :ref:`the Authentication chapter <authn-header>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. Since we are building a multi-tenant app, and the Organization is itself an Account Store, we can map our Organization resource to our Application resource, and thereby enable login for Accounts inside that Organization. 
+As described in :ref:`the Authentication chapter <authn-header>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future. 
 
 To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 

@@ -57,8 +57,8 @@ We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBV
 With the following body, using the Base64 encoded ``value`` from above::
 
 	{
-	    "type": "basic",
-	    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
+    "type": "basic",
+    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
 	}
 
 Which would return the ``href`` for the "Han Solo" Account::
@@ -311,9 +311,9 @@ The values for both properties are stored as `ISO 8601 Durations <https://en.wik
 If we wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, we could simply make a POST request to the ``/oAuthPolicies/:applicationId`` endpoint with the following payload::
 
 	{
-        "accessTokenTtl": "PT30M",
-        "refreshTokenTtl": "P7D"
-    }
+    "accessTokenTtl": "PT30M",
+    "refreshTokenTtl": "P7D"
+  }
 
 And we would get the following response::
 
@@ -778,11 +778,11 @@ Generally, this will include embedding a link in your site that will send an aut
 Once the Authorization Code is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
-	    "providerData": {
-	      "providerId": "github",
-	      "code": "AUTH_CODE_FROM_GITHUB"
-	    }
-	  }
+    "providerData": {
+      "providerId": "github",
+      "code": "AUTH_CODE_FROM_GITHUB"
+    }
+  }
 
 Stormpath will use the ``code`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
@@ -833,10 +833,10 @@ Generally, this will include embedding a link in your site that will send an aut
 Once the Access Token is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
 	{
-	    "providerData": {
-	      "providerId": "linkedin",
-	      "accessToken": "TOKEN_FROM_LINKEDIN"
-	    }
-	  }
+    "providerData": {
+      "providerId": "linkedin",
+      "accessToken": "TOKEN_FROM_LINKEDIN"
+    }
+  }
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 

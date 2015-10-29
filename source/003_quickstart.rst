@@ -74,22 +74,21 @@ From here, using the location of the Tenant, you can get your Application by per
 
 The above cURL would return this example response::
 
-    {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
-      "name": "My Application",
-      "description": "This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
-      "status": "ENABLED",
-      "createdAt": "2015-08-18T20:46:36.061Z",
-      "modifiedAt": "2015-08-25T18:11:29.774Z",
-      "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-      },
-      [...]
-      },
-      "idSiteModel": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/idSiteModel"
-      }
+  {
+    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
+    "name":"My Application",
+    "description":"This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
+    "status":"ENABLED",
+    "createdAt":"2015-08-18T20:46:36.061Z",
+    "modifiedAt":"2015-08-25T18:11:29.774Z",
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+    },
+    [...]
+    "idSiteModel":{
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/idSiteModel"
     }
+  }
 
 Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
 
