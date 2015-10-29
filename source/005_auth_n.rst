@@ -73,8 +73,8 @@ The reason this succeeds is because there is an existing **Account Store Mapping
 
 .. _how-login-works:
 
-How Login Attempts Work 
-^^^^^^^^^^^^^^^^^^^^^^^
+How Login Attempts Work in Stormpath 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
@@ -335,7 +335,7 @@ Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Passw
 
 	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
-This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described above in `How Login Attempts Work`_.
+This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described above in :ref:`How Login Attempts Work <how-login-works>`.
 
 Your application will act as a proxy to the Stormpath API. For example:
 
@@ -832,7 +832,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
 Once the Access Token is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
-	{
+  {
     "providerData": {
       "providerId": "linkedin",
       "accessToken": "TOKEN_FROM_LINKEDIN"
@@ -840,3 +840,16 @@ Once the Access Token is gathered, you can send an HTTP POST to ``https://api.st
   }
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+
+.. _mirror-dir-authn:
+
+d. Authenticating Against a Mirrored LDAP Directory
+===================================================
+
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`about-mirror-dir` as well as how they are :ref:`modeled <modeling-mirror-dirs>`. 
+
+To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory, it is recommended that you maintain a "master" Directory alongside your Mirror Directory. Furthermore, successful user log in is the recommended time to provision, link, and synchronize a user Account from the Mirror Directory to your master Directory.
+
+Working with Accounts in Mirror Directories
+-------------------------------------------
+
