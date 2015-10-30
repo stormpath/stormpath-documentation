@@ -13,6 +13,10 @@ This section covers the Core Concepts of the Stormpath REST API, as well as serv
 REST API Core Concepts
 ======================
 
+.. contents::
+	:local:
+	:depth: 2
+
 The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this guide.
 
 Base URL
@@ -765,7 +769,7 @@ Tenant Operations
 	:local:
 	:depth: 2
 
-Get A Tenant
+Get a Tenant
 ^^^^^^^^^^^^^^^^^^^
 
 When retrieving a Tenant resource, you can either retrieve a Tenant specified by a Tenant ID, or you can simply retrieve the current Tenant.
@@ -776,7 +780,7 @@ When retrieving a Tenant resource, you can either retrieve a Tenant specified by
 
 .. _get-tenantid:
 
-Get A Specified Tenant
+Get a Specified Tenant
 """"""""""""""""""""""
 
 If you know your Tenant ID, you can use the following call::
@@ -829,7 +833,7 @@ Response::
 
 .. _get-current-tenant:
 
-Get The Current Tenant
+Get the Current Tenant
 """""""""""""""""""""""""""""
 
 If you do not know, or do not want to use, your Tenant ID, you can instead send the following call to retrieve the Tenant associated with the API Key that you are using::
@@ -860,12 +864,12 @@ The response will be a ``302 Redirect`` response. You will find the location of 
 
 Most REST libraries and web browsers will automatically issue a request for the resource in the Location header. If you do not see this, just execute a GET request to that ``Location`` (as described :ref:`above <get-tenantid>`) and you will receive back your Tenant resource.
 
-Get Resources Associated With A Tenant
+Get Resources Associated with a Tenant
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are many options for using the Tenant to look up other resources. This means that, with an Tenant ID, you can look up something like all of the Groups associated with that Tenant, and you can also use optional parameters to further refine your queries. For more information, keep reading. 
 
-Get A Tenant's Applications
+Get a Tenant's Applications
 """""""""""""""""""""""""""
 
 You can retrieve the Application resources associated with a Tenant by going to this endpoint::
@@ -883,7 +887,7 @@ If you just want a list of all of a Tenant's applications, send this request to 
 
 :ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-Search A Tenant's Applications
+Search a Tenant's Applications
 +++++++++++++++++++++++++++++++++++
 
 If you would like to search the Applications associated with the Tenant, you can use :ref:`search query parameters <about-search>`, and any matching Application resources will be returned as a :ref:`paginated <about-pagination>` list::
@@ -894,14 +898,14 @@ If you would like to search the Applications associated with the Tenant, you can
 
 In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Application resource :ref:`here <searchable-attributes>`.
 
-Get A Tenant's Directories
+Get a Tenant's Directories
 """"""""""""""""""""""""""
 
 You can retrieve the Directory resources associated with a Tenant by going to this endpoint::
 
 	/v1/tenants/:tenantId/directories 
 
-List A Tenant's Directories
+List a Tenant's Directories
 +++++++++++++++++++++++++++
 
 You can list your Tenant’s Directories by sending a GET request to your Tenant’s Directories Collection resource ``href``::
@@ -912,7 +916,7 @@ You can list your Tenant’s Directories by sending a GET request to your Tenant
 
 :ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-Search A Tenant's Directories
+Search a Tenant's Directories
 +++++++++++++++++++++++++++++
 
 Instead of just retrieving a list of the Directories, it is also possible to search within the Collection and retrieve only the Directories that match your query::
@@ -930,7 +934,7 @@ You can retrieve the Account resources associated with a Tenant by going to this
 
 	/v1/tenants/:tenantId/accounts  
 
-List A Tenant's Accounts 
+List a Tenant's Accounts 
 ++++++++++++++++++++++++
 
 You can list your Tenant’s Accounts by sending a GET request to your Tenant’s Accounts Collection resource ``href``::
@@ -941,7 +945,7 @@ You can list your Tenant’s Accounts by sending a GET request to your Tenant’
 
 :ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-Search A Tenant's Accounts 
+Search a Tenant's Accounts 
 ++++++++++++++++++++++++++
 
 Instead of just retrieving a list of the Accounts, it is also possible to search within the Collection and retrieve only the Accounts that match your query::
@@ -952,14 +956,14 @@ Instead of just retrieving a list of the Accounts, it is also possible to search
 
 In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Account resource :ref:`here <searchable-attributes>`.
 
-Get A Tenant's Groups
+Get a Tenant's Groups
 """"""""""""""""""""""""""""""""""
 
 You can retrieve the Group resources associated with a Tenant by going to this endpoint::
 
 	/v1/tenants/:tenantId/groups  
 
-List A Tenant's Groups 
+List a Tenant's Groups 
 ++++++++++++++++++++++++
 
 You can list your Tenant’s Groups by sending a GET request to your Tenant’s Groups Collection resource ``href``::
@@ -970,7 +974,7 @@ You can list your Tenant’s Groups by sending a GET request to your Tenant’s 
 
 :ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
 
-Search A Tenant's Groups 
+Search a Tenant's Groups 
 ++++++++++++++++++++++++++
 
 Instead of just retrieving a list of the Groups, it is also possible to search within the Collection and retrieve only the Groups that match your query::

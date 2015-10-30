@@ -291,7 +291,7 @@ In this scenario, we recommend linking each Account in a LDAP Mirror Directory w
 
 3. Keep a user’s identity alive even after they’ve left your customer’s organization and been deprovisioned in AD/LDAP. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples
 
-The Stormpath Agent (see :ref:`below <about-ldap-agent>`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory.
+The Stormpath Agent (see :ref:`below <about-ldap-agent>`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`mirror-dir-authn`.
 

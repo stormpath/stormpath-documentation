@@ -570,7 +570,14 @@ You will get back a ``204 No Content`` response back from Stormpath when the cal
 c. How Social Authentication Works
 ==================================
 
-Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are: Google, Facebook, Github, and LinkedIn. In general, what will happen is as follows: 
+Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are: 
+
+- Google
+- Facebook
+- Github,
+- LinkedIn 
+
+In general, the social login process works as follows: 
 
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
@@ -578,7 +585,11 @@ Social authentication essentially means using the "Log in with x" button in your
 
 3. The Provider will return the user to your application with an access token.
 
-4. Stormpath will take this access token and use it to query the provider for: an email address, a first name, and a last name.
+4. Stormpath will take this access token and use it to query the provider for:  
+   
+   - an email address
+   - a first name
+   - a last name.
    
 .. note::
 
@@ -611,13 +622,13 @@ Before you integrate Google Login with Stormpath, you must complete the followin
 
 - Enable Google Login for your Google application
 
-- Retrieve your OAuth Credentials (Client ID and Secret) for your Google application
+- Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
   
 .. note::
 
-	Be sure to only enter the Redirect URL you’re currently using. So, if you’re running your app in development mode, set it to your local URL, and if you’re running your app in production mode, set it to your production URL
+	Be sure to only enter the Redirect URL you are currently using. So, if you are running your app in development mode, set it to your local URL, and if you're running your app in production mode, set it to your production URL.
   
 For more information, please see the `Google OAuth 2.0 documentation <https://developers.google.com/identity/protocols/OAuth2>`_.
 
@@ -639,12 +650,12 @@ Creating this Directory for Google requires that you provide information from Go
 
 .. note::
 
-	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
+	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings <create-asm>` section above.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -846,10 +857,33 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
 d. Authenticating Against a Mirrored LDAP Directory
 ===================================================
 
+.. todo::
+
+  This needs more details.
+
 This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`about-mirror-dir` as well as how they are :ref:`modeled <modeling-mirror-dirs>`. 
 
-To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory, it is recommended that you maintain a "master" Directory alongside your Mirror Directory. Furthermore, successful user log in is the recommended time to provision, link, and synchronize a user Account from the Mirror Directory to your master Directory.
+To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory, so it is recommended that you maintain a "master" Directory alongside your Mirror Directory. Furthermore, a successful user login is the recommended time to provision, link, and synchronize an Account in the Mirror Directory to your master Directory.
 
 Working with Accounts in Mirror Directories
 -------------------------------------------
+
+On a successful login attempt, you would search your master Directory for a matching user. This is often done by searching for a matching email address.
+
+If the Account does not exist, you would create it. You would then create a link between the two Accounts using Custom Data on the Mirror Directory Account. The link should be the Stormpath ``href`` for the Account in the master Directory::
+
+  "customData": {
+    "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlQu"
+  }
+
+In some cases where an Account could be in many Directories at once, you may need links to multiple Accounts from the master Account. A common strategy is to store a collections of Account ``href`` values using customData::
+
+  {
+    "customData": {
+      "accountLinks": {
+          "Link1": "https://api.stormpath.com/v1/accounts/3fLduLKlQu",
+          "Link2": "https://api.stormpath.com/v1/accounts/X3rjfa4Ljd", 
+          "Link3": "https://api.stormpath.com/v1/accounts/a05Ghpjd30"
+      }
+  }
 
