@@ -97,7 +97,7 @@ You can map multiple Account Stores to an Application, but only one is required 
 
 Account Store Mappings 
 ----------------------
-Both **Directory** and **Group** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
+**Directory**, **Group**, and **Organization** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
 
 You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's accountStoreMapping resources. 
 
@@ -149,7 +149,7 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
 	* - accountStore
 	  - String (Link) 
 	  - N/A
-	  - A link to the mapping's Account Store (either a Group or Directory) containing Accounts that may login to the application. **Required.** 
+	  - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
 	  
 	* - ``createdAt``
 	  - String (ISO-8601 Datetime)
@@ -276,6 +276,8 @@ The **Access Token** is what grants access to a protected resource. The Access T
 The **Refresh Token** is a special token that is used to generate additional Access Tokens. This allows you to have an short-lived Access Token without having to collect credentials every single time you need a new Access Token.
 
 When using OAuth 2.0, the Access Token and Refresh Token are returned in the same response during the token exchange, this is called an **Access Token Response**.
+
+.. _token-authn-config:
 
 Using Stormpath for Token-Based Authentication
 ---------------------------------------------------
@@ -452,6 +454,8 @@ Once your application receives the request, the first thing to do is to validate
 	  - Yes
 
 It is up to you to determine which kind of validation is important for your application. If you need to validate the state of the Account and/or Application resources, or if you need to use token revocation, then using Stormpath to validate the token is the obvious choice. If you only require that the token has not expired and has not been tampered with, you can validate the token locally and minimize the network requests to Stormpath.
+
+.. _about-token-validation:
 
 Using Stormpath to Validate Tokens
 """"""""""""""""""""""""""""""""""

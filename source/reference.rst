@@ -4,7 +4,7 @@ REST API Reference
 
 .. todo::
 
-	Clear up the cURL commands, include line breaks.
+    Clear up the cURL commands, include line breaks.
 
 This section covers the Core Concepts of the Stormpath REST API, as well as serving as a complete reference for all of the interactions that are possible with the various Stormpath resources. 
 
@@ -14,8 +14,8 @@ REST API Core Concepts
 ======================
 
 .. contents::
-	:local:
-	:depth: 2
+    :local:
+    :depth: 2
 
 The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this guide.
 
@@ -24,7 +24,7 @@ Base URL
 
 All URLs referenced in the API documentation begin with the following base URL::
 
-	https://api.stormpath.com/v1
+    https://api.stormpath.com/v1
 
 Resource Format 
 ---------------
@@ -57,9 +57,9 @@ When using an API key with Basic authentication, the API key ID is the username 
 
 For example, if using curl::
 
-	curl -u $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
-	     -H "Accept: application/json" \
-	     -L https://api.stormpath.com/v1/tenants/current
+    curl -u $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
+         -H "Accept: application/json" \
+         -L https://api.stormpath.com/v1/tenants/current
 
 Digest Authentication
 ^^^^^^^^^^^^^^^^^^^^^
@@ -84,7 +84,7 @@ If you port the algorithm to other languages, please let us know. We are happy t
 
 .. note::
 
-	The Stormpath SAuthc1 digest algorithm is NOT the same as `RFC 2617 <http://www.ietf.org/rfc/rfc2617.txt>`_ HTTP Digest authentication. The Stormpath SAuthc1 digest-based authentication scheme is more secure than standard HTTP Digest authentication.
+    The Stormpath SAuthc1 digest algorithm is NOT the same as `RFC 2617 <http://www.ietf.org/rfc/rfc2617.txt>`_ HTTP Digest authentication. The Stormpath SAuthc1 digest-based authentication scheme is more secure than standard HTTP Digest authentication.
 
 Creating, Retrieving, Updating, and Deleting Resources
 ------------------------------------------------------
@@ -107,44 +107,44 @@ Responses to your create POST calls will contain:
 **Create POST Response Status Codes:**
 
 .. list-table::
-	:widths: 15 60
-	:header-rows: 1
+    :widths: 15 60
+    :header-rows: 1
 
-	* - Response Code
-	  - Description
-	    
-	* - ``201 CREATED``
-	  - The request was successful, we created a new resource, and the response body contains the representation. The ``Location`` header contains the new resource’s canonical URI.
+    * - Response Code
+      - Description
+        
+    * - ``201 CREATED``
+      - The request was successful, we created a new resource, and the response body contains the representation. The ``Location`` header contains the new resource’s canonical URI.
 
-	* - ``400 BAD REQUEST``
-	  - The data given in the POST failed validation. Inspect the response body for details.
-	  
-	* - ``401 UNAUTHORIZED``
-	  - Authentication credentials are required to access the resource. All requests must be authenticated.
+    * - ``400 BAD REQUEST``
+      - The data given in the POST failed validation. Inspect the response body for details.
+      
+    * - ``401 UNAUTHORIZED``
+      - Authentication credentials are required to access the resource. All requests must be authenticated.
 
-	* - ``403 FORBIDDEN``
-	  - The supplied authentication credentials are not sufficient to access the resource.
+    * - ``403 FORBIDDEN``
+      - The supplied authentication credentials are not sufficient to access the resource.
 
-	* - ``404 NOT FOUND``
-	  - We could not locate the resource based on the specified URI.
+    * - ``404 NOT FOUND``
+      - We could not locate the resource based on the specified URI.
 
-	* - ``405 METHOD NOT ALLOWED``
-	  - POST is not supported for the resource.
+    * - ``405 METHOD NOT ALLOWED``
+      - POST is not supported for the resource.
 
-	* - ``409 CONFLICT``
-	  - You cannot create or update a resource because another resource already exists or conflicts with one you are submitting.
+    * - ``409 CONFLICT``
+      - You cannot create or update a resource because another resource already exists or conflicts with one you are submitting.
 
-	* - ``415 UNSUPPORTED MEDIA TYPE``
-	  - You did not specify the request ``Content-Type`` header to have a value of ``application/json``. Only ``application/json`` is currently supported.
+    * - ``415 UNSUPPORTED MEDIA TYPE``
+      - You did not specify the request ``Content-Type`` header to have a value of ``application/json``. Only ``application/json`` is currently supported.
 
-	* - ``429 TOO MANY REQUESTS``
-	  - Your application is sending too many simultaneous requests.
+    * - ``429 TOO MANY REQUESTS``
+      - Your application is sending too many simultaneous requests.
 
-	* - ``500 SERVER ERROR``
-	  - We could not create or update the resource. Please try again.
+    * - ``500 SERVER ERROR``
+      - We could not create or update the resource. Please try again.
 
-	* - ``503 SERVICE UNAVAILABLE``
-	  - We are temporarily unable to service the request. Please wait for a bit and try again.
+    * - ``503 SERVICE UNAVAILABLE``
+      - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 Retrieving Resources
 ^^^^^^^^^^^^^^^^^^^^
@@ -160,42 +160,42 @@ Responses to your GET calls will contain:
 **GET Response Status Codes:**
 
 .. list-table::
-	:widths: 15 60
-	:header-rows: 1
+    :widths: 15 60
+    :header-rows: 1
 
-	* - Response Code
-	  - Description
-	    
-	* - ``200 OK``
-	  - The request was successful and the response body contains the resource requested.
-	  
-	* - ``302 FOUND``
-	  - A common redirect response; you can GET the resource at the URI found in the ``location`` response header.
+    * - Response Code
+      - Description
+        
+    * - ``200 OK``
+      - The request was successful and the response body contains the resource requested.
+      
+    * - ``302 FOUND``
+      - A common redirect response; you can GET the resource at the URI found in the ``location`` response header.
 
-	* - ``304 NOT MODIFIED``
-	  - Your client's cached version of the representation is still up-to-date.
+    * - ``304 NOT MODIFIED``
+      - Your client's cached version of the representation is still up-to-date.
 
-	* - ``400 BAD REQUEST``
-	  - The data given in the POST failed validation. Inspect the response body for details.
-	  
-	* - ``401 UNAUTHORIZED``
-	  - Authentication credentials are required to access the resource. All requests must be authenticated.
+    * - ``400 BAD REQUEST``
+      - The data given in the POST failed validation. Inspect the response body for details.
+      
+    * - ``401 UNAUTHORIZED``
+      - Authentication credentials are required to access the resource. All requests must be authenticated.
 
-	* - ``403 FORBIDDEN``
-	  - The supplied authentication credentials are not sufficient to access the resource.
+    * - ``403 FORBIDDEN``
+      - The supplied authentication credentials are not sufficient to access the resource.
 
-	* - ``404 NOT FOUND``
-	  - We could not locate the resource based on the specified URI.
+    * - ``404 NOT FOUND``
+      - We could not locate the resource based on the specified URI.
 
-	* - ``429 TOO MANY REQUESTS``
-	  - Your application is sending too many simultaneous requests.
+    * - ``429 TOO MANY REQUESTS``
+      - Your application is sending too many simultaneous requests.
 
-	* - ``500 SERVER ERROR``
-	  - We could not create or update the resource. Please try again.
+    * - ``500 SERVER ERROR``
+      - We could not create or update the resource. Please try again.
 
-	* - ``503 SERVICE UNAVAILABLE``
-	  - We are temporarily unable to service the request. Please wait for a bit and try again.
-	    
+    * - ``503 SERVICE UNAVAILABLE``
+      - We are temporarily unable to service the request. Please wait for a bit and try again.
+        
 Updating Resources
 ^^^^^^^^^^^^^^^^^^
 
@@ -210,44 +210,44 @@ Responses to your update POST calls will contain:
 **Update POST Response Status Codes:**
 
 .. list-table::
-	:widths: 15 60
-	:header-rows: 1
+    :widths: 15 60
+    :header-rows: 1
 
-	* - Response Code
-	  - Description
-	    
-	* - ``200 OK``
-	  - The request was successful and the response body contains the resource requested.
+    * - Response Code
+      - Description
+        
+    * - ``200 OK``
+      - The request was successful and the response body contains the resource requested.
 
-	* - ``400 BAD REQUEST``
-	  - The data given in the POST failed validation. Inspect the response body for details.
-	  
-	* - ``401 UNAUTHORIZED``
-	  - Authentication credentials are required to access the resource. All requests must be authenticated.
+    * - ``400 BAD REQUEST``
+      - The data given in the POST failed validation. Inspect the response body for details.
+      
+    * - ``401 UNAUTHORIZED``
+      - Authentication credentials are required to access the resource. All requests must be authenticated.
 
-	* - ``403 FORBIDDEN``
-	  - The supplied authentication credentials are not sufficient to access the resource.
+    * - ``403 FORBIDDEN``
+      - The supplied authentication credentials are not sufficient to access the resource.
 
-	* - ``404 NOT FOUND``
-	  - We could not locate the resource based on the specified URI.
+    * - ``404 NOT FOUND``
+      - We could not locate the resource based on the specified URI.
 
-	* - ``405 METHOD NOT ALLOWED``
-	  - POST is not supported for the resource.
+    * - ``405 METHOD NOT ALLOWED``
+      - POST is not supported for the resource.
 
-	* - ``409 CONFLICT``
-	  - You cannot create or update a resource because another resource already exists or conflicts with one you are submitting.
+    * - ``409 CONFLICT``
+      - You cannot create or update a resource because another resource already exists or conflicts with one you are submitting.
 
-	* - ``415 UNSUPPORTED MEDIA TYPE``
-	  - You did not specify the request ``Content-Type`` header to have a value of ``application/json``. Only ``application/json`` is currently supported.
+    * - ``415 UNSUPPORTED MEDIA TYPE``
+      - You did not specify the request ``Content-Type`` header to have a value of ``application/json``. Only ``application/json`` is currently supported.
 
-	* - ``429 TOO MANY REQUESTS``
-	  - Your application is sending too many simultaneous requests.
+    * - ``429 TOO MANY REQUESTS``
+      - Your application is sending too many simultaneous requests.
 
-	* - ``500 SERVER ERROR``
-	  - We could not create or update the resource. Please try again.
+    * - ``500 SERVER ERROR``
+      - We could not create or update the resource. Please try again.
 
-	* - ``503 SERVICE UNAVAILABLE``
-	  - We are temporarily unable to service the request. Please wait for a bit and try again.
+    * - ``503 SERVICE UNAVAILABLE``
+      - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 Deleting Resources
 ^^^^^^^^^^^^^^^^^^
@@ -256,42 +256,42 @@ To delete a resource, make an HTTP DELETE request to the resource URL. Note that
 
 .. note::
 
-	If your HTTP does not support the DELETE method, you can simulate it by sending a POST request to the resource endpoint with a ``_method=DELETE`` query string parameter::
+    If your HTTP does not support the DELETE method, you can simulate it by sending a POST request to the resource endpoint with a ``_method=DELETE`` query string parameter::
 
-		curl -X POST -u $API_KEY_ID:$API_KEY_SECRET "https://api.stormpath.com/v1/applications/$APPLICATION_ID?_method=DELETE"
+        curl -X POST -u $API_KEY_ID:$API_KEY_SECRET "https://api.stormpath.com/v1/applications/$APPLICATION_ID?_method=DELETE"
 
 **DELETE Response Status Codes:**
 
 .. list-table::
-	:widths: 15 60
-	:header-rows: 1
+    :widths: 15 60
+    :header-rows: 1
 
-	* - Response Code
-	  - Description
-	    
-	* - ``204 NO CONTENT``
-	  - The request was successful; the resource was deleted. The deleted resource will not be returned..
-	  
-	* - ``401 UNAUTHORIZED``
-	  - Authentication credentials are required to access the resource. All requests must be authenticated.
+    * - Response Code
+      - Description
+        
+    * - ``204 NO CONTENT``
+      - The request was successful; the resource was deleted. The deleted resource will not be returned..
+      
+    * - ``401 UNAUTHORIZED``
+      - Authentication credentials are required to access the resource. All requests must be authenticated.
 
-	* - ``403 FORBIDDEN``
-	  - The supplied authentication credentials are not sufficient to access the resource.
+    * - ``403 FORBIDDEN``
+      - The supplied authentication credentials are not sufficient to access the resource.
 
-	* - ``404 NOT FOUND``
-	  - We could not locate the resource based on the specified URI.
+    * - ``404 NOT FOUND``
+      - We could not locate the resource based on the specified URI.
 
-	* - ``405 METHOD NOT ALLOWED``
-	  - DELETE is not supported for the resource.
+    * - ``405 METHOD NOT ALLOWED``
+      - DELETE is not supported for the resource.
 
-	* - ``429 TOO MANY REQUESTS``
-	  - Your application is sending too many simultaneous requests.
+    * - ``429 TOO MANY REQUESTS``
+      - Your application is sending too many simultaneous requests.
 
-	* - ``500 SERVER ERROR``
-	  - We could not create or update the resource. Please try again.
+    * - ``500 SERVER ERROR``
+      - We could not create or update the resource. Please try again.
 
-	* - ``503 SERVICE UNAVAILABLE``
-	  - We are temporarily unable to service the request. Please wait for a bit and try again.
+    * - ``503 SERVICE UNAVAILABLE``
+      - We are temporarily unable to service the request. Please wait for a bit and try again.
 
 REST Error Responses
 --------------------
@@ -299,32 +299,32 @@ REST Error Responses
 REST API responses indicating an error or warning are represented by a proper response HTTP status code (403, 404, etc) along with a response body containing the following information:
 
 .. list-table::
-	:widths: 20 10 60
-	:header-rows: 1
+    :widths: 20 10 60
+    :header-rows: 1
 
-	* - Attribute
-	  - Type
-	  - Description
-	
-	* - ``status``
-	  - Number
-	  - The corresponding HTTP status code.
-	
-	* - ``code``
-	  - Number
-	  - A `Stormpath-specific error code <http://docs.stormpath.com/errors>`_ that can be used to obtain more information.
-	
-	* - ``message``
-	  - String
-	  - A simple, easy to understand message that you can show directly to your application's end-user.
-	
-	* - ``developerMessage``
-	  - String
-	  - A clear, plain text explanation with technical details that might assist a developer calling the Stormpath API.
-	
-	* - ``moreInfo``
-	  - String
-	  - A fully qualified URL that may be accessed to obtain more information about the error.
+    * - Attribute
+      - Type
+      - Description
+    
+    * - ``status``
+      - Number
+      - The corresponding HTTP status code.
+    
+    * - ``code``
+      - Number
+      - A `Stormpath-specific error code <http://docs.stormpath.com/errors>`_ that can be used to obtain more information.
+    
+    * - ``message``
+      - String
+      - A simple, easy to understand message that you can show directly to your application's end-user.
+    
+    * - ``developerMessage``
+      - String
+      - A clear, plain text explanation with technical details that might assist a developer calling the Stormpath API.
+    
+    * - ``moreInfo``
+      - String
+      - A fully qualified URL that may be accessed to obtain more information about the error.
 
 .. _about-collections:
 
@@ -353,20 +353,20 @@ There are two optional query parameters that may be specified to control paginat
 
 This following request will retrieve a Tenant’s Applications Collection Resource from the server with page results starting at index 10 (the 11th element), with a maximum of 40 total elements::
 
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
 
 This would result in the following response::
 
-	HTTP/1.1 200 OK
+    HTTP/1.1 200 OK
 
-	{
-	  "href": "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
-	  "offset": 10,
-	  "limit": 40,
-	  "items" : [
-	    [...]
-	  ]
-	}
+    {
+      "href": "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+      "offset": 10,
+      "limit": 40,
+      "items" : [
+        [...]
+      ]
+    }
 
 .. _about-sorting:
 
@@ -376,15 +376,15 @@ A request for a Collection Resource can contain an optional ``orderBy`` query pa
 
 For example, a sorted request (where %2C is the URL encoding for the comma character) might look like this::
 
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
 
 When URL-decoded, the URL looks like this::
 
-	https://api.stormpath.com/v1/accounts?orderBy=orderStatement1,orderStatement2,...,orderStatementN
+    https://api.stormpath.com/v1/accounts?orderBy=orderStatement1,orderStatement2,...,orderStatementN
 
 Each ``orderStatement`` is defined as follows::
 
-	``sortableAttributeName optionalAscendingOrDescendingStatement``
+    ``sortableAttributeName optionalAscendingOrDescendingStatement``
 
 - ``sortableAttributeName`` is the name of a sortable attribute of a resource in the Collection. Sortable attributes are non-complex and non-link attributes, such as integers and strings.
 - ``optionalAscendingOrDescendingStatement`` is composed of the following:
@@ -399,17 +399,17 @@ So, putting this all together now. If we wanted to sort all Accounts associated 
 
 Which would look like this::
 
-	orderBy=surname,givenName desc
+    orderBy=surname,givenName desc
 
 Properly URL encoded it would look like this::
 
-	https://api.stormpath.com/v1/applications/someRandomId/accounts?orderBy=surname%20asc%2CgivenName%20desc
+    https://api.stormpath.com/v1/applications/someRandomId/accounts?orderBy=surname%20asc%2CgivenName%20desc
 
 .. note::
 
-	Since ``asc`` is the default, we could actually omit it::
+    Since ``asc`` is the default, we could actually omit it::
 
-		?orderBy=surname%2CgivenName%20desc
+        ?orderBy=surname%2CgivenName%20desc
 
 .. _about-search:
 
@@ -433,11 +433,11 @@ Filter Search
 
 A filter search consists of specifying a query parameter ``q`` and a corresponding search value on a Collection Resource URL::
 
-	/v1/someCollection?q=some+criteria
+    /v1/someCollection?q=some+criteria
 
 For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe"::
 
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
+    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
 
 Matching Logic
 ++++++++++++++
@@ -448,7 +448,7 @@ Stormpath will perform a case-insensitive matching query on all viewable attribu
 
 So the following query::
 
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?q=Joe'
+    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?q=Joe'
 
 Returns all Accounts where:
 
@@ -460,10 +460,10 @@ Returns all Accounts where:
 
 It may help to think about each attribute comparison as similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
 
-	select * from my_tenant_accounts where
-	    (lower(givenName) like '%joe%' OR
-	     lower(surname) like '%joe%' OR
-	     lower(email) like '%joe%' OR ... );
+    select * from my_tenant_accounts where
+        (lower(givenName) like '%joe%' OR
+         lower(surname) like '%joe%' OR
+         lower(email) like '%joe%' OR ... );
 
 .. _search-attribute:
 
@@ -472,11 +472,11 @@ Attribute Search
 
 In the above example, our query returned all Accounts that had any searchable attribute with the query in it. It is also possible to tell Stormpath to only return matches from a particular attribute::
 
-	/v1/someCollection?anAttribute=someValue&anotherAttribute=anotherValue
+    /v1/someCollection?anAttribute=someValue&anotherAttribute=anotherValue
 
 For example, to search an Application’s Accounts for an Account with a ``givenName`` of ``Joe``::
 
-	/v1/applications/someAppId/accounts?givenName=Joe
+    /v1/applications/someAppId/accounts?givenName=Joe
 
 .. _searchable-attributes:
 
@@ -486,26 +486,26 @@ Searchable Attributes
 The following attributes can be filtered by and searched for:
 
 .. list-table::
-	:widths: 15 30
-	:header-rows: 1
+    :widths: 15 30
+    :header-rows: 1
 
-	* - Resource 
-	  - Searchable Attributes 
+    * - Resource 
+      - Searchable Attributes 
 
-	* - Application 
-	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
+    * - Application 
+      - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
-	* - Directory 
-	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
+    * - Directory 
+      - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
-	* - Account 
-	  - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``createdAt``, ``modifiedAt`` 
+    * - Account 
+      - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``createdAt``, ``modifiedAt`` 
 
-	* - Group 
-	  - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
+    * - Group 
+      - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
-	* - Organization 
-	  - ``name``, ``nameKey``, ``status``, ``description``, ``createdAt``, ``modifiedAt``	
+    * - Organization 
+      - ``name``, ``nameKey``, ``status``, ``description``, ``createdAt``, ``modifiedAt``   
 
 Matching Logic
 ++++++++++++++
@@ -523,7 +523,7 @@ Attribute-based queries use standard URI query parameters and function as follow
 
 So the following query::
 
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled'
+    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled'
 
 Returns all accounts where:
 
@@ -536,7 +536,7 @@ Returns all accounts where:
 
 .. note::
 
-	For resources with a ``status`` attribute, status query values must be the exact value. For example, ``enabled`` or ``disabled`` must be passed, while fragments such as ``ena``, ``dis``, ``bled`` are not acceptable.
+    For resources with a ``status`` attribute, status query values must be the exact value. For example, ``enabled`` or ``disabled`` must be passed, while fragments such as ``ena``, ``dis``, ``bled`` are not acceptable.
 
 .. _search-datetime:
 
@@ -547,29 +547,29 @@ The Datetime search is a sub-type of the attribute search that allows you to fil
 
 Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes::
 
-	{
-	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-	  [...]
-	  "createdAt": "2015-08-25T19:57:05.976Z",
-	  "modifiedAt": "2015-08-25T19:57:05.976Z",
-	  "emailVerificationToken": null,
-	  "customData": {
-	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
-	  },
-	  [...]
-	}
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+      [...]
+      "createdAt": "2015-08-25T19:57:05.976Z",
+      "modifiedAt": "2015-08-25T19:57:05.976Z",
+      "emailVerificationToken": null,
+      "customData": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+      },
+      [...]
+    }
 
 Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ which is human readable and has common support across all languages. The timezone is coordinated universal time (UTC). So a datetime range would look like this::
 
-	[ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME
+    [ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME
 
 .. note::
 
-	Omitting the beginning or ending date is valid for requests. Omitting the begin datetime range [,ISO-8601-END-DATETIME] would include all resources created or modified before the end datetime. Omitting the end datetime range [ISO-8601-BEGIN-DATETIME,] would include all resources created or modified after the the begin datetime.
+    Omitting the beginning or ending date is valid for requests. Omitting the begin datetime range [,ISO-8601-END-DATETIME] would include all resources created or modified before the end datetime. Omitting the end datetime range [ISO-8601-BEGIN-DATETIME,] would include all resources created or modified after the the begin datetime.
 
 As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this::
 
-	/v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14]
+    /v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14]
 
 The response would be a Collection of Accounts created between the two days. 
 
@@ -578,7 +578,7 @@ Exclusion vs Inclusion
 
 The square brackets [] denote **inclusion**, but ``createdAt`` and ``modifiedAt`` also support **exclusion** with parentheses (). For example, if you wanted to get all accounts created between Jan 12, 2015 and Jan 14, 2015 not including the 14th, your request would look like this::
 
-	v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14)
+    v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14)
 
 Precision
 +++++++++
@@ -587,11 +587,11 @@ The precision of your query is controlled by the granularity of the `ISO 8601 <h
 
 For example, if you need precision in seconds::
 
-	?createdAt=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
+    ?createdAt=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
 
 And, if you need precision in years::
 
-	?createdAt=[2014, 2015]
+    ?createdAt=[2014, 2015]
 
 Shorthand
 +++++++++
@@ -600,19 +600,19 @@ It is also possible to use shorthand with ranges of ``createdAt`` and ``modified
 
 For example if you wanted all accounts created in Jan 2015, instead of::
 
-	?createdAt=[2015-01-01T00:00:00.000Z,2015-02-01T00:00:00.000)
+    ?createdAt=[2015-01-01T00:00:00.000Z,2015-02-01T00:00:00.000)
 
 You could just write::
 
-	?createdAt=2015-01
+    ?createdAt=2015-01
 
 And if you want all Accounts modified on the 12th hour UTC on Feb 03, 2015, instead of this query::
 
-	?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
+    ?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
 
 You can simply write::
 
-	?modifiedAt=2015-02-03T12
+    ?modifiedAt=2015-02-03T12
 
 .. _about-links:
 
@@ -631,11 +631,11 @@ When requesting a resource you might want the Stormpath API server to return not
 
 To expand one or more links, simply add an ``expand`` query parameter with one or more comma-delimited attributes to the resource URI::
 
-	https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=directory,tenant
+    https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=directory,tenant
 
 .. note::
 
-	It is currently only possible to expand a resource’s immediate links but not further links inside those links.
+    It is currently only possible to expand a resource’s immediate links but not further links inside those links.
 
 .. _ref-tenant:
 
@@ -653,152 +653,152 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 **Tenant Attributes**
 
 .. list-table::
-	:widths: 15 10 20 60
-	:header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	
-	* - ``href`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - The resource's fully qualified location URL
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL
 
-	* - ``name`` 
-	  - String
-	  - 1 < N <= 255 characters
-	  - Name of the Tenant, by default this is the same as the key, but can be modified.
+    * - ``name`` 
+      - String
+      - 1 < N <= 255 characters
+      - Name of the Tenant, by default this is the same as the key, but can be modified.
 
-	* - ``key`` 
-	  - String
-	  - 1 < N <= 63 characters
-	  - Human-readable unique key. This key is unique and assigned by Stormpath. If you would like to change it, please contact Stormpath. The key must have: no whitespace, lower-case a-z and dash ‘–’ characters only, and it cannot start or end with a dash ‘–’ character.
+    * - ``key`` 
+      - String
+      - 1 < N <= 63 characters
+      - Human-readable unique key. This key is unique and assigned by Stormpath. If you would like to change it, please contact Stormpath. The key must have: no whitespace, lower-case a-z and dash ‘–’ characters only, and it cannot start or end with a dash ‘–’ character.
 
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-	
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s attributes were last modified.
-	
-	* - ``customData``
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to the Tenant's customData resource that you can use to store your own custom fields.
+    * - ``createdAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+    
+    * - ``modifiedAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+    
+    * - ``customData``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the Tenant's customData resource that you can use to store your own custom fields.
 
-	* - ``organizations`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the Organizations mapped to this Tenant.
+    * - ``organizations`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Organizations mapped to this Tenant.
 
-	* - ``applications``
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the Applications mapped to this Tenant. 
-	    	
-	* - ``directories`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the Directories mapped to this Tenant.
+    * - ``applications``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Applications mapped to this Tenant. 
+            
+    * - ``directories`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Directories mapped to this Tenant.
 
-	* - ``accounts``
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of the Accounts mapped to this Tenant.
+    * - ``accounts``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of the Accounts mapped to this Tenant.
 
-	* - ``agents`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the Agents configured for this Tenant.
+    * - ``agents`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Agents configured for this Tenant.
 
-	* - ``groups`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the Groups configured for this Tenant.
+    * - ``groups`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Groups configured for this Tenant.
 
-	* - ``idSites`` 
-	  - String (:ref:`Link <about-links>`)
-	  - N/A
-	  - A link to a Collection of all the ID Sites configured for this Tenant.
+    * - ``idSites`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the ID Sites configured for this Tenant.
 
 **Tenant Example**
 
-.. code::
+.. code-block:: json 
 
-	{
-	  "href": "https://api.stormpath.com/v1/tenants/:TenantId",
-	  "name": "tenantName",
-	  "key": "tenantKey",
-	  "createdAt": "dateTime",
-	  "modifiedAt": "dateTime",
-	  "customData": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/customData"
-	  },
-	  "organizations": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/organizations"
-	  },
-	  "applications": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/applications"
-	  },
-	  "directories": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/directories"
-	  },
-	  "accounts": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/accounts"
-	  },
-	  "agents": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/agents"
-	  },
-	  "groups": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/groups"
-	  },
-	  "idSites": {
-	    "href": "https://api.stormpath.com/v1/tenants/:TenantId/idSites"
-	  }
-	}
+    {
+      "href": "https://api.stormpath.com/v1/tenants/:TenantId",
+      "name": "tenantName",
+      "key": "tenantKey",
+      "createdAt": "dateTime",
+      "modifiedAt": "dateTime",
+      "customData": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/customData"
+      },
+      "organizations": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/organizations"
+      },
+      "applications": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/applications"
+      },
+      "directories": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/directories"
+      },
+      "accounts": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/accounts"
+      },
+      "agents": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/agents"
+      },
+      "groups": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/groups"
+      },
+      "idSites": {
+        "href": "https://api.stormpath.com/v1/tenants/:TenantId/idSites"
+      }
+    }
 
 Tenant Operations
 -----------------
     
 .. list-table::
-	:widths: 40 20 40
-	:header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-	* - Operation 
-	  - Optional Parameters 
-	  - Description
-	
-	* - GET /v1/tenants/current
-	  - N/A
-	  - Retrieves the Tenant associated with the current API key. The response will be a ``302 Redirect``. You will find the location of the Tenant in a Location header, although most REST libraries and web browsers will automatically issue a request for it.
-	    
-	* - GET /v1/tenants/$TENANT_ID
-	  - N/A 
-	  - Retrieves the Tenant with the specified ID.
-	
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/tenants/current
+      - N/A
+      - Retrieves the Tenant associated with the current API key. The response will be a ``302 Redirect``. You will find the location of the Tenant in a Location header, although most REST libraries and web browsers will automatically issue a request for it.
+        
+    * - GET /v1/tenants/$TENANT_ID
+      - N/A 
+      - Retrieves the Tenant with the specified ID.
+    
 Retrieve Resources Associated With A Tenant 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
-	:widths: 40 20 40
-	:header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-	* - Operation 
-	  - Optional Parameters 
-	  - Description
-	
-	* - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
-	  - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-	  - Retrieves a collection of all of a Tenant's associated resources of the specified type.
-	    
-	* - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
-	  - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-	  - Searches a collection of all of the Tenant's associated  resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a collection of all of a Tenant's associated resources of the specified type.
+        
+    * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the Tenant's associated  resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
 
 Example Queries
 ^^^^^^^^^^^^^^^
@@ -807,9 +807,9 @@ Example Queries
 
 .. code-block:: bash
 
-	curl -u $API_KEY_ID:$API_KEY_SECRET \
-	-H "Accept: application/json" \
-	"https://api.stormpath.com/v1/tenants/$TENANT_ID/accounts"
+    curl -u $API_KEY_ID:$API_KEY_SECRET \
+    -H "Accept: application/json" \
+    "https://api.stormpath.com/v1/tenants/$TENANT_ID/accounts"
 
 This query would retrieve a collection containing all the Accounts associated with the specified Tenant.
 
@@ -817,9 +817,9 @@ This query would retrieve a collection containing all the Accounts associated wi
 
 .. code-block:: bash
 
-	curl -u $API_KEY_ID:$API_KEY_SECRET \
-	-H "Accept: application/json" \
-	"https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
+    curl -u $API_KEY_ID:$API_KEY_SECRET \
+    -H "Accept: application/json" \
+    "https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
 
 This query would retrieve a collection containing the Applications associated with this Tenant that have the string "foo" as the value of any :ref:`searchable attribute <searchable-attributes>`.
 
@@ -830,3 +830,339 @@ The result body would:
   - have a :ref:`pagination <about-pagination>` offset of 0 and 
   
   - a limit of 50 results per response
+
+Application
+=============
+
+**Description**
+
+.. todo::
+
+    Lots of opportunities for hyperlinking here.
+
+An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs. You control who may log in to an application by assigning (or ‘mapping’) one or more Directory, Group, or Organization resources (generically called Account Stores) to an Application resource. The Accounts in these associated Account Stores collectively form the application’s user base.
+
+**Application URL**
+
+``/v1/applications/$APPLICATION_ID`` 
+
+**Application Attributes**
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL
+
+    * - ``name`` 
+      - String
+      - 1 < N <= 255 characters
+      - Name of the Application. Must be unique across all Applications within a Tenant.
+
+    * - ``description`` 
+      - String  
+      - 0 <= N <= 4000 chars
+      - A description of the application that this resource represents.
+
+    * - ``status`` 
+      - String (Enum)
+      - ``enabled`` (Default) ``disabled``
+      - ``enabled`` applications allow mapped Accounts to log in. ``disabled`` Applications prevent mapped Accounts from logging in.
+
+    * - ``createdAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+    
+    * - ``modifiedAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``tenant`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the Tenant that owns this Application.
+
+    * - ``defaultAccountStoreMapping`` 
+      - String (:ref:`Link <about-links>`)
+      - Could be ``null``
+      - A link to the Account Store Mapping that reflects the default Account Store where the application will store newly created Accounts. A ``null`` value disables the application from directly creating new Accounts.
+
+    * - ``defaultGroupStoreMapping`` 
+      - String (:ref:`Link <about-links>`)
+      - Could be ``null``
+      - A link to the Account Store Mapping that reflects the default Group Store where the application will store newly created Groups. A ``null`` value disables the application from directly creating new Groups.
+
+    * - ``customData``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the Tenant's customData resource that you can use to store your own custom fields.
+
+    * - ``oAuthPolicy`` 
+      - String (:ref:`Link <about-links>`)
+      - 
+      - A link to this Application OAuth policy. For more information, see :ref:`token-authn-config`.
+
+    * - ``accounts``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Accounts mapped to this Application.
+
+    * - ``groups`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to a Collection of all the Groups mapped to this Application.
+
+    * - ``accountStoreMappings``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the collection of all Account Store Mappings for this Application.
+
+    * - ``loginAttempts``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the collection of Login Attempts for this Application. For more information see :ref:<how-login-works>.
+
+    * - ``passwordResetTokens``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the collection of Password Reset Tokens, used in :ref:`password reset workflows <password-reset-flow>`.
+
+    * - ``apiKeys``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A collection of API Keys for this Application. 
+    
+    * - ``verificationEmails``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the collection of Verification Emails for this Application.
+
+    * - ``authTokens``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`. 
+
+**Application Example**
+
+.. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
+      "name": "My Application",
+      "description": "This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
+      "status": "ENABLED",
+      "createdAt": "2015-08-18T20:46:36.061Z",
+      "modifiedAt": "2015-08-25T18:11:29.774Z",
+      "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      },
+      "defaultAccountStoreMapping": {
+        "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
+      },
+      "defaultGroupStoreMapping": {
+        "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
+      },
+      "customData": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/customData"
+      },
+      "oAuthPolicy": {
+        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR"
+      },
+      "accounts": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/accounts"
+      },
+      "groups": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/groups"
+      },
+      "accountStoreMappings": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/accountStoreMappings"
+      },
+      "loginAttempts": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts"
+      },
+      "passwordResetTokens": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens"
+      },
+      "apiKeys": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/apiKeys"
+      },
+      "verificationEmails": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/verificationEmails"
+      },
+      "authTokens": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/authTokens"
+      }  
+    }
+
+ResourceName Operations
+-----------------------
+    
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - N/A
+      - Retrieves the ResourceName
+        
+    * - 
+      - 
+      - 
+    
+Retrieve Resources Associated With A Tenant 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET 
+      - 
+      - 
+        
+
+Example Queries
+^^^^^^^^^^^^^^^
+
+**Query #1 Description**
+
+.. code-block:: bash
+
+    curl 
+
+This query would...
+
+**Query #2 Description**
+
+.. code-block:: bash
+
+    curl 
+
+This query would...
+
+ResourceName
+=============
+
+**Description**
+
+
+
+**ResourceName URL**
+
+``/v1/tenants/:tenantId``
+
+**ResourceName Attributes**
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL
+
+    * - ``name`` 
+      - 
+      - 
+      - 
+
+    * - ``createdAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+    
+    * - ``modifiedAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+    
+    * - ``customData``
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - A link to the Tenant's customData resource that you can use to store your own custom fields.
+
+**ResourceName Example**
+
+.. code-block:: json
+
+    {
+     
+    }
+
+ResourceName Operations
+------------------------
+    
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - N/A
+      - Retrieves the ResourceName
+        
+    * - 
+      - 
+      - 
+    
+Retrieve Resources Associated With A Tenant 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET 
+      - 
+      - 
+        
+
+Example Queries
+^^^^^^^^^^^^^^^
+
+**Query #1 Description**
+
+.. code-block:: bash
+
+    curl 
+
+This query would...
+
+**Query #2 Description**
+
+.. code-block:: bash
+
+    curl 
+
+This query would...
