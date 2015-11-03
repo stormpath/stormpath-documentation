@@ -662,7 +662,7 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 	  - Description
 	
 	* - ``href`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - The resource's fully qualified location URL
 
@@ -673,56 +673,56 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 	* - ``key`` 
 	  - String
-	  - 1 < N <= 63 characters, no whitespace, lower-case a-z and dash ‘–’ characters only, cannot start or end with a dash ‘–’ character.
-	  - Human-readable unique key. This key is unique and assigned by Stormpath. If you would like to change it, please contact Stormpath.
+	  - 1 < N <= 63 characters
+	  - Human-readable unique key. This key is unique and assigned by Stormpath. If you would like to change it, please contact Stormpath. The key must have: no whitespace, lower-case a-z and dash ‘–’ characters only, and it cannot start or end with a dash ‘–’ character.
 
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``customData``
-	  - String (Link) 
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to the Tenant's customData resource that you can use to store your own custom fields.
 
 	* - ``organizations`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the Organizations mapped to this Tenant.
 
 	* - ``applications``
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the Applications mapped to this Tenant. 
 	    	
 	* - ``directories`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the Directories mapped to this Tenant.
 
 	* - ``accounts``
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of the Accounts mapped to this Tenant.
 
 	* - ``agents`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the Agents configured for this Tenant.
 
 	* - ``groups`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the Groups configured for this Tenant.
 
 	* - ``idSites`` 
-	  - String (Link)
+	  - String (:ref:`Link <about-links>`)
 	  - N/A
 	  - A link to a Collection of all the ID Sites configured for this Tenant.
 
@@ -764,223 +764,69 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 Tenant Operations
 -----------------
-
-.. contents::
-	:local:
-	:depth: 2
-
-Get a Tenant
-^^^^^^^^^^^^^^^^^^^
-
-When retrieving a Tenant resource, you can either retrieve a Tenant specified by a Tenant ID, or you can simply retrieve the current Tenant.
-
-.. note::
-
-	 You may only retrieve the Tenant corresponding to the API Key that you use.
-
-.. _get-tenantid:
-
-Get a Specified Tenant
-""""""""""""""""""""""
-
-If you know your Tenant ID, you can use the following call::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId
-
-**Request Parameters**
-
-*None*
-
-**Example Request & Response**
-
-Request::
-
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R'
-
-Response::
-
-	{
-	  "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R",
-	  "name": "iron-troop",
-	  "key": "iron-troop",
-	  "createdAt": "2015-08-18T20:46:35.565Z",
-	  "modifiedAt": "2015-08-18T20:46:36.083Z",
-	  "customData": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/customData"
-	  },
-	  "organizations": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/organizations"
-	  },
-	  "applications": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/applications"
-	  },
-	  "directories": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/directories"
-	  },
-	  "accounts": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/accounts"
-	  },
-	  "agents": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/agents"
-	  },
-	  "groups": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/groups"
-	  },
-	  "idSites": {
-	    "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/idSites"
-	  }
-	}
-
-.. _get-current-tenant:
-
-Get the Current Tenant
-"""""""""""""""""""""""""""""
-
-If you do not know, or do not want to use, your Tenant ID, you can instead send the following call to retrieve the Tenant associated with the API Key that you are using::
-
-	GET https://api.stormpath.com/v1/tenants/current
-
-**Request Parameters**
-
-*None*
-
-**Example Request & Response**
-
-Request::
-
-	curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/current'
-
-Response:
-
-The response will be a ``302 Redirect`` response. You will find the location of the Tenant in a ``Location`` header::
-
-	Connection → keep-alive
-	Content-Length → 0
-	Date → Thu, 15 Oct 2015 21:28:04 GMT
-	Location → https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R
-	Server → Apache
-	Set-Cookie → rememberMe=deleteMe; Path=/; Max-Age=0; Expires=Wed, 14-Oct-2015 21:28:05 GMT
-	Strict-Transport-Security → max-age=31536000; includeSubDomains; preload 
-
-Most REST libraries and web browsers will automatically issue a request for the resource in the Location header. If you do not see this, just execute a GET request to that ``Location`` (as described :ref:`above <get-tenantid>`) and you will receive back your Tenant resource.
-
-Get Resources Associated with a Tenant
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-There are many options for using the Tenant to look up other resources. This means that, with an Tenant ID, you can look up something like all of the Groups associated with that Tenant, and you can also use optional parameters to further refine your queries. For more information, keep reading. 
-
-Get a Tenant's Applications
-"""""""""""""""""""""""""""
-
-You can retrieve the Application resources associated with a Tenant by going to this endpoint::
-
-	/v1/tenants/:tenantId/applications
-
-List All of a Tenant's Applications
-+++++++++++++++++++++++++++++++++++
-
-If you just want a list of all of a Tenant's applications, send this request to the Tenant's ``/applications`` endpoint::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/applications
-
-**Request Parameters**
-
-:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
-
-Search a Tenant's Applications
-+++++++++++++++++++++++++++++++++++
-
-If you would like to search the Applications associated with the Tenant, you can use :ref:`search query parameters <about-search>`, and any matching Application resources will be returned as a :ref:`paginated <about-pagination>` list::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/applications?searchParams
-
-**Request Parameters**
-
-In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Application resource :ref:`here <searchable-attributes>`.
-
-Get a Tenant's Directories
-""""""""""""""""""""""""""
-
-You can retrieve the Directory resources associated with a Tenant by going to this endpoint::
-
-	/v1/tenants/:tenantId/directories 
-
-List a Tenant's Directories
-+++++++++++++++++++++++++++
-
-You can list your Tenant’s Directories by sending a GET request to your Tenant’s Directories Collection resource ``href``::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/directories
-
-**Request Parameters**
-
-:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
-
-Search a Tenant's Directories
-+++++++++++++++++++++++++++++
-
-Instead of just retrieving a list of the Directories, it is also possible to search within the Collection and retrieve only the Directories that match your query::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/directories?q=queryText
-
-**Request Parameters**
-
-In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for a Directory resource :ref:`here <searchable-attributes>`.
-
-Get A Tenant's Accounts
-"""""""""""""""""""""""
-
-You can retrieve the Account resources associated with a Tenant by going to this endpoint::
-
-	/v1/tenants/:tenantId/accounts  
-
-List a Tenant's Accounts 
-++++++++++++++++++++++++
-
-You can list your Tenant’s Accounts by sending a GET request to your Tenant’s Accounts Collection resource ``href``::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/accounts
-
-**Request Parameters**
-
-:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
-
-Search a Tenant's Accounts 
-++++++++++++++++++++++++++
-
-Instead of just retrieving a list of the Accounts, it is also possible to search within the Collection and retrieve only the Accounts that match your query::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/accounts?q=queryText
-
-**Request Parameters**
-
-In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for an Account resource :ref:`here <searchable-attributes>`.
-
-Get a Tenant's Groups
-""""""""""""""""""""""""""""""""""
-
-You can retrieve the Group resources associated with a Tenant by going to this endpoint::
-
-	/v1/tenants/:tenantId/groups  
-
-List a Tenant's Groups 
-++++++++++++++++++++++++
-
-You can list your Tenant’s Groups by sending a GET request to your Tenant’s Groups Collection resource ``href``::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/groups
-
-**Request Parameters**
-
-:ref:`Pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters are available.
-
-Search a Tenant's Groups 
-++++++++++++++++++++++++++
-
-Instead of just retrieving a list of the Groups, it is also possible to search within the Collection and retrieve only the Groups that match your query::
-
-	GET https://api.stormpath.com/v1/tenants/:tenantId/groups?q=queryText
-
-**Request Parameters**
-
-In addition to :ref:`pagination <about-pagination>` and :ref:`sorting <about-sorting>` parameters, you can also find a list of the searchable attributes for a Group resource :ref:`here <searchable-attributes>`.
+    
+.. list-table::
+	:widths: 40 20 40
+	:header-rows: 1
+
+	* - Operation 
+	  - Optional Parameters 
+	  - Description
+	
+	* - GET /v1/tenants/current
+	  - N/A
+	  - Retrieves the Tenant associated with the current API key. The response will be a ``302 Redirect``. You will find the location of the Tenant in a Location header, although most REST libraries and web browsers will automatically issue a request for it.
+	    
+	* - GET /v1/tenants/$TENANT_ID
+	  - N/A 
+	  - Retrieves the Tenant with the specified ID.
+	
+Retrieve Resources Associated With A Tenant 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+	:widths: 40 20 40
+	:header-rows: 1
+
+	* - Operation 
+	  - Optional Parameters 
+	  - Description
+	
+	* - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
+	  - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+	  - Retrieves a collection of all of a Tenant's associated resources of the specified type.
+	    
+	* - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
+	  - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+	  - Searches a collection of all of the Tenant's associated  resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
+
+Example Queries
+^^^^^^^^^^^^^^^
+
+**Retrieving a Collection Associated with a Tenant**
+
+.. code-block:: bash
+
+	curl -u $API_KEY_ID:$API_KEY_SECRET \
+	-H "Accept: application/json" \
+	"https://api.stormpath.com/v1/tenants/$TENANT_ID/accounts"
+
+This query would retrieve a collection containing all the Accounts associated with the specified Tenant.
+
+**Searching a Collection Associated with a Tenant**
+
+.. code-block:: bash
+
+	curl -u $API_KEY_ID:$API_KEY_SECRET \
+	-H "Accept: application/json" \
+	"https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
+
+This query would retrieve a collection containing the Applications associated with this Tenant that have the string "foo" as the value of any :ref:`searchable attribute <searchable-attributes>`.
+
+The result body would:
+  
+  - be :ref:`sorted <about-sorting>` by the ``name`` attribute
+  
+  - have a :ref:`pagination <about-pagination>` offset of 0 and 
+  
+  - a limit of 50 results per response
