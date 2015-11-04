@@ -20,7 +20,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 Additionally:
 
-- All Account resources within a Directory have a unique ``email`` and/or ``username``.
+- All Account resources within a Directory have a unique ``email`` and ``username``.
 - All Group resources within a Directory have a unique ``name``.
 
 The Directory Resource
@@ -64,13 +64,13 @@ An individual Directory resource may be accessed via its Resource URI:
 	  - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
 
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``tenant``
@@ -221,13 +221,13 @@ The Provider resource contains information about the source of the information f
 	  - The resource's fully qualified location URL
 
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``providerId``
@@ -340,13 +340,13 @@ An Agents collection may be accessed via its Resource URI:
 	  - The configuration information for this Agent, as an embedded ``config`` object. (see below)
 	
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s attributes were last modified.
 	
 	* - ``directory``
@@ -692,13 +692,13 @@ An individual Group resource may be accessed via its Resource URI:
 	  - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
 
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s properties were last modified.
 
 	* - ``customData``
@@ -806,7 +806,13 @@ b. How to Store Accounts in Stormpath
 Accounts
 --------
 
-An **Account** is a unique identity within a Directory, with a unique ``username`` and/or ``email``. An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
+An **Account** is a unique identity within a Directory, with a unique ``username`` and ``email``.
+
+.. note::
+
+	Specifying a ``username`` is optional, if not included it will default to the ``email`` value.
+
+An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
 
 The Account Resource
 ^^^^^^^^^^^^^^^^^^^^
@@ -866,7 +872,7 @@ An individual Account resource may be accessed via its Resource URI:
 	* - ``fullName``
 	  - String
 	  - N/A
-	  - The full name for the account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
+	  - The full name for the Account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
 	 
 	* - ``status``
 	  - String (Enum)
@@ -874,13 +880,13 @@ An individual Account resource may be accessed via its Resource URI:
 	  - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.	 
 	
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s properties were last modified.
 
 	* - ``emailVerificationToken``
@@ -1050,13 +1056,13 @@ If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captai
 	  - A link to the Group for this Group Membership.
 	
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s properties were last modified
 	    
 So let's say we want to add "Jean-Luc Picard" to "Starfleet Officers" Group inside the "Captains" Directory.
@@ -1270,13 +1276,13 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 	  - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
 	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource was created.
 	  
 	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
+	  - String 
+	  - ISO-8601 Datetime
 	  - Indicates when this resource’s attributes were last modified.
 
 For a Directory's password policies, you can modify:

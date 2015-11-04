@@ -25,49 +25,49 @@ Once you have the Application resource you may attempt authentication by sending
 **loginAttempts Properties**
 
 .. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
-	* - Property
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	    
-	* - ``type``
-	  - String (Enum)
-	  - N/A
-	  - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
+    * - Property
+      - Type
+      - Valid Value(s)
+      - Description
+        
+    * - ``type``
+      - String (Enum)
+      - N/A
+      - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
 
-	* - ``value``
-	  - String (Base64)
-	  - N/A
-	  - The Base64 encoded ``username``:``plaintextPassword`` pair.
-	    
-	* - ``accountStore``
-	  - String (Link)
-	  - N/A
-	  - An optional link to the Application’s Account Store (Directory or Group) that you are certain contains the account attempting to login. Specifying this attribute can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
-	 
+    * - ``value``
+      - String (Base64)
+      - N/A
+      - The Base64 encoded ``username``:``plaintextPassword`` pair.
+        
+    * - ``accountStore``
+      - String (Link)
+      - N/A
+      - An optional link to the Application’s Account Store (Directory or Group) that you are certain contains the account attempting to login. Specifying this attribute can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
+     
 So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
 We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBVa6tfR``::
 
-	https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts
+    https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts
 
 With the following body, using the Base64 encoded ``value`` from above::
 
-	{
-    "type": "basic",
-    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
-	}
+    {
+      "type": "basic",
+      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
+    }
 
 Which would return the ``href`` for the "Han Solo" Account::
 
-	{
-	  "account": {
-	    "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
-	  }
-	}
+    {
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
+      }
+    }
 
 The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application. 
 
@@ -83,11 +83,11 @@ Let's look at an example to illustrate this behavior. Assume that two Account St
 The following flow chart shows what happens when an account attempts to login to the Foo application:
 
 .. figure:: images/auth_n/LoginAttemptFlow.png
-	:align: center
-	:scale: 100%
-	:alt: Login Attempt Flow 
+    :align: center
+    :scale: 100%
+    :alt: Login Attempt Flow 
 
-	*The Login Attempt Flow* 
+    *The Login Attempt Flow* 
 
 As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
 
@@ -113,69 +113,69 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
 **accountStoreMapping Attributes**
 
 .. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	 
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URI.
-	    
-	* - listIndex
-	  - Number
-	  - 0 <= N < list size
-	  - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
-	    
-	* - isDefaultAccountStore
-	  - String (boolean)
-	  - ``true``, ``false``
-	  - A ``true`` value indicates that new Accounts created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
-	    
-	* - isDefaultGroupStore
-	  - String (boolean)
-	  - ``true``, ``false``
-	  - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
-	
-	* - application
-	  - String (Link)
-	  - N/A
-	  - A link to the mapping’s Application. **Required.**
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+     
+    * - ``href``
+      - String
+      - N/A
+      - The resource's fully qualified location URI.
+        
+    * - listIndex
+      - Number
+      - 0 <= N < list size
+      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+        
+    * - isDefaultAccountStore
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Accounts created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
+        
+    * - isDefaultGroupStore
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
+    
+    * - application
+      - String (Link)
+      - N/A
+      - A link to the mapping’s Application. **Required.**
 
-	* - accountStore
-	  - String (Link) 
-	  - N/A
-	  - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
-	  
-	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - Indicates when this resource was created.
-	
-	    
-	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - Indicates when this resource’s attributes were last modified.
+    * - accountStore
+      - String (Link) 
+      - N/A
+      - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
+      
+    * - ``createdAt``
+      - String (ISO-8601 Datetime)
+      - N/A
+      - Indicates when this resource was created.
+    
+        
+    * - ``modifiedAt``
+      - String (ISO-8601 Datetime)
+      - N/A
+      - Indicates when this resource’s attributes were last modified.
 
 A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp`` would return the following::
 
-	{
-	  "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
-	  "listIndex": 1,
-	  "isDefaultAccountStore": true,
-	  "isDefaultGroupStore": true,
-	  "application": {
-	    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-	  },
-	  "accountStore": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-	  }
-	}
+    {
+      "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+      "listIndex": 1,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "application": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+      }
+    }
 
 .. _create-asm:
 
@@ -184,7 +184,7 @@ Creating A New Account Store Mapping
 
 To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
 
-	curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
+    curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
      -H "Content-Type: application/json;charset=UTF-8" \
      -d '{
            "application": {
@@ -201,34 +201,34 @@ How to Retrieve Additional Account Data on Authentication
 
 Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
 
-	``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
 
 If we had done this with our "Han Solo" Account from above, our JSON response would have looked like this::
 
-	{
-	  "account": {
-	    "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
-	    "username": "first2shoot",
-	    "email": "han@newrepublic.gov",
-	    "givenName": "Han",
-	    "middleName": null,
-	    "surname": "Solo",
-	    "fullName": "Han Solo",
-	    "status": "ENABLED",
-	    "createdAt": "2015-08-28T16:07:38.347Z",
-	    "modifiedAt": "2015-08-28T16:07:38.347Z",
-	    "emailVerificationToken": null,
-	    
-	    [...]
+    {
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
+        "username": "first2shoot",
+        "email": "han@newrepublic.gov",
+        "givenName": "Han",
+        "middleName": null,
+        "surname": "Solo",
+        "fullName": "Han Solo",
+        "status": "ENABLED",
+        "createdAt": "2015-08-28T16:07:38.347Z",
+        "modifiedAt": "2015-08-28T16:07:38.347Z",
+        "emailVerificationToken": null,
+        
+        [...]
 
-	    "accessTokens": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/accessTokens"
-	    },
-	    "refreshTokens": {
-	      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/refreshTokens"
-	    }
-	  }
-	}
+        "accessTokens": {
+          "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/accessTokens"
+        },
+        "refreshTokens": {
+          "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/refreshTokens"
+        }
+      }
+    }
 
 At the end of this JSON we see two interesting links that we can now cover: Access and Refresh tokens. 
 
@@ -291,51 +291,51 @@ Stormpath is configurable so you can set the time to live (TTL) for both the Acc
 
 Each Application resource in Stormpath has an ``oAuthPolicy/:applicationId`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
 
-	{
-		"href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
-		"accessTokenTtl": "PT1H",
-		"refreshTokenTtl": "P60D",
-		"createdAt": "2015-08-18T20:46:36.063Z",
-		"modifiedAt": "2015-08-18T20:46:36.063Z",
-		"tokenEndpoint": {
-			"href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
-		},
-		"application": {
-			"href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-		},
-		"tenant": {
-			"href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-		}
-	}
+    {
+        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+        "accessTokenTtl": "PT1H",
+        "refreshTokenTtl": "P60D",
+        "createdAt": "2015-08-18T20:46:36.063Z",
+        "modifiedAt": "2015-08-18T20:46:36.063Z",
+        "tokenEndpoint": {
+            "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
+        },
+        "application": {
+            "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+        },
+        "tenant": {
+            "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+        }
+    }
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
 
 If we wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, we could simply make a POST request to the ``/oAuthPolicies/:applicationId`` endpoint with the following payload::
 
-	{
+    {
     "accessTokenTtl": "PT30M",
     "refreshTokenTtl": "P7D"
   }
 
 And we would get the following response::
 
-	{
-	  "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
-	  "accessTokenTtl": "PT30M",
-	  "refreshTokenTtl": "P7D",
-	  [...]
-	}
+    {
+      "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+      "accessTokenTtl": "PT30M",
+      "refreshTokenTtl": "P7D",
+      [...]
+    }
 
 .. note::
 
-	Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
 
 Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Password Grant** flow. Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
 
-	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+    https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
 This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described above in :ref:`How Login Attempts Work <how-login-works>`.
 
@@ -347,61 +347,61 @@ Your application will act as a proxy to the Stormpath API. For example:
 
 So you would send a POST to the following URL::
 
-	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+    https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
 And, in lieu of the usual ``Content-Type: application/json;charset=UTF-8``, we would include the following header::
 
-	Content-Type: application/x-www-form-urlencoded
+    Content-Type: application/x-www-form-urlencoded
 
 And the following body::
 
-	grant_type=password&username=tom@stormpath.com&password=Secret1
+    grant_type=password&username=tom@stormpath.com&password=Secret1
 
 This would result in this response::
 
-	{
-	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k",
-	  "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
-	  "token_type": "Bearer",
-	  "expires_in": 1800,
-	  "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqAFf2XsV"
-	}
+    {
+      "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k",
+      "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
+      "token_type": "Bearer",
+      "expires_in": 1800,
+      "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqAFf2XsV"
+    }
 
 This is an **OAuth 2.0 Access Token Response** and includes the following:
 
 .. list-table:: 
-	:widths: 15 10 60
-	:header-rows: 1
+    :widths: 15 10 60
+    :header-rows: 1
 
-	* - Property
-	  - Type
-	  - Description
-	
-	* - access_token
-	  - String (JSON Web Token)
-	  - The access token for the response.
-	
-	* - refresh_token
-	  - String (JSON Web Token)
-	  - The refresh token that can be used to get refreshed Access Tokens.
-	    
-	* - token_type
-	  - String
-	  - The type of token returned.
-	
-	* - expires_in
-	  - Number
-	  - The time in seconds before the token expires.
-	
-	* - stormpath_access_token_href 
-	  - String
-	  - The href location of the token in Stormpath.
+    * - Property
+      - Type
+      - Description
+    
+    * - access_token
+      - String (JSON Web Token)
+      - The access token for the response.
+    
+    * - refresh_token
+      - String (JSON Web Token)
+      - The refresh token that can be used to get refreshed Access Tokens.
+        
+    * - token_type
+      - String
+      - The type of token returned.
+    
+    * - expires_in
+      - Number
+      - The time in seconds before the token expires.
+    
+    * - stormpath_access_token_href 
+      - String
+      - The href location of the token in Stormpath.
 
 .. note::
 
-	Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
 
-		grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+        grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -410,48 +410,48 @@ Once an ``access_token`` has been generated, we have taken care of the Authentic
 
 For example, if you have a route ``https://yourapplication.com/secure-resource``, the client would request authorization to access the resource by passing the access token as follows::
 
-	HTTP/1.1
-	GET /secure-resource
-	Host: https://yourapplication.com
-	Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+    HTTP/1.1
+    GET /secure-resource
+    Host: https://yourapplication.com
+    Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
 
 Once your application receives the request, the first thing to do is to validate the token, either using Stormpath, or using local application-side logic. The benefit of using Stormpath to validate the token through the REST API (or an SDK that is using the REST API) is that Stormpath can validate the token against the state of your Application and Account resources. To illustrate the difference:
 
 .. list-table:: 
-	:widths: 60 15 15
-	:header-rows: 1
+    :widths: 60 15 15
+    :header-rows: 1
 
-	* - Validation Criteria
-	  - Locally
-	  - Stormpath
-	
-	* - Token hasn't been tampered with
-	  - Yes
-	  - Yes
-	    
-	* - Token hasn't expired
-	  - Yes
-	  - Yes
-	
-	* - Token hasn't been revoked
-	  - No
-	  - Yes
-	    
-	* - Account hasn't been disabled or deleted
-	  - No
-	  - Yes
-	
-	* - Issuer is Stormpath
-	  - Yes
-	  - Yes
-	    
-	* - Issuing Application is still enabled, and hasn't been deleted
-	  - No
-	  - Yes
-	
-	* - Account is still in an Account Store for the issuing Application
-	  - No
-	  - Yes
+    * - Validation Criteria
+      - Locally
+      - Stormpath
+    
+    * - Token hasn't been tampered with
+      - Yes
+      - Yes
+        
+    * - Token hasn't expired
+      - Yes
+      - Yes
+    
+    * - Token hasn't been revoked
+      - No
+      - Yes
+        
+    * - Account hasn't been disabled or deleted
+      - No
+      - Yes
+    
+    * - Issuer is Stormpath
+      - Yes
+      - Yes
+        
+    * - Issuing Application is still enabled, and hasn't been deleted
+      - No
+      - Yes
+    
+    * - Account is still in an Account Store for the issuing Application
+      - No
+      - Yes
 
 It is up to you to determine which kind of validation is important for your application. If you need to validate the state of the Account and/or Application resources, or if you need to use token revocation, then using Stormpath to validate the token is the obvious choice. If you only require that the token has not expired and has not been tampered with, you can validate the token locally and minimize the network requests to Stormpath.
 
@@ -468,19 +468,19 @@ To recap, we have done the following:
 
 The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header::
 
-	HTTP/1.1
-	GET /secure-resource
-	Host: https://yourapplication.com
-	Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
+    HTTP/1.1
+    GET /secure-resource
+    Host: https://yourapplication.com
+    Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
 The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
 
-	https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
+    https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
 
 If the access token can be validated, Stormpath will return a 302 to the Access Token resource::
 
-	HTTP/1.1 302 Location Found
-	Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+    HTTP/1.1 302 Location Found
+    Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
 
 With the confirmation that the token is valid, you can now allow the user access to the secured resource that they requested.
 
@@ -489,10 +489,10 @@ Validating the Token Locally
 
 Local validation would also begin at the point of the request to a secure resource:: 
 
-	HTTP/1.1
-	GET /secure-resource
-	Host: https://yourapplication.com
-	Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
+    HTTP/1.1
+    GET /secure-resource
+    Host: https://yourapplication.com
+    Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
 The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token. This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of our `Integration Guides <https://docs.stormpath.com/home/>`_.
 
@@ -503,21 +503,21 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 So a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` along with this header::
 
-	Content-Type: application/x-www-form-urlencoded
+    Content-Type: application/x-www-form-urlencoded
 
 And this in the body::
 
-	grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
+    grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
 
 Would receive this response::
 
-	{
-	  "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
-	  "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
-	  "token_type": "Bearer",
-	  "expires_in": 1800,
-	  "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
-	}
+    {
+      "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
+      "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
+      "token_type": "Bearer",
+      "expires_in": 1800,
+      "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
+    }
 
 Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
 
@@ -534,38 +534,38 @@ To revoke the tokens, simply delete the Account's ``/accessTokens/:accessTokenId
 
 To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections::
 
-	{
-	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-	  "username": "jlpicard",
-	  
-	  [...]
-	  
-	  "accessTokens": {
-	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
-	  },
-	  "refreshTokens": {
-	    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/refreshTokens"
-	  }
-	}
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+      "username": "jlpicard",
+      
+      [...]
+      
+      "accessTokens": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
+      },
+      "refreshTokens": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/refreshTokens"
+      }
+    }
 
 If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens::
 
-	{
-	  "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens",
-	  "offset": 0,
-	  "limit": 25,
-	  "size": 1,
-	  "items": [
-	    {
-	      "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr",
-	      [...]
-	    }
-	  ]
-	}
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens",
+      "offset": 0,
+      "limit": 25,
+      "size": 1,
+      "items": [
+        {
+          "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr",
+          [...]
+        }
+      ]
+    }
 
 To revoke the token, simply issue an HTTP Delete::
 
-	DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
+    DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
 
 You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
 
@@ -597,7 +597,7 @@ In general, the social login process works as follows:
    
 .. note::
 
-	If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
+    If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
 
 5. Stormpath will first search for a Directory that matches the provider of the access token. If one is not found, an error will return.
 
@@ -632,7 +632,7 @@ Before you integrate Google Login with Stormpath, you must complete the followin
   
 .. note::
 
-	Be sure to only enter the Redirect URL you are currently using. So, if you are running your app in development mode, set it to your local URL, and if you're running your app in production mode, set it to your production URL.
+    Be sure to only enter the Redirect URL you are currently using. So, if you are running your app in development mode, set it to your local URL, and if you're running your app in production mode, set it to your production URL.
   
 For more information, please see the `Google OAuth 2.0 documentation <https://developers.google.com/identity/protocols/OAuth2>`_.
 
@@ -641,20 +641,20 @@ Step 1: Create a Social Directory for Google
 
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
-	{
-		"name" : "my-google-directory",
-		"description" : "A Google directory",
-		"provider": {
-			"providerId": "google",
-			"clientId":"YOUR_GOOGLE_CLIENT_ID",
-			"clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
-			"redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
-		} 
-	}
+    {
+        "name" : "my-google-directory",
+        "description" : "A Google directory",
+        "provider": {
+            "providerId": "google",
+            "clientId":"YOUR_GOOGLE_CLIENT_ID",
+            "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
+            "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
+        } 
+    }
 
 .. note::
 
-	If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
+    If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -670,25 +670,25 @@ Generally, this will include embedding a link in your site that will send an aut
 
 .. note::
 
-	It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account. For more information about scopes please see `Google's OAuth Login Scopes documentation <https://developers.google.com/+/web/api/rest/oauth#login-scopes>`_.
+    It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account. For more information about scopes please see `Google's OAuth Login Scopes documentation <https://developers.google.com/+/web/api/rest/oauth#login-scopes>`_.
 
 Once the Authorization Code is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
-	{
-		"providerData": {
-		  "providerId": "google",
-		  "code": "YOUR_GOOGLE_AUTH_CODE"
-		}
-	}
+    {
+        "providerData": {
+          "providerId": "google",
+          "code": "YOUR_GOOGLE_AUTH_CODE"
+        }
+    }
 
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion::
 
-	{
-		"providerData": {
-		  "providerId": "google",
-		  "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
-		}
-	}
+    {
+        "providerData": {
+          "providerId": "google",
+          "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
+        }
+    }
 
 Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
@@ -710,15 +710,15 @@ Step 1: Create a Social Directory for Facebook
 
 Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
-	{
-		"name" : "my-facebook-directory",
-		"description" : "A Facebook directory",
-		"provider": {
-		  "providerId": "facebook",
-		  "clientId":"YOUR_FACEBOOK_APP_ID",
-		  "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
-		}
-	}
+    {
+        "name" : "my-facebook-directory",
+        "description" : "A Facebook directory",
+        "provider": {
+          "providerId": "facebook",
+          "clientId":"YOUR_FACEBOOK_APP_ID",
+          "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
+        }
+    }
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -732,16 +732,16 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 
 .. note::
 
-	It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
+    It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
 
 Once the User Access Token is gathered, you send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
-	{
-		"providerData": {
-		  "providerId": "facebook",
-		  "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
-		}
-	}
+    {
+        "providerData": {
+          "providerId": "facebook",
+          "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
+        }
+    }
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
@@ -764,15 +764,15 @@ Step 1: Create a Social Directory for GitHub
 
 Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
-	{
-		"name" : "my-github-directory",
-		"description" : "A GitHub directory",
-		"provider": {
-		  "providerId": "github",
-		  "clientId":"YOUR_GITHUB_CLIENT_ID",
-		  "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
-		}
-	}
+    {
+        "name" : "my-github-directory",
+        "description" : "A GitHub directory",
+        "provider": {
+          "providerId": "github",
+          "clientId":"YOUR_GITHUB_CLIENT_ID",
+          "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
+        }
+    }
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -788,11 +788,11 @@ Generally, this will include embedding a link in your site that will send an aut
 
 .. note::
 
-	It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_. 
+    It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_. 
 
 Once the Authorization Code is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 
-	{
+    {
     "providerData": {
       "providerId": "github",
       "code": "AUTH_CODE_FROM_GITHUB"
@@ -819,15 +819,15 @@ Step 1: Create a Social Directory for LinkedIn
 
 Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by sending an HTTP POST to the ``/directories`` endpoint with the following payload::
 
-	{
-		"name" : "my-linkedin-directory",
-		"description" : "A LinkedIn Directory",
-		"provider": {
-		  "providerId": "linkedin",
-		  "clientId":"YOUR_LINKEDIN_APP_ID",
-		  "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
-		}
-	}
+    {
+        "name" : "my-linkedin-directory",
+        "description" : "A LinkedIn Directory",
+        "provider": {
+          "providerId": "linkedin",
+          "clientId":"YOUR_LINKEDIN_APP_ID",
+          "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
+        }
+    }
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -843,7 +843,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
 .. note::
 
-	It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes from LinkedIn. If the access token does not grant these scopes, you will not be able to get an Account with an access token. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
+    It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes from LinkedIn. If the access token does not grant these scopes, you will not be able to get an Account with an access token. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
 
 Once the Access Token is gathered, you can send an HTTP POST to ``https://api.stormpath.com/v1/applications/YOUR_APP_ID/accounts`` with the following payload::
 

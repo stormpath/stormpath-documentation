@@ -637,6 +637,12 @@ To expand one or more links, simply add an ``expand`` query parameter with one o
 
     It is currently only possible to expand a resource’s immediate links but not further links inside those links.
 
+**Paginating Expanded Collections**
+
+If you choose to expand one or more Collections, you can provide :ref:`pagination <about-pagination>` parameters as well. The ``offset`` and ``limit`` values are enclosed in parentheses and delimited by the colon ``:`` character. For example::
+
+    https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=groups(offset:0,limit:10)
+
 .. _ref-tenant:
 
 Tenant
@@ -764,6 +770,9 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 Tenant Operations
 -----------------
+
+Retrieve A Tenant 
+^^^^^^^^^^^^^^^^^^
     
 .. list-table::
     :widths: 40 20 40
@@ -807,9 +816,10 @@ Example Queries
 
 .. code-block:: bash
 
-    curl -u $API_KEY_ID:$API_KEY_SECRET \
-    -H "Accept: application/json" \
-    "https://api.stormpath.com/v1/tenants/$TENANT_ID/accounts"
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --url https://api.stormpath.com/v1/tenants/$TENANT_ID
+    
 
 This query would retrieve a collection containing all the Accounts associated with the specified Tenant.
 
@@ -817,9 +827,9 @@ This query would retrieve a collection containing all the Accounts associated wi
 
 .. code-block:: bash
 
-    curl -u $API_KEY_ID:$API_KEY_SECRET \
-    -H "Accept: application/json" \
-    "https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --url "https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
 
 This query would retrieve a collection containing the Applications associated with this Tenant that have the string "foo" as the value of any :ref:`searchable attribute <searchable-attributes>`.
 
@@ -1004,9 +1014,58 @@ An **Application** resource in Stormpath contains information about any real-wor
       }  
     }
 
-ResourceName Operations
+Application Operations
 -----------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create An Application 
+^^^^^^^^^^^^^^^^^^^^^^
     
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes 
+      - Description
+    
+    * - POST /v1/applications
+      - Required: ``name``; Optional: ``description``, ``status`` 
+      - Creates a new Application resource. 
+        
+Create a Directory Together With Your Application
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+If you want to associate the Application with a new Directory automatically so you can start creating Accounts and Groups immediately (without having to map other account Stores) you can use the ``createDirectory`` query parameter::
+
+    POST https://api.stormpath.com/v1/applications?createDirectory=true
+
+This request will:
+
+#. Create the Application.
+
+#. Create a brand new Directory and automatically name the Directory based on the Application resource. The generated name will reflect the new Application’s ``name`` as best as is possible, guaranteeing that it is unique compared to any of your existing Directories.
+
+#. Set the new Directory as the Application’s initial Account Store.
+
+#. Enable the new Directory as the Application’s default Account Store, ensuring any new Accounts created directly by the application are stored in the new Directory.
+
+#. Enable the new Directory as the Application’s default Group Store, ensuring any new Groups created directly by the application are stored in the new Directory.
+
+If you would **not** like an automatically created Directory name, you can specify it:: 
+
+    POST https://api.stormpath.com/v1/applications?createDirectory=Some+Directory+Name
+
+.. note::
+
+    If the Directory name you choose is already in use by another of your existing Directories, the request will fail.
+
+Retrieve an Application  
+^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. list-table::
     :widths: 40 20 40
     :header-rows: 1
@@ -1015,48 +1074,71 @@ ResourceName Operations
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
+    * - GET /v1/applications/$APPLICATION_ID
+      - ``expand`` can be used for ``tenant``, ``accounts``, and ``groups``. More info :ref:`above <about-links>`.
+      - Retrieves the specified Application resource. 
+        
+Update an Application 
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/applications/$APPLICATION_ID
+      - ``name``, ``description``, ``status``
+      - Updates the specified attributes with the values provided.
+
+Delete an Application 
+^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/applications/$APPLICATION_ID
       - N/A
-      - Retrieves the ResourceName
-        
-    * - 
-      - 
-      - 
-    
-Retrieve Resources Associated With A Tenant 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      - Deletes the specified Application.
 
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
+Deleting an application completely erases the application and any of its related data from Stormpath. 
 
-    * - Operation 
-      - Optional Parameters 
-      - Description
-    
-    * - GET 
-      - 
-      - 
-        
+Instead of deleting an Application resource, we recommend that you disable it instead by sending a POST with a ``status`` value of "DISABLED".
 
 Example Queries
 ^^^^^^^^^^^^^^^
 
-**Query #1 Description**
+**Retrieve an Application**
 
 .. code-block:: bash
 
-    curl 
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID?expand=tenant,accounts(offset:0,limit:50)" 
 
-This query would...
+This query would retrieve the specified Application, with the associated Tenant resource and Accounts collection expanded. The expanded Accounts collection would be returned with an ``offset`` of 0 and a result ``limit`` of 50.
 
-**Query #2 Description**
+**Disable an Application**
 
 .. code-block:: bash
 
-    curl 
+    curl --request POST \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID" \
+    --data '{
+    "status":"disabled"
+    }'
 
-This query would...
+This query would disable the Application and prevent any associated Accounts for logging in. 
 
 ResourceName
 =============
