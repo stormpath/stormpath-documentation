@@ -803,11 +803,11 @@ Retrieve Resources Associated With A Tenant
     
     * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of a Tenant's associated resources of the specified type.
+      - Retrieves a collection of all of a Tenant's associated resources of the specified type. Possible resource types are: ``customData``, ``organizations``, ``applications``, ``directories``, ``accounts``, ``agents``, ``groups``, and ``idsites``. 
         
     * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the Tenant's associated  resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
+      - Searches a collection of all of the Tenant's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
 
 Example Queries
 ^^^^^^^^^^^^^^^
@@ -1025,43 +1025,23 @@ Create An Application
 ^^^^^^^^^^^^^^^^^^^^^^
     
 .. list-table::
-    :widths: 40 20 40
+    :widths: 30 15 15 40
     :header-rows: 1
 
     * - Operation 
-      - Attributes 
+      - Attributes
+      - Optional Parameters 
       - Description
     
     * - POST /v1/applications
-      - Required: ``name``; Optional: ``description``, ``status`` 
-      - Creates a new Application resource. 
-        
-Create a Directory Together With Your Application
-"""""""""""""""""""""""""""""""""""""""""""""""""""
-
-If you want to associate the Application with a new Directory automatically so you can start creating Accounts and Groups immediately (without having to map other account Stores) you can use the ``createDirectory`` query parameter::
-
-    POST https://api.stormpath.com/v1/applications?createDirectory=true
-
-This request will:
-
-#. Create the Application.
-
-#. Create a brand new Directory and automatically name the Directory based on the Application resource. The generated name will reflect the new Application’s ``name`` as best as is possible, guaranteeing that it is unique compared to any of your existing Directories.
-
-#. Set the new Directory as the Application’s initial Account Store.
-
-#. Enable the new Directory as the Application’s default Account Store, ensuring any new Accounts created directly by the application are stored in the new Directory.
-
-#. Enable the new Directory as the Application’s default Group Store, ensuring any new Groups created directly by the application are stored in the new Directory.
-
-If you would **not** like an automatically created Directory name, you can specify it:: 
-
-    POST https://api.stormpath.com/v1/applications?createDirectory=Some+Directory+Name
+      - Required: ``name``; Optional: ``description``, ``status``
+      - ``createDirectory``: either ``true`` or a specified "Directory Name"
+      - Creates a new Application resource. If ``createDirectory`` is set to ``true``, a new Directory will be automatically created along with the Application. The generated Directory's ``name`` will reflect the new Application’s ``name`` as best as is possible, guaranteeing that it is unique compared to any of your existing Directories. If you would like a different ``name``, simply put value you would like instead of ``true``.
 
 .. note::
 
     If the Directory name you choose is already in use by another of your existing Directories, the request will fail.
+
 
 Retrieve an Application  
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1075,8 +1055,8 @@ Retrieve an Application
       - Description
     
     * - GET /v1/applications/$APPLICATION_ID
-      - ``expand`` can be used for ``tenant``, ``accounts``, and ``groups``. More info :ref:`above <about-links>`.
-      - Retrieves the specified Application resource. 
+      - ``expand`` 
+      - Retrieves the specified Application resource. ``tenant``, ``accounts``, and ``groups`` can all be expanded. More info :ref:`above <about-links>`.
         
 Update an Application 
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1138,7 +1118,13 @@ This query would retrieve the specified Application, with the associated Tenant 
     "status":"disabled"
     }'
 
-This query would disable the Application and prevent any associated Accounts for logging in. 
+This query would disable the Application and prevent any associated Accounts from logging in.
+
+Retrieve Resources Associated With A Tenant 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
 
 ResourceName
 =============
