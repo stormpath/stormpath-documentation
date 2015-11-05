@@ -21,32 +21,6 @@ Authenticating An Account
 After an Account has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating a user within a specific Application against the Application’s Directories and Groups (more on these :ref:`below <how-login-works>`). That being said, the Application resource is the starting point for authentication attempts.
 
 Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text.
-
-**loginAttempts Properties**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Property
-      - Type
-      - Valid Value(s)
-      - Description
-        
-    * - ``type``
-      - String (Enum)
-      - N/A
-      - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
-
-    * - ``value``
-      - String (Base64)
-      - N/A
-      - The Base64 encoded ``username``:``plaintextPassword`` pair.
-        
-    * - ``accountStore``
-      - String (Link)
-      - N/A
-      - An optional link to the Application’s Account Store (Directory or Group) that you are certain contains the account attempting to login. Specifying this attribute can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
      
 So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 

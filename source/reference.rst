@@ -841,6 +841,8 @@ The result body would:
   
   - a limit of 50 results per response
 
+.. _ref-application:
+
 Application
 =============
 
@@ -940,12 +942,12 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``loginAttempts``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to the collection of Login Attempts for this Application. For more information see :ref:<how-login-works>.
+      - The endpoint for :ref:`Login Attempts <ref-loginattempts>` for this Application..
 
     * - ``passwordResetTokens``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to the collection of Password Reset Tokens, used in :ref:`password reset workflows <password-reset-flow>`.
+      - The endpoint for Password Reset Tokens, used in :ref:`password reset workflows <password-reset-flow>`.
 
     * - ``apiKeys``
       - String (:ref:`Link <about-links>`)
@@ -1012,6 +1014,66 @@ An **Application** resource in Stormpath contains information about any real-wor
       "authTokens": {
         "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/authTokens"
       }  
+    }
+
+Application Endpoints
+---------------------
+
+.. todo::
+
+  Is this the right name for this section?
+
+.. _ref-loginattempts:
+
+Login Attempts
+^^^^^^^^^^^^^^
+
+This is the resource that is sent as ``POST`` in order to authenticate an Account.
+
+**loginAttempts URL**
+
+``/v1/applications/$APPLICATION_ID/loginAttempts``
+
+**loginAttempts Properties**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Property
+      - Type
+      - Valid Value(s)
+      - Description
+        
+    * - ``type``
+      - String (Enum)
+      - N/A
+      - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
+
+    * - ``value``
+      - String (Base64)
+      - N/A
+      - The Base64 encoded ``username``:``plaintextPassword`` pair.
+        
+    * - ``accountStore``
+      - String 
+      - ``href`` or ``nameKey``
+      - An optional link to the Application’s Account Store (Organization, Directory, Group) OR Organization ``nameKey``. You should be certain that the specified Account Store contains the Account attempting to login. 
+
+.. note::
+
+    Specifying the ``accountStore`` can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
+
+**loginAttempts Example**
+
+.. code-block: json 
+
+    {
+        "type": "basic",
+        "value": "anNtaXRoOmNoYW5nZW1l"
+        "accountStore": {
+             "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
+       }
     }
 
 Application Operations
