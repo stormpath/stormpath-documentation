@@ -6,7 +6,7 @@
 
 Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight. 
 
-In this chapter we will cover three of the ways that Stormpath allows you to authenticate users: :ref:`password authentication <password-authn>`, `token authentication <token-authn>`, and `social authentication <social-authn>`.
+In this chapter we will cover three of the ways that Stormpath allows you to authenticate users: :ref:`password authentication <password-authn>`, :ref:`token authentication <token-authn>`, and :ref:`social authentication <social-authn>`.
 
 .. _password-authn:
 
@@ -18,9 +18,9 @@ Probably the single most common way of authenticating a user is to ask them for 
 Authenticating An Account
 -------------------------
 
-After an Account has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating a user within a specific Application against the Application’s Directories and Groups (more on these :ref:`below <how-login-works>`). That being said, the Application resource is the starting point for authentication attempts.
+After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
 
-Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text.
+Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
      
 So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
@@ -28,11 +28,14 @@ We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdlBV
 
     https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts
 
-With the following body, using the Base64 encoded ``value`` from above::
+With the following body, using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`::
 
     {
       "type": "basic",
       "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
+      "accountStore": {
+             "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+       }
     }
 
 Which would return the ``href`` for the "Han Solo" Account::
@@ -43,18 +46,26 @@ Which would return the ``href`` for the "Han Solo" Account::
       }
     }
 
-The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application. 
+The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
+
+.. note::
+
+  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+
+    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+
+  For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
 
 .. _how-login-works:
 
 How Login Attempts Work in Stormpath 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Directories and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
+When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Organizations, Directories, and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
 Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
 
-The following flow chart shows what happens when an account attempts to login to the Foo application:
+The following flow chart shows what happens when an Account attempts to log in to the Foo application:
 
 .. figure:: images/auth_n/LoginAttemptFlow.png
     :align: center
@@ -65,96 +76,47 @@ The following flow chart shows what happens when an account attempts to login to
 
 As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
 
-You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log-in to your Application.
+You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your Application.
 
-.. _account-store-mapping:
+.. _authn-account-store-mapping:
 
 Account Store Mappings 
 ----------------------
 **Directory**, **Group**, and **Organization** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
 
-You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's accountStoreMapping resources. 
+You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's accountStoreMapping resources. For more detailed information please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
 
-The accountStoreMapping Resource
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+So our Application from earlier: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an Account Store Mapping. 
 
-An individual Account Store Mapping resource may be accessed via its Resource URI:
+We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint::
 
-**accountStoreMapping URI**
-
-``/v1/accountStoreMappings/:accountStoreMappingId``
-
-**accountStoreMapping Attributes**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Attribute
-      - Type
-      - Valid Value(s)
-      - Description
-     
-    * - ``href``
-      - String
-      - N/A
-      - The resource's fully qualified location URI.
-        
-    * - listIndex
-      - Number
-      - 0 <= N < list size
-      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
-        
-    * - isDefaultAccountStore
-      - String (boolean)
-      - ``true``, ``false``
-      - A ``true`` value indicates that new Accounts created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
-        
-    * - isDefaultGroupStore
-      - String (boolean)
-      - ``true``, ``false``
-      - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
-    
-    * - application
-      - String (Link)
-      - N/A
-      - A link to the mapping’s Application. **Required.**
-
-    * - accountStore
-      - String (Link) 
-      - N/A
-      - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
-      
-    * - ``createdAt``
-      - String (ISO-8601 Datetime)
-      - N/A
-      - Indicates when this resource was created.
-    
-        
-    * - ``modifiedAt``
-      - String (ISO-8601 Datetime)
-      - N/A
-      - Indicates when this resource’s attributes were last modified.
-
-A GET to ``https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp`` would return the following::
-
-    {
-      "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
-      "listIndex": 1,
-      "isDefaultAccountStore": true,
-      "isDefaultGroupStore": true,
-      "application": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-      },
-      "accountStore": {
-        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+  {
+    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/accountStoreMappings",
+    "offset":0,
+    "limit":25,
+    "size":1,
+    "items":[
+      {
+        "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+        "listIndex":1,
+        "isDefaultAccountStore":true,
+        "isDefaultGroupStore":true,
+        "application":{
+          "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+        },
+        "accountStore":{
+          "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+        }
       }
-    }
+    ]
+  }
+
+So we can see here that the second Mapping maps "My Application" (id: ``1gk4Dxzi6o4PbdlBVa6tfR``) to the "Captains" Directory (id: ``2SKhstu8Plaekcai8lghrp``).
 
 .. _create-asm:
 
 Creating A New Account Store Mapping
-""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
 
@@ -169,42 +131,6 @@ To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`
            }
          }' \
      'https://api.stormpath.com/v1/accountStoreMappings'
-
-How to Retrieve Additional Account Data on Authentication 
----------------------------------------------------------
-
-Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
-
-    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
-
-If we had done this with our "Han Solo" Account from above, our JSON response would have looked like this::
-
-    {
-      "account": {
-        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
-        "username": "first2shoot",
-        "email": "han@newrepublic.gov",
-        "givenName": "Han",
-        "middleName": null,
-        "surname": "Solo",
-        "fullName": "Han Solo",
-        "status": "ENABLED",
-        "createdAt": "2015-08-28T16:07:38.347Z",
-        "modifiedAt": "2015-08-28T16:07:38.347Z",
-        "emailVerificationToken": null,
-        
-        [...]
-
-        "accessTokens": {
-          "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/accessTokens"
-        },
-        "refreshTokens": {
-          "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid/refreshTokens"
-        }
-      }
-    }
-
-At the end of this JSON we see two interesting links that we can now cover: Access and Refresh tokens. 
 
 .. _token-authn:
 

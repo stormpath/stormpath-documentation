@@ -1070,7 +1070,7 @@ This is the resource that is sent as ``POST`` in order to authenticate an Accoun
 
     {
         "type": "basic",
-        "value": "anNtaXRoOmNoYW5nZW1l"
+        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
         "accountStore": {
              "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
        }
@@ -1185,23 +1185,26 @@ This query would disable the Application and prevent any associated Accounts fro
 Retrieve Resources Associated With A Tenant 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. _ref-account-store-mapping:
 
+Account Store Mapping
+=====================
 
+In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it. The following resources may be mapped as Account Stores:
 
-ResourceName
-=============
+- Organization 
+- Directory
+- Group 
 
-**Description**
+An individual Account Store Mapping resource may be accessed via its Resource URI:
 
+**accountStoreMapping URI**
 
+``/v1/accountStoreMappings/:accountStoreMappingId``
 
-**ResourceName URL**
+**accountStoreMapping Attributes**
 
-``/v1/tenants/:tenantId``
-
-**ResourceName Attributes**
-
-.. list-table::
+.. list-table:: 
     :widths: 15 10 20 60
     :header-rows: 1
 
@@ -1209,31 +1212,47 @@ ResourceName
       - Type
       - Valid Value(s)
       - Description
-    
-    * - ``href`` 
-      - String (:ref:`Link <about-links>`)
+     
+    * - ``href``
+      - String
       - N/A
-      - The resource's fully qualified location URL
+      - The resource's fully qualified location URI.
+        
+    * - listIndex
+      - Number
+      - 0 <= N < list size
+      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+        
+    * - isDefaultAccountStore
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Accounts created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
+        
+    * - isDefaultGroupStore
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
+    
+    * - application
+      - String (Link)
+      - N/A
+      - A link to the mapping’s Application. **Required.**
 
-    * - ``name`` 
-      - 
-      - 
-      - 
-
+    * - accountStore
+      - String (Link) 
+      - N/A
+      - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
+      
     * - ``createdAt``
-      - String 
-      - ISO-8601 Datetime
+      - String (ISO-8601 Datetime)
+      - N/A
       - Indicates when this resource was created.
     
+        
     * - ``modifiedAt``
-      - String 
-      - ISO-8601 Datetime
-      - Indicates when this resource’s attributes were last modified.
-    
-    * - ``customData``
-      - String (:ref:`Link <about-links>`)
+      - String (ISO-8601 Datetime)
       - N/A
-      - A link to the Tenant's customData resource that you can use to store your own custom fields.
+      - Indicates when this resource’s attributes were last modified.
 
 **ResourceName Example**
 
