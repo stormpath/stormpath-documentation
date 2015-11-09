@@ -78,15 +78,14 @@ As you can see, Stormpath tries to find the Account in the "Customers" Directory
 
 You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your Application.
 
-.. _authn-account-store-mapping:
+.. _managing-login:
 
-Account Store Mappings 
-----------------------
-**Directory**, **Group**, and **Organization** resources are what are called **Account Stores**, named so because they contain or "store" Accounts. In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it.
+Managing Application Login
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You control which Account Stores are assigned (mapped) to an Application, and the order in which they are consulted during a login attempt, by manipulating an Application's accountStoreMapping resources. For more detailed information please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
+As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
 
-So our Application from earlier: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an Account Store Mapping. 
+The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**. 
 
 We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint::
 
@@ -111,26 +110,56 @@ We can find this Mapping by sending a ``GET`` to our Application's ``/accountSto
     ]
   }
 
-So we can see here that the second Mapping maps "My Application" (id: ``1gk4Dxzi6o4PbdlBVa6tfR``) to the "Captains" Directory (id: ``2SKhstu8Plaekcai8lghrp``).
+.. note:
 
-.. _create-asm:
+  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``. 
 
-Creating A New Account Store Mapping
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Mapping a new Account Store
+"""""""""""""""""""""""""""
 
-To create a new Mapping, simply send an HTTP POST to ``/v1/accountStoreMappings`` with the Application and Account Store (i.e. Group/Directory) information::
+We would now like to map a new Account Store that will have the following characteristics:
 
-    curl -X POST -u $API_KEY_ID:$API_KEY_SECRET \
-     -H "Content-Type: application/json;charset=UTF-8" \
-     -d '{
-           "application": {
-             "href": "YOUR_APPLICATION_HREF"
-           },
-           "accountStore": {
-             "href": "YOUR_DIRECTORY_HREF"
-           }
-         }' \
-     'https://api.stormpath.com/v1/accountStoreMappings'
+#. It will have the highest login priority. This means that it will be consulted first during :ref:`the login process <how-login-works>`, before any other Account Stores.
+#. It will be the default Account Store for any new Accounts.
+#. It will be the default Group Store for any new Groups. 
+
+To accomplish this, we will send a ``POST`` to the ``v1/accountStoreMappings`` endpoint, with the following payload:
+
+  .. code-block: json
+    :emphasize-lines: 1,2,3
+
+    {
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "application": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
+      }
+    }
+
+We are mapping the Application (id: ``1gk4Dxzi6o4PbdlBVa6tfR``) to a new Directory (id: ``2jw4Kslj97zYjYRXEh2KYf``). Additionally, we are setting 
+
+#. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
+#. ``isDefaultAccountStore`` to ``true`` and 
+#. ``isDefaultGroupStore`` to ``true`` as well.
+
+So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+
+Updating an Existing Account Store
+""""""""""""""""""""""""""""""""""
+
+Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update. 
+
+**Updating Login Priority**
+
+For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1. 
+
+**Changing the Default Account or Group Store**
+
+Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true`` in the JSON body to a ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint would result in those values being updated on the target resource, and whichever resource had those values as ``true`` would have them changed to ``false``.
 
 .. _token-authn:
 
@@ -559,7 +588,7 @@ Creating this Directory for Google requires that you provide information from Go
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings <create-asm>` section above.
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -623,7 +652,7 @@ Creating this Directory requires that you provide information from Facebook as a
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
 
 Step 3: Access an Account with Facebook Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -677,7 +706,7 @@ Creating this Directory requires that you provide information from GitHub as a P
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
 
 Step 3: Access an Account with GitHub Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -732,7 +761,7 @@ Creating this Directory requires that you provide information from LinkedIn as a
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the `Account Store Mappings`_ section above.
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
 
 Step 3: Access an Account with LinkedIn Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

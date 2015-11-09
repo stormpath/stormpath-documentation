@@ -2,10 +2,6 @@
 REST API Reference
 ******************
 
-.. todo::
-
-    Clear up the cURL commands, include line breaks.
-
 This section covers the Core Concepts of the Stormpath REST API, as well as serving as a complete reference for all of the interactions that are possible with the various Stormpath resources. 
 
 .. _rest-concepts:
@@ -55,11 +51,14 @@ When using an API key with Basic authentication, the API key ID is the username 
 **HTTP basic username:** apiKey.id value
 **HTTP basic password:** apiKey.secret value
 
-For example, if using curl::
+For example, if using curl:
 
-    curl -u $YOUR_API_KEY_ID:$YOUR_API_KEY_SECRET \
-         -H "Accept: application/json" \
-         -L https://api.stormpath.com/v1/tenants/current
+  .. code-block:: bash
+
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/tenants/current"
 
 Digest Authentication
 ^^^^^^^^^^^^^^^^^^^^^
@@ -258,7 +257,8 @@ To delete a resource, make an HTTP DELETE request to the resource URL. Note that
 
     If your HTTP does not support the DELETE method, you can simulate it by sending a POST request to the resource endpoint with a ``_method=DELETE`` query string parameter::
 
-        curl -X POST -u $API_KEY_ID:$API_KEY_SECRET "https://api.stormpath.com/v1/applications/$APPLICATION_ID?_method=DELETE"
+      "https://api.stormpath.com/v1/applications/$APPLICATION_ID?_method=DELETE"
+
 
 **DELETE Response Status Codes:**
 
@@ -351,11 +351,18 @@ There are two optional query parameters that may be specified to control paginat
 
 *Usage*
 
-This following request will retrieve a Tenant’s Applications Collection Resource from the server with page results starting at index 10 (the 11th element), with a maximum of 40 total elements::
+This following request will retrieve a Tenant’s Applications Collection Resource from the server with page results starting at index 10 (the 11th element), with a maximum of 40 total elements:
 
-    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+  .. code-block:: bash
 
-This would result in the following response::
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+
+This would result in the following response:
+
+  .. code-block:: json
 
     HTTP/1.1 200 OK
 
@@ -374,9 +381,14 @@ Sorting
 ^^^^^^^^^^
 A request for a Collection Resource can contain an optional ``orderBy`` query parameter. The query parameter value is a URL-encoded comma-delimited list of ordering statements. Each ordering statement identifies a **sortable attribute**, and whether you would like the sorting to be **ascending or descending**.
 
-For example, a sorted request (where %2C is the URL encoding for the comma character) might look like this::
+For example, a sorted request (where %2C is the URL encoding for the comma character) might look like this:
 
-    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40'
+  .. code-block:: bash
+
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
 
 When URL-decoded, the URL looks like this::
 
@@ -435,9 +447,14 @@ A filter search consists of specifying a query parameter ``q`` and a correspondi
 
     /v1/someCollection?q=some+criteria
 
-For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe"::
+For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe":
+    
+    .. code-block:: bash
 
-    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe'
+      curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe"
 
 Matching Logic
 ++++++++++++++
@@ -446,9 +463,14 @@ A resource will return for a filter search when the following criteria are met:
 
 Stormpath will perform a case-insensitive matching query on all viewable attributes in all the resources in the Collection. Note that "viewable" means that the attribute can be viewed by the current caller.
 
-So the following query::
+So the following query:
+  
+  .. code-block:: bash
 
-    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?q=Joe'
+      curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/accounts?q=Joe"
 
 Returns all Accounts where:
 
@@ -521,9 +543,14 @@ Attribute-based queries use standard URI query parameters and function as follow
    #. An asterisk only at the end of the value indicates that the case-insensitive value is at the beginning.
    #. An asterisk at the end AND at the beginning of the value indicates the value is contained in the string.
 
-So the following query::
+So the following query:
 
-    curl -X GET -H "Authorization: Basic $API_KEY_ID:$API_KEY_SECRET" -H "Accept: application/json" -H 'https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled'
+  .. code-block:: bash
+
+      curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled"
 
 Returns all accounts where:
 
@@ -818,7 +845,7 @@ Example Queries
 
     curl --request GET \
     --user $API_KEY_ID:$API_KEY_SECRET \
-    --url https://api.stormpath.com/v1/tenants/$TENANT_ID
+    --url "https://api.stormpath.com/v1/tenants/$TENANT_ID"
     
 
 This query would retrieve a collection containing all the Accounts associated with the specified Tenant.
@@ -1016,66 +1043,6 @@ An **Application** resource in Stormpath contains information about any real-wor
       }  
     }
 
-Application Endpoints
----------------------
-
-.. todo::
-
-  Is this the right name for this section?
-
-.. _ref-loginattempts:
-
-Login Attempts
-^^^^^^^^^^^^^^
-
-This is the resource that is sent as ``POST`` in order to authenticate an Account.
-
-**loginAttempts URL**
-
-``/v1/applications/$APPLICATION_ID/loginAttempts``
-
-**loginAttempts Properties**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Property
-      - Type
-      - Valid Value(s)
-      - Description
-        
-    * - ``type``
-      - String (Enum)
-      - N/A
-      - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
-
-    * - ``value``
-      - String (Base64)
-      - N/A
-      - The Base64 encoded ``username``:``plaintextPassword`` pair.
-        
-    * - ``accountStore``
-      - String 
-      - ``href`` or ``nameKey``
-      - An optional link to the Application’s Account Store (Organization, Directory, Group) OR Organization ``nameKey``. You should be certain that the specified Account Store contains the Account attempting to login. 
-
-.. note::
-
-    Specifying the ``accountStore`` can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
-
-**loginAttempts Example**
-
-.. code-block: json 
-
-    {
-        "type": "basic",
-        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
-        "accountStore": {
-             "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
-       }
-    }
-
 Application Operations
 -----------------------
 
@@ -1182,8 +1149,70 @@ This query would retrieve the specified Application, with the associated Tenant 
 
 This query would disable the Application and prevent any associated Accounts from logging in.
 
-Retrieve Resources Associated With A Tenant 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _get-refs-via-app:
+
+Retrieve Resources Associated With An Application 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible to retrieve other, independent, resources using the Tenant for look-up. 
+
+Application Endpoints
+---------------------
+
+There are certain collections that are exposed by the Application as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other collections <get-refs-via-app>`, but are instead using for other flows. These are detailed in this section.
+
+.. _ref-loginattempts:
+
+Login Attempts
+^^^^^^^^^^^^^^
+
+A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-depth more information, please see :ref:<how-login-works>.
+
+**loginAttempts URL**
+
+``/v1/applications/$APPLICATION_ID/loginAttempts``
+
+**loginAttempts Properties**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Property
+      - Type
+      - Valid Value(s)
+      - Description
+        
+    * - ``type``
+      - String (Enum)
+      - N/A
+      - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
+
+    * - ``value``
+      - String (Base64)
+      - N/A
+      - The Base64 encoded ``username``:``plaintextPassword`` pair.
+        
+    * - ``accountStore``
+      - String 
+      - ``href`` or ``nameKey``
+      - An optional link to the Application’s Account Store (Organization, Directory, Group) OR Organization ``nameKey``. You should be certain that the specified Account Store contains the Account attempting to login. 
+
+.. note::
+
+    Specifying the ``accountStore`` can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
+
+**loginAttempts Example**
+
+.. code-block: json 
+
+    {
+        "type": "basic",
+        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
+        "accountStore": {
+             "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
+       }
+    }
 
 .. _ref-account-store-mapping:
 
@@ -1262,9 +1291,11 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
      
     }
 
-ResourceName Operations
-------------------------
-    
+.. _asm-operations:
+
+Account Store Mapping Operations
+--------------------------------
+
 .. list-table::
     :widths: 40 20 40
     :header-rows: 1
@@ -1281,8 +1312,8 @@ ResourceName Operations
       - 
       - 
     
-Retrieve Resources Associated With A Tenant 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Retrieve Resources Associated With An Account Store Mapping 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
