@@ -820,6 +820,8 @@ Retrieve A Tenant
 Retrieve Resources Associated With A Tenant 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+It is possible to retrieve other, independent, resources using the Tenant for look-up. 
+
 .. list-table::
     :widths: 40 20 40
     :header-rows: 1
@@ -837,7 +839,7 @@ Retrieve Resources Associated With A Tenant
       - Searches a collection of all of the Tenant's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`.
 
 Example Queries
-^^^^^^^^^^^^^^^
+"""""""""""""""
 
 **Retrieving a Collection Associated with a Tenant**
 
@@ -1122,7 +1124,7 @@ Deleting an application completely erases the application and any of its related
 Instead of deleting an Application resource, we recommend that you disable it instead by sending a POST with a ``status`` value of "DISABLED".
 
 Example Queries
-^^^^^^^^^^^^^^^
+"""""""""""""""
 
 **Retrieve an Application**
 
@@ -1154,12 +1156,28 @@ This query would disable the Application and prevent any associated Accounts fro
 Retrieve Resources Associated With An Application 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other, independent, resources using the Tenant for look-up. 
+It is possible to retrieve other, independent, resources using the Application for look-up. All of these resources have the following namespacing: ``/v1/applications/$APPLICATION_ID/$RESOURCE_TYPE``.
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a resource of the specified type. Possible resource types are: ``customData``, ``oAuthPolicy``, ``accounts``, ``groups``, ``accountStoreMappings``, and ``idSiteModel``. 
+        
+    * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`, and for a list of searchable attributes see :ref:`here <searchable-attributes>`. Searchable collections associated with an Application are: ``accounts``, ``groups``, ``accountStoreMappings``
 
 Application Endpoints
 ---------------------
 
-There are certain collections that are exposed by the Application as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other collections <get-refs-via-app>`, but are instead using for other flows. These are detailed in this section.
+There are certain collections that are exposed by the Application as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other collections <get-refs-via-app>`, but are instead using for other flows. These are detailed in this section, and have the same namespacing as regular collections: ``/v1/applications/$APPLICATION_ID/$ENDPOINT``.
 
 .. _ref-loginattempts:
 
@@ -1213,6 +1231,26 @@ A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-
              "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
        }
     }
+
+Password Reset Tokens 
+^^^^^^^^^^^^^^^^^^^^^
+
+Where do we explain how this works?
+
+API Keys 
+^^^^^^^^
+
+Where do we explain how this works?
+
+Verification Email 
+^^^^^^^^^^^^^^^^^^
+
+Where do we explain how this works?
+
+Auth Tokens ???
+^^^^^^^^^^^^^^^
+
+Does this belong here? If so, where do we explain how this works?
 
 .. _ref-account-store-mapping:
 
@@ -1283,12 +1321,21 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
       - N/A
       - Indicates when this resource’s attributes were last modified.
 
-**ResourceName Example**
+**Account Store Mapping Example**
 
 .. code-block:: json
 
     {
-     
+      "href": "https://api.stormpath.com/v1/accountStoreMappings/1NUhrCPT0q66bjy6Yv9nS4",
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "application": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
+      }
     }
 
 .. _asm-operations:
@@ -1329,7 +1376,7 @@ Retrieve Resources Associated With An Account Store Mapping
         
 
 Example Queries
-^^^^^^^^^^^^^^^
+"""""""""""""""
 
 **Query #1 Description**
 

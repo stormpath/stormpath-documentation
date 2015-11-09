@@ -125,20 +125,20 @@ We would now like to map a new Account Store that will have the following charac
 
 To accomplish this, we will send a ``POST`` to the ``v1/accountStoreMappings`` endpoint, with the following payload:
 
-  .. code-block: json
-    :emphasize-lines: 1,2,3
+.. code-block:: json
+  :emphasize-lines: 2,3,4
 
-    {
-      "listIndex": 0,
-      "isDefaultAccountStore": true,
-      "isDefaultGroupStore": true,
-      "application": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-      },
-      "accountStore": {
-        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
-      }
+  {
+    "listIndex": 0,
+    "isDefaultAccountStore": true,
+    "isDefaultGroupStore": true,
+    "application": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+    },
+    "accountStore": {
+      "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
     }
+  }
 
 We are mapping the Application (id: ``1gk4Dxzi6o4PbdlBVa6tfR``) to a new Directory (id: ``2jw4Kslj97zYjYRXEh2KYf``). Additionally, we are setting 
 
@@ -153,7 +153,7 @@ Updating an Existing Account Store
 
 Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update. 
 
-**Updating Login Priority**
+**Changing Login Priority**
 
 For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1. 
 
