@@ -166,11 +166,7 @@ html_context = {
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-   'index': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-   '**': ['localtoc.html', 'sourcelink.html', 'searchbox.html'],
-   'using/windows': ['windowssidebar.html', 'searchbox.html']
-}
+# html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

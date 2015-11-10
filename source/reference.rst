@@ -675,6 +675,10 @@ If you choose to expand one or more Collections, you can provide :ref:`paginatio
 Tenant
 ======
 
+.. contents::
+    :local:
+    :depth: 2
+
 **Description**
 
 When you sign up for Stormpath, a private data space is created for you. This space is represented as a Tenant resource in the Stormpath REST API. Your Tenant resource can be thought of as your global starting point. You can access everything in your space by accessing your Tenant resource first and then interacting with its other linked resources (Applications, Directories, etc).
@@ -874,6 +878,10 @@ The result body would:
 
 Application
 =============
+
+.. contents::
+    :local:
+    :depth: 2
 
 **Description**
 
@@ -1257,6 +1265,12 @@ Does this belong here? If so, where do we explain how this works?
 Account Store Mapping
 =====================
 
+.. contents::
+    :local:
+    :depth: 2
+
+**Description**
+
 In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it. The following resources may be mapped as Account Stores:
 
 - Organization 
@@ -1343,6 +1357,30 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
 Account Store Mapping Operations
 --------------------------------
 
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create an Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/accountStoreMappings
+      - Required: ``application``, ``accountStore``; Optional: ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
+      - N/A
+      - Creates a new accountStoreMapping resource, thereby enabling the Accounts in the specified Store to log in to the specified Application. By default ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are set to ``false``.
+
+Retrieve an Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. list-table::
     :widths: 40 20 40
     :header-rows: 1
@@ -1351,13 +1389,40 @@ Account Store Mapping Operations
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
-      - N/A
-      - Retrieves the ResourceName
+    * - GET /v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID
+      - ``expand`` 
+      - Retrieves the specified Application resource. ``accountStore11 and ``application`` can be expanded. More info :ref:`above <about-links>`.
         
-    * - 
-      - 
-      - 
+Update an Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID
+      - ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
+      - Updates the specified attributes with the values provided.
+
+Delete an Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/applications/$APPLICATION_ID
+      - N/A
+      - Deletes the specified Application.
+
     
 Retrieve Resources Associated With An Account Store Mapping 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

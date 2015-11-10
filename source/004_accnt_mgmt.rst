@@ -1,8 +1,8 @@
+.. _account-mgmt:
+
 **********************
 4. Account Management
 **********************
-
-.. _account-mgmt-header:
 
 a. Modeling Your User Base
 ===========================

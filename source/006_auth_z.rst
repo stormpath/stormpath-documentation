@@ -1,7 +1,8 @@
+.. _authz:
+
 *******************************
 6. Authorization With Stormpath
 *******************************
-.. _authz-header:
 
 This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions.
 
@@ -51,7 +52,7 @@ Now that we have some understanding of authorization roles in Stormpath, we can 
 Application-Wide Roles
 ^^^^^^^^^^^^^^^^^^^^^^
 
-In a multi-tenant SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the tenant that they belong to, while at the same time defining authorization based on broader, application-wide roles. In Stormpath, we recommended that you model every tenant that uses your Application using the **Organization** resource. The Organization resource is a container for Directory resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the :ref:`multi-tenancy chapter later in this guide <multitenancy-header>`.
+In a multi-tenant SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the tenant that they belong to, while at the same time defining authorization based on broader, application-wide roles. In Stormpath, we recommended that you model every tenant that uses your Application using the **Organization** resource. The Organization resource is a container for Directory resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the :ref:`multi-tenancy chapter <multitenancy>`.
 
 Alongside these Organizations, it is also possible to define application-wide Groups that allow for roles that span across Organizations, regardless of where a user's Account is found.
 
@@ -61,7 +62,7 @@ For example, your Application could have "Teller" and "Bank Administrator" roles
 
 The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks. 
 
-More information about the APIs that allow you to create, retrieve and search an Application's groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy-header>`.
+More information about the APIs that allow you to create, retrieve and search an Application's groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy>`.
 
 ii. Using Permissions
 ---------------------

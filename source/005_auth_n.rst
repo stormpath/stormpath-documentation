@@ -1,8 +1,8 @@
+.. _authn:
+
 *****************************************
 5. Authenticating Accounts with Stormpath
 *****************************************
-
-.. _authn-header:
 
 Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight. 
 
@@ -80,8 +80,8 @@ You can map multiple Account Stores to an Application, but only one is required 
 
 .. _managing-login:
 
-Managing Application Login
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Manage Who Can Log Into Your Application 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
 
@@ -113,6 +113,8 @@ We can find this Mapping by sending a ``GET`` to our Application's ``/accountSto
 .. note:
 
   Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``. 
+
+.. _create-asm:
 
 Mapping a new Account Store
 """""""""""""""""""""""""""
@@ -588,7 +590,7 @@ Creating this Directory for Google requires that you provide information from Go
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -652,7 +654,7 @@ Creating this Directory requires that you provide information from Facebook as a
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
+Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Facebook Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -706,7 +708,7 @@ Creating this Directory requires that you provide information from GitHub as a P
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 Step 3: Access an Account with GitHub Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -761,7 +763,7 @@ Creating this Directory requires that you provide information from LinkedIn as a
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in the :ref:`Account Store Mappings section <asm-operations>` of the reference chapter.
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 Step 3: Access an Account with LinkedIn Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

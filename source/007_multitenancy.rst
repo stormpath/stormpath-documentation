@@ -1,7 +1,8 @@
+.. _multitenancy:
+
 *******************************
 7. Multi-Tenancy with Stormpath
 *******************************
-.. _multitenancy-header:
 
 a. What Is a Multi-Tenant Application? 
 ======================================
@@ -11,7 +12,7 @@ The best way to understand the concept of multi-tenancy is by thinking of a cond
 b. Modeling Tenants in Stormpath
 =================================
 
-In our :ref:`Account Management <account-mgmt-header>` section we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional **Organization** resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
+In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional **Organization** resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
 
 .. note::
 
@@ -173,7 +174,7 @@ Notice here that both the Default Account Store and Group Store are blank which 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn-header>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
+Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
 
 First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a POST to the ``/v1/accountStoreMappings`` endpoint::
 
@@ -227,7 +228,7 @@ So our Organization now has an associated Directory which can be used as an Acco
 Registering an Organization as an Account Store for an Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described in :ref:`the Authentication chapter <authn-header>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future. 
+As described in :ref:`the Authentication chapter <authn>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future. 
 
 To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
