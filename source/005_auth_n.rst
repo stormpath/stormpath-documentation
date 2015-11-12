@@ -163,6 +163,10 @@ For example, if you want to update an existing Account Store to now have highest
 
 Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true`` in the JSON body to a ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint would result in those values being updated on the target resource, and whichever resource had those values as ``true`` would have them changed to ``false``.
 
+.. note::
+
+  Setting an AccountStoreMapping’s ``isDefaultGroupStore`` or ``isDefaultAccountStore`` to ``false`` will **not** automatically set another AccountStoreMapping’s ``isDefaultGroupStore`` or ``isDefaultAccountStore`` to ``true``. You are responsible for setting this yourself if you would like your Application to create new Accounts/Groups.
+
 .. _token-authn:
 
 b. How Token-Based Authentication Works
@@ -268,7 +272,7 @@ Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Passw
 
     https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
 
-This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described above in :ref:`How Login Attempts Work <how-login-works>`.
+This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
 Your application will act as a proxy to the Stormpath API. For example:
 

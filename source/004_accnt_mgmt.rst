@@ -18,105 +18,7 @@ i. Directories
     
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
-Additionally:
-
-- All Account resources within a Directory have a unique ``email`` and ``username``.
-- All Group resources within a Directory have a unique ``name``.
-
-The Directory Resource
-^^^^^^^^^^^^^^^^^^^^^^
-
-An individual Directory resource may be accessed via its Resource URI:
-
-**Directory URI**
-
-``/v1/directories/:directoryId``
-
-**Directory Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	 
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL
-	
-	* - ``name``
-	  - String
-	  - 1 < N <= 255 characters
-	  - Name of the Directory. Must be unique within a Tenant.
-	
-	* - ``description``
-	  - String
-	  - 0 < N <= 1000 characters
-	  - The description of the Directory.
-	
-	* - ``status``
-	  - String (Enum)
-	  - ``enabled`` , ``disabled``
-	  - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
-
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-	
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s attributes were last modified.
-	
-	* - ``tenant``
-	  - String (Link)
-	  - N/A
-	  - A link to the owning Tenant.
-
-	* - ``provider``
-	  - String (Link)
-	  - N/A
-	  - A link to the Directory's Provider. 
-
-	* - ``customData``
-	  - String (Link) 
-	  - N/A
-	  - A link to the Directory's customData resource that you can use to store your own Directory-specific custom fields.
-
-	* - ``passwordPolicy``
-	  - String (Link)
-	  - N/A
-	  - A link to the Directory’s Password Policy
-	    
-	* - ``accountCreationPolicy``
-	  - String (Link)
-	  - N/A
-	  - A link to the Directory’s Account Creation Policy
-
-	* - ``accounts``
-	  - String (Link)
-	  - N/A
-	  - A link to the Accounts owned by this Directory.
-	
-	* - ``applicationMappings``
-	  - String (Link)
-	  - N/A
-	  - A link to any Application Mapping resources for this Directory.
-	    
-	* - ``applications``
-	  - String (Link)
-	  - N/A
-	  - A link to a collection of all the Applications mapped to this Directory. 
-
-	* - ``groups``
-	  - String (Link)
-	  - N/A
-	  - A link to a collection the Groups mapped to this Directory.
+For more detailed information about the Directory resource, please see :ref:`ref-directory` the Reference chapter.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -168,92 +70,12 @@ Would yield the following response::
 	  "provider": {
 	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/provider"
 	  },
-	  "customData": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/customData"
-	  },
-	  "passwordPolicy": {
-	    "href": "https://api.stormpath.com/v1/passwordPolicies/2SKhstu8Plaekcai8lghrp"
-	  },
-	  "accountCreationPolicy": {
-	    "href": "https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8Plaekcai8lghrp"
-	  },
-	  "accounts": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts"
-	  },
-	  "applicationMappings": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applicationMappings"
-	  },
-	  "applications": {
-	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applications"
+  	  [...]
 	  },
 	  "groups": {
 	    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups"
 	  }
 	}
-
-Of particular interest here is the `provider` resource referenced here. Different types of Directories have different types of Provider resources as well.
-
-.. _about-provider-resource:
-
-The Provider Resource
-""""""""""""""""""""""
-
-The Provider resource contains information about the source of the information found in its associated Directory resource. For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
-
-**Provider URI**
-
-``/v1/directories/:directoryId/provider``
-
-**Provider Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	 
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL
-
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-	
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s attributes were last modified.
-	
-	* - ``providerId``
-	  - String
-	  - ``stormpath`` (for a Cloud Directory), ``ad`` or ``ldap`` (for Mirror Directories), ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories)
-	  - Specifies the type of Provider for the associated Directory.
-	
-	* - ``clientId``
-	  - String
-	  - N/A
-	  - The OAuth 2.0 Client ID for this Provider. Only used for Social providers.
-	
-	* - ``clientSecret``
-	  - String
-	  - N/A
-	  - The OAuth 2.0 Client Secret for this Provider. Only used for Social providers.
-	
-	* - ``redirectUri``
-	  - String 
-	  - A valid URL
-	  - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
-	
-	* - ``agent``
-	  - String (Link) 
-	  - N/A
-	  - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`make-mirror-dir`.
 
 .. _about-mirror-dir:
 
@@ -300,7 +122,7 @@ For more information on how to this works, please see :ref:`mirror-dir-authn`.
 The Agent Resource
 """"""""""""""""""
 
-Mirror Directories have an associated :ref:`Provider resource <about-provider-resource>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
+Mirror Directories have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
 An Agents collection may be accessed via its Resource URI:
 
@@ -535,7 +357,7 @@ How to Make a Mirror Directory
 
 Presently, Mirror Directories be made via the Stormpath Admin Console, or using REST API. If you'd like to do it with REST APIs, read on. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above :ref:<about-provider-resource>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
+To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a ``provider`` resource (see `above :ref:<ref-provider>`) with ``provider`` ``"ldap"``, which will in turn contain an LDAP ``agent`` object::
 
 	{
 	  "name":"My LDAP Directory",
