@@ -1550,7 +1550,7 @@ An individual Directory resource may be accessed via its Resource URI:
   * - ``applicationMappings``
     - String (Link)
     - N/A
-    - A link to any Application Mapping resources for this Directory.
+    - A link to a collection of any accountStoreMapping resources that include this Directory.
       
   * - ``applications``
     - String (Link)
@@ -1623,10 +1623,14 @@ Create a Directory
       - Optional Parameters 
       - Description
     
-    * - POST /v1/
-      - Required: ``.``; Optional: ``.``
+    * - POST /v1/directories
+      - Required: ``name``; Optional: ``description``, ``status``
       - N/A
-      - Creates a new ? resource
+      - Creates a new Directory resource.
+
+.. note::
+
+  Currently it is only possible to make a Cloud or Social Directories via the REST API. To make a Mirror Directory you will need to use the `Admin Console <http://docs.stormpath.com/console/product-guide#create-a-mirrored-directory>`__.
 
 Retrieve a Directory 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1639,9 +1643,9 @@ Retrieve a Directory
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
+    * - GET /v1/directories/$DIRECTORY_ID
       - ``expand`` 
-      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified Directory. ``accounts`` and ``groups``, ``tenant`` can be expanded. More info :ref:`above <about-links>`.
         
 Update a Directory 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1654,8 +1658,8 @@ Update a Directory
       - Attributes
       - Description
     
-    * - POST /v1/
-      - 
+    * - POST /v1/directories/$DIRECTORY_ID
+      - ``name``, ``description``, ``status``
       - Updates the specified attributes with the values provided.
 
 Delete a Directory 
@@ -1669,43 +1673,46 @@ Delete a Directory
       - Attributes
       - Description
     
-    * - DELETE /v1/
+    * - DELETE /v1/directories/$DIRECTORY_ID
       - N/A
       - Deletes the specified
-        
 
+.. note::
+
+  The "Stormpath Administrators" Directory cannot be deleted.
+        
 Example Queries
 """""""""""""""
 
-**Example Description**
-
-.. code-block:: bash
-
-  curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
-  --header 'content-type: application/json' \
-  --url " "
-
-This query would...
-
-**Example Description**
+**Disable a Directory**
 
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $API_KEY_ID:$API_KEY_SECRET \
   --header 'content-type: application/json' \
-  --url " " \
+  --url "https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpeXAMple" \
   --data '{
-    "listIndex":"0"
+    "status" : "DISABLED"
     }'
 
-This query would...
+This query would disable the specified Directory, which would mean that all of its associated Accounts and Groups would be unable to log in to any Application that this Directory was mapped to as an Account Store. 
+
+**Retrieve Directory with Tenant embedded**
+
+.. code-block:: bash
+
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpeXAMple?expand=tenant" \
+
+This query would retrieve the specified Directory with the Tenant resource embedded via :ref:`link expansion <about-links>`.
 
 Retrieve Resources Associated With A Directory 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Intro text 
+It is possible to retrieve other, independent, resources using the Directory for look-up. All of these resources have the following namespacing: ``/v1/directories/$DIRECTORY_ID/$RESOURCE_TYPE``.
 
 .. list-table::
     :widths: 40 20 40
@@ -1715,9 +1722,13 @@ Intro text
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
-      - 
-      -  .
+    * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a resource of the specified type. Possible resource types are: ``customData``, ``accounts``, ``applicationMappings``, ``applications``, accountStoreMappings``, and ``groups``. 
+        
+    * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Application are: ``accounts``, ``groups``, ``accountStoreMappings``
 
 Directory Endpoints
 ---------------------
@@ -1788,7 +1799,7 @@ The Provider resource contains information about the source of the information f
 
 .. _ref-ldap-agent:
 
-The Agent Resource
+LDAP Agent
 """"""""""""""""""
 
 Mirror Directories have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
