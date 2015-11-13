@@ -11,18 +11,18 @@
 This quickstart will get you up and running with Stormpath in about 7
 minutes and give you a good initial feel for the Stormpath REST API.
 
-This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`First Time Set-Up <set-up>` chapter, and now have:
-  
+This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :doc:`First Time Set-Up </002_setup>` chapter, and now have:
+
 - A Stormpath Account
-  
+
 - A Stormpath API Key generated and downloaded onto your system
-  
+
 - A Stormpath Tenant resource. The following associated resources were also automatically created:
 
   - Two Application resources: One called "My Application", and the other called "Stormpath"
-   
+
   - Two Directory resources: "My Application Directory" and "Stormpath Administrators"
-  
+
     - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
 
 During this quickstart, you will do the following:
@@ -103,7 +103,7 @@ Now that we've created an Application, let's create a user Account so someone ca
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
         -d '{
-            "givenName": "givenName",  
+            "givenName": "givenName",
             "surname": "Surname",
             "username": "username",
             "email": "email@address.com",
@@ -116,9 +116,9 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 Stormpath Accounts have several basic fields (``givenName``, ``surname``, ``email``, etc...), but also support storing schema-less JSON data through the ``customData`` field. ``customData`` allows you to store any user profile information (*up to 10MB per user!*).
 
-.. note:: 
+.. note::
 
-  The required fields are: ``givenName``, ``surname``, ``email``, and ``password``. 
+  The required fields are: ``givenName``, ``surname``, ``email``, and ``password``.
 
 So this command::
 
@@ -126,7 +126,7 @@ So this command::
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
         -d '{
-            "givenName": "Joe",  
+            "givenName": "Joe",
             "surname": "Stormtrooper",
             "username": "tk421",
             "email": "tk421@stormpath.com",
@@ -166,7 +166,7 @@ would create the user Account and return this response::
       "emailVerificationToken": null
     }
 
-You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well. 
+You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well.
 
 Authenticate a User Account
 ===========================
