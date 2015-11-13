@@ -34,7 +34,7 @@ b. Modeling Authorization in Stormpath
 
 From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
 
-.. _rbac:
+.. _role-groups:
 
 i. How to Use Groups to Model Authorization Roles
 -------------------------------------------------

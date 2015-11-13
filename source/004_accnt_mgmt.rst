@@ -238,87 +238,7 @@ Presently, Social Directories can only be made via the Stormpath Admin Console o
 ii. Groups
 ----------
 
-**Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. Aside from the relatively simple task of grouping together Accounts, Groups can also be used to implement "roles" for authorization purposes. For more information about this, please see :ref:`rbac`. 
 
-The Group Resource
-^^^^^^^^^^^^^^^^^^
-
-An individual Group resource may be accessed via its Resource URI:
-
-**Group URI**
-
-``/v1/groups/:groupId``
-
-**Group Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	 
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL
-	
-	* - ``name``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The name of the Group. Must be unique within a Directory.
-		
-	* - ``description``
-	  - String
-	  - 1 < N <= 1000 characters
-	  - The description of the Group.
-
-	* - ``status``
-	  - String (Enum)
-	  - ``enabled``, ``disabled``
-	  - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
-
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s properties were last modified.
-
-	* - ``customData``
-	  - String (Link) 
-	  - N/A
-	  - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
-
-	* - ``directory``
-	  - String (Link)
-	  - N/A
-	  - A link to the Directory resource that the Group belongs to. 
-	
-	* - ``tenant``
-	  - String (Link)
-	  - N/A
-	  - A link to the Tenant that owns the Directory containing this Group.
-
-	* - ``accounts``
-	  - String (Link) 
-	  - N/A
-	  - A link to a collection of the Accounts that are contained within this Group. 
-
-	* - ``accountMemberships``
-	  - String (Link)
-	  - N/A
-	  - A link to any Account Memberships for this Group.
-        
-	* - ``applications``
-	  - String (Link)
-	  - N/A
-	  - A link to any Applications associated with this Group.
 
 .. _hierarchy-groups:
 
@@ -611,48 +531,6 @@ Would yield this response::
 
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If we now wanted to add "Jean-Luc Picard" to a Group that belongs to the "Captains" Directory, we would have to link the Account Resource to a Group Resource. This is done via a **groupMembership** resource that stores this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
-
-**groupMembership URI**
-
-``v1/groupMemberships/:groupMembershipId``
-
-**groupMembership Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL.
-	
-	* - ``account``
-	  - String (Link) 
-	  - N/A
-	  - A link to the Account for this Group Membership. 
-	 
-	* - ``group``
-	  - String (Link)
-	  - N/A
-	  - A link to the Group for this Group Membership.
-	
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-	
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s properties were last modified
 	    
 So let's say we want to add "Jean-Luc Picard" to "Starfleet Officers" Group inside the "Captains" Directory.
 

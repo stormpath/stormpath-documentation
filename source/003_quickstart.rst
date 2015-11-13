@@ -11,7 +11,7 @@
 This quickstart will get you up and running with Stormpath in about 7
 minutes and give you a good initial feel for the Stormpath REST API.
 
-This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :doc:`First Time Set-Up </002_setup>` chapter, and now have:
+This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`First Time Set-Up <set-up>` chapter, and now have:
   
 - A Stormpath Account
   

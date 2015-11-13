@@ -1733,14 +1733,16 @@ It is possible to retrieve other, independent, resources using the Directory for
 Directory Endpoints
 ---------------------
 
-There are certain collections that are exposed by the Directory as endpoints.
+There are no collections that are exposed by the Directory as endpoints.
 
 .. _ref-provider:
 
 Provider 
 ^^^^^^^^^^^^^^
 
-The Provider resource contains information about the source of the information found in its associated Directory resource. For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
+The Provider resource contains information about the source of the information found in its associated Directory resource. 
+
+For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
 
 **Provider URI**
 
@@ -1797,12 +1799,24 @@ The Provider resource contains information about the source of the information f
     - N/A
     - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`make-mirror-dir`.
 
+**Provider Example**
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/directories/3S8qv2u78JzwSXzEXAMplE/provider",
+    "providerId":"ldap",
+    "agent":{
+      "href":"https://api.stormpath.com/v1/agents/3S8vF6CIUET9R4PEXAMplE"
+    }
+  }
+
 .. _ref-ldap-agent:
 
 LDAP Agent
 """"""""""""""""""
 
-Mirror Directories have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
+:ref:`Mirror Directories <about-mirror-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
 An Agents collection may be accessed via its Resource URI:
 
@@ -1833,7 +1847,7 @@ An Agents collection may be accessed via its Resource URI:
     
   * - ``status``
     - String
-    - ?
+    - ``online``, ``offline``, ``error``
     - The Agent's status.
   
   * - ``config``
@@ -1865,6 +1879,8 @@ An Agents collection may be accessed via its Resource URI:
     - String (Link)
     - N/A
     - A link to the Tenant that owns the Directory this Agent belongs to.
+
+For an example JSON see :ref:`below <agent-json-ex>`.
 
 **Config Attributes**
 
@@ -1934,6 +1950,8 @@ The ``config`` object is found inside an Agent resource. It corresponds with the
     - N/A
     - Referral issues can arise when querying an Active Directory server without proper DNS. Setting this as true ignores referral exceptions and allows (potentially partial) results to be returned.
 
+For an example JSON see :ref:`below <agent-json-ex>`.
+
 **accountConfig Attributes**
 
 The ``accountConfig`` object is found inside a ``config`` object. It corresponds with the "Account Configuration" tab in the Stormpath Admin Console "Agents" section.
@@ -1990,7 +2008,9 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
   * - ``passwordRdn``
     - String
     - N/A
-    - The name of the attribute for an account's password. 
+    - The name of the attribute for an account's password.
+
+For an example JSON see :ref:`below <agent-json-ex>`.
 
 **groupConfig Attributes**
 
@@ -2030,6 +2050,319 @@ The ``groupConfig`` object is found inside a ``config`` object.
     - N/A
     - The name of the attribute that lists the group members.
 
+.. _agent-json-ex:
+
+**Agent example with embedded Config, accountConfig and groupConfig resources**
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/agents/2PjCYRg3mhGNLUieXamPLE",
+    "id":"2PjCYRg3mhGNLUixcSdK0k",
+    "status":"OFFLINE",
+    "config":{
+      "directoryHost":"someValue",
+      "directoryPort":636,
+      "sslRequired":true,
+      "agentUserDn":"someValue",
+      "baseDn":"someValue",
+      "pollInterval":60,
+      "accountConfig":{
+        "dnSuffix":"someValue",
+        "objectClass":"person",
+        "objectFilter":"someValue",
+        "emailRdn":"someValue",
+        "givenNameRdn":"givenName",
+        "middleNameRdn":"someValue",
+        "surnameRdn":"sn",
+        "usernameRdn":"uid",
+        "passwordRdn":"userPassword"
+      },
+      "groupConfig":{
+        "dnSuffix":"someValue",
+        "objectClass":"groupOfUniqueNames",
+        "objectFilter":"someValue",
+        "nameRdn":"cn",
+        "descriptionRdn":"description",
+        "membersRdn":"uniqueMember"
+      }
+    },
+    "createdAt":"2014-11-25T03:22:39.000Z",
+    "modifiedAt":"2014-11-25T03:22:39.000Z",
+    "directory":{
+      "href":"https://api.stormpath.com/v1/directories/2Pj8EONsQmnAMyIeXamPLE"
+    },
+    "download":{
+      "href":"https://api.stormpath.com/v1/agents/2PjCYRg3mhGNLUieXamPLE/download"
+    },
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbeXamPLE"
+    }
+  }
+
+.. _ref-group:
+
+Group   
+=====
+
+.. contents::
+    :local:
+    :depth: 2
+
+**Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. Aside from the relatively simple task of grouping together Accounts, Groups can also be used to implement "roles" for authorization purposes. For more information about this, please see :ref:`role-groups`. 
+
+An individual Group resource may be accessed via its Resource URI:
+
+**Group URI**
+
+``/v1/groups/:groupId``
+
+**Group Attributes**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+   
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+  
+  * - ``name``
+    - String
+    - 1 < N <= 255 characters
+    - The name of the Group. Must be unique within a Directory.
+    
+  * - ``description``
+    - String
+    - 1 < N <= 1000 characters
+    - The description of the Group.
+
+  * - ``status``
+    - String (Enum)
+    - ``enabled``, ``disabled``
+    - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
+
+  * - ``createdAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource’s properties were last modified.
+
+  * - ``customData``
+    - String (Link) 
+    - N/A
+    - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
+
+  * - ``directory``
+    - String (Link)
+    - N/A
+    - A link to the Directory resource that the Group belongs to. 
+  
+  * - ``tenant``
+    - String (Link)
+    - N/A
+    - A link to the Tenant that owns the Directory containing this Group.
+
+  * - ``accounts``
+    - String (Link) 
+    - N/A
+    - A link to a collection of the Accounts that are contained within this Group. 
+
+  * - ``accountMemberships``
+    - String (Link)
+    - N/A
+    - A link to a collection of groupMemberships that this Group is found in.
+        
+  * - ``applications``
+    - String (Link)
+    - N/A
+    - A link to any Applications associated with this Group.
+
+**Group Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe",
+    "name": "Starfleet Officers",
+    "description": "Commissioned officers in Starfleet",
+    "status": "ENABLED",
+    "createdAt": "2015-08-25T20:09:23.698Z",
+    "modifiedAt": "2015-08-25T20:09:23.698Z",
+    "customData": {
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKExaMPLe/customData"
+    },
+    "directory": {
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+    },
+    "tenant": {
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+    },
+    "accounts": {
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accounts"
+    },
+    "accountMemberships": {
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accountMemberships"
+    },
+    "applications": {
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/applications"
+    }
+  }
+
+.. _Group-operations:
+
+Group Operations
+--------------------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create a Group  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/
+      - Required: ``.``; Optional: ``.``
+      - N/A
+      - Creates a new ? resource
+
+Retrieve a Group  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - ``expand`` 
+      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+        
+Update a Group  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/
+      - 
+      - Updates the specified attributes with the values provided.
+
+Delete a Group 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/
+      - N/A
+      - Deletes the specified
+        
+
+Example Queries
+"""""""""""""""
+
+**Example Description**
+
+.. code-block:: bash
+
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url " "
+
+This query would...
+
+**Example Description**
+
+.. code-block:: bash
+
+  curl --request POST \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url " " \
+  --data '{
+    }'
+
+This query would...
+
+Retrieve Resources Associated With A ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Intro text 
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - 
+      -  .
+
+? Endpoints
+---------------------
+
+There are certain collections that are exposed by the ? as endpoints.
+
+Endpoint Name
+^^^^^^^^^^^^^^
+
+Description text 
+
+**Endpoint URL**
+
+**Endpoint Properties**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Property
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - .
+      - .
+      - .
+      - .
+
 Endpoint Name
 ^^^^^^^^^^^^^^
 
@@ -2053,6 +2386,206 @@ Description text
       - .
       - .
 
+
+Group Membership   
+=====================
+
+.. contents::
+    :local:
+    :depth: 2
+
+Accounts and Groups are linked via a **groupMembership** resource that stores this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
+
+**groupMembership URI**
+
+``v1/groupMemberships/:groupMembershipId``
+
+**groupMembership Attributes**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+  
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+  
+  * - ``account``
+    - String (Link) 
+    - N/A
+    - A link to the Account for this Group Membership. 
+   
+  * - ``group``
+    - String (Link)
+    - N/A
+    - A link to the Group for this Group Membership.
+  
+  * - ``createdAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+  
+  * - ``modifiedAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource’s properties were last modified
+
+**ResourceName Example**
+
+.. code-block:: json
+
+    {
+    }
+
+.. _ResourceName-operations:
+
+ResourceName Operations
+--------------------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create a ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/
+      - Required: ``.``; Optional: ``.``
+      - N/A
+      - Creates a new ? resource
+
+Retrieve a ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - ``expand`` 
+      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+        
+Update a ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/
+      - 
+      - Updates the specified attributes with the values provided.
+
+Delete a ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/
+      - N/A
+      - Deletes the specified
+        
+
+Example Queries
+"""""""""""""""
+
+**Example Description**
+
+.. code-block:: bash
+
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url " "
+
+This query would...
+
+**Example Description**
+
+.. code-block:: bash
+
+  curl --request POST \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url " " \
+  --data '{
+    }'
+
+This query would...
+
+Retrieve Resources Associated With A ResourceName 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Intro text 
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/
+      - 
+      -  .
+
+? Endpoints
+---------------------
+
+There are certain collections that are exposed by the ? as endpoints.
+
+Endpoint Name
+^^^^^^^^^^^^^^
+
+Description text 
+
+**Endpoint URL**
+
+**Endpoint Properties**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Property
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - .
+      - .
+      - .
+      - .
 
 ResourceName  
 =====================
@@ -2102,7 +2635,7 @@ Text
     {
     }
 
-.. _ResourceName-operations:
+.. _ResourceName1-operations:
 
 ResourceName Operations
 --------------------------------
