@@ -2,7 +2,7 @@
 REST API Reference
 ******************
 
-This section covers the Core Concepts of the Stormpath REST API, as well as serving as a complete reference for all of the interactions that are possible with the various Stormpath resources. 
+This section covers the Core Concepts of the Stormpath REST API, as well as serving as a complete reference for all of the Stormpath resources as well as the operations that it is possible to perform with them. 
 
 .. _rest-concepts:
 
@@ -824,7 +824,7 @@ Retrieve A Tenant
 Retrieve Resources Associated With A Tenant 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other, independent, resources using the Tenant for look-up. 
+It is possible to retrieve other associated resources using the Tenant for look-up. 
 
 .. list-table::
     :widths: 40 20 40
@@ -2222,7 +2222,7 @@ An individual Group resource may be accessed via its Resource URI:
 .. _Group-operations:
 
 Group Operations
---------------------------------
+----------------
 
 .. contents:: 
     :local:
@@ -2230,7 +2230,9 @@ Group Operations
 
 Create a Group  
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+
+Groups must be created under a specified Directory resource.
+
 .. list-table::
     :widths: 30 15 15 40
     :header-rows: 1
@@ -2240,13 +2242,13 @@ Create a Group
       - Optional Parameters 
       - Description
     
-    * - POST /v1/
-      - Required: ``.``; Optional: ``.``
+    * - POST v1/directories/$DIRECTORY_ID/groups
+      - Required: ``name``; Optional: ``description``, ``status``
       - N/A
-      - Creates a new ? resource
+      - Creates a new Group resource.
 
 Retrieve a Group  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2256,12 +2258,12 @@ Retrieve a Group
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
+    * - GET /v1/groups/$GROUP_ID
       - ``expand`` 
-      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified Group. ``tenant``, ``directory`` and ``accounts`` can be expanded. More info :ref:`above <about-links>`.
         
 Update a Group  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2271,12 +2273,12 @@ Update a Group
       - Attributes
       - Description
     
-    * - POST /v1/
-      - 
+    * - POST /v1/groups/$GROUP_ID
+      - ``name``, ``description``, ``status``
       - Updates the specified attributes with the values provided.
 
 Delete a Group 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2286,9 +2288,9 @@ Delete a Group
       - Attributes
       - Description
     
-    * - DELETE /v1/
+    * - DELETE /v1/groups/$GROUP_ID
       - N/A
-      - Deletes the specified
+      - Deletes the specified Group resource.
         
 
 Example Queries
@@ -2301,27 +2303,28 @@ Example Queries
   curl --request GET \
   --user $API_KEY_ID:$API_KEY_SECRET \
   --header 'content-type: application/json' \
-  --url " "
+  --url "https://api.stormpath.com/v1/groups/ZgoHUG0oSoVNeU0ExaMPLE?expand=tenant,directory,accounts(offset:0,limit:50)"
 
-This query would...
+This query would retrieve a Group resource along with its associated Tenant and Directory resources embedded via link expansion. It would also return with the embedded collection of associated Accounts, to a maximum of 50 Accounts in this particular return payload.
 
-**Example Description**
+**Disable a Group**
 
 .. code-block:: bash
 
   curl --request POST \
   --user $API_KEY_ID:$API_KEY_SECRET\
   --header 'content-type: application/json' \
-  --url " " \
-  --data '{
-    }'
+  --url "https://api.stormpath.com/v1/groups/ZgoHUG0oSoVNeU0ExaMPLE" \
+  --data '{ \
+   "status" : "DISABLED" \
+ }'
 
-This query would...
+This query would disable a Group, which means that any associated Accounts would not be able to log in to any Applications that they were mapped to. 
 
-Retrieve Resources Associated With A ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Retrieve Resources Associated With A Group 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Intro text 
+It is possible to retrieve other, associated resources using the Group for look-up. 
 
 .. list-table::
     :widths: 40 20 40
@@ -2331,64 +2334,18 @@ Intro text
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
-      - 
-      -  .
+    * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a collection of all of a Group's associated resources of the specified type. Possible resource types are: ``customData``, ``directory``, ``tenant``, ``accounts``, ``accountMemberships`` and ``applications``. 
+        
+    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts``, ``accountMemberships`` and ``applications``. 
 
-? Endpoints
----------------------
-
-There are certain collections that are exposed by the ? as endpoints.
-
-Endpoint Name
-^^^^^^^^^^^^^^
-
-Description text 
-
-**Endpoint URL**
-
-**Endpoint Properties**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Property
-      - Type
-      - Valid Value(s)
-      - Description
-    
-    * - .
-      - .
-      - .
-      - .
-
-Endpoint Name
-^^^^^^^^^^^^^^
-
-Description text 
-
-**Endpoint URL**
-
-**Endpoint Properties**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Property
-      - Type
-      - Valid Value(s)
-      - Description
-    
-    * - . 
-      - .
-      - .
-      - .
-
+.. _ref-groupmembership:
 
 Group Membership   
-=====================
+================
 
 .. contents::
     :local:
@@ -2436,17 +2393,32 @@ Accounts and Groups are linked via a **groupMembership** resource that stores th
     - ISO-8601 Datetime
     - Indicates when this resource’s properties were last modified
 
-**ResourceName Example**
+**Group Membership Example**
 
 .. code-block:: json
 
-    {
-    }
+  {
+    "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/groupMemberships",
+    "offset":0,
+    "limit":25,
+    "size":1,
+    "items":[
+      {
+        "href":"https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHexaMple",
+        "account":{
+          "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple"
+        },
+        "group":{
+          "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJexaMple"
+        }
+      }
+    ]
+  }
 
-.. _ResourceName-operations:
+.. _groupmembership-operations:
 
-ResourceName Operations
---------------------------------
+Group Membership Operations
+---------------------------
 
 .. contents:: 
     :local:
@@ -2545,7 +2517,7 @@ This query would...
 Retrieve Resources Associated With A ResourceName 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Intro text 
+It is possible to retrieve other, associated resources using the ResourceName for look-up.
 
 .. list-table::
     :widths: 40 20 40
@@ -2555,9 +2527,14 @@ Intro text
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
-      - 
-      -  .
+    
+    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a collection of all of a resourceName's associated resources of the specified type. Possible resource types are: ``.`` and ``.``. 
+        
+    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``.``, and ``.``. 
 
 ? Endpoints
 ---------------------
@@ -2737,7 +2714,7 @@ This query would...
 Retrieve Resources Associated With A ResourceName 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Intro text 
+It is possible to retrieve other, associated resources using the ResourceName for look-up.
 
 .. list-table::
     :widths: 40 20 40
@@ -2747,9 +2724,14 @@ Intro text
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
-      - 
-      -  .
+    
+    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a collection of all of a resourceName's associated resources of the specified type. Possible resource types are: ``.`` and ``.``. 
+        
+    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``.``, and ``.``. 
 
 ? Endpoints
 ---------------------
