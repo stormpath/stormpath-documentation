@@ -111,7 +111,7 @@ In this scenario, we recommend linking each Account in a LDAP Mirror Directory w
 
 2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups synchronized from Active Directory and LDAP
 
-3. Keep a user’s identity alive even after they’ve left your customer’s organization and been deprovisioned in AD/LDAP. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples
+3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in AD/LDAP. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples
 
 The Stormpath Agent (see :ref:`below <ref-ldap-agent>`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
@@ -238,7 +238,9 @@ Presently, Social Directories can only be made via the Stormpath Admin Console o
 ii. Groups
 ----------
 
+.. todo::
 
+	This could use some kind of lead-in.
 
 .. _hierarchy-groups:
 

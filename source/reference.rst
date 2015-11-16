@@ -2351,11 +2351,11 @@ Group Membership
     :local:
     :depth: 2
 
-Accounts and Groups are linked via a **groupMembership** resource that stores this Account-to-Group link. Each Account we add to a Group has its own groupMembership resource created.  
+Accounts and Groups are linked via a **groupMembership** resource that stores this Account-to-Group link. Each Account you add to a Group has its own groupMembership resource created.  
 
 **groupMembership URI**
 
-``v1/groupMemberships/:groupMembershipId``
+``v1/groupMemberships/$GROUP_MEMBERSHIP_ID``
 
 **groupMembership Attributes**
 
@@ -2419,6 +2419,141 @@ Accounts and Groups are linked via a **groupMembership** resource that stores th
 
 Group Membership Operations
 ---------------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create a Group Membership 
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
+      - Required: ``account``, ``group``
+      - N/A
+      - Creates a new groupMembership resource.
+
+Retrieve a Group Membership  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
+      - ``expand`` 
+      - Retrieves the specified groupMembership. ``account`` and ``group`` can be expanded. More info :ref:`above <about-links>`.
+        
+Update a Group Membership  
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A groupMembership resource cannot be updated once it has been created.
+
+Delete a Group Membership  
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
+      - N/A
+      - Deletes the specified groupMembership resource. 
+        
+
+Example Queries
+"""""""""""""""
+
+**Deleting a Group Membership**
+
+.. code-block:: bash
+
+  curl --request DELETE \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/groupMemberships/57YZCqrNgrzcIGYexaMpLe"
+
+This query would delete the groupMembership resource. 
+
+**Retrieving a Group Membership with its Account expanded**
+
+.. code-block:: bash
+
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/groupMemberships/57YZCqrNgrzcIGYexaMpLe?expand=account"
+
+This query would retrieve the groupMembership resource with the associate Account expanded inside the JSON.
+
+ResourceName  
+=====================
+
+.. contents::
+    :local:
+    :depth: 2
+
+**Description**
+
+Text
+
+**? URI**
+
+``/v1/``
+
+**ResourceName Attributes**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+     
+    * - ``href``
+      - String
+      - N/A
+      - The resource's fully qualified location URI.
+      
+    * - ``createdAt``
+      - String (ISO-8601 Datetime)
+      - N/A
+      - Indicates when this resource was created.
+        
+    * - ``modifiedAt``
+      - String (ISO-8601 Datetime)
+      - N/A
+      - Indicates when this resource’s attributes were last modified.
+
+**ResourceName Example**
+
+.. code-block:: json
+
+    {
+    }
+
+.. _ResourceName1-operations:
+
+ResourceName Operations
+--------------------------------
 
 .. contents:: 
     :local:
@@ -2612,7 +2747,7 @@ Text
     {
     }
 
-.. _ResourceName1-operations:
+.. _ResourceName2-operations:
 
 ResourceName Operations
 --------------------------------
