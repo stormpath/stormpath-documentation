@@ -317,143 +317,7 @@ b. How to Store Accounts in Stormpath
 Accounts
 --------
 
-An **Account** is a unique identity within a Directory, with a unique ``username`` and ``email``.
 
-.. note::
-
-	Specifying a ``username`` is optional, if not included it will default to the ``email`` value.
-
-An Account can log in to an Application using either the email address or username associated with it. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
-
-The Account Resource
-^^^^^^^^^^^^^^^^^^^^
-
-An individual Account resource may be accessed via its Resource URI:
-
-**Account URI**
-
-``/v1/accounts/:accountId``
-
-**Account Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL.
-
-	* - ``username``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The username for the Account. Must be unique across the owning Directory. If not specified, the username will default to the ``email`` field.
-	 
-	* - ``email``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The email address for the Account. Must be unique across the owning Directory.	 
-	  
-	* - ``password``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The password for the Account. Only include this Attribute if setting or changing the Account password.
-
-	* - ``givenName``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The given (first) name for the Account holder.	
-
-	* - ``middleName``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The middle (second) name for the Account holder.
-
-	* - ``surname``
-	  - String
-	  - 1 < N <= 255 characters
-	  - The surname (last name) for the Account holder.
-	
-	* - ``fullName``
-	  - String
-	  - N/A
-	  - The full name for the Account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
-	 
-	* - ``status``
-	  - String (Enum)
-	  - ``enabled``, ``disabled``, ``unverified``
-	  - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.	 
-	
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s properties were last modified.
-
-	* - ``emailVerificationToken``
-	  - String (Link)
-	  - N/A
-	  - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
-
-	* - ``customData``
-	  - String (Link)
-	  - N/A
-	  - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
-	
-	* - ``providerData``
-	  - String (Link)
-	  - N/A
-	  - A link to the information from the owner Directory's Provider.
-	    
-	* - ``directory``
-	  - String (Link)
-	  - N/A
-	  - A link to the Account's Directory.
-
-	* - ``tenant``
-	  - String (Link)
-	  - N/A
-	  - A link to the Tenant that owns the Account’s Directory.  
-
-	* - ``groups``
-	  - String (Link)
-	  - N/A
-	  - A link to the Groups that the Account belongs to. 
-	    
-	* - ``groupMemberships``
-	  - String (Link)
-	  - N/A
-	  - A link to the Group Memberships that the Account belongs to.
-
-	* - ``applications``
-	  - String (Link)
-	  - N/A
-	  - A link to the Applications that the Account belongs to.
-	    
-	* - ``apiKeys``
-	  - String (Link)
-	  - N/A
-	  - A link to the apiKeys for this Account.
-	
-	* - ``accessTokens``
-	  - String (Link)
-	  - N/A
-	  - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
-	
-	* - ``refreshTokens``
-	  - String (Link)
-	  - N/A
-	  - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. 
 
 New Account Creation
 --------------------
@@ -560,6 +424,8 @@ And get the following response::
 	    "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc"
 	  }
 	}
+
+.. _importing-accounts:
 
 Importing Accounts
 ------------------
@@ -685,132 +551,34 @@ c. How to Search Accounts
 
 You can search Stormpath Accounts, just like all Resource Collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
 
+.. _managing-account-pwd:
+
 d. How to Manage an Account's Password
 ======================================
 
-In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. 
+Change An Account's Password
+----------------------------
+
+.. note::
+
+  The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if we receive the password as plaintext, and only hash it using these techniques.
+
+  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner. 
+
+  Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
+
+  On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call
+
+Manage Password Policies
+------------------------
+
+In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
 .. note::
 
 	This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_. 
 
-**passwordPolicy URI**
-
-``/v1/passwordPolicies/:passwordPolicyID``
-
-**passwordPolicy Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL.
-	  
-	* - ``resetTokenTtl``
-	  - Number
-	  - A positive integer, less than 169 (0 < i < 169). Default is 24.
-	  - An integer that defines how long the password reset token is valid for during the password reset email workflow.
-	  
-	* - ``resetEmailStatus``
-	  - String
-	  - ``ENABLED`` or ``DISABLED``
-	  - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
-	  	  
-	* - ``strength``
-	  - String (Link)
-	  - N/A 
-	  - A link to the password strength requirements for the Directory.
-	
-	* - ``resetEmailTemplates``
-	  - String (Link)
-	  - N/A
-	  - A collection of email templates that can be used for sending the password reset email. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
-	  
-	* - ``resetSuccessEmailStatus``
-	  - String
-	  - ``ENABLED`` or ``DISABLED``
-	  - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
-	  
-	* - ``resetSuccessEmailTemplates``
-	  - String (Link)
-	  - N/A
-	  - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
-
-	* - ``createdAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource was created.
-	  
-	* - ``modifiedAt``
-	  - String 
-	  - ISO-8601 Datetime
-	  - Indicates when this resource’s attributes were last modified.
-
-For a Directory's password policies, you can modify:
-
-- The Password Strength policy
-- The Password Reset Workflow 
-
-Password Strength
------------------
-
-The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` property.
-
-**strength Properties**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Property
-	  - Type
-	  - Valid Value(s)
-	  - Description
-
-	* - ``maxLength``
-	  - Number
-	  - Default is 100
-	  - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
-	    
-	* - ``minLength``
-	  - Number
-	  - Default is 8
-	  - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
-	    
-	* - ``minLowerCase``
-	  - Number	
-	  - Default is 1
-	  - Represents the minimum number of lower case characters required for the password. characters	
-	  
-	* - ``minNumeric``		
-	  - Number	
-	  - Default is 1
-	  - Represents the minimum number of numeric characters required for the password. 
-	
-	* - ``minSymbol``	
-	  - Number	
-	  - Default is 0
-	  - Represents the minimum number of symbol characters required for the password. 
-
-	* - ``minUpperCase``	
-	  - Number	
-	  - Default is 1
-	  - Represents the minimum number of upper case characters required for the password. 
-
-	* - ``minDiacritic``	
-	  - Number	
-	  - Default is 0
-	  - Represents the minimum number of diacritic characters required for the password.
-
-Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and also password changes on existing Accounts in that Directory. To update Password Strength, simple HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
+Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, simply HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
 
 This call::
 
@@ -857,8 +625,8 @@ With the following body::
 	  "resetEmailStatus": "ENABLED"
 	}
 
-Email Templates
-^^^^^^^^^^^^^^^
+Password Reset Email Templates
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To modify the emails that get sent during the password reset workflow, let’s take a look at the email templates for the password reset. Email templates in Stormpath have common properties that can be modified to change the appearance of the emails. The properties below apply to both email templates that reside in the password policy (``resetEmailTemplate`` and ``resetSuccessEmailTemplate``).
 
@@ -876,17 +644,17 @@ To modify the emails that get sent during the password reset workflow, let’s t
 	* - fromEmailAddress		
 	  - String	
 	  - N/A
-	  - The address that appears in the email’s "from" field.
+	  - The address that appears in the email's "from" field.
 	    
 	* - fromName		
 	  - String 
 	  - N/A
-  	  - The name that appears in the email’s "from" field 
+  	  - The name that appears in the email's "from" field 
  
 	* - subject		
 	  - String 
 	  - N/A
-  	  - The subject that appears in the email’s subject field
+  	  - The subject that appears in the email's subject field
 
 	* - htmlBody		
 	  - String	

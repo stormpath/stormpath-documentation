@@ -964,17 +964,17 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``accounts``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to a Collection of all the Accounts mapped to this Application.
+      - A link to a Collection of all the :ref:`Accounts <ref-account>` mapped to this Application. (see note :ref:`below <application-accounts-note>`)
 
     * - ``groups`` 
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to a Collection of all the Groups mapped to this Application.
+      - A link to a Collection of all the :ref:`Groups <ref-group>` mapped to this Application.
 
     * - ``accountStoreMappings``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to the collection of all Account Store Mappings for this Application.
+      - A link to the collection of all :ref:`Account Store Mappings <ref-account-store-mapping>` for this Application.
 
     * - ``loginAttempts``
       - String (:ref:`Link <about-links>`)
@@ -1000,6 +1000,15 @@ An **Application** resource in Stormpath contains information about any real-wor
       - String (:ref:`Link <about-links>`)
       - N/A
       - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`. 
+
+.. _application-accounts-note:
+
+.. note::
+
+  An Application’s Accounts collection is a virtual collection in the sense that none of the Accounts directly belong to the Application, but only indirectly via Directories. So the ``applications/$APPLICATION_ID/accounts`` collection is an aggregate view of all Accounts that are:
+
+  - in any Directory assigned to the Application
+  - in any Group directly assigned to the Application
 
 **Application Example**
 
@@ -1185,7 +1194,7 @@ It is possible to retrieve other, independent, resources using the Application f
 Application Endpoints
 ---------------------
 
-There are certain collections that are exposed by the Application as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other collections <get-refs-via-app>`, but are instead using for other flows. These are detailed in this section, and have the same namespacing as regular collections: ``/v1/applications/$APPLICATION_ID/$ENDPOINT``.
+There are certain resources that are exposed by the Application as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other resources <get-refs-via-app>`, but are instead used for other flows. These are detailed in this section.
 
 .. _ref-loginattempts:
 
@@ -1535,12 +1544,12 @@ An individual Directory resource may be accessed via its Resource URI:
   * - ``passwordPolicy``
     - String (Link)
     - N/A
-    - A link to the Directory’s Password Policy
+    - A link to the Directory’s :ref:`Password Policy <ref-password-policy>`.
       
   * - ``accountCreationPolicy``
     - String (Link)
     - N/A
-    - A link to the Directory’s Account Creation Policy
+    - A link to the Directory’s :ref:`Account Creation Policy <ref-accnt-creation-policy>`.
 
   * - ``accounts``
     - String (Link)
@@ -1605,14 +1614,14 @@ An individual Directory resource may be accessed via its Resource URI:
 .. _directory-operations:
 
 Directory Operations
---------------------------------
+--------------------
 
 .. contents:: 
     :local:
     :depth: 1
 
 Create a Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
     
 .. list-table::
     :widths: 30 15 15 40
@@ -1633,7 +1642,7 @@ Create a Directory
   Currently it is only possible to make a Cloud or Social Directories via the REST API. To make a Mirror Directory you will need to use the `Admin Console <http://docs.stormpath.com/console/product-guide#create-a-mirrored-directory>`__.
 
 Retrieve a Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -1648,7 +1657,7 @@ Retrieve a Directory
       - Retrieves the specified Directory. ``accounts`` and ``groups``, ``tenant`` can be expanded. More info :ref:`above <about-links>`.
         
 Update a Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -1663,7 +1672,7 @@ Update a Directory
       - Updates the specified attributes with the values provided.
 
 Delete a Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -1710,7 +1719,7 @@ This query would disable the specified Directory, which would mean that all of i
 This query would retrieve the specified Directory with the Tenant resource embedded via :ref:`link expansion <about-links>`.
 
 Retrieve Resources Associated With A Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to retrieve other, independent, resources using the Directory for look-up. All of these resources have the following namespacing: ``/v1/directories/$DIRECTORY_ID/$RESOURCE_TYPE``.
 
@@ -1733,12 +1742,217 @@ It is possible to retrieve other, independent, resources using the Directory for
 Directory Endpoints
 ---------------------
 
-There are no collections that are exposed by the Directory as endpoints.
+There are certain resources that are exposed by the Directory as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other resources <get-refs-via-app>`, but are instead used for other flows. These are detailed in this section.
+
+.. _ref-accnt-creation-policy:
+
+Account Creation Policy 
+^^^^^^^^^^^^^^^^^^^^^^^
+
+A Directory’s Account Creation Policy resource contains data and properties that control what Stormpath does when an Account is created. This includes email verification and welcome emails.
+
+**Account Creation Policy URI**
+
+``https://api.stormpath.com/v1/accountCreationPolicies/$DIRECTORY_ID``
+
+**Account Creation Policy Attributes**
+
+.. todo::
+
+  Need to link to more information about Email Templates here.
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+   
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``verificationEmailStatus``
+    - String
+    - ``enabled``, ``disabled`` 
+    - The status of the verification email workflow. If this is set to ``enabled``, Stormpath will send an email to a newly registered user to have them verify their email. The email sent is configurable through the ``verificationEmailTemplates`` property.
+
+  * - ``verificationSuccessEmailStatus``
+    - String
+    - ``enabled``, ``disabled`` 
+    - The status of the verification success email. If this is set to ``enabled``, Stormpath will send an email to a newly verified user to let them know that they have successfully verified their email. The email sent is configurable through the ``verificationSuccessEmailTemplates`` property.
+
+  * - ``welcomeEmailStatus``
+    - String
+    - ``enabled``, ``disabled`` 
+    - The status of the welcome email. If this is set to ``enabled``, Stormpath will send an email to a newly registered user (if ``verificationEmailStatus`` is set to ``disabled``) or a newly verified user (if ``verificationEmailStatus`` is set to ``enabled``). The email sent is configurable through the ``welcomeEmailTemplates`` property.
+
+  * - ``verificationEmailTemplates``
+    - Link 
+    - N/A
+    - A collection of email templates that can be used for sending the verification email. 
+
+  * - ``verificationSuccessEmailTemplates``
+    - Link
+    - N/A
+    - A collection of email templates that can be used for sending the verification success email. 
+
+  * - ``welcomeEmailTemplates``
+    - Link
+    - N/A
+    - A collection of email templates that can be used for sending a welcome email.
+
+**Account Creation Policy Example**
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe",
+    "verificationEmailStatus":"DISABLED",
+    "verificationSuccessEmailStatus":"DISABLED",
+    "welcomeEmailStatus":"DISABLED",
+    "verificationEmailTemplates":{
+      "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/verificationEmailTemplates"
+    },
+    "verificationSuccessEmailTemplates":{
+      "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/verificationSuccessEmailTemplates"
+    },
+    "welcomeEmailTemplates":{
+      "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/welcomeEmailTemplates"
+    }
+  }
+
+.. _ref-password-policy:
+
+Password Policy 
+^^^^^^^^^^^^^^^
+
+The Directory's Password Policy is configured inside the passwordPolicy resource. Specifically, this resource contains information about how passwords are reset and links to further information about the strength requirements for a user's password. The Account Management chapter has more information about the :ref:`Password Reset Flow <password-reset-flow>`.
+
+**Password Policy URI**
+
+``/v1/passwordPolicies/$DIRECTORY_ID``
+
+**passwordPolicy Attributes**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+    
+  * - ``resetTokenTtl``
+    - Number
+    - A positive integer, less than 169 (0 < i < 169). Default is 24.
+    - An integer that defines how long the password reset token is valid for during the password reset email workflow.
+    
+  * - ``resetEmailStatus``
+    - String
+    - ``ENABLED`` or ``DISABLED``
+    - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
+        
+  * - ``strength``
+    - String (Link)
+    - N/A 
+    - A link to the password strength requirements for the Directory.
+  
+  * - ``resetEmailTemplates``
+    - String (Link)
+    - N/A
+    - A collection of email templates that can be used for sending the password reset email. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+    
+  * - ``resetSuccessEmailStatus``
+    - String
+    - ``ENABLED`` or ``DISABLED``
+    - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
+    
+  * - ``resetSuccessEmailTemplates``
+    - String (Link)
+    - N/A
+    - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+
+  * - ``createdAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+    
+  * - ``modifiedAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+.. _ref-password-strength:
+
+Password Strength
+-----------------
+
+The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` property.
+
+**Strength URI**
+
+``/v1/passwordPolicies/$DIRECTORY_ID/strength``
+
+**strength Properties**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Property
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``maxLength``
+    - Number
+    - Default is 100
+    - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
+      
+  * - ``minLength``
+    - Number
+    - Default is 8
+    - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
+      
+  * - ``minLowerCase``
+    - Number  
+    - Default is 1
+    - Represents the minimum number of lower case characters required for the password. characters  
+    
+  * - ``minNumeric``    
+    - Number  
+    - Default is 1
+    - Represents the minimum number of numeric characters required for the password. 
+  
+  * - ``minSymbol`` 
+    - Number  
+    - Default is 0
+    - Represents the minimum number of symbol characters required for the password. 
+
+  * - ``minUpperCase``  
+    - Number  
+    - Default is 1
+    - Represents the minimum number of upper case characters required for the password. 
+
+  * - ``minDiacritic``  
+    - Number  
+    - Default is 0
+    - Represents the minimum number of diacritic characters required for the password.
 
 .. _ref-provider:
 
 Provider 
-^^^^^^^^^^^^^^
+^^^^^^^^
 
 The Provider resource contains information about the source of the information found in its associated Directory resource. 
 
@@ -1797,7 +2011,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   * - ``agent``
     - String (Link) 
     - N/A
-    - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`make-mirror-dir`.
+    - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`below <ref-ldap-agent>`.
 
 **Provider Example**
 
@@ -1814,7 +2028,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
 .. _ref-ldap-agent:
 
 LDAP Agent
-""""""""""""""""""
+""""""""""
 
 :ref:`Mirror Directories <about-mirror-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
@@ -1853,7 +2067,7 @@ An Agents collection may be accessed via its Resource URI:
   * - ``config``
     - Object
     - N/A
-    - The configuration information for this Agent, as an embedded ``config`` object. (see below)
+    - The configuration information for this Agent, as an embedded ``config`` object. For more information see :ref:`below <ref-ldap-agent-config>`.
   
   * - ``createdAt``
     - String 
@@ -1881,6 +2095,8 @@ An Agents collection may be accessed via its Resource URI:
     - A link to the Tenant that owns the Directory this Agent belongs to.
 
 For an example JSON see :ref:`below <agent-json-ex>`.
+
+.. _ref-ldap-agent-config:
 
 **Config Attributes**
 
@@ -1933,12 +2149,12 @@ The ``config`` object is found inside an Agent resource. It corresponds with the
   * - ``accountConfig``
     - Object
     - N/A
-    - The Account configuration information for this Agent, as an embedded ``accountConfig`` object. (see below)
+    - The Account configuration information for this Agent, as an embedded ``accountConfig`` object. For more information see :ref:`below <ref-accountconfig>`.
       
   * - ``groupConfig``
     - Object
     - N/A
-    - The Group configuration information for this Agent, as an embedded ``groupConfig`` object. (see below)
+    - The Group configuration information for this Agent, as an embedded ``groupConfig`` object. For more information see :ref:`below <ref-groupconfig>`.
   
   * - ``referralMode``
     - String
@@ -1951,6 +2167,8 @@ The ``config`` object is found inside an Agent resource. It corresponds with the
     - Referral issues can arise when querying an Active Directory server without proper DNS. Setting this as true ignores referral exceptions and allows (potentially partial) results to be returned.
 
 For an example JSON see :ref:`below <agent-json-ex>`.
+
+.. _ref-accountconfig:
 
 **accountConfig Attributes**
 
@@ -2011,6 +2229,8 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
     - The name of the attribute for an account's password.
 
 For an example JSON see :ref:`below <agent-json-ex>`.
+
+.. _ref-groupconfig:
 
 **groupConfig Attributes**
 
@@ -2502,8 +2722,10 @@ This query would delete the groupMembership resource.
 
 This query would retrieve the groupMembership resource with the associate Account expanded inside the JSON.
 
-ResourceName  
-=====================
+.. _ref-account:
+
+Account  
+=======
 
 .. contents::
     :local:
@@ -2511,57 +2733,203 @@ ResourceName
 
 **Description**
 
-Text
+An **Account** is a unique identity within a Directory, with a unique ``username`` and ``email``.
 
-**? URI**
+.. note::
 
-``/v1/``
+  Specifying a ``username`` is optional, if not included it will default to the ``email`` value.
 
-**ResourceName Attributes**
+An Account can log in to an Application using either the ``email`` or ``username``. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
+
+An individual Account resource may be accessed via its Resource URI:
+
+**Account URI**
+
+``/v1/accounts/:accountId``
+
+**Account Attributes**
 
 .. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
+  :widths: 15 10 20 60
+  :header-rows: 1
 
-    * - Attribute
-      - Type
-      - Valid Value(s)
-      - Description
-     
-    * - ``href``
-      - String
-      - N/A
-      - The resource's fully qualified location URI.
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+  
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``username``
+    - String
+    - 1 < N <= 255 characters
+    - The username for the Account. Must be unique across the owning Directory. If not specified, the username will default to the same value as the ``email`` field.
+   
+  * - ``email``
+    - String
+    - 1 < N <= 255 characters
+    - The email address for the Account. Must be unique across the owning Directory.   
+    
+  * - ``password``
+    - String
+    - 1 < N <= 255 characters
+    - The password for the Account. Only include this attribute if setting or changing the Account password.
+
+  * - ``givenName``
+    - String
+    - 1 < N <= 255 characters
+    - The given (first) name for the Account holder.  
+
+  * - ``middleName``
+    - String
+    - 1 < N <= 255 characters
+    - The middle (second) name for the Account holder.
+
+  * - ``surname``
+    - String
+    - 1 < N <= 255 characters
+    - The surname (last name) for the Account holder.
+  
+  * - ``fullName``
+    - String
+    - N/A
+    - The full name for the Account holder. This is a computed attribute based on the ``givenName``, ``middleName`` and ``surname`` attributes. It cannot be modified. To change this value, change one of the three respective attributes to trigger a new computed value.
+   
+  * - ``status``
+    - String (Enum)
+    - ``enabled``, ``disabled``, ``unverified``
+    - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.  
+  
+  * - ``createdAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String 
+    - ISO-8601 Datetime
+    - Indicates when this resource’s properties were last modified.
+
+  * - ``emailVerificationToken``
+    - String (Link)
+    - N/A
+    - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
+
+  * - ``customData``
+    - String (Link)
+    - N/A
+    - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
+  
+  * - ``providerData``
+    - String (Link)
+    - N/A
+    - A link to the information from the owner Directory's Provider.
       
-    * - ``createdAt``
-      - String (ISO-8601 Datetime)
-      - N/A
-      - Indicates when this resource was created.
-        
-    * - ``modifiedAt``
-      - String (ISO-8601 Datetime)
-      - N/A
-      - Indicates when this resource’s attributes were last modified.
+  * - ``directory``
+    - String (Link)
+    - N/A
+    - A link to the Account's Directory.
 
-**ResourceName Example**
+  * - ``tenant``
+    - String (Link)
+    - N/A
+    - A link to the Tenant that owns the Account’s Directory.  
+
+  * - ``groups``
+    - String (Link)
+    - N/A
+    - A link to a collection of the Groups that the Account belongs to. 
+      
+  * - ``groupMemberships``
+    - String (Link)
+    - N/A
+    - A link to the :ref:`Group Memberships <ref-groupmembership>` that the Account is in.
+
+  * - ``applications``
+    - String (Link)
+    - N/A
+    - A link to the Applications that the Account belongs to.
+      
+  * - ``apiKeys``
+    - String (Link)
+    - N/A
+    - A link to the apiKeys for this Account.
+  
+  * - ``accessTokens``
+    - String (Link)
+    - N/A
+    - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
+  
+  * - ``refreshTokens``
+    - String (Link)
+    - N/A
+    - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. 
+
+**Account Example**
 
 .. code-block:: json
 
-    {
+  {
+    "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple",
+    "username":"jlpicard",
+    "email":"capt@enterprise.com",
+    "givenName":"Jean-Luc",
+    "middleName":null,
+    "surname":"Picard",
+    "fullName":"Jean-Luc Picard",
+    "status":"ENABLED",
+    "createdAt":"2015-08-25T19:57:05.976Z",
+    "modifiedAt":"2015-08-25T19:57:05.976Z",
+    "emailVerificationToken":null,
+    "customData":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+    },
+    "providerData":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/providerData"
+    },
+    "directory":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+    },
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+    },
+    "groups":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/groups"
+    },
+    "applications":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/applications"
+    },
+    "groupMemberships":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/groupMemberships"
+    },
+    "apiKeys":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/apiKeys"
+    },
+    "accessTokens":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/accessTokens"
+    },
+    "refreshTokens":{
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/refreshTokens"
     }
+  }
 
-.. _ResourceName1-operations:
+.. _account-operations:
 
-ResourceName Operations
---------------------------------
+Account Operations
+------------------
 
 .. contents:: 
     :local:
     :depth: 1
 
-Create a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+Create an Account 
+^^^^^^^^^^^^^^^^^
+
+Because an Account is "owned" by a Directory, you can add it either directly through the Directory that owns it, or indirectly via an Application that has that Directory as an Account Store:
+
 .. list-table::
     :widths: 30 15 15 40
     :header-rows: 1
@@ -2571,13 +2939,17 @@ Create a ResourceName
       - Optional Parameters 
       - Description
     
-    * - POST /v1/
-      - Required: ``.``; Optional: ``.``
-      - N/A
-      - Creates a new ? resource
+    * - POST /v1/directories/$DIRECTORY_ID/accounts *or* /v1/applications/$APPLICATION_ID/accounts
+      - Required: ``email``, ``password``, ``givenName``, ``surname``; Optional: ``username``, ``middleName``, ``status``, ``customData``
+      - ``registrationWorkflowEnabled=false``, ``passwordFormat=mcf`` (see note below)
+      - Creates a new Account resource.
 
-Retrieve a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+
+  The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`. 
+
+Retrieve an Account 
+^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2587,12 +2959,12 @@ Retrieve a ResourceName
       - Optional Parameters 
       - Description
     
-    * - GET /v1/
+    * - GET /v1/accounts/$ACCOUNT_ID
       - ``expand`` 
-      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified Account. ``customData``, ``tenant``, ``directory``, ``groups`` and ``groupMemberships`` can be expanded. More info :ref:`above <about-links>`. Also, since ``groups`` and ``groupMemberships`` are collections, they can be expanded and :ref:`paginated <about-pagination>`.
         
-Update a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update an Account 
+^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2602,12 +2974,12 @@ Update a ResourceName
       - Attributes
       - Description
     
-    * - POST /v1/
-      - 
+    * - POST /v1/accounts/$ACCOUNT_ID
+      - ``username``, ``email``, ``password``, ``givenName``, ``middleName``, ``surname``, ``status``, ``customData``
       - Updates the specified attributes with the values provided.
 
-Delete a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Delete an Account 
+^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -2617,24 +2989,37 @@ Delete a ResourceName
       - Attributes
       - Description
     
-    * - DELETE /v1/
+    * - DELETE /v1/accounts/$ACCOUNT_ID
       - N/A
       - Deletes the specified
+
+.. warning::
+
+  Be careful deleting an Account for a single application’s needs - ensure that the deletion is OK for any and all applications that may be associated with the Account. More often than not it is advisable to simply update the Account's ``status`` to ``disabled``.
         
 
 Example Queries
 """""""""""""""
 
-**Example Description**
+**Create an Account while suppressing the registration email**
 
 .. code-block:: bash
 
   curl --request GET \
   --user $API_KEY_ID:$API_KEY_SECRET \
   --header 'content-type: application/json' \
-  --url " "
+  --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts?registrationWorkflowEnabled=false"
+  --data '{ 
+           "username" : "jlpicard",
+           "email" : "capt@enterprise.com",
+           "givenName" : "Jean-Luc",
+           "middleName" : "",
+           "surname" : "Picard",
+           "password" : "uGhd%a8Kl!"
+           "status" : "ENABLED",
+  }
 
-This query would...
+This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow<http://docs.stormpath.com/console/product-guide/#directory-workflows>`__.
 
 **Example Description**
 
@@ -2643,11 +3028,15 @@ This query would...
   curl --request POST \
   --user $API_KEY_ID:$API_KEY_SECRET\
   --header 'content-type: application/json' \
-  --url " " \
+  --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple" 
   --data '{
-    }'
+           "status" : "ENABLED",
+           "customData": {
+               "favoriteColor": "blue",
+               "hobby": "Kendo"
+  }'
 
-This query would...
+This query would update an Account's ``status`` attribute at the same time as it updated/added two entries in the Account's customData resource.
 
 Retrieve Resources Associated With A ResourceName 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2674,7 +3063,7 @@ It is possible to retrieve other, associated resources using the ResourceName fo
 ? Endpoints
 ---------------------
 
-There are certain collections that are exposed by the ? as endpoints.
+There are certain resources that 
 
 Endpoint Name
 ^^^^^^^^^^^^^^
