@@ -1201,7 +1201,7 @@ There are certain resources that are exposed by the Application as endpoints. Th
 Login Attempts
 ^^^^^^^^^^^^^^
 
-A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-depth more information, please see :ref:<how-login-works>.
+A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-depth more information, please see :ref:`how-login-works`.
 
 **loginAttempts URL**
 
@@ -3019,7 +3019,7 @@ Example Queries
            "status" : "ENABLED",
   }
 
-This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow<http://docs.stormpath.com/console/product-guide/#directory-workflows>`__.
+This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__.
 
 **Example Description**
 
