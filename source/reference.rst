@@ -358,7 +358,7 @@ This following request will retrieve a Tenant’s Applications Collection Resour
     curl --request GET \
     --user $API_KEY_ID:$API_KEY_SECRET \
     --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+    --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
 This would result in the following response:
 
@@ -367,7 +367,7 @@ This would result in the following response:
     HTTP/1.1 200 OK
 
     {
-      "href": "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
       "offset": 10,
       "limit": 40,
       "items" : [
@@ -388,7 +388,7 @@ For example, a sorted request (where %2C is the URL encoding for the comma chara
     curl --request GET \
     --user $API_KEY_ID:$API_KEY_SECRET \
     --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/:tenantId/applications?offset=10&limit=40"
+    --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
 When URL-decoded, the URL looks like this::
 
@@ -685,7 +685,7 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 **Tenant URL**
 
-``/v1/tenants/:tenantId``
+``/v1/tenants/1gBTncWsp2ObQGgeXAMPLE``
 
 **Tenant Attributes**
 
@@ -768,34 +768,34 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 .. code-block:: json 
 
     {
-      "href": "https://api.stormpath.com/v1/tenants/:TenantId",
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE",
       "name": "tenantName",
       "key": "tenantKey",
       "createdAt": "dateTime",
       "modifiedAt": "dateTime",
       "customData": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/customData"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/customData"
       },
       "organizations": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/organizations"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/organizations"
       },
       "applications": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/applications"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications"
       },
       "directories": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/directories"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/directories"
       },
       "accounts": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/accounts"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/accounts"
       },
       "agents": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/agents"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/agents"
       },
       "groups": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/groups"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/groups"
       },
       "idSites": {
-        "href": "https://api.stormpath.com/v1/tenants/:TenantId/idSites"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/idSites"
       }
     }
 
@@ -821,10 +821,10 @@ Retrieve A Tenant
       - N/A 
       - Retrieves the Tenant with the specified ID.
     
-Retrieve Resources Associated With A Tenant 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using A Tenant for Look-Up 
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other associated resources using the Tenant for look-up. 
+It is possible to retrieve other independent resources using the Tenant for look-up. 
 
 .. list-table::
     :widths: 40 20 40
@@ -836,7 +836,7 @@ It is possible to retrieve other associated resources using the Tenant for look-
     
     * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of a Tenant's associated resources of the specified type. Possible resource types are: ``customData``, ``organizations``, ``applications``, ``directories``, ``accounts``, ``agents``, ``groups``, and ``idsites``. 
+      - Retrieves a collection of all of a Tenant's associated resources of the specified type. Possible resource types are: ``organizations``, ``applications``, ``directories``, ``accounts``, ``agents``, ``groups``, and ``idsites``. 
         
     * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
@@ -874,6 +874,40 @@ The result body would:
   
   - a limit of 50 results per response
 
+Other Resources Associated with a Tenant 
+----------------------------------------
+
+.. todo::
+
+ID Site
+^^^^^^^
+
+**idSite Example**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/idSites/ZZu4FtIMDUVhLjpPiTDWV",
+    "domainName":"iron-troop.id.stormpath.io",
+    "tlsPublicCert":null,
+    "tlsPrivateKey":null,
+    "gitRepoUrl":"https://github.com/stormpath/idsite",
+    "gitBranch":"master",
+    "authorizedOriginUris":[
+
+    ],
+    "authorizedRedirectUris":[
+
+    ],
+    "logoUrl":null,
+    "sessionTti":"PT30M",
+    "sessionTtl":"PT30M",
+    "sessionCookiePersistent":true,
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+    }
+  }
+
 .. _ref-application:
 
 Application
@@ -909,7 +943,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``href`` 
       - String (:ref:`Link <about-links>`)
       - N/A
-      - The resource's fully qualified location URL
+      - The resource's fully qualified location URL.
 
     * - ``name`` 
       - String
@@ -979,12 +1013,12 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``loginAttempts``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - The endpoint for :ref:`Login Attempts <ref-loginattempts>` for this Application..
+      - The endpoint for :ref:`Login Attempts <ref-loginattempts>` for this Application.
 
     * - ``passwordResetTokens``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - The endpoint for Password Reset Tokens, used in :ref:`password reset workflows <password-reset-flow>`.
+      - The endpoint for :ref:`Password Reset Tokens <ref-password-reset-token>`, used in :ref:`password reset workflows <password-reset-flow>`.
 
     * - ``apiKeys``
       - String (:ref:`Link <about-links>`)
@@ -994,7 +1028,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``verificationEmails``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A link to the collection of Verification Emails for this Application.
+      - The endpoint for Verification Emails for this Application.
 
     * - ``authTokens``
       - String (:ref:`Link <about-links>`)
@@ -1015,14 +1049,14 @@ An **Application** resource in Stormpath contains information about any real-wor
 .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
       "name": "My Application",
       "description": "This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
       "status": "ENABLED",
       "createdAt": "2015-08-18T20:46:36.061Z",
       "modifiedAt": "2015-08-25T18:11:29.774Z",
       "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
       },
       "defaultAccountStoreMapping": {
         "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
@@ -1031,34 +1065,34 @@ An **Application** resource in Stormpath contains information about any real-wor
         "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
       },
       "customData": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/customData"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/customData"
       },
       "oAuthPolicy": {
-        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR"
+        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlexaMple"
       },
       "accounts": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/accounts"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accounts"
       },
       "groups": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/groups"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/groups"
       },
       "accountStoreMappings": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/accountStoreMappings"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accountStoreMappings"
       },
       "loginAttempts": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/loginAttempts"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/loginAttempts"
       },
       "passwordResetTokens": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/passwordResetTokens"
       },
       "apiKeys": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/apiKeys"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/apiKeys"
       },
       "verificationEmails": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/verificationEmails"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/verificationEmails"
       },
       "authTokens": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/authTokens"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
       }  
     }
 
@@ -1170,10 +1204,10 @@ This query would disable the Application and prevent any associated Accounts fro
 
 .. _get-refs-via-app:
 
-Retrieve Resources Associated With An Application 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using an Application for Look-Up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other, independent, resources using the Application for look-up. All of these resources have the following namespacing: ``/v1/applications/$APPLICATION_ID/$RESOURCE_TYPE``.
+It is possible to retrieve other, independent, resources using the Application for look-up.
 
 .. list-table::
     :widths: 40 20 40
@@ -1185,11 +1219,11 @@ It is possible to retrieve other, independent, resources using the Application f
     
     * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a resource of the specified type. Possible resource types are: ``customData``, ``oAuthPolicy``, ``accounts``, ``groups``, ``accountStoreMappings``, and ``idSiteModel``. 
-        
+      - Retrieves a resource of the specified type. Possible resource types are: ``accounts`` and ``groups``. These collections can also be :ref:`paginated <about-pagination>` and :ref:`sorted <about-sorting>`.
+    
     * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Application are: ``accounts``, ``groups``, ``accountStoreMappings``
+      - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Application are: ``accounts``, ``groups``.
 
 Application Endpoints
 ---------------------
@@ -1207,13 +1241,13 @@ A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-
 
 ``/v1/applications/$APPLICATION_ID/loginAttempts``
 
-**loginAttempts Properties**
+**loginAttempts Attributes**
 
 .. list-table:: 
     :widths: 15 10 20 60
     :header-rows: 1
 
-    * - Property
+    * - Attribute
       - Type
       - Valid Value(s)
       - Description
@@ -1239,35 +1273,109 @@ A ``POST`` is sent to this endpoint in order to authenticate an Account. For in-
 
 **loginAttempts Example**
 
-.. code-block: json 
+This is an example of a well-formed JSON body that could be sent to the ``/loginAttempts`` endpoint.
 
-    {
-        "type": "basic",
-        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
-        "accountStore": {
-             "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
-       }
-    }
+.. code-block:: json 
+
+  {
+      "type": "basic",
+      "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
+      "accountStore": {
+           "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
+     }
+  }
+
+.. _ref-password-reset-token:
 
 Password Reset Tokens 
 ^^^^^^^^^^^^^^^^^^^^^
 
-This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`.
+This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`. When you send a POST to an Application's ``/passwordResetTokens`` endpoint with a valid email address (and, optionally, accountStore information), you will receive back the Password Reset Token. For a full description, please see the :ref:`Password Reset Flow <password-reset-flow>` section.
+
+**passwordResetTokens URL**
+
+``/v1/applications/$APPLICATION_ID/passwordResetTokens``
+
+**passwordResetTokens Attributes**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+    
+    * - ``email``
+      - String
+      - Must correspond to an existing Stormpath Account.
+      - Email address of the Account for which the password reset will occur. This is the value that must be passed in order to trigger the token generation.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account for which the password reset will occur. 
+    
+**passwordResetTokens Example**
+
+This is an example of the JSON response to a successful POST to the ``/passwordResetTokens`` endpoint.
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMeXAMpLE.eyJleHAiOjE0NDc4ODU1ODIsImp0aSI6IjFucDE1UkJVTXJQR0FxSlVpOGVJYlEifQ.AiL5ejbhPnjzxOWZkZGrAfYP8KvqT62r_zktvlkGQE0",
+    "email": "capt@enterprise.com",
+    "account": {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
+    }
+  }
+
+.. _ref-verification-email:
 
 Verification Email 
 ^^^^^^^^^^^^^^^^^^
 
-Where do we explain how this works?
-
-OAuth Tokens 
-^^^^^^^^^^^^
-
-Token generation endpoint
+This endpoint is used to trigger the resending of a verification email. For more information, see :ref:`resending-verification-email`.
 
 Auth Tokens 
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+
+**authTokens URL**
+
+**authTokens Attributes**
+
+**authTokens Example**
 
 Token validation endpoint. If so, where do we explain how this works?
+
+OAuth Token 
+^^^^^^^^^^^
+
+**oAuth URL**
+
+**oAuthAttributes**
+
+**oAuth Example**
+
+Other Resources Associated with an Application 
+----------------------------------------------
+
+These are the other resources that can be found associated with any particular Application.
+
+OAuth Policy  
+^^^^^^^^^^^^
+
+**oAuthPolicy URL**
+
+**oAuthPolicy Attributes**
+
+**oAuthPolicy Example**
 
 .. _ref-account-store-mapping:
 
@@ -1308,27 +1416,27 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
       - N/A
       - The resource's fully qualified location URI.
         
-    * - listIndex
+    * - ``listIndex``
       - Number
       - 0 <= N < list size
       - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
         
-    * - isDefaultAccountStore
+    * - ``isDefaultAccountStore``
       - String (boolean)
       - ``true``, ``false``
       - A ``true`` value indicates that new Accounts created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
         
-    * - isDefaultGroupStore
+    * - ``isDefaultGroupStore``
       - String (boolean)
       - ``true``, ``false``
       - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
     
-    * - application
+    * - ``application``
       - String (Link)
       - N/A
       - A link to the mapping’s Application. **Required.**
 
-    * - accountStore
+    * - ``accountStore``
       - String (Link) 
       - N/A
       - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
@@ -1354,7 +1462,7 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
       "isDefaultAccountStore": true,
       "isDefaultGroupStore": true,
       "application": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple"
       },
       "accountStore": {
         "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
@@ -1576,38 +1684,38 @@ An individual Directory resource may be accessed via its Resource URI:
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp",
+    "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe",
     "name": "Captains",
     "description": "Captains from a variety of stories",
     "status": "ENABLED",
     "createdAt": "2015-08-24T15:32:23.079Z",
     "modifiedAt": "2015-08-24T15:32:23.079Z",
     "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
     },
     "provider": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/provider"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/provider"
     },
     "customData": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/customData"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/customData"
     },
     "passwordPolicy": {
-      "href": "https://api.stormpath.com/v1/passwordPolicies/2SKhstu8Plaekcai8lghrp"
+      "href": "https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe"
     },
     "accountCreationPolicy": {
-      "href": "https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8Plaekcai8lghrp"
+      "href": "https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe"
     },
     "accounts": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/accounts"
     },
     "applicationMappings": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applicationMappings"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applicationMappings"
     },
     "applications": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/applications"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applications"
     },
     "groups": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/groups"
     }
   }
 
@@ -1718,10 +1826,10 @@ This query would disable the specified Directory, which would mean that all of i
 
 This query would retrieve the specified Directory with the Tenant resource embedded via :ref:`link expansion <about-links>`.
 
-Retrieve Resources Associated With A Directory 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using A Directory for Look-Up 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other, independent, resources using the Directory for look-up. All of these resources have the following namespacing: ``/v1/directories/$DIRECTORY_ID/$RESOURCE_TYPE``.
+It is possible to retrieve other, independent, resources using the Directory for look-up.
 
 .. list-table::
     :widths: 40 20 40
@@ -1733,23 +1841,21 @@ It is possible to retrieve other, independent, resources using the Directory for
     
     * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a resource of the specified type. Possible resource types are: ``customData``, ``accounts``, ``applicationMappings``, ``applications``, accountStoreMappings``, and ``groups``. 
+      - Retrieves a resource of the specified type. Possible resource types are: ``accounts`` and ``groups``. 
         
-    * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE?(searchParams)
+    * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Application are: ``accounts``, ``groups``, ``accountStoreMappings``
+      - Searches a collection of all of the Directory's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Directory are: ``accounts`` and ``groups``
 
-Directory Endpoints
----------------------
-
-There are certain resources that are exposed by the Directory as endpoints. This means that they cannot be retrieved using ``GET`` calls :ref:`like other resources <get-refs-via-app>`, but are instead used for other flows. These are detailed in this section.
+Other Resources Associated with a Tenant 
+----------------------------------------
 
 .. _ref-accnt-creation-policy:
 
 Account Creation Policy 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-A Directory’s Account Creation Policy resource contains data and properties that control what Stormpath does when an Account is created. This includes email verification and welcome emails.
+A Directory’s Account Creation Policy resource contains data and attributes that control what Stormpath does when an Account is created. This includes email verification and welcome emails.
 
 **Account Creation Policy URI**
 
@@ -1778,17 +1884,17 @@ A Directory’s Account Creation Policy resource contains data and properties th
   * - ``verificationEmailStatus``
     - String
     - ``enabled``, ``disabled`` 
-    - The status of the verification email workflow. If this is set to ``enabled``, Stormpath will send an email to a newly registered user to have them verify their email. The email sent is configurable through the ``verificationEmailTemplates`` property.
+    - The status of the verification email workflow. If this is set to ``enabled``, Stormpath will send an email to a newly registered user to have them verify their email. The email sent is configurable through the ``verificationEmailTemplates`` attribute.
 
   * - ``verificationSuccessEmailStatus``
     - String
     - ``enabled``, ``disabled`` 
-    - The status of the verification success email. If this is set to ``enabled``, Stormpath will send an email to a newly verified user to let them know that they have successfully verified their email. The email sent is configurable through the ``verificationSuccessEmailTemplates`` property.
+    - The status of the verification success email. If this is set to ``enabled``, Stormpath will send an email to a newly verified user to let them know that they have successfully verified their email. The email sent is configurable through the ``verificationSuccessEmailTemplates`` attribute.
 
   * - ``welcomeEmailStatus``
     - String
     - ``enabled``, ``disabled`` 
-    - The status of the welcome email. If this is set to ``enabled``, Stormpath will send an email to a newly registered user (if ``verificationEmailStatus`` is set to ``disabled``) or a newly verified user (if ``verificationEmailStatus`` is set to ``enabled``). The email sent is configurable through the ``welcomeEmailTemplates`` property.
+    - The status of the welcome email. If this is set to ``enabled``, Stormpath will send an email to a newly registered user (if ``verificationEmailStatus`` is set to ``disabled``) or a newly verified user (if ``verificationEmailStatus`` is set to ``enabled``). The email sent is configurable through the ``welcomeEmailTemplates`` attribute.
 
   * - ``verificationEmailTemplates``
     - Link 
@@ -1859,8 +1965,8 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     
   * - ``resetEmailStatus``
     - String
-    - ``ENABLED`` or ``DISABLED``
-    - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
+    - ``enabled`` or ``disabled``
+    - The status of the reset email workflow. If this is set to ``enabled``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
         
   * - ``strength``
     - String (Link)
@@ -1870,17 +1976,17 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``resetEmailTemplates``
     - String (Link)
     - N/A
-    - A collection of email templates that can be used for sending the password reset email. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+    - A collection of email templates that can be used for sending the password reset email. A template stores all relevant attributes  needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
     
   * - ``resetSuccessEmailStatus``
     - String
-    - ``ENABLED`` or ``DISABLED``
-    - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
+    - ``enabled`` or ``disabled``
+    - The status of the reset success email. If this is set to ``enabled``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
     
   * - ``resetSuccessEmailTemplates``
     - String (Link)
     - N/A
-    - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant properties needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+    - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
   * - ``createdAt``
     - String 
@@ -1897,19 +2003,19 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
 Password Strength
 -----------------
 
-The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` property.
+The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` attribute.
 
 **Strength URI**
 
 ``/v1/passwordPolicies/$DIRECTORY_ID/strength``
 
-**strength Properties**
+**strength Attributes**
 
 .. list-table:: 
   :widths: 15 10 20 60
   :header-rows: 1
 
-  * - Property
+  * - Attribute
     - Type
     - Valid Value(s)
     - Description
@@ -2376,7 +2482,7 @@ An individual Group resource may be accessed via its Resource URI:
   * - ``modifiedAt``
     - String 
     - ISO-8601 Datetime
-    - Indicates when this resource’s properties were last modified.
+    - Indicates when this resource’s attributes were last modified.
 
   * - ``customData``
     - String (Link) 
@@ -2423,7 +2529,7 @@ An individual Group resource may be accessed via its Resource URI:
       "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKExaMPLe/customData"
     },
     "directory": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe"
     },
     "tenant": {
       "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
@@ -2449,7 +2555,7 @@ Group Operations
     :depth: 1
 
 Create a Group  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Groups must be created under a specified Directory resource.
 
@@ -2541,8 +2647,8 @@ This query would retrieve a Group resource along with its associated Tenant and 
 
 This query would disable a Group, which means that any associated Accounts would not be able to log in to any Applications that they were mapped to. 
 
-Retrieve Resources Associated With A Group 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using a Group for Look-Up
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to retrieve other, associated resources using the Group for look-up. 
 
@@ -2556,11 +2662,11 @@ It is possible to retrieve other, associated resources using the Group for look-
     
     * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of a Group's associated resources of the specified type. Possible resource types are: ``customData``, ``directory``, ``tenant``, ``accounts``, ``accountMemberships`` and ``applications``. 
+      - Retrieves a collection of all of a Group's associated resources of the specified type. Possible resource types are: ``accounts`` and ``applications``. 
         
     * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts``, ``accountMemberships`` and ``applications``. 
+      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts`` and ``applications``. 
 
 .. _ref-groupmembership:
 
@@ -2611,7 +2717,7 @@ Accounts and Groups are linked via a **groupMembership** resource that stores th
   * - ``modifiedAt``
     - String 
     - ISO-8601 Datetime
-    - Indicates when this resource’s properties were last modified
+    - Indicates when this resource’s attributes were last modified
 
 **Group Membership Example**
 
@@ -2811,7 +2917,7 @@ An individual Account resource may be accessed via its Resource URI:
   * - ``modifiedAt``
     - String 
     - ISO-8601 Datetime
-    - Indicates when this resource’s properties were last modified.
+    - Indicates when this resource’s attributes were last modified.
 
   * - ``emailVerificationToken``
     - String (Link)
@@ -2891,7 +2997,7 @@ An individual Account resource may be accessed via its Resource URI:
       "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/providerData"
     },
     "directory":{
-      "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe"
     },
     "tenant":{
       "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
@@ -3038,10 +3144,10 @@ This query would create an Account with the specified attributes, while also sup
 
 This query would update an Account's ``status`` attribute at the same time as it updated/added two entries in the Account's customData resource.
 
-Retrieve Resources Associated With A ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using an Account for Look-Up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is possible to retrieve other, associated resources using the ResourceName for look-up.
+It is possible to retrieve other, associated resources using the Account for look-up.
 
 .. list-table::
     :widths: 40 20 40
@@ -3051,42 +3157,30 @@ It is possible to retrieve other, associated resources using the ResourceName fo
       - Optional Parameters 
       - Description
     
-    
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE
+    * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of a resourceName's associated resources of the specified type. Possible resource types are: ``.`` and ``.``. 
+      - Retrieves a collection of all of an Account's associated resources of the specified type. Currently the only possible resource types are ``groups``. 
         
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
+    * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``.``, and ``.``. 
+      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Currently the only searchable collection is ``groups``. 
 
-? Endpoints
----------------------
+Account Endpoints 
+-----------------
 
-There are certain resources that 
+.. todo::
 
-Endpoint Name
-^^^^^^^^^^^^^^
+accessTokens 
 
-Description text 
+refreshTokens 
 
-**Endpoint URL**
+emailVerificationToken
 
-**Endpoint Properties**
+Other Resources Associated with an Account  
+------------------------------------------
 
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
+apiKeys 
 
-    * - Property
-      - Type
-      - Valid Value(s)
-      - Description
-    
-    * - .
-      - .
-      - .
-      - .
 
 ResourceName  
 =====================
@@ -3235,8 +3329,8 @@ This query would...
 
 This query would...
 
-Retrieve Resources Associated With A ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using a ResourceName for Look-Up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to retrieve other, associated resources using the ResourceName for look-up.
 
@@ -3269,13 +3363,13 @@ Description text
 
 **Endpoint URL**
 
-**Endpoint Properties**
+**Endpoint Attributes**
 
 .. list-table:: 
     :widths: 15 10 20 60
     :header-rows: 1
 
-    * - Property
+    * - Attribute
       - Type
       - Valid Value(s)
       - Description

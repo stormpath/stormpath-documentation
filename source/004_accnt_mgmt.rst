@@ -610,10 +610,19 @@ would result in the following response::
 Password Reset
 --------------
 
-The Password Reset Email is configurable for a Directory. There is a set of properties that define its behavior, including ``resetEmailStatus`` and the ``resetEmailTemplates`` for the initial password reset email that is sent to the Account’s email address with a link to reset the Account’s password. The properties ``resetSuccessEmailStatus`` and ``resetSuccessEmailTemplates`` for the resulting email that is sent when the password reset is successful through the email workflow.
+How To Reset A Password 
+-----------------------
+
+**IN ORIGINAL API GUIDE: Reset An Account’s Password**
+
+Relevant Reference section: ref-password-reset-token
 
 Enable Password Reset Emails 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Password Reset Email is configurable for a Directory. There is a set of properties that define its behavior, including ``resetEmailStatus`` and the ``resetEmailTemplates`` for the initial password reset email that is sent to the Account’s email address with a link to reset the Account’s password. The properties ``resetSuccessEmailStatus`` and ``resetSuccessEmailTemplates`` for the resulting email that is sent when the password reset is successful through the email workflow.
+
+
 
 To control whether an email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following POST::
 
@@ -751,3 +760,7 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 
 	For more about Account Authentication you can read :doc:`the next chapter </005_auth_n>`.
 
+.. _resending-verification-email:
+
+Resending The Verification Email 
+--------------------------------
