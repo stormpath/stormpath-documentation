@@ -685,7 +685,7 @@ When you sign up for Stormpath, a private data space is created for you. This sp
 
 **Tenant URL**
 
-``/v1/tenants/1gBTncWsp2ObQGgeXAMPLE``
+``/v1/tenants/$TENANT_ID``
 
 **Tenant Attributes**
 
@@ -877,34 +877,119 @@ The result body would:
 Other Resources Associated with a Tenant 
 ----------------------------------------
 
-.. todo::
+.. _ref-id-site: 
 
 ID Site
 ^^^^^^^
+
+This resource contains information about this Tenant's ID Site. For more information, see :ref:`idsite`. 
+
+**idSite URL** 
+
+``/v1/idSites/$IDSITE_ID``
+
+**idSite Attributes**
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL.
+    
+    * - ``domainName``
+      - String 
+      - N/A 
+      - The custom domain name (if any) for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+    
+    * - ``tlsPublicCert``
+      - String 
+      - N/A
+      - The public SSL certificate for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+    
+    * - ``tlsPrivateKey``
+      - String 
+      - N/A
+      - The private SSL certificate for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+    
+    * - ``gitRepoUrl``
+      - String 
+      - N/A
+      - If you are customizing the ID Site code, you will need to put the URL of your GitHub repo here. 
+    
+    * - ``gitBranch``
+      - String 
+      - N/A
+      - If you are customizing the ID Site code, you will need to put the branch name of the custom code here.
+    
+    * - ``authorizedOriginUris``
+      - Array (String)
+      - N/A
+      - An array of URLs where the ID Site requests can originate from, used for local development or custom domain names.
+    
+    * - ``authorizedRedirectUris``
+      - Array (String)
+      - N/A
+      - An array of URLs that the user can be sent to after they log in or register at the ID Site.
+    
+    * - ``logoUrl``
+      - String 
+      - N/A
+      - The URL of the custom logo, if any.
+    
+    * - ``sessionTti``
+      - String 
+      - ISO-8601
+      - The time-to-idle for the session. Represents the session idle timeout as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. 
+    
+    * - ``sessionTtl``
+      - String 
+      - ISO-8601
+      - The time-to-live for the session. Represents the session timeout as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+    
+    * - ``sessionCookiePersistent``
+      - String (Boolean)
+      - ``true`` or ``false``
+      - When this value is ``true``, Stormpath will create a persistent cookie for the ID Site session. This means that the cookie will persist even if the browser is closed and reopened. Setting this ``false`` will ensure that the session is terminated when the user closes their browser.
+    
+    * - ``tenant``
+      - Link 
+      - N/A 
+      - A link to the Tenant associated with this ID Site.
 
 **idSite Example**
 
 .. code-block:: json
 
   {
-    "href":"https://api.stormpath.com/v1/idSites/ZZu4FtIMDUVhLjpPiTDWV",
-    "domainName":"iron-troop.id.stormpath.io",
-    "tlsPublicCert":null,
-    "tlsPrivateKey":null,
+    "href":"https://api.stormpath.com/v1/idSites/1XBJMqDmsNQuOZ18gNCT42",
+    "domainName":"elastic-rebel.id.stormpath.io",
+    "tlsPublicCert":"",
+    "tlsPrivateKey":"",
     "gitRepoUrl":"https://github.com/stormpath/idsite",
     "gitBranch":"master",
     "authorizedOriginUris":[
-
+      "http://google.com"
     ],
     "authorizedRedirectUris":[
-
+      "http://localhost",
+      "http://limitless-ravine-7645.herokuapp.com/",
+      [...]
+      "http://stormpath.localhost:8001"
     ],
-    "logoUrl":null,
-    "sessionTti":"PT30M",
-    "sessionTtl":"PT30M",
+    "logoUrl":"http://www.manic.com.sg/blog/images/CocaCola_co.jpg",
+    "sessionTti":"PT5M",
+    "sessionTtl":"PT5M",
     "sessionCookiePersistent":true,
     "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbu0KAFKR"
     }
   }
 
@@ -1346,36 +1431,100 @@ This endpoint is used to trigger the resending of a verification email. For more
 Auth Tokens 
 ^^^^^^^^^^^
 
-**authTokens URL**
+This endpoint is used for token validation. For more information see :ref:`about-token-validation`. 
 
-**authTokens Attributes**
-
-**authTokens Example**
-
-Token validation endpoint. If so, where do we explain how this works?
+.. _ref-oauth-token:
 
 OAuth Token 
 ^^^^^^^^^^^
 
-**oAuth URL**
-
-**oAuthAttributes**
-
-**oAuth Example**
+This endpoint's URL is found as part of the :ref:`ref-oauth-policy` resource. It is used to generate OAuth 2.0 tokens. For more information see :ref:`token-authn-config`. 
 
 Other Resources Associated with an Application 
 ----------------------------------------------
 
 These are the other resources that can be found associated with any particular Application.
 
+.. _ref-oauth-policy:
+
 OAuth Policy  
 ^^^^^^^^^^^^
 
 **oAuthPolicy URL**
 
+``/v1/oAuthPolicies/$DIRECTORY_ID``
+
 **oAuthPolicy Attributes**
 
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+    
+    * - ``accessTokenTtl``
+      - String 
+      - ISO-8601
+      - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+    
+    * - ``refreshTokenTtl``
+      - String
+      - ISO-8601
+      - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+    
+    * - ``createdAt``
+      - String 
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+    
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+    
+    * - ``tokenEndpoint``
+      - Link
+      - N/A
+      - The location of the :ref:`OAuth Token <ref-oauth-token>` generation endpoint. 
+    
+    * - ``application``
+      - Link
+      - N/A
+      - A link to the Application associated with this Policy.
+    
+    * - ``tenant`` 
+      - Link
+      - N/A
+      - A link to the Tenant associated with this Policy.
+
 **oAuthPolicy Example**
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlexaMple",
+    "accessTokenTtl":"PT30M",
+    "refreshTokenTtl":"P7D",
+    "createdAt":"2015-08-18T20:46:36.063Z",
+    "modifiedAt":"2015-09-01T14:18:14.709Z",
+    "tokenEndpoint":{
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/oauth/token"
+    },
+    "application":{
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple"
+    },
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
+    }
+  }
 
 .. _ref-account-store-mapping:
 
@@ -1442,14 +1591,13 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
       - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
       
     * - ``createdAt``
-      - String (ISO-8601 Datetime)
-      - N/A
+      - String
+      - ISO-8601 Datetime
       - Indicates when this resource was created.
     
-        
     * - ``modifiedAt``
-      - String (ISO-8601 Datetime)
-      - N/A
+      - String
+      - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
 
 **Account Store Mapping Example**
@@ -3214,13 +3362,13 @@ Text
       - The resource's fully qualified location URI.
       
     * - ``createdAt``
-      - String (ISO-8601 Datetime)
-      - N/A
+      - String
+      - ISO-8601 Datetime
       - Indicates when this resource was created.
         
     * - ``modifiedAt``
-      - String (ISO-8601 Datetime)
-      - N/A
+      - String
+      - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
 
 **ResourceName Example**
