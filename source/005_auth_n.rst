@@ -32,7 +32,7 @@ With the following body, using the Base64 encoded ``value`` from above, and spec
 
     {
       "type": "basic",
-      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
+      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
       "accountStore": {
              "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
        }
