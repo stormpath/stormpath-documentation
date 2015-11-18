@@ -3913,7 +3913,6 @@ This query would create a new Organization with the attribute values.
 
 This query would disable the Organization. No Accounts mapped to an Application via this Organization would be able to log in. 
 
-
 Using an Organization for Look-Up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3935,7 +3934,7 @@ It is possible to retrieve other, associated resources using the Organization fo
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
       - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``. 
 
-ResourceName  
+Custom Data  
 =====================
 
 .. contents::
@@ -3944,13 +3943,22 @@ ResourceName
 
 **Description**
 
-Text
+The customData resource is a schema-less map object that is automatically created at the same time as, and linked to, another Stormpath resource. It can currently be found alongside the following Stormpath resources:
+
+- Tenant 
+- Application
+- Directory
+- Group
+- Organization
+- Account 
 
 **? URI**
 
-``/v1/``
+``/v1/$RESOURCE_TYPE/$RESOURCE_ID/customData``
 
 **ResourceName Attributes**
+
+The customData resource has three reserved read-only fields:
 
 .. list-table:: 
     :widths: 15 10 20 60
@@ -3976,55 +3984,62 @@ Text
       - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
 
-**ResourceName Example**
+You can store an unlimited number of additional name/value pairs in the customData resource, with the following restrictions:
+
+- The total storage size of a single customData resource cannot exceed 10 MB (megabytes). The href, createdAt and modifiedAt field names and values do not count against your resource size quota.
+
+- Field names must:
+  - be 1 or more characters long, but less than or equal to 255 characters long (1 <= N <= 255).
+  - contain only alphanumeric characters (0-9 A-Z a-z), underscores or dashes, though they cannot start with a dash.
+  - may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
+
+**customData Example**
 
 .. code-block:: json
 
-    {
-    }
+  {
+    "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/customData",
+    "createdAt":"2015-08-25T19:57:05.976Z",
+    "modifiedAt":"2015-08-26T19:27:29.699Z",
+    "birthDate":"2305-07-13",
+    "birthPlace":"La Barre, France",
+    "currentAssignment":"USS Enterprise (NCC-1701-E)",
+    "favoriteDrink":"Earl Grey tea",
+    "rank":"Captain"
+  }
 
-.. _ResourceName2-operations:
+.. _customdata-operations:
 
-ResourceName Operations
+Custom Data Operations
 --------------------------------
 
 .. contents:: 
     :local:
     :depth: 1
 
-Create a ResourceName 
+Create a customData 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+
+Whenever you create an Stormpath resource, an empty customData resource is created for that resource automatically – you do not need to explicitly execute a request to create it.
+
+However, it is often useful to populate custom data at the same time you create a resource. You can do this by embedding the customData directly in the resource. For an example, see :ref:`below <accnt-create-with-customdata>`.
+
+Retrieve a customData 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. list-table::
-    :widths: 30 15 15 40
+    :widths: 40 20 40
     :header-rows: 1
 
     * - Operation 
-      - Attributes
       - Optional Parameters 
       - Description
     
-    * - POST /v1/
-      - Required: ``.``; Optional: ``.``
+    * - GET /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
       - N/A
-      - Creates a new ? resource
-
-Retrieve a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Optional Parameters 
-      - Description
-    
-    * - GET /v1/
-      - ``expand`` 
-      - Retrieves the specified ?. ``.`` and ``.`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified resource's' customData resource.
         
-Update a ResourceName 
+Update a customData 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
@@ -4035,12 +4050,12 @@ Update a ResourceName
       - Attributes
       - Description
     
-    * - POST /v1/
-      - 
+    * - POST /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
+      - N/A
       - Updates the specified attributes with the values provided.
 
-Delete a ResourceName 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Delete a customData 
+^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
@@ -4050,84 +4065,60 @@ Delete a ResourceName
       - Attributes
       - Description
     
-    * - DELETE /v1/
+    * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
       - N/A
-      - Deletes the specified
-        
+      - Deletes the specified customData resource.
+    
+    * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData/$FIELD_NAME
+      - ``"$FIELD_NAME": null``
+      - Deletes only the specified Custom Data field. You must specify the value of the field as ``null`` in order for the call to succeed.
+
+.. note::
+
+  Deleting a customData resource still leaves an empty customData placeholder resource.        
 
 Example Queries
 """""""""""""""
 
-**Example Description**
+.. _accnt-create-with-customdata:
+
+**Create an Account and simultaneously populate its custom data**
 
 .. code-block:: bash
 
   curl --request GET \
   --user $API_KEY_ID:$API_KEY_SECRET \
   --header 'content-type: application/json' \
-  --url " "
+  --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts"
+  --data '{ 
+           "username" : "jlpicard",
+           "email" : "capt@enterprise.com",
+           "givenName" : "Jean-Luc",
+           "middleName" : "",
+           "surname" : "Picard",
+           "password" : "uGhd%a8Kl!"
+           "status" : "ENABLED",
+           "customData": {
+            "birthDate":"2305-07-13",
+            "birthPlace":"La Barre, France",
+            "currentAssignment":"USS Enterprise (NCC-1701-E)",
+            "favoriteDrink":"Earl Grey tea",
+            "rank":"Captain"
+           }
+  }
 
-This query would...
+This query would create an Account with the attribute values and custom data specified.
 
-**Example Description**
+**Delete a single field from within a customData resource**
 
 .. code-block:: bash
 
   curl --request POST \
   --user $API_KEY_ID:$API_KEY_SECRET\
   --header 'content-type: application/json' \
-  --url " " \
+  --url "https://api.stormpath.com/v1/accounts/cJoiwcorTTmkDDBsf02bAb/customData" \
   --data '{
+      "favoriteColor": null   
     }'
 
-This query would...
-
-Using a ResourceName for Look-Up
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-It is possible to retrieve other, associated resources using the ResourceName for look-up.
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Optional Parameters 
-      - Description
-    
-    
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE
-      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of a resourceName's associated resources of the specified type. Possible resource types are: ``.`` and ``.``. 
-        
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
-      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``.``, and ``.``. 
-
-? Endpoints
----------------------
-
-There are certain collections that are exposed by the ? as endpoints.
-
-Endpoint Name
-^^^^^^^^^^^^^^
-
-Description text 
-
-**Endpoint URL**
-
-**Endpoint Attributes**
-
-.. list-table:: 
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Attribute
-      - Type
-      - Valid Value(s)
-      - Description
-    
-    * - .
-      - .
-      - .
-      - .
+This query would delete only the ``favoriteColor`` field from this customData resource.
