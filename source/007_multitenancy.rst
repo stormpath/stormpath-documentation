@@ -7,6 +7,10 @@
 a. What Is a Multi-Tenant Application? 
 ======================================
 
+.. todo::
+
+    Make sure the code-block directive is used throughout.
+
 The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model. How do we do this? Well, it starts with an Organization.
 
 b. Modeling Tenants in Stormpath

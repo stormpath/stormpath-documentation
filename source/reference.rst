@@ -2146,6 +2146,63 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     - ISO-8601 Datetime
     - Indicates when this resource’s attributes were last modified.
 
+.. _ref-emailtemplates:
+
+Email Templates 
+^^^^^^^^^^^^^^^
+
+This resource defines the contents of the password reset and password reset success emails. 
+
+**EmailTemplate URL**
+
+``/v1/emailTemplates/$EMAILTEMPLATE_ID"``
+
+**EmailTemplate Properties**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Property
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``fromEmailAddress``    
+    - String  
+    - N/A
+    - The address that appears in the email's "from" field.
+      
+  * - ``fromName``    
+    - String 
+    - N/A
+    - The name that appears in the email's "from" field 
+ 
+  * - ``subject``   
+    - String 
+    - N/A
+    - The subject that appears in the email's subject field
+
+  * - ``htmlBody``    
+    - String  
+    - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}
+    - The body of the email in HTML format. This body is only sent when the mimeType for the template is set to text/html. This body can take valid HTML snippets.
+      
+  * - ``textBody``  
+    - String
+    - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}.
+    - The body of the email is plain text format. This body is only sent when the mimeType for the template is set to text/plain.
+
+  * - ``mimeType``
+    - String  
+    - ``text/plain`` or ``text/html``
+    - A property that defines whether Stormpath will send an email with the mime type of ``text/plain`` or ``text/html``. 
+
+  * - ``defaultModel``  
+    - Object  
+    - Object that includes one property ``linkBaseUrl`` which is itself a String
+    - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in password reset workflows.
+
 .. _ref-password-strength:
 
 Password Strength
