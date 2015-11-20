@@ -7,6 +7,10 @@
 a. What Is a Multi-Tenant Application? 
 ======================================
 
+.. todo::
+
+    Make sure the code-block directive is used throughout.
+
 The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model. How do we do this? Well, it starts with an Organization.
 
 b. Modeling Tenants in Stormpath
@@ -24,97 +28,6 @@ Organizations
 The Organization resource is not to be confused with the Tenant resource. While the `Tenant resource <http://docs.stormpath.com/rest/product-guide/#tenants>`_ is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
 
 The Organization resource allows your application's tenants to have as many, or as few, Directories and Groups as they want, while also maintaining strict data segregation. So if a tenant requires a Cloud Directory, a Google Social Directory, and an LDAP Directory, then all of these can sit under the umbrella of a single Organization resource that represents their data space in your app. 
-
-The Organization Resource
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-An individual Organization resource may be accessed via its Resource URI:
-
-**Directory URI**
-
-``/v1/organizations/:organizationId``
-
-**Organization Attributes**
-
-.. list-table:: 
-	:widths: 15 10 20 60
-	:header-rows: 1
-
-	* - Attribute
-	  - Type
-	  - Valid Value(s)
-	  - Description
-	 
-	* - ``href``
-	  - String
-	  - N/A
-	  - The resource's fully qualified location URL
-	
-	* - ``createdAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - Indicates when this resource was created.
-
-	* - ``modifiedAt``
-	  - String (ISO-8601 Datetime)
-	  - N/A
-	  - Indicates when this resource’s attributes were last modified.
-
-	* - ``name``
-	  - String
-	  - 1 <= N <= 255 characters. 
-	  - The name of the Organization. Must be unique across all Organizations within your Stormpath Tenant.
-
-	* - ``nameKey``
-	  - String
-	  - 1 <= N <= 63 characters. 
-	  - A name key that represents the Organization. Must be unique across all organizations within your Stormpath tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: a-z, A-Z, 0-9, and -. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
-
-	* - ``status``
-	  - String (Enum)
-	  - ``ENABLED``, ``DISABLED``
-	  - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
-	
-	* - ``description``
-	  - String
-	  - 0 < N <= 1000 characters
-	  - The description of the Organization.
-
-	* - ``customData``
-	  - String (Link) 
-	  - N/A
-	  - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
-
-	* - ``defaultAccountStoreMapping``
-	  - String (Link)
-	  - ``null`` or Link
-	  - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
-
-	* - ``defaultGroupStoreMapping``
-	  - String (Link)
-	  - ``null`` or Link
-	  - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
-	
-
-	* - ``accountStoreMappings``
-	  - String (Link)
-	  - N/A
-	  - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
-
-	* - ``groups``
-	  - String (Link)
-	  - N/A
-	  - A link to a collection of the Groups wrapped by this Organization.
-
-	* - ``accounts``
-	  - String (Link)
-	  - N/A
-	  - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
-
-	* - ``tenant``
-	  - String (Link)
-	  - N/A
-	  - A link to the Stormpath Tenant that owns this Organization.
 
 How to Create an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

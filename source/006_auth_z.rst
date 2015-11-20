@@ -4,6 +4,10 @@
 6. Authorization With Stormpath
 *******************************
 
+.. todo::
+
+	Make sure the code-block directive is used throughout.
+
 This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions.
 
 a. What is Authorization?
@@ -34,7 +38,7 @@ b. Modeling Authorization in Stormpath
 
 From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
 
-.. _rbac:
+.. _role-groups:
 
 i. How to Use Groups to Model Authorization Roles
 -------------------------------------------------

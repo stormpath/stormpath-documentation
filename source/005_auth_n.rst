@@ -4,6 +4,10 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
+.. todo::
+
+  Make sure the code-block directive is used throughout.
+
 Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight. 
 
 In this chapter we will cover three of the ways that Stormpath allows you to authenticate users: :ref:`password authentication <password-authn>`, :ref:`token authentication <token-authn>`, and :ref:`social authentication <social-authn>`.
@@ -32,7 +36,7 @@ With the following body, using the Base64 encoded ``value`` from above, and spec
 
     {
       "type": "basic",
-      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ=="
+      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
       "accountStore": {
              "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
        }
@@ -224,42 +228,48 @@ Configuring Token-Based Authentication
 
 Stormpath is configurable so you can set the time to live (TTL) for both the Access and Refresh tokens. This is important for many applications because it gives the ability to define how the tokens expire. For example, you could decide that your application requires a user to log in daily, but the access should only live for 10 minutes. Or, you could decide that for your application, users should be able to stay logged-in for two months and the access token expires in an hour.
 
-Each Application resource in Stormpath has an ``oAuthPolicy/:applicationId`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``::
+Each Application resource in Stormpath has an ``oAuthPolicy/:applicationId`` link where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``:
 
-    {
-        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
-        "accessTokenTtl": "PT1H",
-        "refreshTokenTtl": "P60D",
-        "createdAt": "2015-08-18T20:46:36.063Z",
-        "modifiedAt": "2015-08-18T20:46:36.063Z",
-        "tokenEndpoint": {
-            "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
-        },
-        "application": {
-            "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
-        },
-        "tenant": {
-            "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-        }
-    }
+.. code-block:: json 
+
+  {
+      "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+      "accessTokenTtl": "PT1H",
+      "refreshTokenTtl": "P60D",
+      "createdAt": "2015-08-18T20:46:36.063Z",
+      "modifiedAt": "2015-08-18T20:46:36.063Z",
+      "tokenEndpoint": {
+          "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/oauth/token"
+      },
+      "application": {
+          "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      },
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      }
+  }
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
 
-If we wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, we could simply make a POST request to the ``/oAuthPolicies/:applicationId`` endpoint with the following payload::
+If we wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, we could simply make a POST request to the ``/oAuthPolicies/:applicationId`` endpoint with the following payload:
 
-    {
+.. code-block:: json 
+
+  {
     "accessTokenTtl": "PT30M",
     "refreshTokenTtl": "P7D"
   }
 
-And we would get the following response::
+And we would get the following response:
 
-    {
-      "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
-      "accessTokenTtl": "PT30M",
-      "refreshTokenTtl": "P7D",
-      [...]
-    }
+.. code-block:: json 
+
+  {
+    "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlBVa6tfR",
+    "accessTokenTtl": "PT30M",
+    "refreshTokenTtl": "P7D",
+    [...]
+  }
 
 .. note::
 
