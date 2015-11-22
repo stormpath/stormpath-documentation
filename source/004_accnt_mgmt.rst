@@ -796,7 +796,9 @@ To verify the Account, you use the token from the query string to form the above
 
   POST https://api.stormpath.com/v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl
 
-Which will return a result that looks like this::
+Which will return a result that looks like this:
+
+.. code-block:: http 
 
   HTTP/1.1 200 OK
   Content-Type: application/json;charset=UTF-8;
@@ -817,3 +819,93 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 
 Resending The Verification Email 
 --------------------------------
+
+If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint. 
+
+.. code-block:: http 
+
+  POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+
+  {
+    "login": "email@address.com"
+  }
+
+If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return. 
+
+f. Customizing Emails via REST
+==============================
+
+The emails that Stormpath sends to users be customized by modifying the :ref:``ref-emailtemplates`` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <http://api.stormpath.com>`__, or via REST. To find out how to do it via REST, keep reading. 
+
+First, let's look at the default template that comes with the Stormpath Administrator's Directory:
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/emailTemplates/1gBpQ7x9hE837aiG27p1Nd",
+    "name":"Default Welcome Email Template",
+    "description":"This is the welcome email template that is associated with the directory.",
+    "fromName":"iron-troop",
+    "fromEmailAddress":"change-me@stormpath.com",
+    "subject":"Your registration was successful",
+    "textBody":"Thanks for signing up. This is a welcome email welcoming you to the application. This is great place to put information about your app.\n\n--------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
+    "htmlBody":"<p>Thanks for signing up. This is a welcome email welcoming you to the application. This is great place to put information about your app</p><p>-------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
+    "mimeType":"text/plain"
+  }
+
+Message Format
+--------------
+
+The ``mimeType`` designates whether the email is sent as plain text or HTML. This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email. 
+
+textBody and htmlBody
+---------------------
+
+These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
+
+Macros 
+^^^^^^
+
+Stormpath uses Apache Velocity for email templating, and consequently you can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
+
+.. code-block:: java 
+
+  "Hi ${account.givenName}, welcome to $!{application.name}!"
+
+The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with: 
+
+- Account (``${account}``)
+- an Account's Directory (``${account.directory}``), and 
+- an Application (``$!{application}``). 
+  
+You can also include any ``attribute`` that isn't a link, as well as customData.
+
+Macros and customData
+"""""""""""""""""""""
+
+The formatting for customData macros is as follows:
+
+.. code-block:: java 
+
+  $!{resource.attribute.customData.key}
+
+You may have noticed here and with the Application resource that there is an included ``!`` character, this is called a "quiet reference". 
+
+Quiet References
+""""""""""""""""
+
+Quiet references (``!``) tells Velocity that if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Velocity was able to find the value as ``blue``, it would output:
+
+``Is your favorite color blue?``
+
+However, if the value cannot be found, it will output:
+
+``Is your favorite color ${account.customData.favoriteColor}?``
+
+To avoid this, we include the ``!`` which put the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
+
+``Is your favorite color ?``
+
+Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because 

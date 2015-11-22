@@ -240,7 +240,7 @@ You've just scratched the surface of what you can do with Stormpath.
 Want to learn more? Here are a few other helpful resources you can jump
 into.
 
-.. todo:
+.. todo::
 
   Update links once the documentation is complete.
 

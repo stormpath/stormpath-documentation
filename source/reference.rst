@@ -1108,7 +1108,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``apiKeys``
       - String (:ref:`Link <about-links>`)
       - N/A
-      - A collection of API Keys for this Application. 
+      - A collection of all the API Keys for this Application. 
     
     * - ``verificationEmails``
       - String (:ref:`Link <about-links>`)
@@ -1208,7 +1208,6 @@ Create An Application
 .. note::
 
     If the Directory name you choose is already in use by another of your existing Directories, the request will fail.
-
 
 Retrieve an Application  
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1445,6 +1444,17 @@ Other Resources Associated with an Application
 
 These are the other resources that can be found associated with any particular Application.
 
+.. _ref-app-apiKeys:
+
+Application API Keys 
+^^^^^^^^^^^^^^^^^^^^
+
+**ApiKeys URL**
+
+**ApiKeys Attributes**
+
+**ApiKeys Example**
+
 .. _ref-oauth-policy:
 
 OAuth Policy  
@@ -1545,7 +1555,7 @@ In Stormpath, you control who may log in to an Application by associating (or 'm
 
 An individual Account Store Mapping resource may be accessed via its Resource URI:
 
-**accountStoreMapping URI**
+**accountStoreMapping URL**
 
 ``/v1/accountStoreMappings/:accountStoreMappingId``
 
@@ -1737,7 +1747,7 @@ Additionally:
   
 An individual Directory resource may be accessed via its Resource URI:
 
-**Directory URI**
+**Directory URL**
 
 ``/v1/directories/$DIRECTORY_ID``
 
@@ -2005,7 +2015,7 @@ Account Creation Policy
 
 A Directory’s Account Creation Policy resource contains data and attributes that control what Stormpath does when an Account is created. This includes email verification and welcome emails.
 
-**Account Creation Policy URI**
+**Account Creation Policy URL**
 
 ``https://api.stormpath.com/v1/accountCreationPolicies/$DIRECTORY_ID``
 
@@ -2086,7 +2096,7 @@ Password Policy
 
 The Directory's Password Policy is configured inside the passwordPolicy resource. Specifically, this resource contains information about how passwords are reset and links to further information about the strength requirements for a user's password. The Account Management chapter has more information about the :ref:`Password Reset Flow <password-reset-flow>`.
 
-**Password Policy URI**
+**Password Policy URL**
 
 ``/v1/passwordPolicies/$DIRECTORY_ID``
 
@@ -2157,7 +2167,7 @@ This resource defines the contents of the password reset and password reset succ
 
 ``/v1/emailTemplates/$EMAILTEMPLATE_ID"``
 
-**EmailTemplate Properties**
+**emailTemplate Attributes**
 
 .. list-table:: 
   :widths: 15 10 20 60
@@ -2203,14 +2213,33 @@ This resource defines the contents of the password reset and password reset succ
     - Object that includes one property ``linkBaseUrl`` which is itself a String
     - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in password reset workflows.
 
+Email Templates and Macros 
+""""""""""""""""""""""""""
+
+Email templates 
+
+Email Templates have an "htmlBody" and a "textBody", both can have Macros in them.
+
+Email Macros
+
+Placeholder text that represents something that's computed at runtime. Apache Velocity is Stormpath's templating and macro language. 
+
+3 objects you can work with: account, account.directory, and application, and also any property (that isn't a link) associated with them, as well as custom data: ${account.FullName}, account.customData.favoriteColor.
+
+Quiet mode (!) tells Velocity that if it can't resolve the object, it should just show nothing: $!{account.customData.favoriteColor}
+
+You should always refer to an Application using the quiet notation. 
+
+
+
 .. _ref-password-strength:
 
 Password Strength
------------------
+^^^^^^^^^^^^^^^^^
 
 The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` attribute.
 
-**Strength URI**
+**Strength URL**
 
 ``/v1/passwordPolicies/$DIRECTORY_ID/strength``
 
@@ -2269,7 +2298,7 @@ The Provider resource contains information about the source of the information f
 
 For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
 
-**Provider URI**
+**Provider URL**
 
 ``/v1/directories/:directoryId/provider``
 
@@ -2345,7 +2374,7 @@ LDAP Agent
 
 An Agents collection may be accessed via its Resource URI:
 
-**Agent URI**
+**Agent URL**
 
 ``/v1/agents/:directoryId``
 
@@ -2644,7 +2673,7 @@ Group
 
 An individual Group resource may be accessed via its Resource URI:
 
-**Group URI**
+**Group URL**
 
 ``/v1/groups/:groupId``
 
@@ -2869,9 +2898,9 @@ It is possible to retrieve other, associated resources using the Group for look-
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
       - Retrieves a collection of all of a Group's associated resources of the specified type. Possible resource types are: ``accounts`` and ``applications``. 
         
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
+    * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts`` and ``applications``. 
+      - Searches a collection of all of the Group's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts`` and ``applications``. 
 
 .. _ref-groupmembership:
 
@@ -2884,7 +2913,7 @@ Group Membership
 
 Accounts and Groups are linked via a **groupMembership** resource that stores this Account-to-Group link. Each Account you add to a Group has its own groupMembership resource created.  
 
-**groupMembership URI**
+**groupMembership URL**
 
 ``v1/groupMemberships/$GROUP_MEMBERSHIP_ID``
 
@@ -3033,6 +3062,275 @@ This query would delete the groupMembership resource.
 
 This query would retrieve the groupMembership resource with the associate Account expanded inside the JSON.
 
+Organization  
+============
+
+.. contents::
+    :local:
+    :depth: 2
+
+**Description**
+
+The Organization resource is two things:
+
+1. A top-level container for both :ref:`Directories <ref-directory>` and :ref:`Groups <ref-group>` .
+2. An Account Store that can :ref:`be mapped to an Application <create-asm>` just like a Directory or Group.
+
+Organizations are primarily intended to represent "tenants" in multi-tenant applications. For more information about multitenancy in Stormpath, see the :ref:`multitenancy` chapter. 
+
+An individual Organization resource may be accessed via its Resource URI:
+
+**Organization URL**
+
+``/v1/organizations/$ORGANIZATION_ID``
+
+**Organization Attributes**
+
+.. list-table:: 
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+   
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+  
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``name``
+    - String
+    - 1 <= N <= 255 characters. 
+    - The name of the Organization. Must be unique across all Organizations within your Stormpath Tenant.
+
+  * - ``nameKey``
+    - String
+    - 1 <= N <= 63 characters. 
+    - A name key that represents the Organization. Must be unique across all organizations within your Stormpath tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: a-z, A-Z, 0-9, and -. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
+
+  * - ``status``
+    - String (Enum)
+    - ``ENABLED``, ``DISABLED``
+    - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
+  
+  * - ``description``
+    - String
+    - 0 < N <= 1000 characters
+    - The description of the Organization.
+
+  * - ``customData``
+    - String (Link) 
+    - N/A
+    - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
+
+  * - ``defaultAccountStoreMapping``
+    - String (Link)
+    - ``null`` or Link
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
+
+  * - ``defaultGroupStoreMapping``
+    - String (Link)
+    - ``null`` or Link
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
+  
+
+  * - ``accountStoreMappings``
+    - String (Link)
+    - N/A
+    - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
+
+  * - ``groups``
+    - String (Link)
+    - N/A
+    - A link to a collection of the Groups wrapped by this Organization.
+
+  * - ``accounts``
+    - String (Link)
+    - N/A
+    - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
+
+  * - ``tenant``
+    - String (Link)
+    - N/A
+    - A link to the Stormpath Tenant that owns this Organization.
+
+**Organization Example**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE",
+    "createdAt":"2015-10-01T17:39:04.114Z",
+    "modifiedAt":"2015-10-01T17:39:04.114Z",
+    "name":"Canadian Imperial Bank of Commerce",
+    "nameKey":"cibc",
+    "status":"ENABLED",
+    "description":null,
+    "customData":{
+      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/customData"
+    },
+    "defaultAccountStoreMapping":null,
+    "defaultGroupStoreMapping":null,
+    "accountStoreMappings":{
+      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/accountStoreMappings"
+    },
+    "groups":{
+      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/groups"
+    },
+    "accounts":{
+      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/accounts"
+    },
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+    }
+  }
+
+.. _organization-operations:
+
+Organization Operations
+--------------------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create an Organization  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/organizations
+      - Required: ``name``, ``nameKey``; Optional: ``status``, ``description``, ``customData``
+      - N/A
+      - Creates a new Organization resource
+
+Retrieve an Organization  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+  If you don’t have the Organization's URL, you can find it by looking it up in the Stormpath Admin Console or by searching your Tenant’s Organizations by sending a GET to ``/v1/tenants/$TENANT_ID/organizations``.
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/organizations/$ORGANIZATION_ID
+      - ``expand`` 
+      - Retrieves the specified Organization. ``groups``, ``accounts``, and ``tenant`` can be expanded. More info :ref:`above <about-links>`.
+        
+Update an Organization  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/organizations/$ORGANIZATION_ID
+      - ``name``, ``nameKey``, ``description``, ``status``, ``customData``
+      - Updates the specified attributes with the values provided.
+
+Delete an Organization  
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. warning::
+
+  Deleting an Organization completely erases it and any of its related data from Stormpath. We recommend that you disable the Organization instead of deleting it if you anticipate that you might use it again or if you want to retain its data for historical reference. To disable an Organization, you can update the Organization and set the ``status`` attribute to ``DISABLED``.
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/organizations/$ORGANIZATION_ID
+      - N/A
+      - Deletes the specified Organization.
+        
+
+Example Queries
+"""""""""""""""
+
+**Create a new Organization resource**
+
+.. code-block:: bash
+
+  curl --request POST \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/organizations" \
+  --data '{ \
+    "name": "Finance Organization",
+    "nameKey": "finance",
+    "status": "ENABLED"
+    }'
+
+This query would create a new Organization with the attribute values.
+
+**Disable an Organization**
+
+.. code-block:: bash
+
+  curl --request POST \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/organizations"
+  --data '{ \
+    "status": "DISABLED"
+    }'
+
+This query would disable the Organization. No Accounts mapped to an Application via this Organization would be able to log in. 
+
+Using an Organization for Look-Up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is possible to retrieve other, associated resources using the Organization for look-up.
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/organizations/$ORGANIZATION_ID/$RESOURCE_TYPE
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+      - Retrieves a collection of all of an Organization's associated resources of the specified type. Possible resource types are: ``accounts``, ``accountStoreMappings``, and ``groups``.
+        
+    * - GET /v1/Organization/$ORGANIZATION_ID/$RESOURCE_TYPE?(searchParams)
+      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
+      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``. 
+
 .. _ref-account:
 
 Account  
@@ -3054,7 +3352,7 @@ An Account can log in to an Application using either the ``email`` or ``username
 
 An individual Account resource may be accessed via its Resource URI:
 
-**Account URI**
+**Account URL**
 
 ``/v1/accounts/:accountId``
 
@@ -3368,16 +3666,16 @@ It is possible to retrieve other, associated resources using the Account for loo
         
     * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the resourceName's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Currently the only searchable collection is ``groups``. 
+      - Searches a collection of all of the Account's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Currently the only searchable collection is ``groups``. 
 
 
 Other Resources Associated with an Account  
 ------------------------------------------
 
-.. _ref-apikeys:
+.. _ref-account-apikeys:
 
-API Keys 
-^^^^^^^^
+Account API Keys 
+^^^^^^^^^^^^^^^^
 
 This collection stores any API Keys that have been generated for this Account. 
 
@@ -3722,277 +4020,8 @@ Expanded JSON Web Token
     "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"
   }
 
-Organization  
-=====================
-
-.. contents::
-    :local:
-    :depth: 2
-
-**Description**
-
-The Organization resource is two things:
-
-1. A top-level container for both :ref:`Directories <ref-directory>` and :ref:`Groups <ref-group>` .
-2. An Account Store that can :ref:`be mapped to an Application <create-asm>` just like a Directory or Group.
-
-Organizations are primarily intended to represent "tenants" in multi-tenant applications. For more information about multitenancy in Stormpath, see the :ref:`multitenancy` chapter. 
-
-An individual Organization resource may be accessed via its Resource URI:
-
-**Organization URI**
-
-``/v1/organizations/$ORGANIZATION_ID``
-
-**Organization Attributes**
-
-.. list-table:: 
-  :widths: 15 10 20 60
-  :header-rows: 1
-
-  * - Attribute
-    - Type
-    - Valid Value(s)
-    - Description
-   
-  * - ``href``
-    - String
-    - N/A
-    - The resource's fully qualified location URL.
-  
-  * - ``createdAt``
-    - String
-    - ISO-8601 Datetime
-    - Indicates when this resource was created.
-
-  * - ``modifiedAt``
-    - String
-    - ISO-8601 Datetime
-    - Indicates when this resource’s attributes were last modified.
-
-  * - ``name``
-    - String
-    - 1 <= N <= 255 characters. 
-    - The name of the Organization. Must be unique across all Organizations within your Stormpath Tenant.
-
-  * - ``nameKey``
-    - String
-    - 1 <= N <= 63 characters. 
-    - A name key that represents the Organization. Must be unique across all organizations within your Stormpath tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: a-z, A-Z, 0-9, and -. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
-
-  * - ``status``
-    - String (Enum)
-    - ``ENABLED``, ``DISABLED``
-    - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
-  
-  * - ``description``
-    - String
-    - 0 < N <= 1000 characters
-    - The description of the Organization.
-
-  * - ``customData``
-    - String (Link) 
-    - N/A
-    - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
-
-  * - ``defaultAccountStoreMapping``
-    - String (Link)
-    - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
-
-  * - ``defaultGroupStoreMapping``
-    - String (Link)
-    - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
-  
-
-  * - ``accountStoreMappings``
-    - String (Link)
-    - N/A
-    - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
-
-  * - ``groups``
-    - String (Link)
-    - N/A
-    - A link to a collection of the Groups wrapped by this Organization.
-
-  * - ``accounts``
-    - String (Link)
-    - N/A
-    - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
-
-  * - ``tenant``
-    - String (Link)
-    - N/A
-    - A link to the Stormpath Tenant that owns this Organization.
-
-**Organization Example**
-
-.. code-block:: json
-
-  {
-    "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE",
-    "createdAt":"2015-10-01T17:39:04.114Z",
-    "modifiedAt":"2015-10-01T17:39:04.114Z",
-    "name":"Canadian Imperial Bank of Commerce",
-    "nameKey":"cibc",
-    "status":"ENABLED",
-    "description":null,
-    "customData":{
-      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/customData"
-    },
-    "defaultAccountStoreMapping":null,
-    "defaultGroupStoreMapping":null,
-    "accountStoreMappings":{
-      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/accountStoreMappings"
-    },
-    "groups":{
-      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/groups"
-    },
-    "accounts":{
-      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE/accounts"
-    },
-    "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
-    }
-  }
-
-.. _organization-operations:
-
-Organization Operations
---------------------------------
-
-.. contents:: 
-    :local:
-    :depth: 1
-
-Create an Organization  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
-.. list-table::
-    :widths: 30 15 15 40
-    :header-rows: 1
-
-    * - Operation 
-      - Attributes
-      - Optional Parameters 
-      - Description
-    
-    * - POST /v1/organizations
-      - Required: ``name``, ``nameKey``; Optional: ``status``, ``description``, ``customData``
-      - N/A
-      - Creates a new Organization resource
-
-Retrieve an Organization  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. note::
-
-  If you don’t have the Organization's URL, you can find it by looking it up in the Stormpath Admin Console or by searching your Tenant’s Organizations by sending a GET to ``/v1/tenants/$TENANT_ID/organizations``.
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Optional Parameters 
-      - Description
-    
-    * - GET /v1/organizations/$ORGANIZATION_ID
-      - ``expand`` 
-      - Retrieves the specified Organization. ``groups``, ``accounts``, and ``tenant`` can be expanded. More info :ref:`above <about-links>`.
-        
-Update an Organization  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Attributes
-      - Description
-    
-    * - POST /v1/organizations/$ORGANIZATION_ID
-      - ``name``, ``nameKey``, ``description``, ``status``, ``customData``
-      - Updates the specified attributes with the values provided.
-
-Delete an Organization  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. warning::
-
-  Deleting an Organization completely erases it and any of its related data from Stormpath. We recommend that you disable the Organization instead of deleting it if you anticipate that you might use it again or if you want to retain its data for historical reference. To disable an Organization, you can update the Organization and set the ``status`` attribute to ``DISABLED``.
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Attributes
-      - Description
-    
-    * - DELETE /v1/organizations/$ORGANIZATION_ID
-      - N/A
-      - Deletes the specified Organization.
-        
-
-Example Queries
-"""""""""""""""
-
-**Create a new Organization resource**
-
-.. code-block:: bash
-
-  curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
-  --header 'content-type: application/json' \
-  --url "https://api.stormpath.com/v1/organizations" \
-  --data '{ \
-    "name": "Finance Organization",
-    "nameKey": "finance",
-    "status": "ENABLED"
-    }'
-
-This query would create a new Organization with the attribute values.
-
-**Disable an Organization**
-
-.. code-block:: bash
-
-  curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET \
-  --header 'content-type: application/json' \
-  --url "https://api.stormpath.com/v1/organizations"
-  --data '{ \
-    "status": "DISABLED"
-    }'
-
-This query would disable the Organization. No Accounts mapped to an Application via this Organization would be able to log in. 
-
-Using an Organization for Look-Up
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-It is possible to retrieve other, associated resources using the Organization for look-up.
-
-.. list-table::
-    :widths: 40 20 40
-    :header-rows: 1
-
-    * - Operation 
-      - Optional Parameters 
-      - Description
-    
-    * - GET /v1/organizations/$ORGANIZATION_ID/$RESOURCE_TYPE
-      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
-      - Retrieves a collection of all of an Organization's associated resources of the specified type. Possible resource types are: ``accounts``, ``accountStoreMappings``, and ``groups``.
-        
-    * - GET /v1/resourceName/$resourceName_ID/$RESOURCE_TYPE?(searchParams)
-      - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``. 
-
 Custom Data  
-=====================
+============
 
 .. contents::
     :local:
@@ -4009,11 +4038,11 @@ The customData resource is a schema-less map object that is automatically create
 - Organization
 - Account 
 
-**? URI**
+**customData URL**
 
 ``/v1/$RESOURCE_TYPE/$RESOURCE_ID/customData``
 
-**ResourceName Attributes**
+**customData Attributes**
 
 The customData resource has three reserved read-only fields:
 
@@ -4043,7 +4072,7 @@ The customData resource has three reserved read-only fields:
 
 You can store an unlimited number of additional name/value pairs in the customData resource, with the following restrictions:
 
-- The total storage size of a single customData resource cannot exceed 10 MB (megabytes). The href, createdAt and modifiedAt field names and values do not count against your resource size quota.
+- The total storage size of a single customData resource cannot exceed 10 MB (megabytes). The ``href``, ``createdAt`` and ``modifiedAt`` field names and values do not count against your resource size quota.
 
 - Field names must:
   - be 1 or more characters long, but less than or equal to 255 characters long (1 <= N <= 255).
@@ -4075,14 +4104,14 @@ Custom Data Operations
     :depth: 1
 
 Create a customData 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Whenever you create an Stormpath resource, an empty customData resource is created for that resource automatically – you do not need to explicitly execute a request to create it.
 
 However, it is often useful to populate custom data at the same time you create a resource. You can do this by embedding the customData directly in the resource. For an example, see :ref:`below <accnt-create-with-customdata>`.
 
 Retrieve a customData 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
     :widths: 40 20 40
