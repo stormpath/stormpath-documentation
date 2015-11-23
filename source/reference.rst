@@ -2237,7 +2237,7 @@ The ``htmlBody`` and ``textBody`` fields support the use of macros. For a full a
     - The Account's full name (first name and surname).
 
   * - ${account.username}
-    - The Account's first username.
+    - The Account's username.
 
   * - ${account.email}
     - The Account's email.

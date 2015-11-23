@@ -870,7 +870,7 @@ For more information about this, see :ref:`password-reset-flow`.
 Customizing Stormpath Email Templates 
 -------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the :ref:``ref-emailtemplates`` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <http://api.stormpath.com>`__, or via REST. To find out how to do it via REST, keep reading. 
+The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <http://api.stormpath.com>`__, or via REST. To find out how to do it via REST, keep reading. 
 
 First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
