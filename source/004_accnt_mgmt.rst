@@ -741,6 +741,8 @@ The contents of the password reset and the password reset success emails are bot
 
 To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
 
+.. _verify-account-email:
+
 e. How to Verify an Account's Email 
 ===================================
 
@@ -834,8 +836,39 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return. 
 
-f. Customizing Emails via REST
-==============================
+.. _customizing-email-templates:
+
+f. Customizing Stormpath Emails via REST
+========================================
+
+What emails does Stormpath send?
+--------------------------------
+
+Stormpath can be configured to send emails to users as part of a Directory's Account Creation and Password Reset policies.
+
+Account Creation
+^^^^^^^^^^^^^^^^
+
+Found in: :ref:`ref-accnt-creation-policy`
+
+- *Verification Email*: The initial email that is sent out after Account creation that verifies the email address that was used for registration with a link containing the verification token.
+- *Verification Success Email*: An email that is sent after a successful email verification.
+- *Welcome Email*: An email welcoming the user to your application. 
+
+For more information about this, see :ref:`verify-account-email`. 
+
+Password Reset
+^^^^^^^^^^^^^^
+
+Found in: :ref:`ref-password-policy`
+
+- *Reset Email*: The email that is sent out after a user asks to reset their password. It contains a URL with a password reset token.
+- *Reset Success Email*:  An email that is sent after a successful password reset.
+
+For more information about this, see :ref:`password-reset-flow`. 
+
+Customizing Stormpath Email Templates 
+-------------------------------------
 
 The emails that Stormpath sends to users be customized by modifying the :ref:``ref-emailtemplates`` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <http://api.stormpath.com>`__, or via REST. To find out how to do it via REST, keep reading. 
 
@@ -844,15 +877,18 @@ First, let's look at the default template that comes with the Stormpath Administ
 .. code-block:: json 
 
   {
-    "href":"https://api.stormpath.com/v1/emailTemplates/1gBpQ7x9hE837aiG27p1Nd",
-    "name":"Default Welcome Email Template",
-    "description":"This is the welcome email template that is associated with the directory.",
-    "fromName":"iron-troop",
+    "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojvU1m2Nh",
+    "name":"Default Verification Email Template",
+    "description":"This is the verification email template that is associated with the directory.",
+    "fromName":"Jakub Swiatczak",
     "fromEmailAddress":"change-me@stormpath.com",
-    "subject":"Your registration was successful",
-    "textBody":"Thanks for signing up. This is a welcome email welcoming you to the application. This is great place to put information about your app.\n\n--------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
-    "htmlBody":"<p>Thanks for signing up. This is a welcome email welcoming you to the application. This is great place to put information about your app</p><p>-------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
-    "mimeType":"text/plain"
+    "subject":"Verify your account",
+    "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
+    "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
+    "mimeType":"text/plain",
+    "defaultModel":{
+      "linkBaseUrl":"https://api.stormpath.com/emailVerificationTokens"
+    }
   }
 
 Message Format
@@ -865,8 +901,10 @@ textBody and htmlBody
 
 These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
 
-Macros 
-^^^^^^
+.. _using-email-macros:
+
+Using Email Macros 
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Stormpath uses Apache Velocity for email templating, and consequently you can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
 
@@ -882,30 +920,34 @@ The basic structure for a macro is ``${resource.attribute}``. There are three ki
   
 You can also include any ``attribute`` that isn't a link, as well as customData.
 
+For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter. 
+
 Macros and customData
 """""""""""""""""""""
 
 The formatting for customData macros is as follows:
 
-.. code-block:: java 
+.. code-block:: velocity 
 
   $!{resource.attribute.customData.key}
 
 You may have noticed here and with the Application resource that there is an included ``!`` character, this is called a "quiet reference". 
 
+.. _quiet-macro-reference:
+
 Quiet References
 """"""""""""""""
 
-Quiet references (``!``) tells Velocity that if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Velocity was able to find the value as ``blue``, it would output:
+Quiet references (``!``) tell Velocity that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Velocity was able to find the value as ``blue``, it would output:
 
 ``Is your favorite color blue?``
 
-However, if the value cannot be found, it will output:
+However, if the value could not be found, it would output:
 
 ``Is your favorite color ${account.customData.favoriteColor}?``
 
-To avoid this, we include the ``!`` which put the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
+To avoid this, we include the ``!`` which puts the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
 
 ``Is your favorite color ?``
 
-Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because 
+Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the Velocity engine might not have access to an Application resource. 

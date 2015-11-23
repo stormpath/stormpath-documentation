@@ -2057,17 +2057,17 @@ A Directory’s Account Creation Policy resource contains data and attributes th
   * - ``verificationEmailTemplates``
     - Link 
     - N/A
-    - A collection of email templates that can be used for sending the verification email. 
+    - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending the verification email. 
 
   * - ``verificationSuccessEmailTemplates``
     - Link
     - N/A
-    - A collection of email templates that can be used for sending the verification success email. 
+    - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending the verification success email. 
 
   * - ``welcomeEmailTemplates``
     - Link
     - N/A
-    - A collection of email templates that can be used for sending a welcome email.
+    - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending a welcome email.
 
 **Account Creation Policy Example**
 
@@ -2134,7 +2134,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``resetEmailTemplates``
     - String (Link)
     - N/A
-    - A collection of email templates that can be used for sending the password reset email. A template stores all relevant attributes  needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+    - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending the password reset email. A template stores all relevant attributes  needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
     
   * - ``resetSuccessEmailStatus``
     - String
@@ -2144,7 +2144,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``resetSuccessEmailTemplates``
     - String (Link)
     - N/A
-    - A collection of email templates that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
+    - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
   * - ``createdAt``
     - String 
@@ -2161,7 +2161,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
 Email Templates 
 ^^^^^^^^^^^^^^^
 
-This resource defines the contents of the password reset and password reset success emails. 
+This resource defines the contents of emails that are sent as part of the account creation and password reset flows. 
 
 **EmailTemplate URL**
 
@@ -2195,13 +2195,13 @@ This resource defines the contents of the password reset and password reset succ
 
   * - ``htmlBody``    
     - String  
-    - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}
-    - The body of the email in HTML format. This body is only sent when the mimeType for the template is set to text/html. This body can take valid HTML snippets.
+    - See below.
+    - The body of the email in HTML format. This body is only sent when the ``mimeType`` for the template is set to ``text/html``. This body can take valid HTML snippets.
       
   * - ``textBody``  
     - String
-    - For the ``resetEmailTemplate`` it is required to include the macro for the ${url}, ${sptoken} or, ${sptokenNameValuePair}.
-    - The body of the email is plain text format. This body is only sent when the mimeType for the template is set to text/plain.
+    - See below.
+    - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain``.
 
   * - ``mimeType``
     - String  
@@ -2211,26 +2211,58 @@ This resource defines the contents of the password reset and password reset succ
   * - ``defaultModel``  
     - Object  
     - Object that includes one property ``linkBaseUrl`` which is itself a String
-    - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in password reset workflows.
+    - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in account creation and password reset workflows.
 
-Email Templates and Macros 
-""""""""""""""""""""""""""
+.. _ref-email-macros:
 
-Email templates 
+Macros 
+""""""
 
-Email Templates have an "htmlBody" and a "textBody", both can have Macros in them.
+The ``htmlBody`` and ``textBody`` fields support the use of macros. For a full account of what macros are and how to use them, see :ref:`customizing-email-templates`.
 
-Email Macros
+.. list-table:: 
+  :widths: 30 70
+  :header-rows: 1
 
-Placeholder text that represents something that's computed at runtime. Apache Velocity is Stormpath's templating and macro language. 
+  * - Macro
+    - Description
+    
+  * - ${account.givenName}
+    - The Account's first name.
 
-3 objects you can work with: account, account.directory, and application, and also any property (that isn't a link) associated with them, as well as custom data: ${account.FullName}, account.customData.favoriteColor.
+  * - ${account.surname}
+    - The Account's surname.
 
-Quiet mode (!) tells Velocity that if it can't resolve the object, it should just show nothing: $!{account.customData.favoriteColor}
+  * - ${account.fullName}
+    - The Account's full name (first name and surname).
 
-You should always refer to an Application using the quiet notation. 
+  * - ${account.username}
+    - The Account's first username.
 
+  * - ${account.email}
+    - The Account's email.
 
+  * - ${account.directory.name}
+    - The name of the Directory that the Account belongs to.
+
+  * - $!{application.name}
+    - The name of the Application that the Account belongs to. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
+
+  * - $!{account.customData.$KEY}
+    - Some value from the Account's customData resource. Replace ``$KEY`` with a key from the Account's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
+
+  * - ${url}
+    - The ``linkBaseUrl`` value from the template's associated ``defaultModel`` object.
+
+  * - ${sptoken}
+    - The value of the Stormpath token for password reset.
+
+  * - ${sptokenNameValuePair}
+    - A string that is shown as "sptoken=$TOKEN" Where "$TOKEN" is either the verification or password reset token. 
+
+.. note::
+
+  For more information about customizing email templates, please see :ref:`customizing-email-templates`.
 
 .. _ref-password-strength:
 
