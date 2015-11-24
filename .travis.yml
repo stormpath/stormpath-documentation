@@ -5,7 +5,7 @@ python:
 install:
 - pip install -U Sphinx
 script:
-- make linkcheck
+#- make linkcheck
 - make html
 after_success:
 - CURRENT_HASH=`git rev-parse HEAD`
