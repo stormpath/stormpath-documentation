@@ -77,7 +77,7 @@ Finally, if you would like to use Stormpath Digest authentication in a programmi
 
 - Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`__ (the **authenticate** method)
 - Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`__
-- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Stormpath/Http/Authc/Sauthc1RequestSigner.php>`__ (the **signRequest** method)
+- PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Http/Authc/SAuthc1RequestSigner.php>`__ (the **signRequest** method)
 - Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
 - Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`__ (the **sign_request** method)
 
@@ -1915,7 +1915,7 @@ Create a Directory
 
 .. note::
 
-  Currently it is only possible to make a Cloud or Social Directories via the REST API. To make a Mirror Directory you will need to use the `Admin Console <http://docs.stormpath.com/console/product-guide#create-a-mirrored-directory>`__.
+  Currently it is only possible to make a Cloud or Social Directories via the REST API. To make a Mirror Directory you will need to use the `Admin Console <http://docs.stormpath.com/console/product-guide/#create-a-directory>`__.
 
 Retrieve a Directory 
 ^^^^^^^^^^^^^^^^^^^^

@@ -50,7 +50,7 @@ Setting Up Your ID Site
 
 Your ID Site uses a default configuration for testing purposes, but can be fully configured to host customized code or to use your own custom domain.
 
-To set up your ID Site, log into the `Administrator Console <https://api.stormpath.com/>`_ and:
+To set up your ID Site, log into the `Administrator Console <https://api.stormpath.com/login>`_ and:
 
 1. Click on the "ID Site" Tab.
 2. Add your application URLs that will be allowed to process the callbacks from the ID Site to the "Authorized Redirect URIs" property. These URLs will be hosted by your application and will use the Stormpath SDK to process the security assertions about the user that ID Site sends back.
@@ -150,8 +150,8 @@ The Stormpath SDKs help developers quickly integrate communication from Stormpat
 
 Below are language specific libraries that Stormpath has sanity tested with ID Site.
 
-.NET JWT - https://github.com/johnsheehan/jwt
-Ruby JWT - https://github.com/progrium/ruby-jwt
+.NET JWT - https://github.com/jwt-dotnet/jwt
+Ruby JWT - https://github.com/jwt/ruby-jwt
 Go JWT - https://github.com/dgrijalva/jwt-go
 PHP JWT - https://github.com/firebase/php-jwt
 Python JWT - https://github.com/jpadilla/pyjwt
@@ -239,7 +239,7 @@ The Stormpath ``/sso`` endpoint will validate the JWT, and redirect the user to 
 2. Handling the Callback to your Application from ID Site
 ---------------------------------------------------------
 
-Once the user signs up or logs in to your application, they will be redirected back to your application using the ``cb_uri`` callback property that was set in the JWT. In addition to the callback URI, ID Site will include a ``jwtResponse`` parameter in the query. For example, if the specified ``cb_uri`` is "https://yourapp.com/dashboard" then the user will be redirected to::
+Once the user signs up or logs in to your application, they will be redirected back to your application using the ``cb_uri`` callback property that was set in the JWT. In addition to the callback URI, ID Site will include a ``jwtResponse`` parameter in the query. For example, if the specified ``cb_uri`` is ``https://yourapp.com/dashboard`` then the user will be redirected to::
 
 	https://yourapp.com/dashboard?jwtResponse={GENERATED_ID_SITE_ASSERTION_JWT}
 

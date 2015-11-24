@@ -558,7 +558,7 @@ i. Google
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
-- Create an application in the `Google Developer Console <https://console.developers.google.com/>`_
+- Create an application in the `Google Developer Console <https://console.developers.google.com/start>`_
 
 - Enable Google Login for your Google application
 
@@ -590,7 +590,7 @@ Creating this Directory for Google requires that you provide information from Go
 
 .. note::
 
-    If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/+/web/signin/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
+    If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/identity/sign-in/web/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
 Step 2: Map the Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
