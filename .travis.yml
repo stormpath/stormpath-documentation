@@ -7,3 +7,5 @@ install:
 script:
   - make linkcheck
   - make html
+after_success:
+  - echo 'hi'
