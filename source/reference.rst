@@ -1444,21 +1444,29 @@ Other Resources Associated with an Application
 
 These are the other resources that can be found associated with any particular Application.
 
-.. _ref-app-apiKeys:
+.. _ref-application-apikeys:
 
 Application API Keys 
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^ 
 
-**ApiKeys URL**
+A ``GET`` can be sent to this endpoint along with an :ref:`API Key <ref-account-apikeys>` ID, in order to retrieve the Account associated with that API Key. 
 
-**ApiKeys Attributes**
+**Application apiKeys URL**
 
-**ApiKeys Example**
+``/v1/applications/$APPLICATION_ID/apiKeys?id=$API_KEY_ID``
+
+If you would like to retrieve the API Key with the :ref:`ref-account` expanded you can include the ``?expand=account`` parameter. 
+
+**Application apiKeys Attributes**
+
+This call would return an :ref:`API Key <ref-account-apikeys>`.
 
 .. _ref-oauth-policy:
 
 OAuth Policy  
 ^^^^^^^^^^^^
+
+This resource contains information about the Application's OAuth Policy. For more information about how this is used, see :ref:`token-authn-config`. 
 
 **oAuthPolicy URL**
 
@@ -2247,9 +2255,15 @@ The ``htmlBody`` and ``textBody`` fields support the use of macros. For a full a
 
   * - $!{application.name}
     - The name of the Application that the Account belongs to. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
+      
+  * - $!{application.customData.$KEY}
+    - Some value from the Application's customData resource. Replace ``$KEY`` with a key from the Application's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
 
   * - $!{account.customData.$KEY}
     - Some value from the Account's customData resource. Replace ``$KEY`` with a key from the Account's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
+
+  * - $!{account.directory.customData.$KEY}
+    - Some value from the Directory’s customData resource. Replace ``$KEY`` with a key from the Directory's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
 
   * - ${url}
     - The ``linkBaseUrl`` value from the template's associated ``defaultModel`` object.
@@ -3772,6 +3786,78 @@ This collection stores any API Keys that have been generated for this Account.
       "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
     }
   }
+
+Account API Key Operations 
+""""""""""""""""""""""""""
+An Account's API Keys have a full set of CRUD operations available via REST. 
+
+Creating an API Key
++++++++++++++++++++
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/accounts/$ACCOUNT_ID/apiKeys
+      - N/A
+      - Generates a new API Key. 
+
+Retrieving an API Key 
++++++++++++++++++++++
+
+.. list-table::
+    :widths: 30 30 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters
+      - Description
+    
+    * - GET /v1/accounts/$ACCOUNT_ID/apiKeys
+      - ``expand``, ``encryptSecret=true`` (see below)
+      - Retrieves the API Keys for the specified Account. ``account`` and ``tenant`` can be expanded.
+
+.. note::
+
+  If ``encryptSecret=true`` is included, then the returned API Key is encrypted. Additionally, the following parameters can also be modified:
+    - ``encryptionKeySize``: The size of the key used for encryption. Default value is ``128``.
+    - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Default value is ``1024``
+    - ``encryptionKeySalt``: Specifies whether you would like to use a cryptographic salt. Default value is ``false``.
+
+Updating an API Key
++++++++++++++++++++
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/accounts/$ACCOUNT_ID/apiKeys
+      - ``status``
+      - Can be used to update the ``status`` field for an API Key to either ``ENABLED`` or ``DISABLED``.
+
+Deleting an API Key
++++++++++++++++++++
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/apiKeys/$API_KEY_ID
+      - N/A
+      - Deletes the specified API Key resource.
+
 
 .. _access-tokens:
 
