@@ -33,7 +33,12 @@ On the ID Site, the user will enter their data and complete the appropriate acti
 
 After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be ``https://imperialxchange.com/idSiteResult``. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to ``/idSiteResult``, validate that the JWT is correct, and return an ``ID Site Account Result``. The ``ID Site Account Result`` will include the Stormpath Account object and additional information, such as any state that was passed by your application or whether or not the Account returned is newly created.
 
-.. image:: http://docs.stormpath.com/images/docs/ID-diagram.png
+.. figure:: images/idsite/ID-diagram.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site Flow 
+
+    *The ID Site Flow* 
 
 .. _idsite-set-up:
 

@@ -1,3 +1,5 @@
+.. _reference:
+
 ******************
 REST API Reference
 ******************
@@ -4137,6 +4139,8 @@ Expanded JSON Web Token
     },
     "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"
   }
+
+.. _ref-customdata:
 
 Custom Data  
 ============
