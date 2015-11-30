@@ -18,7 +18,7 @@ i. Directories
     
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
-For more detailed information about the Directory resource, please see :ref:`ref-directory` in the Reference chapter.
+For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -130,104 +130,7 @@ For more information on how to this works, please see :ref:`mirror-dir-authn`.
 How to Make a Mirror Directory
 """"""""""""""""""""""""""""""
 
-Presently, Mirror Directories be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with REST APIs, read on. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
-
-To make a Mirror Directory, you must HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``"ldap"``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
-
-.. code-block:: http
-
-    POST /v1/directories HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
-    
-    {
-      "name":"My LDAP Directory",
-      "description":"An LDAP Directory created with the Stormpath API",
-      "provider":{
-        "providerId":"ldap",
-        "agent":{
-          "config":{
-            "directoryHost":"ldap.local",
-            "directoryPort":"636",
-            "sslRequired":true,
-            "agentUserDn":"tom@stormpath.com",
-            "agentUserDnPassword":"StormpathRulez",
-            "baseDn":"dc=example,dc=com",
-            "pollInterval":60,
-            "referralMode":"ignore",
-            "ignoreReferralIssues":false,
-            "accountConfig":{
-              "dnSuffix":"ou=employees",
-              "objectClass":"person",
-              "objectFilter":"(cn=finance)",
-              "emailRdn":"email",
-              "givenNameRdn":"givenName",
-              "middleNameRdn":"middleName",
-              "surnameRdn":"sn",
-              "usernameRdn":"uid",
-              "passwordRdn":"userPassword"
-            },
-            "groupConfig":{
-              "dnSuffix":"ou=groups",
-              "objectClass":"groupOfUniqueNames",
-              "objectFilter":"(ou=*-group)",
-              "nameRdn":"cn",
-              "descriptionRdn":"description",
-              "membersRdn":"uniqueMember"
-            }
-          }
-        }
-      }
-    }
-
-For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
-
-Installing Your Agent
-+++++++++++++++++++++
-
-Installing your Agent is done in three steps.
-
-**1. Download**
-
-Download your Agent by following the Download link on the Agent page in the Admin Console.
-   
-**2. Configure**
-   
-*a.* Make sure Java 1.8 is installed
-
-*b.* Unzip to a location in your file system, for example ``C:\stormpath\agent`` in Windows or ``/opt/stormpath/agent`` in Unix.
-
-In the same location, open the file ``dapper.properties`` from the config folder and replace this line::
-
-  agent.id = PutAgentSpecificIdHere
-
-With this line::
-
-  agent.id  = 72MlbWz6C4dLo1oBhgjjTt
-
-Follow the instructions in the ``dapper.properties`` file to reference your account's API authentication.
-   
-**3. Start**
-
-In Windows:
-
-(cd to your agent directory, for example C:\stormpath\agent)
-
-.. code-block:: powershell
-
-  C:\stormpath\agent>cd bin
-  C:\stormpath\agent\bin>startup.bat
-
-In Unix:
-
-cd to your agent directory, for example /opt/stormpath/agent
-
-.. code-block:: bash 
-
-  $ cd bin
-  $ startup.sh
-
-The Agent will start synchronizing immediately, pushing the configured data to Stormpath. You will see the synchronized user Accounts and Groups appear in the Stormpath Directory, and the Accounts will be able to log in to any Stormpath-enabled application that you assign. When the Agent detects local changes, additions or deletions to the mirrored Accounts or Groups, it will automatically propagate those changes to Stormpath.
+Presently, Mirror Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`mirror-dir-authn`. 
 
 .. _about-social-dir:
     
@@ -241,9 +144,7 @@ Stormpath also simplifies the authorization process by doing things like automat
 Modeling Social Directories
 """""""""""""""""""""""""""
 
-Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. So, the default Stormpath behavior is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
-
-This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
+Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. For more about how these Directories are provisioned, please see :ref:`non-cloud-login`.
 
 .. note::
 
@@ -252,16 +153,16 @@ This approach has two major benefits: It allows for a user to have one unified i
 How to Make a Social Directory
 """"""""""""""""""""""""""""""
 
-Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
+Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
 
 .. _group-mgmt:
 
 ii. Groups
 ----------
 
-.. todo::
+The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by the their role within a company. 
 
-  This needs some kind of lead in, as well as a link to the relevant Reference section.
+For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter. 
 
 .. _hierarchy-groups:
 
@@ -338,15 +239,14 @@ Would yield this response:
     }
   }
 
-
 .. _account-creation:
 
 b. How to Store Accounts in Stormpath
 =====================================
 
-.. todo::
+The Account resource is a unique identity within your application. It is usually used to model an end-user, although it can also be used by a service, process, or any other entity that needs to log-in to Stormpath.
 
-  This needs some kind of lead in, as well as a link to the relevant Reference section.
+For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.  
 
 New Account Creation
 --------------------
@@ -472,7 +372,7 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
 .. note::
 
-  To import user accounts from an LDAP or Social Directory, please see the :ref:`above section <make-mirror-dir>`.
+  To import user accounts from an LDAP or Social Directory, please see :ref:`non-cloud-login`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
    
@@ -557,7 +457,7 @@ One example of this could be if we wanted to add information to our "Jean-Luc Pi
 
 For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint. 
 
-So if we were to  send following REST call:
+So if we were to send following REST call:
 
 .. code-block:: http
 

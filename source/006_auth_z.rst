@@ -1,4 +1,4 @@
-.. _authz:
+ .. _authz:
 
 *******************************
 6. Authorization With Stormpath

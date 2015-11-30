@@ -88,6 +88,38 @@ As you can see, Stormpath tries to find the Account in the "Customers" Directory
 
 You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your Application.
 
+.. _non-cloud-login:
+
+How Login Works with Mirrored and Social Directories 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For both :ref:`Mirrored <about-mirror-dir>` and :ref:`Social<about-social-dir>` Directories, Stormpath has a default behavior that links the Mirror/Social Directories with corresponding "master" Directories. 
+
+The default Stormpath behavior is as a follows: a new user visits your site, and chooses something to log-in with their LDAP credentials, or social login like "Sign-in with Google". Once they log in using their social or LDAP credentials, if it doesn't already exist, a new user Account is created in your Mirror/Social Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Mirror/Social Directory. 
+
+.. code-block:: json 
+
+  {
+    "customData": {
+      "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlQu"
+    }
+  }
+
+If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
+
+.. code-block:: json 
+
+  {
+    "customData": {
+      "accountLinks": {
+          "Link1": "https://api.stormpath.com/v1/accounts/3fLduLKlQu",
+          "Link2": "https://api.stormpath.com/v1/accounts/X3rjfa4Ljd", 
+          "Link3": "https://api.stormpath.com/v1/accounts/a05Ghpjd30"
+      }
+  }
+
+This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social or LDAP identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
+
 .. _managing-login:
 
 Manage Who Can Log Into Your Application 
@@ -637,8 +669,8 @@ Creating this Directory for Google requires that you provide information from Go
 
     If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/identity/sign-in/web/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
-Step 2: Map the Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Map the Google Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
@@ -719,8 +751,8 @@ Creating this Directory requires that you provide information from Facebook as a
       }
   }
 
-Step 2: Map the Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Map the Facebook Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
@@ -785,8 +817,8 @@ Creating this Directory requires that you provide information from GitHub as a P
       }
   }
 
-Step 2: Map the Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Map the GitHub Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
@@ -852,10 +884,10 @@ Creating this Directory requires that you provide information from LinkedIn as a
       }
   }
 
-Step 2: Map the Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 2: Map the LinkedIn Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new LinkedIn Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 Step 3: Access an Account with LinkedIn Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -890,39 +922,116 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
 d. Authenticating Against a Mirrored LDAP Directory
 ===================================================
 
-.. todo::
-
-  This needs more details.
-
 This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`about-mirror-dir` as well as how they are :ref:`modeled <modeling-mirror-dirs>`. 
+
+Mirror Directories and LDAP 
+---------------------------
 
 To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory, so it is recommended that you maintain a "master" Directory alongside your Mirror Directory. Furthermore, a successful user login is the recommended time to provision, link, and synchronize an Account in the Mirror Directory to your master Directory.
 
-Working with Accounts in Mirror Directories
--------------------------------------------
+Step 1: Create a Mirror Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-On a successful login attempt, you would search your master Directory for a matching user. This is often done by searching for a matching email address.
+HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``"ldap"``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
 
-If the Account does not exist, you would create it. You would then create a link between the two Accounts using Custom Data on the Mirror Directory Account. The link should be the Stormpath ``href`` for the Account in the master Directory:
+.. code-block:: http
 
-.. code-block:: json 
-
-  {
-    "customData": {
-      "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlQu"
-    }
-  }
-
-In some cases where an Account could be in many Directories at once, you may need links to multiple Accounts from the master Account. A common strategy is to store a collections of Account ``href`` values using customData:
-
-.. code-block:: json 
-
-  {
-    "customData": {
-      "accountLinks": {
-          "Link1": "https://api.stormpath.com/v1/accounts/3fLduLKlQu",
-          "Link2": "https://api.stormpath.com/v1/accounts/X3rjfa4Ljd", 
-          "Link3": "https://api.stormpath.com/v1/accounts/a05Ghpjd30"
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+    
+    {
+      "name":"My LDAP Directory",
+      "description":"An LDAP Directory created with the Stormpath API",
+      "provider":{
+        "providerId":"ldap",
+        "agent":{
+          "config":{
+            "directoryHost":"ldap.local",
+            "directoryPort":"636",
+            "sslRequired":true,
+            "agentUserDn":"tom@stormpath.com",
+            "agentUserDnPassword":"StormpathRulez",
+            "baseDn":"dc=example,dc=com",
+            "pollInterval":60,
+            "referralMode":"ignore",
+            "ignoreReferralIssues":false,
+            "accountConfig":{
+              "dnSuffix":"ou=employees",
+              "objectClass":"person",
+              "objectFilter":"(cn=finance)",
+              "emailRdn":"email",
+              "givenNameRdn":"givenName",
+              "middleNameRdn":"middleName",
+              "surnameRdn":"sn",
+              "usernameRdn":"uid",
+              "passwordRdn":"userPassword"
+            },
+            "groupConfig":{
+              "dnSuffix":"ou=groups",
+              "objectClass":"groupOfUniqueNames",
+              "objectFilter":"(ou=*-group)",
+              "nameRdn":"cn",
+              "descriptionRdn":"description",
+              "membersRdn":"uniqueMember"
+            }
+          }
+        }
       }
-  }
+    }
 
+For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
+
+Step 2: Install your LDAP Agent 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installing your Agent is done in three steps.
+
+**1. Download**
+
+Download your Agent by following the Download link on the Agent page in the Admin Console.
+   
+**2. Configure**
+   
+*a.* Make sure Java 1.8 is installed
+
+*b.* Unzip to a location in your file system, for example ``C:\stormpath\agent`` in Windows or ``/opt/stormpath/agent`` in Unix.
+
+In the same location, open the file ``dapper.properties`` from the config folder and replace this line::
+
+  agent.id = PutAgentSpecificIdHere
+
+With this line::
+
+  agent.id  = 72MlbWz6C4dLo1oBhgjjTt
+
+Follow the instructions in the ``dapper.properties`` file to reference your account's API authentication.
+   
+**3. Start**
+
+In Windows:
+
+(cd to your agent directory, for example C:\stormpath\agent)
+
+.. code-block:: powershell
+
+  C:\stormpath\agent>cd bin
+  C:\stormpath\agent\bin>startup.bat
+
+In Unix:
+
+cd to your agent directory, for example /opt/stormpath/agent
+
+.. code-block:: bash 
+
+  $ cd bin
+  $ startup.sh
+
+The Agent will start synchronizing immediately, pushing the configured data to Stormpath. You will see the synchronized user Accounts and Groups appear in the Stormpath Directory, and the Accounts will be able to log in to any Stormpath-enabled application that you assign. When the Agent detects local changes, additions or deletions to the mirrored Accounts or Groups, it will automatically propagate those changes to Stormpath.
+
+Step 3: Map the Mirror Directory as an Account Store for Your Application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creating an Account Store Mapping between your new Mirror Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+
+From this point on, any time a user logs in to your Application, their Account will be provisioned into Stormpath, as detailed above in :ref:`non-cloud-login`.
