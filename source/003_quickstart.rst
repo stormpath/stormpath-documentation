@@ -93,7 +93,7 @@ The above cURL would return this example response:
     "tenant":{
       "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
     },
-    "thisResult": {"hasBeenTruncated"},
+    "comment":" // This JSON has been truncated for readability", 
     "accounts":{
       "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
     },
@@ -106,7 +106,7 @@ The above cURL would return this example response:
     "loginAttempts":{
       "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
     },
-    "thisResult": {"hasBeenTruncated"},
+    "comment":" // This JSON has been truncated for readability"
   }
 
 Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.

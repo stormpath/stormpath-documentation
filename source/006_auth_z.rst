@@ -4,10 +4,6 @@
 6. Authorization With Stormpath
 *******************************
 
-.. todo::
-
-	Make sure the code-block directive is used throughout.
-
 This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions.
 
 a. What is Authorization?
@@ -31,7 +27,7 @@ Permissions, at their most basic, are statements of functionality that define a 
 
 .. todo::
 
-	A concrete example of this advantage NEEDS to be included here.  
+  A concrete example of this advantage NEEDS to be included here.  
 
 b. Modeling Authorization in Stormpath
 ======================================
@@ -84,23 +80,29 @@ The next question is: what will your permissions look like?
 How to Model Fine-Grained Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Stormpath also gives you an enormous amount of flexibility with what these permissions look like. A permission in Stormpath can be as simple as::
+Stormpath also gives you an enormous amount of flexibility with what these permissions look like. A permission in Stormpath can be as simple as:
 
-	"create_admin”: “yes”
+.. code-block:: json
 
-Or as complex as::
+  {
+    "create_admin": "yes"
+  }
 
-	{
+Or as complex as:
+
+.. code-block:: json
+
+  {
     "name": "create-admin",
     "description": "This permission allows the account to create an admin"
     "action": "read",
     "resource": "/admin/create",
     "effect": "allow"
-	}
+  }
 
 How is this flexibility possible? Two words: Custom Data.
 
-As mentioned earlier, Stormpath resources like Accounts and Groups are created along with a linked **customData** resource. This resource is very useful for implementing both Account permissions and role (AKA Group) permissions. Essentially, any user-level permissions are defined in a ``customData`` resource linked to a user Account, while any role-level permissions are defined in a ``customData`` resource linked to a role Group. This allows for Stormpath to model user-unique permissions as well as permissions inherited by virtue of a user having one (or more) roles.
+As mentioned earlier, Stormpath resources like Accounts and Groups are created along with a linked :ref:`customData <ref-customdata>` resource. This resource is very useful for implementing both Account permissions and role (AKA Group) permissions. Essentially, any user-level permissions are defined in a ``customData`` resource linked to a user Account, while any role-level permissions are defined in a ``customData`` resource linked to a role Group. This allows for Stormpath to model user-unique permissions as well as permissions inherited by virtue of a user having one (or more) roles.
 
 Permissions in Stormpath can be modeled as an array inside the ``customData`` resource. They can be as simple as a key-value pair, or more complex objects. A user Account could have their user-unique permissions defined in a ``customData`` resource linked to from their Account. At the same time, their Account would be linked to the application-wide "Admin" Group which would have its own linked ``customData`` resource that would contain definitions of the permissions of all the users with the Admin role in your application.
 
@@ -118,51 +120,67 @@ To check a user's unique permissions, you must retrieve their Account's customDa
 
 You can either retrieve the Account along with the expanded customData, by sending an HTTP GET to::
 
-	https://api.stormpath.com/v1/accounts/:AccountId?expand=customData
+  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=customData
 
-This will return the Account resource along with the expanded customData::
+This will return the Account resource along with the expanded customData:
 
-	{
-		"username" : "jlpicard",
-		"email" : "capt@enterprise.com",
-		"givenName" : "Jean-Luc",
-		"surname" : "Picard",
-		"customData": {
-			“permissions”:
-			“crew_quarters”: “&nbsp;9-3601”,
-			"lock_override”: “all”,
-			"command_bridge”: {
-				“type”: “vessel:bridge”,
-				“identifier”: “NCC-1701-D”,
-				“action”: “lockout”,
-				"control_key”: "173467321476C32789777643T732V73117888732476789764376",
-			}
-		}
-	}
+.. code-block:: json 
+
+  HTTP/1.1 200 OK 
+  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
+  Content-Type: application/json;charset=UTF-8
+  
+  {
+    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
+    "username" : "jlpicard",
+    "email" : "capt@enterprise.com",
+    "givenName" : "Jean-Luc",
+    "surname" : "Picard",
+    "customData": {
+      "permissions": {
+        "crew_quarters": "&nbsp;9-3601",
+        "lock_override": "all",
+        "command_bridge": {
+          "type": "vessel:bridge",
+          "identifier": "NCC-1701-D",
+          "action": "lockout",
+          "control_key": "173467321476C32789777643T732V73117888732476789764376"
+        }
+      }
+    }
+  }
 
 Or you can retrieve only the customData by sending a GET to::
 
-	https://api.stormpath.com/v1/accounts/:AccountId/customData
+  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/customData
 
-Which would return only the customData::
+Which would return only the customData:
 
-	{
-		“permissions”:
-		“crew_quarters”: “&nbsp;9-3601”,
-		"lock_override”: “all”,
-		"command_bridge”: {
-		  “type”: “vessel:bridge”,
-		  “identifier”: “NCC-1701-D”,
-		  “action”: “lockout”,
-		  "control_key”: "173467321476C32789777643T732V73117888732476789764376",
-		}
-	} 
+.. code-block:: json 
+
+  HTTP/1.1 200 OK 
+  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
+  Content-Type: application/json;charset=UTF-8
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
+    "permissions": {
+      "crew_quarters": "&nbsp;9-3601",
+      "lock_override": "all",
+      "command_bridge": {
+        "type": "vessel:bridge",
+        "identifier": "NCC-1701-D",
+        "action": "lockout",
+        "control_key": "173467321476C32789777643T732V73117888732476789764376"
+      }
+    }
+  } 
 
 Checking Role Permissions
 """""""""""""""""""""""""
 
 This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve their associated Groups, for example by sending a GET to::
 
-	https://api.stormpath.com/v1/accounts/:accountId/groups
+  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/groups
 
 From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint. 

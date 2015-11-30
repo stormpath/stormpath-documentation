@@ -50,7 +50,7 @@ The following API request:
 .. code-block:: http
 
   POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -79,7 +79,7 @@ Would yield the following response:
     "provider": {
       "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/provider"
     },
-    "thisResult": {"hasBeenTruncated"},
+    "comment":" // This JSON has been truncated for readability",
     "groups": {
       "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/groups"
     }
@@ -134,52 +134,51 @@ Presently, Mirror Directories be made via the Stormpath Admin Console, or using 
 
 To make a Mirror Directory, you must HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``"ldap"``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
 
-.. code-block:: http  
-  :emphasize-lines: 8,10
+.. code-block:: http
 
-  POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
-  
-  {
-    "name":"My LDAP Directory",
-    "description":"An LDAP Directory created with the Stormpath API",
-    "provider":{
-      "providerId":"ldap",
-      "agent":{
-        "config":{
-          "directoryHost":"ldap.local",
-          "directoryPort":"636",
-          "sslRequired":true,
-          "agentUserDn":"tom@stormpath.com",
-          "agentUserDnPassword":"StormpathRulez",
-          "baseDn":"dc=example,dc=com",
-          "pollInterval":60,
-          "referralMode":"ignore",
-          "ignoreReferralIssues":false,
-          "accountConfig":{
-            "dnSuffix":"ou=employees",
-            "objectClass":"person",
-            "objectFilter":"(cn=finance)",
-            "emailRdn":"email",
-            "givenNameRdn":"givenName",
-            "middleNameRdn":"middleName",
-            "surnameRdn":"sn",
-            "usernameRdn":"uid",
-            "passwordRdn":"userPassword"
-          },
-          "groupConfig":{
-            "dnSuffix":"ou=groups",
-            "objectClass":"groupOfUniqueNames",
-            "objectFilter":"(ou=*-group)",
-            "nameRdn":"cn",
-            "descriptionRdn":"description",
-            "membersRdn":"uniqueMember"
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+    
+    {
+      "name":"My LDAP Directory",
+      "description":"An LDAP Directory created with the Stormpath API",
+      "provider":{
+        "providerId":"ldap",
+        "agent":{
+          "config":{
+            "directoryHost":"ldap.local",
+            "directoryPort":"636",
+            "sslRequired":true,
+            "agentUserDn":"tom@stormpath.com",
+            "agentUserDnPassword":"StormpathRulez",
+            "baseDn":"dc=example,dc=com",
+            "pollInterval":60,
+            "referralMode":"ignore",
+            "ignoreReferralIssues":false,
+            "accountConfig":{
+              "dnSuffix":"ou=employees",
+              "objectClass":"person",
+              "objectFilter":"(cn=finance)",
+              "emailRdn":"email",
+              "givenNameRdn":"givenName",
+              "middleNameRdn":"middleName",
+              "surnameRdn":"sn",
+              "usernameRdn":"uid",
+              "passwordRdn":"userPassword"
+            },
+            "groupConfig":{
+              "dnSuffix":"ou=groups",
+              "objectClass":"groupOfUniqueNames",
+              "objectFilter":"(ou=*-group)",
+              "nameRdn":"cn",
+              "descriptionRdn":"description",
+              "membersRdn":"uniqueMember"
+            }
           }
         }
       }
     }
-  }
 
 For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
 
@@ -295,7 +294,7 @@ The following API request:
 .. code-block:: http    
 
   POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -369,7 +368,8 @@ Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captai
 
 .. code-block:: http 
 
-  POST https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
+  POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -416,7 +416,7 @@ Would yield this response:
     "providerData": {
       "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/providerData"
     },
-    "thisResult": {"hasBeenTruncated"}
+    "comment":" // This JSON has been truncated for readability"
   }
 
 Add an Existing Account to a Group
@@ -429,7 +429,7 @@ We make the following request:
 .. code-block:: http 
 
   POST /v1/groupMemberships HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
   
   {
@@ -562,7 +562,7 @@ So if we were to  send following REST call:
 .. code-block:: http
 
   POST /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -618,7 +618,7 @@ This call:
 .. code-block:: http
 
   POST v1/passwordPolicies/$DIRECTORY_ID/strength HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -856,7 +856,7 @@ To verify the Account, you use the token from the query string to form the above
 .. code-block:: http 
 
   POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
 Which will return a result that looks like this:

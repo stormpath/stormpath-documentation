@@ -145,7 +145,7 @@ To accomplish this, we will send a ``POST``:
 .. code-block:: http 
 
   POST v1/accountStoreMappings HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -250,7 +250,7 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
       "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE",
       "accessTokenTtl": "PT1H",
       "refreshTokenTtl": "P60D",
-      "thisResult": "hasBeenTruncated"
+      "comment":" // This JSON has been truncated for readability"
   }
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL ``duration`` for the Access Token is 1 hour and the Refresh Token's is 60 days, while the **maximum** ``duration`` is 180 days.
@@ -260,7 +260,7 @@ If we wanted to change the TTL for the Access Token to 30 minutes and the Refres
 .. code-block:: http
 
   POST /v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -280,7 +280,7 @@ And we would get the following response:
     "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE",
     "accessTokenTtl": "PT30M",
     "refreshTokenTtl": "P7D",
-    "thisResult": "hasBeenTruncated"
+    "comment":" // This JSON has been truncated for readability"
   }
 
 .. note::
@@ -470,7 +470,7 @@ In the event that the Access Token expires, the user can generate a new one usin
 .. code-block:: http 
 
   POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/x-www-form-urlencoded
 
   grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
@@ -619,7 +619,7 @@ Creating this Directory for Google requires that you provide information from Go
 .. code-block:: http 
 
   POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
     
   {
@@ -658,7 +658,7 @@ Once the Authorization Code is gathered, you send an HTTP POST:
 .. code-block:: http 
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -673,7 +673,7 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 .. code-block:: http 
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
     
   {
@@ -706,7 +706,7 @@ Creating this Directory requires that you provide information from Facebook as a
 .. code-block:: http 
 
   POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -738,7 +738,7 @@ Once the User Access Token is gathered, you send an HTTP POST:
 .. code-block:: http 
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -772,7 +772,7 @@ Creating this Directory requires that you provide information from GitHub as a P
 .. code-block:: http 
 
   POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
     
   {
@@ -806,7 +806,7 @@ Once the Authorization Code is gathered, you can send an HTTP POST:
 .. code-block:: http 
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -839,7 +839,7 @@ Creating this Directory requires that you provide information from LinkedIn as a
 .. code-block:: http 
 
   POST /v1/directories HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -873,7 +873,7 @@ Once the Access Token is gathered, you can send an HTTP POST:
 .. code-block:: http 
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: https://api.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
