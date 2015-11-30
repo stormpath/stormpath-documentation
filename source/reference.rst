@@ -55,12 +55,12 @@ When using an API key with Basic authentication, the API key ID is the username 
 
 For example, if using curl:
 
-  .. code-block:: bash
+.. code-block:: bash
 
-    curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/current"
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/tenants/current"
 
 Digest Authentication
 ^^^^^^^^^^^^^^^^^^^^^
@@ -574,18 +574,20 @@ Datetime Search
 
 The Datetime search is a sub-type of the attribute search that allows you to filter or search collections that were created or modified at a particular time. 
 
-Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes::
+Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes:
+
+.. code-block:: json 
 
     {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-      [...]
+      "href": "https://api.stormpath.com/v1/accounts/$ACCOUNT_ID",
+      "comment":" // This JSON has been truncated for readability",
       "createdAt": "2015-08-25T19:57:05.976Z",
       "modifiedAt": "2015-08-25T19:57:05.976Z",
       "emailVerificationToken": null,
       "customData": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+        "href": "https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/customData"
       },
-      [...]
+      "...":"..."
     }
 
 Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ which is human readable and has common support across all languages. The timezone is coordinated universal time (UTC). So a datetime range would look like this::
@@ -598,7 +600,7 @@ Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`
 
 As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this::
 
-    /v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14]
+    /v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14]
 
 The response would be a Collection of Accounts created between the two days. 
 
