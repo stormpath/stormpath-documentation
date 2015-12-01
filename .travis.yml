@@ -38,3 +38,4 @@ after_success:
 before_install:
 - openssl aes-256-cbc -K $encrypted_15c7e38b27fc_key -iv $encrypted_15c7e38b27fc_iv
   -in stormpath_documentation_auto_doc_build.enc -out ~/.ssh/id_ra -d
+- chmod 600 ~/.ssh/id_rsa
