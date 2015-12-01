@@ -587,7 +587,7 @@ Stormpath exposes attributes on all resources that will give you information abo
 
 Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ which is human readable and has common support across all languages. The timezone is coordinated universal time (UTC). So a datetime range would look like this::
 
-    [ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME
+    [ISO-8601-BEGIN-DATETIME, ISO-8601-END-DATETIME]
 
 .. note::
 
