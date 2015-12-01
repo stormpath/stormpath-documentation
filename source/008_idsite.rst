@@ -4,10 +4,6 @@
 8. Using ID Site
 ****************
 
-.. todo::
-
-	Make sure the code-block directive is used throughout.
-
 a. What is an ID Site?
 ======================
 

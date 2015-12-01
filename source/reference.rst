@@ -55,12 +55,12 @@ When using an API key with Basic authentication, the API key ID is the username 
 
 For example, if using curl:
 
-  .. code-block:: bash
+.. code-block:: bash
 
-    curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/current"
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/tenants/current"
 
 Digest Authentication
 ^^^^^^^^^^^^^^^^^^^^^
@@ -574,18 +574,20 @@ Datetime Search
 
 The Datetime search is a sub-type of the attribute search that allows you to filter or search collections that were created or modified at a particular time. 
 
-Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes::
+Stormpath exposes attributes on all resources that will give you information about when the resource was created or modified. For example, an Account resource will have the ``createdAt`` and ``modifiedAt`` attributes:
+
+.. code-block:: json 
 
     {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-      [...]
+      "href": "https://api.stormpath.com/v1/accounts/$ACCOUNT_ID",
+      "comment":" // This JSON has been truncated for readability",
       "createdAt": "2015-08-25T19:57:05.976Z",
       "modifiedAt": "2015-08-25T19:57:05.976Z",
       "emailVerificationToken": null,
       "customData": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+        "href": "https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/customData"
       },
-      [...]
+      "...":"..."
     }
 
 Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`__ which is human readable and has common support across all languages. The timezone is coordinated universal time (UTC). So a datetime range would look like this::
@@ -598,7 +600,7 @@ Stormpath stores the datetime in `ISO 8601 <http://www.w3.org/TR/NOTE-datetime>`
 
 As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this::
 
-    /v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14]
+    /v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14]
 
 The response would be a Collection of Accounts created between the two days. 
 
@@ -970,30 +972,29 @@ This resource contains information about this Tenant's ID Site. For more informa
 
 .. code-block:: json
 
-  {
-    "href":"https://api.stormpath.com/v1/idSites/1XBJMqDmsNQuOZ18gNCT42",
-    "domainName":"elastic-rebel.id.stormpath.io",
-    "tlsPublicCert":"",
-    "tlsPrivateKey":"",
-    "gitRepoUrl":"https://github.com/stormpath/idsite",
-    "gitBranch":"master",
-    "authorizedOriginUris":[
-      "http://google.com"
-    ],
-    "authorizedRedirectUris":[
-      "http://localhost",
-      "http://limitless-ravine-7645.herokuapp.com/",
-      [...]
-      "http://stormpath.localhost:8001"
-    ],
-    "logoUrl":"http://www.manic.com.sg/blog/images/CocaCola_co.jpg",
-    "sessionTti":"PT5M",
-    "sessionTtl":"PT5M",
-    "sessionCookiePersistent":true,
-    "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbu0KAFKR"
+    {
+      "href":"https://api.stormpath.com/v1/idSites/1XBJMqDmsNQuOZ18gNCT42",
+      "domainName":"elastic-rebel.id.stormpath.io",
+      "tlsPublicCert":"",
+      "tlsPrivateKey":"",
+      "gitRepoUrl":"https://github.com/stormpath/idsite",
+      "gitBranch":"master",
+      "authorizedOriginUris":[
+        "http://google.com"
+      ],
+      "authorizedRedirectUris":[
+        "http://localhost",
+        "http://limitless-ravine-7645.herokuapp.com/",
+        "http://stormpath.localhost:8001"
+      ],
+      "logoUrl":"http://www.manic.com.sg/blog/images/CocaCola_co.jpg",
+      "sessionTti":"PT5M",
+      "sessionTtl":"PT5M",
+      "sessionCookiePersistent":true,
+      "tenant":{
+        "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbu0KAFKR"
+      }
     }
-  }
 
 .. _ref-application:
 
@@ -1135,53 +1136,53 @@ An **Application** resource in Stormpath contains information about any real-wor
 
 .. code-block:: json
 
-    {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
-      "name": "My Application",
-      "description": "This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
-      "status": "ENABLED",
-      "createdAt": "2015-08-18T20:46:36.061Z",
-      "modifiedAt": "2015-08-25T18:11:29.774Z",
-      "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
-      },
-      "defaultAccountStoreMapping": {
-        "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
-      },
-      "defaultGroupStoreMapping": {
-        "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
-      },
-      "customData": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/customData"
-      },
-      "oAuthPolicy": {
-        "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlexaMple"
-      },
-      "accounts": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accounts"
-      },
-      "groups": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/groups"
-      },
-      "accountStoreMappings": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accountStoreMappings"
-      },
-      "loginAttempts": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/loginAttempts"
-      },
-      "passwordResetTokens": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/passwordResetTokens"
-      },
-      "apiKeys": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/apiKeys"
-      },
-      "verificationEmails": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/verificationEmails"
-      },
-      "authTokens": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
-      }  
-    }
+  {
+    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
+    "name": "My Application",
+    "description": "This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
+    "status": "ENABLED",
+    "createdAt": "2015-08-18T20:46:36.061Z",
+    "modifiedAt": "2015-08-25T18:11:29.774Z",
+    "tenant": {
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+    },
+    "defaultAccountStoreMapping": {
+      "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
+    },
+    "defaultGroupStoreMapping": {
+      "href": "https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp"
+    },
+    "customData": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/customData"
+    },
+    "oAuthPolicy": {
+      "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdlexaMple"
+    },
+    "accounts": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accounts"
+    },
+    "groups": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/groups"
+    },
+    "accountStoreMappings": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accountStoreMappings"
+    },
+    "loginAttempts": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/loginAttempts"
+    },
+    "passwordResetTokens": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/passwordResetTokens"
+    },
+    "apiKeys": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/apiKeys"
+    },
+    "verificationEmails": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/verificationEmails"
+    },
+    "authTokens": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
+    }  
+  }
 
 Application Operations
 -----------------------
@@ -3109,6 +3110,8 @@ This query would delete the groupMembership resource.
   --url "https://api.stormpath.com/v1/groupMemberships/57YZCqrNgrzcIGYexaMpLe?expand=account"
 
 This query would retrieve the groupMembership resource with the associate Account expanded inside the JSON.
+
+.. _ref-organization:
 
 Organization  
 ============

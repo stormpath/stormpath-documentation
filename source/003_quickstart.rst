@@ -4,10 +4,6 @@
 3. Quickstart
 *************
 
-.. todo::
-
-  How we do the placeholders here ($PLACEHOLDER_NAME) is inconsistent withe way we do it in the rest of the doc (e.g. :tenantId)
-
 This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath REST API.
 
 This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
@@ -63,7 +59,7 @@ The above cURL command returns an empty body along with a header:
 .. code-block:: http 
   :emphasize-lines: 2
     
-    HTTP/1.1 302 Found
+    HTTP/1.1 302 Found 
     Location: https://api.stormpath.com/v1/tenants/yOuRTeNANtid
     Content-Length: 0
 
@@ -85,7 +81,7 @@ From here, using the location of the Tenant, you can get your Application by per
 The above cURL would return this example response:
 
 .. code-block:: json
-  :emphasize-lines: 2,13,14,22,23
+  :emphasize-lines: 2,12,13,21,22
 
   {
     "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE",
@@ -97,8 +93,7 @@ The above cURL would return this example response:
     "tenant":{
       "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
     },
-    [...]
-    },
+    "comment":" // This JSON has been truncated for readability", 
     "accounts":{
       "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
     },
@@ -111,8 +106,7 @@ The above cURL would return this example response:
     "loginAttempts":{
       "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
     },
-    [...]
-    }
+    "comment":" // This JSON has been truncated for readability"
   }
 
 Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
@@ -138,9 +132,7 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 This would return this response:
 
-.. code-block:: json 
-
-  HTTP/1.1 201 Created
+.. code-block:: json  
 
   {
     "href": "https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple",
@@ -189,7 +181,7 @@ The login cURL command would look as follows:
     "value": "dGs0MjE6Q2hhbmdlbWUx"
     }'
 
-We are sending a **Login Attempt** resource, which has two attributes: ``type`` and ``value``.
+We are sending a :ref:`Login Attempt resource <ref-loginattempts>`, which has two attributes: ``type`` and ``value``.
 
 The ``type`` attribute must equal ``basic``. The ``value`` attribute must equal the result of the following (pseudo code) logic::
 
@@ -221,7 +213,7 @@ If the authentication attempt is successful (the username and password match and
 
 You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
-If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/rest/product-guide/#errors>`_ instead:
+If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/errors/>`_ instead:
 
 .. code-block:: json 
 

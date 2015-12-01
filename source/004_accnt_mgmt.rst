@@ -4,10 +4,6 @@
 4. Account Management
 **********************
 
-.. todo::
-
-  Make sure the code-block directive is used throughout.
-
 a. Modeling Your User Base
 ===========================
 
@@ -22,7 +18,7 @@ i. Directories
     
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
-For more detailed information about the Directory resource, please see :ref:`ref-directory` in the Reference chapter.
+For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -49,9 +45,12 @@ The standard, default Directory resource. They can be created using a simple POS
 How to Make a Cloud Directory
 """""""""""""""""""""""""""""
 
-The following API request::
+The following API request:
 
-  POST https://api.stormpath.com/v1/directories
+.. code-block:: http
+
+  POST /v1/directories HTTP/1.1
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -59,25 +58,30 @@ The following API request::
     "description" : "Captains from a variety of stories"
   }
 
-Would yield the following response::
+Would yield the following response:
+
+.. code-block:: HTTP 
+
+  HTTP/1.1 201 Created
+  Location: https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpbCDRb2Q
+  Content-Type: application/json;charset=UTF-8
 
   {
-    "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp",
+    "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE",
     "name": "Captains",
     "description": "Captains from a variety of stories",
     "status": "ENABLED",
     "createdAt": "2015-08-24T15:32:23.079Z",
     "modifiedAt": "2015-08-24T15:32:23.079Z",
     "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
     },
     "provider": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/provider"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/provider"
     },
-      [...]
-    },
+    "comment":" // This JSON has been truncated for readability",
     "groups": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/groups"
     }
   }
 
@@ -117,7 +121,7 @@ In this scenario, we recommend linking each Account in a LDAP Mirror Directory w
 
 3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in AD/LDAP. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples
 
-The Stormpath Agent (see :ref:`below <ref-ldap-agent>`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
+The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`mirror-dir-authn`.
 
@@ -126,91 +130,7 @@ For more information on how to this works, please see :ref:`mirror-dir-authn`.
 How to Make a Mirror Directory
 """"""""""""""""""""""""""""""
 
-Presently, Mirror Directories be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with REST APIs, read on. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
-
-To make a Mirror Directory, you must HTTP POST a new Directory resource to the `/directories` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``"ldap"``. This Provider resource will in turn contain an LDAP :ref:`ref-ldap-agent` object::
-
-  {
-    "name":"My LDAP Directory",
-    "description":"An LDAP Directory created with the Stormpath API",
-    "provider":{
-      "providerId":"ldap",
-      "agent":{
-        "config":{
-          "directoryHost":"ldap.local",
-          "directoryPort":"636",
-          "sslRequired":true,
-          "agentUserDn":"tom@stormpath.com",
-          "agentUserDnPassword":"StormpathRulez",
-          "baseDn":"dc=example,dc=com",
-          "pollInterval":60,
-          "referralMode":"ignore",
-          "ignoreReferralIssues":false,
-          "accountConfig":{
-            "dnSuffix":"ou=employees",
-            "objectClass":"person",
-            "objectFilter":"(cn=finance)",
-            "emailRdn":"email",
-            "givenNameRdn":"givenName",
-            "middleNameRdn":"middleName",
-            "surnameRdn":"sn",
-            "usernameRdn":"uid",
-            "passwordRdn":"userPassword"
-          },
-          "groupConfig":{
-            "dnSuffix":"ou=groups",
-            "objectClass":"groupOfUniqueNames",
-            "objectFilter":"(ou=*-group)",
-            "nameRdn":"cn",
-            "descriptionRdn":"description",
-            "membersRdn":"uniqueMember"
-          }
-        }
-      }
-    }
-  }
-
-
-Installing Your Agent
-+++++++++++++++++++++
-
-Installing your Agent is done in three steps.
-
-1. Download 
-
-Download your Agent by following the ``download`` link.
-   
-2. Configure 
-   
-a. Make sure Java 1.8 is installed
-
-b. Unzip to a location in your file system, for example ``C:\stormpath\agent`` in Windows or ``/opt/stormpath/agent`` in Unix.
-
-In the same location, open the file ``dapper.properties`` from the config folder and replace this line::
-
-  agent.id = PutAgentSpecificIdHere
-
-With this line::
-
-  agent.id  = 72MlbWz6C4dLo1oBhgjjTt
-
-Follow the instructions in the ``dapper.properties`` file to reference your account's API authentication.
-   
-3. Start
-
-In Windows::
-
-  (cd to your agent directory, for example C:\stormpath\agent)
-  C:\stormpath\agent>cd bin
-  C:\stormpath\agent\bin>startup.bat
-
-In Unix::
-
-  (cd to your agent directory, for example /opt/stormpath/agent)
-  $ cd bin
-  $ startup.sh
-
-The Agent will start synchronizing immediately, pushing the configured data to Stormpath. You will see the synchronized user Accounts and Groups appear in the Stormpath Directory, and the Accounts will be able to log in to any Stormpath-enabled application that you assign. When the Agent detects local changes, additions or deletions to the mirrored Accounts or Groups, it will automatically propagate those changes to Stormpath.
+Presently, Mirror Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`mirror-dir-authn`. 
 
 .. _about-social-dir:
     
@@ -224,9 +144,7 @@ Stormpath also simplifies the authorization process by doing things like automat
 Modeling Social Directories
 """""""""""""""""""""""""""
 
-Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. So, the default Stormpath behavior is: a new user visits your site, and chooses to "Sign-in with Google". Once they log in to their Google account and go through the OpenID flow, a new user Account is created in your Google Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Google Directory. If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
-
-This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
+Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. For more about how these Directories are provisioned, please see :ref:`non-cloud-login`.
 
 .. note::
 
@@ -235,16 +153,16 @@ This approach has two major benefits: It allows for a user to have one unified i
 How to Make a Social Directory
 """"""""""""""""""""""""""""""
 
-Presently, Social Directories can only be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
+Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
 
 .. _group-mgmt:
 
 ii. Groups
 ----------
 
-.. todo::
+The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by the their role within a company. 
 
-  This needs some kind of lead in, as well as a link to the relevant Reference section.
+For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter. 
 
 .. _hierarchy-groups:
 
@@ -272,9 +190,12 @@ How to Create a Group
 
 So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory. 
 
-The following API request::
+The following API request:
 
-  POST https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/groups
+.. code-block:: http    
+
+  POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -283,51 +204,54 @@ The following API request::
     "status" : "enabled"
   }
 
-Would yield this response::
+Would yield this response:
 
+.. code-block:: http 
+
+  HTTP/1.1 201 Created
+  Location: https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe
+  Content-Type: application/json;charset=UTF-8
+  
   {
-    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc",
+    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe",
     "name":"Starfleet Officers",
     "description":"Commissioned officers in Starfleet",
     "status":"ENABLED",
     "createdAt":"2015-08-25T20:09:23.698Z",
     "modifiedAt":"2015-08-25T20:09:23.698Z",
     "customData":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/customData"
+      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/customData"
     },
     "directory":{
-      "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
     },
     "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
     },
     "accounts":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accounts"
+      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accounts"
     },
     "accountMemberships":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships"
+      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accountMemberships"
     },
     "applications":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc/applications"
+      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/applications"
     }
   }
-
 
 .. _account-creation:
 
 b. How to Store Accounts in Stormpath
 =====================================
 
-.. todo::
+The Account resource is a unique identity within your application. It is usually used to model an end-user, although it can also be used by a service, process, or any other entity that needs to log-in to Stormpath.
 
-  This needs some kind of lead in, as well as a link to the relevant Reference section.
+For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.  
 
 New Account Creation
 --------------------
 
-.. todo:: Change this link to an appropriate section in the Reference chapter.
-
-The basic steps for creating a new Account are covered in the :doc:`Quickstart</003_quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
 
 .. _add-new-account:
 
@@ -340,9 +264,12 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
 
-Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8Plaekcai8lghrp``. The following API request::
+Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
-  POST https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts
+.. code-block:: http 
+
+  POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
+  Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -363,10 +290,16 @@ Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captai
 
   On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
-Would yield this response::
+Would yield this response:
+
+.. code-block:: http 
+
+  HTTP/1.1 201 Created
+  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
+  Content-Type: application/json;charset=UTF-8
 
   {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
     "username": "jlpicard",
     "email": "capt@enterprise.com",
     "givenName": "Jean-Luc",
@@ -378,43 +311,51 @@ Would yield this response::
     "modifiedAt": "2015-08-25T19:57:05.976Z",
     "emailVerificationToken": null,
     "customData": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
     },
     "providerData": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/providerData"
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/providerData"
     },
-    [...]
-    }
+    "comment":" // This JSON has been truncated for readability"
   }
-
 
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       
-So let's say we want to add "Jean-Luc Picard" to "Starfleet Officers" Group inside the "Captains" Directory.
+So let's say we want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
 
-We make the following request::
+We make the following request:
 
+.. code-block:: http 
+
+  POST /v1/groupMemberships HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+  
   {
     "account" : {
-        "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+        "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
      },
      "group" : {
-         "href" : "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc"
+         "href" : "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
      }
   }
 
-And get the following response::
+And get the following response:
+
+.. code-block:: http
 
   HTTP/1.1 201 Created
+  Location: https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0
+  Content-Type: application/json;charset=UTF-8
 
   {
     "href": "https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0",
     "account": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
     },
     "group": {
-      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJKqFWhDc"
+      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
     }
   }
 
@@ -431,7 +372,7 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
 .. note::
 
-  To import user accounts from an LDAP or Social Directory, please see the :ref:`above section <make-mirror-dir>`.
+  To import user accounts from an LDAP or Social Directory, please see :ref:`non-cloud-login`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
    
@@ -440,7 +381,7 @@ Importing Accounts with Plaintext Passwords
 
 In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
 
-  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?registrationWorkflowEnabled=false
+  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkflowEnabled=false
 
 .. _importing-mcf:
 
@@ -459,12 +400,12 @@ Supported Hashing Algorithms
 
 Stormpath only supports password hashes that use the following algorithms:
 
-- bcrypt: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
-- stormpath2: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
+- **bcrypt**: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
+- **stormpath2**: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
   
 Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
-  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbRvLk9KA/accounts?passwordFormat=mcf
+  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?passwordFormat=mcf
 
 .. _stormpath2-hash:
 
@@ -516,20 +457,28 @@ One example of this could be if we wanted to add information to our "Jean-Luc Pi
 
 For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint. 
 
-So if we were to POST the following REST API::
+So if we were to send following REST call:
 
-  https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData
+.. code-block:: http
 
-With the following payload::
+  POST /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
   {
     "currentAssignment": "USS Enterprise (NCC-1701-E)"
   }
 
-We would get this response::
+We would get this response:
+
+.. code-block:: http  
+
+  HTTP/1.1 201 Created
+  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
+  Content-Type: application/json;charset=UTF-8
 
   {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData",
     "createdAt": "2015-08-25T19:57:05.976Z",
     "modifiedAt": "2015-08-26T19:25:27.936Z",
     "currentAssignment": "USS Enterprise (NCC-1701-E)"
@@ -564,11 +513,13 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, simply HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
 
-This call::
+This call:
 
-  https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength
+.. code-block:: http
 
-with this body::
+  POST v1/passwordPolicies/$DIRECTORY_ID/strength HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
   {
     "minLength": 1,
@@ -576,7 +527,13 @@ with this body::
     "minSymbol": 1
   }
 
-would result in the following response::
+would result in the following response:
+
+.. code-block:: http
+
+  HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength
+  Content-Type: application/json;charset=UTF-8
 
   {
     "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength", 
@@ -653,7 +610,7 @@ If this is a valid email in an Account associated with this Application, you wil
 
 .. code-block:: http
 
-  HTTP/1.1 200 OK 
+  HTTP/1.1 200 OK
   Content-Type: application/json
 
   {
@@ -690,7 +647,7 @@ Once the user clicks this link, your controller should retrieve the token from t
 
   GET /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
   Host: api.stormpath.com
-  Content-Type: application/json
+  Content-Type: application/json;charset=UTF-8
 
 This would result in the exact same ``HTTP 200`` success response as when the token was first generated above.
 
@@ -702,7 +659,7 @@ After a successful GET with the query string token, you can direct the user to a
 
   POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
   Host: api.stormpath.com
-  Content-Type: application/json
+  Content-Type: application/json;charset=UTF-8
 
   {
     "password": "updated+Password1234"
@@ -726,7 +683,7 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
   POST /v1/passwordPolicies/$DIRECTORY_ID HTTP/1.1
   Host: api.stormpath.com
-  Content-Type: application/json
+  Content-Type: application/json;charset=UTF-8
 
   {
       "resetEmailStatus": "ENABLED"
@@ -794,19 +751,24 @@ The token you capture from the query string is used to form the full ``href`` fo
 
   /v1/accounts/emailVerificationsToken/:verificationToken
 
-To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point::
+To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
-  POST https://api.stormpath.com/v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl
+.. code-block:: http 
+
+  POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
 Which will return a result that looks like this:
 
 .. code-block:: http 
 
   HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V
   Content-Type: application/json;charset=UTF-8;
 
   {
-    href: "https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V"
+    "href": "https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V"
   }
 
 If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
@@ -828,7 +790,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
   POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
   Host: api.stormpath.com
-  Content-Type: application/json
+  Content-Type: application/json;charset=UTF-8
 
   {
     "login": "email@address.com"
