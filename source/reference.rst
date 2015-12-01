@@ -11,11 +11,11 @@ This section covers the Core Concepts of the Stormpath REST API, as well as serv
 REST API Core Concepts
 ======================
 
+The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this guide.
+
 .. contents::
     :local:
     :depth: 2
-
-The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this guide.
 
 Base URL
 --------
@@ -38,8 +38,6 @@ Every request to the Stormpath REST API must be authenticated with an **API key*
 
 When you have an API key, you can choose one of two ways to authenticate with Stormpath:
 
-When you have an API key, you can choose one of two ways to authenticate with Stormpath:
-
 - HTTP Basic authentication
 - Digest authentication
 
@@ -53,7 +51,7 @@ When using an API key with Basic authentication, the API key ID is the username 
 **HTTP basic username:** apiKey.id value
 **HTTP basic password:** apiKey.secret value
 
-For example, if using curl:
+For example, if using cUrl:
 
 .. code-block:: bash
 
@@ -85,17 +83,17 @@ If you port the algorithm to other languages, please let us know. We are happy t
 
 .. note::
 
-    The Stormpath SAuthc1 digest algorithm is NOT the same as `RFC 2617 <http://www.ietf.org/rfc/rfc2617.txt>`_ HTTP Digest authentication. The Stormpath SAuthc1 digest-based authentication scheme is more secure than standard HTTP Digest authentication.
+    The Stormpath SAuthc1 digest algorithm is not the same as `RFC 2617 <http://www.ietf.org/rfc/rfc2617.txt>`__ HTTP Digest authentication. The Stormpath SAuthc1 digest-based authentication scheme is more secure than standard HTTP Digest authentication.
 
 Creating, Retrieving, Updating, and Deleting Resources
 ------------------------------------------------------
 
-Stormpath entities have a full set of creation, retrieval, update and deletion (CRUD) actions associated with them. Here we give some information about all of these actions. For a complete description of every resource and the actions that can be performed with it, please see the `REST API Product Guide <http://docs.stormpath.com/rest/product-guide/>`. 
+Stormpath entities have a full set of creation, retrieval, update and deletion actions associated with them. Here we give some information about all of these actions. For a complete description of every resource and the actions that can be performed with it, please see the :ref:`below <ref-tenant>`. 
 
 Creating Resources
 ^^^^^^^^^^^^^^^^^^
 
-You create a resource by submitting an HTTP **POST** to a resource URI. Any POST body must be represented as **JSON**. Requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
+You create a resource by submitting an HTTP **POST** to a resource URL. Any POST body must be represented as **JSON**. Requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
 
 Responses to your create POST calls will contain: 
 
@@ -115,7 +113,7 @@ Responses to your create POST calls will contain:
       - Description
         
     * - ``201 CREATED``
-      - The request was successful, we created a new resource, and the response body contains the representation. The ``Location`` header contains the new resource’s canonical URI.
+      - The request was successful, we created a new resource, and the response body contains the representation. The ``Location`` header contains the new resource’s canonical URL.
 
     * - ``400 BAD REQUEST``
       - The data given in the POST failed validation. Inspect the response body for details.
@@ -127,7 +125,7 @@ Responses to your create POST calls will contain:
       - The supplied authentication credentials are not sufficient to access the resource.
 
     * - ``404 NOT FOUND``
-      - We could not locate the resource based on the specified URI.
+      - We could not locate the resource based on the specified URL.
 
     * - ``405 METHOD NOT ALLOWED``
       - POST is not supported for the resource.
@@ -171,7 +169,7 @@ Responses to your GET calls will contain:
       - The request was successful and the response body contains the resource requested.
       
     * - ``302 FOUND``
-      - A common redirect response; you can GET the resource at the URI found in the ``location`` response header.
+      - A common redirect response; you can GET the resource at the URL found in the ``location`` response header.
 
     * - ``304 NOT MODIFIED``
       - Your client's cached version of the representation is still up-to-date.
@@ -186,7 +184,7 @@ Responses to your GET calls will contain:
       - The supplied authentication credentials are not sufficient to access the resource.
 
     * - ``404 NOT FOUND``
-      - We could not locate the resource based on the specified URI.
+      - We could not locate the resource based on the specified URL.
 
     * - ``429 TOO MANY REQUESTS``
       - Your application is sending too many simultaneous requests.
@@ -200,7 +198,7 @@ Responses to your GET calls will contain:
 Updating Resources
 ^^^^^^^^^^^^^^^^^^
 
-If you want to update a resource, submit an HTTP POST to the resource's URI. Any POST body must be represented as JSON. You must submit at least one attribute. As with the creation POST calls, requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
+If you want to update a resource, submit an HTTP POST to the resource's URL. Any POST body must be represented as JSON. You must submit at least one attribute. As with the creation POST calls, requests that contain body content must specify the HTTP ``Content-Type`` header with a value of ``application/json``.
 
 Responses to your update POST calls will contain: 
 
@@ -230,7 +228,7 @@ Responses to your update POST calls will contain:
       - The supplied authentication credentials are not sufficient to access the resource.
 
     * - ``404 NOT FOUND``
-      - We could not locate the resource based on the specified URI.
+      - We could not locate the resource based on the specified URL.
 
     * - ``405 METHOD NOT ALLOWED``
       - POST is not supported for the resource.
@@ -261,7 +259,6 @@ To delete a resource, make an HTTP DELETE request to the resource URL. Note that
 
       "https://api.stormpath.com/v1/applications/$APPLICATION_ID?_method=DELETE"
 
-
 **DELETE Response Status Codes:**
 
 .. list-table::
@@ -281,7 +278,7 @@ To delete a resource, make an HTTP DELETE request to the resource URL. Note that
       - The supplied authentication credentials are not sufficient to access the resource.
 
     * - ``404 NOT FOUND``
-      - We could not locate the resource based on the specified URI.
+      - We could not locate the resource based on the specified URL.
 
     * - ``405 METHOD NOT ALLOWED``
       - DELETE is not supported for the resource.
@@ -380,7 +377,7 @@ This would result in the following response:
 .. _about-sorting:
 
 Sorting
-^^^^^^^^^^
+^^^^^^^
 A request for a Collection Resource can contain an optional ``orderBy`` query parameter. The query parameter value is a URL-encoded comma-delimited list of ordering statements. Each ordering statement identifies a **sortable attribute**, and whether you would like the sorting to be **ascending or descending**.
 
 For example, a sorted request (where %2C is the URL encoding for the comma character) might look like this:
@@ -417,7 +414,7 @@ Which would look like this::
 
 Properly URL encoded it would look like this::
 
-    https://api.stormpath.com/v1/applications/someRandomId/accounts?orderBy=surname%20asc%2CgivenName%20desc
+    https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?orderBy=surname%20asc%2CgivenName%20desc
 
 .. note::
 
@@ -428,7 +425,7 @@ Properly URL encoded it would look like this::
 .. _about-search:
 
 Search 
-^^^^^^^^^^
+^^^^^^
 
 Search in the contest of the Stormpath REST API means retrieving only the members of a Collection that match a specific query. You search by sending a GET for a Collection, along with query parameters, and Stormpath returns only the resources from the Collection that match your parameters. 
 
@@ -447,7 +444,7 @@ Filter Search
 
 A filter search consists of specifying a query parameter ``q`` and a corresponding search value on a Collection Resource URL::
 
-    /v1/someCollection?q=some+criteria
+    /v1/RESOURCE_TYPE?q=some+criteria
 
 For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe":
     
@@ -456,12 +453,10 @@ For example, to search across an Application’s Accounts for any Account that h
       curl --request GET \
       --user $API_KEY_ID:$API_KEY_SECRET \
       --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/applications/someAppId/accounts?q=Joe"
+      --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?q=Joe"
 
 Matching Logic
 ++++++++++++++
-
-A resource will return for a filter search when the following criteria are met:
 
 Stormpath will perform a case-insensitive matching query on all viewable attributes in all the resources in the Collection. Note that "viewable" means that the attribute can be viewed by the current caller.
 
@@ -480,7 +475,7 @@ Returns all Accounts where:
 - The Account's ``givenName`` equals or contains "joe" (case insensitive) OR
 - The Account's ``middlename`` equals or contains "joe" (case insensitive) OR
 - The Account's ``email`` equals or contains "joe" (case insensitive) OR
-- And so on. For more information about which Account attributes are searchable, please see [here]
+- And so on. For more information about which Account attributes are searchable, please see :ref:`below <searchable-attributes>`.
 
 It may help to think about each attribute comparison as similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
 
@@ -496,11 +491,11 @@ Attribute Search
 
 In the above example, our query returned all Accounts that had any searchable attribute with the query in it. It is also possible to tell Stormpath to only return matches from a particular attribute::
 
-    /v1/someCollection?anAttribute=someValue&anotherAttribute=anotherValue
+    /v1/$RESOURCE_TYPE?anAttribute=someValue&anotherAttribute=anotherValue
 
 For example, to search an Application’s Accounts for an Account with a ``givenName`` of ``Joe``::
 
-    /v1/applications/someAppId/accounts?givenName=Joe
+    /v1/applications/$APPLICATION_ID/accounts?givenName=Joe
 
 .. _searchable-attributes:
 
@@ -523,7 +518,7 @@ The following attributes can be filtered by and searched for:
       - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
     * - Account 
-      - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``createdAt``, ``modifiedAt`` 
+      - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``status``, ``createdAt``, ``modifiedAt`` 
 
     * - Group 
       - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
@@ -534,7 +529,7 @@ The following attributes can be filtered by and searched for:
 Matching Logic
 ++++++++++++++
 
-Attribute-based queries use standard URI query parameters and function as follows:
+Attribute-based queries use standard URL query parameters and function as follows:
 
 - Each query parameter name is the same name of a :ref:`searchable attribute <searchable-attributes>` on an instance in the Collection Resource.
 
@@ -565,7 +560,7 @@ Returns all accounts where:
 
 .. note::
 
-    For resources with a ``status`` attribute, status query values must be the exact value. For example, ``enabled`` or ``disabled`` must be passed, while fragments such as ``ena``, ``dis``, ``bled`` are not acceptable.
+    For resources with a ``status`` attribute, status query values must be the exact value. For example, ``ENABLED`` or ``DISABLED`` must be passed, while fragments such as ``ena``, ``dis``, ``bled`` are not acceptable.
 
 .. _search-datetime:
 
@@ -609,7 +604,7 @@ Exclusion vs Inclusion
 
 The square brackets [] denote **inclusion**, but ``createdAt`` and ``modifiedAt`` also support **exclusion** with parentheses (). For example, if you wanted to get all accounts created between Jan 12, 2015 and Jan 14, 2015 not including the 14th, your request would look like this::
 
-    v1/applications/MYNK0ruvbKziwc/accounts?createdAt=[2015-01-12, 2015-01-14)
+    v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14)
 
 Precision
 +++++++++
@@ -660,7 +655,7 @@ The ``href`` attribute is the fully qualified location URL of the linked resourc
 
 When requesting a resource you might want the Stormpath API server to return not only that resource, but also one or more of its linked resources. Link expansion allows you to retrieve related resources in a single request to the server instead of having to issue multiple separate requests.
 
-To expand one or more links, simply add an ``expand`` query parameter with one or more comma-delimited attributes to the resource URI::
+To expand one or more links, simply add an ``expand`` query parameter with one or more comma-delimited attributes to the resource URL::
 
     https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=directory,tenant
 
@@ -933,12 +928,12 @@ This resource contains information about this Tenant's ID Site. For more informa
       - N/A
       - If you are customizing the ID Site code, you will need to put the branch name of the custom code here.
     
-    * - ``authorizedOriginUris``
+    * - ``authorizedOriginURLs``
       - Array (String)
       - N/A
       - An array of URLs where the ID Site requests can originate from, used for local development or custom domain names.
     
-    * - ``authorizedRedirectUris``
+    * - ``authorizedRedirectURLs``
       - Array (String)
       - N/A
       - An array of URLs that the user can be sent to after they log in or register at the ID Site.
@@ -979,10 +974,10 @@ This resource contains information about this Tenant's ID Site. For more informa
       "tlsPrivateKey":"",
       "gitRepoUrl":"https://github.com/stormpath/idsite",
       "gitBranch":"master",
-      "authorizedOriginUris":[
+      "authorizedOriginURLs":[
         "http://google.com"
       ],
-      "authorizedRedirectUris":[
+      "authorizedRedirectURLs":[
         "http://localhost",
         "http://limitless-ravine-7645.herokuapp.com/",
         "http://stormpath.localhost:8001"
@@ -1045,8 +1040,8 @@ An **Application** resource in Stormpath contains information about any real-wor
 
     * - ``status`` 
       - String (Enum)
-      - ``enabled`` (Default) ``disabled``
-      - ``enabled`` applications allow mapped Accounts to log in. ``disabled`` Applications prevent mapped Accounts from logging in.
+      - ``ENABLED`` (Default), ``DISABLED``
+      - ``ENABLED`` applications allow mapped Accounts to log in. ``DISABLED`` Applications prevent mapped Accounts from logging in.
 
     * - ``createdAt``
       - String 
@@ -1564,7 +1559,7 @@ In Stormpath, you control who may log in to an Application by associating (or 'm
 - Directory
 - Group 
 
-An individual Account Store Mapping resource may be accessed via its Resource URI:
+An individual Account Store Mapping resource may be accessed via its Resource URL:
 
 **accountStoreMapping URL**
 
@@ -1584,12 +1579,12 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URI.
+      - The resource's fully qualified location URL.
         
     * - ``listIndex``
       - Number
       - 0 <= N < list size
-      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+      - The order (priority) in which the associated Account Store will be consulted by the Application dURLng an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
         
     * - ``isDefaultAccountStore``
       - String (boolean)
@@ -1749,14 +1744,14 @@ Directory
 
 **Description**
 
-The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
+The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages secURLty policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own secURLty policies.
 
 Additionally:
 
 - All Account resources within a Directory have a unique ``email`` and ``username``.
 - All Group resources within a Directory have a unique ``name``.
   
-An individual Directory resource may be accessed via its Resource URI:
+An individual Directory resource may be accessed via its Resource URL:
 
 **Directory URL**
 
@@ -1790,7 +1785,7 @@ An individual Directory resource may be accessed via its Resource URI:
   
   * - ``status``
     - String (Enum)
-    - ``enabled`` , ``disabled``
+    - ``ENABLED`` , ``DISABLED``
     - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
 
   * - ``createdAt``
@@ -2052,18 +2047,18 @@ A Directory’s Account Creation Policy resource contains data and attributes th
 
   * - ``verificationEmailStatus``
     - String
-    - ``enabled``, ``disabled`` 
-    - The status of the verification email workflow. If this is set to ``enabled``, Stormpath will send an email to a newly registered user to have them verify their email. The email sent is configurable through the ``verificationEmailTemplates`` attribute.
+    - ``ENABLED``, ``DISABLED`` 
+    - The status of the verification email workflow. If this is set to ``ENABLED``, Stormpath will send an email to a newly registered user to have them verify their email. The email sent is configurable through the ``verificationEmailTemplates`` attribute.
 
   * - ``verificationSuccessEmailStatus``
     - String
-    - ``enabled``, ``disabled`` 
-    - The status of the verification success email. If this is set to ``enabled``, Stormpath will send an email to a newly verified user to let them know that they have successfully verified their email. The email sent is configurable through the ``verificationSuccessEmailTemplates`` attribute.
+    - ``ENABLED``, ``DISABLED`` 
+    - The status of the verification success email. If this is set to ``ENABLED``, Stormpath will send an email to a newly verified user to let them know that they have successfully verified their email. The email sent is configurable through the ``verificationSuccessEmailTemplates`` attribute.
 
   * - ``welcomeEmailStatus``
     - String
-    - ``enabled``, ``disabled`` 
-    - The status of the welcome email. If this is set to ``enabled``, Stormpath will send an email to a newly registered user (if ``verificationEmailStatus`` is set to ``disabled``) or a newly verified user (if ``verificationEmailStatus`` is set to ``enabled``). The email sent is configurable through the ``welcomeEmailTemplates`` attribute.
+    - ``ENABLED``, ``DISABLED`` 
+    - The status of the welcome email. If this is set to ``ENABLED``, Stormpath will send an email to a newly registered user (if ``verificationEmailStatus`` is set to ``DISABLED``) or a newly verified user (if ``verificationEmailStatus`` is set to ``ENABLED``). The email sent is configurable through the ``welcomeEmailTemplates`` attribute.
 
   * - ``verificationEmailTemplates``
     - Link 
@@ -2130,12 +2125,12 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``resetTokenTtl``
     - Number
     - A positive integer, less than 169 (0 < i < 169). Default is 24.
-    - An integer that defines how long the password reset token is valid for during the password reset email workflow.
+    - An integer that defines how long the password reset token is valid for dURLng the password reset email workflow.
     
   * - ``resetEmailStatus``
     - String
-    - ``enabled`` or ``disabled``
-    - The status of the reset email workflow. If this is set to ``enabled``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
+    - ``ENABLED`` or ``DISABLED``
+    - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
         
   * - ``strength``
     - String (Link)
@@ -2149,8 +2144,8 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     
   * - ``resetSuccessEmailStatus``
     - String
-    - ``enabled`` or ``disabled``
-    - The status of the reset success email. If this is set to ``enabled``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
+    - ``ENABLED`` or ``DISABLED``
+    - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
     
   * - ``resetSuccessEmailTemplates``
     - String (Link)
@@ -2345,7 +2340,7 @@ Provider
 
 The Provider resource contains information about the source of the information found in its associated Directory resource. 
 
-For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URI:
+For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URL:
 
 **Provider URL**
 
@@ -2392,7 +2387,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - N/A
     - The OAuth 2.0 Client Secret for this Provider. Only used for Social providers.
   
-  * - ``redirectUri``
+  * - ``redirectURL``
     - String 
     - A valid URL
     - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
@@ -2421,7 +2416,7 @@ LDAP Agent
 
 :ref:`Mirror Directories <about-mirror-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
-An Agents collection may be accessed via its Resource URI:
+An Agents collection may be accessed via its Resource URL:
 
 **Agent URL**
 
@@ -2720,7 +2715,7 @@ Group
 
 **Groups** are collections of Accounts found within a Directory. They can be thought of as labels applied to Accounts. Aside from the relatively simple task of grouping together Accounts, Groups can also be used to implement "roles" for authorization purposes. For more information about this, please see :ref:`role-groups`. 
 
-An individual Group resource may be accessed via its Resource URI:
+An individual Group resource may be accessed via its Resource URL:
 
 **Group URL**
 
@@ -2754,8 +2749,8 @@ An individual Group resource may be accessed via its Resource URI:
 
   * - ``status``
     - String (Enum)
-    - ``enabled``, ``disabled``
-    - ``enabled`` Groups are able to authenticate against an Application. ``disabled`` Groups cannot authenticate against an Application.
+    - ``ENABLED``, ``DISABLED``
+    - ``ENABLED`` Groups are able to authenticate against an Application. ``DISABLED`` Groups cannot authenticate against an Application.
 
   * - ``createdAt``
     - String 
@@ -3129,7 +3124,7 @@ The Organization resource is two things:
 
 Organizations are primarily intended to represent "tenants" in multi-tenant applications. For more information about multitenancy in Stormpath, see the :ref:`multitenancy` chapter. 
 
-An individual Organization resource may be accessed via its Resource URI:
+An individual Organization resource may be accessed via its Resource URL:
 
 **Organization URL**
 
@@ -3401,7 +3396,7 @@ An **Account** is a unique identity within a Directory, with a unique ``username
 
 An Account can log in to an Application using either the ``email`` or ``username``. Accounts can represent your end users (people), but they can also be used to represent services, daemons, processes, or any “entity” that needs to log in to a Stormpath-enabled application. Additionally, an Account may only exist in a single Directory but may be in multiple Groups owned by that Directory. 
 
-An individual Account resource may be accessed via its Resource URI:
+An individual Account resource may be accessed via its Resource URL:
 
 **Account URL**
 
@@ -3460,8 +3455,8 @@ An individual Account resource may be accessed via its Resource URI:
    
   * - ``status``
     - String (Enum)
-    - ``enabled``, ``disabled``, ``unverified``
-    - ``enabled`` Accounts are able to log in to their assigned Applications, ``disabled`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.  
+    - ``ENABLED``, ``DISABLED``, ``unverified``
+    - ``ENABLED`` Accounts are able to log in to their assigned Applications, ``DISABLED`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.  
   
   * - ``createdAt``
     - String 
@@ -3655,7 +3650,7 @@ Delete an Account
 
 .. warning::
 
-  Be careful deleting an Account for a single application’s needs - ensure that the deletion is OK for any and all applications that may be associated with the Account. More often than not it is advisable to simply update the Account's ``status`` to ``disabled``.
+  Be careful deleting an Account for a single application’s needs - ensure that the deletion is OK for any and all applications that may be associated with the Account. More often than not it is advisable to simply update the Account's ``status`` to ``DISABLED``.
         
 
 Example Queries
@@ -3748,7 +3743,7 @@ This collection stores any API Keys that have been generated for this Account.
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URI.
+      - The resource's fully qualified location URL.
       
     * - ``id``
       - String
@@ -3762,7 +3757,7 @@ This collection stores any API Keys that have been generated for this Account.
     
     * - ``status``
       - String (Enum)
-      - ``enabled`` or ``disabled``
+      - ``ENABLED`` or ``DISABLED``
       - Indicates whether this API Key is enabled or not.
     
     * - ``account`` 
@@ -3889,7 +3884,7 @@ This collection stores any OAuth 2.0 Access Tokens that have been generated for 
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URI.
+      - The resource's fully qualified location URL.
      
     * - ``createdAt``
       - String
@@ -3979,7 +3974,7 @@ This collection stores any OAuth 2.0 Refresh Tokens that have been generated for
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URI.
+      - The resource's fully qualified location URL.
      
     * - ``createdAt``
       - String
@@ -4183,7 +4178,7 @@ The customData resource has three reserved read-only fields:
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URI.
+      - The resource's fully qualified location URL.
       
     * - ``createdAt``
       - String

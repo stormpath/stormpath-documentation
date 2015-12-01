@@ -9,16 +9,16 @@ This section will provide you with a quick introduction to Authorization with St
 a. What is Authorization?
 =========================
 
-Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. Going back to the airport example from the last chapter, Perhaps the most accessible example of this process is at the airport, once a security person has checked your passport to make sure that you are who you say you are, a separate person later checks that you are allowed to actually board a specific flight.
+Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. 
 
 Once a user has entered in a valid login and password (authentication), there are the permission checks (authorization) that can be performed which dictate what access rights they have to your system resources. Going back to our airport scenario, once you have proven who you are with your passport, the airline also checks that you are permitted to board the plane by checking that you have a valid boarding pass. 
 
-One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. Put differently, part of modeling authorization is determining whether you will define a permission around your users, or around the resources that they are accessing. To go back to our airport scenario, we can imagine the airline has two options. 
+One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. To go back to our airport scenario, we can imagine the airline has two options. 
 
 i. Simple Authorization
 -----------------------
 
-First, the airline can have at the gate a master list of all passengers who are allowed to board the plane. This is equivalent to hard-coding permission checks into your application, and then tying them in some way to a user. This means that your authorization logic can be based on checks of a user's particular identity (e.g. ``if (user("jsmith") {...``) or their membership in a particular Group (e.g. ``if (user.group("passengers") {...``).  This simple authorization is perfectly sufficient for many applications, but has some downsides. One downside is that it can result in authorization rules that are much difficult to change dynamically. Another downside is that any change in authorization rules can end-up requiring a lot of refactoring of code, test cases, etc. A more dynamic and powerful way of handling authorization is through the use of permissions.
+First, the airline can have at the gate a master list of all passengers who are allowed to board the plane. This is equivalent to hard-coding permission checks into your application, and then tying them in some way to a user. This means that your authorization logic can be based on checks of a user's particular identity (e.g. ``if (user("jsmith") {...``) or their membership in a particular Group (e.g. ``if (user.group("passengers") {...``).  This simple authorization is perfectly sufficient for many applications, but has some downsides. One downside is that it can result in authorization rules that are more difficult to change dynamically. Another downside is that any change in authorization rules can end-up requiring a lot of refactoring of code, test cases, etc. A more dynamic and powerful way of handling authorization is through the use of permissions.
 
 ii. Permissions-based Authorization
 -----------------------------------
@@ -27,7 +27,7 @@ Permissions, at their most basic, are statements of functionality that define a 
 
 .. todo::
 
-  A concrete example of this advantage NEEDS to be included here.  
+  This could use a concrete example. 
 
 b. Modeling Authorization in Stormpath
 ======================================

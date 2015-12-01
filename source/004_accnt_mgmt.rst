@@ -491,11 +491,170 @@ For more information about the customData resource, please see the `customData s
 c. How to Search Accounts
 =========================
 
-You can search Stormpath Accounts, just like all Resource Collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
+You can search Stormpath Accounts, just like all Resource collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
 
-.. todo::
+Search can be performed against one of the collections of Accounts associated with other entities:
 
-  This needs some added examples.
+``/v1/applications/$APPLICATION_ID/accounts``
+
+``/v1/directories/$DIRECTORY_ID/accounts``
+
+``/v1/groups/$GROUP_ID/accounts``
+
+``/v1/organizations/$ORGANIZATION_ID/accounts``
+
+As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are: 
+
+- ``givenName``
+- ``middleName``
+- ``surname``
+- ``username``
+- ``email``
+- ``status``
+
+Example Account Searches
+------------------------
+
+Below are some examples of different kinds of searches that can be performed to find Accounts.
+
+Search an Application's Accounts for a Particular Word 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes. 
+
+**Query**
+
+.. code-block:: http 
+
+  GET /v1/application/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+
+.. note::
+
+  Matching is case-insensitive. So ``?q=luc`` and ``?q=Luc`` will return the same results.
+
+**Response**
+
+.. code-block:: http  
+
+  HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts
+  Content-Type: application/json;charset=UTF-8
+
+  {
+    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts",
+    "offset": 0,
+    "limit": 25,
+    "size": 1,
+    "items": [
+        {
+            "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexAmple",
+            "username": "jlpicard",
+            "email": "capt@enterprise.com",
+            "givenName": "Jean-Luc",
+            "middleName": null,
+            "surname": "Picard",
+            "fullName": "Jean-Luc Picard",
+            "status": "ENABLED",
+            "...": "..."
+        }
+    ]
+  }
+
+Find All the Disabled Accounts in a Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``). 
+
+**Query**
+
+.. code-block:: http 
+
+  GET /v1/directories/accounts?status=DISABLED HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+
+**Response**
+
+.. code-block:: http  
+
+  HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/
+  Content-Type: application/json;charset=UTF-8
+
+  {
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/accounts",
+      "offset": 0,
+      "limit": 25,
+      "size": 1,
+      "items": [
+          {
+              "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexAmple",
+              "username": "first2shoot",
+              "email": "han@newrepublic.gov",
+              "givenName": "Han",
+              "middleName": null,
+              "surname": "Solo",
+              "fullName": "Han Solo",
+              "status": "DISABLED",
+              "...": "..."
+          }
+      ]
+  }
+
+Find All Accounts in a Directory That Were Created on a Particular Day 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So we could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
+
+**Query**
+
+.. code-block:: http 
+
+  GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?modifiedAt=2015-12-01 HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+
+.. note::
+
+  The parameter can be written in many different ways. The following are all equivalent:
+
+  - ?modifiedAt=2015-12-01
+  - ?modifiedAt=[2015-12-01T00:00, 2015-12-02T00:00]
+  - ?modifiedAt=[2015-12-01T00:00:00, 2015-12-02T00:00:00]
+
+  For more information see :ref:`search-datetime`.
+
+**Response**
+
+.. code-block:: http  
+
+  HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/
+  Content-Type: application/json;charset=UTF-8
+
+  {
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts",
+      "offset": 0,
+      "limit": 25,
+      "size": 1,
+      "items": [
+          {
+              "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
+              "username": "first2shoot",
+              "email": "han@newrepublic.gov",
+              "givenName": "Han",
+              "middleName": null,
+              "surname": "Solo",
+              "fullName": "Han Solo",
+              "status": "DISABLED",
+              "createdAt": "2015-08-28T16:07:38.347Z",
+              "modifiedAt": "2015-12-01T21:22:56.608Z",
+              "...": "..."
+          }
+      ]
+  }
 
 .. _managing-account-pwd:
 
