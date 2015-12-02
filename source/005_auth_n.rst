@@ -319,6 +319,8 @@ And we would get the following response:
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a ``duration`` value of 0 (e.g. PT0M).
 
+.. _generate-oauth-token:
+
 Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -343,7 +345,6 @@ So you would send the following API call:
   Content-Type: application/x-www-form-urlencoded
 
   grant_type=password&username=tom%40stormpath.com&password=Secret1
-
 
 This would result in this response:
 
