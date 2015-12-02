@@ -784,8 +784,6 @@ At this point, an email will be built using the password reset base URL specifie
 
 ``http://yoursite.com/path/to/reset/page?sptoken=$TOKEN``
 
-The ``$TOKEN`` is the same verification token that was included in the JSON response above.
-
 So the user would then receive something that looked like this::
 
   Forgot your password? 
