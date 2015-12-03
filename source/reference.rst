@@ -481,7 +481,7 @@ It may help to think about each attribute comparison as similar to a ‘like’ 
 
     select * from my_tenant_accounts where
         (lower(givenName) like '%joe%' OR
-         lower(surname) like '%joe%' OR
+         lower(middlename) like '%joe%' OR
          lower(email) like '%joe%' OR ... );
 
 .. _search-attribute:
