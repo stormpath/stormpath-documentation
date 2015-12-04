@@ -48,8 +48,8 @@ Most clients (including web browsers) show a dialog or prompt for you to provide
 
 When using an API key with Basic authentication, the API key ID is the username and the API key secret is the password:
 
-**HTTP basic username:** apiKey.id value
-**HTTP basic password:** apiKey.secret value
+- **HTTP basic username:** apiKey.id value
+- **HTTP basic password:** apiKey.secret value
 
 For example, if using cUrl:
 
@@ -1052,6 +1052,16 @@ An **Application** resource in Stormpath contains information about any real-wor
       - String 
       - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
+    
+    * - ``authorizedCallbackUris``
+      - String 
+      - N/A 
+      - Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
+    
+    * - ``samlPolicy``
+      - Object 
+      - N/A 
+      - An embedded object that contains information about the Directory's SAML Policy (if any). 
 
     * - ``tenant`` 
       - String (:ref:`Link <about-links>`)
@@ -2374,7 +2384,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   
   * - ``providerId``
     - String
-    - ``stormpath`` (for a Cloud Directory), ``ad`` or ``ldap`` (for Mirror Directories), ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories)
+    - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for Mirror Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
     - Specifies the type of Provider for the associated Directory.
   
   * - ``clientId``
@@ -2396,17 +2406,49 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - String (Link) 
     - N/A
     - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`below <ref-ldap-agent>`.
+  
+  * - ``ssoLoginUrl``
+    - String 
+    - N/A
+    - The URL for the IdP's SSO URL.
+
+  * - ``ssoLogoutUrl``
+    - String 
+    - N/A
+    - The URL for the IdP's SSO logout endpoint.
+
+  * - ``x509SigningCert``
+    - Link 
+    - N/A
+    - The public key used to sign SAML messages.
+
+  * - ``requestSignatureAlgorithm``
+    - String 
+    - ``RSA-SHA256`` (Default), ``RSA-SHA1``
+    - The algorithm used to sign the SAML Assertions. 
+
+  * - ``attributeStatementMappingRules``
+    - Object 
+    - N/A
+    - This object contains the rules that map SAML assertions to Stormpath resource attributes. 
+
+  * - ``serviceProviderMetadata``
+    - Object 
+    - N/A
+    - An object that Tom does not mention outside of his example JSON so I have no idea what it is for.
+
 
 **Provider Example**
 
 .. code-block:: json 
 
   {
-    "href":"https://api.stormpath.com/v1/directories/3S8qv2u78JzwSXzEXAMplE/provider",
-    "providerId":"ldap",
-    "agent":{
-      "href":"https://api.stormpath.com/v1/agents/3S8vF6CIUET9R4PEXAMplE"
-    }
+    href: "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
+    createdAt: "2014-03-28T22:21:32.937Z",
+    modifiedAt: "2014-03-28T22:21:32.949Z",
+    clientId: "5014174166example",
+    clientSecret: "e7c1274966b0844913953281example",
+    providerId: "facebook"
   }
 
 .. _ref-ldap-agent:

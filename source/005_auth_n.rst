@@ -783,7 +783,6 @@ Once the User Access Token is gathered, you send an HTTP POST:
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
-
 iii. Github
 -----------
 
@@ -1036,3 +1035,112 @@ Step 3: Map the Mirror Directory as an Account Store for Your Application
 Creating an Account Store Mapping between your new Mirror Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 From this point on, any time a user logs in to your Application, their Account will be provisioned into Stormpath, as detailed above in :ref:`non-cloud-login`.
+
+.. _saml-authn:
+
+e. Authenticating Against a SAML Directory
+==========================================
+
+You can use Stormpath to authenticate users against a SAML Identity Provider (IdP).
+
+
+
+Stormpath as a Service Provider 
+-------------------------------
+
+The Service Provider initiated flow. 
+
+Stormpath generates AuthnRequest which is sent to the IDP, IDP then responds with a SAML response.
+
+The Stormpath Application Resource has two parts that are relevant to SAML: 
+
+- an ``authorizedCallbackUri`` Array Attribute that defines ? and 
+- an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints 
+
+https://api.stormpath.com/v1/applicationSamlPolicies/:policyId",
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL.
+    
+    * - ``serviceProvider``
+      - Object 
+      - N/A 
+      - ?
+
+https://api.stormpath.com/v1/samlServiceProviders/:serviceProviderId
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+  
+  * - ``href`` 
+    - String (:ref:`Link <about-links>`)
+    - N/A
+    - The resource's fully qualified location URL.
+  
+  * - ``ssoInitiationEndpoint``
+    - Link
+    - N/A 
+    - ?
+     
+You initiate the SAML flow by sending a GET to ``https://api.stormpath.com/v1/applications/:appId/saml/sso/idpRedirect`` 
+
+Additionally, you can specify some optional parameters to...why?
+
+.. list-table::
+  :widths: 30 70 
+  :header-rows: 1
+
+  * - Parameter 
+    - Description 
+  
+  * - ``accountStore.href``
+    - Specifies an Account Store to try with a link.
+
+  * - ``accountStore.nameKey``
+    - Specifies an Account Store to try with a Name Key.
+
+  * - ``callbackUri``
+    - Specifies one of the Application's Authorized Callback URIs to use. Otherwise the flow will default to the first non-wildcard Callback URI. (What does that mean? non-wildcard?)
+
+  * - ``state``
+    - Any state that the developer would like persisted through the request. It is up to the developer to serialize and deserialize this state. 
+
+
+
+Stormpath and SAML Mapping 
+--------------------------
+
+SAML assertions are mapped to the Account resource and its associated customData. 
+
+Attribute Assertions become Account and customData attributes 
+Authorization Statements become permissions?
+
+SAML Assertion mapping is defined in an attributeStatementMappingRules object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/:rulesId``
+
+Configuring Stormpath as a Service Provider 
+-------------------------------------------
+
+Configuration is stored (partly?) in the Directory's Provider resource: ref-provider
+
+Step 1
+^^^^^^^^^^^^^^^^^^^^^^
+
+Step 2 
+^^^^^^^^^^^^^^^^^^^^^^
