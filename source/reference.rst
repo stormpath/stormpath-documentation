@@ -3169,7 +3169,7 @@ An individual Organization resource may be accessed via its Resource URL:
   * - ``status``
     - String (Enum)
     - ``ENABLED``, ``DISABLED``
-    - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications, disabled Organizations cannot.
+    - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications; disabled Organizations cannot.
   
   * - ``description``
     - String
@@ -3184,12 +3184,12 @@ An individual Organization resource may be accessed via its Resource URL:
   * - ``defaultAccountStoreMapping``
     - String (Link)
     - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Accounts to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A ``null`` value disables the ability to add Accounts to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
 
   * - ``defaultGroupStoreMapping``
     - String (Link)
     - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A ``null`` value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
   
 
   * - ``accountStoreMappings``
