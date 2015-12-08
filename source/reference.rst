@@ -1909,10 +1909,6 @@ Create a Directory
       - N/A
       - Creates a new Directory resource.
 
-.. note::
-
-  Currently it is only possible to make a Cloud or Social Directories via the REST API. To make a Mirror Directory you will need to use the `Admin Console <http://docs.stormpath.com/console/product-guide/#create-a-directory>`__.
-
 Retrieve a Directory 
 ^^^^^^^^^^^^^^^^^^^^
 
