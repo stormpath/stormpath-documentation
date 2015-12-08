@@ -1597,12 +1597,12 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
       - A ``true`` value indicates that new Groups created by the Application will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. **This may only be set to true if the Account Store is a Directory. Stormpath does not currently support Groups storing other Groups**.
     
     * - ``application``
-      - String (Link)
+      - Link
       - N/A
       - A link to the mapping’s Application. **Required.**
 
     * - ``accountStore``
-      - String (Link) 
+      - Link 
       - N/A
       - A link to the mapping's Account Store (Group, Directory or Organization) containing Accounts that may log in to the application. **Required.** 
       
@@ -1799,47 +1799,47 @@ An individual Directory resource may be accessed via its Resource URL:
     - Indicates when this resource’s attributes were last modified.
   
   * - ``tenant``
-    - String (Link)
+    - Link
     - N/A
     - A link to the owning :ref:`Tenant <ref-tenant>`.
 
   * - ``provider``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Directory's Provider. 
 
   * - ``customData``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to the Directory's customData resource that you can use to store your own Directory-specific custom fields.
 
   * - ``passwordPolicy``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Directory’s :ref:`Password Policy <ref-password-policy>`.
       
   * - ``accountCreationPolicy``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Directory’s :ref:`Account Creation Policy <ref-accnt-creation-policy>`.
 
   * - ``accounts``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Accounts owned by this Directory.
   
   * - ``applicationMappings``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of any accountStoreMapping resources that include this Directory.
       
   * - ``applications``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of all the :ref:`Applications <ref-application>` mapped to this Directory. 
 
   * - ``groups``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of the Groups mapped to this Directory.
 
@@ -2133,12 +2133,12 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     - The status of the reset email workflow. If this is set to ``ENABLED``, then Stormpath will allow for passwords to be reset through the email workflow and will use the template that is stored in the passwordPolicy’s ``resetEmailTemplates``.
         
   * - ``strength``
-    - String (Link)
+    - Link
     - N/A 
     - A link to the password strength requirements for the Directory.
   
   * - ``resetEmailTemplates``
-    - String (Link)
+    - Link
     - N/A
     - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending the password reset email. A template stores all relevant attributes  needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
     
@@ -2148,7 +2148,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     - The status of the reset success email. If this is set to ``ENABLED``, then Stormpath will send the email when an Account’s password reset email workflow is successful. The email template that is sent is defined in the passwordPolicy’s ``resetSuccessEmailTemplates``.
     
   * - ``resetSuccessEmailTemplates``
-    - String (Link)
+    - Link
     - N/A
     - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
@@ -2393,7 +2393,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
   
   * - ``agent``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`below <ref-ldap-agent>`.
 
@@ -2464,17 +2464,17 @@ An Agents collection may be accessed via its Resource URL:
     - Indicates when this resource’s attributes were last modified.
   
   * - ``directory``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Directory resource that the Agent belongs to. 
   
   * - ``download``
-    - String (Link)
+    - Link
     - N/A
     - A link that allows this Agent to be downloaded for installation.
   
   * - ``tenant``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Tenant that owns the Directory this Agent belongs to.
 
@@ -2763,32 +2763,32 @@ An individual Group resource may be accessed via its Resource URL:
     - Indicates when this resource’s attributes were last modified.
 
   * - ``customData``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
 
   * - ``directory``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Directory resource that the Group belongs to. 
   
   * - ``tenant``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Tenant that owns the Directory containing this Group.
 
   * - ``accounts``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to a collection of the Accounts that are contained within this Group. 
 
   * - ``accountMemberships``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of groupMemberships that this Group is found in.
         
   * - ``applications``
-    - String (Link)
+    - Link
     - N/A
     - A link to any Applications associated with this Group.
 
@@ -2978,12 +2978,12 @@ Accounts and Groups are linked via a **groupMembership** resource that stores th
     - The resource's fully qualified location URL.
   
   * - ``account``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to the Account for this Group Membership. 
    
   * - ``group``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Group for this Group Membership.
   
@@ -3177,38 +3177,38 @@ An individual Organization resource may be accessed via its Resource URL:
     - The description of the Organization.
 
   * - ``customData``
-    - String (Link) 
+    - Link 
     - N/A
     - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
 
   * - ``defaultAccountStoreMapping``
-    - String (Link)
+    - Link
     - ``null`` or Link
     - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
 
   * - ``defaultGroupStoreMapping``
-    - String (Link)
+    - Link
     - ``null`` or Link
     - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
   
 
   * - ``accountStoreMappings``
-    - String (Link)
+    - Link
     - N/A
     - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
 
   * - ``groups``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of the Groups wrapped by this Organization.
 
   * - ``accounts``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
 
   * - ``tenant``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Stormpath Tenant that owns this Organization.
 
@@ -3469,57 +3469,57 @@ An individual Account resource may be accessed via its Resource URL:
     - Indicates when this resource’s attributes were last modified.
 
   * - ``emailVerificationToken``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
 
   * - ``customData``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
   
   * - ``providerData``
-    - String (Link)
+    - Link
     - N/A
     - A link to the information from the owner Directory's Provider.
       
   * - ``directory``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Account's Directory.
 
   * - ``tenant``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Tenant that owns the Account’s Directory.  
 
   * - ``groups``
-    - String (Link)
+    - Link
     - N/A
     - A link to a collection of the Groups that the Account belongs to. 
       
   * - ``groupMemberships``
-    - String (Link)
+    - Link
     - N/A
     - A link to the :ref:`Group Memberships <ref-groupmembership>` that the Account is in.
 
   * - ``applications``
-    - String (Link)
+    - Link
     - N/A
     - A link to the Applications that the Account belongs to.
       
   * - ``apiKeys``
-    - String (Link)
+    - Link
     - N/A
     - A link to the apiKeys for this Account.
   
   * - ``accessTokens``
-    - String (Link)
+    - Link
     - N/A
     - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
   
   * - ``refreshTokens``
-    - String (Link)
+    - Link
     - N/A
     - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. 
 
