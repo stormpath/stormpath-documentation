@@ -2433,9 +2433,9 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - This object contains the rules that map SAML assertions to Stormpath resource attributes.  
 
   * - ``serviceProviderMetadata``
-    - Object 
+    - Link 
     - N/A
-    - An object that Tom does not mention outside of his example JSON so I have no idea what it is for.
+    - This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
 
 
 **Provider Example**

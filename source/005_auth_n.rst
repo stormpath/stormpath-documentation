@@ -1058,41 +1058,6 @@ The broad strokes of the process are as follows:
 
 Just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources.
 
-.. _saml-mapping:
-
-Stormpath and SAML Mapping 
---------------------------
-
-The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
-
-[SAML example here]
-
-.. code-block:: xml 
-
-  <saml:AttributeStatement>
-        <saml:Attribute Name="uid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
-          <saml:AttributeValue xsi:type="xs:string">test</saml:AttributeValue>
-        </saml:Attribute>
-        <saml:Attribute Name="mail" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
-          <saml:AttributeValue xsi:type="xs:string">test@example.com</saml:AttributeValue>
-        </saml:Attribute>
-        <saml:Attribute Name="eduPersonAffiliation" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
-          <saml:AttributeValue xsi:type="xs:string">users</saml:AttributeValue>
-          <saml:AttributeValue xsi:type="xs:string">examplerole1</saml:AttributeValue>
-        </saml:Attribute>
-      </saml:AttributeStatement>
-
-The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormpath and become Account and customData attributes.
-
-SAML Assertion mapping is defined in an attributeStatementMappingRules object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
-
-How does it work?
-
-name: the Attribute name 
-nameFormat: a URN 
-
-
-
 .. _saml-configuration:
 
 Configuring Stormpath as a Service Provider 
@@ -1122,19 +1087,117 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
   Content-Type: application/json;charset=UTF-8
 
   {
-    
+    "ssoLoginUrl": "https://idp.whatever.com/saml2/sso/login",
+    "ssoLogoutUrl": "https://idp.whatever.com/saml2/sso/logout",
+    "x509SigningCertValue": "-----BEGIN CERTIFICATE----- ...",
+    "requestSignatureAlgorithm": "RSA-SHA256",
+    "attributeStatementMappingRulesValue": [
+      {
+        "name":"employee_id",
+        "accountAttributes":[
+          "username"
+        ]
+      },
+      {
+        "name":"first_name",
+        "accountAttributes":[
+          "givenName"
+        ]
+      },
+      {
+        "name":"favoriteColor",
+        "accountAttributes":[
+          "customData.favoriteColor"
+        ]
+      }
+    ]
   }
 
+.. note::
 
-Step 3: Configure Your Application
+  Two attributes here have special values that are different when the Provider is being created versus when it is being returned. 
+
+  - ``x509SigningCertValue`` will return as an object called ``x509SigningCert``.
+  - ``attributeStatementMappingRulesValue`` will return as ``attributeStatementMappingRules``
+
+.. _configure-sp-in-idp:
+
+Step 3: Configure Your Service Provider in your Identity Provider 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. In order to retrieve the required values, simply send a GET to the ``serviceProviderMetadata`` link found in your Directory's Provider object.
+
+.. code-block:: http 
+
+  GET /v1/samlServiceProviderMetadatas/$METADATA_ID" HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/xml
+
+.. note::
+
+  This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
+
+**Example XML**
+
+.. code-block:: xml
+
+  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:5rHYCSu9IjzKz5pkyId5eR:provider:sp">
+      <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+          <md:KeyDescriptor use="signing">
+              <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                  <ds:X509Data>
+                      <ds:X509Certificate>MIIC2DCCAcCgAwIBAgIRAMExAMPLE</ds:X509Certificate>
+                  </ds:X509Data>
+              </ds:KeyInfo>
+          </md:KeyDescriptor>
+          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pkyId5eR/saml/sso/post" index="0"/>
+      </md:SPSSODescriptor>
+  </md:EntityDescriptor>
+
+**Example JSON**
+
+.. code-block:: json
+
+  {
+    "href":"http://localhost:9191/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuMqaOMQZ",
+    "createdAt":"2015-12-09T19:22:10.033Z",
+    "modifiedAt":"2015-12-09T19:22:10.033Z",
+    "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
+    "assertionConsumerServicePostEndpoint":{
+      "href":"http://yourapp.com/v1/directories/15iM83Y77qIIviKlTzGqjX/saml/sso/post"
+    },
+    "x509SigningCert":{
+      "href":"http://localhost:9191/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
+    }
+  }
+
+From this metadata, you will need two values:
+ 
+- **Assertion Consumer Service URL**: This is the location the IdP will send its POST to. 
+- **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it. 
+
+You will also need two other values, which will always be the same:
+
+- **SAML Request Binding:** Set to ``HTTP-Redirect``.
+- **SAML Response Binding:** Set to ``HTTP-Post``.
+
+Step 4: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Stormpath Application Resource has two parts that are relevant to SAML: 
 
-- an ``authorizedCallbackUri`` Array Attribute that defines ? and 
+- an ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you yourself host. 
 - an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints.
 
+SAML Policy Resource 
+""""""""""""""""""""
+
+**samlPolicy URL**
 ``https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID``
+
+**samlPolicy Attributes**
 
 .. list-table::
     :widths: 15 10 20 60
@@ -1149,13 +1212,17 @@ The Stormpath Application Resource has two parts that are relevant to SAML:
       - String (:ref:`Link <about-links>`)
       - N/A
       - The resource's fully qualified location URL.
-    
+     
     * - ``serviceProvider``
       - Object 
       - N/A 
-      - ? It contains the information below: 
+      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` that is used to initiate the SAML flow. 
+
+**serviceProvider URL**
 
 ``https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID``
+
+**serviceProvider Attributes** 
 
 .. list-table::
   :widths: 15 10 20 60
@@ -1176,10 +1243,53 @@ The Stormpath Application Resource has two parts that are relevant to SAML:
     - N/A 
     - This is the URL that will be used to initiate the SAML flow.  
 
-Step ?: Add the SAML Directory as an Account Store
+Step 5: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now you have to map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
+
+.. _saml-mapping:
+
+Configure SAML Assertion Mapping 
+--------------------------------
+
+The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
+
+.. code-block:: xml 
+
+  <saml:AttributeStatement>
+    <saml:Attribute Name="uid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
+      <saml:AttributeValue xsi:type="xs:string">test</saml:AttributeValue>
+    </saml:Attribute>
+    <saml:Attribute Name="mail" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
+      <saml:AttributeValue xsi:type="xs:string">test@example.com</saml:AttributeValue>
+    </saml:Attribute>
+      <saml:Attribute Name="eduPersonAffiliation" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
+      <saml:AttributeValue xsi:type="xs:string">users</saml:AttributeValue>
+      <saml:AttributeValue xsi:type="xs:string">examplerole1</saml:AttributeValue>
+    </saml:Attribute>
+  </saml:AttributeStatement>
+
+The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormpath and become Account and customData attributes.
+
+SAML Assertion mapping is defined in an attributeStatementMappingRules object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
+
+How does it work?
+
+name: the Attribute name 
+nameFormat: a URN 
+
+Rule: 
+
+{
+  "name":"sometext",
+  "nameFormat": "someurn",
+  "accountAttributes":[
+    "username"
+  ]
+}
+
+This is saying: A SAML Assertion with the name 'sometext' OR the nameformat 'someurn' maps to the Account Attribute `username`.
 
 The Stormpath SAML Flow
 ------------------------
@@ -1193,29 +1303,41 @@ The Stormpath SAML Flow
 
 .. todo::
 
-  This is the PlantUML markup for this diagram:
+  This is the PlantUML markup for this diagram. It has to be pretty drastically rewritten to hew more closely to the Flow text below.  
 
   skinparam monochrome true
   title The Service Provider Initiated Flow
+
+  participant "Stormpath" as storm
   participant "Service Provider" as sp
   participant "User Agent" as ua
   participant "Identity Provider" as idp
 
-  sp<-ua: Request target resource
-  sp<-->ua: <i>Discover the IdP</i>
-  sp->ua: Respond with <b>302 Redirect</b>
+
+  sp<-ua: Request target resource (Unauthenticated)
+  sp<-->storm: <i>Look up IdP</i>
+  sp->ua: Respond with <b>302 Redirect to IdP</b>
   ua->idp: Request SSO Service
-  ua<-->idp: Identify the user
+  ua<-->idp: Authenticate the user
   idp->ua: Respond with <b>302 Redirect</b>
-  ua->sp: Request Assertion Consumer Service
+
+  ua->storm: Request Assertion Consumer Service
+  storm->ua: GET callbackUri + JWT
   sp->ua: Redirect to target resource
-  ua->sp: Request target resource
+  ua->sp: Request target resource + JWT
   sp->ua: Respond with requested resource
+
 
 Step 1: Initiate the flow 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You initiate the SAML flow by sending a GET to the ``ssoInitiationEndpoint``, which is ``https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect``
+You initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect``. To this you add a JWT Access Token, so the full request looks like this:
+
+.. code-block:: http 
+
+  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect?accessToken=$STORMPATH_ACCESS_TOKEN HTTP/1.1 
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
 Additionally, you can specify some optional parameters to allow for greater control over which Account Store you would like to authenticate. 
 
@@ -1237,14 +1359,6 @@ Additionally, you can specify some optional parameters to allow for greater cont
 
   * - ``state``
     - Any state that the developer would like persisted through the request. It is up to the developer to serialize and deserialize this state. 
-
-So the GET request would look as follows:
-
-.. code-block:: http 
-
-  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect HTTP/1.1 
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
 
 Step 2: Redirection 
 ^^^^^^^^^^^^^^^^^^^
@@ -1273,3 +1387,5 @@ The user will now be directed back to your Application along with a JSON Web Tok
   Location: https://myapplication.com/whatever/callback?jwtResponse={jwt}
 
 At this point you can...? [Link to other relevant sections of doc]
+
+Exchange the JWT 
