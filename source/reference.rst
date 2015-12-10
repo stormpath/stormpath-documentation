@@ -1126,7 +1126,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``samlPolicy``
       - Object 
       - N/A 
-      - An embedded object that contains information about the Directory's SAML Policy (if any). 
+      - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`the Authentication chapter <ref-samlpolicy>`. 
 
 .. _application-accounts-note:
 
@@ -1549,6 +1549,52 @@ This resource contains information about the Application's OAuth Policy. For mor
     },
     "tenant":{
       "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
+    }
+  }
+
+.. _ref-samlpolicy:
+
+SAML Policy Resource 
+^^^^^^^^^^^^^^^^^^^^
+
+This resource contains information about the Application's SAML policy. For more information about this, please see :ref:`saml-authn`.
+
+**samlPolicy URL**
+
+``https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID``
+
+**samlPolicy Attributes**
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL.
+     
+    * - ``serviceProvider``
+      - Object 
+      - N/A 
+      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the SAML flow. 
+
+**samlPolicy Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/applicationSamlPolicies/:policyId",
+    "serviceProvider": {
+        "href": "https://api.stormpath.com/v1/samlServiceProviders/:serviceProviderId",
+        "ssoInitiationEndpoint": { 
+            "href":"https://api.stormpath.com/v1/applications/:appId/saml/sso/idpRedirect"
+        }  
     }
   }
 
@@ -2390,52 +2436,52 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   * - ``clientId``
     - String
     - N/A
-    - The OAuth 2.0 Client ID for this Provider. Only used for Social providers.
+    - (Social only) The OAuth 2.0 Client ID for this Provider. 
   
   * - ``clientSecret``
     - String
     - N/A
-    - The OAuth 2.0 Client Secret for this Provider. Only used for Social providers.
+    - (Social only) The OAuth 2.0 Client Secret for this Provider. 
   
   * - ``redirectURL``
     - String 
     - A valid URL
-    - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
+    - (Social only) The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
   
   * - ``agent``
     - Link 
     - N/A
-    - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`below <ref-ldap-agent>`.
+    - (LDAP only) A link to the Provider's Agent. For more information see :ref:`below <ref-ldap-agent>`.
   
   * - ``ssoLoginUrl``
     - String 
     - N/A
-    - The URL for the IdP's SSO URL. For more information see :ref:`saml-configuration`.
+    - (SAML only) The URL for the IdP's SSO URL. For more information see :ref:`saml-configuration`.
 
   * - ``ssoLogoutUrl``
     - String 
     - N/A
-    - The URL for the IdP's SSO logout endpoint. For more information see :ref:`saml-configuration`.
+    - (SAML only) The URL for the IdP's SSO logout endpoint. For more information see :ref:`saml-configuration`.
 
-  * - ``x509SigningCertValue``
-    - Link 
+  * - ``encodedX509SigningCert``
+    - Object 
     - N/A
-    - The public key from the SAML Identity Provider used to sign the assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
+    - (SAML only) The public key from the SAML Identity Provider used to sign the assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
 
   * - ``requestSignatureAlgorithm``
     - String 
     - ``RSA-SHA256`` (Default), ``RSA-SHA1``
-    - The algorithm used by the SAML Identity Provider to sign SAML assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
+    - (SAML only) The algorithm used by the SAML Identity Provider to sign SAML assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
 
   * - ``attributeStatementMappingRules``
     - Object 
     - N/A
-    - This object contains the rules that map SAML assertions to Stormpath resource attributes.  
+    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes.  
 
   * - ``serviceProviderMetadata``
     - Link 
     - N/A
-    - This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
+    - (SAML only) This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
 
 
 **Provider Example**

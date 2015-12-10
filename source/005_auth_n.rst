@@ -13,6 +13,10 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
 a. How Password Authentication Works in Stormpath
 =================================================
 
+.. contents:: 
+  :local: 
+  :depth: 2
+
 Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
 
 Authenticating An Account
@@ -123,7 +127,7 @@ This approach has two major benefits: It allows for a user to have one unified i
 .. _managing-login:
 
 Manage Who Can Log Into Your Application 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
 
@@ -164,7 +168,7 @@ We can find this Mapping by sending a ``GET`` to our Application's ``/accountSto
 .. _create-asm:
 
 Mapping a new Account Store
-"""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We would now like to map a new Account Store that will have the following characteristics:
 
@@ -201,7 +205,7 @@ We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directo
 So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
 
 Updating an Existing Account Store
-""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update. 
 
@@ -221,6 +225,10 @@ Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true
 
 b. How Token-Based Authentication Works
 =======================================
+
+.. contents:: 
+  :local: 
+  :depth: 2
 
 In this section, we will discuss how to use Stormpath to use Stormpath to generate and manage OAuth 2.0 Access Token.
 
@@ -577,10 +585,132 @@ To revoke the token, simply issue an HTTP Delete::
 
 You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
 
+.. _about-jwt:
+
+JSON Web Tokens
+---------------
+
+JSON Web Tokens (JWTs) are a crucial part of many authentication flows in Stormpath, including :ref:`ID Site <idsite-with-rest>` and :ref:`SAML <saml-authn>` authentication. 
+
+Generating the JWT
+^^^^^^^^^^^^^^^^^^
+
+Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
+
+- .NET JWT - https://github.com/jwt-dotnet/jwt
+- Ruby JWT - https://github.com/jwt/ruby-jwt
+- Go JWT - https://github.com/dgrijalva/jwt-go
+- PHP JWT - https://github.com/firebase/php-jwt
+- Python JWT - https://github.com/jpadilla/pyjwt
+- Java JWT - https://github.com/jwtk/jjwt
+- Node JWT - https://github.com/jwtk/njwt
+
+JWT Claims
+^^^^^^^^^^
+
+There are two kinds of JWTs that you will deal with: the ones being sent to Stormpath at the beginning of an authentication flow, and the ones that are returned back after the user has authenticated (e.g. with ID Site).
+
+.. _init-jwt:
+
+Initialization JWT
+""""""""""""""""""
+
+.. todo::
+
+  There is some ID Site specific language here. 
+
+This is the JWT that is sent along with the first request that launches the authorization flow, for example as part of ID Site login, or SAML Authentication. The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT are as follows:
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Required?
+    - Valid Value(s)
+
+  * - ``iat``
+    - Yes
+    - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
+
+  * - ``iss``
+    - Yes
+    - The issuer of the token. You should put your Stormpath API Key ID here.
+
+  * - ``sub``
+    - Yes
+    - The subject of the token. You should put your Stormpath Application resource's href here.
+
+  * - ``cb_uri``
+    - Yes
+    - The callback URI to use once the user takes an action on the ID Site. This must match a "Authorized Redirect URI" in the Stormpath ID Site configuration.
+
+  * - ``jti``
+    - Yes
+    - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
+
+  * - ``path``
+    - No
+    - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
+
+  * - ``state``
+    - No
+    - The state of the application that you need to pass through the ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
+
+  * - ``organizationNameKey``
+    - No
+    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+
+  * - ``showOrganizationField``
+    - No 
+    - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
+
+.. _post-auth-jwt:
+
+Post-Authentication JWT 
+"""""""""""""""""""""""
+
+Once the user has been authenticated, you will receive back a JWT response. The JWT contains the following information:
+
+.. list-table::
+  :widths: 15 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Description
+  
+  * - ``iss`` 
+    - The issuer of the JWT. This will match your ID Site domain and can be used for additional validation of the JWT.
+
+  * - ``sub`` 
+    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site. This ``href`` can be queried by using the REST API to get more information about the Account.
+
+  * - ``aud`` 
+    - The audience of the JWT. This will match your API Key ID from Stormpath.
+
+  * - ``exp`` 
+    - The expiration time for the JWT in Unix time.
+
+  * - ``iat`` 
+    - The time at which the JWT was created, in Unix time.
+
+  * - ``jti`` 
+    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
+
+  * - ``state`` 
+    - The state of your application, if you have chosen to have this passed back.
+
+  * - ``status`` 
+    - The status of the request from ID Site. Valid values are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+
 .. _social-authn:
 
 c. How Social Authentication Works
 ==================================
+
+.. contents:: 
+  :local: 
+  :depth: 1
 
 Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are: 
 
@@ -922,6 +1052,10 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
 d. Authenticating Against a Mirrored LDAP Directory
 ===================================================
 
+.. contents:: 
+  :local: 
+  :depth: 2
+
 This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`about-mirror-dir` as well as how they are :ref:`modeled <modeling-mirror-dirs>`. 
 
 Mirror Directories and LDAP 
@@ -1041,6 +1175,10 @@ From this point on, any time a user logs in to your Application, their Account w
 e. Authenticating Against a SAML Directory
 ==========================================
 
+.. contents:: 
+  :local: 
+  :depth: 1
+
 SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. 
 
 Stormpath as a Service Provider 
@@ -1056,7 +1194,7 @@ The broad strokes of the process are as follows:
 #. Identity provider redirects user back to Service Provider along with SAML assertions.
 #. Service Provider receives SAML assertions and either creates or retrieves Account information  
 
-Just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources.
+Just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In this section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works. 
 
 .. _saml-configuration:
 
@@ -1087,38 +1225,16 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
   Content-Type: application/json;charset=UTF-8
 
   {
-    "ssoLoginUrl": "https://idp.whatever.com/saml2/sso/login",
-    "ssoLogoutUrl": "https://idp.whatever.com/saml2/sso/logout",
-    "x509SigningCertValue": "-----BEGIN CERTIFICATE----- ...",
+    "ssoLoginUrl": "https://yourIdp.com/saml2/sso/login",
+    "ssoLogoutUrl": "https://yourIdp.com/saml2/sso/logout",
+    "encodedX509SigningCert": {
+            "-----BEGIN CERTIFICATE-----
+             ...Certificate goes here...
+             -----END CERTIFICATE-----
+            "
+        },
     "requestSignatureAlgorithm": "RSA-SHA256",
-    "attributeStatementMappingRulesValue": [
-      {
-        "name":"employee_id",
-        "accountAttributes":[
-          "username"
-        ]
-      },
-      {
-        "name":"first_name",
-        "accountAttributes":[
-          "givenName"
-        ]
-      },
-      {
-        "name":"favoriteColor",
-        "accountAttributes":[
-          "customData.favoriteColor"
-        ]
-      }
-    ]
   }
-
-.. note::
-
-  Two attributes here have special values that are different when the Provider is being created versus when it is being returned. 
-
-  - ``x509SigningCertValue`` will return as an object called ``x509SigningCert``.
-  - ``attributeStatementMappingRulesValue`` will return as ``attributeStatementMappingRules``
 
 .. _configure-sp-in-idp:
 
@@ -1161,7 +1277,7 @@ Next you will have to configure your Stormpath-powered application as a Service 
 .. code-block:: json
 
   {
-    "href":"http://localhost:9191/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuMqaOMQZ",
+    "href":"http://yourapp.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuMqaOMQZ",
     "createdAt":"2015-12-09T19:22:10.033Z",
     "modifiedAt":"2015-12-09T19:22:10.033Z",
     "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
@@ -1186,67 +1302,29 @@ You will also need two other values, which will always be the same:
 Step 4: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Stormpath Application Resource has two parts that are relevant to SAML: 
+The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML: 
 
 - an ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you yourself host. 
 - an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints.
 
-SAML Policy Resource 
-""""""""""""""""""""
+.. code-block:: http 
 
-**samlPolicy URL**
-``https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID``
+  POST /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
-**samlPolicy Attributes**
+  {
+    "authorizedCallbackUris": [
+      "https://myapplication.com/whatever/callback",
+      "https://myapplication.com/whatever/callback2"
+    ]
+  }
 
-.. list-table::
-    :widths: 15 10 20 60
-    :header-rows: 1
-
-    * - Attribute
-      - Type
-      - Valid Value(s)
-      - Description
-    
-    * - ``href`` 
-      - String (:ref:`Link <about-links>`)
-      - N/A
-      - The resource's fully qualified location URL.
-     
-    * - ``serviceProvider``
-      - Object 
-      - N/A 
-      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` that is used to initiate the SAML flow. 
-
-**serviceProvider URL**
-
-``https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID``
-
-**serviceProvider Attributes** 
-
-.. list-table::
-  :widths: 15 10 20 60
-  :header-rows: 1
-
-  * - Attribute
-    - Type
-    - Valid Value(s)
-    - Description
-  
-  * - ``href`` 
-    - String (:ref:`Link <about-links>`)
-    - N/A
-    - The resource's fully qualified location URL.
-  
-  * - ``ssoInitiationEndpoint``
-    - Link
-    - N/A 
-    - This is the URL that will be used to initiate the SAML flow.  
 
 Step 5: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now you have to map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
+Now you last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
 
 .. _saml-mapping:
 
@@ -1262,34 +1340,78 @@ The Identity Provider's SAML response contains assertions about the user's ident
       <saml:AttributeValue xsi:type="xs:string">test</saml:AttributeValue>
     </saml:Attribute>
     <saml:Attribute Name="mail" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
-      <saml:AttributeValue xsi:type="xs:string">test@example.com</saml:AttributeValue>
+      <saml:AttributeValue xsi:type="xs:string">jane@example.com</saml:AttributeValue>
     </saml:Attribute>
-      <saml:Attribute Name="eduPersonAffiliation" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
-      <saml:AttributeValue xsi:type="xs:string">users</saml:AttributeValue>
-      <saml:AttributeValue xsi:type="xs:string">examplerole1</saml:AttributeValue>
+      <saml:Attribute Name="location" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
+      <saml:AttributeValue xsi:type="xs:string">Tampa, FL</saml:AttributeValue>
     </saml:Attribute>
   </saml:AttributeStatement>
 
 The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormpath and become Account and customData attributes.
 
-SAML Assertion mapping is defined in an attributeStatementMappingRules object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
+SAML Assertion mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
 
-How does it work?
+Mapping Rules 
+^^^^^^^^^^^^^
 
-name: the Attribute name 
-nameFormat: a URN 
+The rules have three different components:
 
-Rule: 
+- **name**: The SAML Attribute name 
+- **nameFormat**: The name format for this SAML Attribute, expressed as a Uniform Resource Name (URN). 
+- **accountAttributes**: This is an array of Stormpath Account or customData (``customData.$KEY_NAME``) attributes that will map to this SAML Attribute.
 
-{
-  "name":"sometext",
-  "nameFormat": "someurn",
-  "accountAttributes":[
-    "username"
-  ]
-}
+**Example Rule**
 
-This is saying: A SAML Assertion with the name 'sometext' OR the nameformat 'someurn' maps to the Account Attribute `username`.
+.. code-block:: json 
+
+  {
+    "name":"uid",
+    "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+    "accountAttributes":[
+      "username"
+    ]
+  }
+
+The rule expressed here is as follows: 
+
+- A SAML Assertion with the name ``uid`` AND 
+- the name format ``someurn`` 
+- maps to the Account Attribute ``username``.
+
+.. note::
+
+  It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+
+In order to create the mapping rules, we simply send the following POST:
+
+.. code-block:: http 
+
+  POST /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+
+  {
+    "attributeStatementMappingRules": [
+      {
+        "name":"uid",
+        "accountAttributes":[
+          "username"
+        ]
+      },
+      {
+        "name":"mail",
+        "accountAttributes":[
+          "email"
+        ]
+      },
+      {
+        "name":"location",
+        "accountAttributes":[
+          "customData.location"
+        ]
+      }
+    ]
+  }
 
 The Stormpath SAML Flow
 ------------------------
@@ -1328,14 +1450,19 @@ The Stormpath SAML Flow
   sp->ua: Respond with requested resource
 
 
+Step 0: Generate a Access Token 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You will need to generate a JWT. 
+
 Step 1: Initiate the flow 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect``. To this you add a JWT Access Token, so the full request looks like this:
+Once the JWT is generated by your server, you initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect``. To this you add a JWT Access Token, so the full request looks like this:
 
 .. code-block:: http 
 
-  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect?accessToken=$STORMPATH_ACCESS_TOKEN HTTP/1.1 
+  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect?accessToken=$GENERATED_JWT HTTP/1.1 
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -1384,8 +1511,6 @@ The user will now be directed back to your Application along with a JSON Web Tok
 .. code-block:: http 
 
   HTTP/1.1 302 Redirect
-  Location: https://myapplication.com/whatever/callback?jwtResponse={jwt}
+  Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
 
-At this point you can...? [Link to other relevant sections of doc]
-
-Exchange the JWT 
+At this point you can...?
