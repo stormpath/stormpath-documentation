@@ -612,7 +612,7 @@ There are two kinds of JWTs that you will deal with: the ones being sent to Stor
 
 .. _init-jwt:
 
-Initialization JWT
+Authentication JWT
 """"""""""""""""""
 
 .. todo::
@@ -643,7 +643,7 @@ This is the JWT that is sent along with the first request that launches the auth
 
   * - ``cb_uri``
     - Yes
-    - The callback URI to use once the user takes an action on the ID Site. This must match a "Authorized Redirect URI" in the Stormpath ID Site configuration.
+    - The callback URI to use once the user takes an action on the ID Site or Identity provider. This must match a Authorized Callback URI on Application resource.
 
   * - ``jti``
     - Yes
@@ -651,26 +651,30 @@ This is the JWT that is sent along with the first request that launches the auth
 
   * - ``path``
     - No
-    - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
+    - (ID Site only) The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
 
   * - ``state``
     - No
-    - The state of the application that you need to pass through the ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
+    - The state of the application that you need to pass through ID Site or the IdP back to your application through the callback. It is up to the developer to serialize/deserialize this value
 
   * - ``organizationNameKey``
     - No
-    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site or SAML.
 
   * - ``showOrganizationField``
     - No 
-    - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
+    - (ID Site only) A boolean representing if the "Organization" field should show on the forms that ID Site renders.
 
 .. _post-auth-jwt:
 
-Post-Authentication JWT 
-"""""""""""""""""""""""
+Account Assertion JWT 
+"""""""""""""""""""""
 
-Once the user has been authenticated, you will receive back a JWT response. The JWT contains the following information:
+Once the user has been authenticated by ID Site or the SAML IdP, you will receive back a JWT response. The JWT contains the following information:
+
+.. todo::
+
+  ``iss`` at least needs to be updated?
 
 .. list-table::
   :widths: 15 60
@@ -683,7 +687,7 @@ Once the user has been authenticated, you will receive back a JWT response. The 
     - The issuer of the JWT. This will match your ID Site domain and can be used for additional validation of the JWT.
 
   * - ``sub`` 
-    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site. This ``href`` can be queried by using the REST API to get more information about the Account.
+    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site / SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
 
   * - ``aud`` 
     - The audience of the JWT. This will match your API Key ID from Stormpath.
@@ -701,7 +705,7 @@ Once the user has been authenticated, you will receive back a JWT response. The 
     - The state of your application, if you have chosen to have this passed back.
 
   * - ``status`` 
-    - The status of the request from ID Site. Valid values are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+    - The status of the request from ID Site. Valid values for ID SIte are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``. For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
 
 .. _social-authn:
 
@@ -1423,37 +1427,35 @@ The Stormpath SAML Flow
 
     *The SAML Flow* 
 
-.. todo::
-
-  This is the PlantUML markup for this diagram. It has to be pretty drastically rewritten to hew more closely to the Flow text below.  
+.. todo:: 
 
   skinparam monochrome true
-  title The Service Provider Initiated Flow
+  title The Stormpath SAML Flow
 
   participant "Stormpath" as storm
   participant "Service Provider" as sp
   participant "User Agent" as ua
   participant "Identity Provider" as idp
 
-
-  sp<-ua: Request target resource (Unauthenticated)
-  sp<-->storm: <i>Look up IdP</i>
-  sp->ua: Respond with <b>302 Redirect to IdP</b>
+  sp<-ua: Request to Login with SAML Provider
+  sp->sp: Generate Authentication JWT for Stormpath
+  sp->ua: Redirect (with JWT) to Stormpath
+  ua->storm: GET to /saml/sso/idpRedirect
+  storm->storm: Look-up IdP Login URL
+  storm->ua: Respond with <b>302 Redirect to IdP</b>
   ua->idp: Request SSO Service
   ua<-->idp: Authenticate the user
   idp->ua: Respond with <b>302 Redirect</b>
-
   ua->storm: Request Assertion Consumer Service
-  storm->ua: GET callbackUri + JWT
-  sp->ua: Redirect to target resource
+  storm->ua: <b>302 Redirect</b> to callbackUri with Assertion JWT
   ua->sp: Request target resource + JWT
   sp->ua: Respond with requested resource
 
 
-Step 0: Generate a Access Token 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 0: Generate a JWT 
+^^^^^^^^^^^^^^^^^^^^^^^
 
-You will need to generate a JWT. 
+The user agent will request to login with SAML. You will need to generate a JWT using :ref:`an approved JWT library <about-jwt>`. 
 
 Step 1: Initiate the flow 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
