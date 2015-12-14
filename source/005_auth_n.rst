@@ -1217,7 +1217,7 @@ You will need the following information from your IdP:
 - **Signing Cert** - The IdP will digitally sign auth assertions and Stormpath will need to validate the signature.  This will usually be in .pem or .crt format, but Stormpath requires the text value.
 - **Signing Algorithm** - You will need the name of the signing algorithm that your IdP uses. It will be either "RSA-SHA256" or "RSA-SHA1".
 
-Step 2: Configure your SAML Directory
+Step 2: Configure Your SAML Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Input the data you gathered in Step 1 above into your Directory's Provider resource:
@@ -1242,7 +1242,7 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
 .. _configure-sp-in-idp:
 
-Step 3: Configure Your Service Provider in your Identity Provider 
+Step 3: Configure Your Service Provider in Your Identity Provider 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. In order to retrieve the required values, simply send a GET to the ``serviceProviderMetadata`` link found in your Directory's Provider object.
@@ -1289,13 +1289,13 @@ Next you will have to configure your Stormpath-powered application as a Service 
       "href":"http://yourapp.com/v1/directories/15iM83Y77qIIviKlTzGqjX/saml/sso/post"
     },
     "x509SigningCert":{
-      "href":"http://localhost:9191/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
+      "href":"http://yourapp.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
     }
   }
 
 From this metadata, you will need two values:
  
-- **Assertion Consumer Service URL**: This is the location the IdP will send its POST to. 
+- **Assertion Consumer Service URL**: This is the location the IdP will send its response to. 
 - **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it. 
 
 You will also need two other values, which will always be the same:
@@ -1308,7 +1308,7 @@ Step 4: Configure Your Application
 
 The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML: 
 
-- an ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you yourself host. 
+- an ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself. 
 - an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints.
 
 .. code-block:: http 
@@ -1417,6 +1417,8 @@ In order to create the mapping rules, we simply send the following POST:
     ]
   }
 
+Now that we've configured everything, we can take a look at what the actual SAML authentication flow looks like. 
+
 The Stormpath SAML Flow
 ------------------------
 
@@ -1478,13 +1480,13 @@ Additionally, you can specify some optional parameters to allow for greater cont
     - Description 
   
   * - ``accountStore.href``
-    - Specifies an Account Store to try with a link.
+    - Specifies a link to an Account Store to attempt to authenticate against.
 
   * - ``accountStore.nameKey``
-    - Specifies an Account Store to try with a Name Key.
+    - Specifies the Name Key of an Account Store to try to authenticate against.
 
   * - ``callbackUri``
-    - Specifies one of the Application's Authorized Callback URIs to use. Otherwise the flow will default to the first non-wildcard Callback URI. (What does that mean? non-wildcard?)
+    - Specifies one of the Application's Authorized Callback URIs to use. Otherwise the flow will default to the first Callback URI that does not contain a wildcard. 
 
   * - ``state``
     - Any state that the developer would like persisted through the request. It is up to the developer to serialize and deserialize this state. 
@@ -1515,4 +1517,4 @@ The user will now be directed back to your Application along with a JSON Web Tok
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
 
-At this point you can...?
+At this point your user is authenticated and able to use your app. 
