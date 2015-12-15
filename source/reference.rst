@@ -20,9 +20,17 @@ The following information is essential to understanding how the Stormpath API fu
 Base URL
 --------
 
-All URLs referenced in the API documentation begin with the following base URL::
+All URLs referenced in the API documentation begin with the following base URL:
 
-    https://api.stormpath.com/v1
+  ``https://api.stormpath.com/v1/``
+
+This is the base URL for Stormpath's public API. If you are using an Enterprise deployment, your base URL will instead be:
+
+  ``https://enterprise.stormpath.io/v1/``
+
+And if you have a private Stormpath deployment, the base URL could be a completely custom URL, or simply: 
+
+  ``https://yourOrganization.stormpath.io/v1/``
 
 Resource Format 
 ---------------
@@ -48,8 +56,8 @@ Most clients (including web browsers) show a dialog or prompt for you to provide
 
 When using an API key with Basic authentication, the API key ID is the username and the API key secret is the password:
 
-**HTTP basic username:** apiKey.id value
-**HTTP basic password:** apiKey.secret value
+- **HTTP basic username:** apiKey.id value
+- **HTTP basic password:** apiKey.secret value
 
 For example, if using cUrl:
 
@@ -698,7 +706,7 @@ When you sign up for Stormpath, a private data space is created for you. This sp
       - Description
     
     * - ``href`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The resource's fully qualified location URL
 
@@ -723,42 +731,42 @@ When you sign up for Stormpath, a private data space is created for you. This sp
       - Indicates when this resource’s attributes were last modified.
     
     * - ``customData``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to the Tenant's customData resource that you can use to store your own custom fields.
 
     * - ``organizations`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the Organizations mapped to this Tenant.
 
     * - ``applications``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the Applications mapped to this Tenant. 
             
     * - ``directories`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the Directories mapped to this Tenant.
 
     * - ``accounts``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of the Accounts mapped to this Tenant.
 
     * - ``agents`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the Agents configured for this Tenant.
 
     * - ``groups`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the Groups configured for this Tenant.
 
     * - ``idSites`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the ID Sites configured for this Tenant.
 
@@ -899,7 +907,7 @@ This resource contains information about this Tenant's ID Site. For more informa
       - Description
     
     * - ``href`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The resource's fully qualified location URL.
     
@@ -1024,7 +1032,7 @@ An **Application** resource in Stormpath contains information about any real-wor
       - Description
     
     * - ``href`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The resource's fully qualified location URL.
 
@@ -1054,69 +1062,79 @@ An **Application** resource in Stormpath contains information about any real-wor
       - Indicates when this resource’s attributes were last modified.
 
     * - ``tenant`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to the Tenant that owns this Application.
 
     * - ``defaultAccountStoreMapping`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - Could be ``null``
       - A link to the Account Store Mapping that reflects the default Account Store where the application will store newly created Accounts. A ``null`` value disables the application from directly creating new Accounts.
 
     * - ``defaultGroupStoreMapping`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - Could be ``null``
       - A link to the Account Store Mapping that reflects the default Group Store where the application will store newly created Groups. A ``null`` value disables the application from directly creating new Groups.
 
     * - ``customData``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to the Tenant's customData resource that you can use to store your own custom fields.
 
     * - ``oAuthPolicy`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - 
       - A link to this Application OAuth policy. For more information, see :ref:`token-authn-config`.
 
     * - ``accounts``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the :ref:`Accounts <ref-account>` mapped to this Application. (see note :ref:`below <application-accounts-note>`)
 
     * - ``groups`` 
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to a Collection of all the :ref:`Groups <ref-group>` mapped to this Application.
 
     * - ``accountStoreMappings``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A link to the collection of all :ref:`Account Store Mappings <ref-account-store-mapping>` for this Application.
 
     * - ``loginAttempts``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The endpoint for :ref:`Login Attempts <ref-loginattempts>` for this Application.
 
     * - ``passwordResetTokens``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The endpoint for :ref:`Password Reset Tokens <ref-password-reset-token>`, used in :ref:`password reset workflows <password-reset-flow>`.
 
     * - ``apiKeys``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A collection of all the API Keys for this Application. 
     
     * - ``verificationEmails``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - The endpoint for Verification Emails for this Application.
 
     * - ``authTokens``
-      - String (:ref:`Link <about-links>`)
+      - Link
       - N/A
       - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`. 
+        
+    * - ``authorizedCallbackUris``
+      - String 
+      - N/A 
+      - Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
+    
+    * - ``samlPolicy``
+      - Object 
+      - N/A 
+      - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`the Authentication chapter <ref-samlpolicy>`. 
 
 .. _application-accounts-note:
 
@@ -1539,6 +1557,52 @@ This resource contains information about the Application's OAuth Policy. For mor
     },
     "tenant":{
       "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
+    }
+  }
+
+.. _ref-samlpolicy:
+
+SAML Policy Resource 
+^^^^^^^^^^^^^^^^^^^^
+
+This resource contains information about the Application's SAML policy. For more information about this, please see :ref:`saml-authn`.
+
+**samlPolicy URL**
+
+``https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID``
+
+**samlPolicy Attributes**
+
+.. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+    
+    * - ``href`` 
+      - String (:ref:`Link <about-links>`)
+      - N/A
+      - The resource's fully qualified location URL.
+     
+    * - ``serviceProvider``
+      - Object 
+      - N/A 
+      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the SAML flow. 
+
+**samlPolicy Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/applicationSamlPolicies/:policyId",
+    "serviceProvider": {
+        "href": "https://api.stormpath.com/v1/samlServiceProviders/:serviceProviderId",
+        "ssoInitiationEndpoint": { 
+            "href":"https://api.stormpath.com/v1/applications/:appId/saml/sso/idpRedirect"
+        }  
     }
   }
 
@@ -2370,39 +2434,71 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   
   * - ``providerId``
     - String
-    - ``stormpath`` (for a Cloud Directory), ``ad`` or ``ldap`` (for Mirror Directories), ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories)
+    - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for Mirror Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
     - Specifies the type of Provider for the associated Directory.
   
   * - ``clientId``
     - String
     - N/A
-    - The OAuth 2.0 Client ID for this Provider. Only used for Social providers.
+    - (Social only) The OAuth 2.0 Client ID for this Provider. 
   
   * - ``clientSecret``
     - String
     - N/A
-    - The OAuth 2.0 Client Secret for this Provider. Only used for Social providers.
+    - (Social only) The OAuth 2.0 Client Secret for this Provider. 
   
   * - ``redirectURL``
     - String 
     - A valid URL
-    - The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
+    - (Social only) The URL to redirect to after the user has authenticated. Currently only used for the Google providers. 
   
   * - ``agent``
     - Link 
     - N/A
-    - A link to the Provider's Agent. Currently only used for LDAP providers. For more information see :ref:`below <ref-ldap-agent>`.
+    - (LDAP only) A link to the Provider's Agent. For more information see :ref:`below <ref-ldap-agent>`.
+  
+  * - ``ssoLoginUrl``
+    - String 
+    - N/A
+    - (SAML only) The URL for the IdP's SSO URL. For more information see :ref:`saml-configuration`.
+
+  * - ``ssoLogoutUrl``
+    - String 
+    - N/A
+    - (SAML only) The URL for the IdP's SSO logout endpoint. For more information see :ref:`saml-configuration`.
+
+  * - ``encodedX509SigningCert``
+    - Object 
+    - N/A
+    - (SAML only) The public key from the SAML Identity Provider used to sign the assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
+
+  * - ``requestSignatureAlgorithm``
+    - String 
+    - ``RSA-SHA256`` (Default), ``RSA-SHA1``
+    - (SAML only) The algorithm used by the SAML Identity Provider to sign SAML assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
+
+  * - ``attributeStatementMappingRules``
+    - Object 
+    - N/A
+    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes.  
+
+  * - ``serviceProviderMetadata``
+    - Link 
+    - N/A
+    - (SAML only) This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
+
 
 **Provider Example**
 
 .. code-block:: json 
 
   {
-    "href":"https://api.stormpath.com/v1/directories/3S8qv2u78JzwSXzEXAMplE/provider",
-    "providerId":"ldap",
-    "agent":{
-      "href":"https://api.stormpath.com/v1/agents/3S8vF6CIUET9R4PEXAMplE"
-    }
+    href: "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
+    createdAt: "2014-03-28T22:21:32.937Z",
+    modifiedAt: "2014-03-28T22:21:32.949Z",
+    clientId: "5014174166example",
+    clientSecret: "e7c1274966b0844913953281example",
+    providerId: "facebook"
   }
 
 .. _ref-ldap-agent:

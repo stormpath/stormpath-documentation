@@ -763,7 +763,21 @@ To trigger the password reset workflow, you send an HTTP POST to the Application
 
 .. note::
 
-  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter. 
+  It is also possible to specify the Account Store in your Password Reset POST:
+
+  .. code-block:: http
+
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+    {
+      "email":"phasma@empire.gov"
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+      }
+    }
+
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
 
@@ -779,6 +793,10 @@ If this is a valid email in an Account associated with this Application, you wil
         "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
     }
   }
+
+.. note::
+
+  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter. 
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
