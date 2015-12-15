@@ -1597,11 +1597,11 @@ This resource contains information about the Application's SAML policy. For more
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/applicationSamlPolicies/:policyId",
+    "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID",
     "serviceProvider": {
-        "href": "https://api.stormpath.com/v1/samlServiceProviders/:serviceProviderId",
+        "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
         "ssoInitiationEndpoint": { 
-            "href":"https://api.stormpath.com/v1/applications/:appId/saml/sso/idpRedirect"
+            "href":"https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
         }  
     }
   }
@@ -1627,7 +1627,7 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
 
 **accountStoreMapping URL**
 
-``/v1/accountStoreMappings/:accountStoreMappingId``
+``/v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID``
 
 **accountStoreMapping Attributes**
 
@@ -2404,7 +2404,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
 
 **Provider URL**
 
-``/v1/directories/:directoryId/provider``
+``/v1/directories/$DIRECTORY_ID/provider``
 
 **Provider Attributes**
 
@@ -2512,7 +2512,7 @@ An Agents collection may be accessed via its Resource URL:
 
 **Agent URL**
 
-``/v1/agents/:directoryId``
+``/v1/agents/$DIRECTORY_ID``
 
 **Agent Attributes**
 
@@ -2811,7 +2811,7 @@ An individual Group resource may be accessed via its Resource URL:
 
 **Group URL**
 
-``/v1/groups/:groupId``
+``/v1/groups/$GROUP_ID``
 
 **Group Attributes**
 
@@ -3276,12 +3276,12 @@ An individual Organization resource may be accessed via its Resource URL:
   * - ``defaultAccountStoreMapping``
     - Link
     - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/accounts`` endpoint.
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A null value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/accounts`` endpoint.
 
   * - ``defaultGroupStoreMapping``
     - Link
     - ``null`` or Link
-    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/:organizationId/groups`` endpoint.
+    - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A null value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/groups`` endpoint.
   
 
   * - ``accountStoreMappings``
@@ -3492,7 +3492,7 @@ An individual Account resource may be accessed via its Resource URL:
 
 **Account URL**
 
-``/v1/accounts/:accountId``
+``/v1/accounts/$ACCOUNT_ID``
 
 **Account Attributes**
 
@@ -3764,7 +3764,7 @@ Example Queries
            "surname" : "Picard",
            "password" : "uGhd%a8Kl!"
            "status" : "ENABLED",
-  }
+  }'
 
 This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__.
 

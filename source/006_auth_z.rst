@@ -124,7 +124,7 @@ You can either retrieve the Account along with the expanded customData, by sendi
 
 This will return the Account resource along with the expanded customData:
 
-.. code-block:: json 
+.. code-block:: http  
 
   HTTP/1.1 200 OK 
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
@@ -156,7 +156,7 @@ Or you can retrieve only the customData by sending a GET to::
 
 Which would return only the customData:
 
-.. code-block:: json 
+.. code-block:: http  
 
   HTTP/1.1 200 OK 
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
