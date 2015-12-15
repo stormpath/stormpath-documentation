@@ -1808,7 +1808,7 @@ Directory
 
 **Description**
 
-The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages secURLty policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own secURLty policies.
+The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
 Additionally:
 
