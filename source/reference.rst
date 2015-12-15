@@ -20,9 +20,17 @@ The following information is essential to understanding how the Stormpath API fu
 Base URL
 --------
 
-All URLs referenced in the API documentation begin with the following base URL::
+All URLs referenced in the API documentation begin with the following base URL:
 
-    https://api.stormpath.com/v1
+  ``https://api.stormpath.com/v1/``
+
+This is the base URL for Stormpath's public API. If you are using an Enterprise deployment, your base URL will instead be:
+
+  ``https://enterprise.stormpath.io/v1/``
+
+And if you have a private Stormpath deployment, the base URL could be a completely custom URL, or simply: 
+
+  ``https://yourOrganization.stormpath.io/v1/``
 
 Resource Format 
 ---------------
