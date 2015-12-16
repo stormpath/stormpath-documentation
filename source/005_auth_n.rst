@@ -230,7 +230,7 @@ b. How Token-Based Authentication Works
   :local: 
   :depth: 2
 
-In this section, we will discuss how to use Stormpath to use Stormpath to generate and manage OAuth 2.0 Access Token.
+In this section, we will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Token.
 
 Introduction to Token-Based Authentication
 ------------------------------------------
