@@ -30,8 +30,8 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
 Let's get started!
 
-Retrieve Your Application
-=========================
+a. Retrieve Your Application
+============================
 
 Before you can create user Accounts you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
@@ -111,8 +111,8 @@ The above cURL would return this example response:
 
 Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
 
-Create a User Account
-=====================
+b. Create a User Account
+========================
 
 Now that we've created an Application, let's create a user Account so someone can log in to (i.e. authenticate with) the Application. POST a new Account resource to the Application's ``/accounts`` endpoint, which you saw in the JSON response above:
 
@@ -163,8 +163,8 @@ This would return this response:
 
 You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well.
 
-Authenticate a User Account
-===========================
+c. Authenticate a User Account
+==============================
 
 Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application? You POST a "Login Attempt" to your Application's ``/loginAttempts`` endpoint.
 
@@ -225,8 +225,8 @@ If the authentication attempt fails, you will see an `error response <http://doc
     "moreInfo": "mailto:support@stormpath.com"
   }
 
-Next Steps
-==========
+d. Next Steps
+=============
 
 We hope you found this Quickstart helpful!
 
