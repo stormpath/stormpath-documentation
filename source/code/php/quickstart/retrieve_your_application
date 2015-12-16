@@ -1,0 +1,5 @@
+$tenant = \Stormpath\Resource\Tenant::get();
+foreach($tenant->applications as $app)
+{
+    print $app->name;
+}

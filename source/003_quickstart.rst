@@ -42,131 +42,147 @@ In our examples below we will use the mock API Key from the :ref:`First Time Set
 
 Before you can get your Application, you must get the location of your Tenant from Stormpath, like so:
 
-.. code-block:: bash
+.. only:: rest 
 
-  curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/current"
+  .. code-block:: bash
 
--  ``$API_KEY_ID`` is the ``apiKey.id`` value in
-   ``apiKey.properties`` and
--  ``$API_KEY_SECRET`` is the ``apiKey.secret`` value in
-   ``apiKey.properties``
+    curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/tenants/current"
 
-The above cURL command returns an empty body along with a header:
+  -  ``$API_KEY_ID`` is the ``apiKey.id`` value in
+     ``apiKey.properties`` and
+  -  ``$API_KEY_SECRET`` is the ``apiKey.secret`` value in
+     ``apiKey.properties``
 
-.. code-block:: http 
-  :emphasize-lines: 2
-    
-    HTTP/1.1 302 Found 
-    Location: https://api.stormpath.com/v1/tenants/yOuRTeNANtid
-    Content-Length: 0
+  The above cURL command returns an empty body along with a header:
 
-Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
+  .. code-block:: http 
+    :emphasize-lines: 2
+      
+      HTTP/1.1 302 Found 
+      Location: https://api.stormpath.com/v1/tenants/yOuRTeNANtid
+      Content-Length: 0
 
-From here, using the location of the Tenant, you can get your Application by performing a search for the Application by name, with $TENANT_HREF replaced with the ``href`` of your Tenant from the previous cURL:
+  Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
 
-.. code-block:: bash
+  From here, using the location of the Tenant, you can get your Application by performing a search for the Application by name, with $TENANT_HREF replaced with the ``href`` of your Tenant from the previous cURL:
 
-  curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/yOuRTeNANtid/applications?name=My%20Application"
+  .. code-block:: bash
 
-.. note::
+    curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/tenants/yOuRTeNANtid/applications?name=My%20Application"
 
-  If you leave off the ``?name=My%20Application'`` query at the end of the request, it will instead retrieve a list of all Applications for this Tenant.
+  .. note::
 
-The above cURL would return this example response:
+    If you leave off the ``?name=My%20Application'`` query at the end of the request, it will instead retrieve a list of all Applications for this Tenant.
 
-.. code-block:: json
-  :emphasize-lines: 2,12,13,21,22
+  The above cURL would return this example response:
 
-  {
-    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE",
-    "name":"My Application",
-    "description":"This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
-    "status":"ENABLED",
-    "createdAt":"2015-08-18T20:46:36.061Z",
-    "modifiedAt":"2015-11-09T21:09:34.334Z",
-    "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
-    },
-    "comment":" // This JSON has been truncated for readability", 
-    "accounts":{
-      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
-    },
-    "groups":{
-      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/groups"
-    },
-    "accountStoreMappings":{
-      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accountStoreMappings"
-    },
-    "loginAttempts":{
-      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
-    },
-    "comment":" // This JSON has been truncated for readability"
-  }
+  .. code-block:: json
+    :emphasize-lines: 2,12,13,21,22
 
-Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
+    {
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE",
+      "name":"My Application",
+      "description":"This application was automatically created for you in Stormpath for use with our Quickstart guides(https://docs.stormpath.com). It does apply to your subscription's number of reserved applications and can be renamed or reused for your own purposes.",
+      "status":"ENABLED",
+      "createdAt":"2015-08-18T20:46:36.061Z",
+      "modifiedAt":"2015-11-09T21:09:34.334Z",
+      "tenant":{
+        "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      },
+      "comment":" // This JSON has been truncated for readability", 
+      "accounts":{
+        "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
+      },
+      "groups":{
+        "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/groups"
+      },
+      "accountStoreMappings":{
+        "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accountStoreMappings"
+      },
+      "loginAttempts":{
+        "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
+      },
+      "comment":" // This JSON has been truncated for readability"
+    }
+
+  Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
+
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/retrieve_your_application
+      :language: php
 
 Create a User Account
 =====================
 
-Now that we've created an Application, let's create a user Account so someone can log in to (i.e. authenticate with) the Application. POST a new Account resource to the Application's ``/accounts`` endpoint, which you saw in the JSON response above:
+Now that we've created an Application, let's create a user Account so someone can log in to (i.e. authenticate with) the Application. 
 
-.. code-block:: bash
+.. only:: rest 
 
-  curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
-    --data '{
-    "givenName": "Joe",
-    "surname": "Stormtrooper",
-    "username": "tk421",
-    "email": "tk421@stormpath.com",
-    "password":"Changeme1",
-    }'
+  .. code-block:: bash
 
-This would return this response:
+    curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
+      --data '{
+      "givenName": "Joe",
+      "surname": "Stormtrooper",
+      "username": "tk421",
+      "email": "tk421@stormpath.com",
+      "password":"Changeme1",
+      }'
 
-.. code-block:: json  
+  This would return this response:
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple",
-    "username": "tk421",
-    "email": "tk421@stormpath.com",
-    "fullName": "Joe Stormtrooper",
-    "givenName": "Joe",
-    "middleName": null,
-    "surname": "Stormtrooper",
-    "status": "ENABLED",
-    "customData": {
-      "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/customData"
-    },
-    "groups": {
-      "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/groups"
-    },
-    "groupMemberships": {
-      "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/groupMemberships"
-    },
-    "directory": {
-      "href":"https://api.stormpath.com/v1/directories/1gkPqEScsMQSUFreXAMPLE"
-    },
-    "tenant": {
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExAMPLE"
-    },
-    "emailVerificationToken": null
-  }
+  .. code-block:: json  
 
-You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well.
+    {
+      "href": "https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple",
+      "username": "tk421",
+      "email": "tk421@stormpath.com",
+      "fullName": "Joe Stormtrooper",
+      "givenName": "Joe",
+      "middleName": null,
+      "surname": "Stormtrooper",
+      "status": "ENABLED",
+      "customData": {
+        "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/customData"
+      },
+      "groups": {
+        "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/groups"
+      },
+      "groupMemberships": {
+        "href":"https://api.stormpath.com/v1/accounts/2wufAnDszC3PRi9exAMple/groupMemberships"
+      },
+      "directory": {
+        "href":"https://api.stormpath.com/v1/directories/1gkPqEScsMQSUFreXAMPLE"
+      },
+      "tenant": {
+        "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExAMPLE"
+      },
+      "emailVerificationToken": null
+    }
 
+  You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well.
+
+.. only:: php 
+
+  .. literalinclude:: code/php/quickstart/create_an_account 
+     :language: php
+     
 Authenticate a User Account
 ===========================
 
-Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application? You POST a "Login Attempt" to your Application's ``/loginAttempts`` endpoint.
+Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application? 
+
+You POST a "Login Attempt" to your Application's ``/loginAttempts`` endpoint.
 
 The login cURL command would look as follows:
 
