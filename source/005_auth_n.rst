@@ -40,7 +40,7 @@ We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleX
     "type": "basic",
     "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
     "accountStore": {
-       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
      }
   }
 
@@ -1432,10 +1432,9 @@ The Stormpath SAML Flow
 .. todo:: 
 
   skinparam monochrome true
-  title The Stormpath SAML Flow
 
   participant "Stormpath" as storm
-  participant "Service Provider" as sp
+  participant "Your Application" as sp
   participant "User Agent" as ua
   participant "Identity Provider" as idp
 

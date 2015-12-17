@@ -52,22 +52,30 @@ Now that we have some understanding of authorization roles in Stormpath, we can 
 Application-Wide Roles
 ^^^^^^^^^^^^^^^^^^^^^^
 
-In a multi-tenant SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the tenant that they belong to, while at the same time defining authorization based on broader, application-wide roles. In Stormpath, we recommended that you model every tenant that uses your Application using the **Organization** resource. The Organization resource is a container for Directory resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the :ref:`multi-tenancy chapter <multitenancy>`.
+In a multi-tenant SaaS application, it is easy to imagine a scenario where you might want to have user Accounts segregated based upon the tenant that they belong to, while at the same time defining authorization based on broader, application-wide roles. In Stormpath, we recommended that you model every tenant that uses your Application using the **Organization** resource. The Organization resource is a container for Directory and Group resources that makes it easier to model user bases with multiple tenants. For more information about this, please see the :ref:`multi-tenancy chapter <multitenancy>`.
 
-Alongside these Organizations, it is also possible to define application-wide Groups that allow for roles that span across Organizations, regardless of where a user's Account is found.
+Alongside these Organizations and their Account Stores, it is also possible to define application-wide Groups that allow for roles that span across Organizations, regardless of which tenant a user belongs to. We can illustrate this with an example.
 
-An example: So let's assume that your "InterGalactic Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of Aargau", "InterGalactic Bank of Kuat", etc), each modeled as an Organization resource. Each of those subsidiaries, in turn, could contain a Directory resource for each of its branches, and each branch could have departmental Groups. However, you can still define roles that span the entire "InterGalactic Banking" application, regardless of which tenant (Organization), branch (Directory), or department (Group) the Account is associated with.
+.. note::
 
-For example, your Application could have "Teller" and "Bank Administrator" roles for all of your Application's users. All this requires is that you create two Groups and assign the users you want to those Groups. Any Account, regardless of the Organization, Directory, or Group that they are assigned to, can also be assigned to the "Teller" or "Bank Administrator" Group.
+  This just one possible way of modeling a multi-tenant app with application-wide roles. Your approach may vary. If you need help with modeling your user base, feel free to contact us at support@stormpath.com and we will help as best as we can. 
+
+Let's assume that your "InterGalactic Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of Aargau", "InterGalactic Bank of Kuat", etc), each modeled as an Organization resource. 
+
+Each of these Organization resources has a Group as its Account Store. This means that all of the users for that Tenant will be represented by Account resources that are mapped to that subsidiary's Organization as well as its Group. 
+
+So we could have a user "Shmi". This user is modeled inside Stormpath by an Account resource. She is an employee Bank of Aargau, so her Account resource is associated with the "Bank of Aargau" Organization and Group resources. 
+
+Now our banking application has roles that we want applied across all of its tenants, such as "Employee", "Customer", and "System Administrator". Modeling these can be accomplished by creating Groups for them, and then associating the appropriate Accounts with them. Since our Shmi user is a bank teller at the Bank of Aargau, we can associated her with the "Bank of Aargau" Group, as well as the "Bank Employee" Group. Each of these Groups could have its own defined permissions, and Shmi would inherit all of them.
 
 The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks. 
 
-More information about the APIs that allow you to create, retrieve and search an Application's groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy>`.
+More information about the APIs that allow you to create, retrieve and search an Application's Groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy>`.
 
 ii. Using Permissions
 ---------------------
 
-If you have decided that your application requires the more advanced authorization modelling possible with permissions, then the first question with every permission is whether it will be tied to an Account or a Group.
+If you have decided that your application requires the more advanced authorization modeling possible with permissions, then the first question with every permission is whether it will be tied to an Account or a Group.
 
 **User-unique permissions:** Any permissions that are are unique to a user should be tied to that user's Account resource.
 
