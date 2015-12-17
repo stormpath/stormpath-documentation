@@ -40,7 +40,7 @@ We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleX
     "type": "basic",
     "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
     "accountStore": {
-       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
      }
   }
 
@@ -1220,24 +1220,23 @@ You will need the following information from your IdP:
 Step 2: Configure Your SAML Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Input the data you gathered in Step 1 above into your Directory's Provider resource:
+Input the data you gathered in Step 1 above into your Directory's Provider resource, and then pass that along as part of the Directory creation HTTP POST:
 
 .. code-block:: http 
 
-  POST /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
-    "ssoLoginUrl": "https://yourIdp.com/saml2/sso/login",
-    "ssoLogoutUrl": "https://yourIdp.com/saml2/sso/logout",
-    "encodedX509SigningCert": {
-            "-----BEGIN CERTIFICATE-----
-             ...Certificate goes here...
-             -----END CERTIFICATE-----
-            "
-        },
-    "requestSignatureAlgorithm": "RSA-SHA256",
+    "name" : "My SAML Directory",
+    "description" : "A Directory used for SAML Authorization",
+    "provider": {
+      "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
+      "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
+      "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
+      "requestSignatureAlgorithm":"RSA-SHA256"
+    }
   }
 
 .. _configure-sp-in-idp:
@@ -1432,10 +1431,9 @@ The Stormpath SAML Flow
 .. todo:: 
 
   skinparam monochrome true
-  title The Stormpath SAML Flow
 
   participant "Stormpath" as storm
-  participant "Service Provider" as sp
+  participant "Your Application" as sp
   participant "User Agent" as ua
   participant "Identity Provider" as idp
 
