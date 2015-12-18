@@ -579,6 +579,17 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
       ]
     }
 
+.. note::
+
+  You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
+
+  .. code-block:: bash 
+
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0eSEXAMPLE"
+
 To revoke the token, simply issue an HTTP Delete::
 
     DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
