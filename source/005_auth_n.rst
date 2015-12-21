@@ -1243,12 +1243,17 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
     "name" : "My SAML Directory",
     "description" : "A Directory used for SAML Authorization",
     "provider": {
+      "providerId":"saml",
       "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
       "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
       "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
       "requestSignatureAlgorithm":"RSA-SHA256"
     }
   }
+
+.. note::
+
+  Notice that new lines in the certificate are separated with a ``\n`` character.
 
 .. _configure-sp-in-idp:
 
