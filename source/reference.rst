@@ -4041,6 +4041,31 @@ This collection stores any OAuth 2.0 Access Tokens that have been generated for 
     }
   }
 
+Access Token Operations 
+"""""""""""""""""""""""
+
+Creating Access Tokens
+++++++++++++++++++++++
+
+You can create an Access Token off of the Application's ``oauth/token`` endpoint as described in :ref:`generate-oauth-token`. 
+
+Retrieving Access Tokens 
+++++++++++++++++++++++++++
+
+An Account's Access Tokens can be retrieved manually. It is also possible to specify an Application and only retrieve the Access Tokens that the Account has for that particular Application. 
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/accounts/$ACCOUNT_ID/accessTokens
+      - ``application.href``
+      - Retrieves the specified Account's Access Tokens.
+
 .. _ref-refresh-token:
 
 Refresh Tokens
@@ -4129,6 +4154,31 @@ This collection stores any OAuth 2.0 Refresh Tokens that have been generated for
       "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
     }
   }
+
+Refresh Token Operations 
+""""""""""""""""""""""""
+
+Creating Refresh Tokens
++++++++++++++++++++++++
+
+You can create a Refresh Token off of the Application's ``oauth/token`` endpoint as described in :ref:`generate-oauth-token`. 
+
+Retrieving Refresh Tokens 
+++++++++++++++++++++++++++
+
+An Account's Refresh Tokens can be retrieved manually. It is also possible to specify an Application and only retrieve the Refresh Tokens that the Account has for that particular Application. 
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/accounts/$ACCOUNT_ID/refreshTokens
+      - ``application.href``
+      - Retrieves the specified Account's Refresh Tokens.
 
 .. _ref-jwt:
 

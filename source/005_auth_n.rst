@@ -579,6 +579,17 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
       ]
     }
 
+.. note::
+
+  You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
+
+  .. code-block:: bash 
+
+    curl --request GET \
+    --user $API_KEY_ID:$API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0eSEXAMPLE"
+
 To revoke the token, simply issue an HTTP Delete::
 
     DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
@@ -1232,12 +1243,17 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
     "name" : "My SAML Directory",
     "description" : "A Directory used for SAML Authorization",
     "provider": {
+      "providerId":"saml",
       "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
       "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
       "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
       "requestSignatureAlgorithm":"RSA-SHA256"
     }
   }
+
+.. note::
+
+  Notice that new lines in the certificate are separated with a ``\n`` character.
 
 .. _configure-sp-in-idp:
 

@@ -526,7 +526,7 @@ A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's `
 
 .. code-block:: http 
 
-  GET /v1/application/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
+  GET /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
