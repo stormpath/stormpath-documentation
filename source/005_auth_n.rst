@@ -596,128 +596,6 @@ To revoke the token, simply issue an HTTP Delete::
 
 You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
 
-.. _about-jwt:
-
-JSON Web Tokens
----------------
-
-JSON Web Tokens (JWTs) are a crucial part of many authentication flows in Stormpath, including :ref:`ID Site <idsite-with-rest>` and :ref:`SAML <saml-authn>` authentication. 
-
-Generating the JWT
-^^^^^^^^^^^^^^^^^^
-
-Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
-
-- .NET JWT - https://github.com/jwt-dotnet/jwt
-- Ruby JWT - https://github.com/jwt/ruby-jwt
-- Go JWT - https://github.com/dgrijalva/jwt-go
-- PHP JWT - https://github.com/firebase/php-jwt
-- Python JWT - https://github.com/jpadilla/pyjwt
-- Java JWT - https://github.com/jwtk/jjwt
-- Node JWT - https://github.com/jwtk/njwt
-
-JWT Claims
-^^^^^^^^^^
-
-There are two kinds of JWTs that you will deal with: the ones being sent to Stormpath at the beginning of an authentication flow, and the ones that are returned back after the user has authenticated (e.g. with ID Site).
-
-.. _init-jwt:
-
-Authentication JWT
-""""""""""""""""""
-
-.. todo::
-
-  There is some ID Site specific language here. 
-
-This is the JWT that is sent along with the first request that launches the authorization flow, for example as part of ID Site login, or SAML Authentication. The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT are as follows:
-
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Required?
-    - Valid Value(s)
-
-  * - ``iat``
-    - Yes
-    - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
-
-  * - ``iss``
-    - Yes
-    - The issuer of the token. You should put your Stormpath API Key ID here.
-
-  * - ``sub``
-    - Yes
-    - The subject of the token. You should put your Stormpath Application resource's href here.
-
-  * - ``cb_uri``
-    - Yes
-    - The callback URI to use once the user takes an action on the ID Site or Identity provider. This must match a Authorized Callback URI on Application resource.
-
-  * - ``jti``
-    - Yes
-    - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
-
-  * - ``path``
-    - No
-    - (ID Site only) The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
-
-  * - ``state``
-    - No
-    - The state of the application that you need to pass through ID Site or the IdP back to your application through the callback. It is up to the developer to serialize/deserialize this value
-
-  * - ``organizationNameKey``
-    - No
-    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site or SAML.
-
-  * - ``showOrganizationField``
-    - No 
-    - (ID Site only) A boolean representing if the "Organization" field should show on the forms that ID Site renders.
-
-.. _post-auth-jwt:
-
-Account Assertion JWT 
-"""""""""""""""""""""
-
-Once the user has been authenticated by ID Site or the SAML IdP, you will receive back a JWT response. The JWT contains the following information:
-
-.. todo::
-
-  ``iss`` at least needs to be updated?
-
-.. list-table::
-  :widths: 15 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Description
-  
-  * - ``iss`` 
-    - The issuer of the JWT. This will match your ID Site domain and can be used for additional validation of the JWT.
-
-  * - ``sub`` 
-    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site / SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
-
-  * - ``aud`` 
-    - The audience of the JWT. This will match your API Key ID from Stormpath.
-
-  * - ``exp`` 
-    - The expiration time for the JWT in Unix time.
-
-  * - ``iat`` 
-    - The time at which the JWT was created, in Unix time.
-
-  * - ``jti`` 
-    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
-
-  * - ``state`` 
-    - The state of your application, if you have chosen to have this passed back.
-
-  * - ``status`` 
-    - The status of the request from ID Site. Valid values for ID SIte are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``. For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
-
 .. _social-authn:
 
 c. How Social Authentication Works
@@ -1260,11 +1138,43 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 Step 3: Configure Your Service Provider in Your Identity Provider 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. In order to retrieve the required values, simply send a GET to the ``serviceProviderMetadata`` link found in your Directory's Provider object.
+Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. 
+
+In order to retrieve the required values, start by sending a GET to the Directory's Provider:
 
 .. code-block:: http 
 
-  GET /v1/samlServiceProviderMetadatas/$METADATA_ID" HTTP/1.1
+  GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/xml
+
+Which will return the Provider:
+
+.. code-block:: json
+  :emphasize-lines: 13,14
+
+  {
+    "href":"https://api.stormpath.com/v1/directories/1joyMCilyf1xSravQxaHxy/provider",
+    "createdAt":"2015-12-21T20:27:16.190Z",
+    "modifiedAt":"2015-12-21T20:27:16.190Z",
+    "providerId":"saml",
+    "ssoLoginUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
+    "ssoLogoutUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
+    "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\nexample\n-----END CERTIFICATE-----",
+    "requestSignatureAlgorithm":"RSA-SHA256",
+    "attributeStatementMappingRules":{
+      "href":"https://api.stormpath.com/v1/attributeStatementMappingRules/1jq5X3PhdEZJ5EL5MORdTG"
+    },
+    "serviceProviderMetadata":{
+      "href":"https://api.stormpath.com/v1/samlServiceProviderMetadatas/1l4aLK8aJPNtwslBgXBjGE"
+    }
+  }
+
+Now send a GET to this ``serviceProviderMetadata`` link found in your Directory's Provider object.
+
+.. code-block:: http 
+
+  GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/xml
 
@@ -1287,7 +1197,7 @@ Next you will have to configure your Stormpath-powered application as a Service 
               </ds:KeyInfo>
           </md:KeyDescriptor>
           <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pkyId5eR/saml/sso/post" index="0"/>
+          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
       </md:SPSSODescriptor>
   </md:EntityDescriptor>
 
@@ -1296,12 +1206,12 @@ Next you will have to configure your Stormpath-powered application as a Service 
 .. code-block:: json
 
   {
-    "href":"http://yourapp.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuMqaOMQZ",
+    "href":"http://yourapp.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuExaMPLE",
     "createdAt":"2015-12-09T19:22:10.033Z",
     "modifiedAt":"2015-12-09T19:22:10.033Z",
     "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
     "assertionConsumerServicePostEndpoint":{
-      "href":"http://yourapp.com/v1/directories/15iM83Y77qIIviKlTzGqjX/saml/sso/post"
+      "href":"http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post"
     },
     "x509SigningCert":{
       "href":"http://yourapp.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
@@ -1328,7 +1238,7 @@ The Stormpath :ref:`Application <ref-application>` Resource has two parts that a
 
 .. code-block:: http 
 
-  POST /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -1338,7 +1248,6 @@ The Stormpath :ref:`Application <ref-application>` Resource has two parts that a
       "https://myapplication.com/whatever/callback2"
     ]
   }
-
 
 Step 5: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1394,7 +1303,7 @@ The rules have three different components:
 The rule expressed here is as follows: 
 
 - A SAML Assertion with the name ``uid`` AND 
-- the name format ``someurn`` 
+- the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic`` 
 - maps to the Account Attribute ``username``.
 
 .. note::
@@ -1405,12 +1314,12 @@ In order to create the mapping rules, we simply send the following POST:
 
 .. code-block:: http 
 
-  POST /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+  POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
-    "attributeStatementMappingRules": [
+    "items":[
       {
         "name":"uid",
         "accountAttributes":[
@@ -1471,12 +1380,89 @@ The Stormpath SAML Flow
 Step 0: Generate a JWT 
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The user agent will request to login with SAML. You will need to generate a JWT using :ref:`an approved JWT library <about-jwt>`. 
+The user agent will request to login with SAML. You will need to generate a JWT using an approved JWT library. 
+
+Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
+
+- .NET JWT - https://github.com/jwt-dotnet/jwt
+- Ruby JWT - https://github.com/jwt/ruby-jwt
+- Go JWT - https://github.com/dgrijalva/jwt-go
+- PHP JWT - https://github.com/firebase/php-jwt
+- Python JWT - https://github.com/jpadilla/pyjwt
+- Java JWT - https://github.com/jwtk/jjwt
+- Node JWT - https://github.com/jwtk/njwt
+
+SAML Authentication JWT
+"""""""""""""""""""""""""""
+
+.. note:: 
+
+  This key must be signed with your API Key Secret. 
+
+The token itself will contain two parts, a Header and a Body that itself contains claims.
+
+**Header** 
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Header Name
+    - Required?
+    - Valid Value(s)
+
+  * - ``kid``
+    - Yes
+    - Your Stormpath API Key ID.
+
+  * - ``alg``
+    - Yes 
+    - The algorithm that was used to sign this key. The only valid value is ``HS256``.
+
+**Body** 
+
+The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body are as follows:
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Required?
+    - Valid Value(s)
+
+  * - ``iat``
+    - Yes
+    - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
+
+  * - ``iss``
+    - Yes
+    - The issuer of the token. This is your Application ``href``.
+
+  * - ``cb_uri``
+    - No
+    - The callback URI to use once the user takes an action on the ID Site or Identity provider. This must match a Authorized Callback URI on Application resource, otherwise the flow will default to the first Callback URI that does not contain a wildcard.
+
+  * - ``jti``
+    - Yes
+    - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
+
+  * - ``state``
+    - No
+    - The state of the application that you need to pass through ID Site or the IdP back to your application through the callback. It is up to the developer to serialize/deserialize this value
+  
+  * - ``ash``
+    - No 
+    - Specifies a link to an Account Store to attempt to authenticate against.
+  
+  * - ``onk``
+    - No 
+    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use SAML.
 
 Step 1: Initiate the flow 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Once the JWT is generated by your server, you initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect``. To this you add a JWT Access Token, so the full request looks like this:
+Once the JWT is generated by your server, you initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect`` along with the JWT you just generated:
 
 .. code-block:: http 
 
@@ -1484,31 +1470,10 @@ Once the JWT is generated by your server, you initiate the SAML flow by sending 
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
-Additionally, you can specify some optional parameters to allow for greater control over which Account Store you would like to authenticate. 
-
-.. list-table::
-  :widths: 30 70 
-  :header-rows: 1
-
-  * - Parameter 
-    - Description 
-  
-  * - ``accountStore.href``
-    - Specifies a link to an Account Store to attempt to authenticate against.
-
-  * - ``accountStore.nameKey``
-    - Specifies the Name Key of an Account Store to try to authenticate against.
-
-  * - ``callbackUri``
-    - Specifies one of the Application's Authorized Callback URIs to use. Otherwise the flow will default to the first Callback URI that does not contain a wildcard. 
-
-  * - ``state``
-    - Any state that the developer would like persisted through the request. It is up to the developer to serialize and deserialize this state. 
-
 Step 2: Redirection 
 ^^^^^^^^^^^^^^^^^^^
 
-The GET sent to the Application's ``/saml/sso/idpRedirect`` endpoint will result in a redirection to the IdP Login URL that you specified during configuration:
+This GET will result in a redirection to the IdP Login URL that you specified during configuration:
 
 .. code-block:: http  
 
@@ -1518,17 +1483,87 @@ The GET sent to the Application's ``/saml/sso/idpRedirect`` endpoint will result
 Step 3: Identity Provider Login 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At this point the IdP will render their login page, and the user will authenticate. Once authentication is successful, the IdP will respond to Stormpath. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
+At this point the IdP will render their login page, and the user will authenticate. 
+
+Step 4: Redirect to Assertion Consumer Service URL 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After authentication the user is redirected back to the Assertion Consumer Service URL that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
 
 .. note::
 
   Account matching is done on the basis of the returned email address. 
 
-The user will now be directed back to your Application along with a JSON Web Token. 
+Step 5: Stormpath Response with JWT 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The user will now be redirected by Stormpath back to your Application along with a JSON Web Token. 
 
 .. code-block:: http 
 
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
+
+SAML Account Assertion JWT 
+""""""""""""""""""""""""""
+
+This JWT again contains both Headers and a Body with Claims. 
+
+**Header** 
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Required?
+    - Valid Value(s)
+
+  * - ``typ``
+    - Yes
+    - The type of token, which will be ``JWT``
+
+  * - ``alg``
+    - Yes 
+    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+**Body** 
+
+.. list-table::
+  :widths: 15 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Description
+  
+  * - ``iss`` 
+    - The issuer of this token, which will contain your Application ``href``. 
+
+  * - ``sub`` 
+    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
+
+  * - ``aud`` 
+    - The audience of the JWT. This will match your API Key ID from Stormpath.
+
+  * - ``exp`` 
+    - The expiration time for the JWT in Unix time.
+
+  * - ``iat`` 
+    - The time at which the JWT was created, in Unix time.
+
+  * - ``jti`` 
+    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
+
+  * - ``state`` 
+    - The state of your application, if you have chosen to have this passed back.
+
+  * - ``status`` 
+    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
+  
+  * - ``irt``
+    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
+
+  * - ``isNewSub``
+    - Indicates whether this is a new Account in Stormpath. 
 
 At this point your user is authenticated and able to use your app. 
