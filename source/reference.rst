@@ -1194,7 +1194,10 @@ An **Application** resource in Stormpath contains information about any real-wor
     },
     "authTokens": {
       "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
-    }  
+    },
+    "samlPolicy" : {
+      "href" : "http://localhost:9191/v1/samlPolicies/QONHxosYAWIwIvZnFA85E"
+    }
   }
 
 Application Operations
