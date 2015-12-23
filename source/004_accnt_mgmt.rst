@@ -160,7 +160,7 @@ Presently, Social Directories can be made via the Stormpath Admin Console or usi
 ii. Groups
 ----------
 
-The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by the their role within a company. 
+The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company. 
 
 For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter. 
 

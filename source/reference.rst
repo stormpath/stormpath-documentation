@@ -335,7 +335,7 @@ REST API responses indicating an error or warning are represented by a proper re
 
 .. _about-collections:
 
-Collection Resources
+Collection Resource
 --------------------
 
 A **Collection** Resource is a resource containing other resources. It is known as a Collection Resource because it is itself a first class resource – it has its own attributes in addition to the resources it contains.

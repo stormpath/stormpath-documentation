@@ -71,7 +71,7 @@ The relation between every Account and its Group is contained in a :ref:`ref-gro
 
 Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Account Stores can be mapped to Application resources to allow your Accounts to log-in to those applications. Both Directories and Groups can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment. 
 
-A resources that contains other resources is known as a :ref:`about-collections`. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href``.
+A resource that contains other resources is known as a :ref:`about-collections`. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href``.
 
 Stormpath uses the :ref:`ref-customdata` resource to store custom information. It is a schema-less map object that is automatically created at the same time as, and linked to, another Stormpath resource, such as an Account, Group, or Directory.
 
