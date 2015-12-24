@@ -1197,7 +1197,7 @@ Now send a GET to this ``serviceProviderMetadata`` link found in your Directory'
               </ds:KeyInfo>
           </md:KeyDescriptor>
           <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
+          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
       </md:SPSSODescriptor>
   </md:EntityDescriptor>
 
@@ -1206,15 +1206,15 @@ Now send a GET to this ``serviceProviderMetadata`` link found in your Directory'
 .. code-block:: json
 
   {
-    "href":"http://yourapp.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuExaMPLE",
+    "href":"http://api.stormpath.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuExaMPLE",
     "createdAt":"2015-12-09T19:22:10.033Z",
     "modifiedAt":"2015-12-09T19:22:10.033Z",
     "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
     "assertionConsumerServicePostEndpoint":{
-      "href":"http://yourapp.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post"
+      "href":"http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post"
     },
     "x509SigningCert":{
-      "href":"http://yourapp.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
+      "href":"http://api.stormpath.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
     }
   }
 
