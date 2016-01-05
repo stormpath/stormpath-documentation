@@ -452,7 +452,7 @@ Filter Search
 
 A filter search consists of specifying a query parameter ``q`` and a corresponding search value on a Collection Resource URL::
 
-    /v1/RESOURCE_TYPE?q=some+criteria
+    /v1/$CONTAINER_TYPE/$CONTAINER_ID/$RESOURCE_TYPE?q=some+criteria
 
 For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe":
     
@@ -475,11 +475,11 @@ So the following query:
       curl --request GET \
       --user $API_KEY_ID:$API_KEY_SECRET \
       --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/accounts?q=Joe"
+      --url "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accounts?q=Joe"
 
 Returns all Accounts where:
 
-- Each Account is owned by the caller’s Tenant AND
+- Each Account is associated to the specified Group
 - The Account's ``givenName`` equals or contains "joe" (case insensitive) OR
 - The Account's ``middlename`` equals or contains "joe" (case insensitive) OR
 - The Account's ``email`` equals or contains "joe" (case insensitive) OR
@@ -543,10 +543,14 @@ Attribute-based queries use standard URL query parameters and function as follow
 
 - A query parameter value triggers one of four types of matching criteria:
    
-   #. No asterisk at the beginning or end of the value indicates a direct case-insensitive match.
-   #. An asterisk only at the beginning of the value indicates that the case-insensitive value is at the end.
-   #. An asterisk only at the end of the value indicates that the case-insensitive value is at the beginning.
+   #. No asterisk at the beginning or end of the value indicates a direct match.
+   #. An asterisk only at the beginning of the value indicates that value is at the end.
+   #. An asterisk only at the end of the value indicates that the value is at the beginning.
    #. An asterisk at the end AND at the beginning of the value indicates the value is contained in the string.
+
+.. note ::
+
+  Just like with Filter search, queries are case-insensitive. 
 
 So the following query:
 
@@ -555,16 +559,16 @@ So the following query:
       curl --request GET \
       --user $API_KEY_ID:$API_KEY_SECRET \
       --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled"
+      --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled"
 
 Returns all accounts where:
 
-- Each Account is owned by the caller Tenant.
-- The Account's ``givenName`` is equal to "Joe" (case insensitive) AND
-- The Account's ``middleName`` ends with "aul" (case insensitive) AND
-- The Account's ``surname`` equals or contains "mit" (case insensitive) AND
-- The Account's ``email`` starts with with "joePaul" (case insensitive) AND
-- The Account's ``status`` equals "disabled" (case insensitive).
+- Each Account belongs to the specified Application 
+- The Account's ``givenName`` is equal to "Joe" AND
+- The Account's ``middleName`` ends with "aul" AND
+- The Account's ``surname`` equals or contains "mit" AND
+- The Account's ``email`` starts with with "joePaul" AND
+- The Account's ``status`` equals "disabled".
 
 .. note::
 
