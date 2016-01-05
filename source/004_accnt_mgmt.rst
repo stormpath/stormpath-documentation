@@ -111,7 +111,7 @@ The big benefit is that your Stormpath-enabled applications still use the same c
 Modeling Mirror Directories
 """""""""""""""""""""""""""
 
-If you Application is going to have an LDAP integration, it will need to support multiple Directories — one Mirror Directory for each LDAP integration.
+If your Application is going to have an LDAP integration, it will need to support multiple Directories — one Mirror Directory for each LDAP integration.
 
 In this scenario, we recommend linking each Account in a LDAP Mirror Directory with a master Account in a master Directory. This offers a few benefits:
 
