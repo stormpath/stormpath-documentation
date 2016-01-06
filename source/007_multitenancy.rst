@@ -4,13 +4,13 @@
 7. Multi-Tenancy with Stormpath
 *******************************
 
-a. What Is a Multi-Tenant Application? 
-======================================
+7.1. What Is a Multi-Tenant Application? 
+========================================
 
 The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model. How do we do this? Well, it starts with an Organization.
 
-b. Modeling Tenants in Stormpath
-=================================
+7.2. Modeling Tenants in Stormpath
+===================================
 
 In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional :ref:`Organization <ref-organization>` resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
 
@@ -18,8 +18,8 @@ In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds o
 
   A Directory or Group can be added to multiple Organizations.
 
-Organizations
--------------
+7.2.1. Organizations
+--------------------
 
 The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
 
@@ -160,8 +160,8 @@ As described in :ref:`the Authentication chapter <authn>`, in order to allow use
 
 To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
-c. Authenticating an Account against an Organization
-====================================================
+7.3. Authenticating an Account against an Organization
+======================================================
 
 Authenticating an Account against an Organization works essentially the same way as described in :ref:`how-login-works`. The only difference is that adding the Organization resource allows for an additional level of Account Stores. 
 

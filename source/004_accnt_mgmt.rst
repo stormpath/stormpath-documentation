@@ -4,8 +4,8 @@
 4. Account Management
 **********************
 
-a. Modeling Your User Base
-===========================
+4.1. Modeling Your User Base
+============================
 
 The first question that we need to address is how we are going to model our users inside Stormpath. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
 
@@ -13,8 +13,8 @@ All of your Accounts will have to be associated with at least one Directory reso
 
 .. _directory-mgmt:
 
-i. Directories
---------------
+4.1.1. Directories
+-------------------
     
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
@@ -157,8 +157,8 @@ Presently, Social Directories can be made via the Stormpath Admin Console or usi
 
 .. _group-mgmt:
 
-ii. Groups
-----------
+4.1.2. Groups
+--------------
 
 The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by the their role within a company. 
 
@@ -241,15 +241,15 @@ Would yield this response:
 
 .. _account-creation:
 
-b. How to Store Accounts in Stormpath
-=====================================
+4.2. How to Store Accounts in Stormpath
+=======================================
 
 The Account resource is a unique identity within your application. It is usually used to model an end-user, although it can also be used by a service, process, or any other entity that needs to log-in to Stormpath.
 
 For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.  
 
-New Account Creation
---------------------
+4.2.1. New Account Creation
+---------------------------
 
 The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
 
@@ -361,8 +361,8 @@ And get the following response:
 
 .. _importing-accounts:
 
-Importing Accounts
-------------------
+4.2.2. Importing Accounts
+-------------------------
 
 Stormpath also makes it very easy to transfer your existing user directory into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
 
@@ -448,8 +448,8 @@ In this case you will be using the API in the same way as usual, except with the
 
 .. _add-user-customdata:
 
-How to Store Additional User Information as Custom Data
--------------------------------------------------------
+4.2.3. How to Store Additional User Information as Custom Data
+--------------------------------------------------------------
 
 While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
 
@@ -488,8 +488,8 @@ This information can also be appended as part of the initial Account creation pa
 
 For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide .
 
-c. How to Search Accounts
-=========================
+4.3. How to Search Accounts
+===========================
 
 You can search Stormpath Accounts, just like all Resource collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
 
@@ -512,8 +512,8 @@ As mentioned in the :ref:`Search section <about-search>` of the Reference chapte
 - ``email``
 - ``status``
 
-Example Account Searches
-------------------------
+4.3.1. Example Account Searches
+-------------------------------
 
 Below are some examples of different kinds of searches that can be performed to find Accounts.
 
@@ -658,11 +658,11 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. _managing-account-pwd:
 
-d. How to Manage an Account's Password
-======================================
+4.4. How to Manage an Account's Password
+========================================
 
-Manage Password Policies
-------------------------
+4.4.1. Manage Password Policies
+--------------------------------
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
@@ -707,8 +707,8 @@ would result in the following response:
 
 .. _change-account-pwd:
 
-Change An Account's Password
-----------------------------
+4.4.2. Change an Account's Password
+-----------------------------------
 
 At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during account creation. The only ways to change an Account password once it has been created are: 
 
@@ -733,13 +733,13 @@ For more information about resetting the password, read on.
 
 .. _password-reset-flow:
 
-Password Reset
---------------
+4.4.3. Password Reset
+---------------------
 
 Password Reset in Stormpath is a self-service flow, where the user is sent an email with a secure link. The user can then click that link and be shown a password reset form. The password reset workflow involves changes to an account at an application level, and as such, this workflow relies on the application resource as a starting point. While this workflow is disabled by default, you can enable it easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console product guide <http://docs.stormpath.com/console/product-guide/#password-reset>`__ for complete instructions.
 
-How To Reset A Password 
------------------------
+How to Reset a Password 
+^^^^^^^^^^^^^^^^^^^^^^^
 
 There are three steps to the password reset flow:
 
@@ -875,13 +875,13 @@ To modify the emails that get sent during the password reset workflow, all you h
 
 .. _verify-account-email:
 
-e. How to Verify an Account's Email 
-===================================
+4.5. How to Verify an Account's Email 
+=====================================
 
 If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
-Understanding the Email Verification Workflow
----------------------------------------------
+4.5.1. The Email Verification Workflow
+--------------------------------------
 
 This workflow involves 3 parties: your application's end-user, your application, and the Stormpath API server.
 
@@ -905,18 +905,18 @@ It is also expected that the workflow’s **Account Verification Base URL** has 
 
   The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
 
-Configuring the Verification Workflow
--------------------------------------
+4.5.2. Configuring the Verification Workflow
+---------------------------------------------
 
 This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_ for complete instructions.
 
-Triggering the Verification Email (Creating A Token)
-----------------------------------------------------
+4.5.3. Triggering the Verification Email (Creating A Token)
+-----------------------------------------------------------
 
 In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you simply create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
 
-Verifying the Email Address (Consuming The Token)
--------------------------------------------------
+4.5.4. Verifying the Email Address (Consuming The Token)
+--------------------------------------------------------
 
 The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
 
@@ -956,8 +956,8 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 
 .. _resending-verification-email:
 
-Resending The Verification Email 
---------------------------------
+4.5.5. Resending the Verification Email 
+---------------------------------------
 
 If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint. 
 
@@ -975,11 +975,11 @@ If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
 
 .. _customizing-email-templates:
 
-f. Customizing Stormpath Emails via REST
-========================================
+4.6. Customizing Stormpath Emails via REST
+==========================================
 
-What emails does Stormpath send?
---------------------------------
+4.6.1. What Emails Does Stormpath Send?
+---------------------------------------
 
 Stormpath can be configured to send emails to users as part of a Directory's Account Creation and Password Reset policies.
 
@@ -1004,8 +1004,8 @@ Found in: :ref:`ref-password-policy`
 
 For more information about this, see :ref:`password-reset-flow`. 
 
-Customizing Stormpath Email Templates 
--------------------------------------
+4.6.2. Customizing Stormpath Email Templates 
+--------------------------------------------
 
 The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading. 
 
@@ -1028,20 +1028,18 @@ First, let's look at the default template that comes with the Stormpath Administ
     }
   }
 
-Message Format
---------------
+**Message Format**
 
 The ``mimeType`` designates whether the email is sent as plain text or HTML. This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email. 
 
-textBody and htmlBody
----------------------
+**textBody and htmlBody**
 
 These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
 
 .. _using-email-macros:
 
 Using Email Macros 
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 Stormpath uses Apache Velocity for email templating, and consequently you can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
 
