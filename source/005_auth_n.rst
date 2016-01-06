@@ -10,8 +10,8 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
 
 .. _password-authn:
 
-a. How Password Authentication Works in Stormpath
-=================================================
+5.1. How Password Authentication Works in Stormpath
+===================================================
 
 .. contents:: 
   :local: 
@@ -19,8 +19,8 @@ a. How Password Authentication Works in Stormpath
 
 Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
 
-Authenticating An Account
--------------------------
+5.1.1. Authenticating An Account
+--------------------------------
 
 After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
 
@@ -72,8 +72,8 @@ The reason this succeeds is because there is an existing **Account Store Mapping
 
 .. _how-login-works:
 
-How Login Attempts Work in Stormpath 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+5.1.2. How Login Attempts Work in Stormpath 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Organizations, Directories, and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
@@ -95,7 +95,7 @@ You can map multiple Account Stores to an Application, but only one is required 
 .. _non-cloud-login:
 
 How Login Works with Mirrored and Social Directories 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 For both :ref:`Mirrored <about-mirror-dir>` and :ref:`Social<about-social-dir>` Directories, Stormpath has a default behavior that links the Mirror/Social Directories with corresponding "master" Directories. 
 
@@ -126,8 +126,8 @@ This approach has two major benefits: It allows for a user to have one unified i
 
 .. _managing-login:
 
-Manage Who Can Log Into Your Application 
-----------------------------------------
+5.1.3. Manage Who Can Log Into Your Application 
+------------------------------------------------
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
 
@@ -223,8 +223,8 @@ Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true
 
 .. _token-authn:
 
-b. How Token-Based Authentication Works
-=======================================
+5.2. How Token-Based Authentication Works
+=========================================
 
 .. contents:: 
   :local: 
@@ -232,8 +232,8 @@ b. How Token-Based Authentication Works
 
 In this section, we will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Token.
 
-Introduction to Token-Based Authentication
-------------------------------------------
+5.2.1. Introduction to Token-Based Authentication
+-------------------------------------------------
 
 Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this requires **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
 
@@ -272,8 +272,8 @@ When using OAuth 2.0, the Access Token and Refresh Token are returned in the sam
 
 .. _token-authn-config:
 
-Using Stormpath for Token-Based Authentication
----------------------------------------------------
+5.2.2. Using Stormpath for Token-Based Authentication
+------------------------------------------------------
 
 Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
 
@@ -598,8 +598,8 @@ You will get back a ``204 No Content`` response back from Stormpath when the cal
 
 .. _social-authn:
 
-c. How Social Authentication Works
-==================================
+5.3. How Social Authentication Works
+====================================
 
 .. contents:: 
   :local: 
@@ -648,8 +648,8 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider) 
 
-i. Google
----------
+5.3.1. Google
+--------------
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
@@ -741,8 +741,8 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
 Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
-ii. Facebook
-------------
+5.3.2. Facebook
+---------------
 
 Before you integrate Facebook Login with Stormpath, you must complete the following steps:
 
@@ -806,8 +806,8 @@ Once the User Access Token is gathered, you send an HTTP POST:
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
-iii. Github
------------
+5.3.3. Github
+--------------
 
 Before you integrate GitHub Login with Stormpath, you must complete the following steps:
 
@@ -873,8 +873,8 @@ Once the Authorization Code is gathered, you can send an HTTP POST:
 
 Stormpath will use the ``code`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
-iv. LinkedIn
-------------
+5.3.4 LinkedIn
+---------------
 
 Before you integrate LinkedIn Login with Stormpath, you must complete the following steps:
 
@@ -942,8 +942,8 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
 
 .. _mirror-dir-authn:
 
-d. Authenticating Against a Mirrored LDAP Directory
-===================================================
+5.4. Authenticating Against a Mirrored LDAP Directory
+=====================================================
 
 .. contents:: 
   :local: 
@@ -1065,8 +1065,8 @@ From this point on, any time a user logs in to your Application, their Account w
 
 .. _saml-authn:
 
-e. Authenticating Against a SAML Directory
-==========================================
+5.5. Authenticating Against a SAML Directory
+============================================
 
 .. contents:: 
   :local: 
@@ -1074,8 +1074,8 @@ e. Authenticating Against a SAML Directory
 
 SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. 
 
-Stormpath as a Service Provider 
--------------------------------
+5.5.1. Stormpath as a Service Provider 
+--------------------------------------
 
 The specific use case that Stormpath supports is user-initiated single sign-on. In this scenario, a user requests a protected resource (e.g. your application). Your application, with the help of Stormpath, then confirms the users identity in order to determine whether they are able to access the resource. In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
 
@@ -1091,8 +1091,8 @@ Just like with Mirror and Social Directories, the user information that is retur
 
 .. _saml-configuration:
 
-Configuring Stormpath as a Service Provider 
--------------------------------------------
+5.5.2. Configuring Stormpath as a Service Provider 
+---------------------------------------------------
 
 Configuration is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-account-store-mapping`. Here we will explain to you the steps that are required to configure Stormpath as a SAML Service Provider. 
 
@@ -1256,8 +1256,8 @@ Now you last thing you have to do is map the new Directory to your Application w
 
 .. _saml-mapping:
 
-Configure SAML Assertion Mapping 
---------------------------------
+Step 6: Configure SAML Assertion Mapping 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
 
@@ -1280,7 +1280,7 @@ The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormp
 SAML Assertion mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
 
 Mapping Rules 
-^^^^^^^^^^^^^
+"""""""""""""
 
 The rules have three different components:
 
@@ -1343,8 +1343,8 @@ In order to create the mapping rules, we simply send the following POST:
 
 Now that we've configured everything, we can take a look at what the actual SAML authentication flow looks like. 
 
-The Stormpath SAML Flow
-------------------------
+5.5.3. The Stormpath SAML Flow
+-------------------------------
 
 .. figure:: images/auth_n/SamlFlow.png
     :align: center
