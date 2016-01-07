@@ -225,8 +225,8 @@ If the authentication attempt fails, you will see an `error response <http://doc
     "moreInfo": "mailto:support@stormpath.com"
   }
 
-Next Steps
-===========
+3.4. Next Steps
+===============
 
 We hope you found this Quickstart helpful!
 
