@@ -123,6 +123,22 @@ Before you can get your Application, you must get the location of your Tenant fr
   .. literalinclude:: code/java/quickstart/retrieve_your_application
       :language: java
 
+.. only:: dotnet
+
+  .. literalinclude:: code/dotnet/quickstart/retrieve_your_application
+      :language: csharp
+
+.. only:: python
+
+  .. literalinclude:: code/python/quickstart/retrieve_your_application
+      :language: python
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/quickstart/retrieve_your_application
+      :language: javascript
+
+
 Create a User Account
 =====================
 
@@ -186,6 +202,21 @@ Now that we've created an Application, let's create a user Account so someone ca
 
   .. literalinclude:: code/java/quickstart/create_an_account
       :language: java
+
+.. only:: dotnet
+
+  .. literalinclude:: code/dotnet/quickstart/create_an_account 
+      :language: csharp
+
+.. only:: python
+
+  .. literalinclude:: code/python/quickstart/create_an_account 
+      :language: python
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/quickstart/create_an_account 
+      :language: javascript
      
 Authenticate a User Account
 ===========================
@@ -241,7 +272,34 @@ Now we have a user Account that can use your Application. But how do you authent
 
   You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
-  If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/errors/>`_ instead:
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/authentication_attempt
+      :language: php
+
+.. only:: java
+
+  .. literalinclude:: code/java/quickstart/authentication_attempt
+      :language: java
+
+.. only:: dotnet
+
+  .. literalinclude:: code/dotnet/quickstart/authentication_attempt
+      :language: csharp
+
+.. only:: python
+
+  .. literalinclude:: code/python/quickstart/authentication_attempt
+      :language: python
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/quickstart/authentication_attempt 
+      :language: javascript
+
+If the authentication attempt fails, you will see an error response instead:
+
+.. only:: rest 
 
   .. code-block:: json 
 
@@ -255,13 +313,28 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: php
 
-  .. literalinclude:: code/php/quickstart/retrieve_your_application
+  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result
       :language: php
 
 .. only:: java
 
-  .. literalinclude:: code/java/quickstart/retrieve_your_application
+  .. literalinclude:: code/java/quickstart/authentication_attempt_error_result
       :language: java
+
+.. only:: dotnet
+
+  .. literalinclude:: code/dotnet/quickstart/authentication_attempt_error_result
+      :language: csharp
+
+.. only:: python
+
+  .. literalinclude:: code/python/quickstart/authentication_attempt_error_result
+      :language: python
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/quickstart/authentication_attempt_error_result
+      :language: javascript
 
 Next Steps
 ==========
