@@ -218,8 +218,8 @@ Now that we've created an Application, let's create a user Account so someone ca
   .. literalinclude:: code/nodejs/quickstart/create_an_account 
       :language: javascript
      
-Authenticate a User Account
-===========================
+3.3 Authenticate a User Account
+===============================
 
 Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application? 
 
