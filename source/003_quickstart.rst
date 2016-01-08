@@ -118,6 +118,11 @@ Before you can get your Application, you must get the location of your Tenant fr
   .. literalinclude:: code/php/quickstart/retrieve_your_application
       :language: php
 
+.. only:: java
+
+  .. literalinclude:: code/java/quickstart/retrieve_your_application
+      :language: java
+
 Create a User Account
 =====================
 
@@ -176,70 +181,87 @@ Now that we've created an Application, let's create a user Account so someone ca
 
   .. literalinclude:: code/php/quickstart/create_an_account 
      :language: php
+
+.. only:: java
+
+  .. literalinclude:: code/java/quickstart/create_an_account
+      :language: java
      
 Authenticate a User Account
 ===========================
 
 Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application? 
 
-You POST a "Login Attempt" to your Application's ``/loginAttempts`` endpoint.
+.. only:: rest 
 
-The login cURL command would look as follows:
+  You POST a "Login Attempt" to your Application's ``/loginAttempts`` endpoint.
 
-.. code-block:: bash
+  The login cURL command would look as follows:
 
-  curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
-    --data '{
-    "type": "basic",
-    "value": "dGs0MjE6Q2hhbmdlbWUx"
-    }'
+  .. code-block:: bash
 
-We are sending a :ref:`Login Attempt resource <ref-loginattempts>`, which has two attributes: ``type`` and ``value``.
+    curl --request GET \
+      --user $API_KEY_ID:$API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
+      --data '{
+      "type": "basic",
+      "value": "dGs0MjE6Q2hhbmdlbWUx"
+      }'
 
-The ``type`` attribute must equal ``basic``. The ``value`` attribute must equal the result of the following (pseudo code) logic::
+  We are sending a :ref:`Login Attempt resource <ref-loginattempts>`, which has two attributes: ``type`` and ``value``.
 
-    String concatenated = username + ':' + plain_text_password;
-    byte[] bytes = concatenated.to_byte_array();
-    String value = base64_encode( bytes );
+  The ``type`` attribute must equal ``basic``. The ``value`` attribute must equal the result of the following (pseudo code) logic::
 
-For example, if you used the ``tk421`` username and ``Changeme1`` password from above when creating your first account, you might compute the ``value`` using `OpenSSL <http://www.openssl.org/>`__ this way:
+      String concatenated = username + ':' + plain_text_password;
+      byte[] bytes = concatenated.to_byte_array();
+      String value = base64_encode( bytes );
 
-.. code-block:: bash
+  For example, if you used the ``tk421`` username and ``Changeme1`` password from above when creating your first account, you might compute the ``value`` using `OpenSSL <http://www.openssl.org/>`__ this way:
 
-    echo -n "tk421:Changeme1" | openssl base64
+  .. code-block:: bash
 
-This would produce the following Base64 result::
+      echo -n "tk421:Changeme1" | openssl base64
 
-    dGs0MjE6Q2hhbmdlbWUx
+  This would produce the following Base64 result::
 
-This is what we passed as the ``value`` attribute.
+      dGs0MjE6Q2hhbmdlbWUx
 
-If the authentication attempt is successful (the username and password match and were Base64-encoded correctly), a link to the successfully authenticated Account will be returned:
+  This is what we passed as the ``value`` attribute.
 
-.. code-block:: json
+  If the authentication attempt is successful (the username and password match and were Base64-encoded correctly), a link to the successfully authenticated Account will be returned:
 
-  {
-    "account": {
-      "href": "https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId"
+  .. code-block:: json
+
+    {
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/aRaNdOmAcCoUnTId"
+      }
     }
-  }
 
-You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
+  You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
-If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/errors/>`_ instead:
+  If the authentication attempt fails, you will see an `error response <http://docs.stormpath.com/errors/>`_ instead:
 
-.. code-block:: json 
+  .. code-block:: json 
 
-  {
-    "status": 400,
-    "code": 400,
-    "message": "Invalid username or password.",
-    "developerMessage": "Invalid username or password.",
-    "moreInfo": "mailto:support@stormpath.com"
-  }
+    {
+      "status": 400,
+      "code": 400,
+      "message": "Invalid username or password.",
+      "developerMessage": "Invalid username or password.",
+      "moreInfo": "mailto:support@stormpath.com"
+    }
+
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/retrieve_your_application
+      :language: php
+
+.. only:: java
+
+  .. literalinclude:: code/java/quickstart/retrieve_your_application
+      :language: java
 
 Next Steps
 ==========
