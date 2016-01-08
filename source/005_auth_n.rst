@@ -94,12 +94,12 @@ You can map multiple Account Stores to an Application, but only one is required 
 
 .. _non-cloud-login:
 
-How Login Works with Mirrored and Social Directories 
+How Login Works with Non-Cloud Directories 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-For both :ref:`Mirrored <about-mirror-dir>` and :ref:`Social<about-social-dir>` Directories, Stormpath has a default behavior that links the Mirror/Social Directories with corresponding "master" Directories. 
+Non-Cloud Directories, like :ref:`Mirrored <about-mirror-dir>`, :ref:`Social<about-social-dir>`, and :ref:`SAML <saml-authn>` Directories, Stormpath suggests a best practice that links the Mirror/Social Directories with corresponding "master" Directories. 
 
-The default Stormpath behavior is as a follows: a new user visits your site, and chooses something to log-in with their LDAP credentials, or social login like "Sign-in with Google". Once they log in using their social or LDAP credentials, if it doesn't already exist, a new user Account is created in your Mirror/Social Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Mirror/Social Directory. 
+Your application should follow a process similar to this: a new user visits your site, and chooses to log-in with their LDAP credentials, or social login like "Sign-in with Google". Once they log in, if an Account doesn't already exist, it is created in your Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Mirror/Social Directory. 
 
 .. code-block:: json 
 
@@ -1135,10 +1135,10 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
 .. _configure-sp-in-idp:
 
-Step 3: Configure Your Service Provider in Your Identity Provider 
+Step 3: Retrieve Your Service Provider Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. 
+Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath. 
 
 In order to retrieve the required values, start by sending a GET to the Directory's Provider:
 
@@ -1227,6 +1227,11 @@ You will also need two other values, which will always be the same:
 
 - **SAML Request Binding:** Set to ``HTTP-Redirect``.
 - **SAML Response Binding:** Set to ``HTTP-Post``.
+
+Step 5: Configure Your Service Provider in Your Identity Provider 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the information you retrieved in the previous step into the relevant application configuration fields. The specific steps to follow here will depend entirely on what Identity Provider you use, and for more information you should consult your Identity Provider's SAML documentation. 
 
 Step 4: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
