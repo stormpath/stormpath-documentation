@@ -6,7 +6,7 @@
 
 This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath REST API.
 
-This quickstart assumes that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
+These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
 
 - A Stormpath account
 
@@ -30,8 +30,8 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
 Let's get started!
 
-Retrieve Your Application
-=========================
+3.1. Retrieve Your Application
+===============================
 
 Before you can create user Accounts you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
@@ -139,8 +139,8 @@ Before you can get your Application, you must get the location of your Tenant fr
       :language: javascript
 
 
-Create a User Account
-=====================
+3.2. Create a User Account
+==========================
 
 Now that we've created an Application, let's create a user Account so someone can log in to (i.e. authenticate with) the Application. 
 
@@ -336,8 +336,8 @@ If the authentication attempt fails, you will see an error response instead:
   .. literalinclude:: code/nodejs/quickstart/authentication_attempt_error_result
       :language: javascript
 
-Next Steps
-==========
+3.4. Next Steps
+===============
 
 We hope you found this Quickstart helpful!
 

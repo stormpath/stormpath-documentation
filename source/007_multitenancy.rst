@@ -4,13 +4,13 @@
 7. Multi-Tenancy with Stormpath
 *******************************
 
-a. What Is a Multi-Tenant Application? 
-======================================
+7.1. What Is a Multi-Tenant Application? 
+========================================
 
 The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model. How do we do this? Well, it starts with an Organization.
 
-b. Modeling Tenants in Stormpath
-=================================
+7.2. Modeling Tenants in Stormpath
+===================================
 
 In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional :ref:`Organization <ref-organization>` resource, which functions like a virtual Account Store that itself wraps both Directories and Groups. 
 
@@ -18,8 +18,8 @@ In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds o
 
   A Directory or Group can be added to multiple Organizations.
 
-Organizations
--------------
+7.2.1. Organizations
+--------------------
 
 The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
 
@@ -30,7 +30,7 @@ How to Create an Organization
 
 You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
 
-So, if for example one of our application's tenants was the Royal Bank of Canada, we could send the following POST:
+So, if for example one of our application's tenants was the Bank of Aargau, we could send the following POST:
 
 .. code-block:: http
 
@@ -39,8 +39,8 @@ So, if for example one of our application's tenants was the Royal Bank of Canada
   Content-Type: application/json;charset=UTF-8
 
   {
-    "name": "Royal Bank of Canada",
-    "nameKey": "rbc",
+    "name": "Bank of Aargau",
+    "nameKey": "boa",
     "status": "ENABLED"
   }
 
@@ -56,8 +56,8 @@ Which would return the following:
     "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
     "createdAt": "2015-10-02T15:27:01.658Z",
     "modifiedAt": "2015-10-02T15:27:01.658Z",
-    "name": "Royal Bank of Canada",
-    "nameKey": "rbc",
+    "name": "Bank of Aargau",
+    "nameKey": "boa",
     "status": "ENABLED",
     "description": null,
     "customData": {
@@ -75,11 +75,11 @@ Which would return the following:
       "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accounts"
     },
     "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexAMPLE"
     }
   }
 
-Notice here that both the Default Account Store and Group Store are blank which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added. 
+Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added. 
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -99,13 +99,13 @@ First, you will need the ``href`` value for a Directory or Group. This, combined
       "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
     },
     "accountStore": {
-      "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYREXaMPLe" 
+      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample" 
     } 
   }
 
 These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
 
-- ``listIndex``: Represents the priority in whicch this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+- ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
 
 - ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
 
@@ -124,7 +124,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
         "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
       },
       "accountStore": {
-        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYREXaMPLe" 
+        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample" 
       },
       "isDefaultAccountStore":true,
       "isDefaultGroupStore":true
@@ -147,7 +147,7 @@ Which would result in the following ``201 Created`` response:
       "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
     },
     "accountStore": {
-      "href": "https://api.stormpath.com/v1/directories/7Fg2qiGIv8vEjTKHddd0mT"
+      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample
     }
   }
 
@@ -160,8 +160,8 @@ As described in :ref:`the Authentication chapter <authn>`, in order to allow use
 
 To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
-c. Authenticating an Account against an Organization
-====================================================
+7.3. Authenticating an Account against an Organization
+======================================================
 
 Authenticating an Account against an Organization works essentially the same way as described in :ref:`how-login-works`. The only difference is that adding the Organization resource allows for an additional level of Account Stores. 
 

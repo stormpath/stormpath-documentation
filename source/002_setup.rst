@@ -6,8 +6,8 @@
 
 Now that you've decided that Stormpath is right for you, let's jump right in and get you set-up. 
 
-a. Sign-up for Stormpath
-========================
+2.1 Sign-up for Stormpath
+=========================
 
 1. Go to https://api.stormpath.com/register and complete the form.
 2. You will receive a confirmation email with an activation link. 
@@ -20,7 +20,7 @@ a. Sign-up for Stormpath
 4. On this screen, re-enter your password and click "Log In" to enter the Admin Console. From here you will be able to perform all of the administrative functions required for your Stormpath Account. You should start by creating an API key.
 
 
-b. Create an API Key Pair
+2.2 Create an API Key Pair
 ===========================
 
 In order to use the Stormpath API, you will need an API key. To get one, follow these steps:
