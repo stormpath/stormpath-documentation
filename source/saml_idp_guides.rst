@@ -35,6 +35,41 @@ Step 1: Gather Information From Your Identity Provider
 
 You will now have to gather information about your Identity Provider from their settings console. 
 
+OneLogin
+--------
+
+.. note::
+
+    A pre-requisite of these steps is that you already have an App created and configured in OneLogin.
+
+Log in to your OneLogin Administrator Account: https://app.onelogin.com/
+
+This will take you to your OneLogin Apps page. From here, click on **Apps** in the top navigation pane, then on **Company Apps**. Select your App from the list below. You will now need to gather the following pieces of information:
+
+- X.509 Signing Certificate
+- SSO Login URL
+- SSO Logout URL
+- Request Signature Algorithm
+
+Click on **SSO** on this your App's navigation pane. 
+
+1.1 IdP Signing Certificate 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Under "X.509 Certificate", click on **View Details**. This will take you to the certificate details page. You will need the contents of the "X.509 Certificate" textbook, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
+
+1.2. The SSO Login / Logout URLs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return to the **App** > **SSO** section. On this page there are two different URLS: 
+
+The "SAML 2.0 Endpoint (HTTP)" is the SSO Login URL that Stormpath needs, and the "SLO Endpoint (HTTP)" is the SSO Logout URL.
+
+1.3. Signature Algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+OneLogin uses the SHA-256 signature algorithm for all self-signed certificates.
+
 Salesforce 
 ----------
 
