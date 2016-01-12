@@ -1,20 +1,6 @@
-SAML Set-Up, end-to-end, with the Admin Console
-
-You have a Stormpath Account, Advanced level + an account with an IdP that supports SAML
-
-The documentation stops at the point where they CAN actually authenticate with SAML
-
-Attribute mapping and testing would be separate 
-
-Start in the IdP and gather required information there
-
-Create Directory in Stormpath, gather Service Provider information 
-
-Go back to IDP and enter Service Provider configuration information (entity ID and Signing Cert)
-
-enter configuration information into Directory, Provider, and Application 
-
-----
+***************
+SAML IdP Guides
+*************** 
 
 This guide will show you how to set-up Stormpath to allow your users to login in with a SAML-enabled Identity Provider (IdP). It assumes that you have only two things:
 
@@ -32,16 +18,22 @@ This guide will show you how to set-up Stormpath to allow your users to login in
 
 This guide will also show you how to set-up login against a private deployment running ADFS with SAML 2.0 support.
 
----
-**Conventions:**
+.. todo::
+    
+    ---
 
-- Clickable navigation items are in **bold**
+    **Conventions:**
 
-- Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL"). 
----
+    - Clickable navigation items are in **bold**
+
+    - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL"). 
+
+    ---
 
 Step 1: Gather Information From Your Identity Provider 
 ======================================================
+
+You will now have to gather information about your Identity Provider from their settings console. 
 
 Salesforce 
 ----------
@@ -59,30 +51,29 @@ This will take you to your Salesforce homepage. From here you will need to navig
 - SSO Logout URL
 - Request Signature Algorithm
 
-1.1 IdP Signing Certificate 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.1. IdP Signing Certificate 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Back in the left navigation pane, in the **Administer** section, click on **Security Controls** > **Identity Provider**. On this page, click on "Download Certificate". This should download a .crt file with a name starting with ``SelfSignedCert``. 
 
 Open this file in your text editor of choice. Its content should be an x509 certificate starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
 
-1.2 The SSO Login / Logout URLs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1.2. The SSO Login / Logout URLs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the navigation pane on the left, find the **Administer** section, click on **Manage Apps** > **Connected Apps**. On this page, under "SAML Login Information", you will find the "SP-Initiated Redirect Endpoint". It will be a URL ending in ``idp/endpoint/HttpRedirect``. This value will be used for both your "SSO Login URL" and "SSO Logout URL".
 
-1.3 Signature Algorithm
-^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+
+    It is recommended that you stay on this "Connected App" page, as we will be returning here in Step 3 to add more configuration details.
+
+1.3. Signature Algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As per `their documentation <https://help.salesforce.com/apex/HTViewHelpDoc?id=security_keys_about.htm>`__, Salesforce uses the SHA-256 signature algorithm for all self-signed certificates.
 
-It is recommended that you stay your Connected App's page, as we will be returning here in Step 3 to add more configuration details.
-
 Step 2: Create Your SAML Directory in Stormpath 
 ===============================================
-
-Unified
--------
 
 We will now create our SAML Directory in Stormpath, using the values we gathered in the previous step. Then we will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
@@ -100,20 +91,54 @@ Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
 Once all this information is entered, click on "Create Directory". At this point, you will arrive back on the main Directories page. Find and click on your new SAML Directory. 
 
-On this page, you will need the follow information found in the "SAML Identity Provider Configuration" section:
+On this page, you will need the follow information:
 
-- Entity ID 
-- Assertion Consumer Service (ACS) URL
-- Service Provider Signing Cert 
+- The Directory's "HREF" found at the very top.
 
-Copy the "Entity ID" and "ACS URL" values somewhere temporarily, and download the Certificate. We will now input these values in the Identity Provider.
+- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section: 
+
+- The "Service Provider Signing Cert", which will download a .pem file.  
+
+.. note::
+
+    You should leave this page open, since you'll be back here in Step 4. 
+
+We will now input these values into the Identity Provider.
 
 Step 3: Configure Your Service Provider in Your IdP 
 ===================================================
 
-IdP-specific 
+Salesforce
+----------
+
+Back on your Connected App's page (found under **Administer** > **Connected Apps**), click "Edit". 
+
+We will now enter in the following fields:
+
+- "Entity Id"
+- "ACS URL" 
+- "Subject Type"
+- "Name ID Format"
+
+For the "Entity ID", you will need to enter in the Directory "HREF" for your SAML Directory.
+
+The "ACS URL" is the "Assertion Consumer Service URL" from the previous step.
+
+For "Subject Type", select "Username", and for "Name ID Format" select the "emailAddress" format.
+
+Finally, check off "Verify Request Signatures" and upload the .pem certificate that you downloaded from Stormpath.
+
+When you are done click **Save**. 
 
 Step 4: Configure Your Application in Stormpath 
 ===============================================
 
-General
+We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
+
+Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. Select the Application that will be using the SAML Directory. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
+
+Next click on **Account Stores** in the navigation pane. 
+
+Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog. 
+
+Ensure that you are in the "Directories" tab and select your SAML Directory from the list, then click **Create Mappings**.  

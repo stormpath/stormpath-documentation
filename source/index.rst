@@ -20,5 +20,6 @@ Contents:
    007_multitenancy
    008_idsite
    reference
+   saml_idp_guides
 
 
