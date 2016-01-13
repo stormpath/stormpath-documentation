@@ -134,7 +134,7 @@ latexpdfja:
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 livehtml:
-	sphinx-autobuild -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	sphinx-autobuild -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html/rest 
 
 text:
 	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
