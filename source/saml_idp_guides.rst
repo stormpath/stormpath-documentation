@@ -51,7 +51,7 @@ You will now need to gather the following pieces of information:
 - SSO Logout URL
 - Request Signature Algorithm
 
-Click on **SSO** on your App's navigation pane. 
+Click on **SSO** in your App's navigation pane. 
 
 1.1 IdP Signing Certificate 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,9 +95,11 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Next, enter in a name and (optionally) a description, then set the Directory's status.
 
-#. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL(s) gathered in step 1.2 above.
+#. For "SAML SSO Login Url" paste in the "SAML 2.0 Endpoint (HTTP)" from the OneLogin site.
+ 
+#. For "SAML SSO Logout Url" fields, paste in the "SLO Endpoint (HTTP)" from step 1.2 above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you downloaded in step 1.1. 
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in step 1.1. 
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
@@ -108,13 +110,13 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Find and click on your new SAML Directory. 
 
-On this page, you will need the follow information:
+#. Copy the "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section
 
-- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section: 
+.. note::
 
     You should leave this page open, since you'll be back here in Step 4. 
 
-We will now input these values into the Identity Provider.
+We will now input this value into the Identity Provider.
 
 Step 3: Configure Your Service Provider in Your IdP 
 ---------------------------------------------------
@@ -123,7 +125,7 @@ Step 3: Configure Your Service Provider in Your IdP
 
 #. Copy your Directory's "Assertion Consumer Service URL" into both the "ACS (Consumer) URL Validator" and "ACS (Consumer) URL" fields.
 
-#. Now click on **Parameters** in the App navigation pane. On this page, all need to ensure that your "Email (SAML NameID)" field has the value "Email", which it should by default.  
+#. Now click on **Parameters** in the App navigation pane. On this page, you need to ensure that your "Email (SAML NameID)" field has the value "Email", which it should by default.  
 
 Step 4: Configure Your Application in Stormpath 
 -----------------------------------------------
@@ -202,7 +204,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Next, enter in a name and (optionally) a description, then set the Directory's status.
 
-#. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL(s) gathered in step 1.2 above.
+#. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL gathered in step 1.2 above.
 
 #. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you downloaded in step 1.1. 
 
@@ -250,10 +252,16 @@ Step 4: Configure Your Application in Stormpath
 
 We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
 
-Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. Select the Application that will be using the SAML Directory. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. 
 
-Next click on **Account Stores** in the navigation pane. 
+#. Select the Application that will be using the SAML Directory. 
 
-Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog. 
+#. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
 
-Ensure that you are in the "Directories" tab and select your SAML Directory from the list, then click **Create Mappings**.
+#. Next click on **Account Stores** in the navigation pane. 
+
+#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog. 
+
+#. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
+
+#. Click **Create Mappings**.
