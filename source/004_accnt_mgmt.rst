@@ -84,6 +84,8 @@ Would yield the following response:
     }
   }
 
+.. _about-mirror-dir:
+
 Mirror Directories
 ^^^^^^^^^^^^^^^^^^
 
@@ -108,6 +110,8 @@ If multiple Directories are desired, we recommend that you create a separate "ma
 2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory. 
 
 3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
+
+For information about how login works with master Directories, please see :ref:`How Login Works with Master Directories <mirror-login>`.
 
 .. _about-ldap-dir:
 
@@ -143,8 +147,8 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 
 .. _make-ldap-dir:
 
-How to Make a LDAP Directory
-++++++++++++++++++++++++++++
+How to Make an LDAP Directory
++++++++++++++++++++++++++++++
 
 Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`. 
 
@@ -167,7 +171,7 @@ How to Make a Social Directory
 
 Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
 
-.. _about-saml-dirs:
+.. _about-saml-dir:
 
 SAML Directories 
 """"""""""""""""
@@ -397,7 +401,7 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
 .. note::
 
-  To import user accounts from an LDAP or Social Directory, please see :ref:`non-cloud-login`.
+  To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
    
