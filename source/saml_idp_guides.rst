@@ -109,7 +109,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on "Create Directory". At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
 
 2.2. Gather Your SAML Directory Information 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -222,7 +222,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on "Create Directory". At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
 
 2.2. Gather Your SAML Directory Information 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -355,7 +355,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on "Create Directory". At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
 
 2.2. Gather Your SAML Directory Information 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
