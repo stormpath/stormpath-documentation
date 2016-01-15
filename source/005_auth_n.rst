@@ -92,37 +92,26 @@ As you can see, Stormpath tries to find the Account in the "Customers" Directory
 
 You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your Application.
 
-.. _non-cloud-login:
+.. _mirror-login:
 
-How Login Works with Mirrored and Social Directories 
-""""""""""""""""""""""""""""""""""""""""""""""""""""
+How Login Works with Master Directories 
+"""""""""""""""""""""""""""""""""""""""
 
-For both :ref:`Mirrored <about-mirror-dir>` and :ref:`Social<about-social-dir>` Directories, Stormpath has a default behavior that links the Mirror/Social Directories with corresponding "master" Directories. 
+If you require a number of Mirror Directories, then we recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory. 
 
-The default Stormpath behavior is as a follows: a new user visits your site, and chooses something to log-in with their LDAP credentials, or social login like "Sign-in with Google". Once they log in using their social or LDAP credentials, if it doesn't already exist, a new user Account is created in your Mirror/Social Directory. After this Account is created, a search is performed inside the Application's master Directory for their email address, to see if they already exist in there. If the user Account is already in the master Directory, no action is taken. If the user Account is not found, a new one is created in the master Directory, and populated with the information pulled from the Google account. The customData resource for that Account is then used to store an ``href`` link to their Account in the Mirror/Social Directory. 
+If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store an ``href`` link to the Account in the Mirror Directory, for example:
 
 .. code-block:: json 
 
   {
     "customData": {
-      "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlQu"
+      "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlEx"
     }
   }
 
-If the user then chooses at some point to "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
+If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
 
-.. code-block:: json 
-
-  {
-    "customData": {
-      "accountLinks": {
-          "Link1": "https://api.stormpath.com/v1/accounts/3fLduLKlQu",
-          "Link2": "https://api.stormpath.com/v1/accounts/X3rjfa4Ljd", 
-          "Link3": "https://api.stormpath.com/v1/accounts/a05Ghpjd30"
-      }
-  }
-
-This approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many social or LDAP identities they choose to log in with; this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
+This mirror-master approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many external identities they choose to log in with; and this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
 .. _managing-login:
 
@@ -940,26 +929,28 @@ Once the Access Token is gathered, you can send an HTTP POST:
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
 
-.. _mirror-dir-authn:
+.. _ldap-dir-authn:
 
-5.4. Authenticating Against a Mirrored LDAP Directory
+5.4. Authenticating Against an LDAP Directory
 =====================================================
 
 .. contents:: 
   :local: 
   :depth: 2
 
-This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`about-mirror-dir` as well as how they are :ref:`modeled <modeling-mirror-dirs>`. 
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories<about-ldap-dir>`. 
 
 Mirror Directories and LDAP 
 ---------------------------
 
-To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory, so it is recommended that you maintain a "master" Directory alongside your Mirror Directory. Furthermore, a successful user login is the recommended time to provision, link, and synchronize an Account in the Mirror Directory to your master Directory.
+To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory. If this fulfills your requirements, then the story ends here. However, if you need to support other kinds of login (and therefore other kinds of Directories) it is recommended that you maintain a "master" Directory alongside your Mirror Directory. For more about this, see :ref:`mirror-login` above.
 
-Step 1: Create a Mirror Directory
+The step-by-step process for setting-up LDAP login is as follows: 
+
+Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``"ldap"``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
+HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
 
 .. code-block:: http
 
@@ -1047,7 +1038,7 @@ In Windows:
 
 In Unix:
 
-cd to your agent directory, for example /opt/stormpath/agent
+(cd to your agent directory, for example /opt/stormpath/agent)
 
 .. code-block:: bash 
 
@@ -1056,12 +1047,10 @@ cd to your agent directory, for example /opt/stormpath/agent
 
 The Agent will start synchronizing immediately, pushing the configured data to Stormpath. You will see the synchronized user Accounts and Groups appear in the Stormpath Directory, and the Accounts will be able to log in to any Stormpath-enabled application that you assign. When the Agent detects local changes, additions or deletions to the mirrored Accounts or Groups, it will automatically propagate those changes to Stormpath.
 
-Step 3: Map the Mirror Directory as an Account Store for Your Application
+Step 3: Map the LDAP Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Mirror Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
-
-From this point on, any time a user logs in to your Application, their Account will be provisioned into Stormpath, as detailed above in :ref:`non-cloud-login`.
+Creating an Account Store Mapping between your new LDAP Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
 
 .. _saml-authn:
 
@@ -1135,10 +1124,10 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
 .. _configure-sp-in-idp:
 
-Step 3: Configure Your Service Provider in Your Identity Provider 
+Step 3: Retrieve Your Service Provider Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. 
+Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath. 
 
 In order to retrieve the required values, start by sending a GET to the Directory's Provider:
 
@@ -1227,6 +1216,11 @@ You will also need two other values, which will always be the same:
 
 - **SAML Request Binding:** Set to ``HTTP-Redirect``.
 - **SAML Response Binding:** Set to ``HTTP-Post``.
+
+Step 5: Configure Your Service Provider in Your Identity Provider 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the information you retrieved in the previous step into the relevant application configuration fields. The specific steps to follow here will depend entirely on what Identity Provider you use, and for more information you should consult your Identity Provider's SAML documentation. 
 
 Step 4: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

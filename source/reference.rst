@@ -2441,7 +2441,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   
   * - ``providerId``
     - String
-    - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for Mirror Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
+    - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
     - Specifies the type of Provider for the associated Directory.
   
   * - ``clientId``
@@ -2513,7 +2513,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
 LDAP Agent
 """"""""""
 
-:ref:`Mirror Directories <about-mirror-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
+:ref:`LDAP Directories <about-ldap-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
 An Agents collection may be accessed via its Resource URL:
 

@@ -22,11 +22,10 @@ For more detailed information about the Directory resource, please see the :ref:
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
-Stormpath supports three types of Directories:
+Stormpath supports two types of Directories:
 
-1. Natively-hosted Cloud Directories that originate in Stormpath
-2. Mirror Directories that act as secure replicas of existing LDAP user directories outside of Stormpath, for example those on Active Directory servers.
-3. Social Directories that pull in account information from four sites that support social login: Google, Facebook, Github and LinkedIn.
+1. Natively-hosted **Cloud Directories** that originate in Stormpath
+2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other websites, as well as in Identity Providers that support SAML.
    
 You can add as many Directories of each type as you require.
 
@@ -34,7 +33,7 @@ You can add as many Directories of each type as you require.
 
   Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-  If however, your application(s) needs to support login for external third-party accounts like those in Active Directory, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
+  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base. 
 
 .. _about-cloud-dir:
 
@@ -63,7 +62,7 @@ Would yield the following response:
 .. code-block:: HTTP 
 
   HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpbCDRb2Q
+  Location: https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE
   Content-Type: application/json;charset=UTF-8
 
   {
@@ -85,12 +84,37 @@ Would yield the following response:
     }
   }
 
-.. _about-mirror-dir:
-
 Mirror Directories
-^^^^^^^^^^^^^^^^^^ 
+^^^^^^^^^^^^^^^^^^
 
-Mirror Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public web applications without breaking corporate firewall policies. Here is how they work:
+**Mirror Directories** are all Directories that pull-in data from external user databases. Currently this encompasses:
+
+- LDAP Directories, including Active Directory
+- Social Directories, such as Facebook and GitHub
+- SAML-enabled Identity Provider Directories, such as Salesforce and OneLogin
+
+For all Mirror Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
+
+.. _supporting-multiple-dirs:
+
+**Supporting Multiple Mirror Directories**
+
+It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one. 
+
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+
+1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
+
+2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory. 
+
+3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
+
+.. _about-ldap-dir:
+
+LDAP Directories
+""""""""""""""""
+
+LDAP Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public web applications without breaking corporate firewall policies. Here is how they work:
 
 - After creating an LDAP Directory in Stormpath, you download a Stormpath Agent. This is a simple standalone software application that you install behind the corporate firewall so it can communicate directly with the LDAP server.
 - You configure the agent via LDAP filters to view only the accounts that you want to expose to your Stormpath-enabled applications.
@@ -98,62 +122,63 @@ Mirror Directories are a big benefit to Stormpath customers who need LDAP direct
 - The synchronized user Accounts and Groups appear in the Stormpath Directory. The Accounts will be able to log in to any Stormpath-enabled application that you assign.
 - When the Agent detects local LDAP changes, additions or deletions to these specific Accounts or Groups, it will automatically propagate those changes to Stormpath to be reflected by your Stormpath-enabled applications.
   
-User Accounts and Groups in mirrored directories are automatically deleted when any of the following things happen:
+User Accounts and Groups in LDAP directories are automatically deleted when any of the following things happen:
 
 - The original object is deleted from the LDAP directory service.
 - The original LDAP object information no longer matches the account filter criteria configured for the agent.
 - The LDAP directory is deleted.
 
-The big benefit is that your Stormpath-enabled applications still use the same convenient REST+JSON API – they do not need to know anything about things like LDAP or legacy connection protocols.
+The big benefit is that your Stormpath-enabled applications still use the same convenient REST API – they do not need to know anything about things like LDAP or legacy connection protocols.
 
-.. _modeling-mirror-dirs:
+.. _modeling-ldap-dirs:
 
-Modeling Mirror Directories
-"""""""""""""""""""""""""""
+Modeling LDAP Directories
++++++++++++++++++++++++++++
 
-If your Application is going to have an LDAP integration, it will need to support multiple Directories — one Mirror Directory for each LDAP integration.
+As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with. 
 
-In this scenario, we recommend linking each Account in a LDAP Mirror Directory with a master Account in a master Directory. This offers a few benefits:
+The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
-1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
+For more information on how to this works, please see :ref:`ldap-dir-authn`.
 
-2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups synchronized from Active Directory and LDAP
+.. _make-ldap-dir:
 
-3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in AD/LDAP. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples
+How to Make a LDAP Directory
+++++++++++++++++++++++++++++
 
-The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its Mirror Directory and sometimes adding new user Accounts. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the Mirror Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
-
-For more information on how to this works, please see :ref:`mirror-dir-authn`.
-
-.. _make-mirror-dir:
-
-How to Make a Mirror Directory
-""""""""""""""""""""""""""""""
-
-Presently, Mirror Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`mirror-dir-authn`. 
+Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`. 
 
 .. _about-social-dir:
     
 Social Directories
-^^^^^^^^^^^^^^^^^^
+""""""""""""""""""
 
-Stormpath works with user Accounts pulled from social login providers (currently Google, Facebook, Github, and LinkedIn) in a way very similar to the way it works with user Accounts from LDAP servers. These external Identity Providers (IdPs) are modeled as Stormpath Directories, much like Mirror Directories. The difference is that, while Mirror Directories always come with an Agent that takes care of synchronization, Social Directories have an associated **Provider** resource. This resource contains the information required by the social login site to work with their site (e.g. the App ID for your Google application or the App Secret).
+Stormpath works with user Accounts pulled from social login providers (currently Google, Facebook, Github, and LinkedIn) in a way very similar to the way it works with user Accounts from LDAP servers. These external social login providers are modeled as Stormpath Directories, much like LDAP Directories. The difference is that, while LDAP Directories always come with an Agent that takes care of synchronization, Social Directories have an associated **Provider** resource. This resource contains the information required by the social login site to work with their site (e.g. the App ID for your Google application).
 
 Stormpath also simplifies the authorization process by doing things like automating Google's access token exchange flow. All you do is POST the authorization code from the end-user and Stormpath returns a new or updated user Account, along with the Google access token which you can use for any further API calls. 
 
 Modeling Social Directories
-"""""""""""""""""""""""""""
+++++++++++++++++++++++++++++
 
-Modeling your users who authorize via Social Login could be accomplished by creating a Directory resource for each social provider that you want to support, along with one master Directory for your application. For more about how these Directories are provisioned, please see :ref:`non-cloud-login`.
-
-.. note::
-
-  For both Mirror and Social Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
+Modeling your users who authorize via Social Login is by necessity very simple, since social login providers do not include the concept of "groups" of users in the same way that LDAP directories do. The only thing that you really have to do as an app developer is create a Directory resource for each social provider that you want to support. As mentioned :ref:`above <supporting-multiple-dirs>`, if you want to support multiple Directories then you may also want to create a master Directory for your application. For more about how Social Directories are provisioned, please see :ref:`mirror-login`.
 
 How to Make a Social Directory
-""""""""""""""""""""""""""""""
+++++++++++++++++++++++++++++++
 
 Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
+
+.. _about-saml-dirs:
+
+SAML Directories 
+""""""""""""""""
+
+In addition to Social Login and LDAP, Stormpath also allows your users to log-in with SAML Identity Providers. Just like with Social Directories, SAML Directories are configured via an associated Provider resource that contains the configuration information for the Identity Provider.
+
+Modeling SAML Directories 
++++++++++++++++++++++++++
+
+How to Make a SAML Directory 
+++++++++++++++++++++++++++++
 
 .. _group-mgmt:
 
