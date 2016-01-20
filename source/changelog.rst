@@ -28,7 +28,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
-UNRELEASED
+2016-01-20
 ==========
 
 - Added :ref:`Change Log <changelog>`.
