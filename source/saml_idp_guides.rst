@@ -177,7 +177,7 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
-You have now complete the initial steps of setting-up log in via Salesforce. 
+You have now completed the initial steps of setting-up log in via Salesforce. 
 
 .. _onelogin:
 
@@ -188,16 +188,19 @@ OneLogin
     :local:
     :depth: 1
 
-Step 1: Gather Information From Your Identity Provider 
+Step 1: Set-up OneLogin
+-----------------------
+
+#. Complete the OneLogin set-up, including adding your subdomain, users, etc.
+
+#. On the "Find Applications" page, search for "SAML"
+
+#. Select **SAML Test Connector (IdP w/ attr w/ sign response)**
+
+#. Give your app a name and click **Save**  
+
+Step 2: Gather Your Identity Provider Information 
 ------------------------------------------------------
-
-You will now have to gather information about your Identity Provider from their settings console. 
-
-#. Log in to your OneLogin Administrator Account: https://app.onelogin.com/. This will take you to your OneLogin Apps page. 
-
-#. From here, click on **Apps** in the top navigation pane, then on **Company Apps**. 
-
-#. Select your App from the list below. 
 
 You will now need to gather the following pieces of information:
 
@@ -208,36 +211,27 @@ You will now need to gather the following pieces of information:
 
 Click on **SSO** in your App's navigation pane. 
 
-1.1 IdP Signing Certificate 
+2.1 IdP Signing Certificate 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Under "X.509 Certificate", click on **View Details**. This will take you to the certificate details page. 
 
 #. Copy the contents of the "X.509 Certificate" text box, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
 
-1.2. The SSO Login / Logout URLs
+2.2. The SSO Login / Logout URLs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Return to the **App** > **SSO** section. On this page there are two different URLS: 
 
-#. Copy the "SAML 2.0 Endpoint (HTTP)", which is the SSO Login URL that Stormpath needs, and
-#. Copy the "SLO Endpoint (HTTP)", which is the SSO Logout URL.
+#. Copy the "SAML 2.0 Endpoint (HTTP)", which is the "SSO Login URL" that Stormpath needs, and
+#. Copy the "SLO Endpoint (HTTP)", which is the "SSO Logout URL".
 
-1.3. Signature Algorithm
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-OneLogin uses the SHA-256 signature algorithm for all self-signed certificates.
-
-.. note::
-
-    It is recommended that you stay on this page, as we will be returning here in Step 3 to add more configuration details.
-
-Step 2: Create Your SAML Directory in Stormpath 
+Step 3: Create Your SAML Directory in Stormpath 
 -----------------------------------------------
 
 We will now create our SAML Directory in Stormpath, using the values we gathered in the previous step. Then we will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
-2.1. Create Your SAML Directory 
+3.1. Create Your SAML Directory 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
@@ -260,7 +254,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
 
-2.2. Gather Your SAML Directory Information 
+3.2. Gather Your SAML Directory Information 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Find and click on your new SAML Directory. 
@@ -273,7 +267,7 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 We will now input this value into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP 
+Step 4: Configure Your Service Provider in Your IdP 
 ---------------------------------------------------
 
 #. Back in your App's settings page (found under **Apps** > **Company Apps**), click **Configuration** in the App's navigation pane.
@@ -282,7 +276,7 @@ Step 3: Configure Your Service Provider in Your IdP
 
 #. Now click on **Parameters** in the App navigation pane. On this page, you need to ensure that your "Email (SAML NameID)" field has the value "Email", which it should by default.  
 
-Step 4: Configure Your Application in Stormpath 
+Step 5: Configure Your Application in Stormpath 
 -----------------------------------------------
 
 We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
@@ -301,6 +295,8 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+You have now completed the initial steps of setting-up log in via Salesforce. 
+
 .. _okta:
 
 Okta 
@@ -310,10 +306,8 @@ Okta
     :local:
     :depth: 1
 
-Step 0: Create Your Okta App
-----------------------------
-
-You will now have to gather information about your Identity Provider from their settings console. 
+Step 1: Set-up Okta 
+-------------------
 
 #. Log in to your Okta Administrator Account. From the landing page click on **Admin** to go to your Admin Dashboard. 
 
@@ -329,7 +323,11 @@ You will now have to gather information about your Identity Provider from their 
 
     For now we will enter dummy data here, and then return later to input the actual values.
 
-#. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/saml/sso/example-okta-com`` then click **Next** at the bottom of the page.
+#. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/`` 
+
+#. For the "Name ID format" select "EmailAddress".
+
+#. Click **Next** at the bottom of the page.
 
 #. On the "Feedback" page, select **I'm an Okta customer adding an internal app** and **This is an internal app that we have created**, then select **Finish**. 
 
@@ -337,7 +335,7 @@ You will now arrive at your App's Admin page.
 
 #. Click on **View Setup Instructions**
 
-Step 1: Gather Information From Your Identity Provider 
+Step 2: Gather Information From Your Identity Provider 
 ------------------------------------------------------
 
 You will now need to gather the required IdP information:
@@ -352,12 +350,12 @@ You will now need to gather the required IdP information:
 
     It is recommended that you stay on this page, as we will be returning here in Step 3 to add more configuration details.
 
-Step 2: Create Your SAML Directory in Stormpath 
+Step 3: Create Your SAML Directory in Stormpath 
 -----------------------------------------------
 
 We will now create our SAML Directory in Stormpath, using the values we gathered in the previous step. Then we will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
-2.1. Create Your SAML Directory 
+3.1. Create Your SAML Directory 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
@@ -370,17 +368,15 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. Next, enter in a name and (optionally) a description, then set the Directory's status.
 
-#. For "SAML SSO Login Url" paste in the "Identity Provider Single Sign-On URL" from above.
- 
-#. For "SAML SSO Logout Url" fields, paste in the "Identity Provider Single Sign-On URL" from above.
+#. For both "SAML SSO Login Url" and "SAML SSO Logout URL" paste in the "Identity Provider Single Sign-On URL" from above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in Step 1. 
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in Step 2. 
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
 #. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
 
-2.2. Gather Your SAML Directory Information 
+3.2. Gather Your SAML Directory Information 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Find and click on your new SAML Directory.
@@ -397,18 +393,18 @@ In the "SAML Identity Provider Configuration" section:
 
 We will now input these values into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP 
+Step 4: Configure Your Service Provider in Your IdP 
 ---------------------------------------------------
 
 #. Back in your App's "General" tab, find the "SAML Settings" section and click **Edit**.
 
 #. From the "General Settings" page click **Next**.   
 
-#. Copy your Directory's "Assertion Consumer Service URL" into the "Single sign on URL" field, replacing the dummy value.
+#. You will now be on the "Configure SAML" page. Copy your Directory's "Assertion Consumer Service URL" into the "Single sign on URL" field, replacing the dummy value.
 
-#. Copy the "Entity ID" URN into the "Audience URI (SP Entity ID)", also replacing the dummy value.
+#. Copy the "Entity ID" URN into the "Audience URI (SP Entity ID)", also replacing the dummy value.    
 
-Step 4: Configure Your Application in Stormpath 
+Step 5: Configure Your Application in Stormpath 
 -----------------------------------------------
 
 We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
@@ -426,3 +422,5 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 #. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
 
 #. Click **Create Mappings**.
+
+You have now completed the initial steps of setting-up log in via Salesforce. 
