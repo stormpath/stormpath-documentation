@@ -96,7 +96,9 @@ Step 1: Set-up Salesforce
 
 You will now be on your Connected App's page.
 
-Under "SAML Login Information", copy the "SP-Initiated Redirect Endpoint". It will be a URL ending in ``idp/endpoint/HttpRedirect``. This value will be used for both your "SSO Login URL" and "SSO Logout URL" when you are setting up your Stormpath SAML Directory.
+#. Click **Manage**
+
+#. Under "SAML Login Information", copy the "SP-Initiated Redirect Endpoint". It will be a URL ending in ``idp/endpoint/HttpRedirect``. This value will be used for both your "SSO Login URL" and "SSO Logout URL" when you are setting up your Stormpath SAML Directory.
 
 Step 2: Create Your SAML Directory in Stormpath 
 -----------------------------------------------
