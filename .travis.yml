@@ -19,6 +19,7 @@ after_success:
 - test -z "$DEPLOY_DOCS" || cd stormpath.github.io
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
+- echo "DEBUG: $DEPLOY_DOCS"
 - test -z "$DEPLOY_DOCS" || ls -la ..
 - test -z "$DEPLOY_DOCS" || ls -la ../build/html
 - test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest && cp -r ../build/html/rest source/rest/product-guide/latest
