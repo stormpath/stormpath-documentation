@@ -148,7 +148,7 @@ Now that we've created an Application, let's create a user Account so someone ca
 
   .. code-block:: bash
 
-    curl --request GET \
+    curl --request POST \
       --user $API_KEY_ID:$API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
@@ -231,7 +231,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
   .. code-block:: bash
 
-    curl --request GET \
+    curl --request POST \
       --user $API_KEY_ID:$API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
