@@ -287,7 +287,7 @@ The basic steps for creating a new Account are covered in the :ref:`Quickstart <
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :doc:`Quickstart </003_quickstart>`. 
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`. 
 
 .. note::
 
@@ -981,7 +981,7 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 
 .. note::
 
-  For more about Account Authentication you can read :doc:`the next chapter </005_auth_n>`.
+  For more about Account Authentication you can read :ref:`the next chapter <authn>`.
 
 .. _resending-verification-email:
 
