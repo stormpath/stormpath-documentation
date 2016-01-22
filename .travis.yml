@@ -20,6 +20,7 @@ after_success:
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
 #- test -z "$DEPLOY_DOCS" || for language in rest php java dotnet python node; do rm -rf source/$language/product-guide/latest && cp -r ../build/html/$language source/$language/product-guide/latest
+- test -z "$DEPLOY_DOCS" || ls -la ../build/html
 - test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest && cp -r ../build/html/rest source/rest/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/php/product-guide/latest && cp -r ../build/html/php source/php/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/java/product-guide/latest && cp -r ../build/html/java source/java/product-guide/latest
