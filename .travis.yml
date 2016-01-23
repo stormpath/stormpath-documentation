@@ -8,12 +8,12 @@ script:
 - make html
 after_success:
 - CURRENT_HASH=`git rev-parse HEAD`
-- echo 'current hash $CURRENT_HASH'
+- echo "current hash $CURRENT_HASH"
 - RELEASE_VERSION=`git tag | xargs -I@ git log --format=format:"%ai @%n" -1 @ | sort
   | awk '{print $4}' | tail -n 1`
 - RELEASE_HASH=`git rev-list $RELEASE_VERSION -n 1`
-- echo 'release version $RELEASE_VERSION'
-- echo 'release version $RELEASE_HASH'
+- echo "release version $RELEASE_VERSION"
+- echo "release version $RELEASE_HASH"
 - if [ "$CURRENT_HASH" = "$RELEASE_HASH"  ]; then DEPLOY_DOCS=true; fi
 - test -z "$DEPLOY_DOCS" || git config --global user.email "evangelists@stormpath.com"
 - test -z "$DEPLOY_DOCS" || git config --global user.name "stormpath-documentation
