@@ -2,5 +2,5 @@
 
     <script type="text/javascript">
       var hash = window.location.hash.substring(1);
-      window.location = '/multitenancy' + hash;
+      window.location = '/rest/product-guide/latest/multitenancy#' + hash;
     </script>

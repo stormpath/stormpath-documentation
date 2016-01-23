@@ -2,5 +2,5 @@
 
     <script type="text/javascript">
       var hash = window.location.hash.substring(1);
-      window.location = '/about' + hash;
+      window.location = '/rest/product-guide/latest/about#' + hash;
     </script>

@@ -2,5 +2,5 @@
 
     <script type="text/javascript">
       var hash = window.location.hash.substring(1);
-      window.location = '/auth_n' + hash;
+      window.location = '/rest/product-guide/latest/auth_n#' + hash;
     </script>
