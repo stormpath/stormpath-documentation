@@ -14,7 +14,8 @@ after_success:
 - RELEASE_HASH=`git rev-list $RELEASE_VERSION -n 1`
 - echo "release version $RELEASE_VERSION"
 - echo "release version $RELEASE_HASH"
-- if [ "$CURRENT_HASH" = "$RELEASE_HASH"  ]; then DEPLOY_DOCS=true; fi
+- if [ "$CURRENT_HASH" = "$RELEASE_HASH"  ]; then export DEPLOY_DOCS=true; fi
+- echo "deploy docs? $DEPLOY_DOCS"
 - test -z "$DEPLOY_DOCS" || git config --global user.email "evangelists@stormpath.com"
 - test -z "$DEPLOY_DOCS" || git config --global user.name "stormpath-documentation
   Auto Doc Build"
