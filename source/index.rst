@@ -11,14 +11,15 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   001_about
-   002_setup
-   003_quickstart
-   004_accnt_mgmt
-   005_auth_n
-   006_auth_z
-   007_multitenancy
-   008_idsite
+   about
+   setup
+   quickstart
+   accnt_mgmt
+   auth_n
+   auth_z
+   multitenancy
+   idsite
    reference
+   changelog
 
 

@@ -7,6 +7,7 @@ SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
 LANGUAGE      = rest
+LANGUAGES     = rest php java dotnet python node
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -25,6 +26,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  html       to make standalone HTML files"
+	@echo "  deploy     to build ALL HTML files for all languges"
 	@echo "  dirhtml    to make HTML files named index.html in directories"
 	@echo "  singlehtml to make a single large HTML file"
 	@echo "  pickle     to make pickle files"
@@ -53,7 +55,15 @@ clean:
 	rm -rf $(BUILDDIR)/*
 
 html:
-	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
+	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html/
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+deploy:
+	@rm -rf $(BUILDDIR)
+	@for target in $(LANGUAGES); do \
+		$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $$target $(BUILDDIR)/html/$$target; \
+	done
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
