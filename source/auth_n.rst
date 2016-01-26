@@ -1694,7 +1694,7 @@ Now you last thing you have to do is map the new Directory to your Application w
 
 .. _saml-mapping:
 
-Step 7: Configure SAML Assertion Mapping 
+Step 7: Configure SAML Attribute Mapping 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
@@ -1715,7 +1715,7 @@ The Identity Provider's SAML response contains assertions about the user's ident
 
 The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormpath and become Account and customData attributes.
 
-SAML Assertion mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
+SAML Attribute mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
 
 Mapping Rules 
 """""""""""""
