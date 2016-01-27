@@ -58,7 +58,7 @@ Before you can get your Application, you must get the location of your Tenant fr
 
   The above cURL command returns an empty body along with a header:
 
-  .. code-block:: http 
+  .. code-block:: none 
     :emphasize-lines: 2
       
       HTTP/1.1 302 Found 

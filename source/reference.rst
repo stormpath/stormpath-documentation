@@ -367,18 +367,18 @@ This following request will retrieve a Tenant’s Applications Collection Resour
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
-This would result in the following response:
+This would result in the following 200 response:
 
   .. code-block:: json
 
-    HTTP/1.1 200 OK
-
     {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40",
       "offset": 10,
       "limit": 40,
-      "items" : [
-        [...]
+      "items": [
+        {
+          "comment": "// This JSON has been truncated for readability"
+        }
       ]
     }
 
@@ -2500,12 +2500,12 @@ For example, a Social Directory could be created for GitHub. This Directory woul
 .. code-block:: json 
 
   {
-    href: "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
-    createdAt: "2014-03-28T22:21:32.937Z",
-    modifiedAt: "2014-03-28T22:21:32.949Z",
-    clientId: "5014174166example",
-    clientSecret: "e7c1274966b0844913953281example",
-    providerId: "facebook"
+    "href": "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
+    "createdAt": "2014-03-28T22:21:32.937Z",
+    "modifiedAt": "2014-03-28T22:21:32.949Z",
+    "clientId": "5014174166example",
+    "clientSecret": "e7c1274966b0844913953281example",
+    "providerId": "facebook"
   }
 
 .. _ref-ldap-agent:
@@ -4445,20 +4445,20 @@ Example Queries
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts"
   --data '{ 
-           "username" : "jlpicard",
-           "email" : "capt@enterprise.com",
-           "givenName" : "Jean-Luc",
-           "middleName" : "",
-           "surname" : "Picard",
-           "password" : "uGhd%a8Kl!"
-           "status" : "ENABLED",
-           "customData": {
-            "birthDate":"2305-07-13",
-            "birthPlace":"La Barre, France",
-            "currentAssignment":"USS Enterprise (NCC-1701-E)",
-            "favoriteDrink":"Earl Grey tea",
-            "rank":"Captain"
-           }
+     "username" : "jlpicard",
+     "email" : "capt@enterprise.com",
+     "givenName" : "Jean-Luc",
+     "middleName" : "",
+     "surname" : "Picard",
+     "password" : "uGhd%a8Kl!"
+     "status" : "ENABLED",
+     "customData": {
+      "birthDate":"2305-07-13",
+      "birthPlace":"La Barre, France",
+      "currentAssignment":"USS Enterprise (NCC-1701-E)",
+      "favoriteDrink":"Earl Grey tea",
+      "rank":"Captain"
+    }'
   }
 
 This query would create an Account with the attribute values and custom data specified.

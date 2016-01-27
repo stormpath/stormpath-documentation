@@ -540,9 +540,7 @@ To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for t
   {
     "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
     "username": "jlpicard",
-    
-    [...]
-    
+    "comment":" // This JSON has been truncated for readability",
     "accessTokens": {
       "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
     },
@@ -563,7 +561,7 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
       "items": [
         {
           "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr",
-          [...]
+          "comment":" // This JSON has been truncated for readability"
         }
       ]
     }
@@ -1031,7 +1029,7 @@ In Windows:
 
 (cd to your agent directory, for example C:\stormpath\agent)
 
-.. code-block:: powershell
+.. code-block:: none
 
   C:\stormpath\agent>cd bin
   C:\stormpath\agent\bin>startup.bat
@@ -1265,6 +1263,11 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 #. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
 
 #. Click **Create Mappings**.
+
+Step 5: Configure Your Attribute Mappings 
+"""""""""""""""""""""""""""""""""""""""""
+
+.. todo::
 
 You have now completed the initial steps of setting-up log in via Salesforce. 
 
