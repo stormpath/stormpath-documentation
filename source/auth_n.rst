@@ -1267,7 +1267,69 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 Step 5: Configure Your Attribute Mappings 
 """""""""""""""""""""""""""""""""""""""""
 
-.. todo::
+When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+
+5.1. Find the Existing SAML Attributes 
++++++++++++++++++++++++++++++++++++++++++++++
+
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Salesforce sends by retrieving the new user Account that was created inside Stormpath. 
+
+Specifically, you want that Account's ``providerData`` resource:
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/accounts/xbKQemsqW3HcpfeXAMPLE/providerData",
+    "createdAt":"2016-01-20T17:56:25.532Z",
+    "modifiedAt":"2016-01-20T17:57:22.530Z",
+    "email":"saml+testuser@email.com",
+    "is_portal_user":"false",
+    "providerId":"saml",
+    "userId":"00536000000G4ft",
+    "username":"saml+testuser@email.com"
+  }
+
+Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
+
+Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
+
+5.2. (Optional) Add Any Additional Attributes You Want
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+If there are other attributes that you would like Salesforce to pass other attributes, you can configure this. From your Salesforce settings page:
+
+#. Under **Administer**, click on **Connected Apps**.
+#. Select the App you would like to configure.
+#. On the App's page, find the "Custom Attributes" section and click on **New**
+#. You will now be on the "Create Custom Attribute" page 
+#. Here you will specify a custom "Attribute key" and then select which Salesforce user information you want it to represent. 
+
+For example: 
+
+* You could make the "Attribute key": ``firstname``
+* Then click on **Insert Field**
+* From here you would select **$User >** and **First Name** then click **Insert**
+* Click **Save**
+
+You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
+
+5.3. Specify Your Mapping
++++++++++++++++++++++++++
+
+#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
+#. Click on the **Directories** tab
+#. Select your Salesforce SAML Directory
+#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
+#. Here you will enter the Salesforce attribute name under "Name" 
+#. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified``
+#. Finally, enter the Account attribute(s) that you would like this Salesforce attribute to map to
+
+For example, you could enter, using the custom attribute from Step 5.2 above:
+
+* For the "Name" enter ``firstname``
+* For "Stormpath Attributes" enter ``givenName``
+
+If a user now logs in, Stormpath will take the ``firstname`` attribute and map it to the ``givenName`` field on the Account resource.
 
 You have now completed the initial steps of setting-up log in via Salesforce. 
 
