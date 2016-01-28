@@ -1449,7 +1449,75 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
-You have now completed the initial steps of setting-up log in via OneLogin. 
+You have now completed the initial steps of setting-up log in via OneLogin.
+
+Step 7: Configure Your Attribute Mappings 
+"""""""""""""""""""""""""""""""""""""""""
+
+When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+
+7.1. Find the Existing SAML Attributes 
++++++++++++++++++++++++++++++++++++++++++++++
+
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that OneLogin sends by retrieving the new user Account that was created inside Stormpath. 
+
+Specifically, you want that Account's ``providerData`` resource:
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/accounts/2i6Rxkcf8NFsIA9eXaMPle/providerData",
+    "createdAt":"2016-01-21T18:11:09.838Z",
+    "modifiedAt":"2016-01-21T18:13:39.102Z",
+    "PersonImmutableID":"samltestuser",
+    "User.FirstName":"John",
+    "User.LastName":"Samlton",
+    "User.email":"saml+testuser@example.com",
+    "providerId":"saml"
+  }
+
+Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by OneLogin.
+
+Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
+
+6.2. (Optional) Add Any Additional Attributes You Want
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+If there are other attributes that you would like OneLogin to pass other attributes, you can configure this. From your OneLogin settings page:
+
+#. Click on **Apps** > **Company Apps**
+#. Select the App that you want to configure
+#. From the App's page, click on **Parameters**
+#. If you want to add any additional parameters, click on **Add parameter**
+#. In the "New Field" dialog box, give the attribute whatever name you wish, and select **Include in SAML assertion**
+#. Back on the "Parameters" page, click on your new Attribute. This will bring up the "Edit Field" dialog
+#. Select the "Value" that you would like this Attribute to represent. This is the piece of user information OneLogin stores that you would like to be transferred to Stormpath in your Attribute. 
+#. Click **Save**
+
+For example: 
+
+* For "Field name" enter ``companyName`` and check "Include in SAML assertion"
+* For the "Value" you would choose "Company"
+
+You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
+
+6.3. Specify Your Mapping
++++++++++++++++++++++++++
+
+#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
+#. Click on the **Directories** tab
+#. Select your OneLogin SAML Directory
+#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
+#. Here you will enter the OneLogin attribute name under "Name" 
+#. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+#. Finally, enter the Account attribute(s) that you would like this OneLogin attribute to map to
+
+For example, you could enter:
+
+* For the "Name" enter ``User.FirstName``
+* For "Stormpath Attributes" enter ``givenName``
+
+If a user now logs in, Stormpath will take the ``User.FirstName`` attribute and map it to the ``givenName`` field on the Account resource.
 
 .. _okta:
 
