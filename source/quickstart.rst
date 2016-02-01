@@ -48,7 +48,7 @@ Before you can get your Application, you must get the location of your Tenant fr
 
     curl --request GET \
       --user $API_KEY_ID:$API_KEY_SECRET \
-      --header 'content-type: application/json' \
+      --header 'accept: application/json' \
       --url "https://api.stormpath.com/v1/tenants/current"
 
   -  ``$API_KEY_ID`` is the ``apiKey.id`` value in
@@ -73,7 +73,7 @@ Before you can get your Application, you must get the location of your Tenant fr
 
     curl --request GET \
       --user $API_KEY_ID:$API_KEY_SECRET \
-      --header 'content-type: application/json' \
+      --header 'accept: application/json' \
       --url "https://api.stormpath.com/v1/tenants/yOuRTeNANtid/applications?name=My%20Application"
 
   .. note::
