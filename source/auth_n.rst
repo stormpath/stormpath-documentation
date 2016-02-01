@@ -1480,7 +1480,7 @@ Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attrib
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
 
-6.2. (Optional) Add Any Additional Attributes You Want
+7.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 If there are other attributes that you would like OneLogin to pass other attributes, you can configure this. From your OneLogin settings page:
@@ -1501,7 +1501,7 @@ For example:
 
 You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
 
-6.3. Specify Your Mapping
+7.3. Specify Your Mapping
 +++++++++++++++++++++++++
 
 #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
@@ -1645,7 +1645,65 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
-You have now completed the initial steps of setting-up log in via Okta.
+.. todo::
+
+  Step 6: Configure Your Attribute Mappings"
+
+  When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+
+  6.1. Find the Existing SAML Attributes+
+
+  If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath. 
+
+  Specifically, you want that Account's ``providerData`` resource:
+
+  .. code-block:: json 
+
+  .. todo::
+
+    {
+      
+    }
+
+  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Okta.
+
+  Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
+
+  6.2. (Optional) Add Any Additional Attributes You Want+
+
+  If there are other attributes that you would like Okta to pass other attributes, you can configure this. From your Okta Admin settings page:
+
+  #. Click on the **Applications** tab in the top navigation pane
+  #. Select your Application
+  #. In the "SAML Settings" section, click on **Edit**
+  #. You will arrive on "General Settings", click **Next**
+  #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...
+
+  .. todo::
+
+  For example: 
+
+  * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
+  * For the "Value" you would choose "Company"
+
+  You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
+
+  6.3. Specify Your Mapping+
+
+  #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
+  #. Click on the **Directories** tab
+  #. Select your Okta SAML Directory
+  #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
+  #. Here you will enter the Okta attribute name under "Name" 
+  #. (Optional) Under "Name Format" you can enter ``todo``
+  #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
+
+  For example, you could enter:
+
+  * For the "Name" enter ``todo``
+  * For "Stormpath Attributes" enter ``todo``
+
+  If a user now logs in, Stormpath will take the ``todo`` attribute and map it to the ``givenName`` field on the Account resource.
 
 .. _saml-configuration-rest:
 
