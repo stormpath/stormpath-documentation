@@ -28,6 +28,13 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+    
+2016-02-02
+==========
+
+- Updated SAML Section of Authentication chapter to include :ref:`IdP-specific set-up guides <saml-configuration>`.
+- Added missing :ref:`organizationAccountStoreMappings <ref-org-asm>` resource to Reference chapter.  
+
 2016-01-20
 ==========
 

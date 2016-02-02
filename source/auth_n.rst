@@ -118,7 +118,7 @@ This mirror-master approach has two major benefits: It allows for a user to have
 5.1.3. Manage Who Can Log Into Your Application 
 ------------------------------------------------
 
-As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-account-store-mapping` section of the Reference chapter.
+As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
 The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**. 
 
@@ -1059,7 +1059,7 @@ Creating an Account Store Mapping between your new LDAP Directory and your Storm
   :local: 
   :depth: 1
 
-SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Currently, Stormpath supports the Service Provider initiated flow.
+SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Currently, Stormpath supports the Service Provider initiated flow, which is where a user chooses to log-in with a SAML-enabled Identity Provider from within your app. 
 
 If you'd like a high-level description of Stormpath's SAML support, see :ref:`Stormpath as a Service Provider <saml-overview>`.
 
@@ -1067,12 +1067,14 @@ If you want a step-by-step guide to configuring Stormpath to work with Identity 
 
 If you'd like to know about how to configure SAML using just the REST API, please see :ref:`Configuring SAML via REST <saml-configuration-rest>`.
 
+If you'd like to understand the steps involved in a SAML login, see the :ref:`SAML Login Flow section <saml-flow>`. 
+
 .. _saml-overview:
 
 5.5.1. Stormpath as a Service Provider 
 --------------------------------------
 
-The specific use case that Stormpath supports is user-initiated single sign-on. In this scenario, a user requests a protected resource (e.g. your application). Your application, with the help of Stormpath, then confirms the users identity in order to determine whether they are able to access the resource. In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
+The specific use case that Stormpath supports is user-initiated single sign-on. In this scenario, a user requests a protected resource (e.g. your application). Your application, with the help of Stormpath, then confirms the user's identity in order to determine whether they are able to access the resource. In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
 
 The broad strokes of the process are as follows:
 
@@ -1084,12 +1086,14 @@ The broad strokes of the process are as follows:
 
 Just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In this section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works. 
 
+For a more detailed account of SAML login, see :ref:`below <saml-flow>`.
+
 .. _saml-configuration:
 
 5.5.2. Configuring SAML
 ------------------------
 
-This section will show you how to set-up Stormpath to allow your users to login in with a SAML-enabled Identity Provider (IdP). It assumes that you have two things:
+This section will show you how to set-up Stormpath to allow your users to log in with a SAML-enabled Identity Provider (IdP). It assumes that you have two things:
 
 - A Stormpath account with at least an Advanced plan
 
@@ -1216,17 +1220,13 @@ You will now create our SAML Directory in Stormpath, using the values you gather
 2.2. Gather Your SAML Directory Information 
 +++++++++++++++++++++++++++++++++++++++++++++
 
-#. Find and click on your new SAML Directory. 
+Find and click on your new SAML Directory. 
 
 On this page, you will need the follow information:
 
 - The Directory's "HREF" found at the very top.
 
 - The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section: 
-
-.. note::
-
-    You should leave this page open, since you'll be back here in Step 4. 
 
 We will now input these values into the Identity Provider.
 
@@ -1291,7 +1291,7 @@ Specifically, you want that Account's ``providerData`` resource:
 
 Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
 
-Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
+Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other SAML Attributes to Stormpath Account attributes as well.
 
 5.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1451,12 +1451,12 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 You have now completed the initial steps of setting-up log in via OneLogin.
 
-Step 7: Configure Your Attribute Mappings 
+Step 6: Configure Your Attribute Mappings 
 """""""""""""""""""""""""""""""""""""""""
 
 When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-7.1. Find the Existing SAML Attributes 
+6.1. Find the Existing SAML Attributes 
 +++++++++++++++++++++++++++++++++++++++++++++
 
 If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that OneLogin sends by retrieving the new user Account that was created inside Stormpath. 
@@ -1480,7 +1480,7 @@ Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attrib
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
 
-7.2. (Optional) Add Any Additional Attributes You Want
+6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 If there are other attributes that you would like OneLogin to pass other attributes, you can configure this. From your OneLogin settings page:
@@ -1501,7 +1501,7 @@ For example:
 
 You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
 
-7.3. Specify Your Mapping
+6.3. Specify Your Mapping
 +++++++++++++++++++++++++
 
 #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
@@ -1607,11 +1607,7 @@ In the "SAML Identity Provider Configuration" section:
    
 #. Copy the "Entity ID" URN.
 
-#. Copy the "Assertion Consumer Service URL". 
-
-.. note::
-
-    You should leave this page open, since you'll be back here in Step 4. 
+#. Copy the "Assertion Consumer Service URL".  
 
 We will now input these values into the Identity Provider.
 
@@ -1718,7 +1714,7 @@ Here we will explain to you the steps that are required to configure Stormpath a
 
 It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires. 
 
-SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-account-store-mapping`. 
+SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-asm`. 
 
 Step 1: Gather IDP Data 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1972,9 +1968,10 @@ In order to create the mapping rules, we simply send the following POST:
 
 Now that we've configured everything, we can take a look at what the actual SAML authentication flow looks like. 
 
+.. _saml-flow:
+
 5.5.4. The Stormpath SAML Flow
 ------------------------------
-
 
 .. figure:: images/auth_n/SamlFlow.png
     :align: center
