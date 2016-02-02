@@ -1091,7 +1091,7 @@ Macros and customData
 
 The formatting for customData macros is as follows:
 
-.. code-block:: velocity 
+.. code-block:: java 
 
   $!{resource.attribute.customData.key}
 

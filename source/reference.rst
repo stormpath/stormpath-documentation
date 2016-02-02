@@ -367,18 +367,18 @@ This following request will retrieve a Tenant’s Applications Collection Resour
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
-This would result in the following response:
+This would result in the following 200 response:
 
   .. code-block:: json
 
-    HTTP/1.1 200 OK
-
     {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40",
       "offset": 10,
       "limit": 40,
-      "items" : [
-        [...]
+      "items": [
+        {
+          "comment": "// This JSON has been truncated for readability"
+        }
       ]
     }
 
@@ -1103,7 +1103,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``accountStoreMappings``
       - Link
       - N/A
-      - A link to the collection of all :ref:`Account Store Mappings <ref-account-store-mapping>` for this Application.
+      - A link to the collection of all :ref:`Account Store Mappings <ref-asm>` for this Application.
 
     * - ``loginAttempts``
       - Link
@@ -1613,7 +1613,7 @@ This resource contains information about the Application's SAML policy. For more
     }
   }
 
-.. _ref-account-store-mapping:
+.. _ref-asm:
 
 Account Store Mapping
 =====================
@@ -1655,7 +1655,7 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
     * - ``listIndex``
       - Number
       - 0 <= N < list size
-      - The order (priority) in which the associated Account Store will be consulted by the Application dURLng an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
         
     * - ``isDefaultAccountStore``
       - String (boolean)
@@ -1700,7 +1700,7 @@ An individual Account Store Mapping resource may be accessed via its Resource UR
         "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple"
       },
       "accountStore": {
-        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
+        "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYReXample"
       }
     }
 
@@ -1743,7 +1743,7 @@ Retrieve an Account Store Mapping
     
     * - GET /v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID
       - ``expand`` 
-      - Retrieves the specified Application resource. ``accountStore` and ``application`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified Account Store Mapping resource. ``accountStore` and ``application`` can be expanded. More info :ref:`above <about-links>`.
         
 Update an Account Store Mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1913,44 +1913,61 @@ An individual Directory resource may be accessed via its Resource URL:
     - Link
     - N/A
     - A link to a collection of the Groups mapped to this Directory.
+      
+  * - ``organizations``
+    - Link
+    - N/A
+    - A link to a collection of the Organizations mapped to this Directory.
+  
+  * - ``organizationMappings``
+    - Link
+    - N/A
+    - A link to a collection of any organizationAccountStoreMappings resources that include this Directory.
+  
 
 **Directory Example**
 
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe",
-    "name": "Captains",
-    "description": "Captains from a variety of stories",
-    "status": "ENABLED",
-    "createdAt": "2015-08-24T15:32:23.079Z",
-    "modifiedAt": "2015-08-24T15:32:23.079Z",
-    "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+    "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe",
+    "name":"Captains",
+    "description":"Captains from a variety of stories",
+    "status":"ENABLED",
+    "createdAt":"2015-08-24T15:32:23.079Z",
+    "modifiedAt":"2015-08-24T15:32:23.079Z",
+    "tenant":{
+      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
     },
-    "provider": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/provider"
+    "provider":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/provider"
     },
-    "customData": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/customData"
+    "customData":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/customData"
     },
-    "passwordPolicy": {
-      "href": "https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe"
+    "passwordPolicy":{
+      "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe"
     },
-    "accountCreationPolicy": {
-      "href": "https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe"
+    "accountCreationPolicy":{
+      "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe"
     },
-    "accounts": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/accounts"
+    "accounts":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/accounts"
     },
-    "applicationMappings": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applicationMappings"
+    "applicationMappings":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applicationMappings"
     },
-    "applications": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applications"
+    "applications":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/applications"
     },
-    "groups": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/groups"
+    "groups":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/groups"
+    },
+    "organizations":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/organizations"
+    },
+    "organizationMappings":{
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/organizationMappings"
     }
   }
 
@@ -2192,7 +2209,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``resetTokenTtl``
     - Number
     - A positive integer, less than 169 (0 < i < 169). Default is 24.
-    - An integer that defines how long the password reset token is valid for dURLng the password reset email workflow.
+    - An integer that defines how long the password reset token is valid for during the password reset email workflow.
     
   * - ``resetEmailStatus``
     - String
@@ -2500,12 +2517,12 @@ For example, a Social Directory could be created for GitHub. This Directory woul
 .. code-block:: json 
 
   {
-    href: "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
-    createdAt: "2014-03-28T22:21:32.937Z",
-    modifiedAt: "2014-03-28T22:21:32.949Z",
-    clientId: "5014174166example",
-    clientSecret: "e7c1274966b0844913953281example",
-    providerId: "facebook"
+    "href": "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
+    "createdAt": "2014-03-28T22:21:32.937Z",
+    "modifiedAt": "2014-03-28T22:21:32.949Z",
+    "clientId": "5014174166example",
+    "clientSecret": "e7c1274966b0844913953281example",
+    "providerId": "facebook"
   }
 
 .. _ref-ldap-agent:
@@ -3463,7 +3480,194 @@ It is possible to retrieve other, associated resources using the Organization fo
         
     * - GET /v1/Organization/$ORGANIZATION_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
-      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``. 
+      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``.
+
+.. _ref-org-asm:
+
+Organization Account Store Mapping
+==================================
+
+.. contents::
+    :local:
+    :depth: 2
+
+**Description**
+
+In the same way that :ref:`Account Store Mappings<ref-asm>` map Groups, Directories, or Organizations to Applications, so Organization Account Store Mappings map Groups or Directories to Organizations.
+
+An individual Organization Account Store Mapping resource may be accessed via its Resource URL:
+
+**organizationAccountStoreMapping URL**
+
+``/v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID``
+
+**organizationAccountStoreMapping Attributes**
+
+.. list-table:: 
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+     
+    * - ``href``
+      - String
+      - N/A
+      - The resource's fully qualified location URL.
+        
+    * - ``listIndex``
+      - Number
+      - 0 <= N < list size
+      - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+        
+    * - ``isDefaultAccountStore``
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Accounts created by the Organization will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they will not.
+        
+    * - ``isDefaultGroupStore``
+      - String (boolean)
+      - ``true``, ``false``
+      - A ``true`` value indicates that new Groups created by the Organization will be automatically saved to the mapped Account Store, while a ``false`` value indicates that they won't. 
+      
+    * - ``organization``
+      - Link
+      - N/A
+      - A link to the mapping’s Organization. **Required.**
+
+    * - ``accountStore``
+      - Link 
+      - N/A
+      - A link to the mapping's Account Store (Group or Directory) containing Accounts that may log in to the Organization. **Required.** 
+      
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+    
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+**Organization Account Store Mapping Example**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/organizationAccountStoreMappings/EWHgZiOWPJyD5Pexample",
+    "listIndex":0,
+    "isDefaultAccountStore":false,
+    "isDefaultGroupStore":false,
+    "organization":{
+      "href":"https://api.stormpath.com/v1/organizations/2P4XOanz26AUomIexaMplE"
+    },
+    "accountStore":{
+      "href":"https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYReXample"
+    }
+  }
+
+.. _org-asm-operations:
+
+Organization Account Store Mapping Operations
+---------------------------------------------
+
+.. contents:: 
+    :local:
+    :depth: 1
+
+Create an Organization Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    
+.. list-table::
+    :widths: 30 15 15 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Optional Parameters 
+      - Description
+    
+    * - POST /v1/organizationAccountStoreMappings
+      - Required: ``application``, ``accountStore``; Optional: ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
+      - N/A
+      - Creates a new organizationAccountStoreMapping resource, thereby enabling the Accounts in the specified Store to log in to the specified Organization. By default ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are set to ``false``.
+
+Retrieve an Organization Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Optional Parameters 
+      - Description
+    
+    * - GET /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      - ``expand`` 
+      - Retrieves the specified Organization Account Store Mapping resource. ``accountStore` and ``organization`` can be expanded. More info :ref:`above <about-links>`.
+        
+Update an Organization Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - POST /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      - ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
+      - Updates the specified attributes with the values provided.
+
+Delete an Organization Account Store Mapping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation 
+      - Attributes
+      - Description
+    
+    * - DELETE /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      - N/A
+      - Deletes the specified Organization Account Store Mapping.
+        
+
+Example Queries
+"""""""""""""""
+
+**Retrieving an Organization Account Store Mapping with embedded resources**
+
+.. code-block:: bash
+
+  curl --request GET \
+  --user $API_KEY_ID:$API_KEY_SECRET \
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/organizationAccountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=organization,accountStore"
+
+This query would retrieve the specified Organization Account Store Mapping with the Organization and accountStore entities embedded with :ref:`link expansion <about-links>`.
+
+**Updating an Organization Account Store Mapping's login priority**
+
+.. code-block:: bash
+
+  curl --request POST \
+  --user $API_KEY_ID:$API_KEY_SECRET\
+  --header 'content-type: application/json' \
+  --url "https://api.stormpath.com/v1/organizationAccountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=application,accountStore" \
+  --data '{
+    "listIndex":"0"
+    }'
+
+This query would update an Organization Account Store Mapping to give it the highest position in the :ref:`login priority index <how-login-works>`.
 
 .. _ref-account:
 
@@ -4435,20 +4639,20 @@ Example Queries
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts"
   --data '{ 
-           "username" : "jlpicard",
-           "email" : "capt@enterprise.com",
-           "givenName" : "Jean-Luc",
-           "middleName" : "",
-           "surname" : "Picard",
-           "password" : "uGhd%a8Kl!"
-           "status" : "ENABLED",
-           "customData": {
-            "birthDate":"2305-07-13",
-            "birthPlace":"La Barre, France",
-            "currentAssignment":"USS Enterprise (NCC-1701-E)",
-            "favoriteDrink":"Earl Grey tea",
-            "rank":"Captain"
-           }
+     "username" : "jlpicard",
+     "email" : "capt@enterprise.com",
+     "givenName" : "Jean-Luc",
+     "middleName" : "",
+     "surname" : "Picard",
+     "password" : "uGhd%a8Kl!"
+     "status" : "ENABLED",
+     "customData": {
+      "birthDate":"2305-07-13",
+      "birthPlace":"La Barre, France",
+      "currentAssignment":"USS Enterprise (NCC-1701-E)",
+      "favoriteDrink":"Earl Grey tea",
+      "rank":"Captain"
+    }'
   }
 
 This query would create an Account with the attribute values and custom data specified.

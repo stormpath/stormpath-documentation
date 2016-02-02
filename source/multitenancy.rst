@@ -147,7 +147,7 @@ Which would result in the following ``201 Created`` response:
       "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
     },
     "accountStore": {
-      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample
+      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
     }
   }
 
