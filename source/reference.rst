@@ -3102,16 +3102,6 @@ Accounts and Groups are linked via a **groupMembership** resource that stores th
     - Link
     - N/A
     - A link to the Group for this Group Membership.
-  
-  * - ``createdAt``
-    - String 
-    - ISO-8601 Datetime
-    - Indicates when this resource was created.
-  
-  * - ``modifiedAt``
-    - String 
-    - ISO-8601 Datetime
-    - Indicates when this resource’s attributes were last modified
 
 **Group Membership Example**
 
