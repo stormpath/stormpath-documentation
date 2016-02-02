@@ -64,7 +64,7 @@ For example, if using cUrl:
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/tenants/current"
 
@@ -363,7 +363,7 @@ This following request will retrieve a Tenant’s Applications Collection Resour
   .. code-block:: bash
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
@@ -393,7 +393,7 @@ For example, a sorted request (where %2C is the URL encoding for the comma chara
   .. code-block:: bash
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
 
@@ -459,7 +459,7 @@ For example, to search across an Application’s Accounts for any Account that h
     .. code-block:: bash
 
       curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?q=Joe"
 
@@ -473,7 +473,7 @@ So the following query:
   .. code-block:: bash
 
       curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accounts?q=Joe"
 
@@ -557,7 +557,7 @@ So the following query:
   .. code-block:: bash
 
       curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/accounts?givenName=Joe&middleName=*aul&surname=*mit*&email=joePaul*&status=disabled"
 
@@ -861,7 +861,7 @@ Example Queries
 .. code-block:: bash
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --url "https://api.stormpath.com/v1/tenants/$TENANT_ID"
     
 
@@ -872,7 +872,7 @@ This query would retrieve a collection containing all the Accounts associated wi
 .. code-block:: bash
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --url "https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?q=foo&orderBy=name&offset=0&limit=50"
 
 This query would retrieve a collection containing the Applications associated with this Tenant that have the string "foo" as the value of any :ref:`searchable attribute <searchable-attributes>`.
@@ -1289,7 +1289,7 @@ Example Queries
 .. code-block:: bash
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID?expand=tenant,accounts(offset:0,limit:50)" 
 
@@ -1300,7 +1300,7 @@ This query would retrieve the specified Application, with the associated Tenant 
 .. code-block:: bash
 
     curl --request POST \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID" \
     --data '{
@@ -1476,7 +1476,7 @@ A ``GET`` can be sent to this endpoint along with an :ref:`API Key <ref-account-
 
 **Application apiKeys URL**
 
-``/v1/applications/$APPLICATION_ID/apiKeys?id=$API_KEY_ID``
+``/v1/applications/$APPLICATION_ID/apiKeys?id=$SP_API_KEY_ID``
 
 If you would like to retrieve the API Key with the :ref:`ref-account` expanded you can include the ``?expand=account`` parameter. 
 
@@ -1784,7 +1784,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/accountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=application,accountStore"
 
@@ -1795,7 +1795,7 @@ This query would retrieve the specified Account Store Mapping with the Applicati
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/accountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=application,accountStore" \
   --data '{
@@ -2054,7 +2054,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpeXAMple" \
   --data '{
@@ -2068,7 +2068,7 @@ This query would disable the specified Directory, which would mean that all of i
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/bckhcGMXQDujIXpeXAMple?expand=tenant" \
 
@@ -3021,7 +3021,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/groups/ZgoHUG0oSoVNeU0ExaMPLE?expand=tenant,directory,accounts(offset:0,limit:50)"
 
@@ -3032,7 +3032,7 @@ This query would retrieve a Group resource along with its associated Tenant and 
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/groups/ZgoHUG0oSoVNeU0ExaMPLE" \
   --data '{ \
@@ -3195,7 +3195,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request DELETE \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/groupMemberships/57YZCqrNgrzcIGYexaMpLe"
 
@@ -3206,7 +3206,7 @@ This query would delete the groupMembership resource.
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/groupMemberships/57YZCqrNgrzcIGYexaMpLe?expand=account"
 
@@ -3436,7 +3436,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/organizations" \
   --data '{ \
@@ -3452,7 +3452,7 @@ This query would create a new Organization with the attribute values.
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/organizations"
   --data '{ \
@@ -3649,7 +3649,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/organizationAccountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=organization,accountStore"
 
@@ -3660,7 +3660,7 @@ This query would retrieve the specified Organization Account Store Mapping with 
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/organizationAccountStoreMappings/1NUhrCPT0q66bjyeXamPLE?expand=application,accountStore" \
   --data '{
@@ -3953,7 +3953,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts?registrationWorkflowEnabled=false"
   --data '{ 
@@ -3973,7 +3973,7 @@ This query would create an Account with the specified attributes, while also sup
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple" 
   --data '{
@@ -4146,7 +4146,7 @@ Deleting an API Key
       - Attributes
       - Description
     
-    * - DELETE /v1/apiKeys/$API_KEY_ID
+    * - DELETE /v1/apiKeys/$SP_API_KEY_ID
       - N/A
       - Deletes the specified API Key resource.
 
@@ -4635,7 +4635,7 @@ Example Queries
 .. code-block:: bash
 
   curl --request GET \
-  --user $API_KEY_ID:$API_KEY_SECRET \
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbexaMPLE/accounts"
   --data '{ 
@@ -4662,7 +4662,7 @@ This query would create an Account with the attribute values and custom data spe
 .. code-block:: bash
 
   curl --request POST \
-  --user $API_KEY_ID:$API_KEY_SECRET\
+  --user $SP_API_KEY_ID:$SP_API_KEY_SECRET\
   --header 'content-type: application/json' \
   --url "https://api.stormpath.com/v1/accounts/cJoiwcorTTmkDDBsf02bAb/customData" \
   --data '{

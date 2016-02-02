@@ -573,7 +573,7 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
   .. code-block:: bash 
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0eSEXAMPLE"
 
