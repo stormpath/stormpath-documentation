@@ -395,7 +395,7 @@ For example, a sorted request (where %2C is the URL encoding for the comma chara
     curl --request GET \
     --user $API_KEY_ID:$API_KEY_SECRET \
     --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
+    --url "https://api.stormpath.com/v1/accounts?orderBy=orderStatement1%2CorderStatement2%2C...%2CorderStatementN"
 
 When URL-decoded, the URL looks like this::
 
