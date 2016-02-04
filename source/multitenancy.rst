@@ -18,7 +18,84 @@ In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds o
 
   A Directory or Group can be added to multiple Organizations.
 
-7.2.1. Organizations
+As with all user base modeling, we'll begin with the basics: Directories and Groups. Then we will move on to an explanation of how the Organization resource is used when modeling multi-tenancy.
+
+7.2.1. Account Store Strategies for Multi-Tenancy
+-------------------------------------------------
+
+Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, the additional consideration is whether you will have each one of your application's tenants represented by a Directory or a Group. 
+
+Strategy 1: Tenants as Directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To understand the multi-tenancy considerations in modeling tenants as :ref:`Directories <ref-directory>`, there are three characteristics of Directories that are worth remembering:
+
+- All Accounts within a Directory must have a unique ``email`` and ``username``
+- All Groups within a Directory must have a unique ``name``
+- User policies, such as the :ref:`Password Policy <ref-password-policy>` and the :ref:`Account Creation Policy <ref-accnt-creation-policy>` are set at the Directory level
+
+From these points we can derive a few conditions where the tenants-as-Directories strategy is optimal. If your tenants satisfy one or more of these conditions:
+
+- Every Account in a tenant must be guaranteed to have a unique ``email``  and ``username``. If a person had already registered for one tenant of your Application, and tried to use the same email address to register for another tenant, they would not be allowed.
+- Each tenant has its own password strength policy.
+- Each tenant has different emails that need to be sent (or not sent) as part of the user Account creation process.
+- Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. 
+
+.. todo::
+
+  What else? An example would be good.
+
+Strategy 2: Tenants as Groups
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The other multi-tenancy option is to have a single Directory under which each of your application's tenants has their own Group. Choosing this strategy is likely right for you if:
+
+- You want to guarantee ``email`` and ``username`` uniqueness across all tenants. This allows for a unified user identity, which allows for things like single-sign-on and account sharing between tenants on your application.
+- All tenants share password and email policies.
+- You want to ensure tenant name uniqueness, since the Group ``name`` must be unique within a Directory.
+
+.. note::
+
+  In both strategies you can still have different Groups and Roles that span the entire Application, regardless of whether you choose to model your tenants with Groups or with Directories. For more on this, see here: :ref:`app-wide-roles`.
+
+A tenant represented as a Group (or "tenant Group") 
+
+As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
+
+Naming Your Tenant Groups
+"""""""""""""""""""""""""
+
+First of all, the name of your tenant Group should contain a descriptive pre-pended bit of text, like ``org.{tenantName}``:
+
+``org.BankofAargau``
+
+This would allow you to query all tenant Groups by simply searching for all Groups that have ``org.`` in their name.
+
+Additionally, as each Group has a globally unique ID (GUID) embedded in its ``href``, this can be used for organizing tenant Groups and sub-Groups.
+
+For example, if a Group's ``href`` is ``https://api.stormpath.com/v1/groups/2gdhVFEQMXpaUMAPzLXen4``, its GUID is ``2gdhVFEQMXpaUMAPzLXen4``. 
+
+If you now wanted to create sub-Groups like ``users`` and ``admins``, we recommend that you pre-pended the GUID to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
+
+``2gdhVFEQMXpaUMAPzLXen4.role.users``
+
+``2gdhVFEQMXpaUMAPzLXen4.role._administrators``
+
+This has two benefits: 
+
+1. It makes it easy to find all the Groups for that particular tenant Group, since you can simply search for the GUID in the ``name`` field:
+
+  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=2gdhVFEQMXpaUMAPzLXen4_*``
+
+Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the underscore::
+
+  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=2gdhVFEQMXpaUMAPzLXen4*
+
+2. It ensures that no tenant sub-Groups have name collisions.
+
+
+
+7.2.2. Organizations
 --------------------
 
 The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
