@@ -52,34 +52,51 @@ The other multi-tenancy option is to have a single Directory under which each of
 
 - You want to guarantee ``email`` and ``username`` uniqueness across all tenants. This allows for a unified user identity, which allows for things like single-sign-on and account sharing between tenants on your application.
 - All tenants share password and email policies.
-- You want to ensure tenant name uniqueness, since the Group ``name`` must be unique within a Directory.
+- You want to ensure that tenant names are unique, since the Group ``name`` must be unique within a Directory.
 
 .. note::
 
   In both strategies you can still have different Groups and Roles that span the entire Application, regardless of whether you choose to model your tenants with Groups or with Directories. For more on this, see here: :ref:`app-wide-roles`.
 
-A tenant represented as a Group (or "tenant Group") 
+A tenant represented as a Group (or "tenant Group") must still belong to a Directory, but 
 
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
 Naming Your Tenant Groups
 """""""""""""""""""""""""
 
-First of all, the name of your tenant Group should contain a descriptive pre-pended bit of text, like ``org.{tenantName}``:
+First of all, the name of your tenant Group should contain a descriptive prepended bit of text, like ``org``:
 
 ``org.BankofAargau``
 
-This would allow you to query all tenant Groups by simply searching for all Groups that have ``org.`` in their name.
+This would allow you to query all tenant Groups by simply searching for all Groups that have ``org.*`` in their name.
+
+.. todo::
+
+  Change this to Org nameKey!
+
+  Also:
+
+  Org nameKey is a unique searchable field
+
+  Tenant Groups should have the Org's nameKey prepended to their subgroup names
+
+  Subdomain multi-tenancy based on the nameKey
+
+  Orgs are "virtual account stores" - they are account stores for the purposes of login, account creation, etc..
+  But they do not themselves own Accounts or Groups
+
+  Org is also a single on/off point, since that's where the App->User mapping exists
 
 Additionally, as each Group has a globally unique ID (GUID) embedded in its ``href``, this can be used for organizing tenant Groups and sub-Groups.
 
 For example, if a Group's ``href`` is ``https://api.stormpath.com/v1/groups/2gdhVFEQMXpaUMAPzLXen4``, its GUID is ``2gdhVFEQMXpaUMAPzLXen4``. 
 
-If you now wanted to create sub-Groups like ``users`` and ``admins``, we recommend that you pre-pended the GUID to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
+If you now wanted to create sub-Groups like ``users`` and ``admins``, we recommend that you prepend the GUID to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
 
 ``2gdhVFEQMXpaUMAPzLXen4.role.users``
 
-``2gdhVFEQMXpaUMAPzLXen4.role._administrators``
+``2gdhVFEQMXpaUMAPzLXen4.role.administrators``
 
 This has two benefits: 
 
@@ -93,14 +110,16 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
 2. It ensures that no tenant sub-Groups have name collisions.
 
-
-
 7.2.2. Organizations
 --------------------
 
-The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
+Once you have your application's tenants modeled as Directories or Groups, the final tool that Stormpath gives you is the Organization resource. These are umbrella entities that all you to better structure and control multi-tenant applications. 
 
-The Organization resource allows your application's tenants to have as many, or as few, Directories and Groups as they want, while also maintaining strict data segregation. So if a tenant requires a Cloud Directory, a Google Social Directory, and an LDAP Directory, then all of these can sit under the umbrella of a single Organization resource that represents their data space in your app. 
+.. note:: 
+  
+  The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
+
+The Organization resource allows your application's tenants to have as many, or as few, Directories and Groups as they want, while also maintaining strict data segregation. So if a tenant requires a Cloud Directory, a Google Social Directory, and an LDAP Directory, all of these can sit under the umbrella of a single Organization resource that represents their data space in your app. 
 
 How to Create an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
