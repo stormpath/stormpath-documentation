@@ -3226,7 +3226,7 @@ Organization
 The Organization resource is two things:
 
 1. A top-level container for both :ref:`Directories <ref-directory>` and :ref:`Groups <ref-group>` .
-2. An Account Store that can :ref:`be mapped to an Application <create-asm>` just like a Directory or Group.
+2. A pseudo-Account Store that can :ref:`be mapped to an Application <create-asm>` (just like a Directory or Group) for the purposes of user login. Unlike Directories and Groups, however, they do not themselves own Accounts, and Users and Groups cannot be associated to them without also being associated with a Directory. 
 
 Organizations are primarily intended to represent "tenants" in multi-tenant applications. For more information about multitenancy in Stormpath, see the :ref:`multitenancy` chapter. 
 
