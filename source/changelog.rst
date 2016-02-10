@@ -28,6 +28,10 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-02-10
+==========
+
+- Changed Sphinx Theme to `Read The Docs <http://docs.readthedocs.org/en/latest/theme.html>`_.
     
 2016-02-02
 ==========

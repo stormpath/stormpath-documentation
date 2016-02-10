@@ -2095,8 +2095,8 @@ It is possible to retrieve other, independent, resources using the Directory for
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
       - Searches a collection of all of the Directory's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Directory are: ``accounts`` and ``groups``
 
-Other Resources Associated with a Tenant 
-----------------------------------------
+Other Resources Associated with a Directory 
+-------------------------------------------
 
 .. _ref-accnt-creation-policy:
 
