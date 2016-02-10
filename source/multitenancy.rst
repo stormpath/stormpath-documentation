@@ -58,8 +58,6 @@ The other multi-tenancy option is to have a single Directory under which each of
 
   In both strategies you can still have different Groups and Roles that span the entire Application, regardless of whether you choose to model your tenants with Groups or with Directories. For more on this, see here: :ref:`app-wide-roles`.
 
-A tenant represented as a Group (or "tenant Group") must still belong to a Directory, but 
-
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
 Naming Your Tenant Groups
