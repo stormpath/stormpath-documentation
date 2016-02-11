@@ -41,6 +41,13 @@ From these points we can derive a few conditions where the tenants-as-Directorie
 - Each tenant has different emails that need to be sent (or not sent) as part of the user Account creation process.
 - Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. 
 
+.. figure:: images/multitenancy/ERD_TpD.png
+    :align: center
+    :scale: 100%
+    :alt: Tenant per Directory 
+
+    *Tenants as Directories ERD* 
+
 .. todo::
 
   What else? An example would be good.
@@ -57,6 +64,13 @@ The other multi-tenancy option is to have a single Directory under which each of
 .. note::
 
   In both strategies you can still have different Groups and Roles that span the entire Application, regardless of whether you choose to model your tenants with Groups or with Directories. For more on this, see here: :ref:`app-wide-roles`.
+
+.. figure:: images/multitenancy/ERD_TpG.png
+    :align: center
+    :scale: 100%
+    :alt: Tenant per Group 
+
+    *Tenants as Groups ERD* 
 
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
