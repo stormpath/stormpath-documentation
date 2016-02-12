@@ -39,7 +39,10 @@ From these points we can derive a few conditions where the tenants-as-Directorie
 - Every Account in a tenant must be guaranteed to have a unique ``email``  and ``username``. If a person had already registered for one tenant of your Application, and tried to use the same email address to register for another tenant, they would not be allowed.
 - Each tenant has its own password strength policy.
 - Each tenant has different emails that need to be sent (or not sent) as part of the user Account creation process.
-- Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. 
+- Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. Application-wide Groups that span across tenants are not required.
+
+Tenants as Directories Example 
+""""""""""""""""""""""""""""""
 
 .. figure:: images/multitenancy/ERD_TpD.png
     :align: center
@@ -50,7 +53,11 @@ From these points we can derive a few conditions where the tenants-as-Directorie
 
 .. todo::
 
-  What else? An example would be good.
+  Explain/describe.
+
+
+  Each Directory would have to have its own local Role Group
+
 
 Strategy 2: Tenants as Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -60,10 +67,10 @@ The other multi-tenancy option is to have a single Directory under which each of
 - You want to guarantee ``email`` and ``username`` uniqueness across all tenants. This allows for a unified user identity, which allows for things like single-sign-on and account sharing between tenants on your application.
 - All tenants share password and email policies.
 - You want to ensure that tenant names are unique, since the Group ``name`` must be unique within a Directory.
+- You want to have application-wide roles that span across tenants.
 
-.. note::
-
-  In both strategies you can still have different Groups and Roles that span the entire Application, regardless of whether you choose to model your tenants with Groups or with Directories. For more on this, see here: :ref:`app-wide-roles`.
+Tenants as Groups Example
+"""""""""""""""""""""""""
 
 .. figure:: images/multitenancy/ERD_TpG.png
     :align: center
@@ -72,10 +79,14 @@ The other multi-tenancy option is to have a single Directory under which each of
 
     *Tenants as Groups ERD* 
 
-As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
+.. todo::
+
+  Claire and Esther can't access the Admin Console. But if Claire were hired as an admin, then she could easily be added to the Group and inherit all of its permissions. 
 
 Naming Your Tenant Groups
 """""""""""""""""""""""""
+
+As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
 First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``aargau``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
 
