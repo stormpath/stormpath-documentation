@@ -1128,6 +1128,8 @@ This section will show you how to set-up Stormpath to allow your users to log in
 
     These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.
 
+    Currently these instructions only cover SP-initiated SAML and not the IdP-initiated flow configuration.
+
 This guide will also show you how to set-up login against a private deployment running ADFS with SAML 2.0 support.
 
 .. todo::
@@ -1724,18 +1726,20 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 .. _saml-configuration-rest:
 
-5.5.3. Configuring SAML Via REST
+5.5.3. Configuring SAML via REST
 --------------------------------
 
 Here we will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
 
 It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires. 
 
+Also, currently the IdP-initiated flow can only be configured via REST, and not yet via the Stormpath Admin Console. 
+
 SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-asm`. 
 
 .. note::
 
-  The steps here are nearly identical regardless of whether you are configuring Service Provider initiated or IdP initiated authentication. Any differences are included in notes like this one.
+  The steps here are nearly identical regardless of whether you are configuring Service Provider initiated or IdP initiated authentication. The only difference is in :ref:`Step 5a <saml-restconfig-5a>`.
 
 Step 1: Gather IDP Data 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1911,6 +1915,8 @@ You should ``POST`` any URIs here that you would like included as authorized cal
       "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO/defaultRelayStates"
     }
   }
+
+.. _saml-restconfig-5a:
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
