@@ -2050,7 +2050,7 @@ Now that we've configured everything, we can take a look at what the actual SAML
 5.5.4. The Stormpath SAML Flow
 ------------------------------
 
-The two SAML authentication flows that Stormpath supports are 
+The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning. 
 
 The Identity Provider Initiated Flow 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2069,6 +2069,111 @@ The Identity Provider Initiated Flow
 .. todo:: 
 
   skinparam monochrome true
+
+  participant "Stormpath" as storm
+  participant "Your Application" as sp
+  participant "User Agent" as ua
+  participant "Identity Provider" as idp
+
+  ua->idp: Request SSO Service
+  ua<-->idp: Authenticate the user
+  ua->idp: Request to Login with Your Application
+  idp->ua: Respond with <b>302 Redirect</b>
+  ua->storm: Request Assertion Consumer Service
+  storm->ua: <b>302 Redirect</b> to callbackUri with Assertion JWT
+  ua->sp: Request target resource + JWT
+  sp->ua: Respond with requested resource
+
+Step 1: Identity Provider Login 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First the user will have to authenticate with the Identity Provider. They will then be provided with a list of configured applications that they are able to log in to. If they choose to log in to your Stormpath-enabled application, this will result in the IdP redirecting them to Stormpath.
+
+Step 2: Redirect to Assertion Consumer Service URL 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``) that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
+
+.. note::
+
+  Account matching is done on the basis of the returned email address. 
+
+Step 3: Stormpath Response with JWT 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The user will now be redirected by Stormpath back to your Application along with a JSON Web Token. 
+
+.. code-block:: http 
+
+  HTTP/1.1 302 Redirect
+  Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
+
+.. _saml-response-jwt:
+
+SAML Account Assertion JWT 
+""""""""""""""""""""""""""
+
+This JWT again contains both Headers and a Body with Claims. 
+
+**Header** 
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Required?
+    - Valid Value(s)
+
+  * - ``typ``
+    - Yes
+    - The type of token, which will be ``JWT``
+
+  * - ``alg``
+    - Yes 
+    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+**Body** 
+
+.. list-table::
+  :widths: 15 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Description
+  
+  * - ``iss`` 
+    - The issuer of this token, which will contain your Application ``href``. 
+
+  * - ``sub`` 
+    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
+
+  * - ``aud`` 
+    - The audience of the JWT. This will match your API Key ID from Stormpath.
+
+  * - ``exp`` 
+    - The expiration time for the JWT in Unix time.
+
+  * - ``iat`` 
+    - The time at which the JWT was created, in Unix time.
+
+  * - ``jti`` 
+    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
+
+  * - ``state`` 
+    - The state of your application, if you have chosen to have this passed back.
+
+  * - ``status`` 
+    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
+  
+  * - ``irt``
+    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
+
+  * - ``isNewSub``
+    - Indicates whether this is a new Account in Stormpath. 
+
+At this point your user is authenticated and able to use your app.
+
 
 .. _saml-sp-init-flow:
 
@@ -2237,66 +2342,6 @@ The user will now be redirected by Stormpath back to your Application along with
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
 
-SAML Account Assertion JWT 
-""""""""""""""""""""""""""
-
-This JWT again contains both Headers and a Body with Claims. 
-
-**Header** 
-
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Required?
-    - Valid Value(s)
-
-  * - ``typ``
-    - Yes
-    - The type of token, which will be ``JWT``
-
-  * - ``alg``
-    - Yes 
-    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
-
-**Body** 
-
-.. list-table::
-  :widths: 15 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Description
-  
-  * - ``iss`` 
-    - The issuer of this token, which will contain your Application ``href``. 
-
-  * - ``sub`` 
-    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
-
-  * - ``aud`` 
-    - The audience of the JWT. This will match your API Key ID from Stormpath.
-
-  * - ``exp`` 
-    - The expiration time for the JWT in Unix time.
-
-  * - ``iat`` 
-    - The time at which the JWT was created, in Unix time.
-
-  * - ``jti`` 
-    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
-
-  * - ``state`` 
-    - The state of your application, if you have chosen to have this passed back.
-
-  * - ``status`` 
-    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
-  
-  * - ``irt``
-    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
-
-  * - ``isNewSub``
-    - Indicates whether this is a new Account in Stormpath. 
+For more information about what is contained in this token, please see :ref:`above <saml-response-jwt>`.
 
 At this point your user is authenticated and able to use your app.
