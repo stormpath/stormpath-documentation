@@ -181,8 +181,12 @@ In addition to Social Login and LDAP, Stormpath also allows your users to log-in
 Modeling SAML Directories 
 +++++++++++++++++++++++++
 
+Just like with Social Directories, the only modeling considerations for SAML Directories are: you will a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
+
 How to Make a SAML Directory 
 ++++++++++++++++++++++++++++
+
+SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`. 
 
 .. _group-mgmt:
 

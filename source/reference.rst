@@ -395,7 +395,7 @@ For example, a sorted request (where %2C is the URL encoding for the comma chara
     curl --request GET \
     --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/applications?offset=10&limit=40"
+    --url "https://api.stormpath.com/v1/accounts?orderBy=orderStatement1%2CorderStatement2%2C...%2CorderStatementN"
 
 When URL-decoded, the URL looks like this::
 
@@ -1597,7 +1597,7 @@ This resource contains information about the Application's SAML policy. For more
     * - ``serviceProvider``
       - Object 
       - N/A 
-      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the SAML flow. 
+      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the Service Provider initiated SAML flow, as well as the ``defaultRelayStates`` endpoint used for IdP-initiated SAML authentication. 
 
 **samlPolicy Example**
 
@@ -1606,9 +1606,12 @@ This resource contains information about the Application's SAML policy. For more
   {
     "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID",
     "serviceProvider": {
-        "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
+      "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
         "ssoInitiationEndpoint": { 
-            "href":"https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
+          "href": "https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
+        },
+        "defaultRelayStates": {
+          "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID/defaultRelayStates"
         }  
     }
   }
@@ -2095,8 +2098,8 @@ It is possible to retrieve other, independent, resources using the Directory for
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`  
       - Searches a collection of all of the Directory's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Directory are: ``accounts`` and ``groups``
 
-Other Resources Associated with a Tenant 
-----------------------------------------
+Other Resources Associated with a Directory 
+-------------------------------------------
 
 .. _ref-accnt-creation-policy:
 

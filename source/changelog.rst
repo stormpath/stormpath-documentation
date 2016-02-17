@@ -36,6 +36,18 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
     - Modified:
     - New
 
+
+2016-02-16
+==========
+
+- Added information about :ref:`IdP-initiated SAML Authentication <saml-authn>`. 
+- Updated Application's :ref:`SAML Policy <ref-samlpolicy>` resource in Reference Chapter to include new ``defaultRelayStates`` endpoint.
+
+2016-02-10
+==========
+
+- Changed Sphinx Theme to `Read The Docs <http://docs.readthedocs.org/en/latest/theme.html>`_.
+>>>>>>> master
     
 2016-02-02
 ==========
