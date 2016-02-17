@@ -1059,7 +1059,7 @@ Creating an Account Store Mapping between your new LDAP Directory and your Storm
   :local: 
   :depth: 1
 
-SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Currently, Stormpath supports the Service Provider initiated flow, which is where a user chooses to log-in with a SAML-enabled Identity Provider from within your app. 
+SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Stormpath supports both the Service Provider initiated flow and the Identity Provider initiated flow.
 
 If you'd like a high-level description of Stormpath's SAML support, see :ref:`Stormpath as a Service Provider <saml-overview>`.
 
@@ -1074,7 +1074,24 @@ If you'd like to understand the steps involved in a SAML login, see the :ref:`SA
 5.5.1. Stormpath as a Service Provider 
 --------------------------------------
 
-The specific use case that Stormpath supports is user-initiated single sign-on. In this scenario, a user requests a protected resource (e.g. your application). Your application, with the help of Stormpath, then confirms the user's identity in order to determine whether they are able to access the resource. In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
+As mentioned above, Stormpath supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
+
+Identity Provider Initiated SAML Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+With IdP-initiated SAML Authentication, the user authenticates first with the Identity Provider, and then logs into your Stormpath-enabled application from a screen inside the IdP's site. 
+
+The IdP initiated process looks like this:
+
+#. User Agent authenticates with the IdP
+#. User Agent requests login to Your Application
+#. IdP redirects the user to Your Application along with SAML assertions 
+#. Service Provider receives SAML assertions and either creates or retrieves Account information   
+
+Service Provider Initiated SAML Authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In this scenario, a user requests a protected resource (e.g. your application). Your application, with the help of Stormpath, then confirms the user's identity in order to determine whether they are able to access the resource.
 
 The broad strokes of the process are as follows:
 
@@ -1084,14 +1101,18 @@ The broad strokes of the process are as follows:
 #. Identity provider redirects user back to Service Provider along with SAML assertions.
 #. Service Provider receives SAML assertions and either creates or retrieves Account information  
 
-Just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In this section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works. 
+In both cases, just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In the following section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works. 
 
-For a more detailed account of SAML login, see :ref:`below <saml-flow>`.
+For a more detailed step-by-step account of SAML login, see :ref:`below <saml-flow>`.
 
 .. _saml-configuration:
 
 5.5.2. Configuring SAML
 ------------------------
+
+.. todo::
+
+  Update with IdP-initiated flow information once available.
 
 This section will show you how to set-up Stormpath to allow your users to log in with a SAML-enabled Identity Provider (IdP). It assumes that you have two things:
 
@@ -1106,6 +1127,8 @@ This section will show you how to set-up Stormpath to allow your users to log in
 .. note::
 
     These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.
+
+    Currently these instructions only cover SP-initiated SAML and not the IdP-initiated flow configuration.
 
 This guide will also show you how to set-up login against a private deployment running ADFS with SAML 2.0 support.
 
@@ -1703,18 +1726,20 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 .. _saml-configuration-rest:
 
-5.5.3. Configuring SAML Via REST
+5.5.3. Configuring SAML via REST
 --------------------------------
-
-.. todo::
-
-    Explain why you'd want to do it this way as opposed to using the guides in the previous section.
 
 Here we will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
 
 It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires. 
 
+Also, currently the IdP-initiated flow can only be configured via REST, and not yet via the Stormpath Admin Console. 
+
 SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-asm`. 
+
+.. note::
+
+  The steps here are nearly identical regardless of whether you are configuring Service Provider initiated or IdP initiated authentication. The only difference is in :ref:`Step 5a <saml-restconfig-5a>`.
 
 Step 1: Gather IDP Data 
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1756,7 +1781,7 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 .. _configure-sp-in-idp:
 
 Step 3: Retrieve Your Service Provider Metadata
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath. 
 
@@ -1858,8 +1883,9 @@ Step 5: Configure Your Application
 
 The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML: 
 
-- an ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself. 
-- an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints.
+1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself. 
+
+You should ``POST`` any URIs here that you would like included as authorized callback URIs.
 
 .. code-block:: http 
 
@@ -1874,15 +1900,72 @@ The Stormpath :ref:`Application <ref-application>` Resource has two parts that a
     ]
   }
 
+2. There is also an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints:
+
+.. code-block:: json 
+
+  {
+    "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO",
+    "createdAt":"2016-01-18T21:02:24.501Z",
+    "modifiedAt":"2016-01-18T21:02:24.501Z",
+    "ssoInitiationEndpoint":{
+      "href":"https://api.stormpath.com/v1/applications/61eykaiWwglwT5mngYyExu/saml/sso/idpRedirect"
+    },
+    "defaultRelayStates":{
+      "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO/defaultRelayStates"
+    }
+  }
+
+.. _saml-restconfig-5a:
+
+Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates/`` endpoint. 
+
+.. code-block:: http 
+
+  POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+  Host: api.stormpath.com
+
+This request will return a response containing a JWT like this:
+
+.. code-block:: json 
+
+  {
+    "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
+  }
+
+This JWT will then need to be entered into your IdP's configuration in order for IdP-initiated authentication to function properly.
+
+This ``defaultRelayStates/`` endpoint also accepts a few optional properties. These properties can be encoded in the defaultRelayState JWT that is stored on your IdP by passing them in the body of your POST:
+
+- **callbackUri**: Specifies the callBackUri to direct users to. Useful if there are multiple callbackUris specified in your Application.
+- **organization**: Allows you to specify an Organization to check users for.
+- **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
+
+.. code-block:: http 
+
+  POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+  Host: api.stormpath.com
+    
+  {
+      "callbackUri": "https://org1.myapp.com",
+      "organization": {
+          "nameKey": "org1",
+      }
+      "state": "IAmAState"
+  }
+
 Step 6: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now you last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
+Now the last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
 
 .. _saml-mapping:
 
-Step 7: Configure SAML Attribute Mapping 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step 7: Configure SAML Attribute Mapping (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
 
@@ -1973,12 +2056,146 @@ Now that we've configured everything, we can take a look at what the actual SAML
 5.5.4. The Stormpath SAML Flow
 ------------------------------
 
-.. figure:: images/auth_n/SamlFlow.png
+The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning. 
+
+The Identity Provider Initiated Flow 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. todo::
+
+  Preamble goes here.
+
+.. figure:: images/auth_n/SamlFlow_IdpInit.png
     :align: center
     :scale: 100%
-    :alt: SAML Flow 
+    :alt: IdP Initiated SAML Flow 
 
-    *The SAML Flow* 
+    *The IdP Initiated SAML Flow* 
+
+.. todo:: 
+
+  skinparam monochrome true
+
+  participant "Stormpath" as storm
+  participant "Your Application" as sp
+  participant "User Agent" as ua
+  participant "Identity Provider" as idp
+
+  ua->idp: Request SSO Service
+  ua<-->idp: Authenticate the user
+  ua->idp: Request to Login with Your Application
+  idp->ua: Respond with <b>302 Redirect</b>
+  ua->storm: Request Assertion Consumer Service
+  storm->ua: <b>302 Redirect</b> to callbackUri with Assertion JWT
+  ua->sp: Request target resource + JWT
+  sp->ua: Respond with requested resource
+
+Step 1: Identity Provider Login 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First the user will have to authenticate with the Identity Provider. They will then be provided with a list of configured applications that they are able to log in to. If they choose to log in to your Stormpath-enabled application, this will result in the IdP redirecting them to Stormpath.
+
+Step 2: Redirect to Assertion Consumer Service URL 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``) that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
+
+.. note::
+
+  Account matching is done on the basis of the returned email address. 
+
+Step 3: Stormpath Response with JWT 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The user will now be redirected by Stormpath back to your Application along with a JSON Web Token. 
+
+.. code-block:: http 
+
+  HTTP/1.1 302 Redirect
+  Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
+
+.. _saml-response-jwt:
+
+SAML Account Assertion JWT 
+""""""""""""""""""""""""""
+
+This JWT again contains both Headers and a Body with Claims. 
+
+**Header** 
+
+.. list-table::
+  :widths: 15 10 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Required?
+    - Valid Value(s)
+
+  * - ``typ``
+    - Yes
+    - The type of token, which will be ``JWT``
+
+  * - ``alg``
+    - Yes 
+    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+**Body** 
+
+.. list-table::
+  :widths: 15 60
+  :header-rows: 1
+
+  * - Claim Name 
+    - Description
+  
+  * - ``iss`` 
+    - The issuer of this token, which will contain your Application ``href``. 
+
+  * - ``sub`` 
+    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
+
+  * - ``aud`` 
+    - The audience of the JWT. This will match your API Key ID from Stormpath.
+
+  * - ``exp`` 
+    - The expiration time for the JWT in Unix time.
+
+  * - ``iat`` 
+    - The time at which the JWT was created, in Unix time.
+
+  * - ``jti`` 
+    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
+
+  * - ``state`` 
+    - The state of your application, if you have chosen to have this passed back.
+
+  * - ``status`` 
+    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
+  
+  * - ``irt``
+    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
+
+  * - ``isNewSub``
+    - Indicates whether this is a new Account in Stormpath. 
+
+At this point your user is authenticated and able to use your app.
+
+
+.. _saml-sp-init-flow:
+
+The Service Provider Initiated Flow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. todo::
+
+  Add some preamble
+
+.. figure:: images/auth_n/SamlFlow_SpInit.png
+    :align: center
+    :scale: 100%
+    :alt: Service Provider Initiated SAML Flow 
+
+    *The Service Provider Initiated SAML Flow* 
 
 .. todo:: 
 
@@ -2131,66 +2348,6 @@ The user will now be redirected by Stormpath back to your Application along with
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
 
-SAML Account Assertion JWT 
-""""""""""""""""""""""""""
-
-This JWT again contains both Headers and a Body with Claims. 
-
-**Header** 
-
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Required?
-    - Valid Value(s)
-
-  * - ``typ``
-    - Yes
-    - The type of token, which will be ``JWT``
-
-  * - ``alg``
-    - Yes 
-    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
-
-**Body** 
-
-.. list-table::
-  :widths: 15 60
-  :header-rows: 1
-
-  * - Claim Name 
-    - Description
-  
-  * - ``iss`` 
-    - The issuer of this token, which will contain your Application ``href``. 
-
-  * - ``sub`` 
-    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
-
-  * - ``aud`` 
-    - The audience of the JWT. This will match your API Key ID from Stormpath.
-
-  * - ``exp`` 
-    - The expiration time for the JWT in Unix time.
-
-  * - ``iat`` 
-    - The time at which the JWT was created, in Unix time.
-
-  * - ``jti`` 
-    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
-
-  * - ``state`` 
-    - The state of your application, if you have chosen to have this passed back.
-
-  * - ``status`` 
-    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
-  
-  * - ``irt``
-    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
-
-  * - ``isNewSub``
-    - Indicates whether this is a new Account in Stormpath. 
+For more information about what is contained in this token, please see :ref:`above <saml-response-jwt>`.
 
 At this point your user is authenticated and able to use your app.

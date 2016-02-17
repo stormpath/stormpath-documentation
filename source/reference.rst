@@ -1597,7 +1597,7 @@ This resource contains information about the Application's SAML policy. For more
     * - ``serviceProvider``
       - Object 
       - N/A 
-      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the SAML flow. 
+      - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the Service Provider initiated SAML flow, as well as the ``defaultRelayStates`` endpoint used for IdP-initiated SAML authentication. 
 
 **samlPolicy Example**
 
@@ -1606,9 +1606,12 @@ This resource contains information about the Application's SAML policy. For more
   {
     "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID",
     "serviceProvider": {
-        "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
+      "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
         "ssoInitiationEndpoint": { 
-            "href":"https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
+          "href": "https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
+        },
+        "defaultRelayStates": {
+          "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID/defaultRelayStates"
         }  
     }
   }
