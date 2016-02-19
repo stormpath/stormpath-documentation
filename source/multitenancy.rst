@@ -51,12 +51,14 @@ Tenants as Directories Example
 
     *Tenants as Directories ERD* 
 
-.. todo::
+An example implementation of the Tenants-as-Directories strategy is shown in the diagram above. Please note that everything discussed occurs inside the private data space that we refer to as your Stormpath Tenant, which is represented by the Tenant resource but does not play any part in multi-tenancy. The scenario demonstrates a multi-tenant userbase with two tenants, each of who is represented by two resources: an Organization and a Directory. There are a few points to highlight in this diagram:
 
-  Explain/describe.
+- The ability to log into the "Lighting Banking" application is controlled by the accountStoreMappings that exist between the Application resource and the Organization resources. To enable or disable a tenant (and its userbase) from logging-in, all you would have to do is enable or disable this Account Store Mapping.
+- Each Tenant is represented by their own Directory, and this has a few apparent consequences:
+   
+   - Any role Groups must be created separately, on a per-Directory basis. If you decided to create a new role, a new Group resource would have to be added to each of your tenant Directories.
+   - In order to allow System Administrators to log in to the app, we've had to create a new Directory just for them, which is separately mapped to the Application as an Account Store. 
 
-
-  Each Directory would have to have its own local Role Group
 
 
 Strategy 2: Tenants as Groups
@@ -88,23 +90,23 @@ Naming Your Tenant Groups
 
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
-First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``aargau``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
+First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``bankofam``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
 
-For example, if your Organization's ``nameKey`` is ``aargau``, you could name the Group ``aargau.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
+For example, if your Organization's ``nameKey`` is ``bankofam``, you could name the Group ``bankofam.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
 
-``aargau.role.users``
+``bankofam.role.users``
 
-``aargau.role.administrators``
+``bankofam.role.administrators``
 
 This has two benefits: 
 
 1. It makes it easy to find all the role Groups for that particular tenant, since you can simply search for the nameKey in the ``name`` field:
 
-  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=aargau.role.*``
+  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bankofam.role.*``
 
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
 
-  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=aargau.*
+  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bankofam.*
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -126,7 +128,7 @@ How to Create an Organization
 
 You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
 
-So, if for example one of our application's tenants was the Bank of Aargau, we could send the following POST:
+So, if for example one of our application's tenants was the Bank of America, we could send the following POST:
 
 .. code-block:: http
 
@@ -135,8 +137,8 @@ So, if for example one of our application's tenants was the Bank of Aargau, we c
   Content-Type: application/json;charset=UTF-8
 
   {
-    "name": "Bank of Aargau",
-    "nameKey": "aargau",
+    "name": "Bank of America",
+    "nameKey": "bankofam",
     "status": "ENABLED"
   }
 
@@ -152,8 +154,8 @@ Which would return the following:
     "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
     "createdAt": "2015-10-02T15:27:01.658Z",
     "modifiedAt": "2015-10-02T15:27:01.658Z",
-    "name": "Bank of Aargau",
-    "nameKey": "aargau",
+    "name": "Bank of America",
+    "nameKey": "bankofam",
     "status": "ENABLED",
     "description": null,
     "customData": {
