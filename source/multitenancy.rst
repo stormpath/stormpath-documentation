@@ -97,23 +97,23 @@ Naming Your Tenant Groups
 
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
-First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``BankOfAm``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
+First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``BankOfA``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
 
-For example, if your Organization's ``nameKey`` is ``BankOfAm``, you could name the Group ``BankOfAm.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
+For example, if your Organization's ``nameKey`` is ``BankOfA``, you could name the Group ``BankOfA.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
 
-``BankOfAm.role.users``
+``BankOfA.role.users``
 
-``BankOfAm.role.administrators``
+``BankOfA.role.administrators``
 
 This has two benefits: 
 
 1. It makes it easy to find all the role Groups for that particular tenant, since you can simply search for the nameKey in the ``name`` field:
 
-  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfAm.role.*``
+  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfA.role.*``
 
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
 
-  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfAm.*
+  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfA.*
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -135,7 +135,7 @@ How to Create an Organization
 
 You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
 
-So, if for example one of our application's tenants was the Bank of America, we could send the following POST:
+So, if for example one of our application's tenants was the Bank of A, we could send the following POST:
 
 .. code-block:: http
 
@@ -144,8 +144,8 @@ So, if for example one of our application's tenants was the Bank of America, we 
   Content-Type: application/json;charset=UTF-8
 
   {
-    "name": "Bank of America",
-    "nameKey": "BankOfAm",
+    "name": "Bank of A",
+    "nameKey": "BankOfA",
     "status": "ENABLED"
   }
 
@@ -161,8 +161,8 @@ Which would return the following:
     "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
     "createdAt": "2015-10-02T15:27:01.658Z",
     "modifiedAt": "2015-10-02T15:27:01.658Z",
-    "name": "Bank of America",
-    "nameKey": "BankOfAm",
+    "name": "Bank of A",
+    "nameKey": "BankOfA",
     "status": "ENABLED",
     "description": null,
     "customData": {
