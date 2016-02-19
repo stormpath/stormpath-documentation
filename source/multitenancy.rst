@@ -20,6 +20,8 @@ In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds o
 
 As with all user base modeling, we'll begin with the basics: Directories and Groups. Then we will move on to an explanation of how the Organization resource is used when modeling multi-tenancy.
 
+.. _multitenancy-strategies:
+
 7.2.1. Account Store Strategies for Multi-Tenancy
 -------------------------------------------------
 

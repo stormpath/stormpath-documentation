@@ -28,14 +28,9 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
-    2016-02-??
+2016-02-??
 
-    - Multi-tenancy chapter significantly expanded. Now includes more information about using Groups vs Directories to model tenants.
-    - List item, with link to documentation if applicable
-    - Fixed:
-    - Modified:
-    - New
-
+- Multi-tenancy chapter significantly expanded. Now includes more information about :ref:`using Groups vs Directories to model tenants <multitenancy-strategies>`.
 
 2016-02-16
 ==========
