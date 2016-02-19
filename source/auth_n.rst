@@ -573,7 +573,7 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
   .. code-block:: bash 
 
     curl --request GET \
-    --user $API_KEY_ID:$API_KEY_SECRET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
     --header 'content-type: application/json' \
     --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0eSEXAMPLE"
 
@@ -936,7 +936,7 @@ Stormpath will use the ``accessToken`` provided to retrieve information about yo
   :local: 
   :depth: 2
 
-This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories<about-ldap-dir>`. 
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`. 
 
 Mirror Directories and LDAP 
 ---------------------------
@@ -1049,6 +1049,12 @@ Step 3: Map the LDAP Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating an Account Store Mapping between your new LDAP Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+
+The log-in process will now proceed as it would for :ref:`any other kind of Directory <how-login-works>`.
+
+.. note::
+
+  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and it also handles authentication attempts and relays back the outcome to Stormpath. 
 
 .. _saml-authn:
 

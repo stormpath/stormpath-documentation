@@ -49,6 +49,8 @@ Also roles do not require you to use permissions-based authorization. You can st
 
 Now that we have some understanding of authorization roles in Stormpath, we can discussion another powerful use of Stormpath's flexible data model.
 
+.. _app-wide-roles:
+
 Application-Wide Roles
 ^^^^^^^^^^^^^^^^^^^^^^
 

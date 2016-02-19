@@ -1074,7 +1074,7 @@ These define the actual content of the email. The only difference is that ``html
 Using Email Macros 
 ^^^^^^^^^^^^^^^^^^
 
-Stormpath uses Apache Velocity for email templating, and consequently you can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
+You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
 
 .. code-block:: java 
 
@@ -1106,7 +1106,7 @@ You may have noticed here and with the Application resource that there is an inc
 Quiet References
 """"""""""""""""
 
-Quiet references (``!``) tell Velocity that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Velocity was able to find the value as ``blue``, it would output:
+Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Stormpath was able to find the value as ``blue``, it would output:
 
 ``Is your favorite color blue?``
 
@@ -1118,4 +1118,4 @@ To avoid this, we include the ``!`` which puts the macro into "quiet reference" 
 
 ``Is your favorite color ?``
 
-Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the Velocity engine might not have access to an Application resource. 
+Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the templating engine might not have access to an Application resource. 
