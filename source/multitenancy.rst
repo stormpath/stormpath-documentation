@@ -44,22 +44,21 @@ From these points we can derive a few conditions where the tenants-as-Directorie
 Tenants as Directories Example 
 """"""""""""""""""""""""""""""
 
+Here is an example implementation that uses Directories to model tenants. It is important to note that this is just an example. Stormpath has a very flexible data model with intentionally versatile resources. If you'd like to discuss your particular implementation needs please `get in touch <support@stormpath.com>`_!
+
 .. figure:: images/multitenancy/ERD_TpD.png
     :align: center
     :scale: 100%
     :alt: Tenant per Directory 
 
-    *Tenants as Directories ERD* 
+    *Tenants as Directories ERD.* 
 
 An example implementation of the Tenants-as-Directories strategy is shown in the diagram above. Please note that everything discussed occurs inside the private data space that we refer to as your Stormpath Tenant, which is represented by the Tenant resource but does not play any part in multi-tenancy. The scenario demonstrates a multi-tenant userbase with two tenants, each of who is represented by two resources: an Organization and a Directory. There are a few points to highlight in this diagram:
 
 - The ability to log into the "Lighting Banking" application is controlled by the accountStoreMappings that exist between the Application resource and the Organization resources. To enable or disable a tenant (and its userbase) from logging-in, all you would have to do is enable or disable this Account Store Mapping.
-- Each Tenant is represented by their own Directory, and this has a few apparent consequences:
-   
-   - Any role Groups must be created separately, on a per-Directory basis. If you decided to create a new role, a new Group resource would have to be added to each of your tenant Directories.
-   - In order to allow System Administrators to log in to the app, we've had to create a new Directory just for them, which is separately mapped to the Application as an Account Store. 
-
-
+- If Claire wanted to create another Account with Bank of B using the same email address, she would be allowed to, since email uniqueness is enforced only inside a Directory.
+- Any role Groups must be created separately, on a per-Directory basis. If you decided to create a new role, a new Group resource representing that role would have to be added to each of your tenant Directories if you wanted the Accounts in that Directory to be able to be assigned that role.
+- In order to allow System Administrators to log in to the app, you'd had to create a new Directory just for them, which is separately mapped to the Application as an Account Store. Since this Directory does not represent a tenant, no Organization resource is created.
 
 Strategy 2: Tenants as Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -74,6 +73,8 @@ The other multi-tenancy option is to have a single Directory under which each of
 Tenants as Groups Example
 """""""""""""""""""""""""
 
+Below we have an example of an implementation that uses Groups to model tenants. This shows just one possible scenario, and if you'd like to discuss your particular implementation needs please `get in touch <support@stormpath.com>`_!
+
 .. figure:: images/multitenancy/ERD_TpG.png
     :align: center
     :scale: 100%
@@ -81,32 +82,36 @@ Tenants as Groups Example
 
     *Tenants as Groups ERD* 
 
-.. todo::
+Once again, everything here is happening inside your private Stormpath Tenant. Just as with the Tenants-as-Directories strategy, every Tenant is modeled by its own dedicated Organization, but in this case there is also one Group resource per Tenant. All of the Accounts and Groups are contained within a single Directory resource. This all means that:
 
-  Claire and Esther can't access the Admin Console. But if Claire were hired as an admin, then she could easily be added to the Group and inherit all of its permissions. 
+- You can still control access to the Application by enabling or disabling the accountStoreMappings between the Organizations and the Application resource.
+- If Claire tried to create another Account with Bank of B using the same email address she'd used with Bank of A, she would be unable to, since emails must be unique within a Directory.
+- If there were a role Group that you wanted to be shared among the tenants, it is as simple as creating one instance of it and then associating Accounts with it.
+- System Administrators just need their own Role Group, which is then mapped as an Account Store with the Application.
+- Claire and Esther do not have access to your application's Admin Console, because that is only allowed for members of the "Sys Admins" role Group. If, however, Claire were hired as a System Administrator, then she could be easily added to the "Sys Admins" Group and inherit all of its permissions. 
 
 Naming Your Tenant Groups
 """""""""""""""""""""""""
 
 As this is the most common strategy used by our customers, we have found some minor naming conventions that are very powerful and we consider to be best-practice.
 
-First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``bankofam``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
+First of all, the name of your tenant Organization will have a unique ``nameKey``, for example ``BankOfAm``. This ``nameKey`` this can be used for organizing tenant Groups and sub-Groups.
 
-For example, if your Organization's ``nameKey`` is ``bankofam``, you could name the Group ``bankofam.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
+For example, if your Organization's ``nameKey`` is ``BankOfAm``, you could name the Group ``BankOfAm.tenant``. If you want to create sub-Groups for roles like ``users`` and ``admins``, we recommend that you prepend the ``nameKey`` to their ``name`` Attribute, along with a descriptive name of what kind of Group it is:
 
-``bankofam.role.users``
+``BankOfAm.role.users``
 
-``bankofam.role.administrators``
+``BankOfAm.role.administrators``
 
 This has two benefits: 
 
 1. It makes it easy to find all the role Groups for that particular tenant, since you can simply search for the nameKey in the ``name`` field:
 
-  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bankofam.role.*``
+  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfAm.role.*``
 
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
 
-  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bankofam.*
+  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=BankOfAm.*
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -138,7 +143,7 @@ So, if for example one of our application's tenants was the Bank of America, we 
 
   {
     "name": "Bank of America",
-    "nameKey": "bankofam",
+    "nameKey": "BankOfAm",
     "status": "ENABLED"
   }
 
@@ -155,7 +160,7 @@ Which would return the following:
     "createdAt": "2015-10-02T15:27:01.658Z",
     "modifiedAt": "2015-10-02T15:27:01.658Z",
     "name": "Bank of America",
-    "nameKey": "bankofam",
+    "nameKey": "BankOfAm",
     "status": "ENABLED",
     "description": null,
     "customData": {
