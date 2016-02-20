@@ -62,13 +62,24 @@ Alongside these Organizations and their Account Stores, it is also possible to d
 
   This just one possible way of modeling a multi-tenant app with application-wide roles. Your approach may vary. If you need help with modeling your user base, feel free to contact us at support@stormpath.com and we will help as best as we can. 
 
-Let's assume that your "InterGalactic Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of Aargau", "InterGalactic Bank of Kuat", etc), each modeled as an Organization resource. 
+Specifically, we will use the Tenant-per-Group example from :ref:`the Multi-tenancy chapter <multitenancy-strategies>`.
+
+.. figure:: images/multitenancy/ERD_TpG.png
+    :align: center
+    :scale: 100%
+    :alt: A multi-tenant implementation 
+
+    *An example multi-tenant application* 
+
+To recap: The "Lightning Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of A", "Bank of B", etc), each modeled as an Organization resource. 
 
 Each of these Organization resources has a Group as its Account Store. This means that all of the users for that Tenant will be represented by Account resources that are mapped to that subsidiary's Organization as well as its Group. 
 
-So we could have a user "Shmi". This user is modeled inside Stormpath by an Account resource. She is an employee Bank of Aargau, so her Account resource is associated with the "Bank of Aargau" Organization and Group resources. 
+Claire is a customer Bank of A, so her Account resource is associated with the "Bank of A" Organization and Group resources. 
 
-Now our banking application has roles that we want applied across all of its tenants, such as "Employee", "Customer", and "System Administrator". Modeling these can be accomplished by creating Groups for them, and then associating the appropriate Accounts with them. Since our Shmi user is a bank teller at the Bank of Aargau, we can associated her with the "Bank of Aargau" Group, as well as the "Bank Employee" Group. Each of these Groups could have its own defined permissions, and Shmi would inherit all of them.
+Now our banking application has roles that we want applied across all of its tenants, such as "User" and "Application Administrator". Modeling these can be accomplished by creating Groups for them, and then associating the appropriate Accounts with them. Voila, application-wide roles.
+
+So Claire is a customer at the Bank of A, and is associated with the "Bank of A" tenant Group. But she is also just a regular user, so she is also associated with the "User" role Group. We have a separate user Esther, who is a customer of Bank of B. She is associated with the Bank of B tenant Group, but because she has the same role as Claire, she is associated with the same role Group.
 
 The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks. 
 
@@ -110,7 +121,7 @@ Or as complex as:
     "effect": "allow"
   }
 
-How is this flexibility possible? Two words: Custom Data.
+How is this flexibility possible? Custom Data.
 
 As mentioned earlier, Stormpath resources like Accounts and Groups are created along with a linked :ref:`customData <ref-customdata>` resource. This resource is very useful for implementing both Account permissions and role (AKA Group) permissions. Essentially, any user-level permissions are defined in a ``customData`` resource linked to a user Account, while any role-level permissions are defined in a ``customData`` resource linked to a role Group. This allows for Stormpath to model user-unique permissions as well as permissions inherited by virtue of a user having one (or more) roles.
 

@@ -38,7 +38,7 @@ To understand the multi-tenancy considerations in modeling tenants as :ref:`Dire
 
 From these points we can derive a few conditions where the tenants-as-Directories strategy is optimal. If your tenants satisfy one or more of these conditions:
 
-- Every Account in a tenant must be guaranteed to have a unique ``email``  and ``username``. If a person had already registered for one tenant of your Application, and tried to use the same email address to register for another tenant, they would not be allowed.
+- You do not require email uniqueness across tenants. If a user has signed up for an Account with one tenant, they are able to use that same email to create an email for another Account in another tenant.
 - Each tenant has its own password strength policy.
 - Each tenant has different emails that need to be sent (or not sent) as part of the user Account creation process.
 - Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. Application-wide Groups that span across tenants are not required.
