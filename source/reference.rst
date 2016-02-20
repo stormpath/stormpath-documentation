@@ -82,6 +82,7 @@ All Stormpath SDKs (currently Java, Ruby, PHP, and Python) use this more secure 
 Finally, if you would like to use Stormpath Digest authentication in a programming language that Stormpath does not yet support, you can attempt to port the algorithm to that language. You can try to replicate the algorithm and use Stormpath existing code as examples or the documented algorithm:
 
 - Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`__ (the **authenticate** method)
+- .NET: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-dotnet/blob/develop/src/Stormpath.SDK.Core/Impl/Http/Authentication/SAuthc1RequestAuthenticator.cs>`__ (the **Authenticate** method)
 - Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`__
 - PHP: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-php/blob/master/src/Http/Authc/SAuthc1RequestSigner.php>`__ (the **signRequest** method)
 - Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
