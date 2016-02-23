@@ -281,3 +281,70 @@ When a login attempt is made against an Application’s ``/loginAttempts`` endpo
     - If it is a Directory or Group, attempt to log in on that resource.
 
 If the login attempt does specify an Organization, then we simply jump to that point in the steps, and the Organization's Account Stores are iterated through as described above. 
+
+.. _multitenant-design:
+
+7.4 Routing Users to their Tenant
+================================================
+
+If you are designing a public multi-tenant web application that supports multiple application tenants with private data partitioning, then you will probably want some way for users to specify which tenant they are logging in to. 
+
+This tenant selection also extends to the requests that the user makes. For example, let's say we have a multi-tenant e-commerce SaaS application that shows purchase history. If a user requests the ``/purchases`` view, they should only be able to see the purchases specific to their organization. This means that instead of executing a query like this to a database:
+
+.. code-block:: sql 
+
+  SELECT * from purchases;
+
+The application needs to know the request user’s tenant identifier so they can show only the purchases for that tenant. The application might instead execute the following query:
+
+.. code-block:: sql 
+
+  SELECT * from purchases where tenant_id = ?;
+
+where ? is the ``tenant_id`` value obtained by inspecting the request.
+
+So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:``Organization resource <ref-organization>` and it's ``nameKey`` attribute.
+
+We present here two possible solutions that use this ``nameKey``. You may support both if you wish to give your customers convenience options.
+
+7.4.1. Sub-Domain
+------------------------
+
+The first solution is to allow your users to access your application via a unique subdomain URL:
+
+``https://organizationNameKey.myapplication.io``
+
+The primary benefit here is that the application never needs to ask the user for the tenant identifier, because it is inherently part of every request in the ``HOST`` header. Also, since we are using the Organization resource's ``nameKey``, we can guarantee that the URL is unique.
+
+There are also a few other things that we recommend with this approach:
+
+Separate Domain Space
+^^^^^^^^^^^^^^^^^^^^^
+
+Keep your customer organization subdomains space completely separate from your company's subdomain space by using a different top-level domain name for your SaaS application.
+
+So if your company's website URL is ``http://mycompany.com``, then your customers could use the ``http://mycompany.io`` domain space:
+
+``http://customerA.mycompany.io``
+
+If you use the same domain space, it is possible that one of your customer's will end up using a subdomain that you might want to use for your company.
+
+If you didn't want to use a separate top-level domain, you could also use sub-subdomains. For example, the app could be accessible here:
+
+``http://myapp.mycompany.com``
+
+And customer organization subdomains for that app would be accessible via:
+
+``http://customerA.myapp.mycompany.com``
+
+It is our opinion that the separate top-level domain (e.g. ``http://mycompany.io``) is the nicer alternative: it is shorter, easier to remember, easier to type, and it also looks better.
+
+Combine With Login Form Field
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a user from a customer organization ever accesses your app directly (``https://mycompany.io``) instead of using their subdomain (``https://customerA.mycompany.io``), you still might need to provide a tenant-aware login form (described below). After login, you can redirect them to their tenant-specific URL for all subsequent requests.
+
+7.4.2. Login Form Field
+------------------------
+
+An alternative, or complimentary, approach to tenant subdomains is to allow the user to specify their tenant on the login page, then storing that in the user's HTTP session.
