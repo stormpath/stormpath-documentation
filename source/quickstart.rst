@@ -151,13 +151,13 @@ Now that we've created an Application, let's create a user Account so someone ca
     curl --request POST \
       --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
+      --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts" \
       --data '{
       "givenName": "Joe",
       "surname": "Stormtrooper",
       "username": "tk421",
       "email": "tk421@stormpath.com",
-      "password":"Changeme1",
+      "password":"Changeme1"
       }'
 
   This would return this response:

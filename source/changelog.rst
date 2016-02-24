@@ -28,14 +28,15 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
-    2016-02-??
+2016-02-24
+==========
 
-    - Added section on :ref:`how to route users to their tenant <multitenant-routing-users>`.
+Added section on :ref:`how to route users to their tenant <multitenant-routing-users>`.
 
 2016-02-19
 ==========
 
-- Multi-tenancy chapter significantly expanded. Now includes more information about :ref:`using Groups vs Directories to model tenants <multitenancy-strategies>`.
+Multi-tenancy chapter significantly expanded. Now includes more information about :ref:`using Groups vs Directories to model tenants <multitenancy-strategies>`.
 
 2016-02-16
 ==========
@@ -46,7 +47,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-02-10
 ==========
 
-- Changed Sphinx Theme to `Read The Docs <http://docs.readthedocs.org/en/latest/theme.html>`_.
+Changed Sphinx Theme to `Read The Docs <http://docs.readthedocs.org/en/latest/theme.html>`_.
     
 2016-02-02
 ==========
