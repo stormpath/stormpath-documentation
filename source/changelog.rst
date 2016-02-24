@@ -28,6 +28,10 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+    2016-02-??
+
+    - Added section on :ref:`how to route users to their tenant <multitenant-routing-users>`.
+
 2016-02-19
 ==========
 

@@ -282,7 +282,7 @@ When a login attempt is made against an Application’s ``/loginAttempts`` endpo
 
 If the login attempt does specify an Organization, then we simply jump to that point in the steps, and the Organization's Account Stores are iterated through as described above. 
 
-.. _multitenant-design:
+.. _multitenant-routing-users:
 
 7.4 Routing Users to their Tenant
 ================================================
@@ -347,4 +347,12 @@ If a user from a customer organization ever accesses your app directly (``https:
 7.4.2. Login Form Field
 ------------------------
 
-An alternative, or complimentary, approach to tenant subdomains is to allow the user to specify their tenant on the login page, then storing that in the user's HTTP session.
+An alternative, or complimentary, approach to tenant subdomains is to allow the user to specify their tenant on the login page, then storing that in the user's HTTP session. Then, for all subsequent requests to your application, you can:
+
+- Inspect the session
+- Look up the tenant ID
+- Customize data views and queries based on the session’s Organization
+
+We advise that you auto-remember the login form tenant ID value in a cookie so that field is pre-populated whenever a user returns to log in. Users don’t like having to remember and type that value in every time they log in.
+
+As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multitenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
