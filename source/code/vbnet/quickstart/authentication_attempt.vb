@@ -1,6 +1,7 @@
 Try
     Dim loginResult = Await myApp.AuthenticateAccountAsync( _
-        "tk421@deathstar.co", "Changeme123!")
+        "tk421@deathstar.co", _
+        "Changeme123!")
     Dim loginAccount = Await loginResult.GetAccountAsync()
 
     Console.WriteLine("User " & loginAccount.FullName & " logged in!")
