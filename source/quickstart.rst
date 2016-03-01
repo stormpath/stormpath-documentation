@@ -4,7 +4,7 @@
 3. Quickstart
 *************
 
-.. only:: not (csharp or vbnet)
+.. only:: rest
 
     This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath REST API.
 
@@ -16,7 +16,7 @@
 
     This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath Python SDK.
 
-.. only:: not (csharp or vbnet or python)
+.. only:: rest
 
     These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
 
