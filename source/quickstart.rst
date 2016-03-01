@@ -4,7 +4,7 @@
 3. Quickstart
 *************
 
-.. only:: not (csharp or vbnet)
+.. only:: rest
 
     This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath REST API.
 
@@ -12,13 +12,24 @@
 
     This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath .NET SDK.
 
-.. only:: not (csharp or vbnet)
+.. only:: python
+
+    This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath Python SDK.
+
+.. only:: rest
 
     These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
 
 .. only:: csharp or vbnet
 
     These instructions assume that you have Visual Studio installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
+
+.. only:: python
+
+    These instructions assume that you have
+    `pip <http://pip.readthedocs.org/en/stable/>`_ installed on your system and
+    that you have already completed the steps in the :ref:`Set-up chapter<set-up>`,
+    and now have:
 
 - A Stormpath account
 
@@ -88,12 +99,33 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
         The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
 
+.. only:: python
+
+    Installing the SDK
+    ------------------
+
+    To set up your environment for this quickstart, follow these steps:
+
+    First, install the Stormpath Python SDK by running the following command on
+    the terminal:
+
+    .. code:: console
+
+        pip install stormpath
+
+    If you'd like to update to use the latest Stormapth Python SDK, you can
+    instead run:
+
+    .. code:: console
+
+        pip install --upgrade stormpath
+
 Let's get started!
 
 3.1. Retrieve Your Application
 ===============================
 
-Before you can create user Accounts you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
+Before you can create user Accounts, you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
 .. only:: rest
 
@@ -121,6 +153,15 @@ Before you can create user Accounts you'll need to retrieve your Stormpath Appli
         You can skip building the ``IClientApiKey`` object and the call to ``SetApiKey()`` if you store your API Key and Secret in environment variables, or put the ``apiKey.properties`` file in the default location (``~\.stormpath\apiKey.properties``). Calling ``IClientBuilder.Build()`` without specifying an API Key will check the default location.
 
     Once you have an ``IClient`` instance, keep it around! You should only create it **once** per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
+
+.. only:: python
+
+    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+
+    .. literalinclude:: code/python/quickstart/initialize_client.py
+        :language: python
+
+    Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: rest
 
@@ -231,8 +272,15 @@ Before you can create user Accounts you'll need to retrieve your Stormpath Appli
 
 .. only:: python
 
-  .. literalinclude:: code/python/quickstart/retrieve_your_application
-      :language: python
+    Next, use the ``client.applications`` generator to search for the "My
+    Application" Application:
+
+    .. literalinclude:: code/python/quickstart/retrieve_your_application.py
+        :language: python
+
+    ``application`` is an ``Application`` object, which represents a Stormpath
+    Application resource as a Python class.  We'll use this object to create a
+    new user Account and then authenticate it.
 
 .. only:: nodejs
 
@@ -320,8 +368,10 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 .. only:: python
 
-  .. literalinclude:: code/python/quickstart/create_an_account
-      :language: python
+    .. literalinclude:: code/python/quickstart/create_an_account.py
+        :language: python
+
+    The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application``, ``Account`` is the Python class that represents a Stormpath Account resource.
 
 .. only:: nodejs
 
@@ -410,8 +460,12 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: python
 
-  .. literalinclude:: code/python/quickstart/authentication_attempt
-      :language: python
+    .. literalinclude:: code/python/quickstart/authentication_attempt.py
+        :language: python
+
+    If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
+
+    If the authentication attempt fails, an ``Error`` will be thrown. The ``user_message`` and ``developer_message`` properties of the exception will contain details about the authentication failure.
 
 .. only:: nodejs
 
@@ -445,11 +499,6 @@ Now we have a user Account that can use your Application. But how do you authent
 
   .. literalinclude:: code/java/quickstart/authentication_attempt_error_result
       :language: java
-
-.. only:: python
-
-  .. literalinclude:: code/python/quickstart/authentication_attempt_error_result
-      :language: python
 
 .. only:: nodejs
 
