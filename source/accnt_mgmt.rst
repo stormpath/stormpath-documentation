@@ -1063,7 +1063,7 @@ First, let's look at the default template that comes with the Stormpath Administ
 
 **Message Format**
 
-The ``mimeType`` designates whether the email is sent as plain text or HTML. This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email. 
+The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide. 
 
 **textBody and htmlBody**
 

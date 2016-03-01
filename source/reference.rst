@@ -2114,10 +2114,6 @@ A Directory’s Account Creation Policy resource contains data and attributes th
 
 **Account Creation Policy Attributes**
 
-.. todo::
-
-  Need to link to more information about Email Templates here.
-
 .. list-table:: 
   :widths: 15 10 20 60
   :header-rows: 1
@@ -2254,7 +2250,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
 Email Templates 
 ^^^^^^^^^^^^^^^
 
-This resource defines the contents of emails that are sent as part of the account creation and password reset flows. 
+This resource defines the contents of emails that are sent as part of the Account creation and password reset flows. For more information about templates and how to customize them, see the :ref:`Account Management chapter <customizing-email-templates>`. 
 
 **EmailTemplate URL**
 
@@ -2289,17 +2285,17 @@ This resource defines the contents of emails that are sent as part of the accoun
   * - ``htmlBody``    
     - String  
     - See below.
-    - The body of the email in HTML format. This body is only sent when the ``mimeType`` for the template is set to ``text/html``. This body can take valid HTML snippets.
+    - The body of the email in HTML format. This body is only sent when the ``mimeType`` for the template is set to ``text/html`` or ``multipart/alternative``. This body can take valid HTML snippets.
       
   * - ``textBody``  
     - String
     - See below.
-    - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain``.
+    - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain`` or ``multipart/alternative`.
 
   * - ``mimeType``
     - String  
-    - ``text/plain`` or ``text/html``
-    - A property that defines whether Stormpath will send an email with the mime type of ``text/plain`` or ``text/html``. 
+    - ``text/plain`` or ``text/html`` or ``multipart/alternative``
+    - A property that defines whether Stormpath will send an email as plaintext, HTML, or both. 
 
   * - ``defaultModel``  
     - Object  
