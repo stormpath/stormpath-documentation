@@ -184,7 +184,6 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   The above cURL command returns an empty body along with a header:
 
   .. code-block:: http
-    :emphasize-lines: 2
 
       HTTP/1.1 302 Found
       Location: https://api.stormpath.com/v1/tenants/yOuRTeNANtid

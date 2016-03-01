@@ -1006,8 +1006,6 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return. 
 
-.. _customizing-email-templates:
-
 4.6. Customizing Stormpath Emails via REST
 ==========================================
 
@@ -1036,6 +1034,8 @@ Found in: :ref:`ref-password-policy`
 - *Reset Success Email*:  An email that is sent after a successful password reset.
 
 For more information about this, see :ref:`password-reset-flow`. 
+
+.. _customizing-email-templates:
 
 4.6.2. Customizing Stormpath Email Templates 
 --------------------------------------------

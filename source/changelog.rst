@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-03-01
+==========
+
+Information about new ``multipart/alternative`` email type added to Reference section on :ref:`Email Templates <ref-emailtemplates>` and Account Management section on :ref:`customizing email templates via REST <customizing-email-templates>`.
+
 2016-02-24
 ==========
 

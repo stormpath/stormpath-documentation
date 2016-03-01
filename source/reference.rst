@@ -2290,7 +2290,7 @@ This resource defines the contents of emails that are sent as part of the Accoun
   * - ``textBody``  
     - String
     - See below.
-    - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain`` or ``multipart/alternative`.
+    - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain`` or ``multipart/alternative``.
 
   * - ``mimeType``
     - String  
