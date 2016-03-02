@@ -1845,7 +1845,7 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``href``
     - String
     - N/A
-    - The resource's fully qualified location URL
+    - The resource's fully qualified location URL.
   
   * - ``name``
     - String
@@ -1880,12 +1880,12 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``provider``
     - Link
     - N/A
-    - A link to the Directory's Provider. 
+    - A link to the Directory's :ref:`Provider <ref-provider>`. 
 
   * - ``customData``
     - Link 
     - N/A
-    - A link to the Directory's customData resource that you can use to store your own Directory-specific custom fields.
+    - A link to the Directory's :ref:`customData <ref-customData>` resource that you can use to store your own Directory-specific custom fields.
 
   * - ``passwordPolicy``
     - Link
@@ -1900,12 +1900,12 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``accounts``
     - Link
     - N/A
-    - A link to the Accounts owned by this Directory.
+    - A link to a collection of the :ref:`Accounts <ref-account>` owned by this Directory.
   
   * - ``applicationMappings``
     - Link
     - N/A
-    - A link to a collection of any accountStoreMapping resources that include this Directory.
+    - A link to a collection of any :ref:`accountStoreMapping <ref-asm>` resources that include this Directory.
       
   * - ``applications``
     - Link
@@ -1915,17 +1915,17 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``groups``
     - Link
     - N/A
-    - A link to a collection of the Groups mapped to this Directory.
+    - A link to a collection of the :ref:`Groups <ref-group>` mapped to this Directory.
       
   * - ``organizations``
     - Link
     - N/A
-    - A link to a collection of the Organizations mapped to this Directory.
+    - A link to a collection of the :ref:`Organizations <ref-organization>` mapped to this Directory.
   
   * - ``organizationMappings``
     - Link
     - N/A
-    - A link to a collection of any organizationAccountStoreMappings resources that include this Directory.
+    - A link to a collection of any :ref:`organizationAccountStoreMappings <ref-org-asm>` resources that include this Directory.
   
 
 **Directory Example**
