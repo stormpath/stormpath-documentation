@@ -392,6 +392,21 @@ And get the following response:
     }
   }
 
+.. todo::
+
+  Final image showing all resources and associations
+
+This would leave us with the following resources:
+
+.. figure:: images/accnt_mgmt/am_erd_final.png
+  :align: center
+  :scale: 20%
+  :alt: Final ERD
+  
+  *Our completed ERD for this chapter, with all resources and associations*
+
+
+
 .. _importing-accounts:
 
 4.2.2. Importing Accounts
