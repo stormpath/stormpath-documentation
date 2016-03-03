@@ -16,6 +16,10 @@
 
     This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath Python SDK.
 
+.. only:: java
+
+    This quickstart will get you up and running with Stormpath in about 7 minutes and give you a good initial feel for the Stormpath Java SDK.
+
 .. only:: rest
 
     These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps in the :ref:`Set-up chapter<set-up>`, and now have:
@@ -30,6 +34,12 @@
     `pip <http://pip.readthedocs.org/en/stable/>`_ installed on your system and
     that you have already completed the steps in the :ref:`Set-up chapter<set-up>`,
     and now have:
+
+.. only:: java
+
+    These instructions assume that you have
+    `java <http://java.com>`_ and `maven <https://maven.apache.org/index.html>`_ installed on your system and that you have
+    already completes the steps in the :ref:`Set-up chapter<set-up>`, and now have:
 
 - A Stormpath account
 
@@ -113,12 +123,47 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
         pip install stormpath
 
-    If you'd like to update to use the latest Stormapth Python SDK, you can
+    If you'd like to update to use the latest Stormpath Python SDK, you can
     instead run:
 
     .. code:: console
 
         pip install --upgrade stormpath
+
+.. only:: java
+
+    Installing the SDK
+    ------------------
+
+    To setup up your environment for this quickstart, follow these steps:
+
+    Include the following  dependencies in your Maven ``pom.xml`` file:
+
+    .. code-block:: xml
+
+        ...
+
+        <dependencies>
+
+            ...
+
+            <dependency>
+                <groupId>com.stormpath.sdk</groupId>
+                <artifactId>stormpath-sdk-api</artifactId>
+                <version>###latest_stormpath_version###</version>
+            </dependency>
+            <dependency>
+                <groupId>com.stormpath.sdk</groupId>
+                <artifactId>stormpath-sdk-httpclient</artifactId>
+                <version>###latest_stormpath_version###</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            ...
+
+        </dependencies>
+
+        ...
 
 Let's get started!
 
@@ -162,6 +207,24 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
         :language: python
 
     Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
+
+.. only:: java
+
+    .. note::
+
+      The following assumes that you have a file name: ``~/.stormpath/apiKey.properties`` that contains your api key id and your api key secret in this format:
+
+      .. code-block:: console
+
+          apiKey.id = <your api key id>
+          apiKey.secret = <your api key secret>
+
+    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+
+    .. literalinclude:: code/java/quickstart/initialize_client.java
+        :language: java
+
+    Once you have a ``Client`` instance, keep it around! You should only created it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: rest
 
@@ -244,8 +307,10 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. only:: java
 
-  .. literalinclude:: code/java/quickstart/retrieve_your_application
-      :language: java
+    Next, use the ``getApplications`` method on the ``Client`` and use criteria to search for the "My Application" Application:
+
+    .. literalinclude:: code/java/quickstart/retrieve_your_application.java
+        :language: java
 
 .. only:: csharp or vbnet
 
@@ -348,7 +413,9 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 .. only:: java
 
-  .. literalinclude:: code/java/quickstart/create_an_account
+    To do this, you'll need to use your ``application`` created in the previous step.
+
+    .. literalinclude:: code/java/quickstart/create_an_account.java
       :language: java
 
 .. only:: csharp or vbnet
@@ -438,8 +505,12 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: java
 
-  .. literalinclude:: code/java/quickstart/authentication_attempt
+  .. literalinclude:: code/java/quickstart/authentication_attempt.java
       :language: java
+
+  If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
+
+  If the authentication attempt fails, a ``ResourceException`` will be thrown. The ``getMessage()`` and ``getDeveloperMessage()`` methods of the exception will contain details about the authentication failure.
 
 .. only:: csharp or vbnet
 
@@ -493,11 +564,6 @@ Now we have a user Account that can use your Application. But how do you authent
 
   .. literalinclude:: code/php/quickstart/authentication_attempt_error_result
       :language: php
-
-.. only:: java
-
-  .. literalinclude:: code/java/quickstart/authentication_attempt_error_result
-      :language: java
 
 .. only:: nodejs
 
