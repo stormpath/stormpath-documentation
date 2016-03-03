@@ -84,7 +84,7 @@ Would yield the following response:
     }
   }
 
-Our current resources (not including the default ones created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
+Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
 
 .. figure:: images/accnt_mgmt/am_erd_01.png
   :align: center
@@ -281,6 +281,15 @@ Would yield this response:
     }
   }
 
+So we can now see how this Group would look in our Tenant:
+
+.. figure:: images/accnt_mgmt/am_erd_02.png
+  :align: center
+  :scale: 100%
+  :alt: <ERD with Directory and Group>
+  
+  *Our Tenant with one Directory and Group (:ref:`default resources <quickstart>` not pictured)*
+
 .. _account-creation:
 
 4.2. How to Store Accounts in Stormpath
@@ -360,6 +369,15 @@ Would yield this response:
     },
     "comment":" // This JSON has been truncated for readability"
   }
+
+Going back to our resource diagram:
+
+.. figure:: images/accnt_mgmt/am_erd_03.png
+  :align: center
+  :scale: 20%
+  :alt: ERD with groupMembership
+  
+  *Our Tenant with a Directory, Group, and an Account that is a member of the Group*
 
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
