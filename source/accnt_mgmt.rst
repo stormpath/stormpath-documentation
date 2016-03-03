@@ -84,6 +84,15 @@ Would yield the following response:
     }
   }
 
+Our current resources (not including the default ones created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
+
+.. figure:: images/accnt_mgmt/am_erd_01.png
+  :align: center
+  :scale: 20%
+  :alt: <>
+  
+  *Our Stormpath Tenant, with an Application resource and our newly created "Captains" Directory*
+
 .. _about-mirror-dir:
 
 Mirror Directories
@@ -404,8 +413,6 @@ This would leave us with the following resources:
   :alt: Final ERD
   
   *Our completed ERD for this chapter, with all resources and associations*
-
-
 
 .. _importing-accounts:
 
