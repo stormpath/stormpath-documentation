@@ -3886,7 +3886,7 @@ Because an Account is "owned" by a Directory, you can add it either directly thr
       - Optional Parameters 
       - Description
     
-    * - POST /v1/directories/$DIRECTORY_ID/accounts *or* /v1/applications/$APPLICATION_ID/accounts
+    * - POST /v1/directories/$DIRECTORY_ID/accounts *or* /v1/applications/$APPLICATION_ID/accounts *or* /v1/organizations/$ORGANIZATION_ID/accounts
       - Required: ``email``, ``password``, ``givenName``, ``surname``; Optional: ``username``, ``middleName``, ``status``, ``customData``
       - ``registrationWorkflowEnabled=false``, ``passwordFormat=mcf`` (see note below)
       - Creates a new Account resource.
