@@ -3875,7 +3875,7 @@ Account Operations
 Create an Account 
 ^^^^^^^^^^^^^^^^^
 
-Because an Account is "owned" by a Directory, you can add it either directly through the Directory that owns it, or indirectly via an Application that has that Directory as an Account Store:
+Because an Account is "owned" by a Directory, you can add it either directly through the Directory that owns it, or indirectly via an Application that has that Directory as an Account Store, or an Organization that is mapped to the Directory through a Group:
 
 .. list-table::
     :widths: 30 15 15 40
