@@ -357,9 +357,15 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/quickstart/retrieve_your_application.js
+    Next, use the ``client.getApplications`` method to search for the "My
+    Application" Application:
+
+    .. literalinclude:: code/nodejs/quickstart/retrieve_your_application.js
       :language: javascript
 
+    ``application`` is an ``Application`` object, which represents a Stormpath
+    Application resource.  We'll use this object to create a new user Account
+    and then authenticate it.
 
 3.2. Create a User Account
 ==========================
