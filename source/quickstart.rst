@@ -557,9 +557,9 @@ Now we have a user Account that can use your Application. But how do you authent
     .. literalinclude:: code/nodejs/quickstart/authentication_attempt.js
       :language: javascript
 
-    If the authentication attempt is successful, you'll get an ``AuthenticationResult`` as the second argument of the callback, which contains a link to the Account details.
-
     If the authentication attempt fails, an ``Error`` will be returned as the first argument of the callback. The ``userMessage`` and ``developerMessage`` properties of the error will contain details about the authentication failure.
+
+    If the authentication attempt is successful, you'll get an ``AuthenticationResult`` as the second argument of the callback, which contains a link to the Account details.
 
 .. there isn't always a response; in dotnet and java it's a thrown exception
 
