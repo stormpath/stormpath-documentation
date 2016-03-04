@@ -348,7 +348,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/quickstart/retrieve_your_application
+  .. literalinclude:: code/nodejs/quickstart/retrieve_your_application.js
       :language: javascript
 
 
@@ -441,7 +441,7 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/quickstart/create_an_account
+  .. literalinclude:: code/nodejs/quickstart/create_an_account.js
       :language: javascript
 
 3.3. Authenticate a User Account
@@ -539,7 +539,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/quickstart/authentication_attempt
+  .. literalinclude:: code/nodejs/quickstart/authentication_attempt.js
       :language: javascript
 
 .. there isn't always a response; in dotnet and java it's a thrown exception
