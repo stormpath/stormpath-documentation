@@ -565,11 +565,6 @@ Now we have a user Account that can use your Application. But how do you authent
   .. literalinclude:: code/php/quickstart/authentication_attempt_error_result
       :language: php
 
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/quickstart/authentication_attempt_error_result
-      :language: javascript
-
 3.4. Next Steps
 ===============
 
