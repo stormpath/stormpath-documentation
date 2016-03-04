@@ -554,7 +554,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/quickstart/authentication_attempt.js
+    .. literalinclude:: code/nodejs/quickstart/authentication_attempt.js
       :language: javascript
 
     If the authentication attempt is successful, you'll get an ``AuthenticationResult`` as the second argument of the callback, which contains a link to the Account details.
