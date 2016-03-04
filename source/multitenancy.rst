@@ -270,6 +270,31 @@ As described in :ref:`the Authentication chapter <authn>`, in order to allow use
 
 To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
+.. _add-accnt-to-org:
+
+Adding an Account to an Organization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Adding a new Account to an Organization is exactly the same as adding them to a Directory, except that you use the Organization to route the creation request:
+
+.. code-block:: http
+
+    POST /v1/organizations/2P4XOanz26AUomIexAmple/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "givenName": "Annie",
+        "surname": "Nguyen",
+        "username": "annie@nguyengland.me",
+        "email": "annie@nguyengland.me",
+        "password":"Changeme1",
+        "customData": {
+            "favoriteColor": "fuschia"
+        }
+    }
+
+
 7.3. Authenticating an Account against an Organization
 ======================================================
 

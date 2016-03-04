@@ -4,10 +4,21 @@
 4. Account Management
 **********************
 
+This chapter provides the information necessary for you to understand the resources and processes involved in Account Management in Stormpath. In addition to information about the different types of resources, it also contains examples of the steps required in setting up a basic user Account with membership in a Group. If you'd like to skip to those steps they are:
+
+1. :ref:`Creating a Directory <make-cloud-dir>`
+2. :ref:`Creating a Group <make-group>`
+3. :ref:`Adding an Account to a Directory <add-new-account>`
+4. :ref:`Adding an Account to a Group <add-account-to-group>`
+
+
+
 4.1. Modeling Your User Base
 ============================
 
-The first question that we need to address is how we are going to model our users inside Stormpath. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**.
+The first question that we need to address is how we are going to model our users inside Stormpath.
+
+User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**.
 
 All of your Accounts will have to be associated with at least one Directory resource, so we can start there.
 
@@ -308,18 +319,18 @@ For more detailed information about the Account resource, see the :ref:`ref-acco
 4.2.1. New Account Creation
 ---------------------------
 
-The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group.
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory, or Group.
 
 .. _add-new-account:
 
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`.
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`, or an Organization, like in :ref:`the Multi-tenancy Chapter <add-accnt-to-org>`.
 
 .. note::
 
-  This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
+  This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
 
 Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
@@ -384,6 +395,8 @@ Going back to our resource diagram:
   :alt: ERD with groupMembership
 
   *Our Tenant with a Directory, Group, and an Account that is a member of the Group*
+
+.. _add-account-to-group:
 
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
