@@ -226,6 +226,15 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
     Once you have a ``Client`` instance, keep it around! You should only created it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
+.. only:: nodejs
+
+    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+
+    .. literalinclude:: code/nodejs/quickstart/initialize_client.js
+        :language: javascript
+
+    Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
+
 .. only:: rest
 
     Before you can get your Application, you must get the location of your Tenant from Stormpath, like so:
