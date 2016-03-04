@@ -165,6 +165,20 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
         ...
 
+.. only:: nodejs
+
+    Installing the SDK
+    ------------------
+
+    To set up your environment for this quickstart, follow these steps:
+
+    First, install the Stormpath Node.js SDK by running the following command on
+    the terminal:
+
+    .. code:: console
+
+        npm install stormpath
+
 Let's get started!
 
 3.1. Retrieve Your Application
