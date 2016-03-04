@@ -9,11 +9,11 @@ This section will provide you with a quick introduction to Authorization with St
 6.1. What is Authorization?
 ===========================
 
-Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**. 
+Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**.
 
-Once a user has entered in a valid login and password (authentication), there are the permission checks (authorization) that can be performed which dictate what access rights they have to your system resources. Going back to our airport scenario, once you have proven who you are with your passport, the airline also checks that you are permitted to board the plane by checking that you have a valid boarding pass. 
+Once a user has entered in a valid login and password (authentication), there are the permission checks (authorization) that can be performed which dictate what access rights they have to your system resources. Going back to our airport scenario, once you have proven who you are with your passport, the airline also checks that you are permitted to board the plane by checking that you have a valid boarding pass.
 
-One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. To go back to our airport scenario, we can imagine the airline has two options. 
+One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. To go back to our airport scenario, we can imagine the airline has two options.
 
 6.1.1. Simple Authorization
 ---------------------------
@@ -27,7 +27,7 @@ Permissions, at their most basic, are statements of functionality that define a 
 
 .. todo::
 
-  This could use a concrete example. 
+  This could use a concrete example.
 
 6.2. Modeling Authorization in Stormpath
 ========================================
@@ -43,7 +43,7 @@ The Group resource is central to many of the more advanced forms of authorizatio
 
 As we have already said, you can think of Groups as labels applied to Accounts via the GroupMembership resource. They can be used to organize users, like having all Accounts belonging to users from Tatooine associated with a "Tatooine" user Group resource. However, much in the same way that a label can be used to define an officer's rank (and thereby what he is authorized to do), Groups can also be used to model "roles" in Stormpath for the purposes of role-based access control. If we associate an Account with a certain role Group, then that Account will have all the authorizations defined for that Group. Moreover, if an Account is associated with multiple Groups then it will inherit authorization from all of them.
 
-Note that when we say "user Group" and "role Group" we are not discussing two different types of Group resources here, but just pointing out that the Group resource has multiple applications. So that "Tatooine" Group could be used to organize all Accounts for users residing on Tatooine, but it could also come with some sort of authorization permissions associated with it as well. A more common scenario would be having a Group called  "administrators", and that could be used to organize everyone with the permissions required for an administrator in your application. 
+Note that when we say "user Group" and "role Group" we are not discussing two different types of Group resources here, but just pointing out that the Group resource has multiple applications. So that "Tatooine" Group could be used to organize all Accounts for users residing on Tatooine, but it could also come with some sort of authorization permissions associated with it as well. A more common scenario would be having a Group called  "administrators", and that could be used to organize everyone with the permissions required for an administrator in your application.
 
 Also roles do not require you to use permissions-based authorization. You can still include checks in your code along the lines of ``if (user.group("authRole") {...``.
 
@@ -60,28 +60,28 @@ Alongside these Organizations and their Account Stores, it is also possible to d
 
 .. note::
 
-  This just one possible way of modeling a multi-tenant app with application-wide roles. Your approach may vary. If you need help with modeling your user base, feel free to contact us at support@stormpath.com and we will help as best as we can. 
+  This just one possible way of modeling a multi-tenant app with application-wide roles. Your approach may vary. If you need help with modeling your user base, feel free to contact us at support@stormpath.com and we will help as best as we can.
 
 Specifically, we will use the Tenant-per-Group example from :ref:`the Multi-tenancy chapter <multitenancy-strategies>`.
 
 .. figure:: images/multitenancy/ERD_TpG.png
     :align: center
     :scale: 100%
-    :alt: A multi-tenant implementation 
+    :alt: A multi-tenant implementation
 
-    *An example multi-tenant application* 
+    *An example multi-tenant application*
 
-To recap: The "Lightning Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of A", "Bank of B", etc), each modeled as an Organization resource. 
+To recap: The "Lightning Banking" application must support multiple tenants for each of the bank's subsidiaries ("Bank of A", "Bank of B", etc), each modeled as an Organization resource.
 
-Each of these Organization resources has a Group as its Account Store. This means that all of the users for that Tenant will be represented by Account resources that are mapped to that subsidiary's Organization as well as its Group. 
+Each of these Organization resources has a Group as its Account Store. This means that all of the users for that Tenant will be represented by Account resources that are mapped to that subsidiary's Organization as well as its Group.
 
-Claire is a customer Bank of A, so her Account resource is associated with the "Bank of A" Organization and Group resources. 
+Claire is a customer Bank of A, so her Account resource is associated with the "Bank of A" Organization and Group resources.
 
 Now our banking application has roles that we want applied across all of its tenants, such as "User" and "Application Administrator". Modeling these can be accomplished by creating Groups for them, and then associating the appropriate Accounts with them. Voila, application-wide roles.
 
 So Claire is a customer at the Bank of A, and is associated with the "Bank of A" tenant Group. But she is also just a regular user, so she is also associated with the "User" role Group. We have a separate user Esther, who is a customer of Bank of B. She is associated with the Bank of B tenant Group, but because she has the same role as Claire, she is associated with the same role Group.
 
-The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks. 
+The actual authorization checks that you do here are irrelevant, so you can still use what we have called "simple authorization" with these roles, or you can use permission-based authorization checks.
 
 More information about the APIs that allow you to create, retrieve and search an Application's Groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy>`.
 
@@ -137,7 +137,7 @@ Since authorization enforcement is handled by `one of Stormpath's integrations <
 Checking User Permissions
 """""""""""""""""""""""""
 
-To check a user's unique permissions, you must retrieve their Account's customData. You can do this in one of two ways: 
+To check a user's unique permissions, you must retrieve their Account's customData. You can do this in one of two ways:
 
 You can either retrieve the Account along with the expanded customData, by sending an HTTP GET to::
 
@@ -145,12 +145,12 @@ You can either retrieve the Account along with the expanded customData, by sendi
 
 This will return the Account resource along with the expanded customData:
 
-.. code-block:: http  
+.. code-block:: http
 
-  HTTP/1.1 200 OK 
+  HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
   Content-Type: application/json;charset=UTF-8
-  
+
   {
     "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
     "username" : "jlpicard",
@@ -177,9 +177,9 @@ Or you can retrieve only the customData by sending a GET to::
 
 Which would return only the customData:
 
-.. code-block:: http  
+.. code-block:: http
 
-  HTTP/1.1 200 OK 
+  HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
   Content-Type: application/json;charset=UTF-8
 
@@ -195,7 +195,7 @@ Which would return only the customData:
         "control_key": "173467321476C32789777643T732V73117888732476789764376"
       }
     }
-  } 
+  }
 
 Checking Role Permissions
 """""""""""""""""""""""""
@@ -204,4 +204,4 @@ This would work in much the same way as checking the permissions for a user's Ac
 
   https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/groups
 
-From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint. 
+From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.

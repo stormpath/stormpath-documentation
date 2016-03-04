@@ -4,18 +4,29 @@
 4. Account Management
 **********************
 
+This chapter provides the information necessary for you to understand the resources and processes involved in Account Management in Stormpath. In addition to information about the different types of resources, it also contains examples of the steps required in setting up a basic user Account with membership in a Group. If you'd like to skip to those steps they are:
+
+1. :ref:`Creating a Directory <make-cloud-dir>`
+2. :ref:`Creating a Group <make-group>`
+3. :ref:`Adding an Account to a Directory <add-new-account>`
+4. :ref:`Adding our Account to a Group <add-account-to-group>`
+
+The final step that would allow this Account to actually log in to the application is covered in :ref:`the Authentication chapter <create-asm>`.
+
 4.1. Modeling Your User Base
 ============================
 
-The first question that we need to address is how we are going to model our users inside Stormpath. User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**. 
+The first topic that we need to address is how we are user modeling works inside Stormpath.
 
-All of your Accounts will have to be associated with at least one Directory resource, so we can start there.  
+User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories**, **Organizations**, and also possibly **Groups**.
+
+All of your Accounts will have to be associated with at least one Directory resource, so we can start there.
 
 .. _directory-mgmt:
 
 4.1.1. Directories
 -------------------
-    
+
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
 For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
@@ -26,20 +37,22 @@ Stormpath supports two types of Directories:
 
 1. Natively-hosted **Cloud Directories** that originate in Stormpath
 2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other websites, as well as in Identity Providers that support SAML.
-   
+
 You can add as many Directories of each type as you require.
 
 .. note::
 
   Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base. 
+  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
 
 .. _about-cloud-dir:
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
 The standard, default Directory resource. They can be created using a simple POST API.
+
+.. _make-cloud-dir:
 
 How to Make a Cloud Directory
 """""""""""""""""""""""""""""
@@ -59,7 +72,7 @@ The following API request:
 
 Would yield the following response:
 
-.. code-block:: HTTP 
+.. code-block:: HTTP
 
   HTTP/1.1 201 Created
   Location: https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE
@@ -84,6 +97,17 @@ Would yield the following response:
     }
   }
 
+Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
+
+.. figure:: images/accnt_mgmt/am_erd_01.png
+  :align: center
+  :scale: 100%
+  :alt: <ERD with Directory>
+
+  *Our Stormpath Tenant, with an Application resource and our newly created "Captains" Directory*
+
+Any new Groups or Accounts that we create will have to be created inside a Directory. Before we move on to that though, it's helpful to know a little about the other kinds of Directories available to you in Stormpath.
+
 .. _about-mirror-dir:
 
 Mirror Directories
@@ -101,13 +125,13 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 **Supporting Multiple Mirror Directories**
 
-It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one. 
+It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
 If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
 
 1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
 
-2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory. 
+2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory.
 
 3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
 
@@ -125,7 +149,7 @@ LDAP Directories are a big benefit to Stormpath customers who need LDAP director
 - The Agent will start synchronizing immediately, pushing this select data outbound to Stormpath over a TLS (HTTPS) connection.
 - The synchronized user Accounts and Groups appear in the Stormpath Directory. The Accounts will be able to log in to any Stormpath-enabled application that you assign.
 - When the Agent detects local LDAP changes, additions or deletions to these specific Accounts or Groups, it will automatically propagate those changes to Stormpath to be reflected by your Stormpath-enabled applications.
-  
+
 User Accounts and Groups in LDAP directories are automatically deleted when any of the following things happen:
 
 - The original object is deleted from the LDAP directory service.
@@ -139,7 +163,7 @@ The big benefit is that your Stormpath-enabled applications still use the same c
 Modeling LDAP Directories
 +++++++++++++++++++++++++++
 
-As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with. 
+As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with.
 
 The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
@@ -150,16 +174,16 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 How to Make an LDAP Directory
 +++++++++++++++++++++++++++++
 
-Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`. 
+Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
 .. _about-social-dir:
-    
+
 Social Directories
 """"""""""""""""""
 
 Stormpath works with user Accounts pulled from social login providers (currently Google, Facebook, Github, and LinkedIn) in a way very similar to the way it works with user Accounts from LDAP servers. These external social login providers are modeled as Stormpath Directories, much like LDAP Directories. The difference is that, while LDAP Directories always come with an Agent that takes care of synchronization, Social Directories have an associated **Provider** resource. This resource contains the information required by the social login site to work with their site (e.g. the App ID for your Google application).
 
-Stormpath also simplifies the authorization process by doing things like automating Google's access token exchange flow. All you do is POST the authorization code from the end-user and Stormpath returns a new or updated user Account, along with the Google access token which you can use for any further API calls. 
+Stormpath also simplifies the authorization process by doing things like automating Google's access token exchange flow. All you do is POST the authorization code from the end-user and Stormpath returns a new or updated user Account, along with the Google access token which you can use for any further API calls.
 
 Modeling Social Directories
 ++++++++++++++++++++++++++++
@@ -169,40 +193,40 @@ Modeling your users who authorize via Social Login is by necessity very simple, 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
 
-Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`. 
+Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
 
 .. _about-saml-dir:
 
-SAML Directories 
+SAML Directories
 """"""""""""""""
 
 In addition to Social Login and LDAP, Stormpath also allows your users to log-in with SAML Identity Providers. Just like with Social Directories, SAML Directories are configured via an associated Provider resource that contains the configuration information for the Identity Provider.
 
-Modeling SAML Directories 
+Modeling SAML Directories
 +++++++++++++++++++++++++
 
 Just like with Social Directories, the only modeling considerations for SAML Directories are: you will a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
 
-How to Make a SAML Directory 
+How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
-SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`. 
+SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
 
 .. _group-mgmt:
 
 4.1.2. Groups
 --------------
 
-The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company. 
+The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
 
-For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter. 
+For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
 
 .. _hierarchy-groups:
 
 Modeling User Hierarchies Using Groups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource. 
+Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource.
 
 A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
 
@@ -218,14 +242,16 @@ Or, to find all Groups in the US East region only, you would GET::
 
 It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
 
+.. _make-group:
+
 How to Create a Group
 ^^^^^^^^^^^^^^^^^^^^^
 
-So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory. 
+So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory.
 
 The following API request:
 
-.. code-block:: http    
+.. code-block:: http
 
   POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
   Host: api.stormpath.com
@@ -239,12 +265,12 @@ The following API request:
 
 Would yield this response:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 201 Created
   Location: https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe
   Content-Type: application/json;charset=UTF-8
-  
+
   {
     "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe",
     "name":"Starfleet Officers",
@@ -272,6 +298,15 @@ Would yield this response:
     }
   }
 
+So we can now see how this Group would look in our Tenant:
+
+.. figure:: images/accnt_mgmt/am_erd_02.png
+  :align: center
+  :scale: 100%
+  :alt: <ERD with Directory and Group>
+
+As we can see here, there is our Application, Directory, and our newly-created Group, and they are all found inside the Stormpath Tenant.
+
 .. _account-creation:
 
 4.2. How to Store Accounts in Stormpath
@@ -279,27 +314,27 @@ Would yield this response:
 
 The Account resource is a unique identity within your application. It is usually used to model an end-user, although it can also be used by a service, process, or any other entity that needs to log-in to Stormpath.
 
-For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.  
+For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
 
 4.2.1. New Account Creation
 ---------------------------
 
-The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory or Group. 
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory, or Group.
 
 .. _add-new-account:
 
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`. 
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`, or an Organization, like in :ref:`the Multi-tenancy Chapter <add-accnt-to-org>`.
 
 .. note::
 
-  This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s ``/accounts`` href instead.
+  This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
 
 Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
   Host: api.stormpath.com
@@ -317,7 +352,7 @@ Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captai
 
   The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if we receive the password as plaintext, and only hash it using these techniques.
 
-  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner. 
+  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
 
   Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
 
@@ -325,7 +360,7 @@ Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captai
 
 Would yield this response:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 201 Created
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
@@ -352,19 +387,30 @@ Would yield this response:
     "comment":" // This JSON has been truncated for readability"
   }
 
+Going back to our resource diagram:
+
+.. figure:: images/accnt_mgmt/am_erd_03.png
+  :align: center
+  :scale: 100%
+  :alt: ERD with groupMembership
+
+We now have our new Account inside the "Captains" Directory.
+
+.. _add-account-to-group:
+
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      
+
 So let's say we want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
 
 We make the following request:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/groupMemberships HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
-  
+
   {
     "account" : {
         "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
@@ -392,6 +438,15 @@ And get the following response:
     }
   }
 
+This would leave us with the following resources:
+
+.. figure:: images/accnt_mgmt/am_erd_final.png
+  :align: center
+  :scale: 100%
+  :alt: Final ERD
+
+This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, however, that there is no association between the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
+
 .. _importing-accounts:
 
 4.2.2. Importing Accounts
@@ -407,8 +462,8 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
   To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
-Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database. 
-   
+Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
+
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -421,13 +476,13 @@ In this case, it is recommended that you suppress Account Verification emails. T
 Importing Accounts with MCF Hash Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string. 
+If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string.
 This works as follows:
 
 1. Create the Account specifying the password hash instead of a plain text password. Stormpath will use the password hash to authenticate the Account’s login attempt.
 
 2. If the login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
-   
+
 Supported Hashing Algorithms
 """"""""""""""""""""""""""""
 
@@ -435,7 +490,7 @@ Stormpath only supports password hashes that use the following algorithms:
 
 - **bcrypt**: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
 - **stormpath2**: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
-  
+
 Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
   https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?passwordFormat=mcf
@@ -449,25 +504,25 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 
   $stormpath2$ALGORITHM_NAME$ITERATION_COUNT$BASE64_SALT$BASE64_PASSWORD_HASH
 
-.. list-table:: 
-  :widths: 20 20 20 
+.. list-table::
+  :widths: 20 20 20
   :header-rows: 1
 
   * - Property
     - Description
     - Valid Values
-  
+
   * - ``ALGORITHM_NAME``
     - The name of the hashing algorithm used to generate the ``BASE64_PASSWORD_HASH``.
     - ``MD5``, ``SHA-1``, ``SHA-256``, ``SHA-384``, ``SHA-512``
-  
+
   * - ``ITERATION_COUNT``
     - The number of iterations executed when generating the ``BASE64_PASSWORD_HASH``
     - Number > 0
-  
+
   * - ``BASE64_SALT``
     - The salt byte array used to salt the first hash iteration.
-    - String (Base64). If your password hashes do you have salt, you can leave it out entirely. 
+    - String (Base64). If your password hashes do you have salt, you can leave it out entirely.
 
   * - ``BASE64_PASSWORD_HASH``
     - The computed hash byte array.
@@ -488,7 +543,7 @@ While Stormpath’s default Account attributes are useful to many applications, 
 
 One example of this could be if we wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
-For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint. 
+For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint.
 
 So if we were to send following REST call:
 
@@ -504,7 +559,7 @@ So if we were to send following REST call:
 
 We would get this response:
 
-.. code-block:: http  
+.. code-block:: http
 
   HTTP/1.1 201 Created
   Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
@@ -517,7 +572,7 @@ We would get this response:
     "currentAssignment": "USS Enterprise (NCC-1701-E)"
   }
 
-This information can also be appended as part of the initial Account creation payload. 
+This information can also be appended as part of the initial Account creation payload.
 
 For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide .
 
@@ -536,7 +591,7 @@ Search can be performed against one of the collections of Accounts associated wi
 
 ``/v1/organizations/$ORGANIZATION_ID/accounts``
 
-As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are: 
+As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are:
 
 - ``givenName``
 - ``middleName``
@@ -550,14 +605,14 @@ As mentioned in the :ref:`Search section <about-search>` of the Reference chapte
 
 Below are some examples of different kinds of searches that can be performed to find Accounts.
 
-Search an Application's Accounts for a Particular Word 
+Search an Application's Accounts for a Particular Word
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes. 
+A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes.
 
 **Query**
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
   Host: api.stormpath.com
@@ -569,7 +624,7 @@ A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's `
 
 **Response**
 
-.. code-block:: http  
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts
@@ -598,11 +653,11 @@ A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's `
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``). 
+An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
 
 **Query**
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/directories/accounts?status=DISABLED HTTP/1.1
   Host: api.stormpath.com
@@ -610,7 +665,7 @@ An :ref:`search-attribute` can be used on a Directory's Accounts collection in o
 
 **Response**
 
-.. code-block:: http  
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/
@@ -636,14 +691,14 @@ An :ref:`search-attribute` can be used on a Directory's Accounts collection in o
       ]
   }
 
-Find All Accounts in a Directory That Were Created on a Particular Day 
+Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So we could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
 
 **Query**
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?modifiedAt=2015-12-01 HTTP/1.1
   Host: api.stormpath.com
@@ -661,7 +716,7 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 **Response**
 
-.. code-block:: http  
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/
@@ -701,7 +756,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 .. note::
 
-  This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_. 
+  This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, simply HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
 
@@ -728,13 +783,13 @@ would result in the following response:
   Content-Type: application/json;charset=UTF-8
 
   {
-    "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength", 
-    "maxLength": 24, 
-    "minDiacritic": 0, 
-    "minLength": 1, 
-    "minLowerCase": 1, 
-    "minNumeric": 1, 
-    "minSymbol": 1, 
+    "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength",
+    "maxLength": 24,
+    "minDiacritic": 0,
+    "minLength": 1,
+    "minLowerCase": 1,
+    "minNumeric": 1,
+    "minSymbol": 1,
     "minUpperCase": 1
   }
 
@@ -743,14 +798,14 @@ would result in the following response:
 4.4.2. Change an Account's Password
 -----------------------------------
 
-At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during account creation. The only ways to change an Account password once it has been created are: 
+At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during account creation. The only ways to change an Account password once it has been created are:
 
 1. To allow the user to update it (without seeing the original value) after being authenticated, or
 2. To use the :ref:`password reset workflow <password-reset-flow>`.
 
 To update the password, you simply send a POST to the ``v1/accounts/$ACCOUNT_ID`` endpoint with the new password:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/accounts/3apenYvL0Z9v9spexAmple HTTP/1.1
   Host: api.stormpath.com
@@ -760,7 +815,7 @@ To update the password, you simply send a POST to the ``v1/accounts/$ACCOUNT_ID`
     "password":"some_New+Value1234"
   }
 
-If the call succeeds you will get back an ``HTTP 200 OK`` with the Account resource in the body. 
+If the call succeeds you will get back an ``HTTP 200 OK`` with the Account resource in the body.
 
 For more information about resetting the password, read on.
 
@@ -771,20 +826,20 @@ For more information about resetting the password, read on.
 
 Password Reset in Stormpath is a self-service flow, where the user is sent an email with a secure link. The user can then click that link and be shown a password reset form. The password reset workflow involves changes to an account at an application level, and as such, this workflow relies on the application resource as a starting point. While this workflow is disabled by default, you can enable it easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console product guide <http://docs.stormpath.com/console/product-guide/#password-reset>`__ for complete instructions.
 
-How to Reset a Password 
+How to Reset a Password
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 There are three steps to the password reset flow:
 
-1. Trigger the workflow 
+1. Trigger the workflow
 2. Verify the token
 3. Update the password
-   
-**Trigger the workflow** 
 
-To trigger the password reset workflow, you send an HTTP POST to the Application's ``/passwordResetTokens`` endpoint: 
+**Trigger the workflow**
 
-.. code-block:: http 
+To trigger the password reset workflow, you send an HTTP POST to the Application's ``/passwordResetTokens`` endpoint:
+
+.. code-block:: http
 
   POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
   Host: api.stormpath.com
@@ -829,7 +884,7 @@ If this is a valid email in an Account associated with this Application, you wil
 
 .. note::
 
-  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter. 
+  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
@@ -837,12 +892,12 @@ At this point, an email will be built using the password reset base URL specifie
 
 So the user would then receive something that looked like this::
 
-  Forgot your password? 
+  Forgot your password?
 
-  We've received a request to reset the password for this email address. 
+  We've received a request to reset the password for this email address.
 
   To reset your password please click on this link or cut and paste this
-  URL into your browser (link expires in 24 hours): 
+  URL into your browser (link expires in 24 hours):
   https://api.stormpath.com/passwordReset?sptoken=eyJraWQiOiIxZ0JUbmNXc[...]
 
   This link takes you to a secure page where you can change your password.
@@ -851,7 +906,7 @@ So the user would then receive something that looked like this::
 
 Once the user clicks this link, your controller should retrieve the token from the query string and check it against the Stormpath API. This can be accomplish by sending a GET to the Application's ``/passwordResetTokens/$TOKEN_VALUE`` endpoint:
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
   Host: api.stormpath.com
@@ -863,7 +918,7 @@ This would result in the exact same ``HTTP 200`` success response as when the to
 
 After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can update the Account resource with POST to the  `passwordResetTokens` endpoint. This is the same endpoint that you used to validate the token above.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
   Host: api.stormpath.com
@@ -875,19 +930,19 @@ After a successful GET with the query string token, you can direct the user to a
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the account.
 
-Manage Password Reset Emails 
+Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Password Reset Email is configurable for a Directory. There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
 
 - ``resetEmailStatus`` which enables or disables the reset email.
-- ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password. 
+- ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
 - ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
 - ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
 
 To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/passwordPolicies/$DIRECTORY_ID HTTP/1.1
   Host: api.stormpath.com
@@ -902,13 +957,13 @@ To control whether any email is sent or not is simply a matter of setting the ap
 Password Reset Email Templates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection. 
+The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
 
 To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
 
 .. _verify-account-email:
 
-4.5. How to Verify an Account's Email 
+4.5. How to Verify an Account's Email
 =====================================
 
 If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
@@ -929,7 +984,7 @@ If you create a new Account in a Directory with both Account Registration and Ve
   Accounts created in a Directory that has the Verification workflow enabled will have an ``UNVERIFIED`` status by default. ``UNVERIFIED`` is the same as ``DISABLED``, but additionally indicates why the Account is disabled. When the email link is clicked, the Account's status will change ``ENABLED``.
 
 
-The Account Verification Base URL 
+The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application web server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
@@ -961,7 +1016,7 @@ The token you capture from the query string is used to form the full ``href`` fo
 
 To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
   Host: api.stormpath.com
@@ -969,7 +1024,7 @@ To verify the Account, you use the token from the query string to form the above
 
 Which will return a result that looks like this:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V
@@ -989,12 +1044,12 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 
 .. _resending-verification-email:
 
-4.5.5. Resending the Verification Email 
+4.5.5. Resending the Verification Email
 ---------------------------------------
 
-If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint. 
+If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
   Host: api.stormpath.com
@@ -1004,7 +1059,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
     "login": "email@address.com"
   }
 
-If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return. 
+If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
 
 4.6. Customizing Stormpath Emails via REST
 ==========================================
@@ -1021,9 +1076,9 @@ Found in: :ref:`ref-accnt-creation-policy`
 
 - *Verification Email*: The initial email that is sent out after Account creation that verifies the email address that was used for registration with a link containing the verification token.
 - *Verification Success Email*: An email that is sent after a successful email verification.
-- *Welcome Email*: An email welcoming the user to your application. 
+- *Welcome Email*: An email welcoming the user to your application.
 
-For more information about this, see :ref:`verify-account-email`. 
+For more information about this, see :ref:`verify-account-email`.
 
 Password Reset
 ^^^^^^^^^^^^^^
@@ -1033,18 +1088,18 @@ Found in: :ref:`ref-password-policy`
 - *Reset Email*: The email that is sent out after a user asks to reset their password. It contains a URL with a password reset token.
 - *Reset Success Email*:  An email that is sent after a successful password reset.
 
-For more information about this, see :ref:`password-reset-flow`. 
+For more information about this, see :ref:`password-reset-flow`.
 
 .. _customizing-email-templates:
 
-4.6.2. Customizing Stormpath Email Templates 
+4.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading. 
+The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading.
 
 First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojvU1m2Nh",
@@ -1063,7 +1118,7 @@ First, let's look at the default template that comes with the Stormpath Administ
 
 **Message Format**
 
-The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide. 
+The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
 **textBody and htmlBody**
 
@@ -1071,35 +1126,35 @@ These define the actual content of the email. The only difference is that ``html
 
 .. _using-email-macros:
 
-Using Email Macros 
+Using Email Macros
 ^^^^^^^^^^^^^^^^^^
 
-You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this: 
+You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
 
-.. code-block:: java 
+.. code-block:: java
 
   "Hi ${account.givenName}, welcome to $!{application.name}!"
 
-The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with: 
+The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with:
 
 - Account (``${account}``)
-- an Account's Directory (``${account.directory}``), and 
-- an Application (``$!{application}``). 
-  
+- an Account's Directory (``${account.directory}``), and
+- an Application (``$!{application}``).
+
 You can also include any ``attribute`` that isn't a link, as well as customData.
 
-For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter. 
+For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter.
 
 Macros and customData
 """""""""""""""""""""
 
 The formatting for customData macros is as follows:
 
-.. code-block:: java 
+.. code-block:: java
 
   $!{resource.attribute.customData.key}
 
-You may have noticed here and with the Application resource that there is an included ``!`` character, this is called a "quiet reference". 
+You may have noticed here and with the Application resource that there is an included ``!`` character, this is called a "quiet reference".
 
 .. _quiet-macro-reference:
 
@@ -1118,4 +1173,4 @@ To avoid this, we include the ``!`` which puts the macro into "quiet reference" 
 
 ``Is your favorite color ?``
 
-Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the templating engine might not have access to an Application resource. 
+Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the templating engine might not have access to an Application resource.

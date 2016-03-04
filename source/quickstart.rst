@@ -53,6 +53,15 @@
 
     - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
 
+  - An Account resource representing your Stormpath Administrator user.
+
+.. figure:: images/quickstart/default_resources.png
+    :align: center
+    :scale: 20%
+    :alt: Default Stormpath Resources
+
+    *These are the default resources that exist in your Tenant right after registration*
+
 During this quickstart, you will do the following:
 
 -  Retrieve your Application.
@@ -258,13 +267,13 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   .. code-block:: bash
 
     curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/tenants/current"
 
-  -  ``$API_KEY_ID`` is the ``apiKey.id`` value in
+  -  ``$SP_API_KEY_ID`` is the ``apiKey.id`` value in
      ``apiKey.properties`` and
-  -  ``$API_KEY_SECRET`` is the ``apiKey.secret`` value in
+  -  ``$SP_API_KEY_SECRET`` is the ``apiKey.secret`` value in
      ``apiKey.properties``
 
   The above cURL command returns an empty body along with a header:
@@ -272,7 +281,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   .. code-block:: http
 
       HTTP/1.1 302 Found
-      Location: https://api.stormpath.com/v1/tenants/yOuRTeNANtid
+      Location: https://api.stormpath.com/v1/tenants/$TENANT_ID
       Content-Length: 0
 
   Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
@@ -282,7 +291,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   .. code-block:: bash
 
     curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/tenants/yOuRTeNANtid/applications?name=My%20Application"
 
@@ -391,7 +400,7 @@ Now that we've created an Application, let's create a user Account so someone ca
   .. code-block:: bash
 
     curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/accounts"
       --data '{
@@ -487,7 +496,7 @@ Now we have a user Account that can use your Application. But how do you authent
   .. code-block:: bash
 
     curl --request GET \
-      --user $API_KEY_ID:$API_KEY_SECRET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
       --data '{
