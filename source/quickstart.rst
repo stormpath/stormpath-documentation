@@ -43,7 +43,7 @@
 
     - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
 
-  - An Account resource representing your Stormpath Administrator user. 
+  - An Account resource representing your Stormpath Administrator user.
 
 .. figure:: images/quickstart/default_resources.png
     :align: center

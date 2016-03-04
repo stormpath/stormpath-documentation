@@ -4,7 +4,7 @@
 5. Authenticating Accounts with Stormpath
 *****************************************
 
-Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight. 
+Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight.
 
 In this chapter we will cover three of the ways that Stormpath allows you to authenticate users: :ref:`password authentication <password-authn>`, :ref:`token authentication <token-authn>`, and :ref:`social authentication <social-authn>`.
 
@@ -13,8 +13,8 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
 5.1. How Password Authentication Works in Stormpath
 ===================================================
 
-.. contents:: 
-  :local: 
+.. contents::
+  :local:
   :depth: 2
 
 Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
@@ -25,7 +25,7 @@ Probably the single most common way of authenticating a user is to ask them for 
 After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
 
 Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
-     
+
 So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
 We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
@@ -48,7 +48,7 @@ We are using the Base64 encoded ``value`` from above, and specifying that the Ac
 
 On success we would get back the ``href`` for the "Han Solo" Account:
 
-.. code-block:: http  
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
@@ -72,21 +72,21 @@ The reason this succeeds is because there is an existing **Account Store Mapping
 
 .. _how-login-works:
 
-5.1.2. How Login Attempts Work in Stormpath 
+5.1.2. How Login Attempts Work in Stormpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Organizations, Directories, and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
 
-Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked. 
+Let's look at an example to illustrate this behavior. Assume that two Account Stores, a "Customers" Directory and an "Employees" Directory, have been assigned (mapped) to a "Foo" application. "Customers" was assigned first, and "Employees" was assigned next, and this will dictate the order in which they are checked.
 
 The following flow chart shows what happens when an Account attempts to log in to the Foo application:
 
 .. figure:: images/auth_n/LoginAttemptFlow.png
     :align: center
     :scale: 100%
-    :alt: Login Attempt Flow 
+    :alt: Login Attempt Flow
 
-    *The Login Attempt Flow* 
+    *The Login Attempt Flow*
 
 As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
 
@@ -94,14 +94,14 @@ You can map multiple Account Stores to an Application, but only one is required 
 
 .. _mirror-login:
 
-How Login Works with Master Directories 
+How Login Works with Master Directories
 """""""""""""""""""""""""""""""""""""""
 
-If you require a number of Mirror Directories, then we recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory. 
+If you require a number of Mirror Directories, then we recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
 
 If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store an ``href`` link to the Account in the Mirror Directory, for example:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "customData": {
@@ -109,22 +109,22 @@ If such an Account is already in the master Directory, no action is taken. If su
     }
   }
 
-If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory. 
+If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory.
 
 This mirror-master approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many external identities they choose to log in with; and this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
 .. _managing-login:
 
-5.1.3. Manage Who Can Log Into Your Application 
+5.1.3. Manage Who Can Log Into Your Application
 ------------------------------------------------
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
-The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**. 
+The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
 
 We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Content-Type: application/json;charset=UTF-8
@@ -152,7 +152,7 @@ We can find this Mapping by sending a ``GET`` to our Application's ``/accountSto
 
 .. note::
 
-  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``. 
+  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
 
 .. _create-asm:
 
@@ -163,11 +163,11 @@ We would now like to map a new Account Store that will have the following charac
 
 #. It will have the highest login priority. This means that it will be consulted first during :ref:`the login process <how-login-works>`, before any other Account Stores.
 #. It will be the default Account Store for any new Accounts.
-#. It will be the default Group Store for any new Groups. 
+#. It will be the default Group Store for any new Groups.
 
 To accomplish this, we will send a ``POST``:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST v1/accountStoreMappings HTTP/1.1
   Host: api.stormpath.com
@@ -185,10 +185,10 @@ To accomplish this, we will send a ``POST``:
     }
   }
 
-We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2jw4Kslj97zYjYRXEh2KYf``). Additionally, we are setting 
+We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2jw4Kslj97zYjYRXEh2KYf``). Additionally, we are setting
 
 #. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
-#. ``isDefaultAccountStore`` to ``true`` and 
+#. ``isDefaultAccountStore`` to ``true`` and
 #. ``isDefaultGroupStore`` to ``true`` as well.
 
 So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
@@ -196,11 +196,11 @@ So by sending a ``POST`` with these contents, we are able to create a new Accoun
 Updating an Existing Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update. 
+Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update.
 
 **Changing Login Priority**
 
-For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1. 
+For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1.
 
 **Changing the Default Account or Group Store**
 
@@ -215,8 +215,8 @@ Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true
 5.2. How Token-Based Authentication Works
 =========================================
 
-.. contents:: 
-  :local: 
+.. contents::
+  :local:
   :depth: 2
 
 In this section, we will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Token.
@@ -228,7 +228,7 @@ Since HTTP is considered a stateless protocol, if your application authenticates
 
 **Token-based authentication** is a alternate, stateless strategy. With token-based authentication, you secure an application based on a security token that is generated for the user on authentication and then stored on the client-side. Token-based Authentication is all about removing the need to store information on the server while giving extra security to keep the token secure on the client. This helps you as a developer build stateless and scalable applications.
 
-Stormpath's approach to token-based authentication has two elements: JSON Web Tokens (JWTs) for authentication, and OAuth 2.0 for authorization. 
+Stormpath's approach to token-based authentication has two elements: JSON Web Tokens (JWTs) for authentication, and OAuth 2.0 for authorization.
 
 Why OAuth 2.0?
 ^^^^^^^^^^^^^^
@@ -253,7 +253,7 @@ For Token Based Authentication, there are a two different types of tokens that n
 - Access Token
 - Refresh Token
 
-The **Access Token** is what grants access to a protected resource. The Access Token that Stormpath generates for Accounts on authentication is a **JSON Web Token**, or JWT. The JWT has security built-in to make sure that the Access Token is not tampered with on the client, and is only valid for a specified duration. 
+The **Access Token** is what grants access to a protected resource. The Access Token that Stormpath generates for Accounts on authentication is a **JSON Web Token**, or JWT. The JWT has security built-in to make sure that the Access Token is not tampered with on the client, and is only valid for a specified duration.
 
 The **Refresh Token** is a special token that is used to generate additional Access Tokens. This allows you to have an short-lived Access Token without having to collect credentials every single time you need a new Access Token.
 
@@ -273,7 +273,7 @@ Stormpath is configurable so you can set the time to live (TTL) for both the Acc
 
 Each Application resource in Stormpath has an associated :ref:`OAuth Policy resource <ref-oauth-policy>` where the TTLs for a particular Application's tokens are stored inside properties called ``accessTokenTtl`` and ``refreshTokenTtl``:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
       "href": "https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE",
@@ -299,7 +299,7 @@ If we wanted to change the TTL for the Access Token to 30 minutes and the Refres
 
 And we would get the following response:
 
-.. code-block:: HTTP 
+.. code-block:: HTTP
 
   HTTP/1.1 200 OK
   Location: https://api.stormpath.com/v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE
@@ -335,7 +335,7 @@ Your application will act as a proxy to the Stormpath API. For example:
 
 So you would send the following API call:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
   Host: api.stormpath.com
@@ -360,31 +360,31 @@ This would result in this response:
 
 This is an **OAuth 2.0 Access Token Response** and includes the following:
 
-.. list-table:: 
+.. list-table::
     :widths: 15 10 60
     :header-rows: 1
 
     * - Property
       - Type
       - Description
-    
+
     * - access_token
       - String (JSON Web Token)
       - The access token for the response.
-    
+
     * - refresh_token
       - String (JSON Web Token)
       - The refresh token that can be used to get refreshed Access Tokens.
-        
+
     * - token_type
       - String
       - The type of token returned.
-    
+
     * - expires_in
       - Number
       - The time in seconds before the token expires.
-    
-    * - stormpath_access_token_href 
+
+    * - stormpath_access_token_href
       - String
       - The href location of the token in Stormpath.
 
@@ -401,7 +401,7 @@ Once an ``access_token`` has been generated, we have taken care of the Authentic
 
 For example, if you have a route ``https://yourapplication.com/secure-resource``, the client would request authorization to access the resource by passing the access token as follows:
 
-.. code-block:: http 
+.. code-block:: http
 
     GET /secure-resource HTTP/1.1
     Host: https://yourapplication.com
@@ -409,38 +409,38 @@ For example, if you have a route ``https://yourapplication.com/secure-resource``
 
 Once your application receives the request, the first thing to do is to validate the token, either using Stormpath, or using local application-side logic. The benefit of using Stormpath to validate the token through the REST API (or an SDK that is using the REST API) is that Stormpath can validate the token against the state of your Application and Account resources. To illustrate the difference:
 
-.. list-table:: 
+.. list-table::
     :widths: 60 15 15
     :header-rows: 1
 
     * - Validation Criteria
       - Locally
       - Stormpath
-    
+
     * - Token hasn't been tampered with
       - Yes
       - Yes
-        
+
     * - Token hasn't expired
       - Yes
       - Yes
-    
+
     * - Token hasn't been revoked
       - No
       - Yes
-        
+
     * - Account hasn't been disabled or deleted
       - No
       - Yes
-    
+
     * - Issuer is Stormpath
       - Yes
       - Yes
-        
+
     * - Issuing Application is still enabled, and hasn't been deleted
       - No
       - Yes
-    
+
     * - Account is still in an Account Store for the issuing Application
       - No
       - Yes
@@ -451,16 +451,16 @@ It is up to you to determine which kind of validation is important for your appl
 
 Using Stormpath to Validate Tokens
 """"""""""""""""""""""""""""""""""
-To see how to validate tokens with the Stormpath REST API, let's go back to the example where a user has already generated an access token. 
+To see how to validate tokens with the Stormpath REST API, let's go back to the example where a user has already generated an access token.
 
-To recap, we have done the following: 
+To recap, we have done the following:
 
 1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type we wanted, as well as our user's username and password.
 2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
 The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header:
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /secure-resource HTTP/1.1
   Host: https://yourapplication.com
@@ -472,7 +472,7 @@ The ``Authorization`` header contains the Access Token. To validate this Token w
 
 If the access token can be validated, Stormpath will return a 302 to the Access Token resource:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 302 Location Found
   Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
@@ -484,7 +484,7 @@ Validating the Token Locally
 
 Local validation would also begin at the point of the request to a secure resource:
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /secure-resource HTTP/1.1
   Host: https://yourapplication.com
@@ -497,7 +497,7 @@ Refreshing Access Tokens
 
 In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-entering their credentials. To use this Refresh Token, simply make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
   Host: api.stormpath.com
@@ -507,7 +507,7 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 This would be the response:
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 200 OK
   Content-Type: application/x-www-form-urlencoded
@@ -531,11 +531,11 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 - The user has explicitly logged out, and your application needs to revoke their access, requiring re-authentication.
 - The application, device, and/or client has been compromised and you need to revoke tokens for an Account.
 
-To revoke the tokens, simply delete the Account's ``/accessTokens/:accessTokenId`` resource. 
+To revoke the tokens, simply delete the Account's ``/accessTokens/:accessTokenId`` resource.
 
 To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
@@ -551,7 +551,7 @@ To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for t
 
 If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens:
 
-.. code-block:: json 
+.. code-block:: json
 
     {
       "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens",
@@ -570,7 +570,7 @@ If you then perform a GET on the ``accessTokens`` link, you will get back the in
 
   You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
 
-  .. code-block:: bash 
+  .. code-block:: bash
 
     curl --request GET \
     --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
@@ -581,25 +581,25 @@ To revoke the token, simply issue an HTTP Delete::
 
     DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
 
-You will get back a ``204 No Content`` response back from Stormpath when the call succeeds. 
+You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
 
 .. _social-authn:
 
 5.3. How Social Authentication Works
 ====================================
 
-.. contents:: 
-  :local: 
+.. contents::
+  :local:
   :depth: 1
 
-Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are: 
+Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are:
 
 - Google
 - Facebook
 - Github,
-- LinkedIn 
+- LinkedIn
 
-In general, the social login process works as follows: 
+In general, the social login process works as follows:
 
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
@@ -607,12 +607,12 @@ In general, the social login process works as follows:
 
 3. The Provider will return the user to your application with an access token.
 
-4. Stormpath will take this access token and use it to query the provider for:  
-   
+4. Stormpath will take this access token and use it to query the provider for:
+
    - an email address
    - a first name
    - a last name.
-   
+
 .. note::
 
     If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
@@ -633,7 +633,7 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider) 
+3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider)
 
 5.3.1. Google
 --------------
@@ -647,11 +647,11 @@ Before you integrate Google Login with Stormpath, you must complete the followin
 - Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
-  
+
 .. note::
 
     Be sure to only enter the Redirect URL you are currently using. So, if you are running your app in development mode, set it to your local URL, and if you're running your app in production mode, set it to your production URL.
-  
+
 For more information, please see the `Google OAuth 2.0 documentation <https://developers.google.com/identity/protocols/OAuth2>`_.
 
 Step 1: Create a Social Directory for Google
@@ -659,12 +659,12 @@ Step 1: Create a Social Directory for Google
 
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
-    
+
   {
       "name" : "my-google-directory",
       "description" : "A Google directory",
@@ -673,7 +673,7 @@ Creating this Directory for Google requires that you provide information from Go
           "clientId":"YOUR_GOOGLE_CLIENT_ID",
           "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
           "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
-      } 
+      }
   }
 
 .. note::
@@ -698,7 +698,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
 Once the Authorization Code is gathered, you send an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
   Host: api.stormpath.com
@@ -713,12 +713,12 @@ Once the Authorization Code is gathered, you send an HTTP POST:
 
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
-    
+
   {
       "providerData": {
         "providerId": "google",
@@ -726,7 +726,7 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
       }
   }
 
-Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 5.3.2. Facebook
 ---------------
@@ -738,7 +738,7 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 - Retrieve your OAuth credentials (App ID and App Secret)
 
 - Add your application's private and public root URLs
-  
+
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
 Step 1: Create a Social Directory for Facebook
@@ -746,7 +746,7 @@ Step 1: Create a Social Directory for Facebook
 
 Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
@@ -778,7 +778,7 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 
 Once the User Access Token is gathered, you send an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
   Host: api.stormpath.com
@@ -791,7 +791,7 @@ Once the User Access Token is gathered, you send an HTTP POST:
       }
   }
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 5.3.3. Github
 --------------
@@ -803,7 +803,7 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 - Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
-  
+
 For more information, please see the `GitHub documentation on registering your app <https://developer.github.com/guides/basics-of-authentication/#registering-your-app>`_.
 
 Step 1: Create a Social Directory for GitHub
@@ -811,12 +811,12 @@ Step 1: Create a Social Directory for GitHub
 
 Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by sending an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
-    
+
   {
       "name" : "my-github-directory",
       "description" : "A GitHub directory",
@@ -841,11 +841,11 @@ Generally, this will include embedding a link in your site that will send an aut
 
 .. note::
 
-    It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_. 
+    It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
 
 Once the Authorization Code is gathered, you can send an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
   Host: api.stormpath.com
@@ -858,7 +858,7 @@ Once the Authorization Code is gathered, you can send an HTTP POST:
     }
   }
 
-Stormpath will use the ``code`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+Stormpath will use the ``code`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 5.3.4 LinkedIn
 ---------------
@@ -870,7 +870,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 - Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication.
 
 - Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
-  
+
 For more information, please see `LinkedIn's OAuth documentation <https://developer.linkedin.com/docs/oauth2>`_.
 
 Step 1: Create a Social Directory for LinkedIn
@@ -878,7 +878,7 @@ Step 1: Create a Social Directory for LinkedIn
 
 Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by sending an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
@@ -912,9 +912,9 @@ Generally, this will include embedding a link in your site that will send an aut
 
 Once the Access Token is gathered, you can send an HTTP POST:
 
-.. code-block:: http 
+.. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1 
+  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -925,25 +925,25 @@ Once the Access Token is gathered, you can send an HTTP POST:
     }
   }
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200). 
+Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 .. _ldap-dir-authn:
 
 5.4. Authenticating Against an LDAP Directory
 =====================================================
 
-.. contents:: 
-  :local: 
+.. contents::
+  :local:
   :depth: 2
 
-This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`. 
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`.
 
-Mirror Directories and LDAP 
+Mirror Directories and LDAP
 ---------------------------
 
 To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory. If this fulfills your requirements, then the story ends here. However, if you need to support other kinds of login (and therefore other kinds of Directories) it is recommended that you maintain a "master" Directory alongside your Mirror Directory. For more about this, see :ref:`mirror-login` above.
 
-The step-by-step process for setting-up LDAP login is as follows: 
+The step-by-step process for setting-up LDAP login is as follows:
 
 Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -952,10 +952,10 @@ HTTP POST a new Directory resource to the ``/directories`` endpoint. This Direct
 
 .. code-block:: http
 
-    POST /v1/directories HTTP/1.1 
+    POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
-    
+
     {
       "name":"My LDAP Directory",
       "description":"An LDAP Directory created with the Stormpath API",
@@ -998,7 +998,7 @@ HTTP POST a new Directory resource to the ``/directories`` endpoint. This Direct
 
 For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
 
-Step 2: Install your LDAP Agent 
+Step 2: Install your LDAP Agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Installing your Agent is done in three steps.
@@ -1006,9 +1006,9 @@ Installing your Agent is done in three steps.
 **1. Download**
 
 Download your Agent by following the Download link on the Agent page in the Admin Console.
-   
+
 **2. Configure**
-   
+
 *a.* Make sure Java 1.8 is installed
 
 *b.* Unzip to a location in your file system, for example ``C:\stormpath\agent`` in Windows or ``/opt/stormpath/agent`` in Unix.
@@ -1022,7 +1022,7 @@ With this line::
   agent.id  = 72MlbWz6C4dLo1oBhgjjTt
 
 Follow the instructions in the ``dapper.properties`` file to reference your account's API authentication.
-   
+
 **3. Start**
 
 In Windows:
@@ -1038,7 +1038,7 @@ In Unix:
 
 (cd to your agent directory, for example /opt/stormpath/agent)
 
-.. code-block:: bash 
+.. code-block:: bash
 
   $ cd bin
   $ startup.sh
@@ -1054,15 +1054,15 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
 
 .. note::
 
-  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and it also handles authentication attempts and relays back the outcome to Stormpath. 
+  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and it also handles authentication attempts and relays back the outcome to Stormpath.
 
 .. _saml-authn:
 
 5.5. Authenticating Against a SAML Directory
 ============================================
 
-.. contents:: 
-  :local: 
+.. contents::
+  :local:
   :depth: 1
 
 SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Stormpath supports both the Service Provider initiated flow and the Identity Provider initiated flow.
@@ -1073,26 +1073,26 @@ If you want a step-by-step guide to configuring Stormpath to work with Identity 
 
 If you'd like to know about how to configure SAML using just the REST API, please see :ref:`Configuring SAML via REST <saml-configuration-rest>`.
 
-If you'd like to understand the steps involved in a SAML login, see the :ref:`SAML Login Flow section <saml-flow>`. 
+If you'd like to understand the steps involved in a SAML login, see the :ref:`SAML Login Flow section <saml-flow>`.
 
 .. _saml-overview:
 
-5.5.1. Stormpath as a Service Provider 
+5.5.1. Stormpath as a Service Provider
 --------------------------------------
 
-As mentioned above, Stormpath supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**. 
+As mentioned above, Stormpath supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**.
 
 Identity Provider Initiated SAML Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-With IdP-initiated SAML Authentication, the user authenticates first with the Identity Provider, and then logs into your Stormpath-enabled application from a screen inside the IdP's site. 
+With IdP-initiated SAML Authentication, the user authenticates first with the Identity Provider, and then logs into your Stormpath-enabled application from a screen inside the IdP's site.
 
 The IdP initiated process looks like this:
 
 #. User Agent authenticates with the IdP
 #. User Agent requests login to Your Application
-#. IdP redirects the user to Your Application along with SAML assertions 
-#. Service Provider receives SAML assertions and either creates or retrieves Account information   
+#. IdP redirects the user to Your Application along with SAML assertions
+#. Service Provider receives SAML assertions and either creates or retrieves Account information
 
 Service Provider Initiated SAML Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1101,13 +1101,13 @@ In this scenario, a user requests a protected resource (e.g. your application). 
 
 The broad strokes of the process are as follows:
 
-#. User Agent requests access from Service Provider 
-#. Service Provider responds with redirect to Identity Provider 
+#. User Agent requests access from Service Provider
+#. Service Provider responds with redirect to Identity Provider
 #. Identity Provider authenticates the user
 #. Identity provider redirects user back to Service Provider along with SAML assertions.
-#. Service Provider receives SAML assertions and either creates or retrieves Account information  
+#. Service Provider receives SAML assertions and either creates or retrieves Account information
 
-In both cases, just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In the following section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works. 
+In both cases, just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In the following section we will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works.
 
 For a more detailed step-by-step account of SAML login, see :ref:`below <saml-flow>`.
 
@@ -1139,14 +1139,14 @@ This section will show you how to set-up Stormpath to allow your users to log in
 This guide will also show you how to set-up login against a private deployment running ADFS with SAML 2.0 support.
 
 .. todo::
-    
+
     ---
 
     **Conventions:**
 
     - Clickable navigation items are in **bold**
 
-    - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL"). 
+    - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL").
 
     ---
 
@@ -1164,35 +1164,35 @@ Step 1: Set-up Salesforce
 
 .. note::
 
-    Before you start, make sure that you have set-up a Salesforce subdomain for your organization. You can do this under **Administer** > **Domain Management** > **My Domain**. 
+    Before you start, make sure that you have set-up a Salesforce subdomain for your organization. You can do this under **Administer** > **Domain Management** > **My Domain**.
 
-1.1. Set-up Your Identity Provider 
+1.1. Set-up Your Identity Provider
 ++++++++++++++++++++++++++++++++++
 
 #. Under **Administer**, click on **Security Controls** > **Identity Provider**
-   
+
 #. Click on **Enable Identity Provider**.
 
-#. You should now be on the "Identity Provider Setup" page, with a single security certificate in the drop down menu. Click on **Save**. 
+#. You should now be on the "Identity Provider Setup" page, with a single security certificate in the drop down menu. Click on **Save**.
 
-#. You will now be back on the "Identity Provider" page. Click **Download Certificate**, which will download a .crt file with a name starting with ``SelfSignedCert``. 
+#. You will now be back on the "Identity Provider" page. Click **Download Certificate**, which will download a .crt file with a name starting with ``SelfSignedCert``.
 
-#. Open this file in your text editor of choice. The contents will be an x509 certificate starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
+#. Open this file in your text editor of choice. The contents will be an x509 certificate starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert".
 
-#. Also click on **Download Metadata**, which will download an XML file which you will use in the very next step. 
+#. Also click on **Download Metadata**, which will download an XML file which you will use in the very next step.
 
-1.2. Set-up Single Sign On 
+1.2. Set-up Single Sign On
 ++++++++++++++++++++++++++++++++++
 
 #. From **Administer**, click on **Security Controls** then **Single Sign-On Settings**.
 
-#. Click **Edit**, and on the next page check "SAML Enabled" and then click **Save**. 
+#. Click **Edit**, and on the next page check "SAML Enabled" and then click **Save**.
 
-#. Under "SAML Single Sign-On Settings" click on **New from Metadata File**. 
+#. Under "SAML Single Sign-On Settings" click on **New from Metadata File**.
 
 #. Select the metadata XML file that you downloaded in step 1.1 above, then click **Create**.
 
-1.3. Create a Connected App 
+1.3. Create a Connected App
 ++++++++++++++++++++++++++++++++++
 
 #. In the navigation pane on the left, under **Build**, find the **Create** section, then click on **Apps**.
@@ -1211,7 +1211,7 @@ Step 1: Set-up Salesforce
 
 #. Click **Save**.
 
-1.4. Get your SSO URLs 
+1.4. Get your SSO URLs
 ++++++++++++++++++++++++++++++++++
 
 You will now be on your Connected App's page.
@@ -1220,19 +1220,19 @@ You will now be on your Connected App's page.
 
 #. Under "SAML Login Information", copy the "SP-Initiated Redirect Endpoint". It will be a URL ending in ``idp/endpoint/HttpRedirect``. This value will be used for both your "SSO Login URL" and "SSO Logout URL" when you are setting up your Stormpath SAML Directory.
 
-Step 2: Create Your SAML Directory in Stormpath 
+Step 2: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now create our SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
-2.1. Create Your SAML Directory 
+2.1. Create Your SAML Directory
 ++++++++++++++++++++++++++++++++++
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
 
-#. Click on the **Directories** tab. 
+#. Click on the **Directories** tab.
 
-#. Click on **Create Directory**. 
+#. Click on **Create Directory**.
 
 #. From the "Directory Type" drop-down menu, select "SAML", which will bring up a Directory creation dialog.
 
@@ -1240,29 +1240,29 @@ You will now create our SAML Directory in Stormpath, using the values you gather
 
 #. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL gathered in step 1.4 above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you downloaded in step 1.1. 
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you downloaded in step 1.1.
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
 
-2.2. Gather Your SAML Directory Information 
+2.2. Gather Your SAML Directory Information
 +++++++++++++++++++++++++++++++++++++++++++++
 
-Find and click on your new SAML Directory. 
+Find and click on your new SAML Directory.
 
 On this page, you will need the follow information:
 
 - The Directory's "HREF" found at the very top.
 
-- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section: 
+- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section:
 
 We will now input these values into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP 
+Step 3: Configure Your Service Provider in Your IdP
 """""""""""""""""""""""""""""""""""""""""""""""""""
 
-#. Back on your Connected App's page (found under **Administer** > **Connected Apps**), click **Edit**. 
+#. Back on your Connected App's page (found under **Administer** > **Connected Apps**), click **Edit**.
 
 You will now enter in your Directory information:
 
@@ -1274,38 +1274,38 @@ You will now enter in your Directory information:
 
 #. Under the "Profiles" section, you will need to click on **Manage Profiles** and select profiles appropriate to the users that will be logging in to your app. For more information about profiles, see the `Salesforce documentation <https://help.salesforce.com/apex/HTViewHelpDoc?id=admin_userprofiles.htm&language=en>`__.
 
-Step 4: Configure Your Application in Stormpath 
+Step 4: Configure Your Application in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
+We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application.
 
-#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. 
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
 
-#. Select the Application that will be using the SAML Directory. 
+#. Select the Application that will be using the SAML Directory.
 
 #. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
 
-#. Next click on **Account Stores** in the navigation pane. 
+#. Next click on **Account Stores** in the navigation pane.
 
-#. Once you are on your Application's Account Stores page, click **Add Account Store**. This will bring up the "Map Account Store" dialog. 
+#. Once you are on your Application's Account Stores page, click **Add Account Store**. This will bring up the "Map Account Store" dialog.
 
 #. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
 
 #. Click **Create Mappings**.
 
-Step 5: Configure Your Attribute Mappings 
+Step 5: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
 When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-5.1. Find the Existing SAML Attributes 
+5.1. Find the Existing SAML Attributes
 +++++++++++++++++++++++++++++++++++++++++++++
 
-If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Salesforce sends by retrieving the new user Account that was created inside Stormpath. 
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Salesforce sends by retrieving the new user Account that was created inside Stormpath.
 
 Specifically, you want that Account's ``providerData`` resource:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "href":"https://api.stormpath.com/v1/accounts/xbKQemsqW3HcpfeXAMPLE/providerData",
@@ -1330,10 +1330,10 @@ If there are other attributes that you would like Salesforce to pass other attri
 #. Under **Administer**, click on **Connected Apps**.
 #. Select the App you would like to configure.
 #. On the App's page, find the "Custom Attributes" section and click on **New**
-#. You will now be on the "Create Custom Attribute" page 
-#. Here you will specify a custom "Attribute key" and then select which Salesforce user information you want it to represent. 
+#. You will now be on the "Create Custom Attribute" page
+#. Here you will specify a custom "Attribute key" and then select which Salesforce user information you want it to represent.
 
-For example: 
+For example:
 
 * You could make the "Attribute key": ``firstname``
 * Then click on **Insert Field**
@@ -1349,7 +1349,7 @@ You will now be returned to your App's main page, and you will see the attribute
 #. Click on the **Directories** tab
 #. Select your Salesforce SAML Directory
 #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-#. Here you will enter the Salesforce attribute name under "Name" 
+#. Here you will enter the Salesforce attribute name under "Name"
 #. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified``
 #. Finally, enter the Account attribute(s) that you would like this Salesforce attribute to map to
 
@@ -1360,11 +1360,11 @@ For example, you could enter, using the custom attribute from Step 5.2 above:
 
 If a user now logs in, Stormpath will take the ``firstname`` attribute and map it to the ``givenName`` field on the Account resource.
 
-You have now completed the initial steps of setting-up log in via Salesforce. 
+You have now completed the initial steps of setting-up log in via Salesforce.
 
 .. _onelogin:
 
-OneLogin 
+OneLogin
 ^^^^^^^^
 
 .. contents::
@@ -1380,9 +1380,9 @@ Step 1: Set-up OneLogin
 
 #. Select **SAML Test Connector (IdP w/ attr w/ sign response)**
 
-#. Give your app a name and click **Save**  
+#. Give your app a name and click **Save**
 
-Step 2: Gather Your Identity Provider Information 
+Step 2: Gather Your Identity Provider Information
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now need to gather the following pieces of information:
@@ -1392,87 +1392,87 @@ You will now need to gather the following pieces of information:
 - SSO Logout URL
 - Request Signature Algorithm
 
-Click on **SSO** in your App's navigation pane. 
+Click on **SSO** in your App's navigation pane.
 
-2.1 IdP Signing Certificate 
+2.1 IdP Signing Certificate
 +++++++++++++++++++++++++++
 
-#. Under "X.509 Certificate", click on **View Details**. This will take you to the certificate details page. 
+#. Under "X.509 Certificate", click on **View Details**. This will take you to the certificate details page.
 
-#. Copy the contents of the "X.509 Certificate" text box, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
+#. Copy the contents of the "X.509 Certificate" text box, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert".
 
 2.2. The SSO Login / Logout URLs
 +++++++++++++++++++++++++++++++++
 
-Return to the **App** > **SSO** section. On this page there are two different URLS: 
+Return to the **App** > **SSO** section. On this page there are two different URLS:
 
 #. Copy the "SAML 2.0 Endpoint (HTTP)", which is the "SSO Login URL" that Stormpath needs, and
 #. Copy the "SLO Endpoint (HTTP)", which is the "SSO Logout URL".
 
-Step 3: Create Your SAML Directory in Stormpath 
+Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 We will now create our SAML Directory in Stormpath, using the values we gathered in the previous step. Then we will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
-3.1. Create Your SAML Directory 
+3.1. Create Your SAML Directory
 ++++++++++++++++++++++++++++++++
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
 
-#. Click on the **Directories** tab. 
+#. Click on the **Directories** tab.
 
-#. Click on **Create Directory**. 
+#. Click on **Create Directory**.
 
 #. From the "Directory Type" drop-down menu, select "SAML", which will bring up a Directory creation dialog.
 
 #. Next, enter in a name and (optionally) a description, then set the Directory's status.
 
 #. For "SAML SSO Login Url" paste in the "SAML 2.0 Endpoint (HTTP)" from the OneLogin site.
- 
+
 #. For "SAML SSO Logout Url" fields, paste in the "SLO Endpoint (HTTP)" from step 1.2 above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in step 1.1. 
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in step 1.1.
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
 
-3.2. Gather Your SAML Directory Information 
+3.2. Gather Your SAML Directory Information
 ++++++++++++++++++++++++++++++++++++++++++++
 
-#. Find and click on your new SAML Directory. 
+#. Find and click on your new SAML Directory.
 
 #. Copy the "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section
 
 .. note::
 
-    You should leave this page open, since you'll be back here in Step 4. 
+    You should leave this page open, since you'll be back here in Step 4.
 
 We will now input this value into the Identity Provider.
 
-Step 4: Configure Your Service Provider in Your IdP 
+Step 4: Configure Your Service Provider in Your IdP
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 #. Back in your App's settings page (found under **Apps** > **Company Apps**), click **Configuration** in the App's navigation pane.
 
 #. Copy your Directory's "Assertion Consumer Service URL" into both the "ACS (Consumer) URL Validator" and "ACS (Consumer) URL" fields.
 
-#. Now click on **Parameters** in the App navigation pane. On this page, you need to ensure that your "Email (SAML NameID)" field has the value "Email", which it should by default.  
+#. Now click on **Parameters** in the App navigation pane. On this page, you need to ensure that your "Email (SAML NameID)" field has the value "Email", which it should by default.
 
-Step 5: Configure Your Application in Stormpath 
+Step 5: Configure Your Application in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
+We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application.
 
-#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. 
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
 
-#. Select the Application that will be using the SAML Directory. 
+#. Select the Application that will be using the SAML Directory.
 
 #. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
 
-#. Next click on **Account Stores** in the navigation pane. 
+#. Next click on **Account Stores** in the navigation pane.
 
-#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog. 
+#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog.
 
 #. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
 
@@ -1480,19 +1480,19 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 You have now completed the initial steps of setting-up log in via OneLogin.
 
-Step 6: Configure Your Attribute Mappings 
+Step 6: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
 When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-6.1. Find the Existing SAML Attributes 
+6.1. Find the Existing SAML Attributes
 +++++++++++++++++++++++++++++++++++++++++++++
 
-If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that OneLogin sends by retrieving the new user Account that was created inside Stormpath. 
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that OneLogin sends by retrieving the new user Account that was created inside Stormpath.
 
 Specifically, you want that Account's ``providerData`` resource:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "href":"https://api.stormpath.com/v1/accounts/2i6Rxkcf8NFsIA9eXaMPle/providerData",
@@ -1520,10 +1520,10 @@ If there are other attributes that you would like OneLogin to pass other attribu
 #. If you want to add any additional parameters, click on **Add parameter**
 #. In the "New Field" dialog box, give the attribute whatever name you wish, and select **Include in SAML assertion**
 #. Back on the "Parameters" page, click on your new Attribute. This will bring up the "Edit Field" dialog
-#. Select the "Value" that you would like this Attribute to represent. This is the piece of user information OneLogin stores that you would like to be transferred to Stormpath in your Attribute. 
+#. Select the "Value" that you would like this Attribute to represent. This is the piece of user information OneLogin stores that you would like to be transferred to Stormpath in your Attribute.
 #. Click **Save**
 
-For example: 
+For example:
 
 * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
 * For the "Value" you would choose "Company"
@@ -1537,7 +1537,7 @@ You will now be returned to your App's main page, and you will see the attribute
 #. Click on the **Directories** tab
 #. Select your OneLogin SAML Directory
 #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-#. Here you will enter the OneLogin attribute name under "Name" 
+#. Here you will enter the OneLogin attribute name under "Name"
 #. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
 #. Finally, enter the Account attribute(s) that you would like this OneLogin attribute to map to
 
@@ -1550,50 +1550,50 @@ If a user now logs in, Stormpath will take the ``User.FirstName`` attribute and 
 
 .. _okta:
 
-Okta 
+Okta
 ^^^^
 
 .. contents::
     :local:
     :depth: 1
 
-Step 1: Set-up Okta 
+Step 1: Set-up Okta
 """""""""""""""""""
 
-#. Log in to your Okta Administrator Account. From the landing page click on **Admin** to go to your Admin Dashboard. 
+#. Log in to your Okta Administrator Account. From the landing page click on **Admin** to go to your Admin Dashboard.
 
-#. From here, click on **Add Applications** in the shortcuts on the right. 
+#. From here, click on **Add Applications** in the shortcuts on the right.
 
 #. Click on **Create New App**, which will bring up a "Create a New Application Integration" dialog.
 
-#. Select "SAML 2.0" and click **Create**.     
+#. Select "SAML 2.0" and click **Create**.
 
 #. Enter in the information on the "General Settings" page and then click **Next**.
 
-.. note:: 
+.. note::
 
     For now we will enter dummy data here, and then return later to input the actual values.
 
-#. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/`` 
+#. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/``
 
 #. For the "Name ID format" select "EmailAddress".
 
 #. Click **Next** at the bottom of the page.
 
-#. On the "Feedback" page, select **I'm an Okta customer adding an internal app** and **This is an internal app that we have created**, then select **Finish**. 
+#. On the "Feedback" page, select **I'm an Okta customer adding an internal app** and **This is an internal app that we have created**, then select **Finish**.
 
-You will now arrive at your App's Admin page. 
+You will now arrive at your App's Admin page.
 
 #. Click on **View Setup Instructions**
 
-Step 2: Gather Information From Your Identity Provider 
+Step 2: Gather Information From Your Identity Provider
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now need to gather the required IdP information:
 
 #. Copy the "Identity Provider Single Sign-On URL". This will be the value for both the "SSO Login URL" and "SSO Logout URL" in your Stormpath configuration.
 
-#. Copy the contents of the "X.509 Certificate" text box, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert". 
+#. Copy the contents of the "X.509 Certificate" text box, starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert".
 
 #. By default, Okta uses the SHA-256 signature algorithm for all self-signed certificates. Click on the **General** tab in the App navigation pane, and look under "SAML Settings" to confirm that the Signature Algorithm is "RSA_SHA256".
 
@@ -1601,19 +1601,19 @@ You will now need to gather the required IdP information:
 
     It is recommended that you stay on this page, as we will be returning here in Step 3 to add more configuration details.
 
-Step 3: Create Your SAML Directory in Stormpath 
+Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 We will now create our SAML Directory in Stormpath, using the values we gathered in the previous step. Then we will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
-3.1. Create Your SAML Directory 
+3.1. Create Your SAML Directory
 +++++++++++++++++++++++++++++++++++++++++++
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
 
-#. Click on the **Directories** tab. 
+#. Click on the **Directories** tab.
 
-#. Click on **Create Directory**. 
+#. Click on **Create Directory**.
 
 #. From the "Directory Type" drop-down menu, select "SAML", which will bring up a Directory creation dialog.
 
@@ -1621,50 +1621,50 @@ We will now create our SAML Directory in Stormpath, using the values we gathered
 
 #. For both "SAML SSO Login Url" and "SAML SSO Logout URL" paste in the "Identity Provider Single Sign-On URL" from above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in Step 2. 
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate in Step 2.
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
-#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page. 
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
 
-3.2. Gather Your SAML Directory Information 
+3.2. Gather Your SAML Directory Information
 +++++++++++++++++++++++++++++++++++++++++++
 
 #. Find and click on your new SAML Directory.
 
 In the "SAML Identity Provider Configuration" section:
-   
+
 #. Copy the "Entity ID" URN.
 
-#. Copy the "Assertion Consumer Service URL".  
+#. Copy the "Assertion Consumer Service URL".
 
 We will now input these values into the Identity Provider.
 
-Step 4: Configure Your Service Provider in Your IdP 
+Step 4: Configure Your Service Provider in Your IdP
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 #. Back in your App's "General" tab, find the "SAML Settings" section and click **Edit**.
 
-#. From the "General Settings" page click **Next**.   
+#. From the "General Settings" page click **Next**.
 
 #. You will now be on the "Configure SAML" page. Copy your Directory's "Assertion Consumer Service URL" into the "Single sign on URL" field, replacing the dummy value.
 
-#. Copy the "Entity ID" URN into the "Audience URI (SP Entity ID)", also replacing the dummy value.    
+#. Copy the "Entity ID" URN into the "Audience URI (SP Entity ID)", also replacing the dummy value.
 
-Step 5: Configure Your Application in Stormpath 
+Step 5: Configure Your Application in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application. 
+We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application.
 
-#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab. 
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
 
-#. Select the Application that will be using the SAML Directory. 
+#. Select the Application that will be using the SAML Directory.
 
 #. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
 
-#. Next click on **Account Stores** in the navigation pane. 
+#. Next click on **Account Stores** in the navigation pane.
 
-#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog. 
+#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog.
 
 #. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
 
@@ -1678,16 +1678,16 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
   6.1. Find the Existing SAML Attributes+
 
-  If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath. 
+  If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
 
   Specifically, you want that Account's ``providerData`` resource:
 
-  .. code-block:: json 
+  .. code-block:: json
 
   .. todo::
 
     {
-      
+
     }
 
   Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Okta.
@@ -1706,7 +1706,7 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
   .. todo::
 
-  For example: 
+  For example:
 
   * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
   * For the "Value" you would choose "Company"
@@ -1719,7 +1719,7 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
   #. Click on the **Directories** tab
   #. Select your Okta SAML Directory
   #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-  #. Here you will enter the Okta attribute name under "Name" 
+  #. Here you will enter the Okta attribute name under "Name"
   #. (Optional) Under "Name Format" you can enter ``todo``
   #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
 
@@ -1737,17 +1737,17 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 Here we will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
 
-It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires. 
+It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires.
 
-Also, currently the IdP-initiated flow can only be configured via REST, and not yet via the Stormpath Admin Console. 
+Also, currently the IdP-initiated flow can only be configured via REST, and not yet via the Stormpath Admin Console.
 
-SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-asm`. 
+SAML configuration data is stored in the Directory's :ref:`Provider resource <ref-provider>` as well as in the :ref:`ref-application`. Both of these resources must also be linked with an :ref:`ref-asm`.
 
 .. note::
 
   The steps here are nearly identical regardless of whether you are configuring Service Provider initiated or IdP initiated authentication. The only difference is in :ref:`Step 5a <saml-restconfig-5a>`.
 
-Step 1: Gather IDP Data 
+Step 1: Gather IDP Data
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 You will need the following information from your IdP:
@@ -1762,7 +1762,7 @@ Step 2: Configure Your SAML Directory
 
 Input the data you gathered in Step 1 above into your Directory's Provider resource, and then pass that along as part of the Directory creation request:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/directories HTTP/1.1
   Host: api.stormpath.com
@@ -1789,11 +1789,11 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 Step 3: Retrieve Your Service Provider Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath. 
+Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath.
 
 In order to retrieve the required values, start by sending this request:
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
   Host: api.stormpath.com
@@ -1823,7 +1823,7 @@ Which will return the Provider:
 
 Now send a GET to this ``serviceProviderMetadata`` link found in your Directory's Provider object.
 
-.. code-block:: http 
+.. code-block:: http
 
   GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
   Host: api.stormpath.com
@@ -1870,30 +1870,30 @@ Now send a GET to this ``serviceProviderMetadata`` link found in your Directory'
   }
 
 From this metadata, you will need two values:
- 
-- **Assertion Consumer Service URL**: This is the location the IdP will send its response to. 
-- **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it. 
+
+- **Assertion Consumer Service URL**: This is the location the IdP will send its response to.
+- **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it.
 
 You will also need two other values, which will always be the same:
 
 - **SAML Request Binding:** Set to ``HTTP-Redirect``.
 - **SAML Response Binding:** Set to ``HTTP-Post``.
 
-Step 4: Configure Your Service Provider in Your Identity Provider 
+Step 4: Configure Your Service Provider in Your Identity Provider
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the information you retrieved in the previous step into the relevant application configuration fields. The specific steps to follow here will depend entirely on what Identity Provider you use, and for more information you should consult your Identity Provider's SAML documentation. 
+Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the information you retrieved in the previous step into the relevant application configuration fields. The specific steps to follow here will depend entirely on what Identity Provider you use, and for more information you should consult your Identity Provider's SAML documentation.
 
 Step 5: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML: 
+The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML:
 
-1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself. 
+1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself.
 
 You should ``POST`` any URIs here that you would like included as authorized callback URIs.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/applications/$APPLICATION_ID HTTP/1.1
   Host: api.stormpath.com
@@ -1908,7 +1908,7 @@ You should ``POST`` any URIs here that you would like included as authorized cal
 
 2. There is also an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO",
@@ -1927,16 +1927,16 @@ You should ``POST`` any URIs here that you would like included as authorized cal
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates/`` endpoint. 
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates/`` endpoint.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
   Host: api.stormpath.com
 
 This request will return a response containing a JWT like this:
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
@@ -1950,11 +1950,11 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 - **organization**: Allows you to specify an Organization to check users for.
 - **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
   Host: api.stormpath.com
-    
+
   {
       "callbackUri": "https://org1.myapp.com",
       "organization": {
@@ -1966,16 +1966,16 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 Step 6: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now the last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`. 
+Now the last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`.
 
 .. _saml-mapping:
 
 Step 7: Configure SAML Attribute Mapping (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource. 
+The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource.
 
-.. code-block:: xml 
+.. code-block:: xml
 
   <saml:AttributeStatement>
     <saml:Attribute Name="uid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">
@@ -1993,18 +1993,18 @@ The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormp
 
 SAML Attribute mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
 
-Mapping Rules 
+Mapping Rules
 """""""""""""
 
 The rules have three different components:
 
-- **name**: The SAML Attribute name 
-- **nameFormat**: The name format for this SAML Attribute, expressed as a Uniform Resource Name (URN). 
+- **name**: The SAML Attribute name
+- **nameFormat**: The name format for this SAML Attribute, expressed as a Uniform Resource Name (URN).
 - **accountAttributes**: This is an array of Stormpath Account or customData (``customData.$KEY_NAME``) attributes that will map to this SAML Attribute.
 
 **Example Rule**
 
-.. code-block:: json 
+.. code-block:: json
 
   {
     "name":"uid",
@@ -2014,10 +2014,10 @@ The rules have three different components:
     ]
   }
 
-The rule expressed here is as follows: 
+The rule expressed here is as follows:
 
-- A SAML Assertion with the name ``uid`` AND 
-- the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic`` 
+- A SAML Assertion with the name ``uid`` AND
+- the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
 - maps to the Account Attribute ``username``.
 
 .. note::
@@ -2026,7 +2026,7 @@ The rule expressed here is as follows:
 
 In order to create the mapping rules, we simply send the following POST:
 
-.. code-block:: http 
+.. code-block:: http
 
   POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
   Host: api.stormpath.com
@@ -2055,16 +2055,16 @@ In order to create the mapping rules, we simply send the following POST:
     ]
   }
 
-Now that we've configured everything, we can take a look at what the actual SAML authentication flow looks like. 
+Now that we've configured everything, we can take a look at what the actual SAML authentication flow looks like.
 
 .. _saml-flow:
 
 5.5.4. The Stormpath SAML Flow
 ------------------------------
 
-The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning. 
+The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning.
 
-The Identity Provider Initiated Flow 
+The Identity Provider Initiated Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. todo::
@@ -2074,11 +2074,11 @@ The Identity Provider Initiated Flow
 .. figure:: images/auth_n/SamlFlow_IdpInit.png
     :align: center
     :scale: 100%
-    :alt: IdP Initiated SAML Flow 
+    :alt: IdP Initiated SAML Flow
 
-    *The IdP Initiated SAML Flow* 
+    *The IdP Initiated SAML Flow*
 
-.. todo:: 
+.. todo::
 
   skinparam monochrome true
 
@@ -2096,44 +2096,44 @@ The Identity Provider Initiated Flow
   ua->sp: Request target resource + JWT
   sp->ua: Respond with requested resource
 
-Step 1: Identity Provider Login 
+Step 1: Identity Provider Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First the user will have to authenticate with the Identity Provider. They will then be provided with a list of configured applications that they are able to log in to. If they choose to log in to your Stormpath-enabled application, this will result in the IdP redirecting them to Stormpath.
 
-Step 2: Redirect to Assertion Consumer Service URL 
+Step 2: Redirect to Assertion Consumer Service URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``) that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
+The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``) that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already).
 
 .. note::
 
-  Account matching is done on the basis of the returned email address. 
+  Account matching is done on the basis of the returned email address.
 
-Step 3: Stormpath Response with JWT 
+Step 3: Stormpath Response with JWT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The user will now be redirected by Stormpath back to your Application along with a JSON Web Token. 
+The user will now be redirected by Stormpath back to your Application along with a JSON Web Token.
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
 
 .. _saml-response-jwt:
 
-SAML Account Assertion JWT 
+SAML Account Assertion JWT
 """"""""""""""""""""""""""
 
-This JWT again contains both Headers and a Body with Claims. 
+This JWT again contains both Headers and a Body with Claims.
 
-**Header** 
+**Header**
 
 .. list-table::
   :widths: 15 10 60
   :header-rows: 1
 
-  * - Claim Name 
+  * - Claim Name
     - Required?
     - Valid Value(s)
 
@@ -2142,47 +2142,47 @@ This JWT again contains both Headers and a Body with Claims.
     - The type of token, which will be ``JWT``
 
   * - ``alg``
-    - Yes 
+    - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
 
-**Body** 
+**Body**
 
 .. list-table::
   :widths: 15 60
   :header-rows: 1
 
-  * - Claim Name 
+  * - Claim Name
     - Description
-  
-  * - ``iss`` 
-    - The issuer of this token, which will contain your Application ``href``. 
 
-  * - ``sub`` 
+  * - ``iss``
+    - The issuer of this token, which will contain your Application ``href``.
+
+  * - ``sub``
     - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
 
-  * - ``aud`` 
+  * - ``aud``
     - The audience of the JWT. This will match your API Key ID from Stormpath.
 
-  * - ``exp`` 
+  * - ``exp``
     - The expiration time for the JWT in Unix time.
 
-  * - ``iat`` 
+  * - ``iat``
     - The time at which the JWT was created, in Unix time.
 
-  * - ``jti`` 
+  * - ``jti``
     - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
 
-  * - ``state`` 
+  * - ``state``
     - The state of your application, if you have chosen to have this passed back.
 
-  * - ``status`` 
-    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``. 
-  
+  * - ``status``
+    - For a SAML IdP the only possible ``status`` is ``AUTHENTICATED``.
+
   * - ``irt``
-    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks. 
+    - The UUID of the SAML Assertion response. This could be cached as a nonce in order to prevent replay attacks.
 
   * - ``isNewSub``
-    - Indicates whether this is a new Account in Stormpath. 
+    - Indicates whether this is a new Account in Stormpath.
 
 At this point your user is authenticated and able to use your app.
 
@@ -2199,11 +2199,11 @@ The Service Provider Initiated Flow
 .. figure:: images/auth_n/SamlFlow_SpInit.png
     :align: center
     :scale: 100%
-    :alt: Service Provider Initiated SAML Flow 
+    :alt: Service Provider Initiated SAML Flow
 
-    *The Service Provider Initiated SAML Flow* 
+    *The Service Provider Initiated SAML Flow*
 
-.. todo:: 
+.. todo::
 
   skinparam monochrome true
 
@@ -2227,10 +2227,10 @@ The Service Provider Initiated Flow
   sp->ua: Respond with requested resource
 
 
-Step 1: Generate a JWT 
+Step 1: Generate a JWT
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The user agent will request to login with SAML. You will need to generate a JWT using an approved JWT library. 
+The user agent will request to login with SAML. You will need to generate a JWT using an approved JWT library.
 
 Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
 
@@ -2245,13 +2245,13 @@ Below are language specific JWT libraries that Stormpath has sanity tested with 
 SAML Authentication JWT
 """""""""""""""""""""""""""
 
-.. note:: 
+.. note::
 
-  This key must be signed with your API Key Secret. 
+  This key must be signed with your API Key Secret.
 
 The token itself will contain two parts, a Header and a Body that itself contains claims.
 
-**Header** 
+**Header**
 
 .. list-table::
   :widths: 15 10 60
@@ -2266,10 +2266,10 @@ The token itself will contain two parts, a Header and a Body that itself contain
     - Your Stormpath API Key ID.
 
   * - ``alg``
-    - Yes 
+    - Yes
     - The algorithm that was used to sign this key. The only valid value is ``HS256``.
 
-**Body** 
+**Body**
 
 The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body are as follows:
 
@@ -2277,7 +2277,7 @@ The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body
   :widths: 15 10 60
   :header-rows: 1
 
-  * - Claim Name 
+  * - Claim Name
     - Required?
     - Valid Value(s)
 
@@ -2300,56 +2300,56 @@ The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body
   * - ``state``
     - No
     - The state of the application that you need to pass through ID Site or the IdP back to your application through the callback. It is up to the developer to serialize/deserialize this value
-  
+
   * - ``ash``
-    - No 
+    - No
     - Specifies a link to an Account Store to attempt to authenticate against.
-  
+
   * - ``onk``
-    - No 
+    - No
     - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use SAML.
 
-Step 2: Initiate the flow 
+Step 2: Initiate the flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once the JWT is generated by your server, you initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect`` along with the JWT you just generated:
 
-.. code-block:: http 
+.. code-block:: http
 
-  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect?accessToken=$GENERATED_JWT HTTP/1.1 
+  GET /v1/applications/$APPLICATION_ID/saml/sso/idpRedirect?accessToken=$GENERATED_JWT HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
-Step 3: Redirection 
+Step 3: Redirection
 ^^^^^^^^^^^^^^^^^^^
 
 This GET will result in a redirection to the IdP Login URL that you specified during configuration:
 
-.. code-block:: http  
+.. code-block:: http
 
-  HTTP/1.1 302 Redirect 
+  HTTP/1.1 302 Redirect
   Location: https://idp.whatever.com/saml2/sso/login?SAMLRequest=fZFfa8IwFMXfBb9DyXvaJtZ1BqsURRC2Mabbw95ivc5Am3TJrXPffmmLY3%2F...
 
-Step 4: Identity Provider Login 
+Step 4: Identity Provider Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At this point the IdP will render their login page, and the user will authenticate. 
+At this point the IdP will render their login page, and the user will authenticate.
 
-Step 5: Redirect to Assertion Consumer Service URL 
+Step 5: Redirect to Assertion Consumer Service URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-After authentication the user is redirected back to the Assertion Consumer Service URL that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already). 
+After authentication the user is redirected back to the Assertion Consumer Service URL that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already).
 
 .. note::
 
-  Account matching is done on the basis of the returned email address. 
+  Account matching is done on the basis of the returned email address.
 
-Step 6: Stormpath Response with JWT 
+Step 6: Stormpath Response with JWT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The user will now be redirected by Stormpath back to your Application along with a JSON Web Token. 
+The user will now be redirected by Stormpath back to your Application along with a JSON Web Token.
 
-.. code-block:: http 
+.. code-block:: http
 
   HTTP/1.1 302 Redirect
   Location: https://myapplication.com/whatever/callback?jwtResponse=$RESPONSE_JWT
