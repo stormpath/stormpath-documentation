@@ -11,5 +11,5 @@ application.createAccount(accountData, function (err, account) {
     return console.error(err);
   }
 
-  console.log('Hello ' + account.fullName);
+  console.log('Hello %s', account.fullName);
 });
