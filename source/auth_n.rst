@@ -181,17 +181,23 @@ To accomplish this, we will send a ``POST``:
       "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
     },
     "accountStore": {
-      "href": "https://api.stormpath.com/v1/directories/2jw4Kslj97zYjYRXEh2KYf"
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
     }
   }
 
-We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2jw4Kslj97zYjYRXEh2KYf``). Additionally, we are setting
+We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
 
 #. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
 #. ``isDefaultAccountStore`` to ``true`` and
 #. ``isDefaultGroupStore`` to ``true`` as well.
 
 So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+
+If we go back to the example from the :ref:`Account Management chapter<account-mgmt>`, we can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
+
+.. figure:: images/auth_n/authn_asm_erd.png
+  :align: center
+  :alt: <ERD with accountStoreMapping>
 
 Updating an Existing Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

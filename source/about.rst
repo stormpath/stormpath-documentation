@@ -4,7 +4,7 @@
 1. About Stormpath
 ******************
 
-In this "About" section, we will discuss some general topics about both Stormpath and the Stormpath data model. 
+In this "About" section, we will discuss some general topics about both Stormpath and the Stormpath data model.
 
 1.1. What is Stormpath?
 =======================
@@ -23,7 +23,7 @@ Stormpath is used as a simple REST API, over HTTP. This means you can use Stormp
 In addition to user registration and login, Stormpath can do a lot more!
 
 - Easily implement token-based authentication.
-- Provide single sign-on across your applications.  
+- Provide single sign-on across your applications.
 - Control of flexible and granular user authorization.
 - Partition multi-tenant SaaS account data.
 - Simplify social login with providers like Google and Facebook.
@@ -59,17 +59,17 @@ Entities inside Stormpath are referred to as **resources**. Each Stormpath resou
 
 When you :ref:`sign up <set-up>` for Stormpath, a private data space is created for you, which is represented as a :ref:`ref-tenant` resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
 
-An :ref:`ref-application` resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.  
+An :ref:`ref-application` resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.
 
 A top-level container resource for your user base is a :ref:`ref-directory`. Directories can either be hosted inside Stormpath, or can be used to replicate outside user directories, as in the case of Active Directory or Facebook. Security policies, like password strength, are defined on a Directory level. An Application can access multiple Directories, and multiple Applications can also access the same Directory.
 
 Users are modeled inside Stormpath as :ref:`ref-account`. Every Account is unique within a Directory, with this uniqueness usually tied to an email address.
 
-A :ref:`ref-group` is made up of Accounts found within a Directory. It can be thought of as a label applied to a set of Accounts. 
+A :ref:`ref-group` is made up of Accounts found within a Directory. It can be thought of as a label applied to a set of Accounts.
 
-The relation between every Account and its Group is contained in a :ref:`ref-groupmembership` resource. If you imagine Groups as labels for Accounts, the Group Membership object contains information about which labels have been applied to which Accounts. 
+The relation between every Account and its Group is contained in a :ref:`ref-groupmembership` resource. If you imagine Groups as labels for Accounts, the Group Membership object contains information about which labels have been applied to which Accounts.
 
-Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Account Stores can be mapped to Application resources to allow your Accounts to log-in to those applications. Both Directories and Groups can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment. 
+Both Directories and Groups are **Account Stores**, in that they both can "store" Accounts. Account Stores can be mapped to Application resources to allow your Accounts to log-in to those applications. Both Directories and Groups can in turn be contained inside an **Organization** resource, which can be used to model the tenants in a multi-tenant deployment.
 
 A resource that contains other resources is known as a :ref:`about-collections`. Collections support additional behavior, such as pagination, sort ordering, and searching. So the "applications" resource would be a collection of Application resource ``href``.
 

@@ -9,16 +9,16 @@ This chapter provides the information necessary for you to understand the resour
 1. :ref:`Creating a Directory <make-cloud-dir>`
 2. :ref:`Creating a Group <make-group>`
 3. :ref:`Adding an Account to a Directory <add-new-account>`
-4. :ref:`Adding an Account to a Group <add-account-to-group>`
+4. :ref:`Adding our Account to a Group <add-account-to-group>`
 
-
+The final step that would allow this Account to actually log in to the application is covered in :ref:`the Authentication chapter <create-asm>`.
 
 4.1. Modeling Your User Base
 ============================
 
-The first question that we need to address is how we are going to model our users inside Stormpath.
+The first topic that we need to address is how we are user modeling works inside Stormpath.
 
-User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories** and also possibly **Groups**.
+User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories**, **Organizations**, and also possibly **Groups**.
 
 All of your Accounts will have to be associated with at least one Directory resource, so we can start there.
 
@@ -101,7 +101,7 @@ Our current resources (**not including the default ones** created in the :ref:`Q
 
 .. figure:: images/accnt_mgmt/am_erd_01.png
   :align: center
-  :scale: 20%
+  :scale: 100%
   :alt: <ERD with Directory>
 
   *Our Stormpath Tenant, with an Application resource and our newly created "Captains" Directory*
@@ -305,7 +305,7 @@ So we can now see how this Group would look in our Tenant:
   :scale: 100%
   :alt: <ERD with Directory and Group>
 
-  *Our Tenant with one Directory and Group (:ref:`default resources <quickstart>` not pictured)*
+As we can see here, there is our Application, Directory, and our newly-created Group, and they are all found inside the Stormpath Tenant.
 
 .. _account-creation:
 
@@ -391,10 +391,10 @@ Going back to our resource diagram:
 
 .. figure:: images/accnt_mgmt/am_erd_03.png
   :align: center
-  :scale: 20%
+  :scale: 100%
   :alt: ERD with groupMembership
 
-  *Our Tenant with a Directory, Group, and an Account that is a member of the Group*
+We now have our new Account inside the "Captains" Directory.
 
 .. _add-account-to-group:
 
@@ -438,18 +438,14 @@ And get the following response:
     }
   }
 
-.. todo::
-
-  Final image showing all resources and associations
-
 This would leave us with the following resources:
 
 .. figure:: images/accnt_mgmt/am_erd_final.png
   :align: center
-  :scale: 20%
+  :scale: 100%
   :alt: Final ERD
 
-  *Our completed ERD for this chapter, with all resources and associations*
+This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, however, that there is no association between the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
 
 .. _importing-accounts:
 
