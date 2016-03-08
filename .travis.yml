@@ -6,6 +6,8 @@ install:
 - pip install -U Sphinx
 script:
 - make html
+- export LANGUAGES=(rest php java csharp vbnet python nodejs)
+- for language in ${LANGUAGES[@]}; do echo $language; done
 after_success:
 - CURRENT_HASH=`git rev-parse HEAD`
 - export RELEASE_VERSION=`git tag | tail -n 1`
@@ -22,6 +24,9 @@ after_success:
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
 - test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest
+# .............. NEW
+#- test -z "$DEPLOY_DOCS" || export LANGUAGES=(rest php java csharp vbnet python nodejs)
+#- test -z "$DEPLOY_DOCS" || for language in ${LANGUAGES[@]}; do echo $language; done
 - test -z "$DEPLOY_DOCS" || cp -r ../build/html source/rest/product-guide/latest
 - test -z "$DEPLOY_DOCS" || git add --all
 - test -z "$DEPLOY_DOCS" || git commit -m "stormpath-documentation release $RELEASE_VERSION"
