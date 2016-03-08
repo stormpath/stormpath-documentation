@@ -205,7 +205,7 @@ In addition to Social Login and LDAP, Stormpath also allows your users to log-in
 Modeling SAML Directories
 +++++++++++++++++++++++++
 
-Just like with Social Directories, the only modeling considerations for SAML Directories are: you will a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
+Just like with Social Directories, the only modeling considerations for SAML Directories are: you will need a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
 
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
@@ -240,7 +240,7 @@ Or, to find all Groups in the US East region only, you would GET::
 
   URL encoding will change a space into "%20".
 
-It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
+It can also be included in the customData resource, as a series of key-value relations.
 
 .. _make-group:
 
