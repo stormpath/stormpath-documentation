@@ -16,11 +16,11 @@ The final step that would allow this Account to actually log in to the applicati
 4.1. Modeling Your User Base
 ============================
 
-The first topic that we need to address is how we are user modeling works inside Stormpath.
+The first topic that you need to address is how you are user modeling works inside Stormpath.
 
 User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories**, **Organizations**, and also possibly **Groups**.
 
-All of your Accounts will have to be associated with at least one Directory resource, so we can start there.
+All of your Accounts will have to be associated with at least one Directory resource, so you can start there.
 
 .. _directory-mgmt:
 
@@ -39,6 +39,8 @@ For more detailed information about the Directory resource, please see the :ref:
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 Types of Directories
@@ -46,7 +48,7 @@ Types of Directories
 Stormpath supports two types of Directories:
 
 1. Natively-hosted **Cloud Directories** that originate in Stormpath
-2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other websites, as well as in Identity Providers that support SAML.
+2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other youbsites, as youll as in Identity Providers that support SAML.
 
 You can add as many Directories of each type as you require.
 
@@ -54,7 +56,7 @@ You can add as many Directories of each type as you require.
 
   Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
+  If hoyouver, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a poyourful tool to manage your application's user base.
 
 .. _about-cloud-dir:
 
@@ -87,6 +89,8 @@ The following request:
 .. only:: java
 
 .. only:: nodejs
+
+.. only:: php
 
 .. only:: python
 
@@ -125,6 +129,8 @@ Would yield the following response:
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this at this:
@@ -136,7 +142,7 @@ Our current resources (**not including the default ones** created in the :ref:`Q
 
   *Our Stormpath Tenant, with an Application resource and our newly created "Captains" Directory*
 
-Any new Groups or Accounts that we create will have to be created inside a Directory. Before we move on to that though, it's helpful to know a little about the other kinds of Directories available to you in Stormpath.
+Any new Groups or Accounts that you create will have to be created inside a Directory. Before you move on to that though, it's helpful to know a little about the other kinds of Directories available to you in Stormpath.
 
 .. _about-mirror-dir:
 
@@ -157,7 +163,7 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, you recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
 
 1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
 
@@ -172,7 +178,7 @@ For information about how login works with master Directories, please see :ref:`
 LDAP Directories
 """"""""""""""""
 
-LDAP Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public web applications without breaking corporate firewall policies. Here is how they work:
+LDAP Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public youb applications without breaking corporate firewall policies. Here is how they work:
 
 - After creating an LDAP Directory in Stormpath, you download a Stormpath Agent. This is a simple standalone software application that you install behind the corporate firewall so it can communicate directly with the LDAP server.
 - You configure the agent via LDAP filters to view only the accounts that you want to expose to your Stormpath-enabled applications.
@@ -195,7 +201,7 @@ Modeling LDAP Directories
 
 As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with.
 
-The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
+The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, you recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`ldap-dir-authn`.
 
@@ -213,6 +219,8 @@ How to Make an LDAP Directory
 .. only:: java
 
 .. only:: nodejs
+
+.. only:: php
 
 .. only:: python
 
@@ -243,6 +251,8 @@ How to Make a Social Directory
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 .. _about-saml-dir:
@@ -269,6 +279,8 @@ How to Make a SAML Directory
 .. only:: java
 
 .. only:: nodejs
+
+.. only:: php
 
 .. only:: python
 
@@ -306,6 +318,8 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 Or, to find all Groups in the US East region only, you would send this request:
@@ -328,6 +342,8 @@ Or, to find all Groups in the US East region only, you would send this request:
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 It can also be included in the customData resource, as a series of key-value relations.
@@ -337,7 +353,7 @@ It can also be included in the customData resource, as a series of key-value rel
 How to Create a Group
 ^^^^^^^^^^^^^^^^^^^^^
 
-So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory.
+So let's say you want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory.
 
 The following request:
 
@@ -360,6 +376,8 @@ The following request:
 .. only:: java
 
 .. only:: nodejs
+
+.. only:: php
 
 .. only:: python
 
@@ -406,9 +424,11 @@ Would yield this response:
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
-We can now see how this Group would look in our Tenant:
+you can now see how this Group would look in our Tenant:
 
 .. figure:: images/accnt_mgmt/am_erd_02.png
   :align: center
@@ -434,12 +454,14 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 4.2.1. New Account Creation
 ---------------------------
 
-The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show how to add an Account to an Application. Below, we will also show how to add an Account to a specific Directory, or Group.
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, you show how to add an Account to an Application. Below, you will also show how to add an Account to a specific Directory, or Group.
 
 .. _add-new-account:
 
@@ -454,7 +476,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
     This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
 
-  Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
+  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
   .. code-block:: http
 
@@ -472,7 +494,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   .. note::
 
-    The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if we receive the password as plaintext, and only hash it using these techniques.
+    The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
 
     Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
 
@@ -480,7 +502,19 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
     On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
-  Would yield this response:
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
+
+Would yield this response:
+
+.. only:: rest
 
   .. code-block:: http
 
@@ -515,6 +549,8 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: nodejs
 
+.. only:: php
+
 .. only:: python
 
 Going back to our resource diagram:
@@ -524,16 +560,16 @@ Going back to our resource diagram:
   :scale: 100%
   :alt: ERD with groupMembership
 
-We now have our new Account inside the "Captains" Directory.
+you now have our new Account inside the "Captains" Directory.
 
 .. _add-account-to-group:
 
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-So let's say we want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
+So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
 
-We make the following request:
+you make the following request:
 
 .. only:: rest
 
@@ -557,6 +593,8 @@ We make the following request:
 .. only:: java
 
 .. only:: nodejs
+
+.. only:: php
 
 .. only:: python
 
@@ -595,7 +633,7 @@ This would leave us with the following resources:
   :scale: 100%
   :alt: Final ERD
 
-This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, however, that there is no association between the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
+This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, hoyouver, that there is no association betyouen the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
 
 .. _importing-accounts:
 
@@ -612,14 +650,14 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
   To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
-Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
+Due to the sheer number of database types and the variation betyouen individual data models, the actual importing of users is not something that Stormpath handles at this time. What you recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
 
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
+In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkfloyounabled=false`` query parameter to the end of your API like so::
 
-  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkflowEnabled=false
+  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkfloyounabled=false
 
 .. _importing-mcf:
 
@@ -691,64 +729,102 @@ In this case you will be using the API in the same way as usual, except with the
 
 While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
 
-One example of this could be if we wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
-For example, we could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, we specify the ``accountId`` and the ``/customdata`` endpoint.
+For example, you could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, you specify the ``accountId`` and the ``/customdata`` endpoint.
 
-So if we were to send following REST call:
+So if you were to send the following request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "currentAssignment": "USS Enterprise (NCC-1701-E)"
-  }
+    POST /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-We would get this response:
+    {
+      "currentAssignment": "USS Enterprise (NCC-1701-E)"
+    }
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
-  Content-Type: application/json;charset=UTF-8
+.. only:: java
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData",
-    "createdAt": "2015-08-25T19:57:05.976Z",
-    "modifiedAt": "2015-08-26T19:25:27.936Z",
-    "currentAssignment": "USS Enterprise (NCC-1701-E)"
-  }
+.. only:: nodejs
 
-This information can also be appended as part of the initial Account creation payload.
+.. only:: php
 
-For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide .
+.. only:: python
+
+You would get this response:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData",
+      "createdAt": "2015-08-25T19:57:05.976Z",
+      "modifiedAt": "2015-08-26T19:25:27.936Z",
+      "currentAssignment": "USS Enterprise (NCC-1701-E)"
+    }
+
+  This information can also be appended as part of the initial Account creation payload.
+
+  For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 4.3. How to Search Accounts
 ===========================
 
-You can search Stormpath Accounts, just like all Resource collections, using Filter, Attribute, and Datetime search. For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
+You can search Stormpath Accounts, just like all Resource collections, using Filter, Attribute, and Datetime search.
 
-Search can be performed against one of the collections of Accounts associated with other entities:
+.. only:: rest
 
-``/v1/applications/$APPLICATION_ID/accounts``
+  Search can be performed against one of the collections of Accounts associated with other entities:
 
-``/v1/directories/$DIRECTORY_ID/accounts``
+  ``/v1/applications/$APPLICATION_ID/accounts``
 
-``/v1/groups/$GROUP_ID/accounts``
+  ``/v1/directories/$DIRECTORY_ID/accounts``
 
-``/v1/organizations/$ORGANIZATION_ID/accounts``
+  ``/v1/groups/$GROUP_ID/accounts``
 
-As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are:
+  ``/v1/organizations/$ORGANIZATION_ID/accounts``
 
-- ``givenName``
-- ``middleName``
-- ``surname``
-- ``username``
-- ``email``
-- ``status``
+  As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are:
+
+  - ``givenName``
+  - ``middleName``
+  - ``surname``
+  - ``username``
+  - ``email``
+  - ``status``
+
+  For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 4.3.1. Example Account Searches
 -------------------------------
@@ -758,141 +834,177 @@ Below are some examples of different kinds of searches that can be performed to 
 Search an Application's Accounts for a Particular Word
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes.
+.. only:: rest
 
-**Query**
+  A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes.
 
-.. code-block:: http
+  **Query**
 
-  GET /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-.. note::
+    GET /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-  Matching is case-insensitive. So ``?q=luc`` and ``?q=Luc`` will return the same results.
+  .. note::
 
-**Response**
+    Matching is case-insensitive. So ``?q=luc`` and ``?q=Luc`` will return the same results.
 
-.. code-block:: http
+  **Response**
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts",
-    "offset": 0,
-    "limit": 25,
-    "size": 1,
-    "items": [
-        {
-            "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexAmple",
-            "username": "jlpicard",
-            "email": "capt@enterprise.com",
-            "givenName": "Jean-Luc",
-            "middleName": null,
-            "surname": "Picard",
-            "fullName": "Jean-Luc Picard",
-            "status": "ENABLED",
-            "...": "..."
-        }
-    ]
-  }
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4Pbdlexample/accounts",
+      "offset": 0,
+      "limit": 25,
+      "size": 1,
+      "items": [
+          {
+              "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexAmple",
+              "username": "jlpicard",
+              "email": "capt@enterprise.com",
+              "givenName": "Jean-Luc",
+              "middleName": null,
+              "surname": "Picard",
+              "fullName": "Jean-Luc Picard",
+              "status": "ENABLED",
+              "...": "..."
+          }
+      ]
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
+.. only:: rest
 
-**Query**
+  An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
 
-.. code-block:: http
+  **Query**
 
-  GET /v1/directories/accounts?status=DISABLED HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-**Response**
+    GET /v1/directories/accounts?status=DISABLED HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-.. code-block:: http
+  **Response**
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/accounts",
-      "offset": 0,
-      "limit": 25,
-      "size": 1,
-      "items": [
-          {
-              "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexAmple",
-              "username": "first2shoot",
-              "email": "han@newrepublic.gov",
-              "givenName": "Han",
-              "middleName": null,
-              "surname": "Solo",
-              "fullName": "Han Solo",
-              "status": "DISABLED",
-              "...": "..."
-          }
-      ]
-  }
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/accounts",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+            {
+                "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexAmple",
+                "username": "first2shoot",
+                "email": "han@newrepublic.gov",
+                "givenName": "Han",
+                "middleName": null,
+                "surname": "Solo",
+                "fullName": "Han Solo",
+                "status": "DISABLED",
+                "...": "..."
+            }
+        ]
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So we could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
+.. only:: rest
 
-**Query**
+  :ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
 
-.. code-block:: http
+  **Query**
 
-  GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?modifiedAt=2015-12-01 HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-.. note::
+    GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?modifiedAt=2015-12-01 HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-  The parameter can be written in many different ways. The following are all equivalent:
+  .. note::
 
-  - ?modifiedAt=2015-12-01
-  - ?modifiedAt=[2015-12-01T00:00, 2015-12-02T00:00]
-  - ?modifiedAt=[2015-12-01T00:00:00, 2015-12-02T00:00:00]
+    The parameter can be written in many different ways. The following are all equivalent:
 
-  For more information see :ref:`search-datetime`.
+    - ?modifiedAt=2015-12-01
+    - ?modifiedAt=[2015-12-01T00:00, 2015-12-02T00:00]
+    - ?modifiedAt=[2015-12-01T00:00:00, 2015-12-02T00:00:00]
 
-**Response**
+    For more information see :ref:`search-datetime`.
 
-.. code-block:: http
+  **Response**
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts",
-      "offset": 0,
-      "limit": 25,
-      "size": 1,
-      "items": [
-          {
-              "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
-              "username": "first2shoot",
-              "email": "han@newrepublic.gov",
-              "givenName": "Han",
-              "middleName": null,
-              "surname": "Solo",
-              "fullName": "Han Solo",
-              "status": "DISABLED",
-              "createdAt": "2015-08-28T16:07:38.347Z",
-              "modifiedAt": "2015-12-01T21:22:56.608Z",
-              "...": "..."
-          }
-      ]
-  }
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+            {
+                "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
+                "username": "first2shoot",
+                "email": "han@newrepublic.gov",
+                "givenName": "Han",
+                "middleName": null,
+                "surname": "Solo",
+                "fullName": "Han Solo",
+                "status": "DISABLED",
+                "createdAt": "2015-08-28T16:07:38.347Z",
+                "modifiedAt": "2015-12-01T21:22:56.608Z",
+                "...": "..."
+            }
+        ]
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _managing-account-pwd:
 
@@ -937,7 +1049,7 @@ would result in the following response:
     "maxLength": 24,
     "minDiacritic": 0,
     "minLength": 1,
-    "minLowerCase": 1,
+    "minLoyourCase": 1,
     "minNumeric": 1,
     "minSymbol": 1,
     "minUpperCase": 1
@@ -1025,7 +1137,7 @@ If this is a valid email in an Account associated with this Application, you wil
   Content-Type: application/json
 
   {
-    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqWEVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-wExaMPLe",
+    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqyouVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-youxaMPLe",
     "email": "phasma@empire.gov",
     "account": {
         "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
@@ -1044,7 +1156,7 @@ So the user would then receive something that looked like this::
 
   Forgot your password?
 
-  We've received a request to reset the password for this email address.
+  you've received a request to reset the password for this email address.
 
   To reset your password please click on this link or cut and paste this
   URL into your browser (link expires in 24 hours):
@@ -1127,7 +1239,7 @@ This workflow involves 3 parties: your application's end-user, your application,
 2. The end-user opens their email and clicks the verification link. This link comes with a token.
 3. With the token, your application calls back to the Stormpath API server to complete the process.
 
-If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications.
+If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a youlcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be alloyoud to log in to applications.
 
 .. note::
 
@@ -1137,11 +1249,11 @@ If you create a new Account in a Directory with both Account Registration and Ve
 The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application web server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
+It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application youb server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
 
 .. note::
 
-  The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
+  The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server youb page. Because it will likely confuse your application end-users if they see a Stormpath youb page, you strongly recommended that you specify a URL that points to your youb application.
 
 4.5.2. Configuring the Verification Workflow
 ---------------------------------------------
@@ -1226,7 +1338,7 @@ Found in: :ref:`ref-accnt-creation-policy`
 
 - *Verification Email*: The initial email that is sent out after Account creation that verifies the email address that was used for registration with a link containing the verification token.
 - *Verification Success Email*: An email that is sent after a successful email verification.
-- *Welcome Email*: An email welcoming the user to your application.
+- *youlcome Email*: An email youlcoming the user to your application.
 
 For more information about this, see :ref:`verify-account-email`.
 
@@ -1272,18 +1384,18 @@ The ``mimeType`` designates whether the email is sent as plain text (``text/plai
 
 **textBody and htmlBody**
 
-These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
+These define the actual content of the email. The only difference is that ``htmlBody`` is alloyoud to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://youb.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
 
 .. _using-email-macros:
 
 Using Email Macros
 ^^^^^^^^^^^^^^^^^^
 
-You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
+You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as youll as the name of your Application. This would look like this:
 
 .. code-block:: java
 
-  "Hi ${account.givenName}, welcome to $!{application.name}!"
+  "Hi ${account.givenName}, youlcome to $!{application.name}!"
 
 The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with:
 
@@ -1291,7 +1403,7 @@ The basic structure for a macro is ``${resource.attribute}``. There are three ki
 - an Account's Directory (``${account.directory}``), and
 - an Application (``$!{application}``).
 
-You can also include any ``attribute`` that isn't a link, as well as customData.
+You can also include any ``attribute`` that isn't a link, as youll as customData.
 
 For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter.
 
@@ -1315,11 +1427,11 @@ Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it
 
 ``Is your favorite color blue?``
 
-However, if the value could not be found, it would output:
+Hoyouver, if the value could not be found, it would output:
 
 ``Is your favorite color ${account.customData.favoriteColor}?``
 
-To avoid this, we include the ``!`` which puts the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
+To avoid this, you include the ``!`` which puts the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
 
 ``Is your favorite color ?``
 
