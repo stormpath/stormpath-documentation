@@ -29,7 +29,17 @@ All of your Accounts will have to be associated with at least one Directory reso
 
 The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
+.. only:: rest
+
 For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -50,54 +60,74 @@ You can add as many Directories of each type as you require.
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
-The standard, default Directory resource. They can be created using a simple POST API.
+These are the standard, default Directory resource.
 
 .. _make-cloud-dir:
 
 How to Make a Cloud Directory
 """""""""""""""""""""""""""""
 
-The following API request:
+The following request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "name" : "Captains",
-    "description" : "Captains from a variety of stories"
-  }
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "name" : "Captains",
+      "description" : "Captains from a variety of stories"
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 Would yield the following response:
 
-.. code-block:: HTTP
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: HTTP
 
-  {
-    "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE",
-    "name": "Captains",
-    "description": "Captains from a variety of stories",
-    "status": "ENABLED",
-    "createdAt": "2015-08-24T15:32:23.079Z",
-    "modifiedAt": "2015-08-24T15:32:23.079Z",
-    "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
-    },
-    "provider": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/provider"
-    },
-    "comment":" // This JSON has been truncated for readability",
-    "groups": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/groups"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE",
+      "name": "Captains",
+      "description": "Captains from a variety of stories",
+      "status": "ENABLED",
+      "createdAt": "2015-08-24T15:32:23.079Z",
+      "modifiedAt": "2015-08-24T15:32:23.079Z",
+      "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
+      },
+      "provider": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/provider"
+      },
+      "comment":" // This JSON has been truncated for readability",
+      "groups": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/groups"
+      }
     }
-  }
 
-Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
+
+Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this at this:
 
 .. figure:: images/accnt_mgmt/am_erd_01.png
   :align: center
@@ -174,7 +204,17 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 How to Make an LDAP Directory
 +++++++++++++++++++++++++++++
 
-Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
+.. only:: rest
+
+  Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 .. _about-social-dir:
 
@@ -193,7 +233,17 @@ Modeling your users who authorize via Social Login is by necessity very simple, 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
 
-Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
+.. only:: rest
+
+  Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 .. _about-saml-dir:
 
@@ -205,12 +255,22 @@ In addition to Social Login and LDAP, Stormpath also allows your users to log-in
 Modeling SAML Directories
 +++++++++++++++++++++++++
 
-Just like with Social Directories, the only modeling considerations for SAML Directories are: you will a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
+The only modeling considerations for SAML Directories are: you will need a Directory for each SAML IdP that you want to support, and you might need to consider having a :ref:`Master Directory <supporting-multiple-dirs>` to co-ordinate among your multiple directories.
 
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
-SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
+.. only:: rest
+
+  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 .. _group-mgmt:
 
@@ -219,7 +279,9 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 
 The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
 
-For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
+.. only:: rest
+
+  For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
 
 .. _hierarchy-groups:
 
@@ -228,19 +290,47 @@ Modeling User Hierarchies Using Groups
 
 Groups, like labels, are inherently "flat". This means that they do not by default include any kind of hierarchy. If a hierarchical or nested structure is desired, it can be simulated in one of two ways: Either, using the Group resource's ``description`` field, or with the Group's associated customData resource.
 
-A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
+A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following request:
 
-  https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
+.. only:: rest
 
-Or, to find all Groups in the US East region only, you would GET::
+  .. code-block:: http
 
-  https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US%20East*
+    GET /v1/directories/$DIR_ID/groups?description=US* HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
 
-.. note::
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
+
+Or, to find all Groups in the US East region only, you would send this request:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    GET /v1/directories/$DIR_ID/groups?description=US%20East* HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+  .. note::
 
   URL encoding will change a space into "%20".
 
-It can also be included in the customData resource, as a series of key-value relations. The downside to this second approach is that customData resources are not currently searchable in the same manner as the Group's ``description`` field is.
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
+
+It can also be included in the customData resource, as a series of key-value relations.
 
 .. _make-group:
 
@@ -249,63 +339,83 @@ How to Create a Group
 
 So let's say we want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory.
 
-The following API request:
+The following request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "name" : "Starfleet Officers",
-    "description" : "Commissioned officers in Starfleet",
-    "status" : "enabled"
-  }
+    POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "name" : "Starfleet Officers",
+      "description" : "Commissioned officers in Starfleet",
+      "status" : "enabled"
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 Would yield this response:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe",
-    "name":"Starfleet Officers",
-    "description":"Commissioned officers in Starfleet",
-    "status":"ENABLED",
-    "createdAt":"2015-08-25T20:09:23.698Z",
-    "modifiedAt":"2015-08-25T20:09:23.698Z",
-    "customData":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/customData"
-    },
-    "directory":{
-      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
-    },
-    "tenant":{
-      "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
-    },
-    "accounts":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accounts"
-    },
-    "accountMemberships":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accountMemberships"
-    },
-    "applications":{
-      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/applications"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe",
+      "name":"Starfleet Officers",
+      "description":"Commissioned officers in Starfleet",
+      "status":"ENABLED",
+      "createdAt":"2015-08-25T20:09:23.698Z",
+      "modifiedAt":"2015-08-25T20:09:23.698Z",
+      "customData":{
+        "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/customData"
+      },
+      "directory":{
+        "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
+      },
+      "tenant":{
+        "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGeXampLE"
+      },
+      "accounts":{
+        "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accounts"
+      },
+      "accountMemberships":{
+        "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/accountMemberships"
+      },
+      "applications":{
+        "href":"https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe/applications"
+      }
     }
-  }
 
-So we can now see how this Group would look in our Tenant:
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
+
+We can now see how this Group would look in our Tenant:
 
 .. figure:: images/accnt_mgmt/am_erd_02.png
   :align: center
   :scale: 100%
   :alt: <ERD with Directory and Group>
 
-As we can see here, there is our Application, Directory, and our newly-created Group, and they are all found inside the Stormpath Tenant.
+There is our Application, Directory, and our newly-created Group, and they are all found inside the Stormpath Tenant.
 
 .. _account-creation:
 
@@ -314,7 +424,17 @@ As we can see here, there is our Application, Directory, and our newly-created G
 
 The Account resource is a unique identity within your application. It is usually used to model an end-user, although it can also be used by a service, process, or any other entity that needs to log-in to Stormpath.
 
-For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
+.. only:: rest
+
+  For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 4.2.1. New Account Creation
 ---------------------------
@@ -328,64 +448,74 @@ Add a New Account to a Directory
 
 Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`, or an Organization, like in :ref:`the Multi-tenancy Chapter <add-accnt-to-org>`.
 
-.. note::
+.. only:: rest
 
-  This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
+  .. note::
 
-Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
+    This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
 
-.. code-block:: http
+  Let's say we want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
-  POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "username" : "jlpicard",
-    "email" : "capt@enterprise.com",
-    "givenName" : "Jean-Luc",
-    "surname" : "Picard",
-    "password" : "uGhd%a8Kl!"
-  }
+    POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-.. note::
+    {
+      "username" : "jlpicard",
+      "email" : "capt@enterprise.com",
+      "givenName" : "Jean-Luc",
+      "surname" : "Picard",
+      "password" : "uGhd%a8Kl!"
+    }
 
-  The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if we receive the password as plaintext, and only hash it using these techniques.
+  .. note::
 
-  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
+    The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if we receive the password as plaintext, and only hash it using these techniques.
 
-  Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
+    Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
 
-  On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
+    Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
 
-Would yield this response:
+    On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
-.. code-block:: http
+  Would yield this response:
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
-    "username": "jlpicard",
-    "email": "capt@enterprise.com",
-    "givenName": "Jean-Luc",
-    "middleName": null,
-    "surname": "Picard",
-    "fullName": "Jean-Luc Picard",
-    "status": "ENABLED",
-    "createdAt": "2015-08-25T19:57:05.976Z",
-    "modifiedAt": "2015-08-25T19:57:05.976Z",
-    "emailVerificationToken": null,
-    "customData": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
-    },
-    "providerData": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/providerData"
-    },
-    "comment":" // This JSON has been truncated for readability"
-  }
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
+      "username": "jlpicard",
+      "email": "capt@enterprise.com",
+      "givenName": "Jean-Luc",
+      "middleName": null,
+      "surname": "Picard",
+      "fullName": "Jean-Luc Picard",
+      "status": "ENABLED",
+      "createdAt": "2015-08-25T19:57:05.976Z",
+      "modifiedAt": "2015-08-25T19:57:05.976Z",
+      "emailVerificationToken": null,
+      "customData": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
+      },
+      "providerData": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/providerData"
+      },
+      "comment":" // This JSON has been truncated for readability"
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 Going back to our resource diagram:
 
@@ -405,38 +535,58 @@ So let's say we want to add "Jean-Luc Picard" to the "Starfleet Officers" Group 
 
 We make the following request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/groupMemberships HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "account" : {
-        "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
-     },
-     "group" : {
-         "href" : "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
-     }
-  }
+    POST /v1/groupMemberships HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "account" : {
+          "href" : "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
+       },
+       "group" : {
+           "href" : "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
+       }
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 And get the following response:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0",
-    "account": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
-    },
-    "group": {
-      "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/groupMemberships/1ufdzvjTWThoqnHf0a9vQ0",
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe"
+      },
+      "group": {
+        "href": "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExAMpLe"
+      }
     }
-  }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: python
 
 This would leave us with the following resources:
 
