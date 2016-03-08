@@ -21,13 +21,13 @@ after_success:
 - test -z "$DEPLOY_DOCS" || cd stormpath.github.io
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
-- test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest && cp -r ../build/html/rest source/rest/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/php/product-guide/latest && cp -r ../build/html/php source/php/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/java/product-guide/latest && cp -r ../build/html/java source/java/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/csharp/product-guide/latest && cp -r ../build/html/csharp source/csharp/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/vbnet/product-guide/latest && cp -r ../build/html/vbnet source/vbnet/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && cp -r ../build/html/python source/python/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest && cp -r ../build/html/nodejs source/nodejs/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest && mkdir -p source/rest/product-guide && cp -r ../build/html/rest source/rest/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/php/product-guide/latest && mkdir -p source/php/product-guide && cp -r ../build/html/php source/php/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/java/product-guide/latest && mkdir -p source/java/product-guide && cp -r ../build/html/java source/java/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/csharp/product-guide/latest && mkdir -p source/csharp/product-guide && cp -r ../build/html/csharp source/csharp/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/vbnet/product-guide/latest && mkdir -p source/vbnet/product-guide && cp -r ../build/html/vbnet source/vbnet/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && mkdir -p source/python/product-guide && cp -r ../build/html/python source/python/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest && mkdir -p source/nodejs/product-guide && cp -r ../build/html/nodejs source/nodejs/product-guide/latest
 - test -z "$DEPLOY_DOCS" || git add --all
 - test -z "$DEPLOY_DOCS" || git commit -m "stormpath-documentation release $RELEASE_VERSION"
 - test -z "$DEPLOY_DOCS" || git push origin source
