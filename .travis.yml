@@ -5,7 +5,7 @@ python:
 install:
 - pip install -U Sphinx
 script:
-- make html
+- make allhtml
 after_success:
 - CURRENT_HASH=`git rev-parse HEAD`
 - export RELEASE_VERSION=`git tag | tail -n 1`
@@ -21,8 +21,13 @@ after_success:
 - test -z "$DEPLOY_DOCS" || cd stormpath.github.io
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
-- test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest
-- test -z "$DEPLOY_DOCS" || cp -r ../build/html source/rest/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/rest/product-guide/latest && cp -r ../build/html/rest source/rest/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/php/product-guide/latest && cp -r ../build/html/php source/php/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/java/product-guide/latest && cp -r ../build/html/java source/java/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/csharp/product-guide/latest && cp -r ../build/html/csharp source/csharp/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/vbnet/product-guide/latest && cp -r ../build/html/vbnet source/vbnet/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && cp -r ../build/html/python source/python/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest && cp -r ../build/html/nodejs source/nodejs/product-guide/latest
 - test -z "$DEPLOY_DOCS" || git add --all
 - test -z "$DEPLOY_DOCS" || git commit -m "stormpath-documentation release $RELEASE_VERSION"
 - test -z "$DEPLOY_DOCS" || git push origin source
