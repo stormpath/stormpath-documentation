@@ -178,7 +178,7 @@ For information about how login works with master Directories, please see :ref:`
 LDAP Directories
 """"""""""""""""
 
-LDAP Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public youb applications without breaking corporate firewall policies. Here is how they work:
+LDAP Directories are a big benefit to Stormpath customers who need LDAP directory accounts to be able to securely log in to public web applications without breaking corporate firewall policies. Here is how they work:
 
 - After creating an LDAP Directory in Stormpath, you download a Stormpath Agent. This is a simple standalone software application that you install behind the corporate firewall so it can communicate directly with the LDAP server.
 - You configure the agent via LDAP filters to view only the accounts that you want to expose to your Stormpath-enabled applications.
@@ -428,7 +428,7 @@ Would yield this response:
 
 .. only:: python
 
-you can now see how this Group would look in our Tenant:
+You can now see how this Group would look in our Tenant:
 
 .. figure:: images/accnt_mgmt/am_erd_02.png
   :align: center
@@ -731,11 +731,11 @@ While Stormpath’s default Account attributes are useful to many applications, 
 
 One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
-For example, you could want to add information about this user's current location, like the ship this Captain is currently assigned to. To do this, you specify the ``accountId`` and the ``/customdata`` endpoint.
-
-So if you were to send the following request:
+For example, you could want to add information about this user's current location, like the ship this Captain is currently assigned to.
 
 .. only:: rest
+
+  To do this, you specify the ``accountId`` and the ``/customdata`` endpoint.
 
   .. code-block:: http
 
@@ -746,20 +746,6 @@ So if you were to send the following request:
     {
       "currentAssignment": "USS Enterprise (NCC-1701-E)"
     }
-
-.. only:: csharp or vbnet
-
-.. only:: java
-
-.. only:: nodejs
-
-.. only:: php
-
-.. only:: python
-
-You would get this response:
-
-.. only:: rest
 
   .. code-block:: http
 
@@ -788,10 +774,20 @@ You would get this response:
 
 .. only:: python
 
+
 4.3. How to Search Accounts
 ===========================
 
 You can search Stormpath Accounts, just like all Resource collections, using Filter, Attribute, and Datetime search.
+
+The Account resource's **searchable attributes** are:
+
+  - ``givenName``
+  - ``middleName``
+  - ``surname``
+  - ``username``
+  - ``email``
+  - ``status``
 
 .. only:: rest
 
@@ -804,15 +800,6 @@ You can search Stormpath Accounts, just like all Resource collections, using Fil
   ``/v1/groups/$GROUP_ID/accounts``
 
   ``/v1/organizations/$ORGANIZATION_ID/accounts``
-
-  As mentioned in the :ref:`Search section <about-search>` of the Reference chapter, the Account resource's **searchable attributes** are:
-
-  - ``givenName``
-  - ``middleName``
-  - ``surname``
-  - ``username``
-  - ``email``
-  - ``status``
 
   For more information about how search works in Stormpath, please see the :ref:`Search section <about-search>` of the Reference chapter.
 
@@ -1020,40 +1007,62 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
   This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
-Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, simply HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
+Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, make this call:
 
-This call:
+.. only:: rest
 
-.. code-block:: http
+  .. code-block:: http
 
-  POST v1/passwordPolicies/$DIRECTORY_ID/strength HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+    POST v1/passwordPolicies/$DIRECTORY_ID/strength HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-  {
-    "minLength": 1,
-    "maxLength": 24,
-    "minSymbol": 1
-  }
+    {
+      "minLength": 1,
+      "maxLength": 24,
+      "minSymbol": 1
+    }
 
-would result in the following response:
+.. only:: csharp or vbnet
 
-.. code-block:: http
+.. only:: java
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength
-  Content-Type: application/json;charset=UTF-8
+.. only:: nodejs
 
-  {
-    "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength",
-    "maxLength": 24,
-    "minDiacritic": 0,
-    "minLength": 1,
-    "minLoyourCase": 1,
-    "minNumeric": 1,
-    "minSymbol": 1,
-    "minUpperCase": 1
-  }
+.. only:: php
+
+.. only:: python
+
+Which results in the following response:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/passwordPolicies/$DIRECTORY_ID/strength",
+      "maxLength": 24,
+      "minDiacritic": 0,
+      "minLength": 1,
+      "minLoyourCase": 1,
+      "minNumeric": 1,
+      "minSymbol": 1,
+      "minUpperCase": 1
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _change-account-pwd:
 
@@ -1065,19 +1074,31 @@ At no point is the user shown, or does Stormpath have access to, the original pa
 1. To allow the user to update it (without seeing the original value) after being authenticated, or
 2. To use the :ref:`password reset workflow <password-reset-flow>`.
 
-To update the password, you simply send a POST to the ``v1/accounts/$ACCOUNT_ID`` endpoint with the new password:
+To update the password, you send the updated password to the Account resource:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/accounts/3apenYvL0Z9v9spexAmple HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
+  .. code-block:: http
 
-  {
-    "password":"some_New+Value1234"
-  }
+    POST /v1/accounts/3apenYvL0Z9v9spexAmple HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
 
-If the call succeeds you will get back an ``HTTP 200 OK`` with the Account resource in the body.
+    {
+      "password":"some_New+Value1234"
+    }
+
+  If the call succeeds you will get back an ``HTTP 200 OK`` with the Account resource in the body.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 For more information about resetting the password, read on.
 
@@ -1099,21 +1120,9 @@ There are three steps to the password reset flow:
 
 **Trigger the workflow**
 
-To trigger the password reset workflow, you send an HTTP POST to the Application's ``/passwordResetTokens`` endpoint:
+.. only:: rest
 
-.. code-block:: http
-
-  POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
-
-  {
-    "email":"phasma@empire.gov"
-  }
-
-.. note::
-
-  It is also possible to specify the Account Store in your Password Reset POST:
+  To trigger the password reset workflow, you send an HTTP POST to the Application's ``/passwordResetTokens`` endpoint:
 
   .. code-block:: http
 
@@ -1123,30 +1132,65 @@ To trigger the password reset workflow, you send an HTTP POST to the Application
 
     {
       "email":"phasma@empire.gov"
-      "accountStore": {
-        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
-      }
     }
 
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset POST:
+
+    .. code-block:: http
+
+      POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json
+
+      {
+        "email":"phasma@empire.gov"
+        "accountStore": {
+          "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+        }
+      }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 200 OK
-  Content-Type: application/json
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqyouVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-youxaMPLe",
-    "email": "phasma@empire.gov",
-    "account": {
-        "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqyouVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-youxaMPLe",
+      "email": "phasma@empire.gov",
+      "account": {
+          "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
+      }
     }
-  }
 
-.. note::
+  .. note::
 
-  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
+    For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
@@ -1166,62 +1210,114 @@ So the user would then receive something that looked like this::
 
 **Verify the token**
 
-Once the user clicks this link, your controller should retrieve the token from the query string and check it against the Stormpath API. This can be accomplish by sending a GET to the Application's ``/passwordResetTokens/$TOKEN_VALUE`` endpoint:
+Once the user clicks this link, your controller should retrieve the token from the query string and check it against the Stormpath API.
 
-.. code-block:: http
+.. only:: rest
 
-  GET /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  This can be accomplished by sending a GET to the Application's ``/passwordResetTokens/$TOKEN_VALUE`` endpoint:
 
-This would result in the exact same ``HTTP 200`` success response as when the token was first generated above.
+  .. code-block:: http
+
+    GET /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+  This would result in the exact same ``HTTP 200`` success response as when the token was first generated above.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 **Update the password**
 
-After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can update the Account resource with POST to the  `passwordResetTokens` endpoint. This is the same endpoint that you used to validate the token above.
+.. only:: rest
 
-.. code-block:: http
+  After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can update the Account resource with POST to the  ``passwordResetTokens`` endpoint. This is the same endpoint that you used to validate the token above.
 
-  POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "password": "updated+Password1234"
-  }
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "password": "updated+Password1234"
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the account.
 
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Password Reset Email is configurable for a Directory. There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
+The Password Reset Email is configurable for a Directory.
 
-- ``resetEmailStatus`` which enables or disables the reset email.
-- ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
-- ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
-- ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
+.. only:: rest
 
-To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
+  There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
 
-.. code-block:: http
+  - ``resetEmailStatus`` which enables or disables the reset email.
+  - ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
+  - ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
+  - ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
 
-  POST /v1/passwordPolicies/$DIRECTORY_ID HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
 
-  {
-      "resetEmailStatus": "ENABLED"
-  }
+  .. code-block:: http
+
+    POST /v1/passwordPolicies/$DIRECTORY_ID HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "resetEmailStatus": "ENABLED"
+    }
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _password-reset-email-templates:
 
 Password Reset Email Templates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
+.. only:: rest
 
-To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
+  The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
+
+  To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _verify-account-email:
 
@@ -1239,7 +1335,7 @@ This workflow involves 3 parties: your application's end-user, your application,
 2. The end-user opens their email and clicks the verification link. This link comes with a token.
 3. With the token, your application calls back to the Stormpath API server to complete the process.
 
-If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a youlcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be alloyoud to log in to applications.
+If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications.
 
 .. note::
 
@@ -1249,11 +1345,11 @@ If you create a new Account in a Directory with both Account Registration and Ve
 The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application youb server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
+It is also expected that the workflow’s **Account Verification Base URL** has been set to a URL that will be processed by your own application web server. This URL should be free of any query parameters, as the Stormpath back-end will append on to the URL a parameter used to verify the email. If this URL is not set, a default Stormpath-branded page will appear which allows the user to complete the workflow.
 
 .. note::
 
-  The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server youb page. Because it will likely confuse your application end-users if they see a Stormpath youb page, you strongly recommended that you specify a URL that points to your youb application.
+  The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
 
 4.5.2. Configuring the Verification Workflow
 ---------------------------------------------
@@ -1268,37 +1364,20 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 4.5.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
 
-The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
+.. only:: rest
 
-  http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
 
-The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
 
-  /v1/accounts/emailVerificationsToken/$VERIFICATION_TOKEN
 
-To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
+.. only:: csharp or vbnet
 
-.. code-block:: http
+.. only:: java
 
-  POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+.. only:: nodejs
 
-Which will return a result that looks like this:
+.. only:: php
 
-.. code-block:: http
-
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V
-  Content-Type: application/json;charset=UTF-8;
-
-  {
-    "href": "https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V"
-  }
-
-If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
-
-If the verification token is not found, a ``404 Not Found`` error is returned with a payload explaining why the attempt failed.
+.. only:: python
 
 .. note::
 
@@ -1309,19 +1388,31 @@ If the verification token is not found, a ``404 Not Found`` error is returned wi
 4.5.5. Resending the Verification Email
 ---------------------------------------
 
-If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint.
+.. only:: rest
 
-.. code-block:: http
+  If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint.
 
-  POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "login": "email@address.com"
-  }
+    POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
+    {
+      "login": "email@address.com"
+    }
+
+  If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 4.6. Customizing Stormpath Emails via REST
 ==========================================
@@ -1338,7 +1429,7 @@ Found in: :ref:`ref-accnt-creation-policy`
 
 - *Verification Email*: The initial email that is sent out after Account creation that verifies the email address that was used for registration with a link containing the verification token.
 - *Verification Success Email*: An email that is sent after a successful email verification.
-- *youlcome Email*: An email youlcoming the user to your application.
+- *Welcome Email*: An email welcoming the user to your application.
 
 For more information about this, see :ref:`verify-account-email`.
 
@@ -1357,34 +1448,20 @@ For more information about this, see :ref:`password-reset-flow`.
 4.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading.
+.. only:: rest
 
-First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
-.. code-block:: json
 
-  {
-    "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojvU1m2Nh",
-    "name":"Default Verification Email Template",
-    "description":"This is the verification email template that is associated with the directory.",
-    "fromName":"Jakub Swiatczak",
-    "fromEmailAddress":"change-me@stormpath.com",
-    "subject":"Verify your account",
-    "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
-    "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
-    "mimeType":"text/plain",
-    "defaultModel":{
-      "linkBaseUrl":"https://api.stormpath.com/emailVerificationTokens"
-    }
-  }
 
-**Message Format**
+.. only:: csharp or vbnet
 
-The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+.. only:: java
 
-**textBody and htmlBody**
+.. only:: nodejs
 
-These define the actual content of the email. The only difference is that ``htmlBody`` is alloyoud to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://youb.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
+.. only:: php
+
+.. only:: python
 
 .. _using-email-macros:
 
@@ -1395,7 +1472,7 @@ You can use macros in your email templates. Macros are placeholder text that are
 
 .. code-block:: java
 
-  "Hi ${account.givenName}, youlcome to $!{application.name}!"
+  "Hi ${account.givenName}, welcome to $!{application.name}!"
 
 The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with:
 
