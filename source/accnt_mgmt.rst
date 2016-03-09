@@ -86,13 +86,35 @@ The following request:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_cloud_dir_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_req
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_cloud_dir_req
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_req
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/create_cloud_dir_req
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/create_cloud_dir_req
+      :language: python
 
 Would yield the following response:
 
@@ -125,15 +147,37 @@ Would yield the following response:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_cloud_dir_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_cloud_dir_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp
+      :language: javascript
+
 .. only:: php
+
+  .. literalinclude:: code/php/account_management/create_cloud_dir_resp
+      :language: php
 
 .. only:: python
 
-Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this at this:
+  .. literalinclude:: code/python/account_management/create_cloud_dir_resp
+      :language: python
+
+Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
 
 .. figure:: images/accnt_mgmt/am_erd_01.png
   :align: center
@@ -314,13 +358,35 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_directory_group_description1
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_directory_group_description1
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/search_directory_group_description1
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/search_directory_group_description1
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/search_directory_group_description1
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/search_directory_group_description1
+      :language: python
 
 Or, to find all Groups in the US East region only, you would send this request:
 
@@ -338,13 +404,35 @@ Or, to find all Groups in the US East region only, you would send this request:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_directory_group_description2
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_directory_group_description2
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/search_directory_group_description2
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/search_directory_group_description2
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/search_directory_group_description2
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/search_directory_group_description2
+      :language: python
 
 It can also be included in the customData resource, as a series of key-value relations.
 
@@ -373,13 +461,35 @@ The following request:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_group_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_group_req
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_group_req
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_group_req
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/create_group_req
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/create_group_req
+      :language: python
 
 Would yield this response:
 
@@ -420,13 +530,35 @@ Would yield this response:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_group_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_group_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_group_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_group_resp
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/create_group_resp
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/create_group_resp
+      :language: python
 
 You can now see how this Group would look in our Tenant:
 
@@ -450,13 +582,23 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: csharp or vbnet
 
+  For more detailed information about the Account resource, see
+
 .. only:: java
+
+  For more detailed information about the Account resource, see
 
 .. only:: nodejs
 
+  For more detailed information about the Account resource, see
+
 .. only:: php
 
+  For more detailed information about the Account resource, see
+
 .. only:: python
+
+  For more detailed information about the Account resource, see
 
 4.2.1. New Account Creation
 ---------------------------
@@ -504,13 +646,35 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_account_in_dir_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_req
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_account_in_dir_req
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/create_account_in_dir_req
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/create_account_in_dir_req
+      :language: python
 
 Would yield this response:
 
@@ -545,13 +709,35 @@ Would yield this response:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_account_in_dir_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/create_account_in_dir_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/create_account_in_dir_resp
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/create_account_in_dir_resp
+      :language: python
 
 Going back to our resource diagram:
 
@@ -560,7 +746,7 @@ Going back to our resource diagram:
   :scale: 100%
   :alt: ERD with groupMembership
 
-you now have our new Account inside the "Captains" Directory.
+The new Account is now in the "Captains" Directory.
 
 .. _add-account-to-group:
 
@@ -569,7 +755,7 @@ Add an Existing Account to a Group
 
 So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
 
-you make the following request:
+You make the following request:
 
 .. only:: rest
 
@@ -590,13 +776,35 @@ you make the following request:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/add_account_to_group_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/add_account_to_group_req
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/add_account_to_group_req
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/add_account_to_group_req
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/add_account_to_group_req
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/add_account_to_group_req
+      :language: python
 
 And get the following response:
 
@@ -620,11 +828,30 @@ And get the following response:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/add_account_to_group_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/add_account_to_group_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/add_account_to_group_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp
+      :language: javascript
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/add_account_to_group_resp
+      :language: python
 
 This would leave us with the following resources:
 
@@ -731,7 +958,7 @@ While Stormpath’s default Account attributes are useful to many applications, 
 
 One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
-For example, you could want to add information about this user's current location, like the ship this Captain is currently assigned to.
+For example, you could add information about this user's current location, like the ship this Captain is currently assigned to.
 
 .. only:: rest
 
@@ -746,6 +973,42 @@ For example, you could want to add information about this user's current locatio
     {
       "currentAssignment": "USS Enterprise (NCC-1701-E)"
     }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/add_cd_to_account_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/account_management/add_cd_to_account_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/account_management/add_cd_to_account_req
+      :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/account_management/add_cd_to_account_req
+      :language: python
+
+Which returns the following:
+
+.. only:: rest
 
   .. code-block:: http
 
@@ -766,13 +1029,35 @@ For example, you could want to add information about this user's current locatio
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/add_cd_to_account_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/add_cd_to_account_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/add_cd_to_account_resp
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/add_cd_to_account_resp
+      :language: python
 
 
 4.3. How to Search Accounts
@@ -867,13 +1152,57 @@ Search an Application's Accounts for a Particular Word
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_req
+        :language: vbnet
+
+    .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_resp
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_req
+      :language: java
+
+  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req
+      :language: javascript
+
+  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_resp
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_req
+      :language: php
+
+  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_resp
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req
+      :language: python
+
+  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_resp
+      :language: python
 
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -920,13 +1249,35 @@ Find All the Disabled Accounts in a Directory
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_disabled_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_disabled_req
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_disabled_req
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_disabled_req
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_disabled_req
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req
+      :language: python
 
 Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -985,13 +1336,35 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. _managing-account-pwd:
 
@@ -1025,13 +1398,35 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 Which results in the following response:
 
@@ -1056,13 +1451,35 @@ Which results in the following response:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. _change-account-pwd:
 
@@ -1092,13 +1509,35 @@ To update the password, you send the updated password to the Account resource:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 For more information about resetting the password, read on.
 
@@ -1153,13 +1592,35 @@ There are three steps to the password reset flow:
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
 
@@ -1184,13 +1645,35 @@ If this is a valid email in an Account associated with this Application, you wil
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
@@ -1226,13 +1709,35 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 **Update the password**
 
@@ -1252,13 +1757,35 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the account.
 
@@ -1290,13 +1817,35 @@ The Password Reset Email is configurable for a Directory.
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. _password-reset-email-templates:
 
@@ -1311,13 +1860,35 @@ Password Reset Email Templates
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. _verify-account-email:
 
@@ -1371,13 +1942,35 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. note::
 
@@ -1406,13 +1999,35 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 4.6. Customizing Stormpath Emails via REST
 ==========================================
@@ -1455,13 +2070,35 @@ For more information about this, see :ref:`password-reset-flow`.
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/
+        :language: vbnet
+
 .. only:: java
+
+  .. literalinclude:: code/java/account_management/
+      :language: java
 
 .. only:: nodejs
 
+  .. literalinclude:: code/nodejs/account_management/
+      :language: javascript
+
 .. only:: php
 
+  .. literalinclude:: code/php/account_management/
+      :language: php
+
 .. only:: python
+
+  .. literalinclude:: code/python/account_management/
+      :language: python
 
 .. _using-email-macros:
 
@@ -1504,7 +2141,7 @@ Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it
 
 ``Is your favorite color blue?``
 
-Hoyouver, if the value could not be found, it would output:
+However, if the value could not be found, it would output:
 
 ``Is your favorite color ${account.customData.favoriteColor}?``
 
