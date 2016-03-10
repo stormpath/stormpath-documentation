@@ -3479,7 +3479,7 @@ It is possible to retrieve other, associated resources using the Organization fo
 
     * - GET /v1/Organization/$ORGANIZATION_ID/$RESOURCE_TYPE?(searchParams)
       - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
-      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``accounts``, and ``groups``.
+      - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Organization are: ``accounts``, and ``groups``.
 
 .. _ref-org-asm:
 
@@ -3492,7 +3492,7 @@ Organization Account Store Mapping
 
 **Description**
 
-In the same way that :ref:`Account Store Mappings<ref-asm>` map Groups, Directories, or Organizations to Applications, so Organization Account Store Mappings map Groups or Directories to Organizations.
+In the same way that :ref:`Account Store Mappings <ref-asm>` map Groups, Directories, or Organizations to Applications, so Organization Account Store Mappings map Groups or Directories to Organizations.
 
 An individual Organization Account Store Mapping resource may be accessed via its Resource URL:
 
