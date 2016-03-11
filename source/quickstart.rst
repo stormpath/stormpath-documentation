@@ -79,7 +79,7 @@ Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multite
 
     First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
 
-        ``install-package Stormpath.SDK``
+        ``PM> install-package Stormpath.SDK``
 
     in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
 
