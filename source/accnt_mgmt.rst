@@ -400,7 +400,7 @@ Or, to find all Groups in the US East region only, you would send this request:
 
   .. note::
 
-  URL encoding will change a space into "%20".
+    URL encoding will change a space into "%20".
 
 .. only:: csharp or vbnet
 
@@ -1338,32 +1338,74 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
-        :language: csharp
+    **Query**
+
+      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req
+          :language: csharp
+
+    **Response**
+
+      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_resp
+          :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
-        :language: vbnet
+    **Query**
+
+      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req
+          :language: vbnet
+
+    **Response**
+
+      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_resp
+          :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  **Query**
+
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req
+      :language: java
+
+  **Response**
+
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  **Query**
+
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_req
+      :language: javascript
+
+  **Response**
+
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  **Query**
+
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req
+      :language: php
+
+  **Response**
+
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_resp
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  **Query**
+
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req
+      :language: python
+
+  **Response**
+
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_resp
       :language: python
 
 .. _managing-account-pwd:
@@ -1400,32 +1442,32 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_req
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req
       :language: python
 
 Which results in the following response:
@@ -1453,32 +1495,32 @@ Which results in the following response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_resp
       :language: python
 
 .. _change-account-pwd:
@@ -1511,32 +1553,32 @@ To update the password, you send the updated password to the Account resource:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/update_account_pwd
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/update_account_pwd
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/update_account_pwd
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/update_account_pwd
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/update_account_pwd
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/update_account_pwd
       :language: python
 
 For more information about resetting the password, read on.
@@ -1594,32 +1636,74 @@ There are three steps to the password reset flow:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/reset1_trigger_req
+        :language: csharp
+
+    .. note::
+
+      It is also possible to specify the Account Store in your Password Reset request:
+
+      .. literalinclude:: code/csharp/account_management/reset1_trigger_req_accountstore
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/reset1_trigger_req
+        :language: vbnet
+
+    .. note::
+
+      It is also possible to specify the Account Store in your Password Reset request:
+
+      .. literalinclude:: code/vbnet/account_management/reset1_trigger_req_accountstore
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/reset1_trigger_req
+      :language: java
+
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset request:
+
+    .. literalinclude:: code/java/account_management/reset1_trigger_req_accountstore
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/reset1_trigger_req
+      :language: javascript
+
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset request:
+
+    .. literalinclude:: code/nodejs/account_management/reset1_trigger_req_accountstore
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/reset1_trigger_req
+      :language: php
+
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset request:
+
+    .. literalinclude:: code/php/account_management/reset1_trigger_req_accountstore
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/reset1_trigger_req
+      :language: python
+
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset request:
+
+    .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore
       :language: python
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
@@ -1647,32 +1731,32 @@ If this is a valid email in an Account associated with this Application, you wil
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/reset1_trigger_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/reset1_trigger_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/reset1_trigger_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/reset1_trigger_resp
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/reset1_trigger_resp
       :language: python
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
@@ -1683,7 +1767,7 @@ So the user would then receive something that looked like this::
 
   Forgot your password?
 
-  you've received a request to reset the password for this email address.
+  You've received a request to reset the password for this email address.
 
   To reset your password please click on this link or cut and paste this
   URL into your browser (link expires in 24 hours):
@@ -1711,32 +1795,32 @@ Once the user clicks this link, your controller should retrieve the token from t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/reset2_verify_token
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/reset2_verify_token
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/reset2_verify_token
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/reset2_verify_token
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/reset2_verify_token
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/reset2_verify_token
       :language: python
 
 **Update the password**
@@ -1759,35 +1843,35 @@ Once the user clicks this link, your controller should retrieve the token from t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/reset3_update
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/reset3_update
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/reset3_update
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/reset3_update
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/reset3_update
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/reset3_update
       :language: python
 
-On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the account.
+On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the Account.
 
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1819,32 +1903,32 @@ The Password Reset Email is configurable for a Directory.
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/enable_pwd_reset_email
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/enable_pwd_reset_email
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/enable_pwd_reset_email
       :language: python
 
 .. _password-reset-email-templates:
@@ -1862,33 +1946,15 @@ Password Reset Email Templates
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
-        :language: csharp
-
   .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/
-        :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
-      :language: java
-
 .. only:: nodejs
-
-  .. literalinclude:: code/nodejs/account_management/
-      :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
-      :language: php
-
 .. only:: python
-
-  .. literalinclude:: code/python/account_management/
-      :language: python
 
 .. _verify-account-email:
 
@@ -1937,39 +2003,87 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
 .. only:: rest
 
+  The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
 
+    http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
+
+  The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
+
+    /v1/accounts/emailVerificationsToken/$VERIFICATION_TOKEN
+
+  To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
+
+  .. code-block:: http
+
+    POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+  Which will return a result that looks like this:
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V
+    Content-Type: application/json;charset=UTF-8;
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V"
+    }
+
+  If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
+
+  If the verification token is not found, a ``404 Not Found`` error is returned with a payload explaining why the attempt failed.
 
 
 .. only:: csharp or vbnet
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/verify_email_req
+        :language: csharp
+
+    .. literalinclude:: code/csharp/account_management/verify_email_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/verify_email_req
+        :language: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/verify_email_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/verify_email_req
+      :language: java
+
+  .. literalinclude:: code/java/account_management/verify_email_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/verify_email_req
+      :language: javascript
+
+  .. literalinclude:: code/nodejs/account_management/verify_email_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/verify_email_req
+      :language: php
+
+  .. literalinclude:: code/php/account_management/verify_email_resp
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/verify_email_req
+      :language: python
+
+  .. literalinclude:: code/python/account_management/verify_email_resp
       :language: python
 
 .. note::
@@ -2001,32 +2115,32 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
+    .. literalinclude:: code/csharp/account_management/resend_verification_email
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/
+    .. literalinclude:: code/vbnet/account_management/resend_verification_email
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
+  .. literalinclude:: code/java/account_management/resend_verification_email
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/
+  .. literalinclude:: code/nodejs/account_management/resend_verification_email
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
+  .. literalinclude:: code/php/account_management/resend_verification_email
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/
+  .. literalinclude:: code/python/account_management/resend_verification_email
       :language: python
 
 4.6. Customizing Stormpath Emails via REST
@@ -2065,40 +2179,48 @@ For more information about this, see :ref:`password-reset-flow`.
 
 .. only:: rest
 
+  The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading.
 
+  First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojvU1m2Nh",
+      "name":"Default Verification Email Template",
+      "description":"This is the verification email template that is associated with the directory.",
+      "fromName":"Jakub Swiatczak",
+      "fromEmailAddress":"change-me@stormpath.com",
+      "subject":"Verify your account",
+      "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
+      "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
+      "mimeType":"text/plain",
+      "defaultModel":{
+        "linkBaseUrl":"https://api.stormpath.com/emailVerificationTokens"
+      }
+    }
+
+  **Message Format**
+
+  The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+
+  **textBody and htmlBody**
+
+  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
 
 .. only:: csharp or vbnet
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/
-        :language: csharp
-
   .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/
-        :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/
-      :language: java
-
 .. only:: nodejs
-
-  .. literalinclude:: code/nodejs/account_management/
-      :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/
-      :language: php
-
 .. only:: python
-
-  .. literalinclude:: code/python/account_management/
-      :language: python
 
 .. _using-email-macros:
 
