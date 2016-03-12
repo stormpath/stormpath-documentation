@@ -334,7 +334,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. only:: php
 
-  .. literalinclude:: code/php/quickstart/retrieve_your_application
+  .. literalinclude:: code/php/quickstart/retrieve_your_application.php
       :language: php
 
 .. only:: java
@@ -446,7 +446,7 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 .. only:: php
 
-  .. literalinclude:: code/php/quickstart/create_an_account
+  .. literalinclude:: code/php/quickstart/create_an_account.php
      :language: php
 
 .. only:: java
@@ -538,7 +538,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: php
 
-  .. literalinclude:: code/php/quickstart/authentication_attempt
+  .. literalinclude:: code/php/quickstart/authentication_attempt.php
       :language: php
 
 .. only:: java
@@ -604,7 +604,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: php
 
-  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result
+  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
       :language: php
 
 3.4. Next Steps

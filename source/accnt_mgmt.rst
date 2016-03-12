@@ -88,32 +88,32 @@ The following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_cloud_dir_req
+    .. literalinclude:: code/csharp/account_management/create_cloud_dir_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_req
+    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_cloud_dir_req
+  .. literalinclude:: code/java/account_management/create_cloud_dir_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_req
+  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_cloud_dir_req
+  .. literalinclude:: code/php/account_management/create_cloud_dir_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_cloud_dir_req
+  .. literalinclude:: code/python/account_management/create_cloud_dir_req.py
       :language: python
 
 Would yield the following response:
@@ -149,32 +149,32 @@ Would yield the following response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_cloud_dir_resp
+    .. literalinclude:: code/csharp/account_management/create_cloud_dir_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_resp
+    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_cloud_dir_resp
+  .. literalinclude:: code/java/account_management/create_cloud_dir_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp
+  .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_cloud_dir_resp
+  .. literalinclude:: code/php/account_management/create_cloud_dir_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_cloud_dir_resp
+  .. literalinclude:: code/python/account_management/create_cloud_dir_resp.py
       :language: python
 
 Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
@@ -360,32 +360,32 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/search_directory_group_description1
+    .. literalinclude:: code/csharp/account_management/search_directory_group_description1.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/search_directory_group_description1
+    .. literalinclude:: code/vbnet/account_management/search_directory_group_description1.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/search_directory_group_description1
+  .. literalinclude:: code/java/account_management/search_directory_group_description1.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/search_directory_group_description1
+  .. literalinclude:: code/nodejs/account_management/search_directory_group_description1.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/search_directory_group_description1
+  .. literalinclude:: code/php/account_management/search_directory_group_description1.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/search_directory_group_description1
+  .. literalinclude:: code/python/account_management/search_directory_group_description1.py
       :language: python
 
 Or, to find all Groups in the US East region only, you would send this request:
@@ -406,32 +406,32 @@ Or, to find all Groups in the US East region only, you would send this request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/search_directory_group_description2
+    .. literalinclude:: code/csharp/account_management/search_directory_group_description2.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/search_directory_group_description2
+    .. literalinclude:: code/vbnet/account_management/search_directory_group_description2.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/search_directory_group_description2
+  .. literalinclude:: code/java/account_management/search_directory_group_description2.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/search_directory_group_description2
+  .. literalinclude:: code/nodejs/account_management/search_directory_group_description2.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/search_directory_group_description2
+  .. literalinclude:: code/php/account_management/search_directory_group_description2.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/search_directory_group_description2
+  .. literalinclude:: code/python/account_management/search_directory_group_description2.py
       :language: python
 
 It can also be included in the customData resource, as a series of key-value relations.
@@ -463,32 +463,32 @@ The following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_group_req
+    .. literalinclude:: code/csharp/account_management/create_group_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_group_req
+    .. literalinclude:: code/vbnet/account_management/create_group_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_group_req
+  .. literalinclude:: code/java/account_management/create_group_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_group_req
+  .. literalinclude:: code/nodejs/account_management/create_group_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_group_req
+  .. literalinclude:: code/php/account_management/create_group_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_group_req
+  .. literalinclude:: code/python/account_management/create_group_req.py
       :language: python
 
 Would yield this response:
@@ -532,32 +532,32 @@ Would yield this response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_group_resp
+    .. literalinclude:: code/csharp/account_management/create_group_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_group_resp
+    .. literalinclude:: code/vbnet/account_management/create_group_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_group_resp
+  .. literalinclude:: code/java/account_management/create_group_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_group_resp
+  .. literalinclude:: code/nodejs/account_management/create_group_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_group_resp
+  .. literalinclude:: code/php/account_management/create_group_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_group_resp
+  .. literalinclude:: code/python/account_management/create_group_resp.py
       :language: python
 
 You can now see how this Group would look in our Tenant:
@@ -648,32 +648,32 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_account_in_dir_req
+    .. literalinclude:: code/csharp/account_management/create_account_in_dir_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_req
+    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_account_in_dir_req
+  .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req
+  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_account_in_dir_req
+  .. literalinclude:: code/php/account_management/create_account_in_dir_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_account_in_dir_req
+  .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
       :language: python
 
 Would yield this response:
@@ -711,32 +711,32 @@ Would yield this response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_account_in_dir_resp
+    .. literalinclude:: code/csharp/account_management/create_account_in_dir_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_resp
+    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_account_in_dir_resp
+  .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp
+  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/create_account_in_dir_resp
+  .. literalinclude:: code/php/account_management/create_account_in_dir_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/create_account_in_dir_resp
+  .. literalinclude:: code/python/account_management/create_account_in_dir_resp.py
       :language: python
 
 Going back to our resource diagram:
@@ -778,32 +778,32 @@ You make the following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/add_account_to_group_req
+    .. literalinclude:: code/csharp/account_management/add_account_to_group_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/add_account_to_group_req
+    .. literalinclude:: code/vbnet/account_management/add_account_to_group_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/add_account_to_group_req
+  .. literalinclude:: code/java/account_management/add_account_to_group_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/add_account_to_group_req
+  .. literalinclude:: code/nodejs/account_management/add_account_to_group_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/add_account_to_group_req
+  .. literalinclude:: code/php/account_management/add_account_to_group_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/add_account_to_group_req
+  .. literalinclude:: code/python/account_management/add_account_to_group_req.py
       :language: python
 
 And get the following response:
@@ -830,27 +830,27 @@ And get the following response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/add_account_to_group_resp
+    .. literalinclude:: code/csharp/account_management/add_account_to_group_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/add_account_to_group_resp
+    .. literalinclude:: code/vbnet/account_management/add_account_to_group_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/add_account_to_group_resp
+  .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp
+  .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp.js
       :language: javascript
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/add_account_to_group_resp
+  .. literalinclude:: code/python/account_management/add_account_to_group_resp.py
       :language: python
 
 This would leave us with the following resources:
@@ -978,32 +978,32 @@ For example, you could add information about this user's current location, like 
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/add_cd_to_account_req
+    .. literalinclude:: code/csharp/account_management/add_cd_to_account_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req
+    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/add_cd_to_account_req
+  .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req
+  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/add_cd_to_account_req
+  .. literalinclude:: code/php/account_management/add_cd_to_account_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/add_cd_to_account_req
+  .. literalinclude:: code/python/account_management/add_cd_to_account_req.py
       :language: python
 
 Which returns the following:
@@ -1031,32 +1031,32 @@ Which returns the following:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/add_cd_to_account_resp
+    .. literalinclude:: code/csharp/account_management/add_cd_to_account_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_resp
+    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/add_cd_to_account_resp
+  .. literalinclude:: code/java/account_management/add_cd_to_account_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp
+  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/add_cd_to_account_resp
+  .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/add_cd_to_account_resp
+  .. literalinclude:: code/python/account_management/add_cd_to_account_resp.py
       :language: python
 
 
@@ -1154,54 +1154,54 @@ Search an Application's Accounts for a Particular Word
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_req
+    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_req
+    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_req.vb
         :language: vbnet
 
     .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_resp
+    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_resp
+    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_req
+  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_req.java
       :language: java
 
-  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp
+  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req
+  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req.js
       :language: javascript
 
-  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_resp
+  .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_req
+  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_req.php
       :language: php
 
-  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_resp
+  .. literalinclude:: code/php/account_management/search_app_accounts_for_word_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req
+  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req.py
       :language: python
 
-  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_resp
+  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_resp.py
       :language: python
 
 Find All the Disabled Accounts in a Directory
@@ -1251,32 +1251,32 @@ Find All the Disabled Accounts in a Directory
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_disabled_req
+    .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_disabled_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_disabled_req
+    .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_disabled_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/search_dir_accounts_for_disabled_req
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_disabled_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_disabled_req
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_disabled_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/search_dir_accounts_for_disabled_req
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_disabled_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req.py
       :language: python
 
 Find All Accounts in a Directory That Were Created on a Particular Day
@@ -1340,72 +1340,72 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
     **Query**
 
-      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req
+      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req.cs
           :language: csharp
 
     **Response**
 
-      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_resp
+      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_resp.cs
           :language: csharp
 
   .. only:: vbnet
 
     **Query**
 
-      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req
+      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req.vb
           :language: vbnet
 
     **Response**
 
-      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_resp
+      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_resp.vb
           :language: vbnet
 
 .. only:: java
 
   **Query**
 
-  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req.java
       :language: java
 
   **Response**
 
-  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_resp
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_resp.java
       :language: java
 
 .. only:: nodejs
 
   **Query**
 
-  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_req
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_req.js
       :language: javascript
 
   **Response**
 
-  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_resp
+  .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_resp.js
       :language: javascript
 
 .. only:: php
 
   **Query**
 
-  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req.php
       :language: php
 
   **Response**
 
-  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_resp
+  .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_resp.php
       :language: php
 
 .. only:: python
 
   **Query**
 
-  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req.py
       :language: python
 
   **Response**
 
-  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_resp
+  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_resp.py
       :language: python
 
 .. _managing-account-pwd:
@@ -1442,32 +1442,32 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_req
+  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req
+  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req
+  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req
+  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req.py
       :language: python
 
 Which results in the following response:
@@ -1495,32 +1495,32 @@ Which results in the following response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_resp
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_resp
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_resp
+  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp
+  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp
+  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_resp
+  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_resp.py
       :language: python
 
 .. _change-account-pwd:
@@ -1553,32 +1553,32 @@ To update the password, you send the updated password to the Account resource:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/update_account_pwd
+    .. literalinclude:: code/csharp/account_management/update_account_pwd.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/update_account_pwd
+    .. literalinclude:: code/vbnet/account_management/update_account_pwd.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/update_account_pwd
+  .. literalinclude:: code/java/account_management/update_account_pwd.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/update_account_pwd
+  .. literalinclude:: code/nodejs/account_management/update_account_pwd.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/update_account_pwd
+  .. literalinclude:: code/php/account_management/update_account_pwd.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/update_account_pwd
+  .. literalinclude:: code/python/account_management/update_account_pwd.py
       :language: python
 
 For more information about resetting the password, read on.
@@ -1636,74 +1636,74 @@ There are three steps to the password reset flow:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/reset1_trigger_req
+    .. literalinclude:: code/csharp/account_management/reset1_trigger_req.cs
         :language: csharp
 
     .. note::
 
       It is also possible to specify the Account Store in your Password Reset request:
 
-      .. literalinclude:: code/csharp/account_management/reset1_trigger_req_accountstore
+      .. literalinclude:: code/csharp/account_management/reset1_trigger_req_accountstore.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/reset1_trigger_req
+    .. literalinclude:: code/vbnet/account_management/reset1_trigger_req.vb
         :language: vbnet
 
     .. note::
 
       It is also possible to specify the Account Store in your Password Reset request:
 
-      .. literalinclude:: code/vbnet/account_management/reset1_trigger_req_accountstore
+      .. literalinclude:: code/vbnet/account_management/reset1_trigger_req_accountstore.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/reset1_trigger_req
+  .. literalinclude:: code/java/account_management/reset1_trigger_req.java
       :language: java
 
   .. note::
 
     It is also possible to specify the Account Store in your Password Reset request:
 
-    .. literalinclude:: code/java/account_management/reset1_trigger_req_accountstore
+    .. literalinclude:: code/java/account_management/reset1_trigger_req_accountstore.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/reset1_trigger_req
+  .. literalinclude:: code/nodejs/account_management/reset1_trigger_req.js
       :language: javascript
 
   .. note::
 
     It is also possible to specify the Account Store in your Password Reset request:
 
-    .. literalinclude:: code/nodejs/account_management/reset1_trigger_req_accountstore
+    .. literalinclude:: code/nodejs/account_management/reset1_trigger_req_accountstore.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/reset1_trigger_req
+  .. literalinclude:: code/php/account_management/reset1_trigger_req.php
       :language: php
 
   .. note::
 
     It is also possible to specify the Account Store in your Password Reset request:
 
-    .. literalinclude:: code/php/account_management/reset1_trigger_req_accountstore
+    .. literalinclude:: code/php/account_management/reset1_trigger_req_accountstore.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/reset1_trigger_req
+  .. literalinclude:: code/python/account_management/reset1_trigger_req.py
       :language: python
 
   .. note::
 
     It is also possible to specify the Account Store in your Password Reset request:
 
-    .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore
+    .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore.py
       :language: python
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
@@ -1731,32 +1731,32 @@ If this is a valid email in an Account associated with this Application, you wil
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/reset1_trigger_resp
+    .. literalinclude:: code/csharp/account_management/reset1_trigger_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/reset1_trigger_resp
+    .. literalinclude:: code/vbnet/account_management/reset1_trigger_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/reset1_trigger_resp
+  .. literalinclude:: code/java/account_management/reset1_trigger_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp
+  .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/reset1_trigger_resp
+  .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/reset1_trigger_resp
+  .. literalinclude:: code/python/account_management/reset1_trigger_resp.py
       :language: python
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
@@ -1795,32 +1795,32 @@ Once the user clicks this link, your controller should retrieve the token from t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/reset2_verify_token
+    .. literalinclude:: code/csharp/account_management/reset2_verify_token.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/reset2_verify_token
+    .. literalinclude:: code/vbnet/account_management/reset2_verify_token.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/reset2_verify_token
+  .. literalinclude:: code/java/account_management/reset2_verify_token.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/reset2_verify_token
+  .. literalinclude:: code/nodejs/account_management/reset2_verify_token.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/reset2_verify_token
+  .. literalinclude:: code/php/account_management/reset2_verify_token.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/reset2_verify_token
+  .. literalinclude:: code/python/account_management/reset2_verify_token.py
       :language: python
 
 **Update the password**
@@ -1843,32 +1843,32 @@ Once the user clicks this link, your controller should retrieve the token from t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/reset3_update
+    .. literalinclude:: code/csharp/account_management/reset3_update.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/reset3_update
+    .. literalinclude:: code/vbnet/account_management/reset3_update.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/reset3_update
+  .. literalinclude:: code/java/account_management/reset3_update.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/reset3_update
+  .. literalinclude:: code/nodejs/account_management/reset3_update.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/reset3_update
+  .. literalinclude:: code/php/account_management/reset3_update.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/reset3_update
+  .. literalinclude:: code/python/account_management/reset3_update.py
       :language: python
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the Account.
@@ -1903,32 +1903,32 @@ The Password Reset Email is configurable for a Directory.
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email
+    .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email
+    .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/enable_pwd_reset_email
+  .. literalinclude:: code/java/account_management/enable_pwd_reset_email.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email
+  .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/enable_pwd_reset_email
+  .. literalinclude:: code/php/account_management/enable_pwd_reset_email.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/enable_pwd_reset_email
+  .. literalinclude:: code/python/account_management/enable_pwd_reset_email.py
       :language: python
 
 .. _password-reset-email-templates:
@@ -2040,50 +2040,50 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/verify_email_req
+    .. literalinclude:: code/csharp/account_management/verify_email_req.cs
         :language: csharp
 
-    .. literalinclude:: code/csharp/account_management/verify_email_resp
+    .. literalinclude:: code/csharp/account_management/verify_email_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/verify_email_req
+    .. literalinclude:: code/vbnet/account_management/verify_email_req.vb
         :language: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/verify_email_resp
+    .. literalinclude:: code/vbnet/account_management/verify_email_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/verify_email_req
+  .. literalinclude:: code/java/account_management/verify_email_req.java
       :language: java
 
-  .. literalinclude:: code/java/account_management/verify_email_resp
+  .. literalinclude:: code/java/account_management/verify_email_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/verify_email_req
+  .. literalinclude:: code/nodejs/account_management/verify_email_req.js
       :language: javascript
 
-  .. literalinclude:: code/nodejs/account_management/verify_email_resp
+  .. literalinclude:: code/nodejs/account_management/verify_email_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/verify_email_req
+  .. literalinclude:: code/php/account_management/verify_email_req.php
       :language: php
 
-  .. literalinclude:: code/php/account_management/verify_email_resp
+  .. literalinclude:: code/php/account_management/verify_email_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/verify_email_req
+  .. literalinclude:: code/python/account_management/verify_email_req.py
       :language: python
 
-  .. literalinclude:: code/python/account_management/verify_email_resp
+  .. literalinclude:: code/python/account_management/verify_email_resp.py
       :language: python
 
 .. note::
@@ -2115,32 +2115,32 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/resend_verification_email
+    .. literalinclude:: code/csharp/account_management/resend_verification_email.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/resend_verification_email
+    .. literalinclude:: code/vbnet/account_management/resend_verification_email.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/resend_verification_email
+  .. literalinclude:: code/java/account_management/resend_verification_email.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/account_management/resend_verification_email
+  .. literalinclude:: code/nodejs/account_management/resend_verification_email.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/account_management/resend_verification_email
+  .. literalinclude:: code/php/account_management/resend_verification_email.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/account_management/resend_verification_email
+  .. literalinclude:: code/python/account_management/resend_verification_email.py
       :language: python
 
 4.6. Customizing Stormpath Emails via REST
