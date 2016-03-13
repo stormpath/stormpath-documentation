@@ -44,4 +44,115 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
       $ chmod go-rwx ~/.stormpath/apiKey.properties
 
+.. only:: csharp or vbnet or python or java or nodejs
+
+  2.3 Installing the SDK
+  ======================
+
+    .. only:: csharp or vbnet
+
+        To set up your environment follow these steps:
+
+        First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
+
+            ``install-package Stormpath.SDK``
+
+        in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
+
+        Next, add these statements at the top of your code:
+
+            .. only:: csharp
+
+                .. literalinclude:: code/csharp/quickstart/using.cs
+                    :language: csharp
+
+            .. only:: vbnet
+
+                .. literalinclude:: code/vbnet/quickstart/using.vb
+                    :language: vbnet
+
+        Asynchronous and Synchronous Support
+        ------------------------------------
+
+        The Stormpath .NET SDK supports the `Task-based asynchronous <https://msdn.microsoft.com/en-us/library/hh873175(v=vs.110).aspx>`_ model by default. Every method that makes a network call ends in ``Async``, takes an optional ``CancellationToken`` parameter, and can be awaited.
+
+        The built-in Visual Studio Console Application template doesn't support making asynchronous calls, but that's easy to fix:
+
+            .. only:: csharp
+
+                .. literalinclude:: code/csharp/quickstart/async_fix.cs
+                    :language: csharp
+
+            .. only:: vbnet
+
+                .. literalinclude:: code/vbnet/quickstart/async_fix.vb
+                    :language: vbnet
+
+        The ``Stormpath.SDK.Sync`` namespace can be used in older applications or situations where synchronous access is required. This namespace provides a synchronous counterpart to each asynchronous method.
+
+        .. note::
+
+            The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
+
+    .. only:: python
+
+        To set up your environment follow these steps:
+
+        First, install the Stormpath Python SDK by running the following command on
+        the terminal:
+
+        .. code:: console
+
+            pip install stormpath
+
+        If you'd like to update to use the latest Stormpath Python SDK, you can
+        instead run:
+
+        .. code:: console
+
+            pip install --upgrade stormpath
+
+    .. only:: java
+
+        To setup up your environment for this quickstart, follow these steps:
+
+        Include the following  dependencies in your Maven ``pom.xml`` file:
+
+        .. code-block:: xml
+
+            ...
+
+            <dependencies>
+
+                ...
+
+                <dependency>
+                    <groupId>com.stormpath.sdk</groupId>
+                    <artifactId>stormpath-sdk-api</artifactId>
+                    <version>###latest_stormpath_version###</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.stormpath.sdk</groupId>
+                    <artifactId>stormpath-sdk-httpclient</artifactId>
+                    <version>###latest_stormpath_version###</version>
+                    <scope>runtime</scope>
+                </dependency>
+
+                ...
+
+            </dependencies>
+
+            ...
+
+    .. only:: nodejs
+
+        To set up your environment follow these steps:
+
+        First, install the Stormpath Node.js SDK by running the following command on
+        the terminal:
+
+        .. code:: console
+
+            npm install stormpath
+
 With these steps complete, you are now ready for the :ref:`Quickstart <quickstart>`.
