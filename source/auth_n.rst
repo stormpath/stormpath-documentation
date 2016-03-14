@@ -17,58 +17,70 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
   :local:
   :depth: 2
 
-Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
+Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate them.
 
 5.1.1. Authenticating An Account
 --------------------------------
 
-After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
+After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the Application is the starting point for authentication attempts.
 
-Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
+.. only:: rest
 
-So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
+  Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
 
-We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
+  So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
-.. code-block:: http
+  We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
 
-  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "type": "basic",
-    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
-    "accountStore": {
-       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-     }
-  }
+    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
-
-On success we would get back the ``href`` for the "Han Solo" Account:
-
-.. code-block:: http
-
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
-  Content-Type: application/json;charset=UTF-8
-
-  {
-    "account": {
-      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
+    {
+      "type": "basic",
+      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
+      "accountStore": {
+         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+       }
     }
-  }
 
-The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
+  We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
-.. note::
+  On success we would get back the ``href`` for the "Han Solo" Account:
 
-  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+  .. code-block:: http
 
-    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
+    Content-Type: application/json;charset=UTF-8
 
-  For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
+    {
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
+      }
+    }
+
+  The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
+
+  .. note::
+
+    Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+
+      ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+
+    For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _how-login-works:
 
@@ -118,7 +130,11 @@ This mirror-master approach has two major benefits: It allows for a user to have
 5.1.3. Manage Who Can Log Into Your Application
 ------------------------------------------------
 
-As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
+As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings.
+
+.. only:: rest
+
+  For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
 The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
 
