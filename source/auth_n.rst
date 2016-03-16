@@ -849,7 +849,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
 
-Once the Authorization Code is gathered, you can send an HTTP POST:
+Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for a access token.  Then you can send an HTTP POST to Stormpath:
 
 .. code-block:: http
 
@@ -860,11 +860,11 @@ Once the Authorization Code is gathered, you can send an HTTP POST:
   {
     "providerData": {
       "providerId": "github",
-      "code": "AUTH_CODE_FROM_GITHUB"
+      "accessToken": "ACCESS_TOKEN_FROM_GITHUB"
     }
   }
 
-Stormpath will use the ``code`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+Stormpath will use the ``accessToken`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 5.3.4 LinkedIn
 ---------------
