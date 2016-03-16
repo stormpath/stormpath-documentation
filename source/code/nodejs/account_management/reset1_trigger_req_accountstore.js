@@ -10,5 +10,5 @@ application.resetPassword(resetPasswordOptions, function (err) {
     return console.error(err);
   }
 
-  console.log('A password reset email has been sent!');
+  console.log('A reset password email has been sent!');
 });

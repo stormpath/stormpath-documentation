@@ -10,6 +10,6 @@ directory.getPasswordPolicy(function (err, passwordPolicy) {
       return console.error(err);
     }
 
-    console.log('Password reset email enabled!');
+    console.log('Reset password email enabled!');
   });
 });
