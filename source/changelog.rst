@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-03-16
+==========
+
+- **Fixed:** Fixed error in :ref:`ID Site Authentication JWT <idsite-auth-jwt>`. ``organizationNameKey`` should be ``onk`` and ``showOrganizationField`` should be ``sof``.
+
 2016-03-04
 ==========
 
