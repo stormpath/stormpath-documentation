@@ -634,16 +634,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       "password" : "uGhd%a8Kl!"
     }
 
-  .. note::
-
-    The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
-
-    Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
-
-    Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
-
-    On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
-
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -675,6 +665,16 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
       :language: python
+
+.. note::
+
+  The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
+
+  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
+
+  Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
+
+  On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
 Would yield this response:
 
