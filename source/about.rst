@@ -44,7 +44,7 @@ You might want to use Stormpath if:
 - You need to store custom user data along with your user’s basic information.
 - You would like to have automatic email verification for new user accounts.
 - You would like to configure and customize password strength rules.
-- You’d like to keep your user data separate from your other applications to increase platform stability and availability.
+- You'd like to keep your user data separate from your other applications to increase platform stability and availability.
 - You are building a service-oriented application, in which multiple independent services need access to the same user data.
 - You are a big organization who would like to use Stormpath, but need to host it yourself (Stormpath offers private deployments).
 
@@ -57,7 +57,7 @@ This section will give a high-level overview of the Stormpath data model, with m
 
 Entities inside Stormpath are referred to as **resources**. Each Stormpath resource has a unique ``href`` associated with it, and contains one or more "attributes". For example, an Account resource has an ``email`` attribute, which contains the value for the email address.
 
-When you :ref:`sign up <set-up>` for Stormpath, a private data space is created for you, which is represented as a :ref:`ref-tenant` resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
+When you :ref:`sign up <quickstart>` for Stormpath, a private data space is created for you, which is represented as a :ref:`ref-tenant` resource in the Stormpath REST API. As a Stormpath customer, you own your Tenant resource and everything in it – Applications, Directories, Accounts, Groups, and so on.
 
 An :ref:`ref-application` resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs.
 

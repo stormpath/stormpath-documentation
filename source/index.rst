@@ -12,7 +12,6 @@ Contents:
    :maxdepth: 2
 
    about
-   setup
    quickstart
    accnt_mgmt
    auth_n

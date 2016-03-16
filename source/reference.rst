@@ -41,8 +41,8 @@ Authentication
 
 Every request to the Stormpath REST API must be authenticated with an **API key** over **HTTPS**. HTTP is not supported. If you want to make a REST request to Stormpath, we assume you have already:
 
-- :ref:`Signed up for Stormpath <set-up>`.
-- :ref:`Obtained your API key <set-up>`.
+- :ref:`Signed up for Stormpath <quickstart-signup>`.
+- :ref:`Obtained your API key <quickstart-create-apikey>`.
 
 When you have an API key, you can choose one of two ways to authenticate with Stormpath:
 
