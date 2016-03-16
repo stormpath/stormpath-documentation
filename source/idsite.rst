@@ -247,11 +247,11 @@ The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body
     - No
     - The state of the application that you need to pass through ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
 
-  * - ``organizationNameKey``
+  * - ``onk``
     - No
     - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
 
-  * - ``showOrganizationField``
+  * - ``sof``
     - No
     - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
 
