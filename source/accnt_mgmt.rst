@@ -634,16 +634,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       "password" : "uGhd%a8Kl!"
     }
 
-  .. note::
-
-    The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
-
-    Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
-
-    Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
-
-    On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
-
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -675,6 +665,16 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
       :language: python
+
+.. note::
+
+  The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
+
+  Plaintext passwords also allow Stormpath to enforce password restrictions in a configurable manner.
+
+  Most importantly, Stormpath never persists or relays plaintext passwords under any circumstances.
+
+  On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
 Would yield this response:
 
@@ -1049,6 +1049,8 @@ Which returns the following:
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
       :language: javascript
 
+  For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
+
 .. only:: php
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
@@ -1185,6 +1187,10 @@ Search an Application's Accounts for a Particular Word
   .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req.js
       :language: javascript
 
+  .. note::
+
+    Matching is case-insensitive. So ``{ q: 'luc' }`` and ``{ q: 'Luc' }`` will return the same results.
+
   .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_resp.js
       :language: javascript
 
@@ -1207,9 +1213,9 @@ Search an Application's Accounts for a Particular Word
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest
+An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
 
-  An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
+.. only:: rest
 
   **Query**
 
@@ -1282,9 +1288,9 @@ Find All the Disabled Accounts in a Directory
 Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest
+:ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
 
-  :ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
+.. only:: rest
 
   **Query**
 
@@ -1672,6 +1678,8 @@ There are three steps to the password reset flow:
 
 .. only:: nodejs
 
+  To trigger the password reset workflow, you call the ``resetPassword(options, callback)`` method on your Application instance:
+
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_req.js
       :language: javascript
 
@@ -1810,6 +1818,8 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: nodejs
 
+  This can be accomplished by calling the ``verifyPasswordResetToken(token, callback)`` method on your Application instance:
+
   .. literalinclude:: code/nodejs/account_management/reset2_verify_token.js
       :language: javascript
 
@@ -1858,6 +1868,8 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: nodejs
 
+  After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can call the ``verifyPasswordResetToken(token, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
+
   .. literalinclude:: code/nodejs/account_management/reset3_update.js
       :language: javascript
 
@@ -1878,16 +1890,16 @@ Manage Password Reset Emails
 
 The Password Reset Email is configurable for a Directory.
 
+There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
+
+- ``resetEmailStatus`` which enables or disables the reset email.
+- ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
+- ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
+- ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
+
+To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
+
 .. only:: rest
-
-  There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
-
-  - ``resetEmailStatus`` which enables or disables the reset email.
-  - ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
-  - ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
-  - ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
-
-  To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
 
   .. code-block:: http
 
@@ -2001,11 +2013,11 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 4.5.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
 
+The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
+
+  http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
+
 .. only:: rest
-
-  The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
-
-    http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
 
   The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
 
@@ -2018,8 +2030,6 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
     POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
-
-  Which will return a result that looks like this:
 
   .. code-block:: http
 
@@ -2034,7 +2044,6 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
   If the validation succeeds, you will receive back the ``href`` for the Account resource which has now been verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
 
   If the verification token is not found, a ``404 Not Found`` error is returned with a payload explaining why the attempt failed.
-
 
 .. only:: csharp or vbnet
 
@@ -2064,11 +2073,19 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 
 .. only:: nodejs
 
+  To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
+
   .. literalinclude:: code/nodejs/account_management/verify_email_req.js
       :language: javascript
 
+  Which will return a result that looks like this:
+
   .. literalinclude:: code/nodejs/account_management/verify_email_resp.js
       :language: javascript
+
+  If the validation succeeds, you will receive an Account instance for the account that was verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
+
+  If the verification token is not found, a error is returned with a message explaining why the attempt failed.
 
 .. only:: php
 
@@ -2129,6 +2146,8 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
       :language: java
 
 .. only:: nodejs
+
+  If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the ``resendVerificationEmail(options, callback)`` method of your Application instance.
 
   .. literalinclude:: code/nodejs/account_management/resend_verification_email.js
       :language: javascript
@@ -2217,6 +2236,8 @@ For more information about this, see :ref:`password-reset-flow`.
 .. only:: java
 
 .. only:: nodejs
+
+The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
 
 .. only:: php
 
