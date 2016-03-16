@@ -860,7 +860,7 @@ This would leave us with the following resources:
   :scale: 100%
   :alt: Final ERD
 
-This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, hoyouver, that there is no association betyouen the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
+This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, however, that there is no association between the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
 
 .. _importing-accounts:
 
@@ -877,7 +877,7 @@ Stormpath also makes it very easy to transfer your existing user directory into 
 
   To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
-Due to the sheer number of database types and the variation betyouen individual data models, the actual importing of users is not something that Stormpath handles at this time. What you recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
+Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What you recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
 
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
