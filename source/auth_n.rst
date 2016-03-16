@@ -136,39 +136,49 @@ As is hopefully evident by now, controlling which Accounts can log in to your Ap
 
   For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
-The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
+  The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
 
-We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
+  We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
 
-.. code-block:: http
+  .. code-block:: http
 
-  HTTP/1.1 200 OK
-  Content-Type: application/json;charset=UTF-8
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
 
-  {
-    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
-    "offset":0,
-    "limit":25,
-    "size":1,
-    "items":[
-      {
-        "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
-        "listIndex":1,
-        "isDefaultAccountStore":true,
-        "isDefaultGroupStore":true,
-        "application":{
-          "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-        },
-        "accountStore":{
-          "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+    {
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
+      "offset":0,
+      "limit":25,
+      "size":1,
+      "items":[
+        {
+          "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+          "listIndex":1,
+          "isDefaultAccountStore":true,
+          "isDefaultGroupStore":true,
+          "application":{
+            "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+          },
+          "accountStore":{
+            "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+          }
         }
-      }
-    ]
-  }
+      ]
+    }
 
-.. note::
+  .. note::
 
-  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
+    Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
+
+.. only:: csharp or vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _create-asm:
 
@@ -181,33 +191,35 @@ We would now like to map a new Account Store that will have the following charac
 #. It will be the default Account Store for any new Accounts.
 #. It will be the default Group Store for any new Groups.
 
-To accomplish this, we will send a ``POST``:
+To accomplish this, we will send this request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST v1/accountStoreMappings HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "listIndex": 0,
-    "isDefaultAccountStore": true,
-    "isDefaultGroupStore": true,
-    "application": {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
+    POST v1/accountStoreMappings HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "application": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
+      }
     }
-  }
 
-We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
+  We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
 
-#. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
-#. ``isDefaultAccountStore`` to ``true`` and
-#. ``isDefaultGroupStore`` to ``true`` as well.
+  #. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
+  #. ``isDefaultAccountStore`` to ``true`` and
+  #. ``isDefaultGroupStore`` to ``true`` as well.
 
-So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+  So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
 
 If we go back to the example from the :ref:`Account Management chapter<account-mgmt>`, we can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
@@ -218,11 +230,11 @@ If we go back to the example from the :ref:`Account Management chapter<account-m
 Updating an Existing Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update.
+Updating an existing Account Store simply involves sending the attributes that you would like to update.
 
 **Changing Login Priority**
 
-For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1.
+For example, if you want to update an existing Account Store to now have highest login priority, send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1.
 
 **Changing the Default Account or Group Store**
 
