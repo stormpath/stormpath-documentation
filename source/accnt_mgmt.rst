@@ -1049,6 +1049,8 @@ Which returns the following:
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
       :language: javascript
 
+  For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
+
 .. only:: php
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
