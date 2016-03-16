@@ -1,0 +1,1 @@
+Email for account https://api.stormpath.com/v1/accounts/6XLbNaUsKm3E0kXMTTr10V verified!
