@@ -8,7 +8,7 @@ Now that you've decided that Stormpath is right for you, let's get you set up an
 
 If you have already signed-up for Stormpath and downloaded an API Key, you can jump to:
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   - :ref:`Installing the SDK <quickstart-install-sdk>`
 
@@ -44,176 +44,169 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
   Your API Key should be stored in a secure location. For example, you could place it in a hidden ``stormpath`` directory:
 
-    .. code-block:: bash
+  .. code-block:: bash
 
-      $ mkdir ~/.stormpath
-      $ mv ~/Downloads/apiKey.properties ~/.stormpath/
+    $ mkdir ~/.stormpath
+    $ mv ~/Downloads/apiKey.properties ~/.stormpath/
 
   We also recommend that you change the file's permissions to prevent access by other users. You can do this by running:
 
-    .. code-block:: bash
+  .. code-block:: bash
 
-      $ chmod go-rwx ~/.stormpath/apiKey.properties
+    $ chmod go-rwx ~/.stormpath/apiKey.properties
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   .. _quickstart-install-sdk:
 
   2.3 Installing the SDK
   ======================
 
-    .. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-        To set up your environment follow these steps:
+    To set up your environment follow these steps:
 
-        First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
+    First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
 
-            ``install-package Stormpath.SDK``
+      ``install-package Stormpath.SDK``
 
-        in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
+    in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
 
-        Next, add these statements at the top of your code:
+    Next, add these statements at the top of your code:
 
-            .. only:: csharp
+    .. only:: csharp
 
-                .. literalinclude:: code/csharp/quickstart/using.cs
-                    :language: csharp
+      .. literalinclude:: code/csharp/quickstart/using.cs
+        :language: csharp
 
-            .. only:: vbnet
+      .. only:: vbnet
 
-                .. literalinclude:: code/vbnet/quickstart/using.vb
-                    :language: vbnet
+        .. literalinclude:: code/vbnet/quickstart/using.vb
+          :language: vbnet
 
-        Asynchronous and Synchronous Support
-        ------------------------------------
+    Asynchronous and Synchronous Support
+    ------------------------------------
 
-        The Stormpath .NET SDK supports the `Task-based asynchronous <https://msdn.microsoft.com/en-us/library/hh873175(v=vs.110).aspx>`_ model by default. Every method that makes a network call ends in ``Async``, takes an optional ``CancellationToken`` parameter, and can be awaited.
+    The Stormpath .NET SDK supports the `Task-based asynchronous <https://msdn.microsoft.com/en-us/library/hh873175(v=vs.110).aspx>`_ model by default. Every method that makes a network call ends in ``Async``, takes an optional ``CancellationToken`` parameter, and can be awaited.
 
-        The built-in Visual Studio Console Application template doesn't support making asynchronous calls, but that's easy to fix:
+    The built-in Visual Studio Console Application template doesn't support making asynchronous calls, but that's easy to fix:
 
-            .. only:: csharp
+      .. only:: csharp
 
-                .. literalinclude:: code/csharp/quickstart/async_fix.cs
-                    :language: csharp
+        .. literalinclude:: code/csharp/quickstart/async_fix.cs
+          :language: csharp
 
-            .. only:: vbnet
+      .. only:: vbnet
 
-                .. literalinclude:: code/vbnet/quickstart/async_fix.vb
-                    :language: vbnet
+        .. literalinclude:: code/vbnet/quickstart/async_fix.vb
+          :language: vbnet
 
-        The ``Stormpath.SDK.Sync`` namespace can be used in older applications or situations where synchronous access is required. This namespace provides a synchronous counterpart to each asynchronous method.
+    The ``Stormpath.SDK.Sync`` namespace can be used in older applications or situations where synchronous access is required. This namespace provides a synchronous counterpart to each asynchronous method.
 
-        .. note::
+    .. note::
+      The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
 
-            The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
+  .. only:: python
 
-    .. only:: python
+    To set up your environment follow these steps:
 
-        To set up your environment follow these steps:
+    First, install the Stormpath Python SDK by running the following command on
+    the terminal:
 
-        First, install the Stormpath Python SDK by running the following command on
-        the terminal:
+    .. code:: console
 
-        .. code:: console
+      pip install stormpath
 
-            pip install stormpath
+    If you'd like to update to use the latest Stormpath Python SDK, you can
+    instead run:
 
-        If you'd like to update to use the latest Stormpath Python SDK, you can
-        instead run:
+    .. code:: console
 
-        .. code:: console
+      pip install --upgrade stormpath
 
-            pip install --upgrade stormpath
+  .. only:: java
 
-    .. only:: java
+    To setup your environment for this quickstart, follow these steps:
 
-        To setup your environment for this quickstart, follow these steps:
+    Include the following dependencies in your Maven ``pom.xml`` file:
 
-        Include the following dependencies in your Maven ``pom.xml`` file:
+    .. code-block:: xml
 
-        .. code-block:: xml
+      ...
 
-            ...
+      <dependencies>
 
-            <dependencies>
+          ...
 
-                ...
+          <dependency>
+              <groupId>com.stormpath.sdk</groupId>
+              <artifactId>stormpath-sdk-api</artifactId>
+              <version>###latest_stormpath_version###</version>
+          </dependency>
+          <dependency>
+              <groupId>com.stormpath.sdk</groupId>
+              <artifactId>stormpath-sdk-httpclient</artifactId>
+              <version>###latest_stormpath_version###</version>
+              <scope>runtime</scope>
+          </dependency>
 
-                <dependency>
-                    <groupId>com.stormpath.sdk</groupId>
-                    <artifactId>stormpath-sdk-api</artifactId>
-                    <version>###latest_stormpath_version###</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.stormpath.sdk</groupId>
-                    <artifactId>stormpath-sdk-httpclient</artifactId>
-                    <version>###latest_stormpath_version###</version>
-                    <scope>runtime</scope>
-                </dependency>
+          ...
 
-                ...
+      </dependencies>
 
-            </dependencies>
+      ...
 
-            ...
+  .. only:: nodejs
 
-    .. only:: nodejs
+    To set up your environment follow these steps:
 
-        To set up your environment follow these steps:
+    First, install the Stormpath Node.js SDK by running the following command on
+    the terminal:
 
-        First, install the Stormpath Node.js SDK by running the following command on
-        the terminal:
+    .. code:: console
 
-        .. code:: console
-
-            npm install stormpath
+      npm install stormpath
 
 .. only:: rest
 
-    These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps above, and now have:
+  These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps above, and now have:
 
 .. only:: csharp or vbnet
 
-    These instructions assume that you have Visual Studio installed on your system and that you have already completed the steps above, and now have:
+  These instructions assume that you have Visual Studio installed on your system and that you have already completed the steps above, and now have:
 
 .. only:: python
 
-    These instructions assume that you have
-    `pip <http://pip.readthedocs.org/en/stable/>`_ installed on your system and
-    that you have already completed the steps above, and now have:
+  These instructions assume that you have
+  `pip <http://pip.readthedocs.org/en/stable/>`_ installed on your system and
+  that you have already completed the steps above, and now have:
 
 .. only:: java
 
-    These instructions assume that you have
-    `java <http://java.com>`_ and `maven <https://maven.apache.org/index.html>`_ installed on your system and that you have
-    already completed the steps above, and now have:
+  These instructions assume that you have
+  `java <http://java.com>`_ and `maven <https://maven.apache.org/index.html>`_ installed on your system and that you have
+  already completed the steps above, and now have:
 
 - A Stormpath account
-
 - A Stormpath API Key generated and downloaded onto your system
-
 - A Stormpath Tenant resource. The following associated resources were also automatically created:
-
   - Two Application resources: One called "My Application", and the other called "Stormpath"
-
   - Two Directory resources: "My Application Directory" and "Stormpath Administrators"
-
-    - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
-
+  - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
   - An Account resource representing your Stormpath Administrator user.
 
 .. figure:: images/quickstart/default_resources.png
-    :align: center
-    :scale: 20%
-    :alt: Default Stormpath Resources
+  :align: center
+  :scale: 20%
+  :alt: Default Stormpath Resources
 
-    *These are the default resources that exist in your Tenant right after registration*
+  *These are the default resources that exist in your Tenant right after registration*
 
 In this section of the quickstart, you will:
 
--  :ref:`Retrieve your Application <quickstart-retrieve-app>`.
--  :ref:`Create a User Account <quickstart-create-account>`.
--  :ref:`Authenticate a User Account <quickstart-auth-user>`.
+- :ref:`Retrieve your Application <quickstart-retrieve-app>`.
+- :ref:`Create a User Account <quickstart-create-account>`.
+- :ref:`Authenticate a User Account <quickstart-auth-user>`.
 
 Stormpath also can do a lot more (like :ref:`Groups <group-mgmt>`, :ref:`Multitenancy <multitenancy>`, and :ref:`Social Integration <social-authn>`) which you can learn more about later in this guide.
 
@@ -221,7 +214,7 @@ Let's get started!
 
 .. _quickstart-retrieve-app:
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   2.4. Retrieve Your Application
   ===============================
@@ -231,68 +224,67 @@ Let's get started!
   2.3. Retrieve Your Application
   ===============================
 
-
 Before you can create user Accounts, you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
 .. only:: csharp or vbnet
 
-    The first thing you need to connect to the Stormpath API is an ``IClient`` object:
+  The first thing you need to connect to the Stormpath API is an ``IClient`` object:
 
-    .. only:: csharp
+  .. only:: csharp
 
-        .. literalinclude:: code/csharp/quickstart/initialize_client.cs
-            :language: csharp
+    .. literalinclude:: code/csharp/quickstart/initialize_client.cs
+      :language: csharp
 
-    .. only:: vbnet
+  .. only:: vbnet
 
-        .. literalinclude:: code/vbnet/quickstart/initialize_client.vb
-            :language: vbnet
+    .. literalinclude:: code/vbnet/quickstart/initialize_client.vb
+      :language: vbnet
 
-    .. note::
+  .. note::
 
-        You can skip building the ``IClientApiKey`` object and the call to ``SetApiKey()`` if you store your API Key and Secret in environment variables, or put the ``apiKey.properties`` file in the default location (``~\.stormpath\apiKey.properties``). Calling ``IClientBuilder.Build()`` without specifying an API Key will check the default location.
+    You can skip building the ``IClientApiKey`` object and the call to ``SetApiKey()`` if you store your API Key and Secret in environment variables, or put the ``apiKey.properties`` file in the default location (``~\.stormpath\apiKey.properties``). Calling ``IClientBuilder.Build()`` without specifying an API Key will check the default location.
 
-    Once you have an ``IClient`` instance, keep it around! You should only create it **once** per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
+  Once you have an ``IClient`` instance, keep it around! You should only create it **once** per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
 
 .. only:: python
 
-    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+  The first thing you need to connect to the Stormpath API is a ``Client`` object:
 
-    .. literalinclude:: code/python/quickstart/initialize_client.py
-        :language: python
+  .. literalinclude:: code/python/quickstart/initialize_client.py
+    :language: python
 
-    Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
+  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: java
 
-    .. note::
+  .. note::
 
-      The following assumes that you have a file name: ``~/.stormpath/apiKey.properties`` that contains your api key id and your api key secret in this format:
+    The following assumes that you have a file name: ``~/.stormpath/apiKey.properties`` that contains your api key id and your api key secret in this format:
 
-      .. code-block:: console
+    .. code-block:: console
 
-          apiKey.id = <your api key id>
-          apiKey.secret = <your api key secret>
+      apiKey.id = <your api key id>
+      apiKey.secret = <your api key secret>
 
-    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+  The first thing you need to connect to the Stormpath API is a ``Client`` object:
 
-    .. literalinclude:: code/java/quickstart/initialize_client.java
-        :language: java
+  .. literalinclude:: code/java/quickstart/initialize_client.java
+    :language: java
 
-    Once you have a ``Client`` instance, keep it around! You should only created it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
+  Once you have a ``Client`` instance, keep it around! You should only created it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: nodejs
 
-    The first thing you need to connect to the Stormpath API is a ``Client`` object:
+  The first thing you need to connect to the Stormpath API is a ``Client`` object:
 
-    .. literalinclude:: code/nodejs/quickstart/initialize_client.js
-        :language: javascript
+  .. literalinclude:: code/nodejs/quickstart/initialize_client.js
+    :language: javascript
 
-    Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
+  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: rest
 
-    Before you can get your Application, you must get the location of your Tenant from Stormpath, like so:
+  Before you can get your Application, you must get the location of your Tenant from Stormpath, like so:
 
 .. only:: rest
 
@@ -312,9 +304,9 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   .. code-block:: http
 
-      HTTP/1.1 302 Found
-      Location: https://api.stormpath.com/v1/tenants/$TENANT_ID
-      Content-Length: 0
+    HTTP/1.1 302 Found
+    Location: https://api.stormpath.com/v1/tenants/$TENANT_ID
+    Content-Length: 0
 
   Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
 
@@ -367,64 +359,64 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 .. only:: php
 
   .. literalinclude:: code/php/quickstart/retrieve_your_application.php
-      :language: php
+    :language: php
 
 .. only:: java
 
-    Next, use the ``getApplications`` method on the ``Client`` and use criteria to search for the "My Application" Application:
+  Next, use the ``getApplications`` method on the ``Client`` and use criteria to search for the "My Application" Application:
 
-    .. literalinclude:: code/java/quickstart/retrieve_your_application.java
-        :language: java
+  .. literalinclude:: code/java/quickstart/retrieve_your_application.java
+    :language: java
 
 .. only:: csharp or vbnet
 
-    Next, use the ``GetApplications()`` collection to search for the "My Application" Application:
+  Next, use the ``GetApplications()`` collection to search for the "My Application" Application:
 
-    .. only:: csharp
+  .. only:: csharp
 
-        .. literalinclude:: code/csharp/quickstart/retrieve_your_application.cs
-            :language: csharp
+    .. literalinclude:: code/csharp/quickstart/retrieve_your_application.cs
+      :language: csharp
 
-    .. only:: vbnet
+  .. only:: vbnet
 
-        .. literalinclude:: code/vbnet/quickstart/retrieve_your_application.vb
-            :language: vbnet
+    .. literalinclude:: code/vbnet/quickstart/retrieve_your_application.vb
+      :language: vbnet
 
-    .. note::
+  .. note::
 
-        ``GetApplications()`` returns an ``IAsyncQueryable``, which represents a Stormpath collection resource that can be queried using LINQ-to-Stormpath. No network request is made to the Stormpath API until you call a method that enumerates the collection, such as ``SingleAsync()`` or ``ToListAsync()``.
+    ``GetApplications()`` returns an ``IAsyncQueryable``, which represents a Stormpath collection resource that can be queried using LINQ-to-Stormpath. No network request is made to the Stormpath API until you call a method that enumerates the collection, such as ``SingleAsync()`` or ``ToListAsync()``.
 
-        **Tip**: If you're using the ``Stormpath.SDK.Sync`` namespace, call the ``Synchronously()`` method after calling ``GetApplications()``. Then use standard LINQ result operators like ``Single()`` to synchronously execute the query.
+    **Tip**: If you're using the ``Stormpath.SDK.Sync`` namespace, call the ``Synchronously()`` method after calling ``GetApplications()``. Then use standard LINQ result operators like ``Single()`` to synchronously execute the query.
 
-    ``myApp`` is an ``IApplication`` object, which represents a Stormpath Application resource as a .NET type. We'll use this object to create a new user Account and then authenticate it.
+  ``myApp`` is an ``IApplication`` object, which represents a Stormpath Application resource as a .NET type. We'll use this object to create a new user Account and then authenticate it.
 
 .. only:: python
 
-    Next, use the ``client.applications`` generator to search for the "My
-    Application" Application:
+  Next, use the ``client.applications`` generator to search for the "My
+  Application" Application:
 
-    .. literalinclude:: code/python/quickstart/retrieve_your_application.py
-        :language: python
+  .. literalinclude:: code/python/quickstart/retrieve_your_application.py
+    :language: python
 
-    ``application`` is an ``Application`` object, which represents a Stormpath
-    Application resource as a Python class.  We'll use this object to create a
-    new user Account and then authenticate it.
+  ``application`` is an ``Application`` object, which represents a Stormpath
+  Application resource as a Python class.  We'll use this object to create a
+  new user Account and then authenticate it.
 
 .. only:: nodejs
 
-    Next, use the ``client.getApplications`` method to search for the "My
-    Application" Application:
+  Next, use the ``client.getApplications`` method to search for the "My
+  Application" Application:
 
-    .. literalinclude:: code/nodejs/quickstart/retrieve_your_application.js
-      :language: javascript
+  .. literalinclude:: code/nodejs/quickstart/retrieve_your_application.js
+    :language: javascript
 
-    ``application`` is an ``Application`` object, which represents a Stormpath
-    Application resource.  We'll use this object to create a new user Account
-    and then authenticate it.
+  ``application`` is an ``Application`` object, which represents a Stormpath
+  Application resource.  We'll use this object to create a new user Account
+  and then authenticate it.
 
 .. _quickstart-create-account:
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   2.5. Create a User Account
   ==========================
@@ -488,44 +480,44 @@ Now that we've created an Application, let's create a user Account so someone ca
 .. only:: php
 
   .. literalinclude:: code/php/quickstart/create_an_account.php
-     :language: php
+    :language: php
 
 .. only:: java
 
-    To do this, you'll need to use your ``application`` created in the previous step.
+  To do this, you'll need to use your ``application`` created in the previous step.
 
-    .. literalinclude:: code/java/quickstart/create_an_account.java
-      :language: java
+  .. literalinclude:: code/java/quickstart/create_an_account.java
+    :language: java
 
 .. only:: csharp or vbnet
 
-    .. only:: csharp
+  .. only:: csharp
 
-        .. literalinclude:: code/csharp/quickstart/create_an_account.cs
-            :language: csharp
+    .. literalinclude:: code/csharp/quickstart/create_an_account.cs
+      :language: csharp
 
-    .. only:: vbnet
+  .. only:: vbnet
 
-        .. literalinclude:: code/vbnet/quickstart/create_an_account.vb
-            :language: vbnet
+    .. literalinclude:: code/vbnet/quickstart/create_an_account.vb
+      :language: vbnet
 
-    ``CreateAccountAsync()`` sends a request to Stormpath and returns an ``IAccount`` (after being awaited). Like ``IApplication``, ``IAccount`` is the .NET type that represents a Stormpath Account resource.
+  ``CreateAccountAsync()`` sends a request to Stormpath and returns an ``IAccount`` (after being awaited). Like ``IApplication``, ``IAccount`` is the .NET type that represents a Stormpath Account resource.
 
 .. only:: python
 
-    .. literalinclude:: code/python/quickstart/create_an_account.py
-        :language: python
+  .. literalinclude:: code/python/quickstart/create_an_account.py
+    :language: python
 
-    The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application``, ``Account`` is the Python class that represents a Stormpath Account resource.
+  The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application``, ``Account`` is the Python class that represents a Stormpath Account resource.
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/quickstart/create_an_account.js
-      :language: javascript
+    :language: javascript
 
 .. _quickstart-auth-user:
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   2.6. Authenticate a User Account
   ================================
@@ -556,21 +548,23 @@ Now we have a user Account that can use your Application. But how do you authent
 
   We are sending a :ref:`Login Attempt resource <ref-loginattempts>`, which has two attributes: ``type`` and ``value``.
 
-  The ``type`` attribute must equal ``basic``. The ``value`` attribute must equal the result of the following (pseudo code) logic::
+  The ``type`` attribute must equal ``basic``. The ``value`` attribute must equal the result of the following (pseudo code) logic:
 
-      String concatenated = username + ':' + plain_text_password;
-      byte[] bytes = concatenated.to_byte_array();
-      String value = base64_encode( bytes );
+  .. code-block:: java
+
+    String concatenated = username + ':' + plain_text_password;
+    byte[] bytes = concatenated.to_byte_array();
+    String value = base64_encode( bytes );
 
   For example, if you used the ``tk421`` username and ``Changeme1`` password from above when creating your first account, you might compute the ``value`` using `OpenSSL <http://www.openssl.org/>`__ this way:
 
   .. code-block:: bash
 
-      echo -n "tk421:Changeme1" | openssl base64
+    echo -n "tk421:Changeme1" | openssl base64
 
   This would produce the following Base64 result::
 
-      dGs0MjE6Q2hhbmdlbWUx
+    dGs0MjE6Q2hhbmdlbWUx
 
   This is what we passed as the ``value`` attribute.
 
@@ -589,12 +583,12 @@ Now we have a user Account that can use your Application. But how do you authent
 .. only:: php
 
   .. literalinclude:: code/php/quickstart/authentication_attempt.php
-      :language: php
+    :language: php
 
 .. only:: java
 
   .. literalinclude:: code/java/quickstart/authentication_attempt.java
-      :language: java
+    :language: java
 
   If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
 
@@ -602,28 +596,28 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: csharp or vbnet
 
-    .. only:: csharp
+  .. only:: csharp
 
-        .. literalinclude:: code/csharp/quickstart/authentication_attempt.cs
-            :language: csharp
+    .. literalinclude:: code/csharp/quickstart/authentication_attempt.cs
+      :language: csharp
 
-    .. only:: vbnet
+  .. only:: vbnet
 
-        .. literalinclude:: code/vbnet/quickstart/authentication_attempt.vb
-            :language: vbnet
+    .. literalinclude:: code/vbnet/quickstart/authentication_attempt.vb
+      :language: vbnet
 
-    If the authentication attempt is successful, you'll get an ``IAuthenticationResult``, which contains a link to the Account details.
+  If the authentication attempt is successful, you'll get an ``IAuthenticationResult``, which contains a link to the Account details.
 
-    If the authentication attempt fails, a ``ResourceException`` will be thrown. The ``Message`` and ``DeveloperMessage`` properties of the exception will contain details about the authentication failure.
+  If the authentication attempt fails, a ``ResourceException`` will be thrown. The ``Message`` and ``DeveloperMessage`` properties of the exception will contain details about the authentication failure.
 
 .. only:: python
 
-    .. literalinclude:: code/python/quickstart/authentication_attempt.py
-        :language: python
+  .. literalinclude:: code/python/quickstart/authentication_attempt.py
+    :language: python
 
-    If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
+  If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
 
-    If the authentication attempt fails, an ``Error`` will be thrown. The ``user_message`` and ``developer_message`` properties of the exception will contain details about the authentication failure.
+  If the authentication attempt fails, an ``Error`` will be thrown. The ``user_message`` and ``developer_message`` properties of the exception will contain details about the authentication failure.
 
 .. only:: nodejs
 
@@ -633,8 +627,6 @@ Now we have a user Account that can use your Application. But how do you authent
     If the authentication attempt fails, an ``Error`` will be returned as the first argument of the callback. The ``userMessage`` and ``developerMessage`` properties of the error will contain details about the authentication failure.
 
     If the authentication attempt is successful, you'll get an ``AuthenticationResult`` as the second argument of the callback, which contains a link to the Account details.
-
-.. there isn't always a response; in dotnet and java it's a thrown exception
 
 .. only:: rest
 
@@ -653,9 +645,9 @@ Now we have a user Account that can use your Application. But how do you authent
 .. only:: php
 
   .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
-      :language: php
+    :language: php
 
-.. only:: csharp or vbnet or python or java or nodejs
+.. only:: not rest
 
   2.7. Next Steps
   ===============
