@@ -55,117 +55,129 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
     $ chmod go-rwx ~/.stormpath/apiKey.properties
 
-.. only:: not rest
+.. _quickstart-install-sdk:
 
-  .. _quickstart-install-sdk:
+2.3 Installing the SDK
+======================
 
-  2.3 Installing the SDK
-  ======================
+.. only:: rest
 
-  .. only:: csharp or vbnet
+  This step is not relevant to the REST Product Guide, but would be required if you were using one of our SDKs. Currently, Stormpath offers the following SDKs:
 
-    To set up your environment follow these steps:
+  - C#
+  - Java
+  - Node.js
+  - Python
+  - VB.net
 
-    First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
+  .. todo::
 
-      ``install-package Stormpath.SDK``
+    Add hyperlinks!
 
-    in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
+.. only:: csharp or vbnet
 
-    Next, add these statements at the top of your code:
+  To set up your environment follow these steps:
+
+  First, create a new Console Application project in Visual Studio. Install the Stormpath .NET SDK by running
+
+    ``install-package Stormpath.SDK``
+
+  in the Package Manager Console. If you prefer, you can also use the NuGet Package Manager to install the Stormpath.SDK package.
+
+  Next, add these statements at the top of your code:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/quickstart/using.cs
+      :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/quickstart/using.vb
+        :language: vbnet
+
+  Asynchronous and Synchronous Support
+  ------------------------------------
+
+  The Stormpath .NET SDK supports the `Task-based asynchronous <https://msdn.microsoft.com/en-us/library/hh873175(v=vs.110).aspx>`_ model by default. Every method that makes a network call ends in ``Async``, takes an optional ``CancellationToken`` parameter, and can be awaited.
+
+  The built-in Visual Studio Console Application template doesn't support making asynchronous calls, but that's easy to fix:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/quickstart/using.cs
+      .. literalinclude:: code/csharp/quickstart/async_fix.cs
         :language: csharp
 
-      .. only:: vbnet
+    .. only:: vbnet
 
-        .. literalinclude:: code/vbnet/quickstart/using.vb
-          :language: vbnet
+      .. literalinclude:: code/vbnet/quickstart/async_fix.vb
+        :language: vbnet
 
-    Asynchronous and Synchronous Support
-    ------------------------------------
+  The ``Stormpath.SDK.Sync`` namespace can be used in older applications or situations where synchronous access is required. This namespace provides a synchronous counterpart to each asynchronous method.
 
-    The Stormpath .NET SDK supports the `Task-based asynchronous <https://msdn.microsoft.com/en-us/library/hh873175(v=vs.110).aspx>`_ model by default. Every method that makes a network call ends in ``Async``, takes an optional ``CancellationToken`` parameter, and can be awaited.
+  .. note::
+    The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
 
-    The built-in Visual Studio Console Application template doesn't support making asynchronous calls, but that's easy to fix:
+.. only:: python
 
-      .. only:: csharp
+  To set up your environment follow these steps:
 
-        .. literalinclude:: code/csharp/quickstart/async_fix.cs
-          :language: csharp
+  First, install the Stormpath Python SDK by running the following command on
+  the terminal:
 
-      .. only:: vbnet
+  .. code:: console
 
-        .. literalinclude:: code/vbnet/quickstart/async_fix.vb
-          :language: vbnet
+    pip install stormpath
 
-    The ``Stormpath.SDK.Sync`` namespace can be used in older applications or situations where synchronous access is required. This namespace provides a synchronous counterpart to each asynchronous method.
+  If you'd like to update to use the latest Stormpath Python SDK, you can
+  instead run:
 
-    .. note::
-      The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
+  .. code:: console
 
-  .. only:: python
+    pip install --upgrade stormpath
 
-    To set up your environment follow these steps:
+.. only:: java
 
-    First, install the Stormpath Python SDK by running the following command on
-    the terminal:
+  To setup your environment for this quickstart, follow these steps:
 
-    .. code:: console
+  Include the following dependencies in your Maven ``pom.xml`` file:
 
-      pip install stormpath
+  .. code-block:: xml
 
-    If you'd like to update to use the latest Stormpath Python SDK, you can
-    instead run:
+    ...
 
-    .. code:: console
+    <dependencies>
 
-      pip install --upgrade stormpath
+        ...
 
-  .. only:: java
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-api</artifactId>
+            <version>###latest_stormpath_version###</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-httpclient</artifactId>
+            <version>###latest_stormpath_version###</version>
+            <scope>runtime</scope>
+        </dependency>
 
-    To setup your environment for this quickstart, follow these steps:
+        ...
 
-    Include the following dependencies in your Maven ``pom.xml`` file:
+    </dependencies>
 
-    .. code-block:: xml
+    ...
 
-      ...
+.. only:: nodejs
 
-      <dependencies>
+  To set up your environment follow these steps:
 
-          ...
+  First, install the Stormpath Node.js SDK by running the following command on
+  the terminal:
 
-          <dependency>
-              <groupId>com.stormpath.sdk</groupId>
-              <artifactId>stormpath-sdk-api</artifactId>
-              <version>###latest_stormpath_version###</version>
-          </dependency>
-          <dependency>
-              <groupId>com.stormpath.sdk</groupId>
-              <artifactId>stormpath-sdk-httpclient</artifactId>
-              <version>###latest_stormpath_version###</version>
-              <scope>runtime</scope>
-          </dependency>
+  .. code:: console
 
-          ...
-
-      </dependencies>
-
-      ...
-
-  .. only:: nodejs
-
-    To set up your environment follow these steps:
-
-    First, install the Stormpath Node.js SDK by running the following command on
-    the terminal:
-
-    .. code:: console
-
-      npm install stormpath
+    npm install stormpath
 
 .. only:: rest
 
@@ -214,15 +226,8 @@ Let's get started!
 
 .. _quickstart-retrieve-app:
 
-.. only:: not rest
-
-  2.4. Retrieve Your Application
-  ===============================
-
-.. only:: rest
-
-  2.3. Retrieve Your Application
-  ===============================
+2.4. Retrieve Your Application
+===============================
 
 Before you can create user Accounts, you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
@@ -416,15 +421,8 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. _quickstart-create-account:
 
-.. only:: not rest
-
-  2.5. Create a User Account
-  ==========================
-
-.. only:: rest
-
-  2.4. Create a User Account
-  ==========================
+2.5. Create a User Account
+==========================
 
 Now that we've created an Application, let's create a user Account so someone can log in to (i.e. authenticate with) the Application.
 
@@ -517,15 +515,8 @@ Now that we've created an Application, let's create a user Account so someone ca
 
 .. _quickstart-auth-user:
 
-.. only:: not rest
-
-  2.6. Authenticate a User Account
-  ================================
-
-.. only:: rest
-
-  2.5. Authenticate a User Account
-  ================================
+2.6. Authenticate a User Account
+================================
 
 Now we have a user Account that can use your Application. But how do you authenticate an Account logging in to the Application?
 
@@ -647,15 +638,8 @@ Now we have a user Account that can use your Application. But how do you authent
   .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
     :language: php
 
-.. only:: not rest
-
-  2.7. Next Steps
-  ===============
-
-.. only:: rest
-
-  2.6. Next Steps
-  ===============
+2.7. Next Steps
+===============
 
 We hope you found this Quickstart helpful!
 
