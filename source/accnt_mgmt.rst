@@ -1888,6 +1888,13 @@ On success, the response will include a link to the Account that the password wa
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. warning:: php
+
+  .. note::
+
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
+    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+
 The Password Reset Email is configurable for a Directory.
 
 There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
@@ -1899,7 +1906,7 @@ There is a set of properties on the :ref:`ref-password-policy` resource that def
 
 To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
 
-.. only:: rest
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -1933,7 +1940,7 @@ To control whether any email is sent or not is simply a matter of setting the ap
   .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email.js
       :language: javascript
 
-.. only:: php
+.. only:: phpnotyet
 
   .. literalinclude:: code/php/account_management/enable_pwd_reset_email.php
       :language: php
