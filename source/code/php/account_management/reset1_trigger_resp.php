@@ -1,11 +1,11 @@
 object(Stormpath\Resource\Account)
     public 'href' => string 'https://api.stormpath.com/v1/accounts/4aOb1hLvLHIB0PWObEnydJ'
-    public 'username' => string 'Sheev.Palpatine@galacticempire.com'
-    public 'email' => string 'Sheev.Palpatine@galacticempire.com'
-    public 'givenName' => string 'Sheev'
+    public 'username' => string 'jlpicard'
+    public 'email' => string 'capt@enterprise.com'
+    public 'givenName' => string 'Jean-Luc'
     public 'middleName' => null
-    public 'surname' => string 'Palpatine'
-    public 'fullName' => string 'Sheev Palpatine'
+    public 'surname' => string 'Picard'
+    public 'fullName' => string 'Jean-Luc Picard'
     public 'status' => string 'ENABLED'
     public 'createdAt' => string '2016-03-17T18:53:50.875Z'
     public 'modifiedAt' => string '2016-03-17T18:53:50.875Z'

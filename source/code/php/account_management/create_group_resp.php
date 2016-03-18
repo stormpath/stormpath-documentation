@@ -1,7 +1,7 @@
 object(Stormpath\Resource\Group)
     public 'href' => string 'https://api.stormpath.com/v1/groups/6NeGAlTQzyzyMO6TB3jVbJ'
-    public 'name' => string 'Leaders'
-    public 'description' => string 'Galactic Senate Leaders'
+    public 'name' => string 'Starfleet Officers'
+    public 'description' => string 'Commissioned officers in Starfleet'
     public 'status' => string 'ENABLED'
     public 'createdAt' => string '2016-03-17T19:09:48.782Z'
     public 'modifiedAt' => string '2016-03-17T19:09:48.782Z'

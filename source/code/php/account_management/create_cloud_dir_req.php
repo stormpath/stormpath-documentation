@@ -4,7 +4,7 @@ $directory = $client
                 ->dataStore
                 ->instantiate(\Stormpath\Resource\Directory::class);
 
-$directory->name = 'Galactic Republic';
-$directory->description = 'Keeping Peace Across The Galaxy';
+$directory->name = 'Captains';
+$directory->description = 'Captains from a variety of stories';
 
 $directory = $tenant->createDirectory($directory);

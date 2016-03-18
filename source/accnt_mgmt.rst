@@ -1202,6 +1202,17 @@ Search an Application's Accounts for a Particular Word
   .. literalinclude:: code/php/account_management/search_app_accounts_for_word_resp.php
       :language: php
 
+  .. note::
+
+    After getting the response, you can iterate over it with a foreach loop
+
+    .. code-block:: php
+
+      foreach($accounts as $account) {
+        var_dump($account);  // object(Stormpath\Resource\Account)
+      }
+
+
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req.py
@@ -1279,6 +1290,16 @@ An :ref:`search-attribute` can be used on a Directory's Accounts collection in o
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_disabled_req.php
       :language: php
+
+  .. note::
+
+    After getting the response, you can iterate over it with a foreach loop
+
+    .. code-block:: php
+
+      foreach($accounts as $account) {
+        var_dump($account);  // object(Stormpath\Resource\Account)
+      }
 
 .. only:: python
 
@@ -1402,6 +1423,16 @@ Find All Accounts in a Directory That Were Created on a Particular Day
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_resp.php
       :language: php
 
+  .. note::
+
+    After getting the response, you can iterate over it with a foreach loop
+
+    .. code-block:: php
+
+      foreach($accounts as $account) {
+        var_dump($account);  // object(Stormpath\Resource\Account)
+      }
+
 .. only:: python
 
   **Query**
@@ -1422,6 +1453,13 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 4.4.1. Manage Password Policies
 --------------------------------
 
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
+    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
 .. note::
@@ -1430,7 +1468,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, make this call:
 
-.. only:: rest
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -1466,7 +1504,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req.js
       :language: javascript
 
-.. only:: php
+.. only:: notyetphp
 
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req.php
       :language: php
@@ -1478,7 +1516,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 Which results in the following response:
 
-.. only:: rest
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -1519,7 +1557,7 @@ Which results in the following response:
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
       :language: javascript
 
-.. only:: php
+.. only:: notyetphp
 
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
       :language: php
@@ -1888,9 +1926,9 @@ On success, the response will include a link to the Account that the password wa
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. warning:: php
+.. only:: php
 
-  .. note::
+  .. warning::
 
     This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
     to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
@@ -1940,7 +1978,7 @@ To control whether any email is sent or not is simply a matter of setting the ap
   .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email.js
       :language: javascript
 
-.. only:: phpnotyet
+.. only:: notyetphp
 
   .. literalinclude:: code/php/account_management/enable_pwd_reset_email.php
       :language: php

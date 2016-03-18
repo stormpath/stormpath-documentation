@@ -1,8 +1,9 @@
 $account = \Stormpath\Resource\Account::instantiate([
-    'givenName' => 'Sheev',
-    'surname' => 'Palpatine',
-    'email' => 'Sheev.Palpatine@galacticempire.com',
-    'password' => 'Sup3rP4ssw0rd!'
+    'username' => 'jlpicard',
+    'givenName' => 'Jean-Luc',
+    'surname' => 'Picard',
+    'email' => 'capt@enterprise.com',
+    'password' => 'uGhd%a8Kl!'
 ]);
 
 $account = $directory->createAccount($account);

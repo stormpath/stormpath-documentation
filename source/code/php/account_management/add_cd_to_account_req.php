@@ -6,9 +6,6 @@ $account = $client
                 );
 $customData = $account->customData;
 
-$customData->officeLocation = "Senate District's executive building";
-$customData->holoTerminalNumber = 18573894;
-$customData->homeWorld = "Naboo";
-$customData->apprentices = ['Darth Maul', 'Darth Tyranus', 'Darth Vader'];
+$customData->currentAssignment = 'USS Enterprise (NCC-1701-E)';
 
 $customData->save();

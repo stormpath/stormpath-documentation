@@ -1,7 +1,7 @@
 object(Stormpath\Resource\Resource)
     public 'href' => string 'https://api.stormpath.com/v1/directories/2bofMIN0rJlxgefvFYloQz'
-    public 'name' => string 'Galactic Republic'
-    public 'description' => string 'Keeping Peace Across The Galaxy'
+    public 'name' => string 'Captains'
+    public 'description' => string 'Captains from a variety of stories'
     public 'status' => string 'ENABLED'
     public 'createdAt' => string '2016-03-17T18:16:14.408Z'
     public 'modifiedAt' => string '2016-03-17T18:16:14.408Z'
