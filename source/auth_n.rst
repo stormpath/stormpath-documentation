@@ -17,70 +17,58 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
   :local:
   :depth: 2
 
-Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate them.
+Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
 
 5.1.1. Authenticating An Account
 --------------------------------
 
-After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the Application is the starting point for authentication attempts.
+After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
 
-.. only:: rest
+Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
 
-  Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
+So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
-  So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
+We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
 
-  We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
-    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
+  {
+    "type": "basic",
+    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
+    "accountStore": {
+       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+     }
+  }
 
-    {
-      "type": "basic",
-      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
-      "accountStore": {
-         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-       }
+We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
+
+On success we would get back the ``href`` for the "Han Solo" Account:
+
+.. code-block:: http
+
+  HTTP/1.1 200 OK
+  Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
+  Content-Type: application/json;charset=UTF-8
+
+  {
+    "account": {
+      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
     }
+  }
 
-  We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
+The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
 
-  On success we would get back the ``href`` for the "Han Solo" Account:
+.. note::
 
-  .. code-block:: http
+  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
 
-    HTTP/1.1 200 OK
-    Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
-    Content-Type: application/json;charset=UTF-8
+    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
 
-    {
-      "account": {
-        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
-      }
-    }
-
-  The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
-
-  .. note::
-
-    Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
-
-      ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
-
-    For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
-
-.. only:: csharp or vbnet
-
-.. only:: java
-
-.. only:: nodejs
-
-.. only:: php
-
-.. only:: python
+  For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
 
 .. _how-login-works:
 
@@ -130,55 +118,41 @@ This mirror-master approach has two major benefits: It allows for a user to have
 5.1.3. Manage Who Can Log Into Your Application
 ------------------------------------------------
 
-As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings.
+As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
-.. only:: rest
+The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
 
-  For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
+We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
 
-  The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
+.. code-block:: http
 
-  We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
+  HTTP/1.1 200 OK
+  Content-Type: application/json;charset=UTF-8
 
-  .. code-block:: http
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
-
-    {
-      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
-      "offset":0,
-      "limit":25,
-      "size":1,
-      "items":[
-        {
-          "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
-          "listIndex":1,
-          "isDefaultAccountStore":true,
-          "isDefaultGroupStore":true,
-          "application":{
-            "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-          },
-          "accountStore":{
-            "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
-          }
+  {
+    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
+    "offset":0,
+    "limit":25,
+    "size":1,
+    "items":[
+      {
+        "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+        "listIndex":1,
+        "isDefaultAccountStore":true,
+        "isDefaultGroupStore":true,
+        "application":{
+          "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+        },
+        "accountStore":{
+          "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
         }
-      ]
-    }
+      }
+    ]
+  }
 
-  .. note::
+.. note::
 
-    Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
-
-.. only:: csharp or vbnet
-
-.. only:: java
-
-.. only:: nodejs
-
-.. only:: php
-
-.. only:: python
+  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
 
 .. _create-asm:
 
@@ -191,35 +165,33 @@ We would now like to map a new Account Store that will have the following charac
 #. It will be the default Account Store for any new Accounts.
 #. It will be the default Group Store for any new Groups.
 
-To accomplish this, we will send this request:
+To accomplish this, we will send a ``POST``:
 
-.. only:: rest
+.. code-block:: http
 
-  .. code-block:: http
+  POST v1/accountStoreMappings HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
 
-    POST v1/accountStoreMappings HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
-
-    {
-      "listIndex": 0,
-      "isDefaultAccountStore": true,
-      "isDefaultGroupStore": true,
-      "application": {
-        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-      },
-      "accountStore": {
-        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
-      }
+  {
+    "listIndex": 0,
+    "isDefaultAccountStore": true,
+    "isDefaultGroupStore": true,
+    "application": {
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+    },
+    "accountStore": {
+      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
     }
+  }
 
-  We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
+We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
 
-  #. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
-  #. ``isDefaultAccountStore`` to ``true`` and
-  #. ``isDefaultGroupStore`` to ``true`` as well.
+#. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
+#. ``isDefaultAccountStore`` to ``true`` and
+#. ``isDefaultGroupStore`` to ``true`` as well.
 
-  So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
 
 If we go back to the example from the :ref:`Account Management chapter<account-mgmt>`, we can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
@@ -230,11 +202,11 @@ If we go back to the example from the :ref:`Account Management chapter<account-m
 Updating an Existing Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Updating an existing Account Store simply involves sending the attributes that you would like to update.
+Updating an existing Account Store simply involves sending a ``POST`` to the ``v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID`` endpoint with the attributes that you would like to update.
 
 **Changing Login Priority**
 
-For example, if you want to update an existing Account Store to now have highest login priority, send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1.
+For example, if you want to update an existing Account Store to now have highest login priority, simple send a ``POST`` with "listIndex": 0 in the body, and the accountStoreMapping resource will be updated. Additionally, all of the other Account Stores will have their ``listIndex`` incremented up by 1.
 
 **Changing the Default Account or Group Store**
 
@@ -717,7 +689,7 @@ Creating this Directory for Google requires that you provide information from Go
 Step 2: Map the Google Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Google Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -799,7 +771,7 @@ Creating this Directory requires that you provide information from Facebook as a
 Step 2: Map the Facebook Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Facebook Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -864,7 +836,7 @@ Creating this Directory requires that you provide information from GitHub as a P
 Step 2: Map the GitHub Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with GitHub Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -877,7 +849,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
 
-Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for a access token.  Then you can send an HTTP POST to Stormpath:
+Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for an access token.  Then you can send an HTTP POST to Stormpath:
 
 .. code-block:: http
 
@@ -931,7 +903,7 @@ Creating this Directory requires that you provide information from LinkedIn as a
 Step 2: Map the LinkedIn Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new LinkedIn Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new LinkedIn Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with LinkedIn Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1082,7 +1054,7 @@ The Agent will start synchronizing immediately, pushing the configured data to S
 Step 3: Map the LDAP Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating an Account Store Mapping between your new LDAP Directory and your Stormpath Application can be done through the REST API, as described in :ref:`create-asm`.
+Creating an Account Store Mapping between your new LDAP Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 The log-in process will now proceed as it would for :ref:`any other kind of Directory <how-login-works>`.
 
@@ -1710,7 +1682,7 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
   When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-  6.1. Find the Existing SAML Attributes+
+  6.1. Find the Existing SAML Attributes
 
   If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
 
