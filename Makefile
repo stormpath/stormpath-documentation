@@ -56,9 +56,9 @@ clean:
 
 html:
 	@rm -rf $(BUILDDIR)
-	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
+	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html/rest
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html/rest."
 
 allhtml:
 	@rm -rf $(BUILDDIR)

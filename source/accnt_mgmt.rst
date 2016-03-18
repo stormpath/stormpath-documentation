@@ -1599,6 +1599,10 @@ Password Reset in Stormpath is a self-service flow, where the user is sent an em
 How to Reset a Password
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+
+  A password reset will only succeed if there is an Account Store mapped to your Application. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
+
 There are three steps to the password reset flow:
 
 1. Trigger the workflow
