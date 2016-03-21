@@ -116,9 +116,9 @@ The following request:
   .. literalinclude:: code/python/account_management/create_cloud_dir_req.py
       :language: python
 
-Would yield the following response:
-
 .. only:: rest
+
+  Would yield the following response:
 
   .. code-block:: HTTP
 
@@ -147,15 +147,11 @@ Would yield the following response:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  Would create the directory "Captains" in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
 
-    .. literalinclude:: code/csharp/account_management/create_cloud_dir_resp.cs
-        :language: csharp
+  .. note::
 
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/create_cloud_dir_resp.vb
-        :language: vbnet
+    See the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_ for a full list of available properties and methods on the ``IDirectory`` type (or any other Stormpath SDK type).
 
 .. only:: java
 
@@ -164,10 +160,14 @@ Would yield the following response:
 
 .. only:: nodejs
 
+  Would yield the following response:
+
   .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp.js
       :language: javascript
 
 .. only:: php
+
+  Would yield the following response:
 
   .. literalinclude:: code/php/account_management/create_cloud_dir_resp.php
       :language: php
@@ -491,9 +491,9 @@ The following request:
   .. literalinclude:: code/python/account_management/create_group_req.py
       :language: python
 
-Would yield this response:
-
 .. only:: rest
+
+  Would yield this response:
 
   .. code-block:: http
 
@@ -530,14 +530,18 @@ Would yield this response:
 
 .. only:: csharp or vbnet
 
+  Would create the "Starfleet Officers" Group in the "Captains" Directory in Stormpath, and update the local ``officersGroup`` variable to reflect the API resource.
+
+  By default, new groups created will have a ``Status`` of Enabled. If you'd like to create an initially-disabled group, use this more-expressive syntax:
+
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/create_group_resp.cs
+    .. literalinclude:: code/csharp/account_management/create_disabled_group_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/create_group_resp.vb
+    .. literalinclude:: code/vbnet/account_management/create_disabled_group_req.vb
         :language: vbnet
 
 .. only:: java
@@ -547,10 +551,14 @@ Would yield this response:
 
 .. only:: nodejs
 
+  Would yield this response:
+
   .. literalinclude:: code/nodejs/account_management/create_group_resp.js
       :language: javascript
 
 .. only:: php
+
+  Would yield this response:
 
   .. literalinclude:: code/php/account_management/create_group_resp.php
       :language: php
@@ -636,6 +644,8 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: csharp or vbnet
 
+  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's `CreateAccountAsync` method:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_account_in_dir_req.cs
@@ -676,9 +686,9 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   On the client side, then, you do not need to worry about salting or storing passwords at any point; you need only pass them to Stormpath for hashing, salting, and persisting with the appropriate HTTPS API call.
 
-Would yield this response:
-
 .. only:: rest
+
+  Would yield this response:
 
   .. code-block:: http
 
@@ -707,18 +717,6 @@ Would yield this response:
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/account_management/create_account_in_dir_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/create_account_in_dir_resp.vb
-        :language: vbnet
-
 .. only:: java
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
@@ -726,10 +724,14 @@ Would yield this response:
 
 .. only:: nodejs
 
+  Would yield this response:
+
   .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp.js
       :language: javascript
 
 .. only:: php
+
+  Would yield this response:
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_resp.php
       :language: php
@@ -755,9 +757,9 @@ Add an Existing Account to a Group
 
 So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
 
-You make the following request:
-
 .. only:: rest
+
+  You make the following request:
 
   .. code-block:: http
 
@@ -775,6 +777,8 @@ You make the following request:
     }
 
 .. only:: csharp or vbnet
+
+  This time, use the existing Account instance you created before, and the ``AddAccountAsync()``` method of the Group object:
 
   .. only:: csharp
 
@@ -806,9 +810,9 @@ You make the following request:
   .. literalinclude:: code/python/account_management/add_account_to_group_req.py
       :language: python
 
-And get the following response:
-
 .. only:: rest
+
+  And get the following response:
 
   .. code-block:: http
 
@@ -826,24 +830,14 @@ And get the following response:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/account_management/add_account_to_group_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/add_account_to_group_resp.vb
-        :language: vbnet
-
 .. only:: java
 
   .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
       :language: java
 
 .. only:: nodejs
+
+  And get the following response:
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp.js
       :language: javascript
@@ -882,9 +876,27 @@ Due to the sheer number of database types and the variation between individual d
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkfloyounabled=false`` query parameter to the end of your API like so::
+In this case, it is recommended that you suppress Account Verification emails.
 
-  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkfloyounabled=false
+.. only:: rest
+
+  This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
+
+    https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkflowEnabled=false
+
+.. only:: csharp or vbnet
+
+  This can be done by setting the ``RegistrationWorkflowEnabled`` flag creating the Account:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_account_disable_reg_workflow.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_account_disable_reg_workflow.vb
+        :language: vbnet
 
 .. _importing-mcf:
 
@@ -906,9 +918,27 @@ Stormpath only supports password hashes that use the following algorithms:
 - **bcrypt**: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
 - **stormpath2**: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
 
-Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the password hash by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
+Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the specified hash.
+
+.. only:: rest
+
+  This can be done by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
   https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?passwordFormat=mcf
+
+.. only:: csharp or vbnet
+
+  This can be done by setting the ``PasswordFormat`` option creating the Account:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/create_account_mcf_hash.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/create_account_mcf_hash.vb
+        :language: vbnet
 
 .. _stormpath2-hash:
 
@@ -976,6 +1006,8 @@ For example, you could add information about this user's current location, like 
 
 .. only:: csharp or vbnet
 
+  The ``picard`` object you created earlier has a ``CustomData`` property that allows you to write to the Account's Custom Data:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/add_cd_to_account_req.cs
@@ -985,6 +1017,12 @@ For example, you could add information about this user's current location, like 
 
     .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req.vb
         :language: vbnet
+
+  You can also use the ``Put()`` method to add items to Custom Data. The ``Remove()`` method will remove a single item (by key), and ``Clear()`` will remove all items.
+
+  .. warning::
+
+    Any changes you make are not preserved until you call `SaveAsync()` to send the updates to the Stormpath API.
 
 .. only:: java
 
@@ -1006,9 +1044,9 @@ For example, you could add information about this user's current location, like 
   .. literalinclude:: code/python/account_management/add_cd_to_account_req.py
       :language: python
 
-Which returns the following:
-
 .. only:: rest
+
+  Which returns the following:
 
   .. code-block:: http
 
@@ -1027,18 +1065,6 @@ Which returns the following:
 
   For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide.
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/account_management/add_cd_to_account_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/add_cd_to_account_resp.vb
-        :language: vbnet
-
 .. only:: java
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_resp.java
@@ -1046,12 +1072,16 @@ Which returns the following:
 
 .. only:: nodejs
 
+  Which returns the following:
+
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
       :language: javascript
 
   For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
 
 .. only:: php
+
+  Which returns the following:
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
       :language: php
@@ -1092,6 +1122,12 @@ The Account resource's **searchable attributes** are:
 
 .. only:: csharp or vbnet
 
+  With the Stormpath .NET SDK, you can use LINQ-to-Stormpath to search Stormpath collections. Searches begin on resources that contain collections of accounts. Any resource that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched.
+
+  .. note::
+
+    Make sure you import the namespace ``Stormpath.SDK`` in order to use LINQ-to-Stormpath.
+
 .. only:: java
 
 .. only:: nodejs
@@ -1108,9 +1144,9 @@ Below are some examples of different kinds of searches that can be performed to 
 Search an Application's Accounts for a Particular Word
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest
+A Filter search will locate the specified string in any searchable attribute of any Account associated with this Application:
 
-  A simple :ref:`search-filter` using the ``?q=`` parameter to the Application's ``/accounts`` collection will find us any Account associated with this Application that has the filter query string as part of any of its searchable attributes.
+.. only:: rest
 
   **Query**
 
@@ -1159,20 +1195,18 @@ Search an Application's Accounts for a Particular Word
     .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_req.cs
         :language: csharp
 
+    ``ToListAsync()`` will materialize the results as a ``List<IAccount>`` containing zero or more items.
+
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_req.vb
         :language: vbnet
 
-    .. only:: csharp
+    ``ToListAsync()`` will materialize the results as a ``List(Of IAccount)`` containing zero or more items.
 
-    .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_resp.cs
-        :language: csharp
+  .. note::
 
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_resp.vb
-        :language: vbnet
+    Matching is case-insensitive, so ``Filter("luc")`` and ``Filter("Luc")`` will return the same results.
 
 .. only:: java
 
@@ -1265,6 +1299,8 @@ An :ref:`search-attribute` can be used on a Directory's Accounts collection in o
     }
 
 .. only:: csharp or vbnet
+
+  Use the LINQ ``Where()`` keyword to perform attribute searches:
 
   .. only:: csharp
 
@@ -1363,29 +1399,17 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. only:: csharp or vbnet
 
+  There are two ways to specify a datetime search parameter: by using a ``DateTimeOffset`` instance, or by using the ``Within()`` method.
+
   .. only:: csharp
 
-    **Query**
-
-      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req.cs
-          :language: csharp
-
-    **Response**
-
-      .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_resp.cs
-          :language: csharp
+    .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req.cs
+        :language: csharp
 
   .. only:: vbnet
 
-    **Query**
-
-      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req.vb
-          :language: vbnet
-
-    **Response**
-
-      .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_resp.vb
-          :language: vbnet
+    .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req.vb
+        :language: vbnet
 
 .. only:: java
 
@@ -1484,15 +1508,20 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
-        :language: csharp
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
+    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
 
-  .. only:: vbnet
+    .. only:: (csharp and nope)
 
-    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
-        :language: vbnet
+      .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
+          :language: csharp
+
+    .. only:: (vbnet and nope)
+
+      .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -1535,7 +1564,7 @@ Which results in the following response:
       "minUpperCase": 1
     }
 
-.. only:: csharp or vbnet
+.. only:: ()(csharp or vbnet) and nope)
 
   .. only:: csharp
 
@@ -1682,16 +1711,11 @@ There are three steps to the password reset flow:
 
 .. only:: csharp or vbnet
 
+  To trigger the password reset workflow, use the ``SendPasswordResetEmailAsync()`` method from your Application:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/reset1_trigger_req.cs
-        :language: csharp
-
-    .. note::
-
-      It is also possible to specify the Account Store in your Password Reset request:
-
-      .. literalinclude:: code/csharp/account_management/reset1_trigger_req_accountstore.cs
         :language: csharp
 
   .. only:: vbnet
@@ -1699,12 +1723,21 @@ There are three steps to the password reset flow:
     .. literalinclude:: code/vbnet/account_management/reset1_trigger_req.vb
         :language: vbnet
 
-    .. note::
+  .. note::
 
-      It is also possible to specify the Account Store in your Password Reset request:
+    It is also possible to specify the Account Store in your Password Reset request:
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/reset1_trigger_req_accountstore.cs
+        :language: csharp
+
+    .. only:: vbnet
 
       .. literalinclude:: code/vbnet/account_management/reset1_trigger_req_accountstore.vb
         :language: vbnet
+
+    The second parameter can be any object that implements ``IAccountStore`` (Directories, Groups, Organizations). Alternatively, you can directly pass the Stormpath ``href`` of an Account Store resource, or the ``nameKey`` of an Organization resource.
 
 .. only:: java
 
@@ -1756,9 +1789,11 @@ There are three steps to the password reset flow:
     .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore.py
       :language: python
 
-If this is a valid email in an Account associated with this Application, you will get a success response:
+If this is a valid email in an Account associated with this Application, the request will suceed.
 
 .. only:: rest
+
+  The success response will look like:
 
   .. code-block:: http
 
@@ -1779,15 +1814,11 @@ If this is a valid email in an Account associated with this Application, you wil
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  If the email is not valid, a ``ResourceException`` will be thrown.
 
-    .. literalinclude:: code/csharp/account_management/reset1_trigger_resp.cs
-        :language: csharp
+  .. note::
 
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/reset1_trigger_resp.vb
-        :language: vbnet
+    The returned value is an ``IPasswordResetToken`` instance that represents a copy of the token that can be used to reset the user's password.
 
 .. only:: java
 
@@ -1796,10 +1827,14 @@ If this is a valid email in an Account associated with this Application, you wil
 
 .. only:: nodejs
 
+  The success response will look like:
+
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
       :language: javascript
 
 .. only:: php
+
+  The success response will look like:
 
   .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
       :language: php
@@ -1843,6 +1878,8 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: csharp or vbnet
 
+  This can be accomplished by using the ``VerifyPasswordResetTokenAsync()`` method:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/reset2_verify_token.cs
@@ -1852,6 +1889,8 @@ Once the user clicks this link, your controller should retrieve the token from t
 
     .. literalinclude:: code/vbnet/account_management/reset2_verify_token.vb
         :language: vbnet
+
+  If the token is not valid, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
@@ -1877,9 +1916,11 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 **Update the password**
 
+After verifying that the token from the query string is valid, you can direct the user to a page where they can update their password.
+
 .. only:: rest
 
-  After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can update the Account resource with POST to the  ``passwordResetTokens`` endpoint. This is the same endpoint that you used to validate the token above.
+  Once you have the password, you can update the Account resource with a POST to the ``passwordResetTokens`` endpoint. This is the same endpoint that you used to validate the token above.
 
   .. code-block:: http
 
@@ -1892,6 +1933,8 @@ Once the user clicks this link, your controller should retrieve the token from t
     }
 
 .. only:: csharp or vbnet
+
+  Once you have the password, you can update the Account resource with the ``ResetPasswordAsync()`` method:
 
   .. only:: csharp
 
@@ -1910,7 +1953,7 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: nodejs
 
-  After a successful GET with the query string token, you can direct the user to a page where they can update their password. Once you have the password, you can call the ``verifyPasswordResetToken(token, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
+  Once you have the password, you can call the ``verifyPasswordResetToken(token, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
 
   .. literalinclude:: code/nodejs/account_management/reset3_update.js
       :language: javascript
@@ -1962,12 +2005,17 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
+    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+
+  .. only:: (csharp and nope)
 
     .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
         :language: csharp
 
-  .. only:: vbnet
+  .. only:: (vbnet and nope)
 
     .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
         :language: vbnet
@@ -1997,17 +2045,22 @@ To control whether any email is sent or not is simply a matter of setting the ap
 Password Reset Email Templates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest
+The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
 
-  The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
+.. only:: rest
 
   To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-  .. only:: vbnet
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
+    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+
+  .. only:: (csharp and none)
+
+  .. only:: (vbnet and none)
 
 .. only:: java
 
@@ -2096,12 +2149,11 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: csharp or vbnet
 
+  You can use the ``VerifyAccountEmailAsync()`` method on the ``IClient`` type, plus the token you capture from the query string, to verify the Account:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/verify_email_req.cs
-        :language: csharp
-
-    .. literalinclude:: code/csharp/account_management/verify_email_resp.cs
         :language: csharp
 
   .. only:: vbnet
@@ -2109,8 +2161,7 @@ The email that is sent upon Account creation contains a link to the base URL tha
     .. literalinclude:: code/vbnet/account_management/verify_email_req.vb
         :language: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/verify_email_resp.vb
-        :language: vbnet
+  If the token is valid, the Account details are returned. If the token is invalid, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
@@ -2161,9 +2212,11 @@ The email that is sent upon Account creation contains a link to the base URL tha
 4.5.5. Resending the Verification Email
 ---------------------------------------
 
+If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email.
+
 .. only:: rest
 
-  If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint.
+  To resend the email, use the :ref:`Application resource's <ref-application>` ``/verificationEmails`` endpoint.
 
   .. code-block:: http
 
@@ -2178,6 +2231,8 @@ The email that is sent upon Account creation contains a link to the base URL tha
   If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
 
 .. only:: csharp or vbnet
+
+  To resend the email, use the ``SendVerificationEmailAsync()`` method:
 
   .. only:: csharp
 
@@ -2196,7 +2251,7 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: nodejs
 
-  If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email using the ``resendVerificationEmail(options, callback)`` method of your Application instance.
+  To resend the email, use the ``resendVerificationEmail(options, callback)`` method of your Application instance.
 
   .. literalinclude:: code/nodejs/account_management/resend_verification_email.js
       :language: javascript
@@ -2278,9 +2333,14 @@ For more information about this, see :ref:`password-reset-flow`.
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-  .. only:: vbnet
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
+    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+
+  .. only:: (csharp and nope)
+
+  .. only:: (vbnet and nope)
 
 .. only:: java
 
