@@ -924,7 +924,7 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
   This can be done by POSTing the Account information to the Directory or Application ``/accounts`` endpoint and specifying ``passwordFormat=mcf`` as a query parameter::
 
-  https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?passwordFormat=mcf
+    https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?passwordFormat=mcf
 
 .. only:: csharp or vbnet
 
@@ -1482,7 +1482,7 @@ Find All Accounts in a Directory That Were Created on a Particular Day
   .. warning::
 
     This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
-    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    to enable or disable the password reset email. For updates, you can follow `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
@@ -1511,14 +1511,14 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+    For updates, you can follow `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
 
-    .. only:: (csharp and nope)
+    .. only:: notyetcsharp
 
       .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
           :language: csharp
 
-    .. only:: (vbnet and nope)
+    .. only:: notyetvbnet
 
       .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
           :language: vbnet
@@ -1564,17 +1564,8 @@ Which results in the following response:
       "minUpperCase": 1
     }
 
-.. only:: ()(csharp or vbnet) and nope)
+.. only:: notyetcsharp or notyetvbnet
 
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_resp.vb
-        :language: vbnet
 
 .. only:: java
 
@@ -2008,14 +1999,14 @@ To control whether any email is sent or not is simply a matter of setting the ap
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+    For updates, you can follow the `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
 
-  .. only:: (csharp and nope)
+  .. only:: notyetcsharp
 
     .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
         :language: csharp
 
-  .. only:: (vbnet and nope)
+  .. only:: notyetvbnet
 
     .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
         :language: vbnet
@@ -2056,11 +2047,11 @@ The contents of the password reset and the password reset success emails are bot
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
 
-  .. only:: (csharp and none)
+  .. only:: notyetcsharp
 
-  .. only:: (vbnet and none)
+  .. only:: notyetvbnet
 
 .. only:: java
 
@@ -2336,11 +2327,11 @@ For more information about this, see :ref:`password-reset-flow`.
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
 
-  .. only:: (csharp and nope)
+  .. only:: notyetcsharp
 
-  .. only:: (vbnet and nope)
+  .. only:: notyetvbnet
 
 .. only:: java
 
