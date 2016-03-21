@@ -532,17 +532,19 @@ The following request:
 
   Would create the "Starfleet Officers" Group in the "Captains" Directory in Stormpath, and update the local ``officersGroup`` variable to reflect the API resource.
 
-  By default, new groups created will have a ``Status`` of Enabled. If you'd like to create an initially-disabled group, use this more-expressive syntax:
+  .. note::
 
-  .. only:: csharp
+    By default, new Groups created will have a ``Status`` of Enabled. If you'd like to create an initially-disabled Group, use this more-expressive syntax:
 
-    .. literalinclude:: code/csharp/account_management/create_disabled_group_req.cs
-        :language: csharp
+    .. only:: csharp
 
-  .. only:: vbnet
+      .. literalinclude:: code/csharp/account_management/create_disabled_group_req.cs
+          :language: csharp
 
-    .. literalinclude:: code/vbnet/account_management/create_disabled_group_req.vb
-        :language: vbnet
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/create_disabled_group_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -644,7 +646,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: csharp or vbnet
 
-  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's `CreateAccountAsync` method:
+  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``CreateAccountAsync()`` method:
 
   .. only:: csharp
 
@@ -778,7 +780,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: csharp or vbnet
 
-  This time, use the existing Account instance you created before, and the ``AddAccountAsync()``` method of the Group object:
+  This time, use the existing Account instance you created before, and the ``AddAccountAsync()`` method of the Group object:
 
   .. only:: csharp
 
@@ -886,7 +888,7 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: csharp or vbnet
 
-  This can be done by setting the ``RegistrationWorkflowEnabled`` flag creating the Account:
+  This can be done by setting the ``RegistrationWorkflowEnabled`` flag when creating the Account:
 
   .. only:: csharp
 
@@ -928,7 +930,7 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: csharp or vbnet
 
-  This can be done by setting the ``PasswordFormat`` option creating the Account:
+  This can be done by setting the ``PasswordFormat`` option when creating the Account:
 
   .. only:: csharp
 
@@ -1006,7 +1008,7 @@ For example, you could add information about this user's current location, like 
 
 .. only:: csharp or vbnet
 
-  The ``picard`` object you created earlier has a ``CustomData`` property that allows you to write to the Account's Custom Data:
+  The ``picard`` Account you created earlier has a ``CustomData`` property that allows you to write to the resource's Custom Data:
 
   .. only:: csharp
 
@@ -1018,11 +1020,11 @@ For example, you could add information about this user's current location, like 
     .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req.vb
         :language: vbnet
 
-  You can also use the ``Put()`` method to add items to Custom Data. The ``Remove()`` method will remove a single item (by key), and ``Clear()`` will remove all items.
+  You can also use the ``Put()`` method to add items to Custom Data. The ``Remove()`` method will remove a single item (by key). ``Clear()`` will remove all items.
 
   .. warning::
 
-    Any changes you make are not preserved until you call `SaveAsync()` to send the updates to the Stormpath API.
+    Any Custom Data changes you make are not preserved until you call ```SaveAsync()`` on the parent resource to send the updates to the Stormpath API.
 
 .. only:: java
 
@@ -1122,7 +1124,9 @@ The Account resource's **searchable attributes** are:
 
 .. only:: csharp or vbnet
 
-  With the Stormpath .NET SDK, you can use LINQ-to-Stormpath to search Stormpath collections. Searches begin on resources that contain collections of accounts. Any resource that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched.
+  With the Stormpath .NET SDK, you can use LINQ-to-Stormpath to easily perform searches. Search expressions begin on resources that contain collections.
+
+  In this case, any resource type that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
   .. note::
 
@@ -1258,7 +1262,9 @@ A Filter search will locate the specified string in any searchable attribute of 
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute. This could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
+An :ref:`search-attribute` can be used on a Directory's Accounts collection in order to find all of the Accounts that contain a certain value in the specified attribute.
+
+For example, this could be used to find all the Accounts that are disabled (i.e. that have their ``status`` set to ``disabled``).
 
 .. only:: rest
 
@@ -1300,7 +1306,7 @@ An :ref:`search-attribute` can be used on a Directory's Accounts collection in o
 
 .. only:: csharp or vbnet
 
-  Use the LINQ ``Where()`` keyword to perform attribute searches:
+  Use the LINQ ``Where()`` keyword to perform Attribute searches:
 
   .. only:: csharp
 
@@ -1399,7 +1405,9 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. only:: csharp or vbnet
 
-  There are two ways to specify a datetime search parameter: by using a ``DateTimeOffset`` instance, or by using the ``Within()`` method.
+  There are two ways to specify a Datetime search parameter in LINQ-to-Stormpath: by comparing to a ``DateTimeOffset`` instance, or by using the ``Within()`` method.
+
+  Use ``Within()`` when you want to find everything within a logical period (like a day or year):
 
   .. only:: csharp
 
@@ -1409,6 +1417,18 @@ Find All Accounts in a Directory That Were Created on a Particular Day
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req.vb
+        :language: vbnet
+
+  Use a ``DateTimeOffset`` comparison when you want more granularity. You can specify an exact moment in time, and use either inclusive (greater/less than or equal to) or exclusive (greater/less than) matching:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_after_date_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_after_date_req.vb
         :language: vbnet
 
 .. only:: java
@@ -1490,9 +1510,11 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
   This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
-Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, make this call:
+Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory.
 
 .. only:: rest or php
+
+  To update Password Strength, make this call:
 
   .. code-block:: http
 
@@ -1530,6 +1552,8 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: nodejs
 
+  To update Password Strength, make this call:
+
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req.js
       :language: javascript
 
@@ -1543,9 +1567,9 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req.py
       :language: python
 
-Which results in the following response:
-
 .. only:: rest or php
+
+  Which results in the following response:
 
   .. code-block:: http
 
@@ -1574,6 +1598,8 @@ Which results in the following response:
 
 .. only:: nodejs
 
+  Which results in the following response:
+
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
       :language: javascript
 
@@ -1597,9 +1623,9 @@ At no point is the user shown, or does Stormpath have access to, the original pa
 1. To allow the user to update it (without seeing the original value) after being authenticated, or
 2. To use the :ref:`password reset workflow <password-reset-flow>`.
 
-To update the password, you send the updated password to the Account resource:
-
 .. only:: rest
+
+  To update the password, you send the updated password to the Account resource:
 
   .. code-block:: http
 
@@ -1614,6 +1640,8 @@ To update the password, you send the updated password to the Account resource:
   If the call succeeds you will get back an ``HTTP 200 OK`` with the Account resource in the body.
 
 .. only:: csharp or vbnet
+
+  To update the password, set the new password locally, then save the resource:
 
   .. only:: csharp
 
@@ -1632,10 +1660,14 @@ To update the password, you send the updated password to the Account resource:
 
 .. only:: nodejs
 
+  To update the password, you send the updated password to the Account resource:
+
   .. literalinclude:: code/nodejs/account_management/update_account_pwd.js
       :language: javascript
 
 .. only:: php
+
+  To update the password, you send the updated password to the Account resource:
 
   .. literalinclude:: code/php/account_management/update_account_pwd.php
       :language: php
@@ -1805,11 +1837,7 @@ If this is a valid email in an Account associated with this Application, the req
 
 .. only:: csharp or vbnet
 
-  If the email is not valid, a ``ResourceException`` will be thrown.
-
-  .. note::
-
-    The returned value is an ``IPasswordResetToken`` instance that represents a copy of the token that can be used to reset the user's password.
+  If the email is not valid, a ``ResourceException`` will be thrown. The returned value is an ``IPasswordResetToken`` instance that represents a copy of the token that can be used to reset the user's password.
 
 .. only:: java
 

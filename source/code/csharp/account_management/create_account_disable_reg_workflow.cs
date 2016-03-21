@@ -1,3 +1,1 @@
-await myDirectory.CreateAccountAsync(
-    theAccount,
-    opt => opt.RegistrationWorkflowEnabled = false);
+await myDirectory.CreateAccountAsync(acct, opt => opt.RegistrationWorkflowEnabled = false);
