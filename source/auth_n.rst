@@ -17,58 +17,176 @@ In this chapter we will cover three of the ways that Stormpath allows you to aut
   :local:
   :depth: 2
 
-Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate an account.
+Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an Account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate that Account.
 
 5.1.1. Authenticating An Account
 --------------------------------
 
-After an Account resource has been created, you can authenticate it given an input of a ``username`` or ``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the :ref:`Application resource <ref-application>` is the starting point for authentication attempts.
+After an Account resource has been created, you can authenticate it given an input of a ``username``/``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the Application resource is the starting point for authentication attempts.
 
-Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
+.. only:: rest
 
-So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
+  Once you have the Application resource you may attempt authentication by sending a POST request to the Application’s ``/loginAttempts`` endpoint and providing a base64 encoded ``username``/``email`` and ``password`` pair that is separated with a colon (for example ``testuser``:``testpassword``). Stormpath requires that the ``username``/``email`` and ``password`` are base64 encoded so that these values are not passed as clear text. For more information about the ``/loginAttempts`` endpoint please see the :ref:`Reference Chapter <ref-loginattempts>`.
 
-We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
+  So, if we had a user Account "Han Solo" in the "Captains" Directory, and we wanted to log him in, we would first need to take the combination of his ``username`` and ``password`` ("first2shoot:Change+me1") and then Base64 encode them: ``Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==``.
 
-.. code-block:: http
+  We would issue the following POST to our Application with ID ``1gk4Dxzi6o4PbdleXaMPLE``:
 
-  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "type": "basic",
-    "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
-    "accountStore": {
-       "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-     }
-  }
+    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
-
-On success we would get back the ``href`` for the "Han Solo" Account:
-
-.. code-block:: http
-
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
-  Content-Type: application/json;charset=UTF-8
-
-  {
-    "account": {
-      "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
+    {
+      "type": "basic",
+      "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
+      "accountStore": {
+         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+       }
     }
-  }
 
-The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
+  We are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
-.. note::
+  On success we would get back the ``href`` for the "Han Solo" Account:
 
-  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+  .. code-block:: http
 
-    ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid
+    Content-Type: application/json;charset=UTF-8
 
-  For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
+    {
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid"
+      }
+    }
+
+  The reason this succeeds is because there is an existing **Account Store Mapping** between the "Han Solo" Account's "Captains" Directory and our Application. This mapping is what allows this Account to log in to the Application.
+
+  .. note::
+
+    Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+
+      ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
+
+    For more information about link expansion, please see :ref:`the Reference chapter <about-links>`.
+
+.. only:: csharp or vbnet
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/login_attempt_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/login_attempt_req
+        :language: vbnet
+
+  .. note::
+
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authn/login_attempt_req_expand_account
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authn/login_attempt_req_expand_account
+        :language: vbnet
+
+  If authentication succeeded, you would receive back
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/login_attempt_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/login_attempt_resp
+        :language: vbnet
+
+.. only:: java
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+
+  .. literalinclude:: code/java/authn/login_attempt_req
+      :language: java
+
+  .. note::
+
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+
+    .. literalinclude:: code/java/authn/login_attempt_req_expand_account
+      :language: java
+
+  If authentication succeeded, you would receive back...
+
+  .. literalinclude:: code/java/authn/login_attempt_resp
+      :language: java
+
+.. only:: nodejs
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+
+  .. literalinclude:: code/nodejs/authn/login_attempt_req
+      :language: javascript
+
+  .. note::
+
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+
+    .. literalinclude:: code/nodejs/authn/login_attempt_req_expand_account
+      :language: javascript
+
+  If authentication succeeded, you would receive back ...
+
+  .. literalinclude:: code/nodejs/authn/login_attempt_resp
+      :language: javascript
+
+.. only:: php
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+
+    .. literalinclude:: code/php/authn/login_attempt_req
+      :language: php
+
+  .. note::
+
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+
+    .. literalinclude:: code/php/authn/login_attempt_req_expand_account
+      :language: php
+
+  If authentication succeeded, you would ...
+
+    .. literalinclude:: code/php/authn/login_attempt_resp
+      :language: php
+
+.. only:: python
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+
+  .. literalinclude:: code/python/authn/login_attempt_req
+      :language: python
+
+  .. note::
+
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+
+    .. literalinclude:: code/python/authn/login_attempt_req_expand_account
+      :language: python
+
+  If authentication succeeded, you would receive back ...
+
+  .. literalinclude:: code/python/authn/login_attempt_resp
+      :language: python
 
 .. _how-login-works:
 
@@ -99,60 +217,179 @@ How Login Works with Master Directories
 
 If you require a number of Mirror Directories, then we recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
 
-If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store an ``href`` link to the Account in the Mirror Directory, for example:
+If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store a link to the Account in the Mirror Directory, for example:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "customData": {
-      "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlEx"
+  .. code-block:: json
+
+    {
+      "customData": {
+        "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlEx"
+      }
     }
-  }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/customdata_accountlink
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/customdata_accountlink
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authn/customdata_accountlink
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authn/customdata_accountlink
+      :language: javascript
+
+.. only:: php
+
+    .. literalinclude:: code/php/authn/customdata_accountlink
+      :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authn/customdata_accountlink
+      :language: python
 
 If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory.
 
-This mirror-master approach has two major benefits: It allows for a user to have one unified identity in your Application, regardless of how many external identities they choose to log in with; and this central identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
+This mirror-master approach has two major benefits:
+
+1. It allows for a user to have one unified identity in your Application, regardless of how many external identities they choose to log in with.
+2. This identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
 .. _managing-login:
 
 5.1.3. Manage Who Can Log Into Your Application
 ------------------------------------------------
 
-As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings. For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
+As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings.
 
-The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our Application: ``https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE``, and our "Captains" Directory: ``https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp`` are mapped to one another by an **Account Store Mapping**.
+.. only:: rest
 
-We can find this Mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
+  For more detailed information about this resource, please see the :ref:`ref-asm` section of the Reference chapter.
 
-.. code-block:: http
+The reason why our user "Han Solo" was able to log in to our application is because the Application resource that represents our application and our "Captains" Directory are mapped to one another by an **Account Store Mapping**.
 
-  HTTP/1.1 200 OK
-  Content-Type: application/json;charset=UTF-8
+.. only:: rest
 
-  {
-    "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
-    "offset":0,
-    "limit":25,
-    "size":1,
-    "items":[
-      {
-        "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
-        "listIndex":1,
-        "isDefaultAccountStore":true,
-        "isDefaultGroupStore":true,
-        "application":{
-          "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-        },
-        "accountStore":{
-          "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+  You can find this mapping by sending a ``GET`` to our Application's ``/accountStoreMappings`` endpoint, which would yield the following response:
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accountStoreMappings",
+      "offset":0,
+      "limit":25,
+      "size":1,
+      "items":[
+        {
+          "href":"https://api.stormpath.com/v1/accountStoreMappings/5WKhSDXNR8Wiksjv808XHp",
+          "listIndex":1,
+          "isDefaultAccountStore":true,
+          "isDefaultGroupStore":true,
+          "application":{
+            "href":"https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+          },
+          "accountStore":{
+            "href":"https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp"
+          }
         }
-      }
-    ]
-  }
+      ]
+    }
 
-.. note::
+  .. note::
 
-  Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
+    Any new Accounts and Groups added to this Application via it's `/accounts` and `/groups` endpoints will be added to this Directory by default, since ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are both set to ``true``.
+
+.. only:: csharp or vbnet
+
+  You can find this mapping by...
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/get_asm_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/get_asm_req
+        :language: vbnet
+
+.. only:: java
+
+  You can find this mapping by...
+
+  .. literalinclude:: code/java/authn/get_asm_req
+      :language: java
+
+.. only:: nodejs
+
+  You can find this mapping by...
+
+  .. literalinclude:: code/nodejs/authn/get_asm_req
+      :language: javascript
+
+.. only:: php
+
+  You can find this mapping by...
+
+  .. literalinclude:: code/php/authn/get_asm_req
+    :language: php
+
+.. only:: python
+
+  You can find this mapping by...
+
+  .. literalinclude:: code/python/authn/get_asm_req
+      :language: python
+
+This will return the Account Store Mapping:
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/get_asm_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/get_asm_resp
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authn/get_asm_resp
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authn/get_asm_resp
+      :language: javascript
+
+.. only:: php
+
+    .. literalinclude:: code/php/authn/get_asm_resp
+      :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authn/get_asm_resp
+      :language: python
 
 .. _create-asm:
 
@@ -165,33 +402,67 @@ We would now like to map a new Account Store that will have the following charac
 #. It will be the default Account Store for any new Accounts.
 #. It will be the default Group Store for any new Groups.
 
-To accomplish this, we will send a ``POST``:
+.. only:: rest
 
-.. code-block:: http
+  To accomplish this, we will send a ``POST``:
 
-  POST v1/accountStoreMappings HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "listIndex": 0,
-    "isDefaultAccountStore": true,
-    "isDefaultGroupStore": true,
-    "application": {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
+    POST v1/accountStoreMappings HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "application": {
+        "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdleXaMPLE"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
+      }
     }
-  }
 
-We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
+  We are mapping the Application (id: ``1gk4Dxzi6o4PbdleXaMPLE``) to a new Directory (id: ``2SKhstu8PlaekcaEXampLE``). Additionally, we are setting
 
-#. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
-#. ``isDefaultAccountStore`` to ``true`` and
-#. ``isDefaultGroupStore`` to ``true`` as well.
+  #. the login priority to the highest priority, by sending a ``listIndex`` of ``0``.
+  #. ``isDefaultAccountStore`` to ``true`` and
+  #. ``isDefaultGroupStore`` to ``true`` as well.
 
-So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+  So by sending a ``POST`` with these contents, we are able to create a new Account Store Mapping that supersedes the old one.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authn/create_asm
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authn/create_asm
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authn/create_asm
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authn/create_asm
+      :language: javascript
+
+.. only:: php
+
+    .. literalinclude:: code/php/authn/create_asm
+      :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authn/create_asm
+      :language: python
 
 If we go back to the example from the :ref:`Account Management chapter<account-mgmt>`, we can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
@@ -2013,7 +2284,7 @@ The rules have three different components:
 .. code-block:: json
 
   {
-    "name":"uid",
+    "name": "uid",
     "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
     "accountAttributes":[
       "username"
@@ -2067,6 +2338,10 @@ Now that we've configured everything, we can take a look at what the actual SAML
 
 5.5.4. The Stormpath SAML Flow
 ------------------------------
+
+.. todo::
+
+  This is probably most irrelevant to the SDKs.
 
 The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning.
 
@@ -2191,7 +2466,6 @@ This JWT again contains both Headers and a Body with Claims.
     - Indicates whether this is a new Account in Stormpath.
 
 At this point your user is authenticated and able to use your app.
-
 
 .. _saml-sp-init-flow:
 
