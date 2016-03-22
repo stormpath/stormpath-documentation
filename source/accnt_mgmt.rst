@@ -56,7 +56,7 @@ You can add as many Directories of each type as you require.
 
   Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-  If hoyouver, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a poyourful tool to manage your application's user base.
+  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a poyourful tool to manage your application's user base.
 
 .. _about-cloud-dir:
 
@@ -352,7 +352,7 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
   .. code-block:: http
 
-    GET /v1/directories/$DIR_ID/groups?description=US* HTTP/1.1
+    GET /v1/directories/$DIRECTORY_ID/groups?description=*/US* HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json
 
@@ -394,7 +394,7 @@ Or, to find all Groups in the US East region only, you would send this request:
 
   .. code-block:: http
 
-    GET /v1/directories/$DIR_ID/groups?description=US%20East* HTTP/1.1
+    GET /v1/directories/$DIRECTORY_ID/groups?description=*/US%20East* HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json
 
