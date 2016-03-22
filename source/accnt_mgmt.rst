@@ -1502,7 +1502,7 @@ Find All Accounts in a Directory That Were Created on a Particular Day
   .. warning::
 
     This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
-    to enable or disable the password reset email. For updates, you can follow `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
