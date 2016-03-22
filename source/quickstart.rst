@@ -287,7 +287,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, with the Tenant's unique ID at the end.
 
-  From here, using your Tenant ID, you can get your Application by performing a search for the Application by name, with $TENANT_ID replaced with the ``$TENANT_ID`` of your Tenant from the previous cURL:
+  From here, using your Tenant ID, you can get your Application by performing a search for the Application by name, with $TENANT_ID replaced with your Tenant's ID from the previous cURL:
 
   .. code-block:: bash
 
