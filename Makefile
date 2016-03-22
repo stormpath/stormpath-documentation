@@ -56,9 +56,9 @@ clean:
 
 html:
 	@rm -rf $(BUILDDIR)
-	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html/rest
+	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html/rest."
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html"
 
 allhtml:
 	@rm -rf $(BUILDDIR)
@@ -144,7 +144,8 @@ latexpdfja:
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 livehtml:
-	sphinx-autobuild -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@rm -rf $(BUILDDIR)
+	sphinx-autobuild -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
 
 text:
 	$(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(BUILDDIR)/text
