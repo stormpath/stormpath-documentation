@@ -1024,7 +1024,7 @@ For example, you could add information about this user's current location, like 
 
   .. warning::
 
-    Any Custom Data changes you make are not preserved until you call ```SaveAsync()`` on the parent resource to send the updates to the Stormpath API.
+    Any Custom Data changes you make are not preserved until you call ``SaveAsync()`` on the parent resource to send the updates to the Stormpath API.
 
 .. only:: java
 
