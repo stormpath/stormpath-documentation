@@ -267,6 +267,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   .. code-block:: bash
 
     curl --request GET \
+      --verbose \
       --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/tenants/current"
@@ -284,16 +285,16 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
       Location: https://api.stormpath.com/v1/tenants/$TENANT_ID
       Content-Length: 0
 
-  Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, which you will need in the next step.
+  Make note of the ``Location`` header. This is the location of your Tenant in Stormpath, with the Tenant's unique ID at the end.
 
-  From here, using the location of the Tenant, you can get your Application by performing a search for the Application by name, with $TENANT_HREF replaced with the ``href`` of your Tenant from the previous cURL:
+  From here, using your Tenant ID, you can get your Application by performing a search for the Application by name, with $TENANT_ID replaced with the ``$TENANT_ID`` of your Tenant from the previous cURL:
 
   .. code-block:: bash
 
     curl --request GET \
       --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/tenants/yOuRTeNANtid/applications?name=My%20Application"
+      --url "https://api.stormpath.com/v1/tenants/$TENANT_ID/applications?name=My%20Application"
 
   .. note::
 
@@ -312,7 +313,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
       "createdAt":"2015-08-18T20:46:36.061Z",
       "modifiedAt":"2015-11-09T21:09:34.334Z",
       "tenant":{
-        "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+        "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExAMPLE"
       },
       "comment":" // This JSON has been truncated for readability",
       "accounts":{
