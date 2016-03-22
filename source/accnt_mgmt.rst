@@ -230,11 +230,11 @@ Groups, like labels, are inherently "flat". This means that they do not by defau
 
 A geographical region can, for example, be represented as ``"North America/US/US East"`` in the Group's ``description`` field, allowing for queries to be made using simple pattern-matching queries. So to find all Groups in the US, you'd make the following HTTP GET::
 
-  https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US*
+  https://api.stormpath.com/v1/directories/$DIRECTORY_ID/groups?description=*/US*
 
 Or, to find all Groups in the US East region only, you would GET::
 
-  https://api.stormpath.com/v1/directories/$DIR_ID/groups?description=US%20East*
+  https://api.stormpath.com/v1/directories/$DIRECTORY_ID/groups?description=*/US%20East*
 
 .. note::
 
