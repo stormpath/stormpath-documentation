@@ -991,31 +991,122 @@ It is up to you to determine which kind of validation is important for your appl
 
 Using Stormpath to Validate Tokens
 """"""""""""""""""""""""""""""""""
-To see how to validate tokens with the Stormpath REST API, let's go back to the example where a user has already generated an access token.
+To see how to validate tokens with Stormpath, let's go back to the example where a user has already generated an access token.
 
 To recap, you have done the following:
 
-1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type you wanted, as well as your user's username and password.
-2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+.. only:: rest
 
-The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header:
+  1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type you wanted, as well as your user's username and password.
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-.. code-block:: http
+  The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header:
 
-  GET /secure-resource HTTP/1.1
-  Host: https://yourapplication.com
-  Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
+  .. code-block:: http
 
-The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
+    GET /secure-resource HTTP/1.1
+    Host: https://yourapplication.com
+    Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
-    https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
+  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
 
-If the access token can be validated, Stormpath will return a 302 to the Access Token resource:
+      https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
 
-.. code-block:: http
+  If the access token can be validated, Stormpath will return a 302 to the Access Token resource:
 
-  HTTP/1.1 302 Location Found
-  Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+  .. code-block:: http
+
+    HTTP/1.1 302 Location Found
+    Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+
+.. only:: csharp or vbnet
+
+  1. ?
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+  The user now attempts to access a secured resource by...?
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_req
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req
+      :language: vbnet
+
+  If the access token can be validated, Stormpath will return...?
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_resp
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_resp
+      :language: vbnet
+
+.. only:: java
+
+  1. ?
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+  The user now attempts to access a secured resource by...?
+
+  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req
+    :language: java
+
+  If the access token can be validated, Stormpath will return...?
+
+  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp
+    :language: java
+
+.. only:: nodejs
+
+  1. ?
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+  The user now attempts to access a secured resource by...?
+
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req
+    :language: javascript
+
+  If the access token can be validated, Stormpath will return...?
+
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp
+    :language: javascript
+
+.. only:: php
+
+  1. ?
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+  The user now attempts to access a secured resource by...?
+
+  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req
+    :language: php
+
+  If the access token can be validated, Stormpath will return...?
+
+  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp
+    :language: php
+
+.. only:: python
+
+  1. ?
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+  The user now attempts to access a secured resource by...?
+
+  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_req
+    :language: python
+
+  If the access token can be validated, Stormpath will return...?
+
+  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_resp
+    :language: python
 
 With the confirmation that the token is valid, you can now allow the user access to the secured resource that they requested.
 
@@ -1030,24 +1121,98 @@ Local validation would also begin at the point of the request to a secure resour
   Host: https://yourapplication.com
   Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
-The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token. This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
+The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token.
+
+.. only:: rest
+
+  This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_local
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_local
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/validate_oauth_token_local
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/validate_oauth_token_local
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/validate_oauth_token_local
+      :language: python
 
 Refreshing Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-entering their credentials. To use this Refresh Token, simply make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
+In the event that the Access Token expires, the user can generate a new one using the Refresh Token without re-entering their credentials.
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/x-www-form-urlencoded
+  To use this Refresh Token, you make an HTTP POST to your Applications ``/oauth/token`` endpoint with it and you will get a new token back.
 
-  grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
+  .. code-block:: http
+
+    POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/refresh_access_token_req
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/refresh_access_token_req
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/refresh_access_token_req
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/refresh_access_token_req
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/refresh_access_token_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/refresh_access_token_req
+    :language: python
 
 This would be the response:
 
-.. code-block:: http
+.. only:: rest
+
+  .. code-block:: http
 
   HTTP/1.1 200 OK
   Content-Type: application/x-www-form-urlencoded
@@ -1060,8 +1225,39 @@ This would be the response:
     "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
   }
 
-Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
+.. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/refresh_access_token_resp
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/refresh_access_token_resp
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/refresh_access_token_resp
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/refresh_access_token_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/refresh_access_token_resp
+    :language: python
+
+Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
 
 Revoking Access and Refresh Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1071,57 +1267,163 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 - The user has explicitly logged out, and your application needs to revoke their access, requiring re-authentication.
 - The application, device, and/or client has been compromised and you need to revoke tokens for an Account.
 
-To revoke the tokens, simply delete the Account's ``/accessTokens/:accessTokenId`` resource.
+.. only:: rest
 
-To retrieve an Account's Access and Refresh tokens, make an HTTP GET calls for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections:
+  To revoke the tokens, all you have to do is delete the Account's ``/accessTokens/:accessTokenId`` resource.
 
-.. code-block:: json
+  First, you retrieve an Account's Access and Refresh tokens. To do this, make an HTTP GET call for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections:
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-    "username": "jlpicard",
-    "comment":" // This JSON has been truncated for readability",
-    "accessTokens": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
-    },
-    "refreshTokens": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/refreshTokens"
-    }
-  }
-
-If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens:
-
-.. code-block:: json
+  .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens",
-      "offset": 0,
-      "limit": 25,
-      "size": 1,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr",
-          "comment":" // This JSON has been truncated for readability"
-        }
-      ]
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+      "username": "jlpicard",
+      "comment":" // This JSON has been truncated for readability",
+      "accessTokens": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
+      },
+      "refreshTokens": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/refreshTokens"
+      }
     }
+
+  If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens:
+
+  .. code-block:: json
+
+      {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/accessTokens",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCexample",
+            "comment":" // This JSON has been truncated for readability"
+          }
+        ]
+      }
+
+  .. note::
+
+    You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
+
+    .. code-block:: bash
+
+      curl --request GET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_user_access_tokens
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_user_access_tokens
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_user_access_tokens
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_user_access_tokens
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_user_access_tokens
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_user_access_tokens
+    :language: python
 
 .. note::
 
-  You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
+    You can query the Access Tokens that an Account has for a specific Application by
 
-  .. code-block:: bash
 
-    curl --request GET \
-    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
-    --header 'content-type: application/json' \
-    --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0eSEXAMPLE"
+To revoke the token, send the following request:
 
-To revoke the token, simply issue an HTTP Delete::
+.. only:: rest
 
-    DELETE https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr
+  .. code-block:: http
 
-You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
+    DELETE /v1/accessTokens/6NrWIs5ikmIPVJCexample HTTP/1.1
+    Host: api.stormpath.com
+
+  You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req
+      :language: csharp
+
+    You will get back a ... ?
+
+    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req
+      :language: vbnet
+
+    You will get back a ... ?
+
+    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/delete_user_access_tokens_req
+    :language: java
+
+  You will get back a ... ?
+
+  .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req
+    :language: javascript
+
+  You will get back a ... ?
+
+  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/delete_user_access_tokens_req
+    :language: php
+
+  You will get back a ... ?
+
+  .. literalinclude:: code/php/authentication/delete_user_access_tokens_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/delete_user_access_tokens_req
+    :language: python
+
+  You will get back a ... ?
+
+  .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp
+    :language: python
 
 .. _social-authn:
 
