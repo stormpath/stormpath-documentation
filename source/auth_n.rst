@@ -1214,16 +1214,16 @@ This would be the response:
 
   .. code-block:: http
 
-  HTTP/1.1 200 OK
-  Content-Type: application/x-www-form-urlencoded
+    HTTP/1.1 200 OK
+    Content-Type: application/x-www-form-urlencoded
 
-  {
-    "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
-    "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
-    "token_type": "Bearer",
-    "expires_in": 1800,
-    "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
-  }
+    {
+      "access_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2TnJXSXM1aWttSVBWSkNuMnA0bnJyIiwiaWF0IjoxNDQxMTMzNjQ1LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTM1NDQ1LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.SbSmuPz0-v4J2BO9-lpyz_2_T62mSB1ql_0IMrftpgg",
+      "refresh_token": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g",
+      "token_type": "Bearer",
+      "expires_in": 1800,
+      "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
+    }
 
 .. only:: csharp or vbnet
 
@@ -1314,43 +1314,6 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
       --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
-
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_user_access_tokens
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_user_access_tokens
-      :language: vbnet
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/get_user_access_tokens
-    :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/get_user_access_tokens
-    :language: javascript
-
-.. only:: php
-
-  .. literalinclude:: code/php/authentication/get_user_access_tokens
-    :language: php
-
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/get_user_access_tokens
-    :language: python
-
-.. note::
-
-    You can query the Access Tokens that an Account has for a specific Application by
-
 
 To revoke the token, send the following request:
 
@@ -1463,11 +1426,63 @@ In general, the social login process works as follows:
 
 6. Once the Directory is located, Stormpath will look for an Account in your application's Directories that matches this information.
 
-   a. If a matching Account is found, Stormpath will return the existing Account's ``href``.
+.. only:: rest
 
-   b. If a matching Account is not found, Stormpath will create one and return the new Account's ``href``.
+     a. If a matching Account is found, Stormpath will return the existing Account's ``href``.
 
-7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
+     b. If a matching Account is not found, Stormpath will create one and return the new Account's ``href``.
+
+  7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+      a. If a matching Account is found,
+
+      b. If a matching Account is not found,
+
+   7. At this point,
+
+  .. only:: vbnet
+
+      a. If a matching Account is found,
+
+      b. If a matching Account is not found,
+
+   7. At this point,
+
+.. only:: java
+
+    a. If a matching Account is found,
+
+    b. If a matching Account is not found,
+
+ 7. At this point,
+
+.. only:: nodejs
+
+    a. If a matching Account is found,
+
+    b. If a matching Account is not found,
+
+ 7. At this point,
+
+.. only:: php
+
+    a. If a matching Account is found,
+
+    b. If a matching Account is not found,
+
+ 7. At this point,
+
+.. only:: python
+
+    a. If a matching Account is found,
+
+    b. If a matching Account is not found,
+
+ 7. At this point,
 
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
@@ -1499,24 +1514,58 @@ For more information, please see the `Google OAuth 2.0 documentation <https://de
 Step 1: Create a Social Directory for Google
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by sending an HTTP POST:
+Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by creating a new Directory:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "name" : "my-google-directory",
-      "description" : "A Google directory",
-      "provider": {
-          "providerId": "google",
-          "clientId":"YOUR_GOOGLE_CLIENT_ID",
-          "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
-          "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
-      }
-  }
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "name" : "my-google-directory",
+        "description" : "A Google directory",
+        "provider": {
+            "providerId": "google",
+            "clientId":"YOUR_GOOGLE_CLIENT_ID",
+            "clientSecret":"YOUR_GOOGLE_CLIENT_SECRET",
+            "redirectUri":"YOUR_GOOGLE_REDIRECT_URI"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_google
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_google
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_google
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_google
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_google
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_google
+    :language: python
 
 .. note::
 
@@ -1538,37 +1587,124 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account. For more information about scopes please see `Google's OAuth Login Scopes documentation <https://developers.google.com/+/web/api/rest/oauth#login-scopes>`_.
 
-Once the Authorization Code is gathered, you send an HTTP POST:
+Once the Authorization Code is gathered, you send this request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "providerData": {
-        "providerId": "google",
-        "code": "YOUR_GOOGLE_AUTH_CODE"
-      }
-  }
+    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "providerData": {
+          "providerId": "google",
+          "code": "YOUR_GOOGLE_AUTH_CODE"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_code
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_code
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_google_providerdata_code
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_code
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_google_providerdata_code
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_google_providerdata_code
+    :language: python
 
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "providerData": {
-        "providerId": "google",
-        "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
-      }
-  }
+    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+    {
+        "providerData": {
+          "providerId": "google",
+          "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_access_token
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_access_token
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_google_providerdata_access_token
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_access_token
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_google_providerdata_access_token
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token
+    :language: python
+
+Either way, Stormpath will use the code or access token provided to retrieve information about your Google Account, then return a Stormpath Account.
+
+.. only:: rest
+
+  The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
+
 
 5.3.2. Facebook
 ---------------
@@ -1586,23 +1722,57 @@ For more information, please see the `Facebook documentation <https://developers
 Step 1: Create a Social Directory for Facebook
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by sending an HTTP POST:
+Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by creating a new Directory:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "name" : "my-facebook-directory",
-      "description" : "A Facebook directory",
-      "provider": {
-        "providerId": "facebook",
-        "clientId":"YOUR_FACEBOOK_APP_ID",
-        "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
-      }
-  }
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "name" : "my-facebook-directory",
+        "description" : "A Facebook directory",
+        "provider": {
+          "providerId": "facebook",
+          "clientId":"YOUR_FACEBOOK_APP_ID",
+          "clientSecret":"YOUR_FACEBOOK_APP_SECRET"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_fb
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_fb
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_fb
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_fb
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_fb
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_fb
+    :language: python
 
 Step 2: Map the Facebook Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1618,22 +1788,74 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 
     It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
 
-Once the User Access Token is gathered, you send an HTTP POST:
+Once the User Access Token is gathered, you send an this request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "providerData": {
-        "providerId": "facebook",
-        "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
-      }
-  }
+    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+    {
+        "providerData": {
+          "providerId": "facebook",
+          "accessToken": "USER_ACCESS_TOKEN_FROM_FACEBOOK"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_account_fb_providerdata_access_token
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_fb_providerdata_access_token
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_fb_providerdata_access_token
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_fb_providerdata_access_token
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_fb_providerdata_access_token
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token
+    :language: python
+
+Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account.
+
+.. only:: rest
+
+  The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 5.3.3. Github
 --------------
@@ -1651,23 +1873,57 @@ For more information, please see the `GitHub documentation on registering your a
 Step 1: Create a Social Directory for GitHub
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by sending an HTTP POST:
+Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by creating a new Directory:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "name" : "my-github-directory",
-      "description" : "A GitHub directory",
-      "provider": {
-        "providerId": "github",
-        "clientId":"YOUR_GITHUB_CLIENT_ID",
-        "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
-      }
-  }
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "name" : "my-github-directory",
+        "description" : "A GitHub directory",
+        "provider": {
+          "providerId": "github",
+          "clientId":"YOUR_GITHUB_CLIENT_ID",
+          "clientSecret":"YOUR_GITHUB_CLIENT_SECRET"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_github
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_github
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_github
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_github
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_github
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_github
+    :language: python
 
 Step 2: Map the GitHub Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1683,24 +1939,77 @@ Generally, this will include embedding a link in your site that will send an aut
 
 .. note::
 
-    It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
+    It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about this see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
 
-Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for an access token.  Then you can send an HTTP POST to Stormpath:
+Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for an access token.  Then you can send this information to Stormpath:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "github",
-      "accessToken": "ACCESS_TOKEN_FROM_GITHUB"
+    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "providerData": {
+        "providerId": "github",
+        "accessToken": "ACCESS_TOKEN_FROM_GITHUB"
+      }
     }
-  }
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_account_github_providerdata_access_token
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_github_providerdata_access_token
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_github_providerdata_access_token
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_github_providerdata_access_token
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_github_providerdata_access_token
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token
+    :language: python
+
+Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account.
+
+.. only:: rest
+
+  The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
+
 
 5.3.4 LinkedIn
 ---------------
@@ -1718,23 +2027,57 @@ For more information, please see `LinkedIn's OAuth documentation <https://develo
 Step 1: Create a Social Directory for LinkedIn
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by sending an HTTP POST:
+Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by creating a new Directory:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-      "name" : "my-linkedin-directory",
-      "description" : "A LinkedIn Directory",
-      "provider": {
-        "providerId": "linkedin",
-        "clientId":"YOUR_LINKEDIN_APP_ID",
-        "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
-      }
-  }
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "name" : "my-linkedin-directory",
+        "description" : "A LinkedIn Directory",
+        "provider": {
+          "providerId": "linkedin",
+          "clientId":"YOUR_LINKEDIN_APP_ID",
+          "clientSecret":"YOUR_LINKEDIN_APP_SECRET"
+        }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_linkedin
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_linkedin
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_linkedin
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_linkedin
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_linkedin
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_linkedin
+    :language: python
 
 Step 2: Map the LinkedIn Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1752,22 +2095,74 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes from LinkedIn. If the access token does not grant these scopes, you will not be able to get an Account with an access token. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
 
-Once the Access Token is gathered, you can send an HTTP POST:
+Once the Access Token is gathered, you can send it to Stormpath:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "linkedin",
-      "accessToken": "TOKEN_FROM_LINKEDIN"
+    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "providerData": {
+        "providerId": "linkedin",
+        "accessToken": "TOKEN_FROM_LINKEDIN"
+      }
     }
-  }
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_access_token
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_access_token
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_linkedin_providerdata_access_token
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_linkedin_providerdata_access_token
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_linkedin_providerdata_access_token
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token
+    :language: python
+
+Stormpath will use the Access Token provided to retrieve information about your LinkedIn Account, then return a Stormpath Account.
+
+.. only:: rest
+
+  he HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
 
 .. _ldap-dir-authn:
 
@@ -1790,55 +2185,89 @@ The step-by-step process for setting-up LDAP login is as follows:
 Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
+.. only:: rest
 
-.. code-block:: http
+  HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
 
-    POST /v1/directories HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-    {
-      "name":"My LDAP Directory",
-      "description":"An LDAP Directory created with the Stormpath API",
-      "provider":{
-        "providerId":"ldap",
-        "agent":{
-          "config":{
-            "directoryHost":"ldap.local",
-            "directoryPort":"636",
-            "sslRequired":true,
-            "agentUserDn":"tom@stormpath.com",
-            "agentUserDnPassword":"StormpathRulez",
-            "baseDn":"dc=example,dc=com",
-            "pollInterval":60,
-            "referralMode":"ignore",
-            "ignoreReferralIssues":false,
-            "accountConfig":{
-              "dnSuffix":"ou=employees",
-              "objectClass":"person",
-              "objectFilter":"(cn=finance)",
-              "emailRdn":"email",
-              "givenNameRdn":"givenName",
-              "middleNameRdn":"middleName",
-              "surnameRdn":"sn",
-              "usernameRdn":"uid",
-              "passwordRdn":"userPassword"
-            },
-            "groupConfig":{
-              "dnSuffix":"ou=groups",
-              "objectClass":"groupOfUniqueNames",
-              "objectFilter":"(ou=*-group)",
-              "nameRdn":"cn",
-              "descriptionRdn":"description",
-              "membersRdn":"uniqueMember"
+      POST /v1/directories HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json;charset=UTF-8
+
+      {
+        "name":"My LDAP Directory",
+        "description":"An LDAP Directory created with the Stormpath API",
+        "provider":{
+          "providerId":"ldap",
+          "agent":{
+            "config":{
+              "directoryHost":"ldap.local",
+              "directoryPort":"636",
+              "sslRequired":true,
+              "agentUserDn":"tom@stormpath.com",
+              "agentUserDnPassword":"StormpathRulez",
+              "baseDn":"dc=example,dc=com",
+              "pollInterval":60,
+              "referralMode":"ignore",
+              "ignoreReferralIssues":false,
+              "accountConfig":{
+                "dnSuffix":"ou=employees",
+                "objectClass":"person",
+                "objectFilter":"(cn=finance)",
+                "emailRdn":"email",
+                "givenNameRdn":"givenName",
+                "middleNameRdn":"middleName",
+                "surnameRdn":"sn",
+                "usernameRdn":"uid",
+                "passwordRdn":"userPassword"
+              },
+              "groupConfig":{
+                "dnSuffix":"ou=groups",
+                "objectClass":"groupOfUniqueNames",
+                "objectFilter":"(ou=*-group)",
+                "nameRdn":"cn",
+                "descriptionRdn":"description",
+                "membersRdn":"uniqueMember"
+              }
             }
           }
         }
       }
-    }
 
-For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
+  For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_ldap
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_ldap
+      :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_ldap
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_ldap
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_ldap
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_ldap
+    :language: python
 
 Step 2: Install your LDAP Agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2866,7 +3295,7 @@ The rule expressed here is as follows:
 
   It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-In order to create the mapping rules, you simply send the following POST:
+In order to create the mapping rules, you send the following POST:
 
 .. code-block:: http
 
