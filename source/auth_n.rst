@@ -2574,22 +2574,56 @@ When a new Account logs in via SAML, the IdP sends along a number of SAML attrib
 
 If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Salesforce sends by retrieving the new user Account that was created inside Stormpath.
 
-Specifically, you want that Account's ``providerData`` resource:
+Specifically, you want that Account's Provider Data:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href":"https://api.stormpath.com/v1/accounts/xbKQemsqW3HcpfeXAMPLE/providerData",
-    "createdAt":"2016-01-20T17:56:25.532Z",
-    "modifiedAt":"2016-01-20T17:57:22.530Z",
-    "email":"saml+testuser@email.com",
-    "is_portal_user":"false",
-    "providerId":"saml",
-    "userId":"00536000000G4ft",
-    "username":"saml+testuser@email.com"
-  }
+  .. code-block:: json
 
-Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
+    {
+      "href":"https://api.stormpath.com/v1/accounts/xbKQemsqSForceXAMPLE/providerData",
+      "createdAt":"2016-01-20T17:56:25.532Z",
+      "modifiedAt":"2016-01-20T17:57:22.530Z",
+      "email":"saml+testuser@email.com",
+      "is_portal_user":"false",
+      "providerId":"saml",
+      "userId":"00536000000G4ft",
+      "username":"saml+testuser@email.com"
+    }
+
+  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/saml_salesforce_account_providerdata
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/saml_salesforce_account_providerdata
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/saml_salesforce_account_providerdata
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/saml_salesforce_account_providerdata
+      :language: python
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other SAML Attributes to Stormpath Account attributes as well.
 
@@ -2763,20 +2797,54 @@ If you have already successfully set-up SAML and authenticated a user with your 
 
 Specifically, you want that Account's ``providerData`` resource:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href":"https://api.stormpath.com/v1/accounts/2i6Rxkcf8NFsIA9eXaMPle/providerData",
-    "createdAt":"2016-01-21T18:11:09.838Z",
-    "modifiedAt":"2016-01-21T18:13:39.102Z",
-    "PersonImmutableID":"samltestuser",
-    "User.FirstName":"John",
-    "User.LastName":"Samlton",
-    "User.email":"saml+testuser@example.com",
-    "providerId":"saml"
-  }
+  .. code-block:: json
 
-Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by OneLogin.
+    {
+      "href":"https://api.stormpath.com/v1/accounts/2i6RxkcOneLogineXaMPle/providerData",
+      "createdAt":"2016-01-21T18:11:09.838Z",
+      "modifiedAt":"2016-01-21T18:13:39.102Z",
+      "PersonImmutableID":"samltestuser",
+      "User.FirstName":"John",
+      "User.LastName":"Samlton",
+      "User.email":"saml+testuser@example.com",
+      "providerId":"saml"
+    }
+
+  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by OneLogin.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/saml_onelogin_account_providerdata
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/saml_onelogin_account_providerdata
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/saml_onelogin_account_providerdata
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/saml_onelogin_account_providerdata
+      :language: python
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
 
@@ -2941,65 +3009,100 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
-.. todo::
+Step 6: Configure Your Attribute Mappings
+"""""""""""""""""""""""""""""""""""""""""
 
-  Step 6: Configure Your Attribute Mappings"
+When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-  When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+6.1. Find the Existing SAML Attributes
+++++++++++++++++++++++++++++++++++++++
 
-  6.1. Find the Existing SAML Attributes
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
 
-  If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
+Specifically, you want that Account's ``providerData`` resource:
 
-  Specifically, you want that Account's ``providerData`` resource:
+.. only:: rest
 
   .. code-block:: json
 
-  .. todo::
-
     {
-
+      "href":"https://api.stormpath.com/v1/accounts/6Y2ViNhE5GOktaExample/providerData",
+      "createdAt":"2016-03-09T18:16:16.116Z",
+      "modifiedAt":"2016-03-25T14:49:30.098Z",
+      "providerId":"saml"
     }
 
-  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Okta.
+.. only:: csharp or vbnet
 
-  Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
+  .. only:: csharp
 
-  6.2. (Optional) Add Any Additional Attributes You Want+
+    .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata
+        :language: csharp
 
-  If there are other attributes that you would like Okta to pass other attributes, you can configure this. From your Okta Admin settings page:
+  .. only:: vbnet
 
-  #. Click on the **Applications** tab in the top navigation pane
-  #. Select your Application
-  #. In the "SAML Settings" section, click on **Edit**
-  #. You will arrive on "General Settings", click **Next**
-  #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...
+    .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata
+        :language: vbnet
 
-  .. todo::
+.. only:: java
 
-  For example:
+  .. literalinclude:: code/java/authentication/saml_okta_account_providerdata
+      :language: java
 
-  * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
-  * For the "Value" you would choose "Company"
+.. only:: nodejs
 
-  You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
+  .. literalinclude:: code/nodejs/authentication/saml_okta_account_providerdata
+      :language: javascript
 
-  6.3. Specify Your Mapping+
+.. only:: php
 
-  #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
-  #. Click on the **Directories** tab
-  #. Select your Okta SAML Directory
-  #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-  #. Here you will enter the Okta attribute name under "Name"
-  #. (Optional) Under "Name Format" you can enter ``todo``
-  #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
+  .. literalinclude:: code/php/authentication/saml_okta_account_providerdata
+    :language: php
 
-  For example, you could enter:
+.. only:: python
 
-  * For the "Name" enter ``todo``
-  * For "Stormpath Attributes" enter ``todo``
+  .. literalinclude:: code/python/authentication/saml_okta_account_providerdata
+    :language: python
 
-  If a user now logs in, Stormpath will take the ``todo`` attribute and map it to the ``givenName`` field on the Account resource.
+As you can see there are no default attributes passed by Okta, but you can map any attributes you like to the Stormpath Account attributes as well.
+
+6.2. (Optional) Add Any Additional Attributes You Want
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+If there are attributes that you would like Okta to pass other attributes, you can configure this. From your Okta Admin settings page:
+
+#. Click on the **Applications** tab in the top navigation pane
+#. Select your Application
+#. In the "SAML Settings" section, click on **Edit**
+#. You will arrive on "General Settings", click **Next**
+#. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional attributes that you would like to be sent.
+
+For example:
+
+* For "Name" enter ``firstName``
+* (Optional) For "Name format" you can select "Basic"
+* For the "Value" you would choose "user:firstName"
+* Click "Next" and on the next page "Finish"
+
+You will now be returned to your App's "Sign on" page. If you click on the "General" tab, you will see the attribute you just added in the "Attribute Statements" section. You can add as many attributes as you wish.
+
+6.3. Specify Your Mapping
++++++++++++++++++++++++++
+
+#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
+#. Click on the **Directories** tab
+#. Select your Okta SAML Directory
+#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
+#. Here you will enter the Okta attribute name under "Name"
+#. (Optional) Under "Name Format" you can enter ``Basic``
+#. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to.
+
+For example, you could enter:
+
+* For the "Name" enter ``firstName``
+* For "Stormpath Attributes" enter ``givenName``
+
+If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
 
 .. _saml-configuration-rest:
 
@@ -3033,23 +3136,57 @@ Step 2: Configure Your SAML Directory
 
 Input the data you gathered in Step 1 above into your Directory's Provider resource, and then pass that along as part of the Directory creation request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "name" : "My SAML Directory",
-    "description" : "A Directory used for SAML Authorization",
-    "provider": {
-      "providerId":"saml",
-      "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
-      "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
-      "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
-      "requestSignatureAlgorithm":"RSA-SHA256"
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "name" : "My SAML Directory",
+      "description" : "A Directory used for SAML Authorization",
+      "provider": {
+        "providerId":"saml",
+        "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
+        "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
+        "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
+        "requestSignatureAlgorithm":"RSA-SHA256"
+      }
     }
-  }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_directory_saml
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_directory_saml
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_saml
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_saml
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_directory_saml
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_saml
+      :language: python
 
 .. note::
 
@@ -3064,45 +3201,147 @@ Next you will have to configure your Stormpath-powered application as a Service 
 
 In order to retrieve the required values, start by sending this request:
 
-.. code-block:: http
+.. only:: rest
 
-  GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/xml
+  .. code-block:: http
 
-Which will return the Provider:
+    GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/xml
 
-.. code-block:: json
-  :emphasize-lines: 13,14
+.. only:: csharp or vbnet
 
-  {
-    "href":"https://api.stormpath.com/v1/directories/1joyMCilyf1xSravQxaHxy/provider",
-    "createdAt":"2015-12-21T20:27:16.190Z",
-    "modifiedAt":"2015-12-21T20:27:16.190Z",
-    "providerId":"saml",
-    "ssoLoginUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
-    "ssoLogoutUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
-    "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\nexample\n-----END CERTIFICATE-----",
-    "requestSignatureAlgorithm":"RSA-SHA256",
-    "attributeStatementMappingRules":{
-      "href":"https://api.stormpath.com/v1/attributeStatementMappingRules/1jq5X3PhdEZJ5EL5MORdTG"
-    },
-    "serviceProviderMetadata":{
-      "href":"https://api.stormpath.com/v1/samlServiceProviderMetadatas/1l4aLK8aJPNtwslBgXBjGE"
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_directory_provider_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_directory_provider_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_directory_provider_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_directory_provider_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_directory_provider_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_directory_provider_req
+      :language: python
+
+This will return the Provider:
+
+.. only:: rest
+
+  .. code-block:: json
+    :emphasize-lines: 13,14
+
+    {
+      "href":"https://api.stormpath.com/v1/directories/1joyMCilyf1xSravQxaHxy/provider",
+      "createdAt":"2015-12-21T20:27:16.190Z",
+      "modifiedAt":"2015-12-21T20:27:16.190Z",
+      "providerId":"saml",
+      "ssoLoginUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
+      "ssoLogoutUrl":"https://stormpathsaml-dev-ed.my.salesforce.com/idp/endpoint/HttpRedirect",
+      "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\nexample\n-----END CERTIFICATE-----",
+      "requestSignatureAlgorithm":"RSA-SHA256",
+      "attributeStatementMappingRules":{
+        "href":"https://api.stormpath.com/v1/attributeStatementMappingRules/1jq5X3PhdEZJ5EL5MORdTG"
+      },
+      "serviceProviderMetadata":{
+        "href":"https://api.stormpath.com/v1/samlServiceProviderMetadatas/1l4aLK8aJPNtwslBgXBjGE"
+      }
     }
-  }
 
-Now send a GET to this ``serviceProviderMetadata`` link found in your Directory's Provider object.
+.. only:: csharp or vbnet
 
-.. code-block:: http
+  .. only:: csharp
 
-  GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/xml
+    .. literalinclude:: code/csharp/authentication/get_directory_provider_resp
+        :language: csharp
 
-.. note::
+  .. only:: vbnet
 
-  This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
+    .. literalinclude:: code/vbnet/authentication/get_directory_provider_resp
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_directory_provider_resp
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_directory_provider_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_directory_provider_resp
+      :language: python
+
+Now you will need to retrieve your Directory Provider's Service Provider Metadata:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/xml
+
+  .. note::
+
+    This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_serviceprovider_metadata_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_serviceprovider_metadata_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_serviceprovider_metadata_req
+      :language: python
 
 **Example XML**
 
@@ -3123,22 +3362,24 @@ Now send a GET to this ``serviceProviderMetadata`` link found in your Directory'
       </md:SPSSODescriptor>
   </md:EntityDescriptor>
 
-**Example JSON**
+.. only:: rest
 
-.. code-block:: json
+  **Example JSON**
 
-  {
-    "href":"http://api.stormpath.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuExaMPLE",
-    "createdAt":"2015-12-09T19:22:10.033Z",
-    "modifiedAt":"2015-12-09T19:22:10.033Z",
-    "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
-    "assertionConsumerServicePostEndpoint":{
-      "href":"http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post"
-    },
-    "x509SigningCert":{
-      "href":"http://api.stormpath.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
+  .. code-block:: json
+
+    {
+      "href":"http://api.stormpath.com/v1/samlServiceProviderMetadatas/173pHdbJ96DpPeuExaMPLE",
+      "createdAt":"2015-12-09T19:22:10.033Z",
+      "modifiedAt":"2015-12-09T19:22:10.033Z",
+      "entityId":"urn:stormpath:directory:15iM83Y77qIIviKlTzGqjX:provider:sp",
+      "assertionConsumerServicePostEndpoint":{
+        "href":"http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post"
+      },
+      "x509SigningCert":{
+        "href":"http://api.stormpath.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
+      }
     }
-  }
 
 From this metadata, you will need two values:
 
@@ -3158,60 +3399,198 @@ Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the infor
 Step 5: Configure Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Stormpath :ref:`Application <ref-application>` Resource has two parts that are relevant to SAML:
+Your Stormpath Application Resource has two parts that are relevant to SAML:
 
 1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself.
 
-You should ``POST`` any URIs here that you would like included as authorized callback URIs.
+You should create any URIs here that you would like included as authorized callback URIs.
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/$APPLICATION_ID HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "authorizedCallbackUris": [
-      "https://myapplication.com/whatever/callback",
-      "https://myapplication.com/whatever/callback2"
-    ]
-  }
+    POST /v1/applications/$APPLICATION_ID HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "authorizedCallbackUris": [
+        "https://myapplication.com/whatever/callback",
+        "https://myapplication.com/whatever/callback2"
+      ]
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_callback_uris
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_callback_uris
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_callback_uris
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_callback_uris
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_callback_uris
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_callback_uris
+      :language: python
 
 2. There is also an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO",
-    "createdAt":"2016-01-18T21:02:24.501Z",
-    "modifiedAt":"2016-01-18T21:02:24.501Z",
-    "ssoInitiationEndpoint":{
-      "href":"https://api.stormpath.com/v1/applications/61eykaiWwglwT5mngYyExu/saml/sso/idpRedirect"
-    },
-    "defaultRelayStates":{
-      "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO/defaultRelayStates"
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO",
+      "createdAt":"2016-01-18T21:02:24.501Z",
+      "modifiedAt":"2016-01-18T21:02:24.501Z",
+      "ssoInitiationEndpoint":{
+        "href":"https://api.stormpath.com/v1/applications/61eykaiWwglwT5mngYyExu/saml/sso/idpRedirect"
+      },
+      "defaultRelayStates":{
+        "href":"https://api.stormpath.com/v1/samlServiceProviders/61fOguTd49bCKEJbuLnFHO/defaultRelayStates"
+      }
     }
-  }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/saml_policy_example
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/saml_policy_example
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/saml_policy_example
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/saml_policy_example
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/saml_policy_example
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/saml_policy_example
+      :language: python
 
 .. _saml-restconfig-5a:
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates/`` endpoint.
+.. only:: rest
 
-.. code-block:: http
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
-  POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-  Host: api.stormpath.com
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_default_relay_state_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_default_relay_state_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_default_relay_state_req
+      :language: python
 
 This request will return a response containing a JWT like this:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
-  }
+  .. code-block:: json
+
+    {
+      "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_resp
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_default_relay_state_resp
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_default_relay_state_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_default_relay_state_resp
+      :language: python
 
 This JWT will then need to be entered into your IdP's configuration in order for IdP-initiated authentication to function properly.
 
@@ -3221,18 +3600,52 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 - **organization**: Allows you to specify an Organization to check users for.
 - **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-  Host: api.stormpath.com
+  .. code-block:: http
 
-  {
-      "callbackUri": "https://org1.myapp.com",
-      "organization": {
-          "nameKey": "org1",
-      }
-      "state": "IAmAState"
-  }
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
+
+    {
+        "callbackUri": "https://org1.myapp.com",
+        "organization": {
+            "nameKey": "org1",
+        }
+        "state": "IAmAState"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_with_extras
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/get_default_relay_state_with_extras
+      :language: python
 
 Step 6: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3275,58 +3688,144 @@ The rules have three different components:
 
 **Example Rule**
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "name": "uid",
-    "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
-    "accountAttributes":[
-      "username"
-    ]
-  }
+  .. code-block:: json
+
+    {
+      "name": "uid",
+      "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+      "accountAttributes":[
+        "username"
+      ]
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/example_saml_rule
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/example_saml_rule
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/example_saml_rule
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/example_saml_rule
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/example_saml_rule
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/example_saml_rule
+      :language: python
 
 The rule expressed here is as follows:
 
-- A SAML Assertion with the name ``uid`` AND
-- the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
-- maps to the Account Attribute ``username``.
+.. only:: rest
 
-.. note::
+  - A SAML Assertion with the name ``uid`` AND
+  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+  - maps to the Account Attribute ``username``.
 
-  It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+  .. note::
 
-In order to create the mapping rules, you send the following POST:
+    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. only:: csharp
 
-  {
-    "items":[
-      {
-        "name":"uid",
-        "accountAttributes":[
-          "username"
-        ]
-      },
-      {
-        "name":"mail",
-        "accountAttributes":[
-          "email"
-        ]
-      },
-      {
-        "name":"location",
-        "accountAttributes":[
-          "customData.location"
-        ]
-      }
-    ]
-  }
+  .. only:: vbnet
 
-Now that we've configured everything, you can take a look at what the actual SAML authentication flow looks like.
+.. only:: java
+
+.. only:: nodejs
+
+.. only:: php
+
+.. only:: python
+
+In order to create the mapping rules, you send the following request:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "items":[
+        {
+          "name":"uid",
+          "accountAttributes":[
+            "username"
+          ]
+        },
+        {
+          "name":"mail",
+          "accountAttributes":[
+            "email"
+          ]
+        },
+        {
+          "name":"location",
+          "accountAttributes":[
+            "customData.location"
+          ]
+        }
+      ]
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/create_mapping_rule
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_mapping_rule
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_mapping_rule
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_mapping_rule
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_mapping_rule
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_mapping_rule
+      :language: python
+
+.. only:: rest
+
+  Now that we've configured everything, you can take a look at what the actual SAML authentication flow looks like.
 
 .. _saml-flow:
 
