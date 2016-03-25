@@ -940,12 +940,12 @@ This resource contains information about this Tenant's ID Site. For more informa
       - N/A
       - If you are customizing the ID Site code, you will need to put the branch name of the custom code here.
 
-    * - ``authorizedOriginURLs``
+    * - ``authorizedOriginURIs``
       - Array (String)
       - N/A
       - An array of URLs where the ID Site requests can originate from, used for local development or custom domain names.
 
-    * - ``authorizedRedirectURLs``
+    * - ``authorizedRedirectURIs``
       - Array (String)
       - N/A
       - An array of URLs that the user can be sent to after they log in or register at the ID Site.
