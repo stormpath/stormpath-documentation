@@ -31,7 +31,11 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: rest
 
-For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
+  For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Directory resource is represented by the ``IDirectory`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -248,13 +252,14 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 How to Make an LDAP Directory
 +++++++++++++++++++++++++++++
 
-.. only:: rest
+.. only:: rest or csharp or vbnet
 
   Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  .. todo::
+    (LDAP Directory creation)
 
 .. only:: java
 
@@ -291,11 +296,13 @@ How to Make a Social Directory
 
 .. only:: rest
 
-  Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
+  Social Directories can be made using the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  .. todo::
+
+    How to create social directories here.
 
 .. only:: java
 
@@ -328,13 +335,15 @@ The only modeling considerations for SAML Directories are: you will need a Direc
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
-.. only:: rest
+.. only:: rest or csharp or vbnet
 
   SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  .. todo::
+
+    (Creating SAML directories)
 
 .. only:: java
 
@@ -362,6 +371,10 @@ The Group resource can either be imagined as a container for Accounts, or as a l
 .. only:: rest
 
   For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Group resource is represented by the ``IGroup`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -617,6 +630,10 @@ The Account resource is a unique identity within your application. It is usually
 .. only:: rest
 
   For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -1038,6 +1055,8 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``SaveAsync()`` on the parent resource to send the updates to the Stormpath API.
 
+  To retrieve the Account's Custom Data after it's been saved, use the ``GetCustomDataAsync()`` method. For more information about the ``ICustomData`` interface, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+
 .. only:: java
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
@@ -1138,7 +1157,7 @@ The Account resource's **searchable attributes** are:
 
   With the Stormpath .NET SDK, you can use LINQ-to-Stormpath to easily perform searches. Search expressions begin on resources that contain collections.
 
-  In this case, any resource type that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
+  Any resource type that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
   .. note::
 
@@ -1542,17 +1561,16 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: csharp or vbnet
 
-  .. warning::
+  .. todo::
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+    This is available now!
 
-    .. only:: notyetcsharp
+    .. only:: csharp
 
       .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
           :language: csharp
 
-    .. only:: notyetvbnet
+    .. only:: vbnet
 
       .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
           :language: vbnet
@@ -1600,8 +1618,11 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "minUpperCase": 1
     }
 
-.. only:: notyetcsharp or notyetvbnet
+.. only:: csharp or vbnet
 
+  .. todo::
+
+    Response here.
 
 .. only:: java
 
@@ -2036,20 +2057,19 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
 .. only:: csharp or vbnet
 
-  .. warning::
+  .. todo::
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+    This is available now! (well, partially)
 
-  .. only:: notyetcsharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
-        :language: csharp
+      .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
+          :language: csharp
 
-  .. only:: notyetvbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
-        :language: vbnet
+      .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -2088,10 +2108,6 @@ The contents of the password reset and the password reset success emails are bot
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
     For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
-
-  .. only:: notyetcsharp
-
-  .. only:: notyetvbnet
 
 .. only:: java
 
@@ -2368,10 +2384,6 @@ For more information about this, see :ref:`password-reset-flow`.
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
     For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
-
-  .. only:: notyetcsharp
-
-  .. only:: notyetvbnet
 
 .. only:: java
 
