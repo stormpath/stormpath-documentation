@@ -263,7 +263,7 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #167 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_.
+    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
 
     .. todo::
 
@@ -354,7 +354,7 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #111 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
     .. todo::
 
@@ -2110,7 +2110,7 @@ The contents of the password reset and the password reset success emails are bot
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
 
   .. todo::
 
@@ -2390,7 +2390,7 @@ The emails that Stormpath sends to users be customized by modifying the :ref:`re
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
 
     .. todo::
 
