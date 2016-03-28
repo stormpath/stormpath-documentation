@@ -33,15 +33,9 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
 
-.. only:: csharp or vbnet
+.. todo::
 
-.. only:: java
-
-.. only:: nodejs
-
-.. only:: php
-
-.. only:: python
+  This will need links to the generated doc for the SDKs.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -260,13 +254,23 @@ How to Make an LDAP Directory
 
 .. only:: csharp or vbnet
 
+  .. todo::
+
 .. only:: java
+
+  .. todo::
 
 .. only:: nodejs
 
+  .. todo::
+
 .. only:: php
 
+  .. todo::
+
 .. only:: python
+
+  .. todo::
 
 .. _about-social-dir:
 
@@ -291,13 +295,23 @@ How to Make a Social Directory
 
 .. only:: csharp or vbnet
 
+  .. todo::
+
 .. only:: java
+
+  .. todo::
 
 .. only:: nodejs
 
+  .. todo::
+
 .. only:: php
 
+  .. todo::
+
 .. only:: python
+
+  .. todo::
 
 .. _about-saml-dir:
 
@@ -320,13 +334,23 @@ How to Make a SAML Directory
 
 .. only:: csharp or vbnet
 
+  .. todo::
+
 .. only:: java
+
+  .. todo::
 
 .. only:: nodejs
 
+  .. todo::
+
 .. only:: php
 
+  .. todo::
+
 .. only:: python
+
+  .. todo::
 
 .. _group-mgmt:
 
@@ -338,6 +362,10 @@ The Group resource can either be imagined as a container for Accounts, or as a l
 .. only:: rest
 
   For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
+
+.. todo::
+
+  This will need links to the generated documentation for the SDKs.
 
 .. _hierarchy-groups:
 
@@ -590,25 +618,9 @@ The Account resource is a unique identity within your application. It is usually
 
   For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  For more detailed information about the Account resource, see
-
-.. only:: java
-
-  For more detailed information about the Account resource, see
-
-.. only:: nodejs
-
-  For more detailed information about the Account resource, see
-
-.. only:: php
-
-  For more detailed information about the Account resource, see
-
-.. only:: python
-
-  For more detailed information about the Account resource, see
+  This will need links to the generated documentation for the SDKs.
 
 4.2.1. New Account Creation
 ---------------------------
