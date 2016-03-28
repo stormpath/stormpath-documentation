@@ -1561,19 +1561,17 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  To retrieve the password policy, use the ``GetPasswordPolicyAsync()`` and ``GetPasswordStrengthPolicyAsync()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
 
-    This is available now!
+  .. only:: csharp
 
-    .. only:: csharp
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
+        :language: csharp
 
-      .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
-          :language: csharp
+  .. only:: vbnet
 
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
-          :language: vbnet
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
+        :language: vbnet
 
 .. only:: java
 
@@ -1617,12 +1615,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "minSymbol": 1,
       "minUpperCase": 1
     }
-
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    Response here.
 
 .. only:: java
 
