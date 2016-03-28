@@ -252,14 +252,22 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 How to Make an LDAP Directory
 +++++++++++++++++++++++++++++
 
-.. only:: rest or csharp or vbnet
+LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-  Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
+.. only:: rest
+
+  For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
 .. only:: csharp or vbnet
 
-  .. todo::
-    (LDAP Directory creation)
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow the `.NET SDK ticket #167 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_.
+
+    .. todo::
+
+      Add LDAP directory creation .NET example
 
 .. only:: java
 
@@ -294,15 +302,15 @@ Modeling your users who authorize via Social Login is by necessity very simple, 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
 
+Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+
 .. only:: rest
 
-  Social Directories can be made using the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
+  For more information about creating them using the REST API, please see :ref:`social-authn`.
 
 .. only:: csharp or vbnet
 
-  .. todo::
-
-    How to create social directories here.
+  For more information about creating them using the .NET SDK, please see :ref:`social-authn`.
 
 .. only:: java
 
@@ -335,15 +343,22 @@ The only modeling considerations for SAML Directories are: you will need a Direc
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
-.. only:: rest or csharp or vbnet
+SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
 
-  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
+.. only:: rest
+
+  For more information about creating them using the REST API, see :ref:`saml-configuration-rest`.
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  .. warning::
 
-    (Creating SAML directories)
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow the `.NET SDK ticket #111 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_.
+
+    .. todo::
+
+      Add SAML directory creation .NET example
 
 .. only:: java
 
@@ -2097,6 +2112,10 @@ The contents of the password reset and the password reset success emails are bot
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
     For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
 
+  .. todo::
+
+    Add templates example
+
 .. only:: java
 
 .. only:: nodejs
@@ -2335,9 +2354,9 @@ For more information about this, see :ref:`password-reset-flow`.
 4.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-.. only:: rest
+The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via the REST API.
 
-  The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading.
+.. only:: rest
 
   First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
@@ -2372,6 +2391,10 @@ For more information about this, see :ref:`password-reset-flow`.
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
     For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+
+    .. todo::
+
+      Add email templates .NET example
 
 .. only:: java
 
