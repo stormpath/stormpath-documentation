@@ -1,4 +1,4 @@
 var groupsInUSEast = await myDirectory
     .GetGroups()
-    .Where(g => g.Description.StartsWith("US East"))
+    .Where(g => g.Description.Contains("/US East"))
     .ToListAsync();

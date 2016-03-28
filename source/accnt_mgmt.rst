@@ -31,7 +31,11 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: rest
 
-For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
+  For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Directory resource is represented by the ``IDirectory`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -248,13 +252,22 @@ For more information on how to this works, please see :ref:`ldap-dir-authn`.
 How to Make an LDAP Directory
 +++++++++++++++++++++++++++++
 
+LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+
 .. only:: rest
 
-  Presently, LDAP Directories can be made via the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
+  For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
+
+    .. todo::
+
+      Add LDAP directory creation .NET example
 
 .. only:: java
 
@@ -289,13 +302,15 @@ Modeling your users who authorize via Social Login is by necessity very simple, 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
 
+Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+
 .. only:: rest
 
-  Presently, Social Directories can be made via the Stormpath Admin Console or using REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_. For more information about creating them using REST API, please see :ref:`social-authn`.
+  For more information about creating them using the REST API, please see :ref:`social-authn`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  For more information about creating them using the .NET SDK, please see :ref:`social-authn`.
 
 .. only:: java
 
@@ -328,13 +343,22 @@ The only modeling considerations for SAML Directories are: you will need a Direc
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
+SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
+
 .. only:: rest
 
-  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or using :ref:`REST API <saml-configuration-rest>`.
+  For more information about creating them using the REST API, see :ref:`saml-configuration-rest`.
 
 .. only:: csharp or vbnet
 
-  (todo)
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
+
+    .. todo::
+
+      Add SAML directory creation .NET example
 
 .. only:: java
 
@@ -362,6 +386,10 @@ The Group resource can either be imagined as a container for Accounts, or as a l
 .. only:: rest
 
   For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Group resource is represented by the ``IGroup`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -617,6 +645,10 @@ The Account resource is a unique identity within your application. It is usually
 .. only:: rest
 
   For more detailed information about the Account resource, see the :ref:`ref-account` section of the Reference chapter.
+
+.. only:: csharp or vbnet
+
+  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
 .. todo::
 
@@ -1038,6 +1070,8 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``SaveAsync()`` on the parent resource to send the updates to the Stormpath API.
 
+  To retrieve the Account's Custom Data after it's been saved, use the ``GetCustomDataAsync()`` method. For more information about the ``ICustomData`` interface, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+
 .. only:: java
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
@@ -1138,7 +1172,7 @@ The Account resource's **searchable attributes** are:
 
   With the Stormpath .NET SDK, you can use LINQ-to-Stormpath to easily perform searches. Search expressions begin on resources that contain collections.
 
-  In this case, any resource type that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
+  Any resource type that exposes a ``GetAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
   .. note::
 
@@ -1542,20 +1576,17 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: csharp or vbnet
 
-  .. warning::
+  To retrieve the password policy, use the ``GetPasswordPolicyAsync()`` and ``GetPasswordStrengthPolicyAsync()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
+  .. only:: csharp
 
-    .. only:: notyetcsharp
+    .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
+        :language: csharp
 
-      .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
-          :language: csharp
+  .. only:: vbnet
 
-    .. only:: notyetvbnet
-
-      .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
-          :language: vbnet
+    .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
+        :language: vbnet
 
 .. only:: java
 
@@ -1599,9 +1630,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "minSymbol": 1,
       "minUpperCase": 1
     }
-
-.. only:: notyetcsharp or notyetvbnet
-
 
 .. only:: java
 
@@ -2020,7 +2048,7 @@ There is a set of properties on the :ref:`ref-password-policy` resource that def
 - ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
 - ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
 
-To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
+To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, perform the following:
 
 .. only:: rest or php
 
@@ -2036,17 +2064,12 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
 .. only:: csharp or vbnet
 
-  .. warning::
-
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #47 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/47>`_.
-
-  .. only:: notyetcsharp
+  .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
         :language: csharp
 
-  .. only:: notyetvbnet
+  .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
         :language: vbnet
@@ -2087,11 +2110,11 @@ The contents of the password reset and the password reset success emails are bot
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
 
-  .. only:: notyetcsharp
+  .. todo::
 
-  .. only:: notyetvbnet
+    Add templates example
 
 .. only:: java
 
@@ -2331,9 +2354,9 @@ For more information about this, see :ref:`password-reset-flow`.
 4.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-.. only:: rest
+The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via the REST API.
 
-  The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via REST. To find out how to do it via REST, keep reading.
+.. only:: rest
 
   First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
@@ -2367,11 +2390,11 @@ For more information about this, see :ref:`password-reset-flow`.
   .. warning::
 
     This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow the `.NET SDK ticket #158 on Github <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_.
+    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
 
-  .. only:: notyetcsharp
+    .. todo::
 
-  .. only:: notyetvbnet
+      Add email templates .NET example
 
 .. only:: java
 
