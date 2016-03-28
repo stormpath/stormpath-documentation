@@ -2033,7 +2033,7 @@ There is a set of properties on the :ref:`ref-password-policy` resource that def
 - ``resetSuccessEmailStatus`` which enables or disables the reset success email, and
 - ``resetSuccessEmailTemplates`` which defines the content of the reset success email.
 
-To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, send the following:
+To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, perform the following:
 
 .. only:: rest or php
 
@@ -2049,19 +2049,15 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  .. only:: csharp
 
-    This is available now! (well, partially)
+    .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
+        :language: csharp
 
-    .. only:: csharp
+  .. only:: vbnet
 
-      .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
-          :language: vbnet
+    .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
+        :language: vbnet
 
 .. only:: java
 
