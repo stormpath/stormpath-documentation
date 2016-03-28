@@ -78,12 +78,12 @@ After an Account resource has been created, you can authenticate it given an inp
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/login_attempt_req
+    .. literalinclude:: code/csharp/authentication/login_attempt_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/login_attempt_req
+    .. literalinclude:: code/vbnet/authentication/login_attempt_req.vb
         :language: vbnet
 
   .. note::
@@ -92,100 +92,100 @@ After an Account resource has been created, you can authenticate it given an inp
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account
+      .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account
+      .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account.vb
         :language: vbnet
 
   If authentication succeeded, you would receive back (todo)
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/login_attempt_resp
+    .. literalinclude:: code/csharp/authentication/login_attempt_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/login_attempt_resp
+    .. literalinclude:: code/vbnet/authentication/login_attempt_resp.vb
         :language: vbnet
 
 .. only:: java
 
   So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
-  .. literalinclude:: code/java/authentication/login_attempt_req
+  .. literalinclude:: code/java/authentication/login_attempt_req.java
       :language: java
 
   .. note::
 
     Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
-    .. literalinclude:: code/java/authentication/login_attempt_req_expand_account
+    .. literalinclude:: code/java/authentication/login_attempt_req_expand_account.java
       :language: java
 
   If authentication succeeded, you would receive back... (todo)
 
-  .. literalinclude:: code/java/authentication/login_attempt_resp
+  .. literalinclude:: code/java/authentication/login_attempt_resp.java
       :language: java
 
 .. only:: nodejs
 
   So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
-  .. literalinclude:: code/nodejs/authentication/login_attempt_req
+  .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
 
   .. note::
 
     Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
-    .. literalinclude:: code/nodejs/authentication/login_attempt_req_expand_account
+    .. literalinclude:: code/nodejs/authentication/login_attempt_req_expand_account.js
       :language: javascript
 
   If authentication succeeded, you would receive back ... (todo)
 
-  .. literalinclude:: code/nodejs/authentication/login_attempt_resp
+  .. literalinclude:: code/nodejs/authentication/login_attempt_resp.js
       :language: javascript
 
 .. only:: php
 
   So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
-    .. literalinclude:: code/php/authentication/login_attempt_req
+    .. literalinclude:: code/php/authentication/login_attempt_req.php
       :language: php
 
   .. note::
 
     Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
-    .. literalinclude:: code/php/authentication/login_attempt_req_expand_account
+    .. literalinclude:: code/php/authentication/login_attempt_req_expand_account.php
       :language: php
 
   If authentication succeeded, you would ... (todo)
 
-    .. literalinclude:: code/php/authentication/login_attempt_resp
+    .. literalinclude:: code/php/authentication/login_attempt_resp.php
       :language: php
 
 .. only:: python
 
   So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
-  .. literalinclude:: code/python/authentication/login_attempt_req
+  .. literalinclude:: code/python/authentication/login_attempt_req.py
       :language: python
 
   .. note::
 
     Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
-    .. literalinclude:: code/python/authentication/login_attempt_req_expand_account
+    .. literalinclude:: code/python/authentication/login_attempt_req_expand_account.py
       :language: python
 
   If authentication succeeded, you would receive back ... (todo)
 
-  .. literalinclude:: code/python/authentication/login_attempt_resp
+  .. literalinclude:: code/python/authentication/login_attempt_resp.py
       :language: python
 
 .. _how-login-works:
@@ -233,32 +233,32 @@ If such an Account is already in the master Directory, no action is taken. If su
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/customdata_accountlink
+    .. literalinclude:: code/csharp/authentication/customdata_accountlink.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/customdata_accountlink
+    .. literalinclude:: code/vbnet/authentication/customdata_accountlink.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/customdata_accountlink
+  .. literalinclude:: code/java/authentication/customdata_accountlink.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/customdata_accountlink
+  .. literalinclude:: code/nodejs/authentication/customdata_accountlink.js
       :language: javascript
 
 .. only:: php
 
-    .. literalinclude:: code/php/authentication/customdata_accountlink
+    .. literalinclude:: code/php/authentication/customdata_accountlink.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/customdata_accountlink
+  .. literalinclude:: code/python/authentication/customdata_accountlink.py
       :language: python
 
 If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory.
@@ -321,40 +321,40 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_asm_req
+    .. literalinclude:: code/csharp/authentication/get_asm_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_asm_req
+    .. literalinclude:: code/vbnet/authentication/get_asm_req.vb
         :language: vbnet
 
 .. only:: java
 
   You can find this mapping by... (todo)
 
-  .. literalinclude:: code/java/authentication/get_asm_req
+  .. literalinclude:: code/java/authentication/get_asm_req.java
       :language: java
 
 .. only:: nodejs
 
   You can find this mapping by...
 
-  .. literalinclude:: code/nodejs/authentication/get_asm_req
+  .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
 
 .. only:: php
 
   You can find this mapping by... (todo)
 
-  .. literalinclude:: code/php/authentication/get_asm_req
+  .. literalinclude:: code/php/authentication/get_asm_req.php
     :language: php
 
 .. only:: python
 
   You can find this mapping by... (todo)
 
-  .. literalinclude:: code/python/authentication/get_asm_req
+  .. literalinclude:: code/python/authentication/get_asm_req.py
       :language: python
 
 This will return the Account Store Mapping:
@@ -363,32 +363,32 @@ This will return the Account Store Mapping:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_asm_resp
+    .. literalinclude:: code/csharp/authentication/get_asm_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_asm_resp
+    .. literalinclude:: code/vbnet/authentication/get_asm_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_asm_resp
+  .. literalinclude:: code/java/authentication/get_asm_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_asm_resp
+  .. literalinclude:: code/nodejs/authentication/get_asm_resp.js
       :language: javascript
 
 .. only:: php
 
-    .. literalinclude:: code/php/authentication/get_asm_resp
+    .. literalinclude:: code/php/authentication/get_asm_resp.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_asm_resp
+  .. literalinclude:: code/python/authentication/get_asm_resp.py
       :language: python
 
 .. _create-asm:
@@ -436,32 +436,32 @@ We would now like to map a new Account Store that will have the following charac
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_asm
+    .. literalinclude:: code/csharp/authentication/create_asm.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_asm
+    .. literalinclude:: code/vbnet/authentication/create_asm.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_asm
+  .. literalinclude:: code/java/authentication/create_asm.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_asm
+  .. literalinclude:: code/nodejs/authentication/create_asm.js
       :language: javascript
 
 .. only:: php
 
-    .. literalinclude:: code/php/authentication/create_asm
+    .. literalinclude:: code/php/authentication/create_asm.php
       :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_asm
+  .. literalinclude:: code/python/authentication/create_asm.py
       :language: python
 
 If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
@@ -495,32 +495,32 @@ For example, if you want to update an existing Account Store to now have highest
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/change_login_priority
+    .. literalinclude:: code/csharp/authentication/change_login_priority.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/change_login_priority
+    .. literalinclude:: code/vbnet/authentication/change_login_priority.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/change_login_priority
+  .. literalinclude:: code/java/authentication/change_login_priority.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/change_login_priority
+  .. literalinclude:: code/nodejs/authentication/change_login_priority.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/change_login_priority
+  .. literalinclude:: code/php/authentication/change_login_priority.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/change_login_priority
+  .. literalinclude:: code/python/authentication/change_login_priority.py
       :language: python
 
 The accountStoreMapping resource will be updated and all of the other Account Stores will have their ``listIndex`` incremented up by 1.
@@ -546,32 +546,32 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/change_default_stores
+    .. literalinclude:: code/csharp/authentication/change_default_stores.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/change_default_stores
+    .. literalinclude:: code/vbnet/authentication/change_default_stores.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/change_default_stores
+  .. literalinclude:: code/java/authentication/change_default_stores.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/change_default_stores
+  .. literalinclude:: code/nodejs/authentication/change_default_stores.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/change_default_stores
+  .. literalinclude:: code/php/authentication/change_default_stores.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/change_default_stores
+  .. literalinclude:: code/python/authentication/change_default_stores.py
       :language: python
 
 .. note::
@@ -656,32 +656,32 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/oauth_policy
+    .. literalinclude:: code/csharp/authentication/oauth_policy.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/oauth_policy
+    .. literalinclude:: code/vbnet/authentication/oauth_policy.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/oauth_policy
+  .. literalinclude:: code/java/authentication/oauth_policy.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/oauth_policy
+  .. literalinclude:: code/nodejs/authentication/oauth_policy.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/oauth_policy
+  .. literalinclude:: code/php/authentication/oauth_policy.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/oauth_policy
+  .. literalinclude:: code/python/authentication/oauth_policy.py
       :language: python
 
 The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
@@ -705,32 +705,32 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_req
+    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_req
+    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/update_oauth_ttl_req
+  .. literalinclude:: code/java/authentication/update_oauth_ttl_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_req
+  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/update_oauth_ttl_req
+  .. literalinclude:: code/php/authentication/update_oauth_ttl_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/update_oauth_ttl_req
+  .. literalinclude:: code/python/authentication/update_oauth_ttl_req.py
       :language: python
 
 And you would get the following response:
@@ -754,32 +754,32 @@ And you would get the following response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_resp
+    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_resp
+    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/update_oauth_ttl_resp
+  .. literalinclude:: code/java/authentication/update_oauth_ttl_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp
+  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/update_oauth_ttl_resp
+  .. literalinclude:: code/php/authentication/update_oauth_ttl_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/update_oauth_ttl_resp
+  .. literalinclude:: code/python/authentication/update_oauth_ttl_resp.py
       :language: python
 
 .. note::
@@ -829,32 +829,32 @@ So you would send the following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/generate_oauth_token_req
+    .. literalinclude:: code/csharp/authentication/generate_oauth_token_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_req
+    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/generate_oauth_token_req
+  .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req
+  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/generate_oauth_token_req
+  .. literalinclude:: code/php/authentication/generate_oauth_token_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/generate_oauth_token_req
+  .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
       :language: python
 
 Which would result in this response:
@@ -876,32 +876,32 @@ Which would result in this response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/generate_oauth_token_resp
+    .. literalinclude:: code/csharp/authentication/generate_oauth_token_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_resp
+    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/generate_oauth_token_resp
+  .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp
+  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/generate_oauth_token_resp
+  .. literalinclude:: code/php/authentication/generate_oauth_token_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/generate_oauth_token_resp
+  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
       :language: python
 
 This is an **OAuth 2.0 Access Token Response** and includes the following:
@@ -1028,24 +1028,24 @@ To recap, you have done the following:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_req
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_req.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
       :language: vbnet
 
   If the access token can be validated, Stormpath will return...?
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_resp
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_resp.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_resp
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_resp.vb
       :language: vbnet
 
 .. only:: java
@@ -1055,12 +1055,12 @@ To recap, you have done the following:
 
   The user now attempts to access a secured resource by...?
 
-  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req
+  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
     :language: java
 
   If the access token can be validated, Stormpath will return...?
 
-  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp
+  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp.java
     :language: java
 
 .. only:: nodejs
@@ -1070,12 +1070,12 @@ To recap, you have done the following:
 
   The user now attempts to access a secured resource by...?
 
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
     :language: javascript
 
   If the access token can be validated, Stormpath will return...?
 
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
     :language: javascript
 
 .. only:: php
@@ -1085,12 +1085,12 @@ To recap, you have done the following:
 
   The user now attempts to access a secured resource by...?
 
-  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req
+  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req.php
     :language: php
 
   If the access token can be validated, Stormpath will return...?
 
-  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp
+  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
     :language: php
 
 .. only:: python
@@ -1100,12 +1100,12 @@ To recap, you have done the following:
 
   The user now attempts to access a secured resource by...?
 
-  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_req
+  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_req.py
     :language: python
 
   If the access token can be validated, Stormpath will return...?
 
-  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_resp
+  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_resp.py
     :language: python
 
 With the confirmation that the token is valid, you can now allow the user access to the secured resource that they requested.
@@ -1131,32 +1131,32 @@ The token specified in the Authorization header has been digitally signed with t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_local
+    .. literalinclude:: code/csharp/authentication/validate_oauth_token_local.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_local
+    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_local.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/validate_oauth_token_local
+  .. literalinclude:: code/java/authentication/validate_oauth_token_local.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local
+  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/validate_oauth_token_local
+  .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/validate_oauth_token_local
+  .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
       :language: python
 
 Refreshing Access Tokens
@@ -1180,32 +1180,32 @@ In the event that the Access Token expires, the user can generate a new one usin
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/refresh_access_token_req
+    .. literalinclude:: code/csharp/authentication/refresh_access_token_req.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/refresh_access_token_req
+    .. literalinclude:: code/vbnet/authentication/refresh_access_token_req.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/refresh_access_token_req
+  .. literalinclude:: code/java/authentication/refresh_access_token_req.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/refresh_access_token_req
+  .. literalinclude:: code/nodejs/authentication/refresh_access_token_req.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/refresh_access_token_req
+  .. literalinclude:: code/php/authentication/refresh_access_token_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/refresh_access_token_req
+  .. literalinclude:: code/python/authentication/refresh_access_token_req.py
     :language: python
 
 This would be the response:
@@ -1229,32 +1229,32 @@ This would be the response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/refresh_access_token_resp
+    .. literalinclude:: code/csharp/authentication/refresh_access_token_resp.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/refresh_access_token_resp
+    .. literalinclude:: code/vbnet/authentication/refresh_access_token_resp.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/refresh_access_token_resp
+  .. literalinclude:: code/java/authentication/refresh_access_token_resp.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp
+  .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/refresh_access_token_resp
+  .. literalinclude:: code/php/authentication/refresh_access_token_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/refresh_access_token_resp
+  .. literalinclude:: code/python/authentication/refresh_access_token_resp.py
     :language: python
 
 Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
@@ -1330,62 +1330,62 @@ To revoke the token, send the following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req
+    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req.cs
       :language: csharp
 
     You will get back a ... (todo)
 
-    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp
+    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req
+    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req.vb
       :language: vbnet
 
     You will get back a ... (todo)
 
-    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp
+    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/delete_user_access_tokens_req
+  .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
     :language: java
 
   You will get back a ... (todo)
 
-  .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp
+  .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req
+  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
   You will get back a ... (todo)
 
-  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp
+  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/delete_user_access_tokens_req
+  .. literalinclude:: code/php/authentication/delete_user_access_tokens_req.php
     :language: php
 
   You will get back a ... (todo)
 
-  .. literalinclude:: code/php/authentication/delete_user_access_tokens_resp
+  .. literalinclude:: code/php/authentication/delete_user_access_tokens_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/delete_user_access_tokens_req
+  .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
     :language: python
 
   You will get back a ... (todo)
 
-  .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp
+  .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp.py
     :language: python
 
 .. _social-authn:
@@ -1539,32 +1539,32 @@ Creating this Directory for Google requires that you provide information from Go
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_google
+    .. literalinclude:: code/csharp/authentication/create_directory_google.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_google
+    .. literalinclude:: code/vbnet/authentication/create_directory_google.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_google
+  .. literalinclude:: code/java/authentication/create_directory_google.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_google
+  .. literalinclude:: code/nodejs/authentication/create_directory_google.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_google
+  .. literalinclude:: code/php/authentication/create_directory_google.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_google
+  .. literalinclude:: code/python/authentication/create_directory_google.py
     :language: python
 
 .. note::
@@ -1608,32 +1608,32 @@ Once the Authorization Code is gathered, you send this request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_code
+    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_code.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_code
+    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_code.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_google_providerdata_code
+  .. literalinclude:: code/java/authentication/create_account_google_providerdata_code.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_code
+  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_code.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_google_providerdata_code
+  .. literalinclude:: code/php/authentication/create_account_google_providerdata_code.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_google_providerdata_code
+  .. literalinclude:: code/python/authentication/create_account_google_providerdata_code.py
     :language: python
 
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
@@ -1657,32 +1657,32 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_access_token
+    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_access_token.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_access_token
+    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_access_token.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_google_providerdata_access_token
+  .. literalinclude:: code/java/authentication/create_account_google_providerdata_access_token.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_access_token
+  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_access_token.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_google_providerdata_access_token
+  .. literalinclude:: code/php/authentication/create_account_google_providerdata_access_token.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token
+  .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token.py
     :language: python
 
 Either way, Stormpath will use the code or access token provided to retrieve information about your Google Account, then return a Stormpath Account.
@@ -1746,32 +1746,32 @@ Creating this Directory requires that you provide information from Facebook as a
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_fb
+    .. literalinclude:: code/csharp/authentication/create_directory_fb.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_fb
+    .. literalinclude:: code/vbnet/authentication/create_directory_fb.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_fb
+  .. literalinclude:: code/java/authentication/create_directory_fb.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_fb
+  .. literalinclude:: code/nodejs/authentication/create_directory_fb.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_fb
+  .. literalinclude:: code/php/authentication/create_directory_fb.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_fb
+  .. literalinclude:: code/python/authentication/create_directory_fb.py
     :language: python
 
 Step 2: Map the Facebook Directory as an Account Store for Your Application
@@ -1809,32 +1809,32 @@ Once the User Access Token is gathered, you send an this request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_fb_providerdata_access_token
+    .. literalinclude:: code/csharp/authentication/create_account_fb_providerdata_access_token.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_fb_providerdata_access_token
+    .. literalinclude:: code/vbnet/authentication/create_account_fb_providerdata_access_token.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_fb_providerdata_access_token
+  .. literalinclude:: code/java/authentication/create_account_fb_providerdata_access_token.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_fb_providerdata_access_token
+  .. literalinclude:: code/nodejs/authentication/create_account_fb_providerdata_access_token.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_fb_providerdata_access_token
+  .. literalinclude:: code/php/authentication/create_account_fb_providerdata_access_token.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token
+  .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token.py
     :language: python
 
 Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account.
@@ -1897,32 +1897,32 @@ Creating this Directory requires that you provide information from GitHub as a P
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_github
+    .. literalinclude:: code/csharp/authentication/create_directory_github.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_github
+    .. literalinclude:: code/vbnet/authentication/create_directory_github.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_github
+  .. literalinclude:: code/java/authentication/create_directory_github.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_github
+  .. literalinclude:: code/nodejs/authentication/create_directory_github.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_github
+  .. literalinclude:: code/php/authentication/create_directory_github.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_github
+  .. literalinclude:: code/python/authentication/create_directory_github.py
     :language: python
 
 Step 2: Map the GitHub Directory as an Account Store for Your Application
@@ -1962,32 +1962,32 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_github_providerdata_access_token
+    .. literalinclude:: code/csharp/authentication/create_account_github_providerdata_access_token.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_github_providerdata_access_token
+    .. literalinclude:: code/vbnet/authentication/create_account_github_providerdata_access_token.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_github_providerdata_access_token
+  .. literalinclude:: code/java/authentication/create_account_github_providerdata_access_token.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_github_providerdata_access_token
+  .. literalinclude:: code/nodejs/authentication/create_account_github_providerdata_access_token.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_github_providerdata_access_token
+  .. literalinclude:: code/php/authentication/create_account_github_providerdata_access_token.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token
+  .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token.py
     :language: python
 
 Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account.
@@ -2061,32 +2061,32 @@ Creating this Directory requires that you provide information from LinkedIn as a
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_linkedin
+    .. literalinclude:: code/csharp/authentication/create_directory_linkedin.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_linkedin
+    .. literalinclude:: code/vbnet/authentication/create_directory_linkedin.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_linkedin
+  .. literalinclude:: code/java/authentication/create_directory_linkedin.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_linkedin
+  .. literalinclude:: code/nodejs/authentication/create_directory_linkedin.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_linkedin
+  .. literalinclude:: code/php/authentication/create_directory_linkedin.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_linkedin
+  .. literalinclude:: code/python/authentication/create_directory_linkedin.py
     :language: python
 
 Step 2: Map the LinkedIn Directory as an Account Store for Your Application
@@ -2126,32 +2126,32 @@ Once the Access Token is gathered, you can send it to Stormpath:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_access_token
+    .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_access_token.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_access_token
+    .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_access_token.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_linkedin_providerdata_access_token
+  .. literalinclude:: code/java/authentication/create_account_linkedin_providerdata_access_token.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_linkedin_providerdata_access_token
+  .. literalinclude:: code/nodejs/authentication/create_account_linkedin_providerdata_access_token.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_linkedin_providerdata_access_token
+  .. literalinclude:: code/php/authentication/create_account_linkedin_providerdata_access_token.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token
+  .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token.py
     :language: python
 
 Stormpath will use the Access Token provided to retrieve information about your LinkedIn Account, then return a Stormpath Account.
@@ -2261,32 +2261,32 @@ Step 1: Create an LDAP Directory
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_ldap
+    .. literalinclude:: code/csharp/authentication/create_directory_ldap.cs
       :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_ldap
+    .. literalinclude:: code/vbnet/authentication/create_directory_ldap.vb
       :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_ldap
+  .. literalinclude:: code/java/authentication/create_directory_ldap.java
     :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_ldap
+  .. literalinclude:: code/nodejs/authentication/create_directory_ldap.js
     :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_ldap
+  .. literalinclude:: code/php/authentication/create_directory_ldap.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_ldap
+  .. literalinclude:: code/python/authentication/create_directory_ldap.py
     :language: python
 
 Step 2: Install your LDAP Agent
@@ -2617,32 +2617,32 @@ Specifically, you want that Account's Provider Data:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata
+    .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata
+    .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/saml_salesforce_account_providerdata
+  .. literalinclude:: code/java/authentication/saml_salesforce_account_providerdata.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/saml_salesforce_account_providerdata
+  .. literalinclude:: code/nodejs/authentication/saml_salesforce_account_providerdata.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/saml_salesforce_account_providerdata
+  .. literalinclude:: code/php/authentication/saml_salesforce_account_providerdata.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/saml_salesforce_account_providerdata
+  .. literalinclude:: code/python/authentication/saml_salesforce_account_providerdata.py
       :language: python
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other SAML Attributes to Stormpath Account attributes as well.
@@ -2838,32 +2838,32 @@ Specifically, you want that Account's ``providerData`` resource:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata
+    .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata
+    .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/saml_onelogin_account_providerdata
+  .. literalinclude:: code/java/authentication/saml_onelogin_account_providerdata.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/saml_onelogin_account_providerdata
+  .. literalinclude:: code/nodejs/authentication/saml_onelogin_account_providerdata.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/saml_onelogin_account_providerdata
+  .. literalinclude:: code/php/authentication/saml_onelogin_account_providerdata.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/saml_onelogin_account_providerdata
+  .. literalinclude:: code/python/authentication/saml_onelogin_account_providerdata.py
       :language: python
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
@@ -3056,32 +3056,32 @@ Specifically, you want that Account's ``providerData`` resource:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata
+    .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata
+    .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/saml_okta_account_providerdata
+  .. literalinclude:: code/java/authentication/saml_okta_account_providerdata.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/saml_okta_account_providerdata
+  .. literalinclude:: code/nodejs/authentication/saml_okta_account_providerdata.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/saml_okta_account_providerdata
+  .. literalinclude:: code/php/authentication/saml_okta_account_providerdata.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/saml_okta_account_providerdata
+  .. literalinclude:: code/python/authentication/saml_okta_account_providerdata.py
     :language: python
 
 As you can see there are no default attributes passed by Okta, but you can map any attributes you like to the Stormpath Account attributes as well.
@@ -3180,32 +3180,32 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_directory_saml
+    .. literalinclude:: code/csharp/authentication/create_directory_saml.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_saml
+    .. literalinclude:: code/vbnet/authentication/create_directory_saml.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_saml
+  .. literalinclude:: code/java/authentication/create_directory_saml.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_directory_saml
+  .. literalinclude:: code/nodejs/authentication/create_directory_saml.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_directory_saml
+  .. literalinclude:: code/php/authentication/create_directory_saml.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_directory_saml
+  .. literalinclude:: code/python/authentication/create_directory_saml.py
       :language: python
 
 .. note::
@@ -3233,32 +3233,32 @@ In order to retrieve the required values, start by sending this request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_req
+    .. literalinclude:: code/csharp/authentication/get_directory_provider_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_req
+    .. literalinclude:: code/vbnet/authentication/get_directory_provider_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_directory_provider_req
+  .. literalinclude:: code/java/authentication/get_directory_provider_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_directory_provider_req
+  .. literalinclude:: code/nodejs/authentication/get_directory_provider_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_directory_provider_req
+  .. literalinclude:: code/php/authentication/get_directory_provider_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_directory_provider_req
+  .. literalinclude:: code/python/authentication/get_directory_provider_req.py
       :language: python
 
 This will return the Provider:
@@ -3289,32 +3289,32 @@ This will return the Provider:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_resp
+    .. literalinclude:: code/csharp/authentication/get_directory_provider_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_resp
+    .. literalinclude:: code/vbnet/authentication/get_directory_provider_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_directory_provider_resp
+  .. literalinclude:: code/java/authentication/get_directory_provider_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp
+  .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_directory_provider_resp
+  .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_directory_provider_resp
+  .. literalinclude:: code/python/authentication/get_directory_provider_resp.py
       :language: python
 
 Now you will need to retrieve your Directory Provider's Service Provider Metadata:
@@ -3335,32 +3335,32 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req
+    .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req
+    .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_req
+  .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_serviceprovider_metadata_req
+  .. literalinclude:: code/nodejs/authentication/get_serviceprovider_metadata_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_serviceprovider_metadata_req
+  .. literalinclude:: code/php/authentication/get_serviceprovider_metadata_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_serviceprovider_metadata_req
+  .. literalinclude:: code/python/authentication/get_serviceprovider_metadata_req.py
       :language: python
 
 **Example XML**
@@ -3444,32 +3444,32 @@ You should create any URIs here that you would like included as authorized callb
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_callback_uris
+    .. literalinclude:: code/csharp/authentication/create_callback_uris.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_callback_uris
+    .. literalinclude:: code/vbnet/authentication/create_callback_uris.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_callback_uris
+  .. literalinclude:: code/java/authentication/create_callback_uris.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_callback_uris
+  .. literalinclude:: code/nodejs/authentication/create_callback_uris.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_callback_uris
+  .. literalinclude:: code/php/authentication/create_callback_uris.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_callback_uris
+  .. literalinclude:: code/python/authentication/create_callback_uris.py
       :language: python
 
 2. There is also an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints:
@@ -3494,32 +3494,32 @@ You should create any URIs here that you would like included as authorized callb
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/saml_policy_example
+    .. literalinclude:: code/csharp/authentication/saml_policy_example.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/saml_policy_example
+    .. literalinclude:: code/vbnet/authentication/saml_policy_example.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/saml_policy_example
+  .. literalinclude:: code/java/authentication/saml_policy_example.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/saml_policy_example
+  .. literalinclude:: code/nodejs/authentication/saml_policy_example.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/saml_policy_example
+  .. literalinclude:: code/php/authentication/saml_policy_example.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/saml_policy_example
+  .. literalinclude:: code/python/authentication/saml_policy_example.py
       :language: python
 
 .. _saml-restconfig-5a:
@@ -3542,32 +3542,32 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_req
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_req
+  .. literalinclude:: code/java/authentication/get_default_relay_state_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_req
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_default_relay_state_req
+  .. literalinclude:: code/php/authentication/get_default_relay_state_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_default_relay_state_req
+  .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
 This request will return a response containing a JWT like this:
@@ -3584,32 +3584,32 @@ This request will return a response containing a JWT like this:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_resp
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_resp
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_resp
+  .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_default_relay_state_resp
+  .. literalinclude:: code/php/authentication/get_default_relay_state_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_default_relay_state_resp
+  .. literalinclude:: code/python/authentication/get_default_relay_state_resp.py
       :language: python
 
 This JWT will then need to be entered into your IdP's configuration in order for IdP-initiated authentication to function properly.
@@ -3639,32 +3639,32 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras
+    .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras
+    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras
+  .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_with_extras
+  .. literalinclude:: code/nodejs/authentication/get_default_relay_state_with_extras.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras
+  .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/get_default_relay_state_with_extras
+  .. literalinclude:: code/python/authentication/get_default_relay_state_with_extras.py
       :language: python
 
 Step 6: Add the SAML Directory as an Account Store
@@ -3724,32 +3724,32 @@ The rules have three different components:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/example_saml_rule
+    .. literalinclude:: code/csharp/authentication/example_saml_rule.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/example_saml_rule
+    .. literalinclude:: code/vbnet/authentication/example_saml_rule.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/example_saml_rule
+  .. literalinclude:: code/java/authentication/example_saml_rule.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/example_saml_rule
+  .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/example_saml_rule
+  .. literalinclude:: code/php/authentication/example_saml_rule.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/example_saml_rule
+  .. literalinclude:: code/python/authentication/example_saml_rule.py
       :language: python
 
 The rule expressed here is as follows:
@@ -3825,32 +3825,32 @@ In order to create the mapping rules, you send the following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_mapping_rule
+    .. literalinclude:: code/csharp/authentication/create_mapping_rule.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_mapping_rule
+    .. literalinclude:: code/vbnet/authentication/create_mapping_rule.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_mapping_rule
+  .. literalinclude:: code/java/authentication/create_mapping_rule.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_mapping_rule
+  .. literalinclude:: code/nodejs/authentication/create_mapping_rule.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_mapping_rule
+  .. literalinclude:: code/php/authentication/create_mapping_rule.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_mapping_rule
+  .. literalinclude:: code/python/authentication/create_mapping_rule.py
       :language: python
 
 .. only:: rest
