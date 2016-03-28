@@ -1,4 +1,4 @@
 var passwordPolicy = await myDirectory.GetPasswordPolicyAsync();
 
-passwordPolicy.SetResetEmailStatus(EmailStatus.Disabled);
+passwordPolicy.SetResetEmailStatus(EmailStatus.Enabled);
 await passwordPolicy.SaveAsync();

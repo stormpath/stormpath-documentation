@@ -1,4 +1,4 @@
 Dim passwordPolicy = Await myDirectory.GetPasswordPolicyAsync()
 
-passwordPolicy.SetResetEmailStatus(EmailStatus.Disabled)
+passwordPolicy.SetResetEmailStatus(EmailStatus.Enabled)
 Await passwordPolicy.SaveAsync()
