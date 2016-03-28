@@ -74,7 +74,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: csharp or vbnet
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
   .. only:: csharp
 
@@ -88,7 +88,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
     .. only:: csharp
 
@@ -100,7 +100,7 @@ After an Account resource has been created, you can authenticate it given an inp
       .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account
         :language: vbnet
 
-  If authentication succeeded, you would receive back
+  If authentication succeeded, you would receive back (todo)
 
   .. only:: csharp
 
@@ -114,76 +114,76 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: java
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
   .. literalinclude:: code/java/authentication/login_attempt_req
       :language: java
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
     .. literalinclude:: code/java/authentication/login_attempt_req_expand_account
       :language: java
 
-  If authentication succeeded, you would receive back...
+  If authentication succeeded, you would receive back... (todo)
 
   .. literalinclude:: code/java/authentication/login_attempt_resp
       :language: java
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req
       :language: javascript
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
     .. literalinclude:: code/nodejs/authentication/login_attempt_req_expand_account
       :language: javascript
 
-  If authentication succeeded, you would receive back ...
+  If authentication succeeded, you would receive back ... (todo)
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_resp
       :language: javascript
 
 .. only:: php
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
     .. literalinclude:: code/php/authentication/login_attempt_req
       :language: php
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
     .. literalinclude:: code/php/authentication/login_attempt_req_expand_account
       :language: php
 
-  If authentication succeeded, you would ...
+  If authentication succeeded, you would ... (todo)
 
     .. literalinclude:: code/php/authentication/login_attempt_resp
       :language: php
 
 .. only:: python
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would...
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
 
   .. literalinclude:: code/python/authentication/login_attempt_req
       :language: python
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this...
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
 
     .. literalinclude:: code/python/authentication/login_attempt_req_expand_account
       :language: python
 
-  If authentication succeeded, you would receive back ...
+  If authentication succeeded, you would receive back ... (todo)
 
   .. literalinclude:: code/python/authentication/login_attempt_resp
       :language: python
@@ -317,7 +317,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: csharp or vbnet
 
-  You can find this mapping by...
+  You can find this mapping by... (todo)
 
   .. only:: csharp
 
@@ -331,7 +331,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: java
 
-  You can find this mapping by...
+  You can find this mapping by... (todo)
 
   .. literalinclude:: code/java/authentication/get_asm_req
       :language: java
@@ -345,14 +345,14 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: php
 
-  You can find this mapping by...
+  You can find this mapping by... (todo)
 
   .. literalinclude:: code/php/authentication/get_asm_req
     :language: php
 
 .. only:: python
 
-  You can find this mapping by...
+  You can find this mapping by... (todo)
 
   .. literalinclude:: code/python/authentication/get_asm_req
       :language: python
@@ -784,7 +784,7 @@ And you would get the following response:
 
 .. note::
 
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+  Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
 
 .. _generate-oauth-token:
 
@@ -1021,7 +1021,7 @@ To recap, you have done the following:
 
 .. only:: csharp or vbnet
 
-  1. ?
+  1. (todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1050,7 +1050,7 @@ To recap, you have done the following:
 
 .. only:: java
 
-  1. ?
+  1. (todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1065,7 +1065,7 @@ To recap, you have done the following:
 
 .. only:: nodejs
 
-  1. ?
+  1. (todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1080,7 +1080,7 @@ To recap, you have done the following:
 
 .. only:: php
 
-  1. ?
+  1. (todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1095,7 +1095,7 @@ To recap, you have done the following:
 
 .. only:: python
 
-  1. ?
+  1. (todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1291,18 +1291,18 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 
   .. code-block:: json
 
-      {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/accessTokens",
-        "offset": 0,
-        "limit": 25,
-        "size": 1,
-        "items": [
-          {
-            "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCexample",
-            "comment":" // This JSON has been truncated for readability"
-          }
-        ]
-      }
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/accessTokens",
+      "offset": 0,
+      "limit": 25,
+      "size": 1,
+      "items": [
+        {
+          "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCexample",
+          "comment":" // This JSON has been truncated for readability"
+        }
+      ]
+    }
 
   .. note::
 
@@ -1333,7 +1333,7 @@ To revoke the token, send the following request:
     .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req
       :language: csharp
 
-    You will get back a ... ?
+    You will get back a ... (todo)
 
     .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp
       :language: csharp
@@ -1343,7 +1343,7 @@ To revoke the token, send the following request:
     .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req
       :language: vbnet
 
-    You will get back a ... ?
+    You will get back a ... (todo)
 
     .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp
       :language: vbnet
@@ -1353,7 +1353,7 @@ To revoke the token, send the following request:
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_req
     :language: java
 
-  You will get back a ... ?
+  You will get back a ... (todo)
 
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp
     :language: java
@@ -1363,7 +1363,7 @@ To revoke the token, send the following request:
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req
     :language: javascript
 
-  You will get back a ... ?
+  You will get back a ... (todo)
 
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp
     :language: javascript
@@ -1373,7 +1373,7 @@ To revoke the token, send the following request:
   .. literalinclude:: code/php/authentication/delete_user_access_tokens_req
     :language: php
 
-  You will get back a ... ?
+  You will get back a ... (todo)
 
   .. literalinclude:: code/php/authentication/delete_user_access_tokens_resp
     :language: php
@@ -1383,7 +1383,7 @@ To revoke the token, send the following request:
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_req
     :language: python
 
-  You will get back a ... ?
+  You will get back a ... (todo)
 
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp
     :language: python
@@ -1438,51 +1438,51 @@ In general, the social login process works as follows:
 
   .. only:: csharp
 
-      a. If a matching Account is found,
+      a. If a matching Account is found, (todo)
 
-      b. If a matching Account is not found,
+      b. If a matching Account is not found, (todo)
 
-   7. At this point,
+   7. At this point, (todo)
 
   .. only:: vbnet
 
-      a. If a matching Account is found,
+      a. If a matching Account is found, (todo)
 
-      b. If a matching Account is not found,
+      b. If a matching Account is not found, (todo)
 
-   7. At this point,
+   7. At this point, (todo)
 
 .. only:: java
 
-    a. If a matching Account is found,
+    a. If a matching Account is found, (todo)
 
-    b. If a matching Account is not found,
+    b. If a matching Account is not found, (todo)
 
- 7. At this point,
+ 7. At this point, (todo)
 
 .. only:: nodejs
 
-    a. If a matching Account is found,
+    a. If a matching Account is found, (todo)
 
-    b. If a matching Account is not found,
+    b. If a matching Account is not found, (todo)
 
- 7. At this point,
+ 7. At this point, (todo)
 
 .. only:: php
 
-    a. If a matching Account is found,
+    a. If a matching Account is found, (todo)
 
-    b. If a matching Account is not found,
+    b. If a matching Account is not found, (todo)
 
- 7. At this point,
+ 7. At this point, (todo)
 
 .. only:: python
 
-    a. If a matching Account is found,
+    a. If a matching Account is found, (todo)
 
-    b. If a matching Account is not found,
+    b. If a matching Account is not found, (todo)
 
- 7. At this point,
+ 7. At this point, (todo)
 
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
@@ -1998,17 +1998,27 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
+ (todo)
+
   .. only:: csharp
 
   .. only:: vbnet
 
 .. only:: java
 
+ (todo)
+
 .. only:: nodejs
+
+ (todo)
 
 .. only:: php
 
+ (todo)
+
 .. only:: python
+
+ (todo)
 
 
 5.3.4 LinkedIn
@@ -2148,9 +2158,11 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: rest
 
-  he HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+  The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 .. only:: csharp or vbnet
+
+ (todo)
 
   .. only:: csharp
 
@@ -2158,11 +2170,19 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
+ (todo)
+
 .. only:: nodejs
+
+ (todo)
 
 .. only:: php
 
+ (todo)
+
 .. only:: python
+
+ (todo)
 
 .. _ldap-dir-authn:
 
@@ -3746,17 +3766,27 @@ The rule expressed here is as follows:
 
 .. only:: csharp or vbnet
 
+  (todo)
+
   .. only:: csharp
 
   .. only:: vbnet
 
 .. only:: java
 
+  (todo)
+
 .. only:: nodejs
+
+  (todo)
 
 .. only:: php
 
+  (todo)
+
 .. only:: python
+
+  (todo)
 
 In order to create the mapping rules, you send the following request:
 

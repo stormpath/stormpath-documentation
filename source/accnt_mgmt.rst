@@ -254,23 +254,23 @@ How to Make an LDAP Directory
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  (todo)
 
 .. only:: java
 
-  .. todo::
+  (todo)
 
 .. only:: nodejs
 
-  .. todo::
+  (todo)
 
 .. only:: php
 
-  .. todo::
+  (todo)
 
 .. only:: python
 
-  .. todo::
+  (todo)
 
 .. _about-social-dir:
 
@@ -295,23 +295,23 @@ How to Make a Social Directory
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  (todo)
 
 .. only:: java
 
-  .. todo::
+  (todo)
 
 .. only:: nodejs
 
-  .. todo::
+  (todo)
 
 .. only:: php
 
-  .. todo::
+  (todo)
 
 .. only:: python
 
-  .. todo::
+  (todo)
 
 .. _about-saml-dir:
 
@@ -334,23 +334,23 @@ How to Make a SAML Directory
 
 .. only:: csharp or vbnet
 
-  .. todo::
+  (todo)
 
 .. only:: java
 
-  .. todo::
+  (todo)
 
 .. only:: nodejs
 
-  .. todo::
+  (todo)
 
 .. only:: php
 
-  .. todo::
+  (todo)
 
 .. only:: python
 
-  .. todo::
+  (todo)
 
 .. _group-mgmt:
 
