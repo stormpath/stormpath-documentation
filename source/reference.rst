@@ -2235,16 +2235,6 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
     - N/A
     - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
-  * - ``createdAt``
-    - String
-    - ISO-8601 Datetime
-    - Indicates when this resource was created.
-
-  * - ``modifiedAt``
-    - String
-    - ISO-8601 Datetime
-    - Indicates when this resource’s attributes were last modified.
-
 .. _ref-emailtemplates:
 
 Email Templates
