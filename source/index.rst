@@ -21,5 +21,6 @@ Contents:
    idsite
    reference
    changelog
+   errors
 
 
