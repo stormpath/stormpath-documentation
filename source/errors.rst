@@ -7,58 +7,58 @@ Stormpath Error Codes
 19XX: Billing / Payment
 =======================
 
-1902: Application limit reached. Please add more Applications in the Admin Console.
+1902: Application limit reached. Please add more Applications in the "My Subscription" section of the Stormpath Admin Console.
 
 2XXX: General Validation
 ========================
 
-2000: The property value is required; it cannot be null, empty, or blank.
+2000: The specified property value is required; it cannot be null, empty, or blank.
 
-2001: The property value must be unique.
+2001: The specified property value must be unique.
 
-2002: The property value is invalid. This is a generic property invalid error. For example, supplying a fraction of 15/0 – cannot divide by zero. Only use this code if a more accurate status code is not available. For example, an email without an ‘@’ should return error code 2006, not 2002.
+2002: The specified property value is invalid. This is a generic property invalid error. For example, supplying a fraction of 15/0 – cannot divide by zero. Only use this code if a more accurate status code is not available. For example, an email without an ‘@’ should return error code 2006, not 2002.
 
-2003: The property value is unsupported. For example, enum ‘enabled’ or ‘disabled’ is expected, but the value passed was ‘foo’.
+2003: The specified property value is unsupported. For example, enum ‘enabled’ or ‘disabled’ is expected, but the value passed was ‘foo’.
 
-2004: The property value is an invalid type. For example, specifying a string when a number is required.
+2004: The specified property value is an invalid type. For example, specifying a string when a number is required.
 
-2005: The property value uses an invalid character encoding.
+2005: The specified property value uses an invalid character encoding.
 
-2006: The property value format is invalid. For example, specifying the “12/15/2012” date format when “2012-12-15” is expected.
+2006: The specified property value format is invalid. For example, specifying the “12/15/2012” date format when “2012-12-15” is expected.
 
-2007: The property value minimum length is not satisfied.
+2007: The specified property value's minimum length is not satisfied.
 
-2008: The property value maximum length is not satisfied.
+2008: The specified property value's maximum length is not satisfied.
 
-2009: The property minimum value is not satisfied.
+2009: The specified property's minimum value is not satisfied.
 
-2010: The property maximum value is exceeded.
+2010: The specified property's maximum value is exceeded.
 
-2011: The property minimum date/time is not satisfied.
+2011: The specified property's minimum date/time is not satisfied.
 
-2012: The property maximum date/time is exceeded.
+2012: The specified property's maximum date/time is exceeded.
 
-2013: The property value is not within range.
+2013: The specified property's value is not within range.
 
-2014: The property value is an invalid reference. For example, linking to an object that is not allowed to be linked to a ‘constraint violation’.
+2014: The specified property value is an invalid reference. For example, linking to an object that is not allowed to be linked to. Also known as a ‘constraint violation’.
 
 2015: Unknown property. For example, trying to set a ‘srname’ property instead of ‘surname’.
 
-2016: Property value does not match a known resource.
+2016: Property value does not match a known Stormpath resource.
 
-2100: Malformed query. One or more query criteria parameters was not specified correctly.
+2100: Malformed query. One or more query criteria parameters were not specified correctly.
 
 2101: The supplied query parameter must have a corresponding value.
 
 2102: The supplied query parameter may only have a single value and the parameter cannot be specified more than once.
 
-2103: The supplied query parameter value is invalid or an expected type.
+2103: The supplied query parameter value is invalid or an unexpected type.
 
 2104: The orderBy query parameter value contains an invalid order statement.
 
 2105: Unsupported Query Property: specifying a property not recognized as queryable.
 
-2106: Unsupported Order Property: specifying a property for sort order when the property cannot be used for sort ordering.
+2106: Unsupported Order Property: specifying a property for sort ordering that cannot be sorted.
 
 2107: Unsupported Expand Property: specifying a property for expansion when the property is not expandable.
 
@@ -73,35 +73,35 @@ Stormpath Error Codes
 
 3003: Property names may not equal any of the following reserved names: ‘href’, 'createdAt’, 'modifiedAt’, ‘meta’, ‘spMeta’, ‘spmeta’, ‘ionmeta’, or ‘ionMeta’.
 
-3004: Property value exceeded maximum size. The value exceeds the maximum storage size limit of 10 MB per customData resource.
+3004: Property value exceeds maximum size. The value exceeds the maximum storage size limit of 10 MB per customData resource.
 
 4XXX: Tenant
 ============
 
 4001: Your Stormpath Tenant owner Account cannot be deleted.
 
-4002: Your Stormpath Tenant owner account’s status cannot be modified.
+4002: Your Stormpath Tenant owner Account’s status cannot be modified.
 
 5XXX: Application
 =================
 
-5010: The specified Directory name is already in use by another Directory and cannot be used to auto-create a Directory for the new application. Please choose a different Directory name for the auto-created Directory.
+5010: The specified Directory name is already in use by another Directory and cannot be used to auto-create a Directory for the new Application. Please choose a different Directory name for the auto-created Directory.
 
-5100: The Account storage location is unspecified.
+5100: The Account Store is unspecified.
 
-5101: The Account storage location is disabled.
+5101: The Account Store is disabled.
 
-5102: The Group storage location is unspecified.
+5102: The Group Store is unspecified.
 
-5103: This application’s default storage location for new Groups is disabled. New Groups cannot be added to disabled directories.
+5103: This Application’s default storage location for new Groups is disabled. New Groups cannot be added to disabled Directories.
 
 5104: The specified Account store is already mapped to that Application. Please choose another Group or Directory.
 
-5106: The specified Directory Account store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new accounts.
+5106: The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Accounts.
 
-5108: The specified Group Account store is a read-only mirror of an externally managed Group. It cannot be used to directly store new accounts.
+5108: The specified Group Account store is a read-only mirror of an externally managed Group. It cannot be used to directly store new Accounts.
 
-5110: The specified Directory Account store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
+5110: The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
 
 5112: Specifying a Group as a defaultGroupStore is not currently supported.
 
@@ -112,7 +112,7 @@ Stormpath Error Codes
 
 6100: The Directory does not allow creation of new accounts or Groups.
 
-6101: The account’s Directory is not enabled for the verification email workflow.
+6101: The Account’s Directory is not enabled for the verification email workflow.
 
 6201: This Directory cannot be converted to an external provider Directory.
 
