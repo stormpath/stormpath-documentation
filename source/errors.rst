@@ -93,9 +93,9 @@ Stormpath Error Codes
 
 5102: The Group Store is unspecified.
 
-5103: This Application’s default storage location for new Groups is disabled. New Groups cannot be added to disabled Directories.
+5103: This Application’s default Account Store for new Groups is disabled. New Groups cannot be added to disabled Directories.
 
-5104: The specified Account store is already mapped to that Application. Please choose another Group or Directory.
+5104: The specified Account Store is already mapped to that Application. Please choose another Group or Directory.
 
 5106: The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Accounts.
 
@@ -105,12 +105,12 @@ Stormpath Error Codes
 
 5112: Specifying a Group as a defaultGroupStore is not currently supported.
 
-5114: The specified Account store reference is invalid.
+5114: The specified Account Store reference is invalid.
 
 6XXX: Directory
 ===============
 
-6100: The Directory does not allow creation of new accounts or Groups.
+6100: This Directory does not allow creation of new Accounts or Groups.
 
 6101: The Account’s Directory is not enabled for the verification email workflow.
 
@@ -131,9 +131,9 @@ Stormpath Error Codes
 
 7104: Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified username or email.
 
-7200: Stormpath was not able to complete the request to Facebook or Google: this can be caused by either a bad Facebook or Google Directory configuration, or the provided Account credentials are not valid.
+7200: Stormpath was not able to complete the request to the Social Login site: this can be caused by either a bad Social Directory configuration, or the provided Account credentials are not valid.
 
-7201: Stormpath is unable to create or update the Account because the Facebook or Google response did not contain the required property.
+7201: Stormpath is unable to create or update the Account because the Social Login site response did not contain the required property.
 
 7202: This property is a read-only property on a externally managed Directory account, it cannot be modified.
 
@@ -152,7 +152,7 @@ Stormpath Error Codes
 
 9005: Stormpath, while acting as a gateway/proxy to your Directory service, received an invalid response from your Directory Server. Please ensure that you are using a supported Directory service version and that the Stormpath Directory Agent is configured correctly to communicate with that Directory Server.
 
-9006: Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the AD server. Potential solutions are to ensure that your AD server’s DNS settings are correctly configured or to log in to the Stormpath UI Console and change your AD server’s Stormpath Agent configuration to ‘Ignore Referral Issues’.
+9006: Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the AD server. Potential solutions are to ensure that your AD server's DNS settings are correctly configured or to log in to the Stormpath UI Console and change your AD server's Stormpath Agent configuration to ‘Ignore Referral Exceptions’.
 
 100XX: OAuth Errors
 ===================
@@ -167,9 +167,9 @@ Stormpath Error Codes
 
 10014: Token is invalid because the issuer of the token does not match the Application validating the token.
 
-10015: Token is no longer valid because the application that issued the token is not enabled.
+10015: Token is no longer valid because the Application that issued the token is not enabled.
 
-10016: Token is no longer valid because the Account is not in an Account store assigned to the application that issued the token.
+10016: Token is no longer valid because the Account is not in an Account Store assigned to the Application that issued the token.
 
 10017: Token is invalid because verifying the signature of a JWT failed.
 
@@ -183,12 +183,18 @@ Stormpath Error Codes
 10102: Authentication failed at the SAML Identity Provider, please check the SAML Identity Provider logs for more information.
 
 110XX: Token Errors
-11001: Token is invalid because the specified organization name key does not exist in your Stormpath Tenant.
+===================
 
-11002: Token is invalid because the specified organization is disabled.
+.. todo::
 
-11003: Token is invalid because the specified organization reference is not one of the application’s assigned Account stores.
+  I don't see why these are called "Token" errors and not "Organization" errors, since 100xx errors aren't called "Token errors".
 
-11004: Token is invalid because the a required claim value cannot be null or empty.
+11001: Token is invalid because the specified Organization nameKey does not exist in your Stormpath Tenant.
 
-11005: Token is invalid because the a token with the same identifier (jti) has been already used.
+11002: Token is invalid because the specified Organization is disabled.
+
+11003: Token is invalid because the specified Organization is not one of the Application’s assigned Account Stores.
+
+11004: Token is invalid because a required claim value cannot be null or empty.
+
+11005: Token is invalid because a token with the same identifier (jti) has been already used.
