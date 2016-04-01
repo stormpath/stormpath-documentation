@@ -1,5 +1,4 @@
-.. _errors_test:
-
+.. _errors:
 
 *********************
 Stormpath Error Codes
