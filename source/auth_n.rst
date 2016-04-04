@@ -1710,8 +1710,6 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
   #. You will arrive on "General Settings", click **Next**
   #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...
 
-  .. todo::
-
   For example:
 
   * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
