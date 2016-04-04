@@ -278,7 +278,7 @@ Stormpath, while acting as a gateway/proxy to your Directory service, received a
 
 9006
 -------------
-Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the AD server. Potential solutions are to ensure that your AD server's DNS settings are correctly configured or to log in to the Stormpath UI Console and change your AD server's Stormpath Agent configuration to ‘Ignore Referral Exceptions’.
+Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the Active Directory server. Potential solutions are to ensure that your Active Directory server's DNS settings are correctly configured or to log in to the Stormpath UI Console and change your Active Directory server's Stormpath Agent configuration to ‘Ignore Referral Exceptions’.
 
 100XX: OAuth Errors
 ===================
@@ -335,7 +335,7 @@ Authentication failed at the SAML Identity Provider, please check the SAML Ident
 
 11001
 -------------
-Token is invalid because the specified organization name key does not exist in your Stormpath Tenant.
+Token is invalid because the specified Organization nameKey does not exist in your Stormpath Tenant.
 
 11002
 -------------

@@ -395,3 +395,25 @@ Resetting Your Password with ID Site
 The Account Management chapter has an overview of :ref:`password-reset-flow` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password. If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. The issue here, however, is bridging the Password Reset Flow and the ID Site flow.
 
 Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
+
+8.5 Using ID Site for Multitenancy
+===================================
+
+When a user wants to log in to your multi-tenant application, you may want to specify a tenant for the user to be logged in to. Stormpath's ID Site supports multi-tenancy via the **Organization** resource. An Organization in Stormpath is a resource used to group together Account Stores for an Application and can represent a tenant for your application. These Organization resources can be mapped to your Application as virtual Account Stores. For more detailed information about multi-tenancy and the Organization resource, please see :ref:`the Multi-Tenancy chapter <multitenancy>`.
+
+To imagine how this works, take the following example. You are building a trooper application, TrooperApp.com where you have three different Organizations:
+
+- Stormtroopers
+- Snowtroopers
+- Sandtroopers
+
+Each of these types of troopers can only access their own Organization. To be able to support this, you create three Organization resources in Stormpath, specifying the ``nameKey`` that matches the subdomain.
+
+For an example of how to do this via REST, please see the :ref:`Multi-tenancy Chapter <create-org>`.
+
+Once these organizations are mapped to your Application as Account Stores, you can use ID Site in a multi-tenant fashion. Including:
+
+- Specifying the Organization (e.g. via a tenant-specific subdomain), which forces the user to log into a particular Organization in the Application.
+- Allowing the user to specify their Organization via an additional login form field for the user to fill out while logging in or resetting their password.
+
+For more information about this, please see :ref:`the relevant section of the Multi-tenancy Chapter <multitenant-routing-users>`.

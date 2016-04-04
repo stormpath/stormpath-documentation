@@ -135,6 +135,8 @@ The Organization resource allows your application's tenants to have as many, or 
 
 Although Organizations do not themselves own Accounts in the same way as Directories and Groups, they can be mapped to Applications as Account Stores for the purposes of user log in. This means that they can be used as, among other things, a single-point of access control to an Application. For example, if you wanted to enable login for a new tenant in your multi-tenant application, all you would have to do is map all of the relevant Directories and/or Groups to your Organization, and then map that Organization to your Application as an Account Store. If at some future point you want to disable that tenant, all you have to do is remove the Account Store Mapping between that Organization and your Application, and the tenant's users would no longer be able to log in.
 
+.. _create-org:
+
 How to Create an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -315,7 +317,7 @@ If the login attempt does specify an Organization, then we simply jump to that p
 .. _multitenant-routing-users:
 
 7.4 Routing Users to their Tenant
-================================================
+==================================
 
 If you are designing a public multi-tenant web application that supports multiple application tenants with private data partitioning, then you will probably want some way for users to specify which tenant they are logging in to.
 
@@ -333,7 +335,7 @@ The application needs to know the request user’s tenant identifier so they can
 
 where ? is the ``tenant_id`` value obtained by inspecting the request.
 
-So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:``Organization resource <ref-organization>` and it's ``nameKey`` attribute.
+So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:`Organization resource <ref-organization>` and it's ``nameKey`` attribute.
 
 We present here two possible solutions that use this ``nameKey``. You may support both if you wish to give your customers convenience options.
 
@@ -385,4 +387,13 @@ An alternative, or complimentary, approach to tenant subdomains is to allow the 
 
 We advise that you auto-remember the login form tenant ID value so that field is pre-populated whenever a user returns to log in. Users don’t like having to remember and type that value in every time they log in.
 
-As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multitenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
+As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multi-tenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
+
+.. todo::
+
+  The SDKs can show you how to actually accomplish all this. e.g.::
+
+      application.createIdSiteUrl({
+        'callbackUri': 'https://trooperapp.com/callback',
+        'showOrganizationField': true
+    });
