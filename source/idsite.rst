@@ -346,7 +346,11 @@ Once the JWT is validated, you can read information about the user from the JWT.
 Exchanging the ID Site JWT for an OAuth Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For background information, please see :ref:`token-authn`. In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from the ID Site.
+.. note::
+
+  For background information, please see :ref:`token-authn`.
+
+In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from ID Site.
 
 .. code-block:: http
 
@@ -356,7 +360,7 @@ For background information, please see :ref:`token-authn`. In this situation, af
 
   grant_type=id_site_token&token={$JWT_FROM_ID_SITE}
 
-Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that its associated with is still valid) and then return an OAuth 2.0 Access Token:
+Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that it's associated with is still valid) and then return an OAuth 2.0 Access Token:
 
 .. code-block:: http
 

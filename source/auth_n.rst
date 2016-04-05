@@ -1708,7 +1708,7 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
   #. Select your Application
   #. In the "SAML Settings" section, click on **Edit**
   #. You will arrive on "General Settings", click **Next**
-  #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...todo
+  #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...(todo)
 
   For example:
 

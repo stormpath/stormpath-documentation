@@ -855,7 +855,7 @@ To trigger the password reset workflow, you send an HTTP POST to the Application
 
 .. note::
 
-  It is also possible to specify the Account Store in your Password Reset POST:
+  It is also possible to specify the Account Store or Organization ``nameKey`` in your Password Reset POST:
 
   .. code-block:: http
 
@@ -870,6 +870,18 @@ To trigger the password reset workflow, you send an HTTP POST to the Application
       }
     }
 
+  .. code-block:: http
+
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+    {
+      "email":"phasma@empire.gov"
+      "accountStore": {
+        "nameKey": "empireoutfitters"
+      }
+    }
 
 If this is a valid email in an Account associated with this Application, you will get a success response:
 
