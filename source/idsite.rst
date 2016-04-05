@@ -7,7 +7,7 @@
 8.1. What is an ID Site?
 ========================
 
-Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication.
+Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication. It supports regular login to your Stormpath Directories, as well as Social and SAML login.
 
 The screens and functionality of ID Site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, JavaScript code, screens, removing screens, and even changing how the screens behave.
 
@@ -400,24 +400,13 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
 Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
 
-8.5 Using ID Site for Multitenancy
-===================================
+8.5 Using ID Site for Multi-tenancy
+====================================
 
-When a user wants to log in to your multi-tenant application, you may want to specify a tenant for the user to be logged in to. Stormpath's ID Site supports multi-tenancy via the **Organization** resource. An Organization in Stormpath is a resource used to group together Account Stores for an Application and can represent a tenant for your application. These Organization resources can be mapped to your Application as virtual Account Stores. For more detailed information about multi-tenancy and the Organization resource, please see :ref:`the Multi-Tenancy chapter <multitenancy>`.
+.. todo::
 
-To imagine how this works, take the following example. You are building a trooper application, TrooperApp.com where you have three different Organizations:
+  There's a lot more to say here for SDKs than there is for REST.
 
-- Stormtroopers
-- Snowtroopers
-- Sandtroopers
+If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
 
-Each of these types of troopers can only access their own Organization. To be able to support this, you create three Organization resources in Stormpath, specifying the ``nameKey`` that matches the subdomain.
-
-For an example of how to do this via REST, please see the :ref:`Multi-tenancy Chapter <create-org>`.
-
-Once these organizations are mapped to your Application as Account Stores, you can use ID Site in a multi-tenant fashion. Including:
-
-- Specifying the Organization (e.g. via a tenant-specific subdomain), which forces the user to log into a particular Organization in the Application.
-- Allowing the user to specify their Organization via an additional login form field for the user to fill out while logging in or resetting their password.
-
-For more information about this, please see :ref:`the relevant section of the Multi-tenancy Chapter <multitenant-routing-users>`.
+From that point, ID Site (combined with one of our SDKs) is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
