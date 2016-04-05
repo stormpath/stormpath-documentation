@@ -4160,3 +4160,28 @@ The user will now be redirected by Stormpath back to your Application along with
 For more information about what is contained in this token, please see :ref:`above <saml-response-jwt>`.
 
 At this point your user is authenticated and able to use your app.
+
+.. only:: not rest
+
+  5.6. How API Key Authentication Work in Stormpath
+  =====================================================
+
+  .. todo::
+
+    Not really sure what goes in here, it's only for the SDKs. Whoever gets here first, let's chat about it. :)
+
+  5.6.1. How to use API Key and Secret Authentication
+  -----------------------------------------------------------------
+
+  5.6.2. How to authenticate using HTTP Basic
+  -----------------------------------------------------------------
+
+  5.6.3. How to exchange an API Key for an Access Token
+  -----------------------------------------------------------------
+
+  5.6.4. How to authenticate using HTTP Bearer using Access Tokens
+  -----------------------------------------------------------------
+
+
+
+

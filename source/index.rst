@@ -19,6 +19,8 @@ Contents:
    multitenancy
    idsite
    reference
+   configuration
    changelog
+
 
 
