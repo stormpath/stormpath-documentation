@@ -4166,22 +4166,277 @@ At this point your user is authenticated and able to use your app.
   5.6. How API Key Authentication Work in Stormpath
   =====================================================
 
-  .. todo::
+  In this section, we discuss how to set up Stormpath to manage and authenticate API Keys and Tokens for developers that are using your API services. Stormpath provides not only the user management piece around API Keys, but also allows you to associate permissions and custom data with the Accounts for advanced use-cases.
 
-    Not really sure what goes in here, it's only for the SDKs. Whoever gets here first, let's chat about it. :)
+  Stormpath offers a complete solution that securely and easily helps you manage developer accounts, create and manage API Keys, and generate OAuth 2.0 bearer tokens to support Access Token authentication.
 
   5.6.1. How to use API Key and Secret Authentication
   -----------------------------------------------------------------
 
+  First, you will need an Account for a developer. For information about how to create an Account, see :ref:`the Account Management chapter <add-new-account>`.
+
+  Create an API Key for an Account
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Once you have an Account, creating an API Key is a simple call:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_apikey_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_apikey_req.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/create_apikey_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/create_apikey_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/create_apikey_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/create_apikey_req.py
+        :language: python
+
+  You will then get back the newly-created API Key:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_apikey_resp.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_apikey_resp.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/create_apikey_resp.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/create_apikey_resp.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/create_apikey_resp.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/create_apikey_resp.py
+        :language: python
+
+  Managing API Keys
+  ^^^^^^^^^^^^^^^^^
+
+  In some cases, you may need to delete or disable an API Key. This is important for management of API Keys. For example, a developer may delete an API Key because it has been compromised, or the administrator may disable all API Keys for a developer that is past due on payments for the service. API Keys can be retrieved from either the Application or Account. Once a key is retrieved, it can be deleted or disabled.
+
+  **Delete an API Key**
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/delete_apikey.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/delete_apikey.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/delete_apikey.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/delete_apikey.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/delete_apikey.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/delete_apikey.py
+        :language: python
+
+  **Disable an API Key**
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/disable_apikey.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/disable_apikey.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/disable_apikey.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/disable_apikey.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/disable_apikey.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/disable_apikey.py
+        :language: python
+
+  .. _api-basic-auth:
+
   5.6.2. How to authenticate using HTTP Basic
   -----------------------------------------------------------------
+
+  Now that your developer has an API Key, there are two methods that they can use to authenticate their API calls: HTTP Basic and HTTP Bearer. In this section we'll cover Basic Authentication, then we'll discuss :ref:`how to exchange an API Key for an OAuth token <api-key-for-token>`, and finally how to authenticate an API call with that token using :ref:`HTTP Bearer Authentication <api-bearer-auth>`.
+
+  The simplest way to authenticate a call is to Base64 encode the API Key and Secret and then pass this encoded string in the authorization header:
+
+  .. code-block:: http
+
+    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpGTVY0V1ZWQ1ZHMzVYQVRJSTlUOTZKNzpYRVBKb2xobk1ZRUR3MmJTQ2ZSbkQrbnlxSyt...
+
+  .. warning::
+
+    Basic Authentication does not encrypt or hash the credentials in any wayin any way. By itself, it is not secure and Stormpath strongly recommends that when a developer calls your API, it is transmitted over HTTPS to provide adequate security.
+
+  Upon receiving this request, the Stormpath SDK will authenticate the request as follows:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/authenticate_basic_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/authenticate_basic_req.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/authenticate_basic_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/authenticate_basic_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/authenticate_basic_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/authenticate_basic_req.py
+        :language: python
+
+  The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
+
+  The SDK provides a caching layer to ensure fast response times in your API by reducing network traffic to the Stormpath service. The caching layer will cache the API Key securely with the Secret encrypted. Stormpath will use the cached entry for API Key and Secret authentication when possible.
+
+  .. _api-key-for-token:
 
   5.6.3. How to exchange an API Key for an Access Token
   -----------------------------------------------------------------
 
-  5.6.4. How to authenticate using HTTP Bearer using Access Tokens
+  Instead of passing base64 encoded API keys over the wire, you can exchange an API Key Id and Secret for an Access Token, and use the Access Token as a Bearer Token to authentication for a protected API or resource. Exchanging an API Key for a token is essentially a two step process:
+
+  1. The client authenticates with Stormpath and requests an access token from the token endpoint
+  2. Stormpath authenticates the client and issues an access token
+
+  For more details, see earlier in this chapter: :ref:`generate-oauth-token`.
+
+  .. _api-bearer-auth:
+
+  5.6.4. How to authenticate using HTTP Bearer Access Tokens
   -----------------------------------------------------------------
 
+  After you return an OAuth Access Token to a developer using your API service, they can start using the OAuth Access Token to validate authentication to your service.
 
+  Stormpath requires that the developer send the Access Token in the Authorization header of the request.
 
+  Again, the Stormtrooper Equipment API example. We will require that a developer exchange his API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
 
+  The developer request would look something like this:
+
+  .. code-block:: http
+
+    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Bearer 7FRhtCNRapj9zs.YI8MqPiS8hzx3wJH4.qT29JUOpU...
+
+  The Stormpath SDK would then authenticate the request as follows:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/authenticate_bearer_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/authenticate_bearer_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/authenticate_bearer_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
+        :language: python
