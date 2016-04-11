@@ -7,9 +7,17 @@ Stormpath Error Codes
 19XX: Billing / Payment
 =======================
 
+1900
+------------
+Modifying the specified property requires that your Stormpath Tenant have a higher subscription level.
+
+To upgrade your subscription, go to the "My Subscription" section of the Stormpath Admin Console.
+
 1902
 -------------
 Application limit reached. Please add more Applications in the "My Subscription" section of the Stormpath Admin Console.
+
+Your "Available Applications" is your application limit and the "Active Applications" is the current number of Applications in your Tenant. To be able to create additional applications, delete unused applications, or update your subscription to include more applications.
 
 2XXX: General Validation
 ========================
@@ -18,17 +26,23 @@ Application limit reached. Please add more Applications in the "My Subscription"
 -------------
 The specified property value is required; it cannot be null, empty, or blank.
 
+For example, you attempted to create an Account without providing a value for the ``email`` property.
+
 2001
 -------------
 The specified property value must be unique.
 
+For example, you attempted to create an Account with the same ``email`` as another Account in the same Directory.
+
 2002
 -------------
-The specified property value is invalid. This is a generic property invalid error. For example, supplying a fraction of 15/0 – cannot divide by zero. Only use this code if a more accurate status code is not available. For example, an email without an ‘@’ should return error code 2006, not 2002.
+The specified property value is invalid.
+
+This is a generic property invalid error. For example, supplying a fraction of 15/0 – cannot divide by zero. Stormpath only uses this code if a more accurate status code is not available. For example, an email without an ‘@’ should return error code 2006, not 2002.
 
 2003
 -------------
-The specified property value is unsupported. For example, enum ‘enabled’ or ‘disabled’ is expected, but the value passed was ‘foo’.
+The specified property value is unsupported. For example, ``enabled`` or ``disabled`` is expected, but the value passed was ``foo``.
 
 2004
 -------------
@@ -82,6 +96,8 @@ Unknown property. For example, trying to set a ‘srname’ property instead of 
 -------------
 Property value does not match a known Stormpath resource.
 
+For example, you specified an invalid ``href`` for a resource that does not exist in your Tenant.
+
 2100
 -------------
 Malformed query. One or more query criteria parameters were not specified correctly.
@@ -100,7 +116,7 @@ The supplied query parameter value is invalid or an unexpected type.
 
 2104
 -------------
-The orderBy query parameter value contains an invalid order statement.
+The ``orderBy`` query parameter value contains an invalid order statement.
 
 2105
 -------------
@@ -131,7 +147,7 @@ Property name is invalid. Property names may contain only alphanumeric character
 
 3003
 -------------
-Property names may not equal any of the following reserved names: ‘href’, 'createdAt’, 'modifiedAt’, ‘meta’, ‘spMeta’, ‘spmeta’, ‘ionmeta’, or ‘ionMeta’.
+Property names may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
 
 3004
 -------------
@@ -221,13 +237,19 @@ The Directory cannot be updated to reflect a different identity provider. Please
 -------------
 Login attempt failed because the specified password is incorrect.
 
+During a login attempt, Stormpath found an Account from the specified ``username`` or ``email``, but the password was incorrect.
+
 7101
 -------------
 Login attempt failed because the Account is disabled.
 
+During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``DISABLED``. Accounts with the ``DISABLED`` status cannot login.
+
 7102
 -------------
 Login attempt failed because the Account is not verified.
+
+During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``UNVERIFIED``. Accounts with the ``UNVERIFIED`` status cannot login.
 
 7103
 -------------
@@ -235,7 +257,7 @@ Login attempt failed because the Account is locked.
 
 7104
 -------------
-Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified username or email.
+Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified ``username`` or ``email``.
 
 7200
 -------------
@@ -287,13 +309,17 @@ Stormpath, while acting as a gateway/proxy to your Active Directory server, enco
 -------------
 Token is no longer valid because the Account is not enabled.
 
+This error can occur when you validate a token for an Account that has been changed to have a status of ``DISABLED``.
+
 10011
 -------------
 Token is no longer valid because it has expired.
 
+Stormpath tokens have an expiration time that is configurable through the Application’s OAuth Policy. If you try authenticating with an expired token, this error will return.
+
 10012
 -------------
-Token is invalid because the issued at time (iat) is after the current time.
+Token is invalid because the issued at time (``iat``) is after the current time.
 
 10013
 -------------

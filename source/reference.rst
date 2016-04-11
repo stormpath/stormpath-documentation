@@ -3736,8 +3736,8 @@ An individual Account resource may be accessed via its Resource URL:
 
   * - ``status``
     - String (Enum)
-    - ``ENABLED``, ``DISABLED``, ``unverified``
-    - ``ENABLED`` Accounts are able to log in to their assigned Applications, ``DISABLED`` Accounts may not log in to Applications, ``unverified`` Accounts are disabled and have not verified their email address.
+    - ``ENABLED``, ``DISABLED``, ``UNVERIFIED``
+    - ``ENABLED`` Accounts are able to log in to their assigned Applications, ``DISABLED`` Accounts may not log in to Applications, ``UNVERIFIED`` Accounts are disabled because they have not verified their email address.
 
   * - ``createdAt``
     - String
