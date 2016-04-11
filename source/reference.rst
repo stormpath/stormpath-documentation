@@ -1472,17 +1472,30 @@ These are the other resources that can be found associated with any particular A
 Application API Keys
 ^^^^^^^^^^^^^^^^^^^^
 
-A ``GET`` can be sent to this endpoint along with an :ref:`API Key <ref-account-apikeys>` ID, in order to retrieve the Account associated with that API Key.
+This collection stores any API Keys that have been generated for this Application.
 
 **Application apiKeys URL**
 
-``/v1/applications/$APPLICATION_ID/apiKeys?id=$SP_API_KEY_ID``
+``/v1/applications/$APPLICATION_ID/apiKeys``
 
-If you would like to retrieve the API Key with the :ref:`ref-account` expanded you can include the ``?expand=account`` parameter.
+If you would like to retrieve a specific API Key, and you know the Key ID, you can include it as an optional parameter: ``id=$SP_API_KEY_ID``.
+
+If you would like to retrieve the API Key with the :ref:`ref-account` expanded you can include the ``expand=account`` parameter.
+
+Finally, if you would like the API Key's Secret to be encrypted, use the ``encryptSecret=true`` parameter.
+
+.. note::
+
+  If ``encryptSecret=true`` is included, then the following parameter must also be included:
+    - ``encryptionKeySalt``: This is a `URL-safe Base64-encoded <https://tools.ietf.org/html/rfc4648>`__ 16-byte string that will be added to the secret before it is encrypted.
+
+  There are two more optional parameters than can be included alongside these two:
+    - ``encryptionKeySize``: The size of the key used for encryption. Possible values are ``128``, ``192``, and ``256``. Default value is ``128``.
+    - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Possible values are any whole number from ``1`` to ``65536``.  Default value is ``1024``.
 
 **Application apiKeys Attributes**
 
-This call would return an :ref:`API Key <ref-account-apikeys>`.
+This call would return a collection of :ref:`API Keys <ref-account-apikeys>` for this Application only. For details about what an API Key object looks like you can refer to the :ref:`Account API Keys <ref-account-apikeys>` section.
 
 .. _ref-oauth-policy:
 
@@ -4057,8 +4070,8 @@ This collection stores any API Keys that have been generated for this Account.
 
   {
     "href": "https://api.stormpath.com/v1/apiKeys/5G5KR4W3K1BP235X8KEXAMPLE",
-    "id": "5G5KR4W3K1BP235X8K6NEBL93",
-    "secret": "GRiCelvEblNU7Xl4l3oOCw30c72Rwj8TkRn8cUQCrvU",
+    "id": "5G5KR4W3K1BP235X8K6EXBL93",
+    "secret": "GRiCelvEblNU7Xl4l3oOCw30c72Rwj8TkRn8cUQCreX",
     "status": "ENABLED",
     "account": {
       "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
@@ -4067,6 +4080,8 @@ This collection stores any API Keys that have been generated for this Account.
       "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
     }
   }
+
+.. _ref-api-key-operations:
 
 Account API Key Operations
 """"""""""""""""""""""""""
@@ -4100,14 +4115,16 @@ Retrieving an API Key
 
     * - GET /v1/accounts/$ACCOUNT_ID/apiKeys
       - ``expand``, ``encryptSecret=true`` (see below)
-      - Retrieves the API Keys for the specified Account. ``account`` and ``tenant`` can be expanded.
+      - Retrieves a collection of API Keys for the specified Account. ``account`` and ``tenant`` can be expanded.
 
 .. note::
 
-  If ``encryptSecret=true`` is included, then the returned API Key is encrypted. Additionally, the following parameters can also be modified:
-    - ``encryptionKeySize``: The size of the key used for encryption. Default value is ``128``.
-    - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Default value is ``1024``
-    - ``encryptionKeySalt``: Specifies whether you would like to use a cryptographic salt. Default value is ``false``.
+  If ``encryptSecret=true`` is included, then the returned API Key Secret is encrypted. Additionally, the following parameter must be included:
+    - ``encryptionKeySalt``: This is a `URL-safe Base64-encoded <https://tools.ietf.org/html/rfc4648>`__ 16-byte string that will be added to the secret before it is encrypted.
+
+  There are two more optional parameters than can be included alongside these two:
+    - ``encryptionKeySize``: The size of the key used for encryption. Possible values are ``128``, ``192``, and ``256``. Default value is ``128``.
+    - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Possible values are any whole number from ``1`` to ``65536``.  Default value is ``1024``.
 
 Updating an API Key
 +++++++++++++++++++
