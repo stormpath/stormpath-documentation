@@ -9,15 +9,61 @@ Stormpath Error Codes
 
 1900
 ------------
+
+**Error Condition**
 Modifying the specified property requires that your Stormpath Tenant have a higher subscription level.
 
 To upgrade your subscription, go to the "My Subscription" section of the Stormpath Admin Console.
 
+**User Message**
+
 1902
 -------------
+
+**Error Condition**
+
+**User Message**
 Application limit reached. Please add more Applications in the "My Subscription" section of the Stormpath Admin Console.
 
-Your "Available Applications" is your application limit and the "Active Applications" is the current number of Applications in your Tenant. To be able to create additional applications, delete unused applications, or update your subscription to include more applications.
+Your "Available Applications" is your Application limit and the "Active Applications" is the current number of Applications in your Tenant. To be able to create additional ones, delete unused Applications, or update your subscription to include more Applications.
+
+1903
+----
+
+**Error Condition**
+
+**User Message**
+The specified subscription level is not available for your active subscription plan.
+
+This error normally only occurs with older Stormpath Tenants. Please contact us at support@stormpath.com for assistance.
+
+1904
+----
+
+**Error Condition**
+
+**User Message**
+
+1905
+----
+
+**Error Condition**
+
+**User Message**
+
+1906
+----
+
+**Error Condition**
+
+**User Message**
+
+1910
+----
+
+**Error Condition**
+
+**User Message**
 
 2XXX: General Validation
 ========================
@@ -54,7 +100,9 @@ The specified property value uses an invalid character encoding.
 
 2006
 -------------
-The specified property value format is invalid. For example, specifying the “12/15/2012” date format when “2012-12-15” is expected.
+The specified property value format is invalid.
+
+For example, specifying the “12/15/2012” date format when “2012-12-15” is expected. Some forms of this error will include more specific information.
 
 2007
 -------------
@@ -98,6 +146,18 @@ Property value does not match a known Stormpath resource.
 
 For example, you specified an invalid ``href`` for a resource that does not exist in your Tenant.
 
+2017
+-------------
+
+2020
+----
+
+2021
+----
+
+2022
+----
+
 2100
 -------------
 Malformed query. One or more query criteria parameters were not specified correctly.
@@ -130,6 +190,9 @@ Unsupported Order Property: specifying a property for sort ordering that cannot 
 -------------
 Unsupported Expand Property: specifying a property for expansion when the property is not expandable.
 
+2108
+----
+
 3XXX: Custom Data
 =================
 
@@ -153,7 +216,7 @@ Property names may not equal any of the following reserved names: ``href``, ``cr
 -------------
 Property value exceeds maximum size. The value exceeds the maximum storage size limit of 10 MB per customData resource.
 
-4XXX: Tenant
+400X: Tenant
 ============
 
 4001
@@ -163,6 +226,48 @@ Your Stormpath Tenant owner Account cannot be deleted.
 4002
 -------------
 Your Stormpath Tenant owner Account’s status cannot be modified.
+
+4xxx: Organization
+==================
+
+4520
+----
+
+4600
+----
+
+4601
+----
+
+4602
+----
+
+4603
+----
+
+4604
+----
+
+4605
+----
+
+4606
+----
+
+4610
+----
+
+4612
+----
+
+4614
+----
+
+4700
+----
+
+4701
+----
 
 5XXX: Application
 =================
@@ -191,6 +296,9 @@ This Application’s default storage location for new Groups is disabled. New Gr
 -------------
 The specified Account Store is already mapped to that Application. Please choose another Group or Directory.
 
+5105
+----
+
 5106
 -------------
 The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Accounts.
@@ -211,6 +319,33 @@ Specifying a Group as a defaultGroupStore is not currently supported.
 -------------
 The specified Account Store reference is invalid.
 
+5116
+----
+
+5117
+----
+
+5118
+----
+
+5119
+----
+
+5120
+----
+
+5121
+----
+
+5122
+----
+
+5200
+----
+
+5201
+----
+
 6XXX: Directory
 ===============
 
@@ -229,6 +364,9 @@ This Directory cannot be converted to an external provider Directory.
 6202
 -------------
 The Directory cannot be updated to reflect a different identity provider. Please create a new Directory instead.
+
+6203
+----
 
 7XXX: Account
 =============
@@ -259,6 +397,15 @@ Login attempt failed because the Account is locked.
 -------------
 Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified ``username`` or ``email``.
 
+7105
+-------------
+
+7106
+----
+
+7107
+----
+
 7200
 -------------
 Stormpath was not able to complete the request to the Social Login site: this can be caused by either a bad Social Directory configuration, or the provided Account credentials are not valid.
@@ -270,6 +417,12 @@ Stormpath is unable to create or update the Account because the Social Login sit
 7202
 -------------
 This property is a read-only property on a externally managed Directory Account, and consequently cannot be modified.
+
+7203
+----
+
+7301
+----
 
 9XXX: Agent
 ===========
@@ -378,3 +531,13 @@ Token is invalid because a required claim value cannot be null or empty.
 11005
 -------------
 Token is invalid because a token with the same identifier (jti) has been already used.
+
+120XX: ID Site JWT
+==================
+
+12001
+-----
+
+12002
+-----
+
