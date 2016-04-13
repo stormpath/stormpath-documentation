@@ -202,27 +202,24 @@ For example, specifying a string when a number is required.
 
 **Error Message**
 
+The specified property value uses an invalid character encoding.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property value uses an invalid character encoding.
-
-**Further Information**
 
 2006
 -------------
 
 **Error Message**
 
+The specified property is in an invalid format.
+
 **User Message**
 
 *(Same as above)*
 
-The specified property value format is invalid.
-
 **Further Information**
-
 
 For example, specifying the “12/15/2012” date format when “2012-12-15” is expected. Some forms of this error will include more specific information.
 
@@ -231,103 +228,107 @@ For example, specifying the “12/15/2012” date format when “2012-12-15” i
 
 **Error Message**
 
+The specified property value's minimum length is not satisfied.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property value's minimum length is not satisfied.
 
 2008
 -------------
 
 **Error Message**
 
+The specified property value exceeded the maximum allowed length.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property value's maximum length is not satisfied.
 
 2009
 -------------
 
 **Error Message**
 
+The specified property's minimum value is not satisfied.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property's minimum value is not satisfied.
 
 2010
 -------------
 
 **Error Message**
 
+The specified property exceeded the maximum allowed value.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property's maximum value is exceeded.
 
 2011
 -------------
 
 **Error Message**
 
+The specified property's minimum date/time is not satisfied.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property's minimum date/time is not satisfied.
 
 2012
 -------------
 
 **Error Message**
 
+The specified property's maximum date/time is exceeded.
+
 **User Message**
 
 *(Same as above)*
-
-The specified property's maximum date/time is exceeded.
 
 2013
 -------------
 
 **Error Message**
 
+The specified property's value is not within range.
+
 **User Message**
 
 *(Same as above)*
 
-The specified property's value is not within range.
+**Further Information**
+
+This error will also return what the minimum and maximum values are for the range.
 
 2014
 -------------
 
 **Error Message**
 
+The specified property value is an invalid reference.
+
 **User Message**
 
 *(Same as above)*
 
-The specified property value is an invalid reference.
-
 **Further Information**
 
-For example, linking to an object that is not allowed to be linked to. Also known as a ‘constraint violation’.
+For example, linking to an object that is not allowed to be linked to. This error will sometimes return with more specific information.
 
 2015
 -------------
 
 **Error Message**
 
+Unknown property.
+
 **User Message**
 
 *(Same as above)*
-
-Unknown property.
 
 **Further Information**
 
@@ -338,11 +339,11 @@ For example, trying to set a ‘srname’ property instead of ‘surname’.
 
 **Error Message**
 
+Property value does not match a known Stormpath resource.
+
 **User Message**
 
 *(Same as above)*
-
-Property value does not match a known Stormpath resource.
 
 **Further Information**
 
