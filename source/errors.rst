@@ -7,10 +7,10 @@ Stormpath Error Codes
 110X: Communication
 ===================
 
-1100
-----
+Error 1100
+-----------
 
-**Error Message**
+**Message**
 
 The specified HTTP request method is not supported.
 
@@ -18,10 +18,10 @@ The specified HTTP request method is not supported.
 
 *(Same as above)*
 
-1101
-----
+Error 1101
+----------
 
-**Error Message**
+**Message**
 
 Bad request 'Content-Type'. This error will specify what the expected value is.
 
@@ -32,10 +32,10 @@ Bad request 'Content-Type'. This error will specify what the expected value is.
 19XX: Billing / Payment
 =======================
 
-1900
+Error 1900
 ------------
 
-**Error Message**
+**Message**
 
 Subscription upgrade required.
 
@@ -45,10 +45,10 @@ To upgrade your subscription, go to the "My Subscription" section of the Stormpa
 
 *(Same as above)*
 
-1902
+Error 1902
 -------------
 
-**Error Message**
+**Message**
 
 Application limit reached. Please add more Applications in the "My Subscription" section of the Stormpath Admin Console.
 
@@ -60,10 +60,10 @@ Application limit reached. Please add more Applications in the "My Subscription"
 
 Your "Available Applications" is your Application limit and the "Active Applications" is the current number of Applications in your Tenant. To be able to create additional ones, delete unused Applications, or update your subscription to include more Applications.
 
-1903
-----
+Error 1903
+----------
 
-**Error Message**
+**Message**
 
 The specified subscription level is not available for your active subscription plan.
 
@@ -75,10 +75,10 @@ The specified subscription level is not available.
 
 This error normally only occurs with older Stormpath Tenants. Please contact us at support@stormpath.com for assistance.
 
-1904
-----
+Error 1904
+-----------
 
-**Error Message**
+**Message**
 
 In order to change your subscription, you need to add a payment method first.
 
@@ -86,10 +86,10 @@ In order to change your subscription, you need to add a payment method first.
 
 You cannot modify your subscription because you have not added a payment method.
 
-1905
-----
+Error 1905
+-----------
 
-**Error Message**
+**Message**
 
 You cannot lower the number of Applications for your subscription without first deleting Applications. Please delete the specified number of Applications and then try again.
 
@@ -97,10 +97,10 @@ You cannot lower the number of Applications for your subscription without first 
 
 *(Same as above)*
 
-1906
-----
+Error 1906
+-----------
 
-**Error Message**
+**Message**
 
 You cannot add more than one credit card to your subscription. A credit card already exists for your subscription.
 
@@ -108,10 +108,10 @@ You cannot add more than one credit card to your subscription. A credit card alr
 
 You cannot add more than one credit card to your subscription.
 
-1910
-----
+Error 1910
+-----------
 
-**Error Message**
+**Message**
 
 Cannot send an email with the specified mime type on the developer tier. Modify the email template or upgrade your Stormpath Tenant.
 
@@ -122,10 +122,10 @@ Cannot send an email with the specified mime type on the developer tier. Modify 
 2XXX: General Validation
 ========================
 
-2000
+Error 2000
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value is required; it cannot be null, empty, or blank.
 
@@ -137,10 +137,10 @@ The specified property value is required; it cannot be null, empty, or blank.
 
 For example, you attempted to create an Account without providing a value for the ``email`` property.
 
-2001
+Error 2001
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value already exists. Please choose another value.
 
@@ -152,10 +152,10 @@ The specified property value already exists. Please choose another value.
 
 For example, you attempted to create an Account with the same ``email`` as another Account in the same Directory.
 
-2002
+Error 2002
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value is invalid.
 
@@ -167,10 +167,10 @@ The specified property value is invalid.
 
 This is a generic property invalid error. For example, supplying a fraction of 15/0 – cannot divide by zero. Stormpath only uses this code if a more accurate status code is not available. For example, an email without an ‘@’ should return error code 2006, not 2002.
 
-2003
+Error 2003
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value is unsupported.
 
@@ -182,10 +182,10 @@ The specified property value is unsupported.
 
 For example, ``enabled`` or ``disabled`` is expected, but the value passed was ``foo``.
 
-2004
+Error 2004
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value is an invalid type.
 
@@ -197,10 +197,10 @@ The specified property value is an invalid type.
 
 For example, specifying a string when a number is required.
 
-2005
+Error 2005
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value uses an invalid character encoding.
 
@@ -208,10 +208,10 @@ The specified property value uses an invalid character encoding.
 
 *(Same as above)*
 
-2006
+Error 2006
 -------------
 
-**Error Message**
+**Message**
 
 The specified property is in an invalid format.
 
@@ -223,10 +223,10 @@ The specified property is in an invalid format.
 
 For example, specifying the “12/15/2012” date format when “2012-12-15” is expected. Some forms of this error will include more specific information.
 
-2007
+Error 2007
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value's minimum length is not satisfied.
 
@@ -234,10 +234,10 @@ The specified property value's minimum length is not satisfied.
 
 *(Same as above)*
 
-2008
+Error 2008
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value exceeded the maximum allowed length.
 
@@ -245,10 +245,10 @@ The specified property value exceeded the maximum allowed length.
 
 *(Same as above)*
 
-2009
+Error 2009
 -------------
 
-**Error Message**
+**Message**
 
 The specified property's minimum value is not satisfied.
 
@@ -256,10 +256,10 @@ The specified property's minimum value is not satisfied.
 
 *(Same as above)*
 
-2010
+Error 2010
 -------------
 
-**Error Message**
+**Message**
 
 The specified property exceeded the maximum allowed value.
 
@@ -267,10 +267,10 @@ The specified property exceeded the maximum allowed value.
 
 *(Same as above)*
 
-2011
+Error 2011
 -------------
 
-**Error Message**
+**Message**
 
 The specified property's minimum date/time is not satisfied.
 
@@ -278,10 +278,10 @@ The specified property's minimum date/time is not satisfied.
 
 *(Same as above)*
 
-2012
+Error 2012
 -------------
 
-**Error Message**
+**Message**
 
 The specified property's maximum date/time is exceeded.
 
@@ -289,10 +289,10 @@ The specified property's maximum date/time is exceeded.
 
 *(Same as above)*
 
-2013
+Error 2013
 -------------
 
-**Error Message**
+**Message**
 
 The specified property's value is not within range.
 
@@ -304,10 +304,10 @@ The specified property's value is not within range.
 
 This error will also return what the minimum and maximum values are for the range.
 
-2014
+Error 2014
 -------------
 
-**Error Message**
+**Message**
 
 The specified property value is an invalid reference.
 
@@ -319,10 +319,10 @@ The specified property value is an invalid reference.
 
 For example, linking to an object that is not allowed to be linked to. This error will sometimes return with more specific information.
 
-2015
+Error 2015
 -------------
 
-**Error Message**
+**Message**
 
 Unknown property.
 
@@ -334,10 +334,10 @@ Unknown property.
 
 For example, trying to set a ‘srname’ property instead of ‘surname’.
 
-2016
+Error 2016
 -------------
 
-**Error Message**
+**Message**
 
 Property value does not match a known Stormpath resource.
 
@@ -349,10 +349,12 @@ Property value does not match a known Stormpath resource.
 
 For example, you specified an invalid ``href`` for a resource that does not exist in your Tenant.
 
-2017
+Error 2017 <<<
 -------------
 
-**Error Message**
+**Message**
+
+The specified property is unsupported.
 
 **User Message**
 
@@ -360,47 +362,47 @@ For example, you specified an invalid ``href`` for a resource that does not exis
 
 **Further Information**
 
+For example, you set-up a generic LDAP agent and then try to use properties that are only for Active Directory agents.
 
-2020
-----
+Error 2020
+----------
 
-**Error Message**
+**Message**
 
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-2021
-----
-
-**Error Message**
+The specified resource reference is invalid: the specified resource does not exist. It may have been deleted before the request was submitted.
 
 **User Message**
 
 *(Same as above)*
 
-**Further Information**
 
-
-2022
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-2100
+Error 2021
 -------------
 
-**Error Message**
+**Message**
+
+The specified resource reference is invalid: the resource's status is such that it may not be used.
+
+**User Message**
+
+*(Same as above)*
+
+Error 2022
+-----------
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+Error 2100
+-------------
+
+**Message**
 
 **User Message**
 
@@ -408,10 +410,10 @@ For example, you specified an invalid ``href`` for a resource that does not exis
 
 Malformed query. One or more query criteria parameters were not specified correctly.
 
-2101
+Error 2101
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -419,10 +421,10 @@ Malformed query. One or more query criteria parameters were not specified correc
 
 The supplied query parameter must have a corresponding value.
 
-2102
+Error 2102
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -430,10 +432,10 @@ The supplied query parameter must have a corresponding value.
 
 The supplied query parameter may only have a single value and the parameter cannot be specified more than once.
 
-2103
+Error 2103
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -441,10 +443,10 @@ The supplied query parameter may only have a single value and the parameter cann
 
 The supplied query parameter value is invalid or an unexpected type.
 
-2104
+Error 2104
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -452,10 +454,10 @@ The supplied query parameter value is invalid or an unexpected type.
 
 The ``orderBy`` query parameter value contains an invalid order statement.
 
-2105
+Error 2105
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -463,10 +465,10 @@ The ``orderBy`` query parameter value contains an invalid order statement.
 
 Unsupported Query Property: specifying a property not recognized as queryable.
 
-2106
+Error 2106
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -474,10 +476,10 @@ Unsupported Query Property: specifying a property not recognized as queryable.
 
 Unsupported Order Property: specifying a property for sort ordering that cannot be sorted.
 
-2107
+Error 2107
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -485,10 +487,10 @@ Unsupported Order Property: specifying a property for sort ordering that cannot 
 
 Unsupported Expand Property: specifying a property for expansion when the property is not expandable.
 
-2108
-----
+Error 108
+-----------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -500,10 +502,10 @@ Unsupported Expand Property: specifying a property for expansion when the proper
 3XXX: Custom Data
 =================
 
-3000
+Error 3000
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -511,10 +513,10 @@ Unsupported Expand Property: specifying a property for expansion when the proper
 
 Property names cannot be null, empty or blank.
 
-3001
+Error 3001
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -522,10 +524,10 @@ Property names cannot be null, empty or blank.
 
 Property name is invalid. Property names cannot exceed 255 characters.
 
-3002
+Error 3002
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -533,10 +535,10 @@ Property name is invalid. Property names cannot exceed 255 characters.
 
 Property name is invalid. Property names may contain only alphanumeric characters, underscores, or dashes, but cannot start with a dash.
 
-3003
+Error 3003
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -544,10 +546,10 @@ Property name is invalid. Property names may contain only alphanumeric character
 
 Property names may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
 
-3004
+Error 3004
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -558,10 +560,10 @@ Property value exceeds maximum size. The value exceeds the maximum storage size 
 400X: Tenant
 ============
 
-4001
+Error 4001
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -569,10 +571,10 @@ Property value exceeds maximum size. The value exceeds the maximum storage size 
 
 Your Stormpath Tenant owner Account cannot be deleted.
 
-4002
+Error 4002
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -583,22 +585,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 4XXX: Organization
 ==================
 
-4520
-----
+Error 4520
+-----------
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-4600
-----
-
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -607,24 +597,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 **Further Information**
 
 
+Error 4600
+-----------
 
-4601
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-4602
-----
-
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -632,12 +608,21 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 **Further Information**
 
+Error 4601
+-----------
 
+**Message**
 
-4603
-----
+**User Message**
 
-**Error Message**
+*(Same as above)*
+
+**Further Information**
+
+Error 4602
+-----------
+
+**Message**
 
 **User Message**
 
@@ -647,23 +632,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 
 
-4604
-----
+Error 4603
+-----------
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-4605
-----
-
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -673,23 +645,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 
 
-4606
-----
+Error 4604
+-----------
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-4610
-----
-
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -699,10 +658,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 
 
-4612
-----
+Error 4605
+-----------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -711,24 +670,48 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 **Further Information**
 
 
+
+Error 4606
+-----------
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 4610
+-----------
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 4612
+-----------
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
 
 4614
-----
+-----------
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-4700
-----
-
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -738,10 +721,23 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 
 
-4701
-----
+Error 4700
+-----------
 
-**Error Message**
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 4701
+-------------
+
+**Message**
 
 **User Message**
 
@@ -754,20 +750,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 5XXX: Application
 =================
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-5010
+Error 5010
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -775,10 +761,10 @@ Your Stormpath Tenant owner Account’s status cannot be modified.
 
 The specified Directory name is already in use by another Directory and cannot be used to auto-create a Directory for the new Application. Please choose a different Directory name for the auto-created Directory.
 
-5100
+Error 5100
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -786,10 +772,10 @@ The specified Directory name is already in use by another Directory and cannot b
 
 The Account Store is unspecified.
 
-5101
+Error 5101
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -797,10 +783,10 @@ The Account Store is unspecified.
 
 The Account Store is disabled.
 
-5102
+Error 5102
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -808,10 +794,10 @@ The Account Store is disabled.
 
 The Group Store is unspecified.
 
-5103
+Error 5103
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -819,10 +805,10 @@ The Group Store is unspecified.
 
 This Application’s default storage location for new Groups is disabled. New Groups cannot be added to disabled Directories.
 
-5104
+Error 5104
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -830,10 +816,9 @@ This Application’s default storage location for new Groups is disabled. New Gr
 
 The specified Account Store is already mapped to that Application. Please choose another Group or Directory.
 
-5105
-----
-
-**Error Message**
+Error 5105
+-------------
+**Message**
 
 **User Message**
 
@@ -843,10 +828,10 @@ The specified Account Store is already mapped to that Application. Please choose
 
 
 
-5106
+Error 5106
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -854,10 +839,10 @@ The specified Account Store is already mapped to that Application. Please choose
 
 The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Accounts.
 
-5108
+Error 5108
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -865,10 +850,10 @@ The specified Directory Account Store is a read-only mirror of an externally man
 
 The specified Group Account store is a read-only mirror of an externally managed Group. It cannot be used to directly store new Accounts.
 
-5110
+Error 5110
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -876,10 +861,10 @@ The specified Group Account store is a read-only mirror of an externally managed
 
 The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
 
-5112
+Error 5112
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -887,10 +872,10 @@ The specified Directory Account Store is a read-only mirror of an externally man
 
 Specifying a Group as a defaultGroupStore is not currently supported.
 
-5114
+Error 5114
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -898,23 +883,9 @@ Specifying a Group as a defaultGroupStore is not currently supported.
 
 The specified Account Store reference is invalid.
 
-5116
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-5117
-----
-
-**Error Message**
+Error 5116
+-------------
+**Message**
 
 **User Message**
 
@@ -924,23 +895,9 @@ The specified Account Store reference is invalid.
 
 
 
-5118
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-5119
-----
-
-**Error Message**
+Error 5117
+-------------
+**Message**
 
 **User Message**
 
@@ -950,23 +907,9 @@ The specified Account Store reference is invalid.
 
 
 
-5120
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-5121
-----
-
-**Error Message**
+Error 5118
+-------------
+**Message**
 
 **User Message**
 
@@ -976,10 +919,11 @@ The specified Account Store reference is invalid.
 
 
 
-5122
-----
+Error 5119
+-------------
 
-**Error Message**
+
+**Message**
 
 **User Message**
 
@@ -989,10 +933,52 @@ The specified Account Store reference is invalid.
 
 
 
-5200
-----
+Error 5120
+-------------
 
-**Error Message**
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 5121
+-------------
+
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+Error 5122
+-------------
+
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 5200
+-------------
+
+
+**Message**
 
 **User Message**
 
@@ -1003,9 +989,10 @@ The specified Account Store reference is invalid.
 
 
 5201
-----
+-------------
 
-**Error Message**
+
+**Message**
 
 **User Message**
 
@@ -1018,20 +1005,10 @@ The specified Account Store reference is invalid.
 6XXX: Directory
 ===============
 
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-6100
+Error 6100
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1039,10 +1016,10 @@ The specified Account Store reference is invalid.
 
 This Directory does not allow creation of new Accounts or Groups.
 
-6101
+Error 6101
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1050,10 +1027,10 @@ This Directory does not allow creation of new Accounts or Groups.
 
 The Account’s Directory is not enabled for the verification email workflow.
 
-6201
+Error 6201
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1061,10 +1038,10 @@ The Account’s Directory is not enabled for the verification email workflow.
 
 This Directory cannot be converted to an external provider Directory.
 
-6202
+Error 6202
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1072,10 +1049,11 @@ This Directory cannot be converted to an external provider Directory.
 
 The Directory cannot be updated to reflect a different identity provider. Please create a new Directory instead.
 
-6203
-----
+Error 6203
+-------------
 
-**Error Message**
+
+**Message**
 
 **User Message**
 
@@ -1088,10 +1066,10 @@ The Directory cannot be updated to reflect a different identity provider. Please
 7XXX: Account
 =============
 
-7100
+Error 7100
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1104,10 +1082,10 @@ Login attempt failed because the specified password is incorrect.
 
 During a login attempt, Stormpath found an Account from the specified ``username`` or ``email``, but the password was incorrect.
 
-7101
+Error 7101
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1117,10 +1095,10 @@ Login attempt failed because the Account is disabled.
 
 During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``DISABLED``. Accounts with the ``DISABLED`` status cannot login.
 
-7102
+Error 7102
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1133,10 +1111,10 @@ Login attempt failed because the Account is not verified.
 
 During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``UNVERIFIED``. Accounts with the ``UNVERIFIED`` status cannot login.
 
-7103
+Error 7103
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1144,10 +1122,10 @@ During a login attempt Stormpath found an Account from the specified ``username`
 
 Login attempt failed because the Account is locked.
 
-7104
+Error 7104
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1155,10 +1133,10 @@ Login attempt failed because the Account is locked.
 
 Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified ``username`` or ``email``.
 
-7105
+Error 7105
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1168,36 +1146,38 @@ Login attempt failed because there is no Account in the Application’s associat
 
 
 
-7106
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-7107
-----
-
-**Error Message**
-
-**User Message**
-
-*(Same as above)*
-
-**Further Information**
-
-
-
-7200
+Error 7106
 -------------
 
-**Error Message**
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 7107
+-------------
+
+
+**Message**
+
+**User Message**
+
+*(Same as above)*
+
+**Further Information**
+
+
+
+Error 7200
+-------------
+
+**Message**
 
 **User Message**
 
@@ -1205,11 +1185,11 @@ Login attempt failed because there is no Account in the Application’s associat
 
 Stormpath was not able to complete the request to the Social Login site: this can be caused by either a bad Social Directory configuration, or the provided Account credentials are not valid.
 
-7201
+Error 7201
 -------------
 Stormpath is unable to create or update the Account because the Social Login site response did not contain the required property.
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1217,10 +1197,10 @@ Stormpath is unable to create or update the Account because the Social Login sit
 
 
 
-7202
+Error 7202
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1228,10 +1208,11 @@ Stormpath is unable to create or update the Account because the Social Login sit
 
 This property is a read-only property on a externally managed Directory Account, and consequently cannot be modified.
 
-7203
-----
+Error 7203
+-------------
 
-**Error Message**
+
+**Message**
 
 **User Message**
 
@@ -1241,10 +1222,9 @@ This property is a read-only property on a externally managed Directory Account,
 
 
 
-7301
-----
-
-**Error Message**
+Error 7301
+-------------
+**Message**
 
 **User Message**
 
@@ -1257,10 +1237,10 @@ This property is a read-only property on a externally managed Directory Account,
 9XXX: Agent
 ===========
 
-9000
+Error 9000
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1268,10 +1248,10 @@ This property is a read-only property on a externally managed Directory Account,
 
 Stormpath, while acting as a gateway/proxy to your Directory service, was not able to reach the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your Directory’s Stormpath Agent is online and successfully communicating with Stormpath.
 
-9001
+Error 9001
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1279,10 +1259,10 @@ Stormpath, while acting as a gateway/proxy to your Directory service, was not ab
 
 Stormpath, while acting as a gateway/proxy to your Directory service, was not able to reach your Directory Server. Please ensure that the Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
 
-9002
+Error 9002
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1290,10 +1270,10 @@ Stormpath, while acting as a gateway/proxy to your Directory service, was not ab
 
 Stormpath, while acting as a gateway/proxy to your Directory service, did not receive a timely response from the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your Directory’s Stormpath Agent is online and successfully communicating with Stormpath.
 
-9003
+Error 9003
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1301,10 +1281,10 @@ Stormpath, while acting as a gateway/proxy to your Directory service, did not re
 
 Stormpath, while acting as a gateway/proxy to your Directory server, did not receive a timely response from the Directory Server. Please ensure that your Directory’s Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
 
-9004
+Error 9004
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1312,10 +1292,10 @@ Stormpath, while acting as a gateway/proxy to your Directory server, did not rec
 
 Stormpath, while acting as a gateway/proxy to your Directory service, received an invalid response from the Stormpath Directory Agent. Please ensure you are running the latest stable version of the Stormpath Directory Agent for your Directory Server.
 
-9005
+Error 9005
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1323,10 +1303,10 @@ Stormpath, while acting as a gateway/proxy to your Directory service, received a
 
 Stormpath, while acting as a gateway/proxy to your Directory service, received an invalid response from your Directory Server. Please ensure that you are using a supported Directory service version and that the Stormpath Directory Agent is configured correctly to communicate with that Directory Server.
 
-9006
+Error 9006
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1337,10 +1317,10 @@ Stormpath, while acting as a gateway/proxy to your Active Directory server, enco
 100XX: OAuth Errors
 ===================
 
-10010
+Error 10010
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1353,10 +1333,10 @@ Token is no longer valid because the Account is not enabled.
 
 This error can occur when you validate a token for an Account that has been changed to have a status of ``DISABLED``.
 
-10011
+Error 10011
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1369,10 +1349,10 @@ Token is no longer valid because it has expired.
 
 Stormpath tokens have an expiration time that is configurable through the Application’s OAuth Policy. If you try authenticating with an expired token, this error will return.
 
-10012
+Error 10012
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1380,10 +1360,10 @@ Stormpath tokens have an expiration time that is configurable through the Applic
 
 Token is invalid because the issued at time (``iat``) is after the current time.
 
-10013
+Error 10013
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1395,10 +1375,10 @@ Token does not exist.
 
 This can occur if the token has been manually deleted, or if the token has expired and been removed by Stormpath.
 
-10014
+Error 10014
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1406,10 +1386,10 @@ This can occur if the token has been manually deleted, or if the token has expir
 
 Token is invalid because the issuer of the token does not match the Application validating the token.
 
-10015
+Error 10015
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1417,10 +1397,10 @@ Token is invalid because the issuer of the token does not match the Application 
 
 Token is no longer valid because the Application that issued the token is not enabled.
 
-10016
+Error 10016
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1428,10 +1408,10 @@ Token is no longer valid because the Application that issued the token is not en
 
 Token is no longer valid because the Account is not in an Account Store assigned to the Application that issued the token.
 
-10017
+Error 10017
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1442,10 +1422,10 @@ Token is invalid because verifying the signature of a JWT failed.
 101XX: SAML Errors
 ==================
 
-10100
+Error 10100
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1453,10 +1433,10 @@ Token is invalid because verifying the signature of a JWT failed.
 
 The SAML Response object is malformed or cannot be used by Stormpath. Please contact us at support@stormpath.com to help troubleshoot this problem.
 
-10101
+Error 10101
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1464,10 +1444,10 @@ The SAML Response object is malformed or cannot be used by Stormpath. Please con
 
 The SAML Response has an invalid signature and cannot be trusted. Please contact us at support@stormpath.com to help troubleshoot this problem.
 
-10102
+Error 10102
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1478,10 +1458,10 @@ Authentication failed at the SAML Identity Provider, please check the SAML Ident
 110XX: Token Errors
 ====================
 
-11001
+Error 11001
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1489,10 +1469,10 @@ Authentication failed at the SAML Identity Provider, please check the SAML Ident
 
 Token is invalid because the specified Organization nameKey does not exist in your Stormpath Tenant.
 
-11002
+Error 11002
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1500,10 +1480,10 @@ Token is invalid because the specified Organization nameKey does not exist in yo
 
 Token is invalid because the specified Organization is disabled.
 
-11003
+Error 11003
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1511,10 +1491,10 @@ Token is invalid because the specified Organization is disabled.
 
 Token is invalid because the specified Organization is not one of the Application’s assigned Account Stores.
 
-11004
+Error 11004
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1522,10 +1502,10 @@ Token is invalid because the specified Organization is not one of the Applicatio
 
 Token is invalid because a required claim value cannot be null or empty.
 
-11005
+Error 11005
 -------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1536,10 +1516,10 @@ Token is invalid because a token with the same identifier (jti) has been already
 120XX: ID Site JWT
 ==================
 
-12001
------
+Error 12001
+-----------
 
-**Error Message**
+**Message**
 
 **User Message**
 
@@ -1549,10 +1529,10 @@ Token is invalid because a token with the same identifier (jti) has been already
 
 
 
-12002
------
+Error 12002
+------------
 
-**Error Message**
+**Message**
 
 **User Message**
 
