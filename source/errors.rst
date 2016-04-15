@@ -349,7 +349,7 @@ Property value does not match a known Stormpath resource.
 
 For example, you specified an invalid ``href`` for a resource that does not exist in your Tenant.
 
-Error 2017 <<<
+Error 2017
 -------------
 
 **Message**
@@ -404,100 +404,99 @@ Error 2100
 
 **Message**
 
+Malformed query. Ensure each name/value pair has a valid name and value.
+
 **User Message**
 
 *(Same as above)*
-
-Malformed query. One or more query criteria parameters were not specified correctly.
 
 Error 2101
 -------------
 
 **Message**
 
+The specified query parameter must have a corresponding value.
+
 **User Message**
 
 *(Same as above)*
-
-The supplied query parameter must have a corresponding value.
 
 Error 2102
 -------------
 
 **Message**
 
+The specified query parameter can only have a single value.
+
 **User Message**
 
 *(Same as above)*
-
-The supplied query parameter may only have a single value and the parameter cannot be specified more than once.
 
 Error 2103
 -------------
 
 **Message**
 
+The specified query parameter value is invalid or an unexpected type.
+
 **User Message**
 
 *(Same as above)*
-
-The supplied query parameter value is invalid or an unexpected type.
 
 Error 2104
 -------------
 
 **Message**
 
+The ``orderBy`` query value contains an invalid order statement. An order statement must be a queryable property optionally followed by a ``\`` space character and order direction token (``asc`` or ``desc``).
+
 **User Message**
 
 *(Same as above)*
-
-The ``orderBy`` query parameter value contains an invalid order statement.
 
 Error 2105
 -------------
 
 **Message**
 
+The specified query value is not supported.
+
 **User Message**
 
 *(Same as above)*
-
-Unsupported Query Property: specifying a property not recognized as queryable.
 
 Error 2106
 -------------
 
 **Message**
 
+The specified orderBy value is not supported.
+
 **User Message**
 
 *(Same as above)*
-
-Unsupported Order Property: specifying a property for sort ordering that cannot be sorted.
 
 Error 2107
 -------------
 
 **Message**
 
+The specified reference does not support expansion.
+
 **User Message**
 
 *(Same as above)*
 
-Unsupported Expand Property: specifying a property for expansion when the property is not expandable.
-
-Error 108
+Error 2108
 -----------
 
 **Message**
 
+Invalid range specified: end value should be greater than start value.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 3XXX: Custom Data
 =================
@@ -507,55 +506,55 @@ Error 3000
 
 **Message**
 
+Property names cannot be null, empty or blank.
+
 **User Message**
 
 *(Same as above)*
-
-Property names cannot be null, empty or blank.
 
 Error 3001
 -------------
 
 **Message**
 
+Property name is invalid. Property names cannot exceed 255 characters.
+
 **User Message**
 
 *(Same as above)*
-
-Property name is invalid. Property names cannot exceed 255 characters.
 
 Error 3002
 -------------
 
 **Message**
 
+Property name is invalid. Property names may contain only alphanumeric characters ``0-9A-Za-z``, underscores ``_``, or dashes ``-``, but cannot start with a dash.
+
 **User Message**
 
 *(Same as above)*
-
-Property name is invalid. Property names may contain only alphanumeric characters, underscores, or dashes, but cannot start with a dash.
 
 Error 3003
 -------------
 
 **Message**
 
+Property names may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
+
 **User Message**
 
 *(Same as above)*
-
-Property names may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
 
 Error 3004
 -------------
 
 **Message**
 
+Property value exceeds maximum size. The value exceeds the maximum storage size limit of 10 MB per customData resource.
+
 **User Message**
 
 *(Same as above)*
-
-Property value exceeds maximum size. The value exceeds the maximum storage size limit of 10 MB per customData resource.
 
 400X: Tenant
 ============
@@ -565,22 +564,23 @@ Error 4001
 
 **Message**
 
+Your Stormpath Tenant owner Account cannot be deleted.
+
 **User Message**
 
-*(Same as above)*
-
-Your Stormpath Tenant owner Account cannot be deleted.
+Sorry, that Account cannot be deleted.
 
 Error 4002
 -------------
 
 **Message**
 
+Your Stormpath Tenant owner Account’s status cannot be modified.
+
 **User Message**
 
-*(Same as above)*
+Sorry, that Account's status cannot be changed.
 
-Your Stormpath Tenant owner Account’s status cannot be modified.
 
 4XXX: Organization
 ==================
@@ -590,136 +590,132 @@ Error 4520
 
 **Message**
 
+The specified Directory name is already in use by another Directory and cannot be used to auto-create a Directory for the new Organization.  Please choose a different name for the auto-created Directory.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 Error 4600
 -----------
 
 **Message**
 
+This Organization does not have a default storage location configured for newly created Accounts. To fix this problem: in the Organization's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Accounts.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
 
 Error 4601
 -----------
 
 **Message**
 
+This Organization's default Account Store for new Accounts is disabled.  New Accounts cannot be added to disabled Groups or Directories. To fix this problem: in the Organization's 'Account Stores' configuration, change the status of the default Account Store to ``ENABLED``.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
 
 Error 4602
 -----------
 
 **Message**
 
+No default Account Store has been assigned to this Organization for newly created Groups. To fix this problem: in the Organization's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Groups.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4603
 -----------
 
 **Message**
 
+This Organization's default Account Store for new Groups is disabled.  New Groups cannot be added to disabled Account Stores. To fix this problem: in the Organization's 'Account Stores' configuration, change the status of the Account Store used for storing new Groups to ``ENABLED``.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4604
 -----------
 
 **Message**
 
+The specified Account Store is already mapped to the Organization. Please choose another Account Store to map.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4605
 -----------
 
 **Message**
 
+Login attempt failed because the Organization does not have any assigned Account Stores.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4606
 -----------
 
 **Message**
 
+The specified Directory is a read-only mirror of an externally managed directory. It cannot be used to directly store new Accounts.
+
 **User Message**
 
 *(Same as above)*
 
-**Further Information**
+Error 4608
+----------
 
+**Message**
 
+The specified Group is a read-only mirror of an externally-managed Group. It cannot be used to directly store new Accounts.
+
+**User Message**
+
+*(Same as above)*
 
 Error 4610
 -----------
 
 **Message**
 
+The specified Directory is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4612
 -----------
 
 **Message**
 
+Specifying a Group as a default Group Store is not currently supported.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
 
 4614
 -----------
 
 **Message**
 
+An Organization cannot be mapped as an Account Store for another Organization.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 4700
 -----------
@@ -730,10 +726,6 @@ Error 4700
 
 *(Same as above)*
 
-**Further Information**
-
-
-
 Error 4701
 -------------
 
@@ -742,9 +734,6 @@ Error 4701
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 
 5XXX: Application
@@ -757,7 +746,7 @@ Error 5010
 
 **User Message**
 
-*(Same as above)*
+Sorry, that Directory name is not available. Please choose another.
 
 The specified Directory name is already in use by another Directory and cannot be used to auto-create a Directory for the new Application. Please choose a different Directory name for the auto-created Directory.
 
@@ -766,240 +755,220 @@ Error 5100
 
 **Message**
 
+This Application does not have a default Account Store for newly created Accounts.  To fix this problem: in the Application's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Accounts.
+
 **User Message**
 
 *(Same as above)*
-
-The Account Store is unspecified.
 
 Error 5101
 -------------
 
 **Message**
 
+This Application's default Account Store for new Accounts is disabled - new Accounts cannot be added to disabled Account Stores. To fix this problem: in the Application's 'Account Stores' configuration, change the status of the default Account Store used for storing new Accounts to ``ENABLED``.
+
 **User Message**
 
 *(Same as above)*
-
-The Account Store is disabled.
 
 Error 5102
 -------------
 
 **Message**
 
+This Application does not have a default Account Store for newly created Groups.  To fix this problem: in the Application's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Groups.
+
 **User Message**
 
 *(Same as above)*
-
-The Group Store is unspecified.
 
 Error 5103
 -------------
 
 **Message**
 
+This Application's default Account Store for new Groups is disabled - new Groups cannot be added to disabled Account Stores. To fix this problem: in the Application's 'Account Stores' configuration, change the status of the default Account Store used for storing new Groups to ``ENABLED``.
+
 **User Message**
 
 *(Same as above)*
-
-This Application’s default storage location for new Groups is disabled. New Groups cannot be added to disabled Directories.
 
 Error 5104
 -------------
 
 **Message**
 
+The specified Account Store is already mapped to that Application. Please choose another Account Store.
+
 **User Message**
 
 *(Same as above)*
-
-The specified Account Store is already mapped to that Application. Please choose another Group or Directory.
 
 Error 5105
 -------------
+
 **Message**
+
+Login attempt failed because the Application is not assigned any Account Stores.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5106
 -------------
 
 **Message**
 
+The specified Directory Account Store is a read-only mirror of an externally-managed Directory. It cannot be used to directly store new Accounts.
+
 **User Message**
 
 *(Same as above)*
-
-The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Accounts.
 
 Error 5108
 -------------
 
 **Message**
 
+The specified Group Account store is a read-only mirror of an externally-managed Group. It cannot be used to directly store new Accounts.
+
 **User Message**
 
 *(Same as above)*
-
-The specified Group Account store is a read-only mirror of an externally managed Group. It cannot be used to directly store new Accounts.
 
 Error 5110
 -------------
 
 **Message**
 
+The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
+
 **User Message**
 
 *(Same as above)*
-
-The specified Directory Account Store is a read-only mirror of an externally managed Directory. It cannot be used to directly store new Groups.
 
 Error 5112
 -------------
 
 **Message**
 
+Specifying a Group as a default Group Store is not currently supported.
+
 **User Message**
 
 *(Same as above)*
-
-Specifying a Group as a defaultGroupStore is not currently supported.
 
 Error 5114
 -------------
 
 **Message**
 
+The specified Account Store is not one of the Application's assigned Account Stores.
+
 **User Message**
 
 *(Same as above)*
-
-The specified Account Store reference is invalid.
 
 Error 5116
 -------------
+
 **Message**
+
+This Application's default Account Store for new Accounts is an Organization, but this Organization itself has not been configured with a default Account Store. For an Account to be saved to an Organization, the Organization must be assigned a default Account Store. To fix this problem: in the Organization's 'Account Stores' configuration, specify an Account Store that will be used to store new Accounts for the Organization, and ensure its status is ``ENABLED``.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5117
 -------------
+
 **Message**
+
+This Application's default Account Store for new Accounts is is an Organization, but the Organization's own default Account Store is disabled. Account Stores must be enabled to allow new Accounts to be added. To fix this problem: in the Organization's `Account stores' configuration, find the Organization's default Account Store and ensure its status is set to ``ENABLED``.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5118
 -------------
+
 **Message**
+
+This Application's default Account Store for new Groups is an Organization, but this Organization itself has not been configured with a default Group Store. For a Group to be saved to an Organization, the Organization must be assigned a default Account Store. To fix this problem: in the Organization's 'Account Stores' configuration, specify an Account Store that will be used to store new Groups for the Organization, and ensure its status is ``ENABLED``.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5119
 -------------
 
-
 **Message**
+
+This Application's default Account Store for new Groups is is an Organization, but the Organization's own default Group Store is disabled. Group Stores must be enabled to allow new Groups to be added. To fix this problem: in the Organization's `Account Stores' configuration, find the Organization's default Group Store and ensure its status is set to ``ENABLED``.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5120
 -------------
 
-
 **Message**
+
+The specified Application does not have an authorizedCallbackUri and can not be used in a SAML workflow until it is configured. Please update the Application's authorizedCallbackUris property.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5121
 -------------
 
-
 **Message**
+
+The specified callbackUri is not configured as an authorizedCallbackUri for the Application. Please check the Application's authorizedCallbackUris property for the list of valid callbackUris.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 Error 5122
 -------------
 
-
 **Message**
+
+The specified Application does not have a default authorizedCallbackUri (a non-wildcard subdomain URI) and cannot be used in a SAML workflow until it is configured. Please update the Application's authorizedCallbackUris property.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 5200
 -------------
 
-
 **Message**
+
+
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 5201
 -------------
 
-
 **Message**
+
+
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 
 6XXX: Directory
@@ -1010,58 +979,55 @@ Error 6100
 
 **Message**
 
+This externally-managed Directory does not allow creation of new Accounts or Groups.
+
 **User Message**
 
 *(Same as above)*
-
-This Directory does not allow creation of new Accounts or Groups.
 
 Error 6101
 -------------
 
 **Message**
 
+The Account's Directory does not have a verification email workflow enabled. Please enable the Directory's email verification workflow and try again.
+
 **User Message**
 
 *(Same as above)*
-
-The Account’s Directory is not enabled for the verification email workflow.
 
 Error 6201
 -------------
 
 **Message**
 
+This Directory cannot be converted to a Mirror Directory.
+
 **User Message**
 
 *(Same as above)*
-
-This Directory cannot be converted to an external provider Directory.
 
 Error 6202
 -------------
 
 **Message**
 
+The specified Directory cannot be updated to reflect a different identity provider. Please create a new Directory instead.
+
 **User Message**
 
 *(Same as above)*
-
-The Directory cannot be updated to reflect a different identity provider. Please create a new Directory instead.
 
 Error 6203
 -------------
 
-
 **Message**
+
+Stormpath was not able to complete the request to LinkedIn. This is caused by the LinkedIn configuration missing the redirectUri property in the Stormpath Directory configuration. When using an authorization code from LinkedIn, a redirectUri property must be set.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 7XXX: Account
 =============
@@ -1071,14 +1037,13 @@ Error 7100
 
 **Message**
 
+Login attempt failed because the specified password is incorrect.
+
 **User Message**
 
 *(Same as above)*
 
-Login attempt failed because the specified password is incorrect.
-
 **Further Information**
-
 
 During a login attempt, Stormpath found an Account from the specified ``username`` or ``email``, but the password was incorrect.
 
@@ -1087,11 +1052,13 @@ Error 7101
 
 **Message**
 
+Login attempt failed because the Account is disabled.
+
 **User Message**
 
 *(Same as above)*
 
-Login attempt failed because the Account is disabled.
+**Further Information**
 
 During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``DISABLED``. Accounts with the ``DISABLED`` status cannot login.
 
@@ -1100,14 +1067,13 @@ Error 7102
 
 **Message**
 
+Login attempt failed because the Account is not verified.
+
 **User Message**
 
 *(Same as above)*
 
-Login attempt failed because the Account is not verified.
-
 **Further Information**
-
 
 During a login attempt Stormpath found an Account from the specified ``username`` or ``email``, but the Account had a status of ``UNVERIFIED``. Accounts with the ``UNVERIFIED`` status cannot login.
 
@@ -1116,123 +1082,97 @@ Error 7103
 
 **Message**
 
+Login attempt failed because the Account is locked.
+
 **User Message**
 
 *(Same as above)*
-
-Login attempt failed because the Account is locked.
 
 Error 7104
 -------------
 
 **Message**
 
+Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified ``username`` or ``email``.
+
 **User Message**
 
 *(Same as above)*
-
-Login attempt failed because there is no Account in the Application’s associated Account Stores with the specified ``username`` or ``email``.
 
 Error 7105
 -------------
 
 **Message**
 
+Login attempt failed because the Account is in a Group that is disabled.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 7106
 -------------
 
-
 **Message**
+
+Login attempt failed because the Account is in a Directory that is disabled.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 7107
 -------------
 
-
 **Message**
+
+Login attempt failed because the Account is in an Organization that is disabled.
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 7200
 -------------
 
 **Message**
 
+Stormpath was not able to complete the request to the Social Login site: this can be caused by either a bad Social Directory configuration, or the provided Account credentials are not valid.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath was not able to complete the request to the Social Login site: this can be caused by either a bad Social Directory configuration, or the provided Account credentials are not valid.
 
 Error 7201
 -------------
-Stormpath is unable to create or update the Account because the Social Login site response did not contain the required property.
 
 **Message**
+
+Stormpath is unable to create or update the Account because the Social Login site response did not contain the required property.
 
 **User Message**
 
 *(Same as above)*
-
-
 
 Error 7202
 -------------
 
 **Message**
 
-**User Message**
-
-*(Same as above)*
-
 This property is a read-only property on a externally managed Directory Account, and consequently cannot be modified.
 
-Error 7203
--------------
-
-
-**Message**
-
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 Error 7301
 -------------
+
 **Message**
 
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
 
 9XXX: Agent
 ===========
@@ -1242,77 +1182,77 @@ Error 9000
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory service, was not able to reach the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your directory's Stormpath Agent is online and successfully communicating with Stormpath.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory service, was not able to reach the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your Directory’s Stormpath Agent is online and successfully communicating with Stormpath.
 
 Error 9001
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory service, was not able to reach your directory server. Please ensure that the Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory service, was not able to reach your Directory Server. Please ensure that the Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
 
 Error 9002
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory service, did not receive a timely response from the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your directory's Stormpath Agent is online and successfully communicating with Stormpath.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory service, did not receive a timely response from the Stormpath Directory Agent that communicates with your Directory Server. Please ensure that your Directory’s Stormpath Agent is online and successfully communicating with Stormpath.
 
 Error 9003
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory server, did not receive a timely response from the directory server. Please ensure that your directory's Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory server, did not receive a timely response from the Directory Server. Please ensure that your Directory’s Stormpath Agent is configured correctly and successfully communicating with your Directory Server.
 
 Error 9004
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory service, received an invalid response from the Stormpath Directory Agent. Please ensure you are running the latest stable version of the Stormpath Directory Agent for your Directory Server.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory service, received an invalid response from the Stormpath Directory Agent. Please ensure you are running the latest stable version of the Stormpath Directory Agent for your Directory Server.
 
 Error 9005
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your directory service, received an invalid response from your directory server. Please ensure that you are using a supported directory service version and that the Stormpath Directory Agent is configured correctly to communicate with that Directory Server.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Directory service, received an invalid response from your Directory Server. Please ensure that you are using a supported Directory service version and that the Stormpath Directory Agent is configured correctly to communicate with that Directory Server.
 
 Error 9006
 -------------
 
 **Message**
 
+Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the Active Directory server. Potential solutions are to ensure that your Active Directory server's DNS settings are correctly configured or to log in to the Stormpath UI Console and change your Active Directory server's Stormpath Agent configuration to 'Ignore Referral Issues'.
+
 **User Message**
 
 *(Same as above)*
-
-Stormpath, while acting as a gateway/proxy to your Active Directory server, encountered a referral error while communicating with the Active Directory server. Potential solutions are to ensure that your Active Directory server's DNS settings are correctly configured or to log in to the Stormpath UI Console and change your Active Directory server's Stormpath Agent configuration to ‘Ignore Referral Exceptions’.
 
 100XX: OAuth Errors
 ===================
@@ -1322,30 +1262,24 @@ Error 10010
 
 **Message**
 
+Token is no longer valid because the Account is not enabled.
+
 **User Message**
 
 *(Same as above)*
-
-Token is no longer valid because the Account is not enabled.
-
-**Further Information**
-
-
-This error can occur when you validate a token for an Account that has been changed to have a status of ``DISABLED``.
 
 Error 10011
 -------------
 
 **Message**
 
+Token is no longer valid because it has expired.
+
 **User Message**
 
 *(Same as above)*
 
-Token is no longer valid because it has expired.
-
 **Further Information**
-
 
 Stormpath tokens have an expiration time that is configurable through the Application’s OAuth Policy. If you try authenticating with an expired token, this error will return.
 
@@ -1354,59 +1288,55 @@ Error 10012
 
 **Message**
 
+Token is invalid because the issued at time (``iat``) is after the current time.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because the issued at time (``iat``) is after the current time.
 
 Error 10013
 -------------
 
 **Message**
 
+This can occur if the token has been manually deleted, or if the token has expired and removed by Stormpath.
+
 **User Message**
 
 *(Same as above)*
-
-Token does not exist.
-
-**Further Information**
-
-This can occur if the token has been manually deleted, or if the token has expired and been removed by Stormpath.
 
 Error 10014
 -------------
 
 **Message**
 
+Token is invalid because the issuer of the token does not match the Application validating the token.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because the issuer of the token does not match the Application validating the token.
 
 Error 10015
 -------------
 
 **Message**
 
+Token is no longer valid because the Application that issued the token is not enabled.
+
 **User Message**
 
 *(Same as above)*
-
-Token is no longer valid because the Application that issued the token is not enabled.
 
 Error 10016
 -------------
 
 **Message**
 
+Token is no longer valid because the Account is not in an Account Store assigned to the Application that issued the token.
+
 **User Message**
 
 *(Same as above)*
-
-Token is no longer valid because the Account is not in an Account Store assigned to the Application that issued the token.
 
 Error 10017
 -------------
@@ -1427,33 +1357,33 @@ Error 10100
 
 **Message**
 
+The SAML Response object is malformed or cannot be used by Stormpath. Please contact us at support@stormpath.com to help troubleshoot this problem.
+
 **User Message**
 
 *(Same as above)*
-
-The SAML Response object is malformed or cannot be used by Stormpath. Please contact us at support@stormpath.com to help troubleshoot this problem.
 
 Error 10101
 -------------
 
 **Message**
 
+The SAML Response has an invalid signature and cannot be trusted. Please contact us at support@stormpath.com to help troubleshoot this problem.
+
 **User Message**
 
 *(Same as above)*
-
-The SAML Response has an invalid signature and cannot be trusted. Please contact us at support@stormpath.com to help troubleshoot this problem.
 
 Error 10102
 -------------
 
 **Message**
 
+Authentication failed at the SAML Identity Provider, please check the SAML Identity Provider logs for more information.
+
 **User Message**
 
 *(Same as above)*
-
-Authentication failed at the SAML Identity Provider, please check the SAML Identity Provider logs for more information.
 
 110XX: Token Errors
 ====================
@@ -1463,55 +1393,55 @@ Error 11001
 
 **Message**
 
+Token is invalid because the specified Organization ``nameKey`` does not exist in your Stormpath Tenant.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because the specified Organization nameKey does not exist in your Stormpath Tenant.
 
 Error 11002
 -------------
 
 **Message**
 
+Token is invalid because the specified Organization is disabled.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because the specified Organization is disabled.
 
 Error 11003
 -------------
 
 **Message**
 
+Token is invalid because the specified Organization is not one of the Application’s assigned Account Stores.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because the specified Organization is not one of the Application’s assigned Account Stores.
 
 Error 11004
 -------------
 
 **Message**
 
+Token is invalid because the specified claim value cannot be null or empty.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because a required claim value cannot be null or empty.
 
 Error 11005
 -------------
 
 **Message**
 
+Token is invalid because a token with the same identifier (``jti``) has been already used.
+
 **User Message**
 
 *(Same as above)*
-
-Token is invalid because a token with the same identifier (jti) has been already used.
 
 120XX: ID Site JWT
 ==================
@@ -1521,23 +1451,19 @@ Error 12001
 
 **Message**
 
+The session on ID Site has timed out. This can occur if the user stays on ID Site without logging in, registering, or resetting a password.
+
 **User Message**
 
-*(Same as above)*
-
-**Further Information**
-
-
+The session on ID Site has timed out.
 
 Error 12002
 ------------
 
 **Message**
 
+The ID Site token that was submitted was not authenticated by ID Site. Stormpath can only generate an access token for ID Site tokens that include the status claim of ``AUTHENTICATED``, meaning that ID Site authenticated the Account with a valid login attempt.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
-
