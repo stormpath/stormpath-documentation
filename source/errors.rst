@@ -392,12 +392,11 @@ Error 2022
 
 **Message**
 
+The specified resource reference is invalid: the specified Account Store is not a SAML Directory and may not be used.
+
 **User Message**
 
 *(Same as above)*
-
-**Further Information**
-
 
 Error 2100
 -------------
@@ -623,7 +622,7 @@ Error 4602
 
 **Message**
 
-No default Account Store has been assigned to this Organization for newly created Groups. To fix this problem: in the Organization's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Groups.
+No default Account Store has been mapped to this Organization for newly created Groups. To fix this problem: in the Organization's 'Account Stores' configuration, specify the Account Store that will be used to store newly created Groups.
 
 **User Message**
 
@@ -722,19 +721,15 @@ Error 4700
 
 **Message**
 
-**User Message**
-
-*(Same as above)*
-
-Error 4701
--------------
-
-**Message**
+A Directory of the specified type is already mapped to this Organization. An Organization may be mapped to only one Directory of this type.
 
 **User Message**
 
 *(Same as above)*
 
+**Further Information**
+
+This can occur with various kinds of social login Directories (e.g. GitHub, Facebook).
 
 5XXX: Application
 =================
@@ -953,23 +948,11 @@ Error 5200
 
 **Message**
 
-
-
-**User Message**
-
-*(Same as above)*
-
-5201
--------------
-
-**Message**
-
-
+A Directory of the specified type is already mapped to this Application. An Application may be assigned only one Directory of this type.
 
 **User Message**
 
 *(Same as above)*
-
 
 6XXX: Directory
 ===============
@@ -1170,6 +1153,8 @@ Error 7301
 
 **Message**
 
+The email body must contain at least one of the following placeholders: ``${url}``, ``${sptoken}``, ``${sptokenNameValuePair}``.
+
 **User Message**
 
 *(Same as above)*
@@ -1332,7 +1317,7 @@ Error 10016
 
 **Message**
 
-Token is no longer valid because the Account is not in an Account Store assigned to the Application that issued the token.
+Token is no longer valid because the Account is not in an Account Store mapped to the Application that issued the token.
 
 **User Message**
 
