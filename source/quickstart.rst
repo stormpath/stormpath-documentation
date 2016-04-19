@@ -57,7 +57,7 @@
 
 .. figure:: images/quickstart/default_resources.png
     :align: center
-    :scale: 20%
+    :scale: 100%
     :alt: Default Stormpath Resources
 
     *These are the default resources that exist in your Tenant right after registration*
