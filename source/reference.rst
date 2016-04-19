@@ -2303,7 +2303,7 @@ This resource defines the contents of emails that are sent as part of the Accoun
   * - ``defaultModel``
     - Object
     - Object that includes one property ``linkBaseUrl`` which is itself a String
-    - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The linkBaseUrl is used when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in account creation and password reset workflows.
+    - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
 
 .. _ref-email-macros:
 
@@ -2360,7 +2360,7 @@ The ``htmlBody`` and ``textBody`` fields support the use of macros. For a full a
 
 .. note::
 
-  For more information about customizing email templates, please see :ref:`customizing-email-templates`.
+  If you are using Angular and routing with ``#`` in your URLs, the default ``${url}`` macro will not work here because it treats ``#`` as an HTML fragment. Instead, you will have to hardcode the URL into your email template and include the ``{sptokenNameValuePair}`` macro at the end.
 
 .. _ref-password-strength:
 

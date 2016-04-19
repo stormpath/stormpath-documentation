@@ -20,7 +20,7 @@ Contents:
    multitenancy
    idsite
    reference
-   changelog
    errors
+   changelog
 
 
