@@ -648,7 +648,7 @@ And if you want all Accounts modified on the 12th hour UTC on Feb 03, 2015, inst
 
     ?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
 
-You can simply write::
+You can write::
 
     ?modifiedAt=2015-02-03T12
 
