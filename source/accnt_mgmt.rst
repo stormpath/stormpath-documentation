@@ -977,6 +977,8 @@ The contents of the password reset and the password reset success emails are bot
 
 To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired attribute in the payload body.
 
+.. _password-change-timestamp-search:
+
 4.4.4. How to Find When An Account's Password Was Changed
 ----------------------------------------------------------
 
