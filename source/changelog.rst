@@ -31,7 +31,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-04-21
 ==========
 
-- **New:** Added ``passwordModifiedAt`` attribute to :ref:`ref-account` Resource table, as well as to list of :ref:`searchable-attributes`.
+- **New:** Added ``passwordModifiedAt`` attribute to :ref:`ref-account` Resource table, as well as to list of :ref:`searchable-attributes`. Example usage also added to :ref:`new section in Account Management chapter <password-change-timestamp-search>`.
 
 2016-04-18
 ==========
