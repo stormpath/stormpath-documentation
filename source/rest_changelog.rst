@@ -28,6 +28,12 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-04-22
+==========
+
+- **New:** Added new SAML Authentication :ref:`configuration instructions for Ping Identity <ping>`.
+- **New:** Added information about :ref:`Mapping SAML Attributes for Okta <okta-attribute-mapping>`.
+
 2016-04-21
 ==========
 
@@ -36,7 +42,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-04-18
 ==========
 
-- Added :ref:`errors` page, with list of REST Errors along with explanations.
+- **New:** Added :ref:`errors` page, with list of REST Errors along with explanations.
 
 2016-03-16
 ==========
