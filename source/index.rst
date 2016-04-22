@@ -21,6 +21,6 @@ Contents:
    idsite
    reference
    errors
-   rest_changelog
+   changelog
 
 
