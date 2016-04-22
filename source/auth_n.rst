@@ -1676,62 +1676,65 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
-.. todo::
+Step 6: Configure Your Attribute Mappings
+"""""""""""""""""""""""""""""""""""""""""
 
-  Step 6: Configure Your Attribute Mappings"
+When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-  When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+6.1. Find the Existing SAML Attributes+
 
-  6.1. Find the Existing SAML Attributes+
+If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
 
-  If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Okta sends by retrieving the new user Account that was created inside Stormpath.
+Specifically, you want that Account's ``providerData`` resource:
 
-  Specifically, you want that Account's ``providerData`` resource:
+.. code-block:: json
 
-  .. code-block:: json
+  {
+    href: "https://api.stormpath.com/v1/accounts/6Y2ViNhE5GTDBIGsTMgMD/providerData",
+    createdAt: "2016-03-09T18:16:16.116Z",
+    modifiedAt: "2016-03-25T14:49:30.098Z",
+    providerId: "saml"
+  }
 
-    {
-      href: "https://api.stormpath.com/v1/accounts/6Y2ViNhE5GTDBIGsTMgMD/providerData",
-      createdAt: "2016-03-09T18:16:16.116Z",
-      modifiedAt: "2016-03-25T14:49:30.098Z",
-      providerId: "saml"
-    }
+As you can see, by default Okta does not pass any attributes.
 
-  As you can see, by default Okta does not pass any attributes.
+6.2. (Optional) Add Any Additional Attributes You Want
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-  6.2. (Optional) Add Any Additional Attributes You Want+
+If there are attributes that you would like Okta, you can configure this. From your Okta Admin settings page:
 
-  If there are other attributes that you would like Okta to pass other attributes, you can configure this. From your Okta Admin settings page:
+#. Click on the **Applications** tab in the top navigation pane
+#. Select your Application
+#. In the "SAML Settings" section, click on **Edit**
+#. You will arrive on "General Settings", click **Next**
+#. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional attributes you would like to be passed.
 
-  #. Click on the **Applications** tab in the top navigation pane
-  #. Select your Application
-  #. In the "SAML Settings" section, click on **Edit**
-  #. You will arrive on "General Settings", click **Next**
-  #. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional...(todo)
+For example:
 
-  For example:
+* For "Name" enter ``firstName``
+* For the "Value" you would choose "user.firstName"
+* Scroll down to the bottom and click **Next**
+* On the next page click **Finish**
 
-  * For "Field name" enter ``companyName`` and check "Include in SAML assertion"
-  * For the "Value" you would choose "Company"
+You will now be take to your App's "Sign On" tab, but if you return to the "General" tab you can scroll down and see the attribute you just added in the "SAML Settings" section, under "Attribute Statements". You can add as many attributes as you wish.
 
-  You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
+6.3. Specify Your Mapping
++++++++++++++++++++++++++
 
-  6.3. Specify Your Mapping+
+#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
+#. Click on the **Directories** tab
+#. Select your Okta SAML Directory
+#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
+#. Here you will enter the Okta attribute name under "Name"
+#. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
+#. Click **Save**
 
-  #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
-  #. Click on the **Directories** tab
-  #. Select your Okta SAML Directory
-  #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-  #. Here you will enter the Okta attribute name under "Name"
-  #. (Optional) Under "Name Format" you can enter ``todo``
-  #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
+For example, you could enter:
 
-  For example, you could enter:
+* For the "Name" enter ``firstName``
+* For "Stormpath Attributes" enter ``givenName``
 
-  * For the "Name" enter ``todo``
-  * For "Stormpath Attributes" enter ``todo``
-
-  If a user now logs in, Stormpath will take the ``todo`` attribute and map it to the ``givenName`` field on the Account resource.
+If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
 
 .. _ping:
 
@@ -1745,37 +1748,50 @@ Ping
 Step 1: Set-up Ping
 """""""""""""""""""""""""
 
-1.1. Set-up Your Identity Provider
-++++++++++++++++++++++++++++++++++
+#. Log in to your PingOne account: https://admin.pingone.com/web-portal/login
+#. Click on the "Applications" tab on the top navigate pane.
+#. Click on "Add Application" > "New SAML Application"
+#. Fill in the information, the click on **Continue to Next Step**
 
-#. Choose an arbitrary app
-#. Click on the gear, then PingOne Administration
-#. Applications Tab
-#. Add Application > New SAML Application
-#. Continue to next step
-#. Download SAML Metadata
-#. SingSignOnService Location e.g. https://sso.connect.pingidentity.com/sso/idp/SSO.saml2?idpid=411765dd-3fac-474d-9cec-1bc161ee9054
-SingleLogoutService Location e.g. https://sso.connect.pingidentity.com/sso/SLO.saml2
-#. x509 Certificate must be PEM encoded, Ping does not provided that =/
-#. Entity ID = Directory Href
-#. For Verification Cert, download PEM from Stormpath, upload it to Ping
-#.
+Step 2: Gather Your Identity Provider Information
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
-1.2. Set-up Single Sign On
-++++++++++++++++++++++++++++++++++
+You will now need to gather the following pieces of information:
 
-#.
+- X.509 Signing Certificate
+- SSO Login URL
+- SSO Logout URL
 
-1.3. Create a Connected App
-++++++++++++++++++++++++++++++++++
+Click on **Download** beside SAML Metadata, this will download ``saml2-metadata-idp.xml``, which you need to open in a text editor of your choice. We will now retrieve the above information from this XML file.
 
-#.
+2.1 IdP Signing Certificate
++++++++++++++++++++++++++++
 
-1.4. Get your SSO URLs
-++++++++++++++++++++++++++++++++++
+#. Inside the ``<ds:X509Certificate>`` assertion you will find the text of the x509 certificate. Unfortunately it is not in the PEM encoded format that Stormpath requires.
+#. Copy and paste the content of this certificate into a new text file, ensuring that all of the text is fully left-justified.
+#. Add a newline at the top of the certificate and add this: ``-----BEGIN CERTIFICATE-----``
+#. Next add this to the bottom of the certificate: ``-----END CERTIFICATE-----``
+
+What you should now have is something that looks like this:
+
+.. code-block::
+
+  -----BEGIN CERTIFICATE-----
+  MIIDaDCCAlCgAwIBAgIGAVQ0xF8mMA0GCSqGSIb3DQEBCwUAMHUxCzAJBgNVBAYTAlVTMQswCQYD
+  {More certificate content here}
+  8bMh4fe2s1wR6pDkVjgEwu0DW2zBcXSg9KuT3lcWEUIq3Bct7Cdng12C0zXbgnQJAFtzHYbXAwkG
+  sh3WzqLNeYeoU5sGPWhlvNR7n2R1
+  -----END CERTIFICATE-----
 
 
-Step 2: Create Your SAML Directory in Stormpath
+2.2. The SSO Login / Logout URLs
++++++++++++++++++++++++++++++++++
+
+#. For the "SSO Login URL", find the ``SingleSignOnService Location`` assertion, which should look something like this: ``https://sso.connect.pingidentity.com/sso/idp/SSO.saml2?idpid={hash}``
+#. For the "SSO Logout URL", find the ``SingleLogoutService Location`` assertion, which should be exactly this: ``https://sso.connect.pingidentity.com/sso/SLO.saml2``
+
+
+Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now create our SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
@@ -1793,9 +1809,9 @@ You will now create our SAML Directory in Stormpath, using the values you gather
 
 #. Next, enter in a name and (optionally) a description, then set the Directory's status to "Enabled".
 
-#. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL gathered in step 1.4 above.
+#. For both the "SAML SSO Login Url" and "SAML SSO Logout Url" fields, you will enter in the URL gathered in step 2.2 above.
 
-#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you downloaded in step 1.1.
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the IdP certificate you created in step 2.1.
 
 #. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
 
@@ -1806,26 +1822,24 @@ You will now create our SAML Directory in Stormpath, using the values you gather
 
 Find and click on your new SAML Directory.
 
-On this page, you will need the follow information:
+From this page, you will need the follow information:
 
 - The Directory's "HREF" found at the very top.
 
-- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section:
+- The "Assertion Consumer Service URL" found in the "SAML Identity Provider Configuration" section
 
 We will now input these values into the Identity Provider.
 
 Step 3: Configure Your Service Provider in Your IdP
 """""""""""""""""""""""""""""""""""""""""""""""""""
 
-#. Back on your Connected App's page (found under **Administer** > **Connected Apps**), click **Edit**.
+Back on your Ping Application's page (where we previously downloaded the SAML Metadata), you will now enter in your Directory information:
 
-You will now enter in your Directory information:
+#. The "Assertion Consumer Service (ACS)" is the "Assertion Consumer Service URL" from the previous step.
 
-#. For the "Entity ID", you will need to enter in the Directory "HREF" for your SAML Directory.
+#. The "Entity ID" is the Directory "HREF" for your SAML Directory.
 
-#. The "ACS URL" is the "Assertion Consumer Service URL" from the previous step.
-
-#. Click **Save**
+#. Click **Continue to Next Step**
 
 Step 4: Configure Your Application in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -1838,11 +1852,11 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
 
-#. Next click on **Account Stores** in the navigation pane.
+#. Next click on **Account Stores** in the left-side navigation pane.
 
 #. Once you are on your Application's Account Stores page, click **Add Account Store**. This will bring up the "Map Account Store" dialog.
 
-#. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
+#. Ensure that you are in the "Directories" tab and select your Ping Identity Directory from the list.
 
 #. Click **Create Mappings**.
 
