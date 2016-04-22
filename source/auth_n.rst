@@ -1143,14 +1143,13 @@ This section will show you how to set-up Stormpath to allow your users to log in
     - :ref:`Salesforce <salesforce>`
     - :ref:`OneLogin <onelogin>`
     - :ref:`Okta <okta>`
+    - :ref:`Ping Identity <ping>`
 
 .. note::
 
     These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.
 
     Currently these instructions only cover SP-initiated SAML and not the IdP-initiated flow configuration.
-
-This guide will also show you how to set-up login against a private deployment running ADFS with SAML 2.0 support.
 
 .. todo::
 
