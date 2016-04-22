@@ -600,10 +600,10 @@ You will get back a ``204 No Content`` response back from Stormpath when the cal
 
 Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are:
 
-- Google
-- Facebook
-- Github,
-- LinkedIn
+- :ref:`Google <authn-google>`
+- :ref:`Facebook <authn-facebook>`
+- :ref:`Github <authn-github>`
+- :ref:`LinkedIn <authn-linkedin>`
 
 In general, the social login process works as follows:
 
@@ -640,6 +640,8 @@ As a developer, integrating Social Login into your application with Stormpath on
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
 3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider)
+
+.. _authn-google:
 
 5.3.1. Google
 --------------
@@ -734,6 +736,8 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
 Either way, Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your Google Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
+.. _authn-facebook:
+
 5.3.2. Facebook
 ---------------
 
@@ -798,6 +802,8 @@ Once the User Access Token is gathered, you send an HTTP POST:
   }
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your Facebook Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+
+.. _authn-github:
 
 5.3.3. Github
 --------------
@@ -866,6 +872,8 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
 
 Stormpath will use the ``accessToken`` provided to retrieve information about your GitHub Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
+.. _authn-linkedin:
+
 5.3.4 LinkedIn
 ---------------
 
@@ -910,7 +918,7 @@ Step 3: Access an Account with LinkedIn Tokens
 
 To access or create an Account in your new LinkedIn Directory, you must gather a LinkedIn **Access Token** on behalf of the user. This requires leveraging `LinkedIn's OAuth 2.0 protocol <https://developer.linkedin.com/docs/oauth2>`_ and the user’s consent for your application’s permissions.
 
-Generally, this will include embedding a link in your site that will send an authentication request to LinkedIn. Once the user has authenticated, LinkedIn will redirect the response to your application, including the Authorization Code that you will exchange for the Access Token. This is documented in detail in LinkedIn's `Authenticating with OAuth 2.0 page <https://developer.linkedin.com/docs/oauth2#hero-par_longformtext_3_longform-text-content-par_resourceparagraph_3>`_.
+Generally, this will include embedding a link in your site that will send an authentication request to LinkedIn. Once the user has authenticated, LinkedIn will redirect the response to your application, along with an Access Token. This is documented in detail in LinkedIn's `Authenticating with OAuth 2.0 page <https://developer.linkedin.com/docs/oauth2#hero-par_longformtext_3_longform-text-content-par_resourceparagraph_3>`_.
 
 .. note::
 

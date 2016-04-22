@@ -526,7 +526,7 @@ The following attributes can be filtered by and searched for:
       - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
 
     * - Account
-      - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``status``, ``createdAt``, ``modifiedAt``
+      - ``givenName``, ``middleName``, ``surname``, ``username``, ``email``, ``status``, ``createdAt``, ``modifiedAt``, ``passwordModifiedAt``
 
     * - Group
       - ``name``, ``description``, ``status``, ``createdAt``, ``modifiedAt``
@@ -648,7 +648,7 @@ And if you want all Accounts modified on the 12th hour UTC on Feb 03, 2015, inst
 
     ?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
 
-You can simply write::
+You can write::
 
     ?modifiedAt=2015-02-03T12
 
@@ -2265,7 +2265,7 @@ This resource defines the contents of emails that are sent as part of the Accoun
   :widths: 15 10 20 60
   :header-rows: 1
 
-  * - Property
+  * - Attribute
     - Type
     - Valid Value(s)
     - Description
@@ -2298,11 +2298,11 @@ This resource defines the contents of emails that are sent as part of the Accoun
   * - ``mimeType``
     - String
     - ``text/plain`` or ``text/html`` or ``multipart/alternative``
-    - A property that defines whether Stormpath will send an email as plaintext, HTML, or both.
+    - An attribute that defines whether Stormpath will send an email as plaintext, HTML, or both.
 
   * - ``defaultModel``
     - Object
-    - Object that includes one property ``linkBaseUrl`` which is itself a String
+    - Object that includes one attribute ``linkBaseUrl`` which is itself a String
     - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
 
 .. _ref-email-macros:
@@ -3766,6 +3766,11 @@ An individual Account resource may be accessed via its Resource URL:
     - Link
     - N/A
     - A link to the Account’s email verification token. This will only be set if the Account needs to be verified.
+
+  * - ``passwordModifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this Account's password was last modified.
 
   * - ``customData``
     - Link

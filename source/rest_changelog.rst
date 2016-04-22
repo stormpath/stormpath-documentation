@@ -1,8 +1,8 @@
-.. _changelog:
+.. _rest-changelog:
 
-**********
-Change Log
-**********
+********************
+REST API Change Log
+********************
 
 Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` namespace. All changes to the API and documentation are therefore arranged by date, in descending order.
 
@@ -33,6 +33,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
 - **New:** Added new SAML Authentication :ref:`configuration instructions for Ping Identity <ping>`.
 - **New:** Added information about :ref:`Mapping SAML Attributes for Okta <okta-attribute-mapping>`.
+
+2016-04-21
+==========
+
+- **New:** Added ``passwordModifiedAt`` attribute to :ref:`ref-account` Resource table, as well as to list of :ref:`searchable-attributes`. Example usage also added to :ref:`new section in Account Management chapter <password-change-timestamp-search>`.
 
 2016-04-18
 ==========
@@ -85,7 +90,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-01-20
 ==========
 
-- **New:** Added :ref:`Change Log <changelog>`.
+- **New:** Added :ref:`Change Log <rest-changelog>`.
 - **Modified:** Directory type language changed. "Social", "Mirror" and "SAML" Directories are all actually "Mirror Directories", and the language in the :ref:`Account Management <account-mgmt>` and :ref:`Authentication <authn>` chapters has been updated to reflect this.
 - **New:** Created top-level :ref:`Mirror Directories section <about-mirror-dir>` that discusses all Mirror Directories in general and how to support multiple Mirror Directories.
 - **Modified:** Updated information about :ref:`Master Directories <mirror-login>` and how they function.

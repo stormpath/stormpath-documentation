@@ -467,7 +467,7 @@ Due to the sheer number of database types and the variation between individual d
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case, it is recommended that you suppress Account Verification emails. This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
+In this case, it is recommended that you suppress Account Verification emails. This can be done by adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
 
   https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkflowEnabled=false
 
@@ -508,7 +508,7 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
   :widths: 20 20 20
   :header-rows: 1
 
-  * - Property
+  * - Attribute
     - Description
     - Valid Values
 
@@ -758,7 +758,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
   This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
-Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, simply HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
+Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory. To update Password Strength, send an HTTP POST to the appropriate ``$directoryId`` and ``/strength`` resource with the changes.
 
 This call:
 
@@ -798,12 +798,12 @@ would result in the following response:
 4.4.2. Change an Account's Password
 -----------------------------------
 
-At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during account creation. The only ways to change an Account password once it has been created are:
+At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during Account creation. The only ways to change an Account password once it has been created are:
 
 1. To allow the user to update it (without seeing the original value) after being authenticated, or
 2. To use the :ref:`password reset workflow <password-reset-flow>`.
 
-To update the password, you simply send a POST to the ``v1/accounts/$ACCOUNT_ID`` endpoint with the new password:
+To update the password, you send a POST to the ``v1/accounts/$ACCOUNT_ID`` endpoint with the new password:
 
 .. code-block:: http
 
@@ -975,7 +975,23 @@ Password Reset Email Templates
 
 The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
 
-To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
+To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired attribute in the payload body.
+
+.. _password-change-timestamp-search:
+
+4.4.4. How to Find When An Account's Password Was Changed
+----------------------------------------------------------
+
+You may want to find out when an Account's password was last changed, or return a collection of Accounts that changed their passwords within a certain timespan. This information is contained in the searchable ``passwordModifiedAt`` attribute found in every :ref:`Account resource <ref-account>`.
+
+If you wanted to find all Accounts that had modified their password before January 1, 2016 you would use :ref:`Datetime search <search-datetime>`:
+
+.. code-block:: http
+
+  GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
+  Host: api.stormpath.com
+
+This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the start of 2016.
 
 .. _verify-account-email:
 
@@ -1017,7 +1033,7 @@ This workflow is disabled by default on Directories, but you can enable it, and 
 4.5.3. Triggering the Verification Email (Creating A Token)
 -----------------------------------------------------------
 
-In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you simply create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
+In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
 
 4.5.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
