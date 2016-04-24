@@ -1583,11 +1583,7 @@ Step 1: Set-up Okta
 
 #. Enter in the information on the "General Settings" page and then click **Next**.
 
-.. note::
-
-    For now we will enter dummy data here, and then return later to input the actual values.
-
-#. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/``
+#. For now we will enter dummy data here, and then return later to input the actual values. For both the "Single sign on URL" and "Audience URI", enter in the dummy value ``http://example.com/``
 
 #. For the "Name ID format" select "EmailAddress".
 
