@@ -64,7 +64,7 @@ The reason this succeeds is because there is an existing **Account Store Mapping
 
 .. note::
 
-  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, simply add the **expand=account** parameter to the end of your authentication query:
+  Instead of just receiving an Account's ``href`` after successful authentication, it is possible to receive the full Account resource in the JSON response body. To do this, add the **expand=account** parameter to the end of your authentication query:
 
     ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/loginAttempts?expand=account``
 
@@ -2125,7 +2125,7 @@ You should ``POST`` any URIs here that you would like included as authorized cal
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates/`` endpoint.
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT by sending a POST to the Service Provider resource's ``defaultRelayStates`` endpoint.
 
 .. code-block:: http
 
