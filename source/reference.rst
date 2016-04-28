@@ -3593,7 +3593,7 @@ Create an Organization Account Store Mapping
       - Description
 
     * - POST /v1/organizationAccountStoreMappings
-      - Required: ``application``, ``accountStore``; Optional: ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
+      - Required: ``organization``, ``accountStore``; Optional: ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
       - N/A
       - Creates a new organizationAccountStoreMapping resource, thereby enabling the Accounts in the specified Store to log in to the specified Organization. By default ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are set to ``false``.
 
@@ -3610,7 +3610,7 @@ Retrieve an Organization Account Store Mapping
 
     * - GET /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
       - ``expand``
-      - Retrieves the specified Organization Account Store Mapping resource. ``accountStore` and ``organization`` can be expanded. More info :ref:`above <about-links>`.
+      - Retrieves the specified Organization Account Store Mapping resource. ``accountStore`` and ``organization`` can be expanded. More info :ref:`above <about-links>`.
 
 Update an Organization Account Store Mapping
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
