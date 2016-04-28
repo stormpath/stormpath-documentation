@@ -959,10 +959,27 @@ To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDA
 
 The step-by-step process for setting-up LDAP login is as follows:
 
+.. _authn-ldap-dir-creation:
+
 Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
+HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object, which in turn also contains a few nested configuration resources.
+
+.. note::
+
+  All of these must be passed at the same time:
+
+  .. code-block:: none
+
+    directory
+      └──provider
+          └──agent
+              └──config
+                  ├──accountConfig
+                  └──groupConfig
+
+The full Directory object, with all of the required resources, will look like this:
 
 .. code-block:: http
 
@@ -984,8 +1001,6 @@ HTTP POST a new Directory resource to the ``/directories`` endpoint. This Direct
             "agentUserDnPassword":"StormpathRulez",
             "baseDn":"dc=example,dc=com",
             "pollInterval":60,
-            "referralMode":"ignore",
-            "ignoreReferralIssues":false,
             "accountConfig":{
               "dnSuffix":"ou=employees",
               "objectClass":"person",
@@ -1010,12 +1025,12 @@ HTTP POST a new Directory resource to the ``/directories`` endpoint. This Direct
       }
     }
 
-For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
+For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section, with special attention to the :ref:`ref-ldap-agent` sub-section.
 
 Step 2: Install your LDAP Agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Installing your Agent is done in three steps.
+Once the Directory, Provider and Agent are created, installing your Agent is done in three steps.
 
 **1. Download**
 
@@ -1041,7 +1056,7 @@ Follow the instructions in the ``dapper.properties`` file to reference your acco
 
 In Windows:
 
-(cd to your agent directory, for example C:\stormpath\agent)
+(Go to your agent directory, for example ``C:\stormpath\agent``)
 
 .. code-block:: none
 
@@ -1050,7 +1065,7 @@ In Windows:
 
 In Unix:
 
-(cd to your agent directory, for example /opt/stormpath/agent)
+(Go to your agent directory, for example ``/opt/stormpath/agent``)
 
 .. code-block:: bash
 

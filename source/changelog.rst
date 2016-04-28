@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-04-28
+==========
+
+- **New:** Added information to :ref:`ref-ldap-agent` section in Reference chapter to clarify which attributes are optional, and which ones are only present for regular LDAP vs Active Directory agents. Also added :ref:`clarifying note <authn-ldap-dir-creation>` to Authentication chapter that explains that Directory, Provider, and Agent must all be passed at the same time in order to create an LDAP Directory.
+
 2016-04-22
 ==========
 

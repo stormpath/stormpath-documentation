@@ -1873,7 +1873,7 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``status``
     - String (Enum)
     - ``ENABLED`` , ``DISABLED``
-    - Enabled Directories can be used as Account Stores for Applications. Disabled Directories cannot be used for login.
+    - Enabled Directories can be used as Account Stores for logging in to Applications. Disabled Directories cannot be used for login.
 
   * - ``createdAt``
     - String
@@ -2534,6 +2534,19 @@ LDAP Agent
 
 :ref:`LDAP Directories <about-ldap-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
+The Agent itself is a complicated object, with a number of required objects both above and below it. All of these resources are required for LDAP configuration:
+
+.. code-block:: none
+
+  directory
+    └──provider
+        └──agent
+            └──config
+                ├──accountConfig
+                └──groupConfig
+
+You will need to pass all of these resources together if you want to create an LDAP Agent. For an example JSON see :ref:`the Authentication chapter <authn-ldap-dir-creation>`.
+
 An Agents collection may be accessed via its Resource URL:
 
 **Agent URL**
@@ -2563,7 +2576,7 @@ An Agents collection may be accessed via its Resource URL:
 
   * - ``status``
     - String
-    - ``online``, ``offline``, ``error``
+    - ``ONLINE``, ``OFFLINE``, ``ERROR``
     - The Agent's status.
 
   * - ``config``
@@ -2625,7 +2638,7 @@ The ``config`` object is found inside an Agent resource. It corresponds with the
 
   * - ``sslRequired``
     - Boolean
-    - .
+    - ``true``, ``false``
     - Indicates whether the Agent socket connection to the directory uses SSL encryption.
 
   * - ``agentUserDn``
@@ -2661,12 +2674,12 @@ The ``config`` object is found inside an Agent resource. It corresponds with the
   * - ``referralMode``
     - String
     - ``follow``, ``ignore``
-    - Prevents referral problems for Active Directory servers that are not configured properly for DNS.
+    - Prevents referral problems for Active Directory servers that are not configured properly for DNS. *(Active Directory only)*
 
   * - ``ignoreReferralIssues``
     - Boolean
     - N/A
-    - Referral issues can arise when querying an Active Directory server without proper DNS. Setting this as true ignores referral exceptions and allows (potentially partial) results to be returned.
+    - Referral issues can arise when querying an Active Directory server without proper DNS. Setting this as true ignores referral exceptions and allows (potentially partial) results to be returned. *(Active Directory only)*
 
 For an example JSON see :ref:`below <agent-json-ex>`.
 
@@ -2688,7 +2701,7 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
   * - ``dnSuffix``
     - String
     - N/A
-    - Optional value appended to the Base DN when accessing accounts. If left unspecified, account searches will stem from the Base DN.
+    - *(Optional)* Value appended to the Base DN when accessing accounts. If left unspecified, account searches will stem from the Base DN.
 
   * - ``objectClass``
     - String
@@ -2698,7 +2711,7 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
   * - ``objectFilter``
     - String
     - N/A
-    - LDAP query filter to use when searching for user accounts.
+    - *(Optional)* LDAP query filter to use when searching for user accounts.
 
   * - ``emailRdn``
     - String
@@ -2713,7 +2726,7 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
   * - ``middleNameRdn``
     - String
     - N/A
-    - The name of the attribute for an account's middle name.
+    - *(Optional)* The name of the attribute for an account's middle name.
 
   * - ``surnameRdn``
     - String
@@ -2728,7 +2741,7 @@ The ``accountConfig`` object is found inside a ``config`` object. It corresponds
   * - ``passwordRdn``
     - String
     - N/A
-    - The name of the attribute for an account's password.
+    - The name of the attribute for an account's password. *(Non-AD only)*
 
 For an example JSON see :ref:`below <agent-json-ex>`.
 
@@ -2745,22 +2758,22 @@ The ``groupConfig`` object is found inside a ``config`` object.
   * - ``dnSuffix``
     - String
     - N/A
-    - Optional value appended to the Base DN when accessing groups. If left unspecified, group searches will stem from the Base DN.
+    - *(Optional)* Value appended to the Base DN when accessing groups. If left unspecified, group searches will stem from the Base DN.
 
   * - ``objectClass``
     - String
     - N/A
-    - The LDAP object class to use when when loading accounts.
+    - The LDAP group object class to use when when loading accounts.
 
   * - ``objectFilter``
     - String
     - N/A
-    - LDAP query filter to use when searching for groups.
+    - *(Optional)* LDAP query filter to use when searching for groups.
 
   * - ``nameRdn``
     - String
     - N/A
-    - The name of the attribute for a group's name. For example cn. Please note: group names must be unique within a directory.
+    - The name of the attribute for a group's name. For example ``cn``. Please note: group names must be unique within a directory.
 
   * - ``descriptionRdn``
     - String
@@ -2770,11 +2783,15 @@ The ``groupConfig`` object is found inside a ``config`` object.
   * - ``membersRdn``
     - String
     - N/A
-    - The name of the attribute that lists the group members.
+    - *(Optional)* The name of the attribute that lists the group members.
 
 .. _agent-json-ex:
 
-**Agent example with embedded Config, accountConfig and groupConfig resources**
+**Agent example with embedded config, accountConfig and groupConfig resources**
+
+.. note::
+
+  We can tell that this is an Active Directory Agent because it is missing ``referralMode`` and ``ignoreReferralIssues`` from the ``config`` resource, and has the ``passwordRdn`` attribute inside ``accountConfig``. You would also know that it is an Active Directory Agent because the associated Provider resource would have its ``providerId`` attribute set to ``ad``.
 
 .. code-block:: json
 
@@ -2868,7 +2885,7 @@ An individual Group resource may be accessed via its Resource URL:
   * - ``status``
     - String (Enum)
     - ``ENABLED``, ``DISABLED``
-    - ``ENABLED`` Groups are able to authenticate against an Application. ``DISABLED`` Groups cannot authenticate against an Application.
+    - Enabled Groups can be used as Account Stores for logging in to Applications. Disabled Groups cannot be used for login.
 
   * - ``createdAt``
     - String
@@ -3277,7 +3294,7 @@ An individual Organization resource may be accessed via its Resource URL:
   * - ``status``
     - String (Enum)
     - ``ENABLED``, ``DISABLED``
-    - Indicates whether the Organization is enabled or not. Enabled Organizations can be used as Account Stores for applications; disabled Organizations cannot.
+    - Enabled Organizations can be used for logging in to Applications. Disabled Organizations cannot be used for login.
 
   * - ``description``
     - String
@@ -3750,7 +3767,7 @@ An individual Account resource may be accessed via its Resource URL:
   * - ``status``
     - String (Enum)
     - ``ENABLED``, ``DISABLED``, ``UNVERIFIED``
-    - ``ENABLED`` Accounts are able to log in to their assigned Applications, ``DISABLED`` Accounts may not log in to Applications, ``UNVERIFIED`` Accounts are disabled because they have not verified their email address.
+    - Enabled Accounts are able to log in to their assigned Applications, Disabled Accounts may not log in to Applications, Unverified Accounts are disabled because they have not verified their email address.
 
   * - ``createdAt``
     - String
