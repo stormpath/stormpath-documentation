@@ -605,15 +605,17 @@ Social authentication essentially means using the "Log in with x" button in your
 - :ref:`Github <authn-github>`
 - :ref:`LinkedIn <authn-linkedin>`
 
+*The Social Login Process*
+
 In general, the social login process works as follows:
 
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
 2. The user will be asked by the Provider to accept the permissions required by your app.
 
-3. The Provider will return the user to your application with an access token.
+3. The Provider will return the user to your application with an Access Token or Authorization Code.
 
-4. Stormpath will take this access token and use it to query the provider for:
+4. Stormpath will take this token/code and use it to query the provider for:
 
    - an email address
    - a first name
@@ -623,7 +625,7 @@ In general, the social login process works as follows:
 
     If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
 
-5. Stormpath will first search for a Directory that matches the provider of the access token. If one is not found, an error will return.
+5. Stormpath will first search for a Directory that matches the provider of the token/code. If one is not found, an error will return.
 
 6. Once the Directory is located, Stormpath will look for an Account in your application's Directories that matches this information.
 
@@ -633,13 +635,15 @@ In general, the social login process works as follows:
 
 7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
 
-As a developer, integrating Social Login into your application with Stormpath only requires three steps:
+**Configuring Social Login**
 
-1. Create a Social Directory for your Provider.
+Assuming that you already have the appropriate developer account with the Social Login provider, integrating Social Login into your application with Stormpath only requires three steps:
 
-2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
+1. Create a Directory for your Social Login provider of choice.
 
-3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider)
+2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the Account Store are considered the Application’s users and they can log in to it.
+
+3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider).
 
 .. _authn-google:
 
@@ -698,7 +702,7 @@ Step 3: Access an Account with Google Tokens
 
 To access or create an Account in your new Google Directory, you must gather a Google **Authorization Code** on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OAuth2>`_ and the user’s consent for your application’s permissions.
 
-Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code** or **Access Token**. This is documented in detail here: `Using OAuth 2.0 for Web Server Applications <https://developers.google.com/identity/protocols/OAuth2WebServer>`_.
+Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code**. This is documented in detail here: `Using OAuth 2.0 for Web Server Applications <https://developers.google.com/identity/protocols/OAuth2WebServer>`_. Note that you will also find instructions there on how to exchange that Authorization Code for an Access Token directly with Google.
 
 .. note::
 
@@ -708,7 +712,7 @@ Once the Authorization Code is gathered, you send an HTTP POST:
 
 .. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -723,14 +727,14 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
 .. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
       "providerData": {
         "providerId": "google",
-        "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
+        "accessToken": "ACCESS_TOKEN_FROM_GOOGLE"
       }
   }
 
@@ -784,13 +788,13 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 
 .. note::
 
-    It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
+    It is required that your Facebook application requests the ``email`` scope (or "Permission") from Facebook. If the Access Token does not grant ``email`` scope, you will not be able to get an Account with an Access Token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
 
 Once the User Access Token is gathered, you send an HTTP POST:
 
 .. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -855,11 +859,11 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your GitHub application requests the ``user:email`` scope from GitHub. If the access token does not grant ``user:email`` scope, you will not be able to get an Account with an access token. For more information about see `Github's documentation on OAuth scopes <https://developer.github.com/v3/oauth/#scopes>`_.
 
-Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for a access token.  Then you can send an HTTP POST to Stormpath:
+Once the Authorization Code is gathered, you need to use the `Github Access Token Endpoint <https://developer.github.com/v3/oauth/#2-github-redirects-back-to-your-site>`_ to exchange this code for an Access Token.  Then you can send an HTTP POST to Stormpath:
 
 .. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
@@ -916,30 +920,45 @@ Creating an Account Store Mapping between your new LinkedIn Directory and your S
 Step 3: Access an Account with LinkedIn Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To access or create an Account in your new LinkedIn Directory, you must gather a LinkedIn **Access Token** on behalf of the user. This requires leveraging `LinkedIn's OAuth 2.0 protocol <https://developer.linkedin.com/docs/oauth2>`_ and the user’s consent for your application’s permissions.
+To access or create an Account in your new LinkedIn Directory, you must gather a LinkedIn **Authorization Code** on behalf of the user. This requires leveraging `LinkedIn's OAuth 2.0 protocol <https://developer.linkedin.com/docs/oauth2>`_ and the user’s consent for your application’s permissions.
 
-Generally, this will include embedding a link in your site that will send an authentication request to LinkedIn. Once the user has authenticated, LinkedIn will redirect the response to your application, along with an Access Token. This is documented in detail in LinkedIn's `Authenticating with OAuth 2.0 page <https://developer.linkedin.com/docs/oauth2#hero-par_longformtext_3_longform-text-content-par_resourceparagraph_3>`_.
+Generally, this will include embedding a link in your site that will send an authentication request to LinkedIn. Once the user has authenticated, LinkedIn will redirect the response to your application, along with an Authorization Code. This is documented in detail in LinkedIn's `Authenticating with OAuth 2.0 page <https://developer.linkedin.com/docs/oauth2#hero-par_longformtext_3_longform-text-content-par_resourceparagraph_3>`_. Note that it is also possible for you to use the Authorization Code to retrieve an Access Token yourself.
 
 .. note::
 
-    It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes from LinkedIn. If the access token does not grant these scopes, you will not be able to get an Account with an access token. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
+    It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes (or "fields") from LinkedIn. If the Authorization Code does not grant these scopes, you will not be able to get an Account. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
 
-Once the Access Token is gathered, you can send an HTTP POST:
+Once the Authorization Code is gathered, you can send an HTTP POST:
 
 .. code-block:: http
 
-  POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
   Host: api.stormpath.com
   Content-Type: application/json;charset=UTF-8
 
   {
     "providerData": {
       "providerId": "linkedin",
-      "accessToken": "TOKEN_FROM_LINKEDIN"
+      "code": "YOUR_LINKEDIN_AUTH_CODE"
     }
   }
 
-Stormpath will use the ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+If you have already exchanged the code for an Access Token, you can send that instead:
+
+.. code-block:: http
+
+  POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json;charset=UTF-8
+
+  {
+    "providerData": {
+      "providerId": "linkedin",
+      "accessToken": "ACCESS_TOKEN_FROM_LINKEDIN"
+    }
+  }
+
+Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
 .. _ldap-dir-authn:
 
