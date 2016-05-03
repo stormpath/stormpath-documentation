@@ -2262,11 +2262,7 @@ The step-by-step process for setting-up LDAP login is as follows:
 Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest or php
-
-  .. only:: php
-
-    .. warning:: The PHP SDK does not support working with LDAP directories directly.  Please use REST API calls below.
+.. only:: rest
 
   HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object:
 
@@ -2339,6 +2335,17 @@ Step 1: Create an LDAP Directory
 
   .. literalinclude:: code/nodejs/authentication/create_directory_ldap.js
     :language: javascript
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
+
+    .. todo::
+
+      Add SAML directory creation .NET example
 
 .. only:: python
 
