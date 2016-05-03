@@ -1,0 +1,1 @@
+$result = $application->authenticateAccount($authenticationRequest)->account;

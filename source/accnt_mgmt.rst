@@ -279,7 +279,14 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
 
 .. only:: php
 
-  (todo)
+   .. warning::
+
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
+
+    .. todo::
+
+      Add LDAP directory creation PHP example
 
 .. only:: python
 
@@ -322,7 +329,7 @@ Social Directories can be made using the Stormpath Admin Console, or using the R
 
 .. only:: php
 
-  (todo)
+  For more information about creating them using the PHP SDK, please see :ref:`social-authn`.
 
 .. only:: python
 
@@ -370,7 +377,7 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 
 .. only:: php
 
-  (todo)
+  For more information about creating them using the PHP SDK, see :ref:`saml-configuration-rest`.
 
 .. only:: python
 
