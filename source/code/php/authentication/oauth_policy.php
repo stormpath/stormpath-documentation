@@ -1,0 +1,1 @@
+$oauthPolicy = $application->oauthPolicy;
