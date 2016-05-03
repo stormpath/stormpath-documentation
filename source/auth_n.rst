@@ -271,7 +271,7 @@ This mirror-master approach has two major benefits:
 .. _managing-login:
 
 5.1.3. Manage Who Can Log Into Your Application
-------------------------------------------------
+-----------------------------------------------
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings.
 
@@ -644,7 +644,7 @@ When using OAuth 2.0, the Access Token and Refresh Token are returned in the sam
 .. _token-authn-config:
 
 5.2.2. Using Stormpath for Token-Based Authentication
-------------------------------------------------------
+-----------------------------------------------------
 
 Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
 
@@ -1923,7 +1923,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. only:: python
 
 5.3.3. Github
---------------
+-------------
 
 Before you integrate GitHub Login with Stormpath, you must complete the following steps:
 
@@ -2083,7 +2083,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 
 5.3.4 LinkedIn
----------------
+--------------
 
 Before you integrate LinkedIn Login with Stormpath, you must complete the following steps:
 
@@ -3596,7 +3596,7 @@ Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-.. only:: rest or php
+.. only:: rest
 
 To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
@@ -3604,9 +3604,14 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. warning::
 
-    The PHP SDK does not yet support working with IdP-initiated Authentication Only at this time.
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
 
-.. only:: rest or php
+    .. todo::
+
+      Add Default Relay State PHP example
+
+.. only:: rest
 
   .. code-block:: http
 
@@ -3642,7 +3647,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 This request will return a response containing a JWT like this:
 
-.. only:: rest or php
+.. only:: rest
 
   .. code-block:: json
 
@@ -3685,7 +3690,7 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 - **organization**: Allows you to specify an Organization to check users for.
 - **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
 
-.. only:: rest or php
+.. only:: rest
 
   .. code-block:: http
 
@@ -4082,7 +4087,7 @@ The Service Provider Initiated Flow
 
 
 Step 1: Generate a JWT
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 The user agent will request to login with SAML. You will need to generate a JWT using an approved JWT library.
 
