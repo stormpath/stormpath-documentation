@@ -1838,6 +1838,10 @@ Additionally:
 - All Account resources within a Directory have a unique ``email`` and ``username``.
 - All Group resources within a Directory have a unique ``name``.
 
+.. note::
+
+  For more information about modeling your user base with Directories see the :ref:`Account Management <directory-mgmt>` chapter.
+
 An individual Directory resource may be accessed via its Resource URL:
 
 **Directory URL**
