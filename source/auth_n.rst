@@ -2385,15 +2385,10 @@ Step 1: Create an LDAP Directory
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_directory_ldap.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/create_directory_ldap.vb
-      :language: vbnet
+    The ability to create an LDAP directory is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
 
 .. only:: java
 
