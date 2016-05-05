@@ -1458,7 +1458,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/get_refresh_tokens.vb
+    .. literalinclude:: code/vbnet/authentication/get_access_tokens.vb
       :language: vbnet
 
   .. note::
@@ -1472,7 +1472,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/get_refresh_tokens_for_app.vb
+      .. literalinclude:: code/vbnet/authentication/get_access_tokens_for_app.vb
         :language: vbnet
 
 .. only:: rest
@@ -1593,21 +1593,11 @@ In general, the social login process works as follows:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+     a. If a matching Account is found, Stormpath will return the existing Account.
 
-      a. If a matching Account is found, (todo)
+     b. If a matching Account is not found, Stormpath will create one and return it.
 
-      b. If a matching Account is not found, (todo)
-
-   7. At this point, (todo)
-
-  .. only:: vbnet
-
-      a. If a matching Account is found, (todo)
-
-      b. If a matching Account is not found, (todo)
-
-   7. At this point, (todo)
+  7. The Account can now be used like any other Account in Stormpath.
 
 .. only:: java
 
