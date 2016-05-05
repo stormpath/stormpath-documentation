@@ -654,6 +654,8 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
         "comment":" // This JSON has been truncated for readability"
     }
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
+
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -666,15 +668,21 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
     .. literalinclude:: code/vbnet/authentication/oauth_policy.vb
         :language: vbnet
 
+  The ``AccessTokenTimeToLive`` and ``RefreshTokenTimeToLive`` properties represent the time to live (TTL) values as ``TimeSpan`` objects.
+
 .. only:: java
 
   .. literalinclude:: code/java/authentication/oauth_policy.java
       :language: java
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/oauth_policy.js
       :language: javascript
+
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
 
 .. only:: php
 
@@ -685,12 +693,16 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
 
   .. literalinclude:: code/php/authentication/oauth_policy_res.php
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
 .. only:: python
 
   .. literalinclude:: code/python/authentication/oauth_policy.py
       :language: python
 
-The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
+By **default**, the TTL for the Access Token is 1 hour and the Refresh Token TTL is 60 days. The maximum value for both is 180 days.
 
 If you wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, you could send the following request:
 
@@ -739,10 +751,9 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. literalinclude:: code/python/authentication/update_oauth_ttl_req.py
       :language: python
 
-
-And you would get the following response:
-
 .. only:: rest
+
+  And you would get the following response:
 
   .. code-block:: HTTP
 
@@ -757,19 +768,9 @@ And you would get the following response:
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  And you would get the following response:
 
   .. literalinclude:: code/java/authentication/update_oauth_ttl_resp.java
       :language: java
@@ -781,17 +782,53 @@ And you would get the following response:
 
 .. only:: php
 
+  And you would get the following response:
+
   .. literalinclude:: code/php/authentication/update_oauth_ttl_resp.php
     :language: php
 
 .. only:: python
 
+  And you would get the following response:
+
   .. literalinclude:: code/python/authentication/update_oauth_ttl_resp.py
       :language: python
 
-.. note::
+.. only:: rest
 
-  Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: (csharp or vbnet)
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of ``TimeSpan.Zero``.
+
+.. only:: java
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: nodejs
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: php
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: python
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
 
 .. _generate-oauth-token:
 
@@ -844,6 +881,10 @@ So you would send the following request:
     .. literalinclude:: code/vbnet/authentication/generate_oauth_token_req.vb
         :language: vbnet
 
+  .. note::
+
+      Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``SetAccountStore()`` method when you are building the request.
+
 .. only:: java
 
   .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
@@ -864,9 +905,9 @@ So you would send the following request:
   .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
       :language: python
 
-Which would result in this response:
-
 .. only:: rest
+
+  Which would result in this response:
 
   .. code-block:: http
 
@@ -881,41 +922,100 @@ Which would result in this response:
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
 
-.. only:: csharp or vbnet
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
 
-  .. only:: csharp
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
 
-    .. literalinclude:: code/csharp/authentication/generate_oauth_token_resp.cs
-        :language: csharp
+      * - Property
+        - Type
+        - Description
 
-  .. only:: vbnet
+      * - access_token
+        - String (JSON Web Token)
+        - The access token for the response.
 
-    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_resp.vb
-        :language: vbnet
+      * - refresh_token
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens.
+
+      * - token_type
+        - String
+        - The type of token returned.
+
+      * - expires_in
+        - Number
+        - The time in seconds before the token expires.
+
+      * - stormpath_access_token_href
+        - String
+        - The href location of the token in Stormpath.
+
+.. only:: (csharp or vbnet)
+
+  The ``IOauthGrantAuthenticationResult`` response contains the following properties and methods:
+
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
+
+      * - Member
+        - Type
+        - Description
+
+      * - AccessTokenString
+        - String (JSON Web Token)
+        - The access token for the response.
+
+      * - AccessTokenHref
+        - String
+        - The href location of the token in Stormpath.
+
+      * - RefreshTokenString
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens.
+
+      * - TokenType
+        - String
+        - The type of token returned.
+
+      * - ExpiresIn
+        - Long
+        - The time in seconds before the token expires.
+
+      * - GetAccessTokenAsync()
+        - ``Task<IAccessToken>``
+        - Retrieves the generated access token as an ``IAccessToken`` object.
 
 .. only:: java
+
+  Which would result in this response:
 
   .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
       :language: java
 
+  .. todo::
+    Describe the result.
+
 .. only:: nodejs
+
+  Which would result in this response:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
 
+  .. todo::
+    Describe the result.
+
 .. only:: php
+
+  Which would result in this response:
 
   .. literalinclude:: code/php/authentication/generate_oauth_token_resp.php
     :language: php
 
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
-      :language: python
-
-This is an **OAuth 2.0 Access Token Response** and includes the following:
-
-.. only:: php
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
 
   .. list-table::
       :widths: 15 10 60
@@ -953,36 +1053,15 @@ This is an **OAuth 2.0 Access Token Response** and includes the following:
         - Number
         - The time in seconds before the token expires.
 
+.. only:: python
 
-.. only:: not php
+  Which would result in this response:
 
-  .. list-table::
-      :widths: 15 10 60
-      :header-rows: 1
+  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
+      :language: python
 
-      * - Property
-        - Type
-        - Description
-
-      * - access_token
-        - String (JSON Web Token)
-        - The access token for the response.
-
-      * - refresh_token
-        - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
-
-      * - token_type
-        - String
-        - The type of token returned.
-
-      * - expires_in
-        - Number
-        - The time in seconds before the token expires.
-
-      * - stormpath_access_token_href
-        - String
-        - The href location of the token in Stormpath.
+  .. todo::
+    Describe the result.
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1058,7 +1137,9 @@ To recap, you have done the following:
     Host: https://yourapplication.com
     Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
-  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
+  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token:
+
+  .. code-block:: none
 
       https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
 
@@ -1071,10 +1152,10 @@ To recap, you have done the following:
 
 .. only:: csharp or vbnet
 
-  1. (todo)
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in string (JWT) format.
 
-  The user now attempts to access a secured resource by...?
+  The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
 
   .. only:: csharp
 
@@ -1086,17 +1167,7 @@ To recap, you have done the following:
     .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
       :language: vbnet
 
-  If the access token can be validated, Stormpath will return...?
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_resp.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_resp.vb
-      :language: vbnet
+  If the access token can be validated, Stormpath will return the access token to you as an ``IAccessToken``. If the access token is invalid or expired, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
@@ -1181,6 +1252,8 @@ The token specified in the Authorization header has been digitally signed with t
 
 .. only:: csharp or vbnet
 
+  Validating the token locally is simply a matter of using the ``WithLocalValidation`` flag when creating the request:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/validate_oauth_token_local.cs
@@ -1235,6 +1308,8 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: csharp or vbnet
 
+  Simply create and send a Refresh Grant request to Stormpath containing the Refresh Token:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/refresh_access_token_req.cs
@@ -1265,9 +1340,9 @@ In the event that the Access Token expires, the user can generate a new one usin
   .. literalinclude:: code/python/authentication/refresh_access_token_req.py
     :language: python
 
-This would be the response:
-
 .. only:: rest
+
+  This would be the response:
 
   .. code-block:: http
 
@@ -1284,32 +1359,32 @@ This would be the response:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/refresh_access_token_resp.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/refresh_access_token_resp.vb
-      :language: vbnet
+  The response type is ``IOauthGrantAuthenticationResult``, the same type as the initial grant response. The ``AccessTokenString`` property contains the new Access Token in string (JWT) form.
 
 .. only:: java
+
+  This would be the response:
 
   .. literalinclude:: code/java/authentication/refresh_access_token_resp.java
     :language: java
 
 .. only:: nodejs
 
+  This would be the response:
+
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp.js
     :language: javascript
 
 .. only:: php
 
+  This would be the response:
+
   .. literalinclude:: code/php/authentication/refresh_access_token_resp.php
     :language: php
 
 .. only:: python
+
+  This would be the response:
 
   .. literalinclude:: code/python/authentication/refresh_access_token_resp.py
     :language: python
@@ -1372,9 +1447,37 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
 
-To revoke the token, send the following request:
+.. only:: (csharp or vbnet)
+
+  First, you have to get a reference to the Access or Refresh token you'd like to delete. You can do this by retrieving all the tokens for the Account in question and examining the returned items for the token you need to revoke:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_access_tokens.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_refresh_tokens.vb
+      :language: vbnet
+
+  .. note::
+
+    You can restrict your search to only the Access or Refresh tokens related to a specific Application by specifying the Application's href:
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_access_tokens_for_app.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_refresh_tokens_for_app.vb
+        :language: vbnet
 
 .. only:: rest
+
+  To revoke the token, send the following request:
 
   .. code-block:: http
 
@@ -1385,14 +1488,11 @@ To revoke the token, send the following request:
 
 .. only:: csharp or vbnet
 
+  After you retrieve the tokens, it's a simple matter of telling Stormpath to delete them:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req.cs
-      :language: csharp
-
-    You will get back a ... (todo)
-
-    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp.cs
       :language: csharp
 
   .. only:: vbnet
@@ -1400,12 +1500,9 @@ To revoke the token, send the following request:
     .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req.vb
       :language: vbnet
 
-    You will get back a ... (todo)
-
-    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp.vb
-      :language: vbnet
-
 .. only:: java
+
+  To revoke the token, send the following request:
 
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
     :language: java
@@ -1417,6 +1514,8 @@ To revoke the token, send the following request:
 
 .. only:: nodejs
 
+  To revoke the token, send the following request:
+
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
@@ -1427,12 +1526,16 @@ To revoke the token, send the following request:
 
 .. only:: php
 
+  To revoke the token, send the following request:
+
   .. literalinclude:: code/php/authentication/delete_user_access_tokens_req.php
     :language: php
 
   If successful, ``null`` will be returned
 
 .. only:: python
+
+  To revoke the token, send the following request:
 
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
     :language: python
