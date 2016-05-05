@@ -308,7 +308,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: csharp or vbnet
 
-  You can find this mapping by... (todo)
+  You can find all the Account Store Mappings for an application by using the ``GetAccountStoreMappings()`` collection:
 
   .. only:: csharp
 
@@ -362,36 +362,31 @@ The reason why your user "Han Solo" was able to log in to your application is be
   .. literalinclude:: code/python/authentication/get_asm_req.py
       :language: python
 
-This will return the Account Store Mapping:
-
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_asm_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_asm_resp.vb
-        :language: vbnet
 
 .. only:: java
+
+  This will return the Account Store Mapping:
 
   .. literalinclude:: code/java/authentication/get_asm_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This will return the Account Store Mapping:
+
   .. literalinclude:: code/nodejs/authentication/get_asm_resp.js
       :language: javascript
 
 .. only:: php
 
-    .. literalinclude:: code/php/authentication/get_asm_resp.php
-      :language: php
+  This will return the Account Store Mapping:
+
+  .. literalinclude:: code/php/authentication/get_asm_resp.php
+    :language: php
 
 .. only:: python
+
+  This will return the Account Store Mapping:
 
   .. literalinclude:: code/python/authentication/get_asm_resp.py
       :language: python
@@ -438,6 +433,8 @@ We would now like to map a new Account Store that will have the following charac
   So by sending a ``POST`` with these contents, you are able to create a new Account Store Mapping that supersedes the old one.
 
 .. only:: csharp or vbnet
+
+  We can accomplish this by creating a new ``IApplicationAccountStoreMapping`` instance, and then adding to the Application with ``CreateAccountStoreMappingAsync()``:
 
   .. only:: csharp
 
