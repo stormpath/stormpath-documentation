@@ -2235,7 +2235,7 @@ The Directory's Password Policy is configured inside the passwordPolicy resource
   * - ``strength``
     - Link
     - N/A
-    - A link to the password strength requirements for the Directory.
+    - A link to the :ref:`Password Strength requirements <ref-password-strength>` for the Directory.
 
   * - ``resetEmailTemplates``
     - Link
