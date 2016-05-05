@@ -1839,9 +1839,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -1991,9 +1989,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -2144,11 +2140,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
- (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -2304,11 +2296,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
- (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
