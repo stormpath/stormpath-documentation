@@ -74,7 +74,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: csharp or vbnet
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``AuthenticateAccountAsync()`` method on the ``IApplication`` object.
 
   .. only:: csharp
 
@@ -86,31 +86,22 @@ After an Account resource has been created, you can authenticate it given an inp
     .. literalinclude:: code/vbnet/authentication/login_attempt_req.vb
         :language: vbnet
 
-  .. note::
+  If the authentication succeeds, you receive an ``IAuthenticationResult`` that contains a link you can traverse to retrieve the Account details. If the authentication fails, a ``ResourceException`` will be thrown.
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account.cs
-        :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account.vb
-        :language: vbnet
-
-  If authentication succeeded, you would receive back (todo)
+  To retreive Account details, call ``GetAccountAsync()``. To avoid making a separate network request, you can request the Account details during authentication by making an *expanded* request (assuming you have caching enabled):
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/login_attempt_resp.cs
-        :language: csharp
+    .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account.cs
+      :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/login_attempt_resp.vb
-        :language: vbnet
+    .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account.vb
+      :language: vbnet
+
+  .. note::
+    It's also possible to specify a specific Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``SetAccountStore()`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
 
 .. only:: java
 
