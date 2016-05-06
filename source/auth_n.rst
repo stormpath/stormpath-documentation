@@ -99,7 +99,7 @@ How Login Works with Master Directories
 
 If you require a number of Mirror Directories, then we recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
 
-If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store an ``href`` link to the Account in the Mirror Directory, for example:
+If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The Custom Data resource for that master Account should then be used to store an ``href`` link to the Account in the Mirror Directory, for example:
 
 .. code-block:: json
 
@@ -225,7 +225,7 @@ Sending ``"isDefaultAccountStore": true`` and/or ``"isDefaultAccountStore": true
   :local:
   :depth: 2
 
-In this section, we will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Token.
+In this section, we will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Tokens.
 
 5.2.1. Introduction to Token-Based Authentication
 -------------------------------------------------
@@ -483,7 +483,7 @@ If the access token can be validated, Stormpath will return a 302 to the Access 
   HTTP/1.1 302 Location Found
   Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
 
-With the confirmation that the token is valid, you can now allow the user access to the secured resource that they requested.
+With the confirmation that the token is valid, you can now allow the user to access the secured resource that they requested.
 
 Validating the Token Locally
 """"""""""""""""""""""""""""
@@ -526,7 +526,9 @@ This would be the response:
     "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCn2p4nrr"
   }
 
-Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
+Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time.
+
+This means that once the Refresh Token expires, the user must authenticate again to get new Access and Refresh Tokens.
 
 
 Revoking Access and Refresh Tokens
@@ -625,7 +627,7 @@ In general, the social login process works as follows:
 
     If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
 
-5. Stormpath will first search for a Directory that matches the provider of the token/code. If one is not found, an error will return.
+5. Stormpath will search for a Directory that matches the provider of the token/code. If one is not found, an error will be returned.
 
 6. Once the Directory is located, Stormpath will look for an Account in your application's Directories that matches this information.
 
