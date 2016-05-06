@@ -4402,36 +4402,34 @@ At this point your user is authenticated and able to use your app.
     .. literalinclude:: code/python/authentication/create_apikey_req.py
         :language: python
 
-  You will then get back the newly-created API Key:
-
   .. only:: csharp or vbnet
 
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/create_apikey_resp.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/create_apikey_resp.vb
-          :language: vbnet
+    The returned ``IApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
 
   .. only:: java
+
+    You will then get back the newly-created API Key:
 
     .. literalinclude:: code/java/authentication/create_apikey_resp.java
         :language: java
 
   .. only:: nodejs
 
+    You will then get back the newly-created API Key:
+
     .. literalinclude:: code/nodejs/authentication/create_apikey_resp.js
         :language: javascript
 
   .. only:: php
 
+    You will then get back the newly-created API Key:
+
     .. literalinclude:: code/php/authentication/create_apikey_resp.php
       :language: php
 
   .. only:: python
+
+    You will then get back the newly-created API Key:
 
     .. literalinclude:: code/python/authentication/create_apikey_resp.py
         :language: python
@@ -4587,7 +4585,7 @@ At this point your user is authenticated and able to use your app.
 
   Stormpath requires that the developer send the Access Token in the Authorization header of the request.
 
-  Again, the Stormtrooper Equipment API example. We will require that a developer exchange his API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
+  Again, the Stormtrooper Equipment API example. We will require that a developer exchange their API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
 
   The developer request would look something like this:
 
@@ -4601,15 +4599,21 @@ At this point your user is authenticated and able to use your app.
 
   .. only:: csharp or vbnet
 
-    .. only:: csharp
+    .. warning::
 
-      .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
-          :language: csharp
+      This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #173 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/173>`_ on Github.
 
-    .. only:: vbnet
+    .. todo::
 
-      .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
-          :language: vbnet
+      .. only:: csharp
+
+        .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
+            :language: csharp
+
+      .. only:: vbnet
+
+        .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
+            :language: vbnet
 
   .. only:: java
 
