@@ -31,7 +31,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-04-29
 ==========
 
-- **Fixed:** Updated :ref:``Social Login information for LinkedIn <authn-linkedin>` to reflect the fact that Stormpath can handle the exchange of an Authorization Code for an Access Token.
+- **Fixed:** Updated :ref:`Social Login information for LinkedIn <authn-linkedin>` to reflect the fact that Stormpath can handle the exchange of an Authorization Code for an Access Token.
 
 2016-04-28
 ==========
