@@ -74,7 +74,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: csharp or vbnet
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``AuthenticateAccountAsync()`` method on the ``IApplication`` object.
 
   .. only:: csharp
 
@@ -86,31 +86,22 @@ After an Account resource has been created, you can authenticate it given an inp
     .. literalinclude:: code/vbnet/authentication/login_attempt_req.vb
         :language: vbnet
 
-  .. note::
+  If the authentication succeeds, you receive an ``IAuthenticationResult`` that contains a link you can traverse to retrieve the Account details. If the authentication fails, a ``ResourceException`` will be thrown.
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account.cs
-        :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account.vb
-        :language: vbnet
-
-  If authentication succeeded, you would receive back (todo)
+  To retreive Account details, call ``GetAccountAsync()``. To avoid making a separate network request, you can request the Account details during authentication by making an *expanded* request (assuming you have caching enabled):
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/login_attempt_resp.cs
-        :language: csharp
+    .. literalinclude:: code/csharp/authentication/login_attempt_req_expand_account.cs
+      :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/login_attempt_resp.vb
-        :language: vbnet
+    .. literalinclude:: code/vbnet/authentication/login_attempt_req_expand_account.vb
+      :language: vbnet
+
+  .. note::
+    It's also possible to specify a specific Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``SetAccountStore()`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
 
 .. only:: java
 
@@ -317,7 +308,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: csharp or vbnet
 
-  You can find this mapping by... (todo)
+  You can find all the Account Store Mappings for an application by using the ``GetAccountStoreMappings()`` collection:
 
   .. only:: csharp
 
@@ -371,36 +362,31 @@ The reason why your user "Han Solo" was able to log in to your application is be
   .. literalinclude:: code/python/authentication/get_asm_req.py
       :language: python
 
-This will return the Account Store Mapping:
-
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_asm_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_asm_resp.vb
-        :language: vbnet
 
 .. only:: java
+
+  This will return the Account Store Mapping:
 
   .. literalinclude:: code/java/authentication/get_asm_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This will return the Account Store Mapping:
+
   .. literalinclude:: code/nodejs/authentication/get_asm_resp.js
       :language: javascript
 
 .. only:: php
 
-    .. literalinclude:: code/php/authentication/get_asm_resp.php
-      :language: php
+  This will return the Account Store Mapping:
+
+  .. literalinclude:: code/php/authentication/get_asm_resp.php
+    :language: php
 
 .. only:: python
+
+  This will return the Account Store Mapping:
 
   .. literalinclude:: code/python/authentication/get_asm_resp.py
       :language: python
@@ -447,6 +433,8 @@ We would now like to map a new Account Store that will have the following charac
   So by sending a ``POST`` with these contents, you are able to create a new Account Store Mapping that supersedes the old one.
 
 .. only:: csharp or vbnet
+
+  We can accomplish this by creating a new ``IApplicationAccountStoreMapping`` instance, and then adding to the Application with ``CreateAccountStoreMappingAsync()``:
 
   .. only:: csharp
 
@@ -666,6 +654,8 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
         "comment":" // This JSON has been truncated for readability"
     }
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
+
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -678,15 +668,21 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
     .. literalinclude:: code/vbnet/authentication/oauth_policy.vb
         :language: vbnet
 
+  The ``AccessTokenTimeToLive`` and ``RefreshTokenTimeToLive`` properties represent the time to live (TTL) values as ``TimeSpan`` objects.
+
 .. only:: java
 
   .. literalinclude:: code/java/authentication/oauth_policy.java
       :language: java
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/oauth_policy.js
       :language: javascript
+
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
 
 .. only:: php
 
@@ -697,12 +693,16 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
 
   .. literalinclude:: code/php/authentication/oauth_policy_res.php
 
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
 .. only:: python
 
   .. literalinclude:: code/python/authentication/oauth_policy.py
       :language: python
 
-The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+
+By **default**, the TTL for the Access Token is 1 hour and the Refresh Token TTL is 60 days. The maximum value for both is 180 days.
 
 If you wanted to change the TTL for the Access Token to 30 minutes and the Refresh Token to 7 days, you could send the following request:
 
@@ -751,10 +751,9 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. literalinclude:: code/python/authentication/update_oauth_ttl_req.py
       :language: python
 
-
-And you would get the following response:
-
 .. only:: rest
+
+  And you would get the following response:
 
   .. code-block:: HTTP
 
@@ -769,19 +768,9 @@ And you would get the following response:
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/update_oauth_ttl_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/update_oauth_ttl_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  And you would get the following response:
 
   .. literalinclude:: code/java/authentication/update_oauth_ttl_resp.java
       :language: java
@@ -793,17 +782,53 @@ And you would get the following response:
 
 .. only:: php
 
+  And you would get the following response:
+
   .. literalinclude:: code/php/authentication/update_oauth_ttl_resp.php
     :language: php
 
 .. only:: python
 
+  And you would get the following response:
+
   .. literalinclude:: code/python/authentication/update_oauth_ttl_resp.py
       :language: python
 
-.. note::
+.. only:: rest
 
-  Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: (csharp or vbnet)
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of ``TimeSpan.Zero``.
+
+.. only:: java
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: nodejs
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: php
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+.. only:: python
+
+  .. note::
+
+    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
 
 .. _generate-oauth-token:
 
@@ -856,6 +881,10 @@ So you would send the following request:
     .. literalinclude:: code/vbnet/authentication/generate_oauth_token_req.vb
         :language: vbnet
 
+  .. note::
+
+      Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``SetAccountStore()`` method when you are building the request.
+
 .. only:: java
 
   .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
@@ -876,9 +905,9 @@ So you would send the following request:
   .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
       :language: python
 
-Which would result in this response:
-
 .. only:: rest
+
+  Which would result in this response:
 
   .. code-block:: http
 
@@ -893,41 +922,100 @@ Which would result in this response:
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
 
-.. only:: csharp or vbnet
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
 
-  .. only:: csharp
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
 
-    .. literalinclude:: code/csharp/authentication/generate_oauth_token_resp.cs
-        :language: csharp
+      * - Property
+        - Type
+        - Description
 
-  .. only:: vbnet
+      * - access_token
+        - String (JSON Web Token)
+        - The access token for the response.
 
-    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_resp.vb
-        :language: vbnet
+      * - refresh_token
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens.
+
+      * - token_type
+        - String
+        - The type of token returned.
+
+      * - expires_in
+        - Number
+        - The time in seconds before the token expires.
+
+      * - stormpath_access_token_href
+        - String
+        - The href location of the token in Stormpath.
+
+.. only:: (csharp or vbnet)
+
+  The ``IOauthGrantAuthenticationResult`` response contains the following properties and methods:
+
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
+
+      * - Member
+        - Type
+        - Description
+
+      * - AccessTokenString
+        - String (JSON Web Token)
+        - The access token for the response.
+
+      * - AccessTokenHref
+        - String
+        - The href location of the token in Stormpath.
+
+      * - RefreshTokenString
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens.
+
+      * - TokenType
+        - String
+        - The type of token returned.
+
+      * - ExpiresIn
+        - Long
+        - The time in seconds before the token expires.
+
+      * - GetAccessTokenAsync()
+        - ``Task<IAccessToken>``
+        - Retrieves the generated access token as an ``IAccessToken`` object.
 
 .. only:: java
+
+  Which would result in this response:
 
   .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
       :language: java
 
+  .. todo::
+    Describe the result.
+
 .. only:: nodejs
+
+  Which would result in this response:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
 
+  .. todo::
+    Describe the result.
+
 .. only:: php
+
+  Which would result in this response:
 
   .. literalinclude:: code/php/authentication/generate_oauth_token_resp.php
     :language: php
 
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
-      :language: python
-
-This is an **OAuth 2.0 Access Token Response** and includes the following:
-
-.. only:: php
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
 
   .. list-table::
       :widths: 15 10 60
@@ -965,36 +1053,15 @@ This is an **OAuth 2.0 Access Token Response** and includes the following:
         - Number
         - The time in seconds before the token expires.
 
+.. only:: python
 
-.. only:: not php
+  Which would result in this response:
 
-  .. list-table::
-      :widths: 15 10 60
-      :header-rows: 1
+  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
+      :language: python
 
-      * - Property
-        - Type
-        - Description
-
-      * - access_token
-        - String (JSON Web Token)
-        - The access token for the response.
-
-      * - refresh_token
-        - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
-
-      * - token_type
-        - String
-        - The type of token returned.
-
-      * - expires_in
-        - Number
-        - The time in seconds before the token expires.
-
-      * - stormpath_access_token_href
-        - String
-        - The href location of the token in Stormpath.
+  .. todo::
+    Describe the result.
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1070,7 +1137,9 @@ To recap, you have done the following:
     Host: https://yourapplication.com
     Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
-  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token::
+  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token:
+
+  .. code-block:: none
 
       https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
 
@@ -1083,10 +1152,10 @@ To recap, you have done the following:
 
 .. only:: csharp or vbnet
 
-  1. (todo)
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
+  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in string (JWT) format.
 
-  The user now attempts to access a secured resource by...?
+  The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
 
   .. only:: csharp
 
@@ -1098,17 +1167,7 @@ To recap, you have done the following:
     .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
       :language: vbnet
 
-  If the access token can be validated, Stormpath will return...?
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_resp.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_resp.vb
-      :language: vbnet
+  If the access token can be validated, Stormpath will return the access token to you as an ``IAccessToken``. If the access token is invalid or expired, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
@@ -1193,6 +1252,8 @@ The token specified in the Authorization header has been digitally signed with t
 
 .. only:: csharp or vbnet
 
+  Validating the token locally is simply a matter of using the ``WithLocalValidation`` flag when creating the request:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/validate_oauth_token_local.cs
@@ -1247,6 +1308,8 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: csharp or vbnet
 
+  Simply create and send a Refresh Grant request to Stormpath containing the Refresh Token:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/refresh_access_token_req.cs
@@ -1277,9 +1340,9 @@ In the event that the Access Token expires, the user can generate a new one usin
   .. literalinclude:: code/python/authentication/refresh_access_token_req.py
     :language: python
 
-This would be the response:
-
 .. only:: rest
+
+  This would be the response:
 
   .. code-block:: http
 
@@ -1296,32 +1359,32 @@ This would be the response:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/refresh_access_token_resp.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/refresh_access_token_resp.vb
-      :language: vbnet
+  The response type is ``IOauthGrantAuthenticationResult``, the same type as the initial grant response. The ``AccessTokenString`` property contains the new Access Token in string (JWT) form.
 
 .. only:: java
+
+  This would be the response:
 
   .. literalinclude:: code/java/authentication/refresh_access_token_resp.java
     :language: java
 
 .. only:: nodejs
 
+  This would be the response:
+
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp.js
     :language: javascript
 
 .. only:: php
 
+  This would be the response:
+
   .. literalinclude:: code/php/authentication/refresh_access_token_resp.php
     :language: php
 
 .. only:: python
+
+  This would be the response:
 
   .. literalinclude:: code/python/authentication/refresh_access_token_resp.py
     :language: python
@@ -1384,9 +1447,37 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
 
-To revoke the token, send the following request:
+.. only:: (csharp or vbnet)
+
+  First, you have to get a reference to the Access or Refresh token you'd like to delete. You can do this by retrieving all the tokens for the Account in question and examining the returned items for the token you need to revoke:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/get_access_tokens.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/get_access_tokens.vb
+      :language: vbnet
+
+  .. note::
+
+    You can restrict your search to only the Access or Refresh tokens related to a specific Application by specifying the Application's href:
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_access_tokens_for_app.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_access_tokens_for_app.vb
+        :language: vbnet
 
 .. only:: rest
+
+  To revoke the token, send the following request:
 
   .. code-block:: http
 
@@ -1397,14 +1488,11 @@ To revoke the token, send the following request:
 
 .. only:: csharp or vbnet
 
+  After you retrieve the tokens, it's a simple matter of telling Stormpath to delete them:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req.cs
-      :language: csharp
-
-    You will get back a ... (todo)
-
-    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_resp.cs
       :language: csharp
 
   .. only:: vbnet
@@ -1412,12 +1500,9 @@ To revoke the token, send the following request:
     .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req.vb
       :language: vbnet
 
-    You will get back a ... (todo)
-
-    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_resp.vb
-      :language: vbnet
-
 .. only:: java
+
+  To revoke the token, send the following request:
 
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
     :language: java
@@ -1429,6 +1514,8 @@ To revoke the token, send the following request:
 
 .. only:: nodejs
 
+  To revoke the token, send the following request:
+
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
@@ -1439,12 +1526,16 @@ To revoke the token, send the following request:
 
 .. only:: php
 
+  To revoke the token, send the following request:
+
   .. literalinclude:: code/php/authentication/delete_user_access_tokens_req.php
     :language: php
 
   If successful, ``null`` will be returned
 
 .. only:: python
+
+  To revoke the token, send the following request:
 
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
     :language: python
@@ -1502,21 +1593,11 @@ In general, the social login process works as follows:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+     a. If a matching Account is found, Stormpath will return the existing Account.
 
-      a. If a matching Account is found, (todo)
+     b. If a matching Account is not found, Stormpath will create one and return it.
 
-      b. If a matching Account is not found, (todo)
-
-   7. At this point, (todo)
-
-  .. only:: vbnet
-
-      a. If a matching Account is found, (todo)
-
-      b. If a matching Account is not found, (todo)
-
-   7. At this point, (todo)
+  7. The Account can now be used like any other Account in Stormpath.
 
 .. only:: java
 
@@ -1758,9 +1839,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -1910,9 +1989,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -2063,11 +2140,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
- (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -2223,11 +2296,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: csharp or vbnet
 
- (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
 .. only:: java
 
@@ -2316,15 +2385,10 @@ Step 1: Create an LDAP Directory
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_directory_ldap.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/create_directory_ldap.vb
-      :language: vbnet
+    The ability to create an LDAP directory is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
 
 .. only:: java
 
@@ -2678,15 +2742,22 @@ Specifically, you want that Account's Provider Data:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata.cs
-        :language: csharp
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -2899,15 +2970,22 @@ Specifically, you want that Account's ``providerData`` resource:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata.cs
-        :language: csharp
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3117,15 +3195,22 @@ Specifically, you want that Account's ``providerData`` resource:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata.cs
-        :language: csharp
+  The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3241,15 +3326,22 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_directory_saml.cs
-        :language: csharp
+  The ability to create SAML Directories is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_saml.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_directory_saml.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_directory_saml.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3294,15 +3386,22 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_req.cs
-        :language: csharp
+  The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_directory_provider_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_directory_provider_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3324,9 +3423,9 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/python/authentication/get_directory_provider_req.py
       :language: python
 
-This will return the Provider:
-
 .. only:: rest
+
+  This will return the Provider:
 
   .. code-block:: json
     :emphasize-lines: 13,14
@@ -3348,34 +3447,30 @@ This will return the Provider:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  This will return the Provider:
 
   .. literalinclude:: code/java/authentication/get_directory_provider_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This will return the Provider:
+
   .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp.js
       :language: javascript
 
 .. only:: php
 
+  This will return the Provider:
+
   .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
 .. only:: python
+
+  This will return the Provider:
 
   .. literalinclude:: code/python/authentication/get_directory_provider_resp.py
       :language: python
@@ -3396,15 +3491,22 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req.cs
-        :language: csharp
+    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3510,15 +3612,22 @@ You should create any URIs here that you would like included as authorized callb
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_callback_uris.cs
-        :language: csharp
+    The ability to update the authorized callbackURIs is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #172 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/172>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_callback_uris.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_callback_uris.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_callback_uris.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3595,10 +3704,14 @@ You should create any URIs here that you would like included as authorized callb
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
 .. only:: rest
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
 
 .. only:: php
 
@@ -3611,24 +3724,24 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
       Add Default Relay State PHP example
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_req.cs
-        :language: csharp
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_default_relay_state_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3645,9 +3758,10 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-This request will return a response containing a JWT like this:
 
 .. only:: rest
+
+  This request will return a response containing a JWT like this:
 
   .. code-block:: json
 
@@ -3655,29 +3769,23 @@ This request will return a response containing a JWT like this:
       "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  This request will return a response containing a JWT like this:
 
   .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This request will return a response containing a JWT like this:
+
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
 
 .. only:: python
+
+  This request will return a response containing a JWT like this:
 
   .. literalinclude:: code/python/authentication/get_default_relay_state_resp.py
       :language: python
@@ -3689,6 +3797,8 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 - **callbackUri**: Specifies the callBackUri to direct users to. Useful if there are multiple callbackUris specified in your Application.
 - **organization**: Allows you to specify an Organization to check users for.
 - **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
+
+A request including these optional properties looks like this:
 
 .. only:: rest
 
@@ -3707,15 +3817,22 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras.cs
-        :language: csharp
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3785,64 +3902,74 @@ The rules have three different components:
       ]
     }
 
+    The rule expressed here is as follows:
+
+    - A SAML Assertion with the name ``uid`` AND
+    - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+    - maps to the Account Attribute ``username``.
+
+    .. note::
+
+      It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/example_saml_rule.cs
-        :language: csharp
+    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/example_saml_rule.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/example_saml_rule.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/example_saml_rule.vb
+          :language: vbnet
+
+    .. todo:
+
+      The rule expressed here is as follows:
+
+      (todo)
 
 .. only:: java
 
   .. literalinclude:: code/java/authentication/example_saml_rule.java
       :language: java
 
+  .. todo:
+
+    The rule expressed here is as follows:
+
+    (todo)
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
+
+  .. todo:
+
+    The rule expressed here is as follows:
+
+    (todo)
 
 .. only:: python
 
   .. literalinclude:: code/python/authentication/example_saml_rule.py
       :language: python
 
-The rule expressed here is as follows:
+  .. todo:
 
-.. only:: rest or php
+    The rule expressed here is as follows:
 
-  - A SAML Assertion with the name ``uid`` AND
-  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
-  - maps to the Account Attribute ``username``.
+    (todo)
 
-  .. note::
-
-    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
-
-.. only:: csharp or vbnet
-
-  (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
-
-.. only:: java
-
-  (todo)
-
-.. only:: nodejs
-
-  (todo)
-
-.. only:: python
-
-  (todo)
 
 In order to create the mapping rules, you send the following request:
 
@@ -3879,15 +4006,22 @@ In order to create the mapping rules, you send the following request:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_mapping_rule.cs
-        :language: csharp
+    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_mapping_rule.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_mapping_rule.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_mapping_rule.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -4268,36 +4402,34 @@ At this point your user is authenticated and able to use your app.
     .. literalinclude:: code/python/authentication/create_apikey_req.py
         :language: python
 
-  You will then get back the newly-created API Key:
-
   .. only:: csharp or vbnet
 
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/create_apikey_resp.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/create_apikey_resp.vb
-          :language: vbnet
+    The returned ``IApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
 
   .. only:: java
+
+    You will then get back the newly-created API Key:
 
     .. literalinclude:: code/java/authentication/create_apikey_resp.java
         :language: java
 
   .. only:: nodejs
 
+    You will then get back the newly-created API Key:
+
     .. literalinclude:: code/nodejs/authentication/create_apikey_resp.js
         :language: javascript
 
   .. only:: php
 
+    You will then get back the newly-created API Key:
+
     .. literalinclude:: code/php/authentication/create_apikey_resp.php
       :language: php
 
   .. only:: python
+
+    You will then get back the newly-created API Key:
 
     .. literalinclude:: code/python/authentication/create_apikey_resp.py
         :language: python
@@ -4453,7 +4585,7 @@ At this point your user is authenticated and able to use your app.
 
   Stormpath requires that the developer send the Access Token in the Authorization header of the request.
 
-  Again, the Stormtrooper Equipment API example. We will require that a developer exchange his API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
+  Again, the Stormtrooper Equipment API example. We will require that a developer exchange their API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
 
   The developer request would look something like this:
 
@@ -4467,15 +4599,21 @@ At this point your user is authenticated and able to use your app.
 
   .. only:: csharp or vbnet
 
-    .. only:: csharp
+    .. warning::
 
-      .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
-          :language: csharp
+      This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #173 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/173>`_ on Github.
 
-    .. only:: vbnet
+    .. todo::
 
-      .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
-          :language: vbnet
+      .. only:: csharp
+
+        .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
+            :language: csharp
+
+      .. only:: vbnet
+
+        .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
+            :language: vbnet
 
   .. only:: java
 
