@@ -2430,7 +2430,7 @@ The Password Strength Policy for a Directory can be modified through the Adminis
 
   * - ``preventReuse``
     - Number
-    - Default is 0 (disabled)
+    - Default ``0`` (disabled), max ``25``.
     - Restricts password reuse if the password was used within the specified number of entries in the password history. So if ``preventReuse`` is set to ``10``, then a password will be rejected if it falls within the last 10 entries of the user's password history.
 
 **Password Strength Example**

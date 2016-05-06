@@ -996,7 +996,7 @@ This would then return all Accounts in the specified Directory that had their pa
 4.4.5. How to Restrict Password Reuse
 -------------------------------------
 
-Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength object:
+Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength object, sending any value up to ``25``:
 
 .. code-block:: http
 
