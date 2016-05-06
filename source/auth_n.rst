@@ -2742,15 +2742,22 @@ Specifically, you want that Account's Provider Data:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata.cs
-        :language: csharp
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_salesforce_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_salesforce_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -2963,15 +2970,22 @@ Specifically, you want that Account's ``providerData`` resource:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata.cs
-        :language: csharp
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_onelogin_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_onelogin_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3181,15 +3195,22 @@ Specifically, you want that Account's ``providerData`` resource:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata.cs
-        :language: csharp
+  The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/saml_okta_account_providerdata.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/saml_okta_account_providerdata.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3305,15 +3326,22 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_directory_saml.cs
-        :language: csharp
+  The ability to create SAML Directories is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_directory_saml.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_directory_saml.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_directory_saml.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3358,15 +3386,22 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+.. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_req.cs
-        :language: csharp
+  The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+  For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_directory_provider_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_directory_provider_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3388,9 +3423,9 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/python/authentication/get_directory_provider_req.py
       :language: python
 
-This will return the Provider:
-
 .. only:: rest
+
+  This will return the Provider:
 
   .. code-block:: json
     :emphasize-lines: 13,14
@@ -3412,34 +3447,30 @@ This will return the Provider:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_directory_provider_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_directory_provider_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  This will return the Provider:
 
   .. literalinclude:: code/java/authentication/get_directory_provider_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This will return the Provider:
+
   .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp.js
       :language: javascript
 
 .. only:: php
 
+  This will return the Provider:
+
   .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
 .. only:: python
+
+  This will return the Provider:
 
   .. literalinclude:: code/python/authentication/get_directory_provider_resp.py
       :language: python
@@ -3460,15 +3491,22 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req.cs
-        :language: csharp
+    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_serviceprovider_metadata_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_serviceprovider_metadata_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3574,15 +3612,22 @@ You should create any URIs here that you would like included as authorized callb
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_callback_uris.cs
-        :language: csharp
+    The ability to update the authorized callbackURIs is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #172 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/172>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_callback_uris.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_callback_uris.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_callback_uris.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3659,10 +3704,14 @@ You should create any URIs here that you would like included as authorized callb
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
 .. only:: rest
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
 
 .. only:: php
 
@@ -3675,24 +3724,24 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
       Add Default Relay State PHP example
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_req.cs
-        :language: csharp
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_default_relay_state_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_default_relay_state_req.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3709,9 +3758,10 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-This request will return a response containing a JWT like this:
 
 .. only:: rest
+
+  This request will return a response containing a JWT like this:
 
   .. code-block:: json
 
@@ -3719,29 +3769,23 @@ This request will return a response containing a JWT like this:
       "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  This request will return a response containing a JWT like this:
 
   .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This request will return a response containing a JWT like this:
+
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
 
 .. only:: python
+
+  This request will return a response containing a JWT like this:
 
   .. literalinclude:: code/python/authentication/get_default_relay_state_resp.py
       :language: python
@@ -3753,6 +3797,8 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 - **callbackUri**: Specifies the callBackUri to direct users to. Useful if there are multiple callbackUris specified in your Application.
 - **organization**: Allows you to specify an Organization to check users for.
 - **state**: Any state that your application would like to receive. Note that the application developer will need to interpret this state.
+
+A request including these optional properties looks like this:
 
 .. only:: rest
 
@@ -3771,15 +3817,22 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras.cs
-        :language: csharp
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/get_default_relay_state_with_extras.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
+          :language: vbnet
 
 .. only:: java
 
@@ -3849,64 +3902,74 @@ The rules have three different components:
       ]
     }
 
+    The rule expressed here is as follows:
+
+    - A SAML Assertion with the name ``uid`` AND
+    - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+    - maps to the Account Attribute ``username``.
+
+    .. note::
+
+      It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/example_saml_rule.cs
-        :language: csharp
+    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/example_saml_rule.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/example_saml_rule.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/example_saml_rule.vb
+          :language: vbnet
+
+    .. todo:
+
+      The rule expressed here is as follows:
+
+      (todo)
 
 .. only:: java
 
   .. literalinclude:: code/java/authentication/example_saml_rule.java
       :language: java
 
+  .. todo:
+
+    The rule expressed here is as follows:
+
+    (todo)
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
+
+  .. todo:
+
+    The rule expressed here is as follows:
+
+    (todo)
 
 .. only:: python
 
   .. literalinclude:: code/python/authentication/example_saml_rule.py
       :language: python
 
-The rule expressed here is as follows:
+  .. todo:
 
-.. only:: rest or php
+    The rule expressed here is as follows:
 
-  - A SAML Assertion with the name ``uid`` AND
-  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
-  - maps to the Account Attribute ``username``.
+    (todo)
 
-  .. note::
-
-    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
-
-.. only:: csharp or vbnet
-
-  (todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
-
-.. only:: java
-
-  (todo)
-
-.. only:: nodejs
-
-  (todo)
-
-.. only:: python
-
-  (todo)
 
 In order to create the mapping rules, you send the following request:
 
@@ -3943,15 +4006,22 @@ In order to create the mapping rules, you send the following request:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_mapping_rule.cs
-        :language: csharp
+    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_mapping_rule.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_mapping_rule.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_mapping_rule.vb
+          :language: vbnet
 
 .. only:: java
 
