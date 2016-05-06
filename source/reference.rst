@@ -2371,7 +2371,7 @@ The ``htmlBody`` and ``textBody`` fields support the use of macros. For a full a
 Password Strength
 ^^^^^^^^^^^^^^^^^
 
-The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` attribute.
+The Password Strength Policy for a Directory can be modified through the Administrator Console and through the REST API. Password Strength Policy is part of the Directory’s Password Policy and can be accessed through the ``strength`` link.
 
 **Strength URL**
 
@@ -2388,20 +2388,30 @@ The Password Strength Policy for a Directory can be modified through the Adminis
     - Valid Value(s)
     - Description
 
-  * - ``maxLength``
-    - Number
-    - Default is 100
-    - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
 
   * - ``minLength``
     - Number
     - Default is 8
     - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
 
+  * - ``maxLength``
+    - Number
+    - Default is 100
+    - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
+
   * - ``minLowerCase``
     - Number
     - Default is 1
     - Represents the minimum number of lower case characters required for the password. characters
+
+  * - ``minUpperCase``
+    - Number
+    - Default is 1
+    - Represents the minimum number of upper case characters required for the password.
 
   * - ``minNumeric``
     - Number
@@ -2413,15 +2423,31 @@ The Password Strength Policy for a Directory can be modified through the Adminis
     - Default is 0
     - Represents the minimum number of symbol characters required for the password.
 
-  * - ``minUpperCase``
-    - Number
-    - Default is 1
-    - Represents the minimum number of upper case characters required for the password.
-
   * - ``minDiacritic``
     - Number
     - Default is 0
     - Represents the minimum number of diacritic characters required for the password.
+
+  * - ``preventReuse``
+    - Number
+    - Default is 0 (disabled)
+    - Restricts password reuse if the password was used within the specified number of entries in the password history. So if ``preventReuse`` is set to ``10``, then a password will be rejected if it falls within the last 10 entries of the user's password history.
+
+**Password Strength Example**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe/strength",
+    "minLength": 1,
+    "maxLength": 24,
+    "minLowerCase": 1,
+    "minUpperCase": 1,
+    "minNumeric": 1,
+    "minSymbol": 1,
+    "minDiacritic": 0,
+    "preventReuse": 10
+  }
 
 .. _ref-provider:
 
@@ -2538,7 +2564,7 @@ LDAP Agent
 
 :ref:`LDAP Directories <about-ldap-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
-The Agent itself is a complicated object, with a number of required objects both above and below it. All of these resources are required for LDAP configuration:
+The Agent itself is a complex object, with a number of required objects both above and below it. All of these resources are required for LDAP configuration:
 
 .. code-block:: none
 

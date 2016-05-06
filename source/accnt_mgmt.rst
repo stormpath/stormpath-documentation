@@ -1007,7 +1007,7 @@ Stormpath can store historical password information in order to allow for restri
       "preventReuse": "10"
   }
 
-
+This would not allow a user to set their password to any string that matched their previous 10 passwords.
 
 .. _verify-account-email:
 
