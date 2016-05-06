@@ -3605,7 +3605,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. warning::
 
     This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
+    For updates, you can follow `ticket #149 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
 
     .. todo::
 
@@ -4219,7 +4219,7 @@ At this point your user is authenticated and able to use your app.
 
 .. only:: not rest
 
-  5.6. How API Key Authentication Work in Stormpath
+  5.6. How API Key Authentication Works in Stormpath
   =====================================================
 
   In this section, we discuss how to set up Stormpath to manage and authenticate API Keys and Tokens for developers that are using your API services. Stormpath provides not only the user management piece around API Keys, but also allows you to associate permissions and custom data with the Accounts for advanced use-cases.
@@ -4392,7 +4392,7 @@ At this point your user is authenticated and able to use your app.
 
   .. warning::
 
-    Basic Authentication does not encrypt or hash the credentials in any wayin any way. By itself, it is not secure and Stormpath strongly recommends that when a developer calls your API, it is transmitted over HTTPS to provide adequate security.
+    Basic Authentication does not encrypt or hash the credentials in any way. By itself, it is not secure and Stormpath strongly recommends that when a developer calls your API, it is transmitted over HTTPS to provide adequate security.
 
   Upon receiving this request, the Stormpath SDK will authenticate the request as follows:
 
