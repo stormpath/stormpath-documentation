@@ -2498,7 +2498,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - (SAML only) The URL for the IdP's SSO logout endpoint. For more information see :ref:`saml-configuration`.
 
   * - ``encodedX509SigningCert``
-    - Object
+    - String
     - N/A
     - (SAML only) The public key from the SAML Identity Provider used to sign the assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
 
