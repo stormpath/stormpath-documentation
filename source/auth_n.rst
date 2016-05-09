@@ -2256,7 +2256,7 @@ The rule expressed here is as follows:
 
   It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-In order to create the mapping rules, we simply send the following POST:
+In order to create the mapping rules, we send the following POST:
 
 .. code-block:: http
 

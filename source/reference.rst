@@ -2510,15 +2510,15 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   * - ``attributeStatementMappingRules``
     - Object
     - N/A
-    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes.
+    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes. For information about what's found in this object, see :ref:`below <ref-attribute-mapping>`. For more information about how this is used, please see :ref:`Step 7 of the SAML configuration section <saml-mapping>`.
 
   * - ``serviceProviderMetadata``
     - Link
     - N/A
-    - (SAML only) This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
+    - (SAML only) This object contains metadata related to your Service Provider. For information about what's found in this object, see :ref:`below <ref-sp-metadata>`. For more information about how this is used, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
 
 
-**Provider Example**
+**Provider Example (Facebook)**
 
 .. code-block:: json
 
@@ -2529,6 +2529,27 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     "clientId": "5014174166example",
     "clientSecret": "e7c1274966b0844913953281example",
     "providerId": "facebook"
+  }
+
+**Provider Example (SAML)**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/directories/4yuXfz9HS0okwMTeXample/provider",
+    "createdAt":"2016-04-22T18:40:10.062Z",
+    "modifiedAt":"2016-04-22T18:40:10.062Z",
+    "providerId":"saml",
+    "ssoLoginUrl":"https://sso.someSamlIdp.com/sso/idp/SSO.saml2?idpid=4ad1f356-Ha5h-440d-955a-60873aExample",
+    "ssoLogoutUrl":"https://sso.someSamlIdp.com/sso/SLO.saml2",
+    "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\nTHISHASBEENTRUNCATEDMIIDaDCCAlCgAwIBAgIGAVQ0xF8mMA0GCSqGSIb3DQEBCwUAMHUxCzAJBgNVBAYTAlVTMQswCQYD\nsh3WzqLNeYeoU5sGPWhlvNR7n2R1\n-----END CERTIFICATE-----",
+    "requestSignatureAlgorithm":"RSA-SHA256",
+    "attributeStatementMappingRules":{
+      "href":"https://api.stormpath.com/v1/attributeStatementMappingRules/4yveqrVFYsVas8lExample"
+    },
+    "serviceProviderMetadata":{
+      "href":"https://api.stormpath.com/v1/samlServiceProviderMetadatas/506sSbmUAx1rXnpExample"
+    }
   }
 
 .. _ref-ldap-agent:
@@ -2753,7 +2774,7 @@ For an example JSON see :ref:`below <agent-json-ex>`.
 
 **groupConfig Attributes**
 
-The ``groupConfig`` object is found inside a ``config`` object.
+The ``groupConfig`` object is found inside a ``config`` object. It corresponds with the "Group Configuration" tab in the Stormpath Admin Console "Agents" section.
 
 .. list-table::
   :widths: 15 10 20 60
@@ -2767,22 +2788,22 @@ The ``groupConfig`` object is found inside a ``config`` object.
   * - ``objectClass``
     - String
     - N/A
-    - The LDAP group object class to use when when loading accounts.
+    - The LDAP group object class to use when when loading Accounts.
 
   * - ``objectFilter``
     - String
     - N/A
-    - *(Optional)* LDAP query filter to use when searching for groups.
+    - *(Optional)* LDAP query filter to use when searching for Groups.
 
   * - ``nameRdn``
     - String
     - N/A
-    - The name of the attribute for a group's name. For example ``cn``. Please note: group names must be unique within a directory.
+    - The name of the attribute for a Group's name. For example ``cn``. Please note: Group names must be unique within a Directory.
 
   * - ``descriptionRdn``
     - String
     - N/A
-    - The name of the attribute for a group's description.
+    - The name of the attribute for a Group's description.
 
   * - ``membersRdn``
     - String
@@ -2792,10 +2813,6 @@ The ``groupConfig`` object is found inside a ``config`` object.
 .. _agent-json-ex:
 
 **Agent example with embedded config, accountConfig and groupConfig resources**
-
-.. note::
-
-  We can tell that this is an Active Directory Agent because it is missing ``referralMode`` and ``ignoreReferralIssues`` from the ``config`` resource, and has the ``passwordRdn`` attribute inside ``accountConfig``. You would also know that it is an Active Directory Agent because the associated Provider resource would have its ``providerId`` attribute set to ``ad``.
 
 .. code-block:: json
 
@@ -2842,6 +2859,157 @@ The ``groupConfig`` object is found inside a ``config`` object.
       "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbeXamPLE"
     }
   }
+
+.. note::
+
+  We can tell that this is an Active Directory Agent because it is missing ``referralMode`` and ``ignoreReferralIssues`` from the ``config`` resource, and has the ``passwordRdn`` attribute inside ``accountConfig``. You would also know that it is an Active Directory Agent because the associated Provider resource would have its ``providerId`` attribute set to ``ad``.
+
+.. _ref-attribute-mapping:
+
+Attribute Statement Mapping Rules
+"""""""""""""""""""""""""""""""""
+
+This is an collection of rules. Each of these rules maps an SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`,
+
+**Attribute Statement Mapping Rules URL**
+
+``/v1/attributeStatementMappingRules/$ATTRIBUTE_STATEMENT_MAPPING_RULES_ID``
+
+**Attribute Statement Mapping Rules Attributes**
+
+.. list-table::
+  :widths: 20 10 70
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Description
+
+  * - ``name``
+    - String
+    - The SAML Attribute name that will be passed from your Identity Provider.
+
+  * - ``nameFormat``
+    - String
+    - (Optional) The name format for the above-specified SAML Attribute, expressed as a Uniform Resource Name (URN).
+
+  * - ``accountAttributes``
+    - Array
+    - This is an array of Stormpath Account or customData (``customData.$KEY_NAME``) attributes that will map to this SAML Attribute.
+
+**Attribute Statement Mapping Rules Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/attributeStatementMappingRules/PybI8DObmohmOIexample",
+    "createdAt": "2016-01-21T17:47:34.980Z",
+    "modifiedAt": "2016-01-28T21:58:47.839Z",
+    "items": [
+        {
+            "name": "User.FirstName",
+            "nameFormat": null,
+            "accountAttributes": [
+                "givenName"
+            ]
+        },
+        {
+            "name": "User.LastName",
+            "nameFormat": null,
+            "accountAttributes": [
+                "surname"
+            ]
+        }
+    ]
+  }
+
+.. _ref-sp-metadata:
+
+Service Provider Metadata
+"""""""""""""""""""""""""
+
+This object contains the SAML Service Provider information about Stormpath that is required for the Service Provider-initiated SAML flow. The object by default returns as XML, but it is possible to get JSON by adding an ``Accept: application/json`` header to your request. For more information about how to use this, please see :ref:`the Authentication chapter <configure-sp-in-idp>`.
+
+**Service Provider Metadata URL**
+
+``/v1/samlServiceProviderMetadatas/$SERVICE_PROVIDER_METADATA_ID``
+
+**Service Provider Metadata Elements**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``entityId``
+    - String
+    - URN-formatted
+    - The entity ID of the Stormpath SAML Directory in URN-format.
+
+  * - ``assertionConsumerServicePostEndpoint``
+    - Link
+    - N/A
+    - The ACS Endpoint required by your Identity Provider.
+
+  * - ``x509SigningCert``
+    - Link
+    - N/A
+    - An XML x509 Signing Certificate that will return with ``Content-Type: application/pkix-cert``. If you retrieve XML instead of JSON, the certificate will be embedded in the response.
+
+**Service Provider Metadata JSON Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/samlServiceProviderMetadatas/QLoznDKpnXuX77example",
+    "createdAt": "2016-01-21T17:47:35.313Z",
+    "modifiedAt": "2016-01-21T17:47:35.313Z",
+    "entityId": "urn:stormpath:directory:PwrCmDmJisz3uDexample:provider:sp",
+    "assertionConsumerServicePostEndpoint": {
+        "href": "https://api.stormpath.com/v1/directories/PwrCmDmJisz3uDexample/saml/sso/post"
+    },
+    "x509SigningCert": {
+        "href": "https://api.stormpath.com/v1/x509certificates/QLXha2bQ9f4d1Rexample"
+    }
+  }
+
+**Service Provider Metadata XML Example**
+
+.. code-block:: xml
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:PwrCmDmJisz3uDexample:provider:sp">
+    <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+      <md:KeyDescriptor use="signing">
+        <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:X509Data>
+            <ds:X509Certificate>MIIC1zCCAb+TRUNACATED</ds:X509Certificate>
+          </ds:X509Data>
+        </ds:KeyInfo>
+      </md:KeyDescriptor>
+      <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+      <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://api.stormpath.com/v1/directories/PwrCmDmJisz3uDexample/saml/sso/post" index="0" />
+    </md:SPSSODescriptor>
+  </md:EntityDescriptor>
 
 .. _ref-group:
 
