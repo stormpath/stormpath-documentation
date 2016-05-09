@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-05-09
+==========
+
+- **New:** Added missing :ref:`ref-attribute-mapping`, :ref:`ref-sp-metadata` objects to Directory's Provider section of Reference chapter. Also added :ref:`ref-provider-data` to Account section of that chapter. Objects were previously documented and discussed in :ref:`Authentication Chapter <authn>` but were not included in Reference chapter.
+
 2016-04-29
 ==========
 
