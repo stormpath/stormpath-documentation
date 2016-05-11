@@ -272,6 +272,8 @@ Once the user signs up or logs in to your application, they will be redirected b
 
 The ``jwtResponse`` represents a JWT that provides a signed security assertion about who the user is and what they did on ID Site.
 
+.. _idsite-response-jwt:
+
 ID Site Assertion JWT
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -303,6 +305,10 @@ The Header and Body claims found in this JWT are as follows:
   * - ``alg``
     - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+  * - ``kid``
+    - Yes
+    - Your Stormpath API Key ID.
 
 **Body**
 

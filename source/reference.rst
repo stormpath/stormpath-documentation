@@ -340,6 +340,52 @@ Collection Resource
 
 A **Collection** Resource is a resource containing other resources. It is known as a Collection Resource because it is itself a first class resource – it has its own attributes in addition to the resources it contains.
 
+**Collection Attributes**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The collections's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this collection was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this collection's attributes were last modified.
+
+  * - ``offset``
+    - Number
+    - Default is 0.
+    - Used for :ref:`about-pagination`. The offset of the first returned resource.
+
+  * - ``limit``
+    - Number
+    - Default is 25.
+    - Used for :ref:`about-pagination`. The maximum number of collection items to return for a single request.
+
+  * - ``size``
+    - Number
+    - N/A
+    - The number of resources in the ``items`` array.
+
+  * - ``items``
+    - Array
+    - N/A
+    - An array of resources, each with their own ``href`` and attributes.
+
 If you want to interact with multiple resources, you must do so with a Collection Resource. Collection Resources also support additional behavior specific to collections, such as :ref:`pagination <about-pagination>`, :ref:`sorting <about-sorting>`, and :ref:`searching <about-search>`.
 
 .. _about-pagination:
@@ -353,7 +399,7 @@ If a Collection Resource represents a large enough number of resource instances,
 
 There are two optional query parameters that may be specified to control pagination:
 
-- ``offset``: The zero-based starting index in the entire collection of the first item to return. Default is 0.
+- ``offset``: The point at which, in the zero-based starting index of the entire collection, the first returned item is found. Default is 0.
 - ``limit``: The maximum number of collection items to return for a single request. Minimum value is 1. Maximum value is 100. Default is 25.
 
 *Usage*
@@ -1131,9 +1177,9 @@ An **Application** resource in Stormpath contains information about any real-wor
       - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`.
 
     * - ``authorizedCallbackUris``
-      - String
+      - Array
       - N/A
-      - Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
+      - An array of Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
 
     * - ``samlPolicy``
       - Object
@@ -1436,7 +1482,7 @@ This is an example of the JSON response to a successful POST to the ``/passwordR
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMeXAMpLE.eyJleHAiOjE0NDc4ODU1ODIsImp0aSI6IjFucDE1UkJVTXJQR0FxSlVpOGVJYlEifQ.AiL5ejbhPnjzxOWZkZGrAfYP8KvqT62r_zktvlkGQE0",
+    "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMeXAMpLE.eyJleHAiOjE0NDc4ODU1ODIsImp0aSI6IjFucDE1UkJVTXJQR0FxSlVpOGVJYlEifQ.AiL5ejbhPnjzxOWZkZGrAfYP8KvqT62r_zktvlkGQE0",
     "email": "capt@enterprise.com",
     "account": {
       "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
@@ -2524,7 +2570,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - (SAML only) The URL for the IdP's SSO logout endpoint. For more information see :ref:`saml-configuration`.
 
   * - ``encodedX509SigningCert``
-    - Object
+    - String
     - N/A
     - (SAML only) The public key from the SAML Identity Provider used to sign the assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
 
@@ -2534,17 +2580,17 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     - (SAML only) The algorithm used by the SAML Identity Provider to sign SAML assertions that are returned to Stormpath. For more information see :ref:`saml-configuration`.
 
   * - ``attributeStatementMappingRules``
-    - Object
+    - Link
     - N/A
-    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes.
+    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes. For information about what's found in this object, see :ref:`below <ref-attribute-mapping>`. For more information about how it is used, please see :ref:`Step 7 of the SAML configuration section <saml-mapping>`.
 
   * - ``serviceProviderMetadata``
     - Link
     - N/A
-    - (SAML only) This object contains metadata related to your Service Provider. For more information, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
+    - (SAML only) This object contains metadata related to your Service Provider. For information about what's found in this object, see :ref:`below <ref-sp-metadata>`. For more information about how it is used, please see :ref:`Step 3 of the SAML configuration section <configure-sp-in-idp>`.
 
 
-**Provider Example**
+**Provider Example (Facebook)**
 
 .. code-block:: json
 
@@ -2555,6 +2601,27 @@ For example, a Social Directory could be created for GitHub. This Directory woul
     "clientId": "5014174166example",
     "clientSecret": "e7c1274966b0844913953281example",
     "providerId": "facebook"
+  }
+
+**Provider Example (SAML)**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/directories/4yuXfz9HS0okwMTeXample/provider",
+    "createdAt":"2016-04-22T18:40:10.062Z",
+    "modifiedAt":"2016-04-22T18:40:10.062Z",
+    "providerId":"saml",
+    "ssoLoginUrl":"https://sso.someSamlIdp.com/sso/idp/SSO.saml2?idpid=4ad1f356-Ha5h-440d-955a-60873aExample",
+    "ssoLogoutUrl":"https://sso.someSamlIdp.com/sso/SLO.saml2",
+    "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\nTHISHASBEENTRUNCATEDMIIDaDCCAlCgAwIBAgIGAVQ0xF8mMA0GCSqGSIb3DQEBCwUAMHUxCzAJBgNVBAYTAlVTMQswCQYD\nsh3WzqLNeYeoU5sGPWhlvNR7n2R1\n-----END CERTIFICATE-----",
+    "requestSignatureAlgorithm":"RSA-SHA256",
+    "attributeStatementMappingRules":{
+      "href":"https://api.stormpath.com/v1/attributeStatementMappingRules/4yveqrVFYsVas8lExample"
+    },
+    "serviceProviderMetadata":{
+      "href":"https://api.stormpath.com/v1/samlServiceProviderMetadatas/506sSbmUAx1rXnpExample"
+    }
   }
 
 .. _ref-ldap-agent:
@@ -2779,7 +2846,7 @@ For an example JSON see :ref:`below <agent-json-ex>`.
 
 **groupConfig Attributes**
 
-The ``groupConfig`` object is found inside a ``config`` object.
+The ``groupConfig`` object is found inside a ``config`` object. It corresponds with the "Group Configuration" tab in the Stormpath Admin Console "Agents" section.
 
 .. list-table::
   :widths: 15 10 20 60
@@ -2793,22 +2860,22 @@ The ``groupConfig`` object is found inside a ``config`` object.
   * - ``objectClass``
     - String
     - N/A
-    - The LDAP group object class to use when when loading accounts.
+    - The LDAP group object class to use when when loading Accounts.
 
   * - ``objectFilter``
     - String
     - N/A
-    - *(Optional)* LDAP query filter to use when searching for groups.
+    - *(Optional)* LDAP query filter to use when searching for Groups.
 
   * - ``nameRdn``
     - String
     - N/A
-    - The name of the attribute for a group's name. For example ``cn``. Please note: group names must be unique within a directory.
+    - The name of the attribute for a Group's name. For example ``cn``. Please note: Group names must be unique within a Directory.
 
   * - ``descriptionRdn``
     - String
     - N/A
-    - The name of the attribute for a group's description.
+    - The name of the attribute for a Group's description.
 
   * - ``membersRdn``
     - String
@@ -2818,10 +2885,6 @@ The ``groupConfig`` object is found inside a ``config`` object.
 .. _agent-json-ex:
 
 **Agent example with embedded config, accountConfig and groupConfig resources**
-
-.. note::
-
-  We can tell that this is an Active Directory Agent because it is missing ``referralMode`` and ``ignoreReferralIssues`` from the ``config`` resource, and has the ``passwordRdn`` attribute inside ``accountConfig``. You would also know that it is an Active Directory Agent because the associated Provider resource would have its ``providerId`` attribute set to ``ad``.
 
 .. code-block:: json
 
@@ -2868,6 +2931,188 @@ The ``groupConfig`` object is found inside a ``config`` object.
       "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbeXamPLE"
     }
   }
+
+.. note::
+
+  We can tell that this is an Active Directory Agent because it is missing ``referralMode`` and ``ignoreReferralIssues`` from the ``config`` resource, and has the ``passwordRdn`` attribute inside ``accountConfig``. You would also know that it is an Active Directory Agent because the associated Provider resource would have its ``providerId`` attribute set to ``ad``.
+
+.. _ref-attribute-mapping:
+
+Attribute Statement Mapping Rules
+"""""""""""""""""""""""""""""""""
+
+This is an object that contains an array of mapping rules. Each of these rules maps an SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`.
+
+**Attribute Statement Mapping Rules URL**
+
+``/v1/attributeStatementMappingRules/$ATTRIBUTE_STATEMENT_MAPPING_RULES_ID``
+
+**Attribute Statement Mapping Rules Attributes**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``items``
+    - Array
+    - N/A
+    - An array of Mapping Rules (see below).
+
+**Mapping Rule Attributes**
+
+.. list-table::
+  :widths: 20 10 70
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Description
+
+  * - ``name``
+    - String
+    - The SAML Attribute name that will be passed from your Identity Provider.
+
+  * - ``nameFormat``
+    - String
+    - (Optional) The name format for the above-specified SAML Attribute, expressed as a Uniform Resource Name (URN).
+
+  * - ``accountAttributes``
+    - Array
+    - This is an array of Stormpath Account or customData (``customData.$KEY_NAME``) attributes that will map to this SAML Attribute.
+
+**Attribute Statement Mapping Rules Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/attributeStatementMappingRules/PybI8DObmohmOIexample",
+    "createdAt": "2016-01-21T17:47:34.980Z",
+    "modifiedAt": "2016-01-28T21:58:47.839Z",
+    "items": [
+        {
+            "name": "User.FirstName",
+            "nameFormat": null,
+            "accountAttributes": [
+                "givenName"
+            ]
+        },
+        {
+            "name": "User.LastName",
+            "nameFormat": null,
+            "accountAttributes": [
+                "surname"
+            ]
+        }
+    ]
+  }
+
+.. _ref-sp-metadata:
+
+Service Provider Metadata
+"""""""""""""""""""""""""
+
+This object contains the SAML Service Provider information about Stormpath that is required for the Service Provider-initiated SAML flow. The object by default returns as XML, but it is possible to get JSON by adding an ``Accept: application/json`` header to your request. For more information about how to use this, please see :ref:`the Authentication chapter <configure-sp-in-idp>`.
+
+**Service Provider Metadata URL**
+
+``/v1/samlServiceProviderMetadatas/$SERVICE_PROVIDER_METADATA_ID``
+
+**Service Provider Metadata Elements**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``entityId``
+    - String
+    - URN-formatted
+    - The entity ID of the Stormpath SAML Directory in URN-format.
+
+  * - ``assertionConsumerServicePostEndpoint``
+    - Link
+    - N/A
+    - The ACS Endpoint required by your Identity Provider.
+
+  * - ``x509SigningCert``
+    - Link
+    - N/A
+    - An XML x509 Signing Certificate that will return with ``Content-Type: application/pkix-cert``. If you retrieve XML instead of JSON, the certificate will be embedded in the response.
+
+**Service Provider Metadata JSON Example**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/samlServiceProviderMetadatas/QLoznDKpnXuX77example",
+    "createdAt": "2016-01-21T17:47:35.313Z",
+    "modifiedAt": "2016-01-21T17:47:35.313Z",
+    "entityId": "urn:stormpath:directory:PwrCmDmJisz3uDexample:provider:sp",
+    "assertionConsumerServicePostEndpoint": {
+        "href": "https://api.stormpath.com/v1/directories/PwrCmDmJisz3uDexample/saml/sso/post"
+    },
+    "x509SigningCert": {
+        "href": "https://api.stormpath.com/v1/x509certificates/QLXha2bQ9f4d1Rexample"
+    }
+  }
+
+**Service Provider Metadata XML Example**
+
+.. code-block:: xml
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:PwrCmDmJisz3uDexample:provider:sp">
+    <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+      <md:KeyDescriptor use="signing">
+        <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:X509Data>
+            <ds:X509Certificate>MIIC1zCCAb+TRUNACATED</ds:X509Certificate>
+          </ds:X509Data>
+        </ds:KeyInfo>
+      </md:KeyDescriptor>
+      <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+      <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://api.stormpath.com/v1/directories/PwrCmDmJisz3uDexample/saml/sso/post" index="0" />
+    </md:SPSSODescriptor>
+  </md:EntityDescriptor>
 
 .. _ref-group:
 
@@ -3827,7 +4072,7 @@ An individual Account resource may be accessed via its Resource URL:
   * - ``providerData``
     - Link
     - N/A
-    - A link to the information from the owner Directory's Provider.
+    - A link to this Account's :ref:`Provider Data <ref-provider-data>`.
 
   * - ``directory``
     - Link
@@ -3886,10 +4131,10 @@ An individual Account resource may be accessed via its Resource URL:
     "modifiedAt":"2015-08-25T19:57:05.976Z",
     "emailVerificationToken":null,
     "customData":{
-      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData"
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple/customData"
     },
     "providerData":{
-      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/providerData"
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple/providerData"
     },
     "directory":{
       "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe"
@@ -4271,9 +4516,9 @@ This collection stores any OAuth 2.0 Access Tokens that have been generated for 
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/accessTokens/6TVcnquGRyFZq0ssyHwpTN",
+    "href": "https://api.stormpath.com/v1/accessTokens/6TVcnquGRyFZq0sexample",
     "createdAt": "2015-11-18T19:16:12.437Z",
-    "jwt": "eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiI2VFZjbnF1R1J5RlpxMHNzeUh3cFROIiwiaWF0IjoxNDQ3ODc0MTcyLCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQ3ODc1OTcyLCJydGkiOiI2VFZjbm5hQlhOd2JEQm4xbTI1WXJKIn0.flUqUWUEnwGcmVaCwWuf4KpQCkxkqYeWlYGrtFkBaFs",
+    "jwt": "eyJraWQ...kqYeWlYGrtFkBaFs",
     "expandedJwt": {
       "header": {
         "kid": "2ZFMV4WVVCVG35XATII9T96J7",
@@ -4282,21 +4527,21 @@ This collection stores any OAuth 2.0 Access Tokens that have been generated for 
       "claims": {
         "jti": "6TVcnquGRyFZq0ssyHwpTN",
         "iat": 1447874172,
-        "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
-        "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+        "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
+        "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple",
         "exp": 1447875972,
         "rti": "6TVcnnaBXNwbDBn1m25YrJ"
       },
       "signature": "flUqUWUEnwGcmVaCwWuf4KpQCkxkqYeWlYGrtFkBaFs"
     },
     "account": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple"
     },
     "application": {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple"
     },
     "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
     }
   }
 
@@ -4397,20 +4642,20 @@ This collection stores any OAuth 2.0 Refresh Tokens that have been generated for
       "claims": {
         "jti": "6TVcnnaBXNwbDBn1m25YrJ",
         "iat": 1447874172,
-        "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
-        "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+        "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
+        "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple",
         "exp": 1448478972
       },
       "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"
     },
     "account": {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple"
     },
     "application": {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR"
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple"
     },
     "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
     }
   }
 
@@ -4438,6 +4683,85 @@ An Account's Refresh Tokens can be retrieved manually. It is also possible to sp
     * - GET /v1/accounts/$ACCOUNT_ID/refreshTokens
       - ``application.href``
       - Retrieves the specified Account's Refresh Tokens.
+
+
+.. _ref-provider-data:
+
+Provider Data
+^^^^^^^^^^^^^
+
+The Provider Data object contains a mixture of data pulled from the Provider information of :ref:`the owner Directory <ref-provider>` as well as Provider data specific to this Account.
+
+It could, for example, contain:
+
+- An Access Token for Facebook or GitHub (e.g. ``"accessToken":"someTokenValue"``)
+- All SAML attributes passed by the SAML IdP that this Account came from (e.g. ``"firstName":"Aname"``)
+
+For more information about Provider Data and Social Directories, see :ref:`social-authn`.
+
+To find out about Provider Data for SAML Directories, see :ref:`saml-configuration`. Each SAML Identity Provider has their own information that they pass into the Provider Data, and all SAML attributes passed in by the Provider will be present in the Account's Provider Data.
+
+**Provider Data Attributes**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``providerId``
+    - String
+    - *(See Description)*
+    - Contains an identifying string for the source of this Account's information. This will match the ``providerId`` of :ref:`the Directory that owns this Account<ref-provider>`.
+
+**Provider Data Example (Google)**
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/1Voi7LQ6NGnTPskexample/providerData",
+    "createdAt": "2016-04-29T17:31:23.676Z",
+    "modifiedAt": "2016-04-29T17:31:23.686Z",
+    "accessToken": "ya29.CjHTAlCOmTwdjexDp-CwCbP2wGMExampleo-on6Ce79eR9Qd_Oq3nm3Zv6ForExample",
+    "providerId": "google",
+    "refreshToken": null
+  }
+
+**Provider Data Example (SAML)**
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/accounts/5JlXuVTgTnVCh0gEXAMPLE/providerData",
+    "createdAt":"2016-04-22T20:06:21.496Z",
+    "modifiedAt":"2016-04-22T20:09:50.104Z",
+    "email":"jakub@stormpath.com",
+    "firstName":"Jakub",
+    "providerId":"saml"
+  }
+
+Provider Data Operations
+""""""""""""""""""""""""
+
+The providerData object can be explicitly created as part of the Directory creation POST. Once it has been created, it can be retrieved with a GET, and in some cases updated with a PUT. Provider Data plays a role in both Social Login and SAML Configurations. For more information about the operations possible with Provider Data, please see the :ref:`authn` Chapter.
 
 .. _ref-jwt:
 
@@ -4531,8 +4855,8 @@ Expanded JSON Web Token
     "claims": {
       "jti": "6TVcnnaBXNwbDBn1m25YrJ",
       "iat": 1447874172,
-      "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR",
-      "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+      "iss": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple",
+      "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple",
       "exp": 1448478972
     },
     "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"

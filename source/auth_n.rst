@@ -2258,7 +2258,7 @@ The rule expressed here is as follows:
 
   It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-In order to create the mapping rules, we simply send the following POST:
+In order to create the mapping rules, we send the following POST:
 
 .. code-block:: http
 
@@ -2378,6 +2378,10 @@ This JWT again contains both Headers and a Body with Claims.
   * - ``alg``
     - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+  * - ``kid``
+    - Yes
+    - Your Stormpath API Key ID.
 
 **Body**
 
