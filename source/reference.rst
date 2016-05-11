@@ -4592,11 +4592,11 @@ The Provider Data object contains a mixture of data pulled from the Provider inf
 It could, for example, contain:
 
 - An Access Token for Facebook or GitHub (e.g. ``"accessToken":"someTokenValue"``)
-- Specific SAML attributes passed by the SAML IdP that this Account came from (e.g. ``"firstName":"Aname"``)
+- All SAML attributes passed by the SAML IdP that this Account came from (e.g. ``"firstName":"Aname"``)
 
 For more information about Provider Data and Social Directories, see :ref:`social-authn`.
 
-To find out about Provider Data for SAML Directories, see :ref:`saml-configuration`. Each SAML IdP has their own information that they pass into the Provider Data.
+To find out about Provider Data for SAML Directories, see :ref:`saml-configuration`. Each SAML Identity Provider has their own information that they pass into the Provider Data, and all SAML attributes passed in by the Provider will be present in the Account's Provider Data.
 
 **Provider Data Attributes**
 
@@ -4642,7 +4642,6 @@ To find out about Provider Data for SAML Directories, see :ref:`saml-configurati
     "refreshToken": null
   }
 
-
 **Provider Data Example (SAML)**
 
 .. code-block:: json
@@ -4659,7 +4658,7 @@ To find out about Provider Data for SAML Directories, see :ref:`saml-configurati
 Provider Data Operations
 """"""""""""""""""""""""
 
-The providerData object can be explicitly created as part of the Directory creation POST. Once it has been created, it can always be retrieved with a GET, and in some cases updated with a PUT. Provider Data plays a role in both Social Login and SAML Configurations. For more information about the operations possible with Provider Data, please see the :ref:`authn` Chapter.
+The providerData object can be explicitly created as part of the Directory creation POST. Once it has been created, it can be retrieved with a GET, and in some cases updated with a PUT. Provider Data plays a role in both Social Login and SAML Configurations. For more information about the operations possible with Provider Data, please see the :ref:`authn` Chapter.
 
 .. _ref-jwt:
 
