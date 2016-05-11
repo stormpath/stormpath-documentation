@@ -16,7 +16,7 @@ The final step that would allow this Account to actually log in to the applicati
 4.1. Modeling Your User Base
 ============================
 
-The first topic that we need to address is how we are user modeling works inside Stormpath.
+The first topic that we need to address is how user modeling works inside Stormpath.
 
 User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories**, **Organizations**, and also possibly **Groups**.
 
@@ -27,7 +27,7 @@ All of your Accounts will have to be associated with at least one Directory reso
 4.1.1. Directories
 -------------------
 
-The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
+The **Directory** resource is a top-level container for Account and Group resources. Directories and Groups are both referred to as "Account Stores". A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
 For more detailed information about the Directory resource, please see the :ref:`ref-directory` section in the Reference chapter.
 
@@ -217,7 +217,7 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 4.1.2. Groups
 --------------
 
-The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
+The other type of Account Store is the Group resource, which can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
 
 For more detailed information about the Group resource, please see the :ref:`ref-group` section of the Reference chapter.
 

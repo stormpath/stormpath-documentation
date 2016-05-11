@@ -2377,6 +2377,10 @@ This JWT again contains both Headers and a Body with Claims.
     - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
 
+  * - ``kid``
+    - Yes
+    - Your Stormpath API Key ID.
+
 **Body**
 
 .. list-table::

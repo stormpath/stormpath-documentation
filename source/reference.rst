@@ -340,6 +340,52 @@ Collection Resource
 
 A **Collection** Resource is a resource containing other resources. It is known as a Collection Resource because it is itself a first class resource – it has its own attributes in addition to the resources it contains.
 
+**Collection Attributes**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The collections's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this collection was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this collection's attributes were last modified.
+
+  * - ``offset``
+    - Number
+    - Default is 0.
+    - Used for :ref:`about-pagination`. The offset of the first returned resource.
+
+  * - ``limit``
+    - Number
+    - Default is 25.
+    - Used for :ref:`about-pagination`. The maximum number of collection items to return for a single request.
+
+  * - ``size``
+    - Number
+    - N/A
+    - The number of resources in the ``items`` array.
+
+  * - ``items``
+    - Array
+    - N/A
+    - An array of resources, each with their own ``href`` and attributes.
+
 If you want to interact with multiple resources, you must do so with a Collection Resource. Collection Resources also support additional behavior specific to collections, such as :ref:`pagination <about-pagination>`, :ref:`sorting <about-sorting>`, and :ref:`searching <about-search>`.
 
 .. _about-pagination:
@@ -353,7 +399,7 @@ If a Collection Resource represents a large enough number of resource instances,
 
 There are two optional query parameters that may be specified to control pagination:
 
-- ``offset``: The zero-based starting index in the entire collection of the first item to return. Default is 0.
+- ``offset``: The point at which, in the zero-based starting index of the entire collection, the first returned item is found. Default is 0.
 - ``limit``: The maximum number of collection items to return for a single request. Minimum value is 1. Maximum value is 100. Default is 25.
 
 *Usage*
@@ -1131,9 +1177,9 @@ An **Application** resource in Stormpath contains information about any real-wor
       - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`.
 
     * - ``authorizedCallbackUris``
-      - String
+      - Array
       - N/A
-      - Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
+      - An array of Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
 
     * - ``samlPolicy``
       - Object
@@ -2510,7 +2556,7 @@ For example, a Social Directory could be created for GitHub. This Directory woul
   * - ``attributeStatementMappingRules``
     - Link
     - N/A
-    - (SAML only) This collection contains the rules that map SAML assertions to Stormpath resource attributes. For information about what's found in this object, see :ref:`below <ref-attribute-mapping>`. For more information about how it is used, please see :ref:`Step 7 of the SAML configuration section <saml-mapping>`.
+    - (SAML only) This object contains the rules that map SAML assertions to Stormpath resource attributes. For information about what's found in this object, see :ref:`below <ref-attribute-mapping>`. For more information about how it is used, please see :ref:`Step 7 of the SAML configuration section <saml-mapping>`.
 
   * - ``serviceProviderMetadata``
     - Link
@@ -2869,13 +2915,44 @@ The ``groupConfig`` object is found inside a ``config`` object. It corresponds w
 Attribute Statement Mapping Rules
 """""""""""""""""""""""""""""""""
 
-This is an collection of rules. Each of these rules maps an SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`,
+This is an object that contains an array of mapping rules. Each of these rules maps an SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`.
 
 **Attribute Statement Mapping Rules URL**
 
 ``/v1/attributeStatementMappingRules/$ATTRIBUTE_STATEMENT_MAPPING_RULES_ID``
 
 **Attribute Statement Mapping Rules Attributes**
+
+.. list-table::
+  :widths: 15 10 20 60
+  :header-rows: 1
+
+  * - Attribute
+    - Type
+    - Valid Value(s)
+    - Description
+
+  * - ``href``
+    - String
+    - N/A
+    - The resource's fully qualified location URL.
+
+  * - ``createdAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource was created.
+
+  * - ``modifiedAt``
+    - String
+    - ISO-8601 Datetime
+    - Indicates when this resource’s attributes were last modified.
+
+  * - ``items``
+    - Array
+    - N/A
+    - An array of Mapping Rules (see below).
+
+**Mapping Rule Attributes**
 
 .. list-table::
   :widths: 20 10 70
