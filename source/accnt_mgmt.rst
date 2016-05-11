@@ -993,6 +993,22 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
 
+4.4.5. How to Restrict Password Reuse
+-------------------------------------
+
+Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength object, sending any value up to ``25``:
+
+.. code-block:: http
+
+  POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
+  Host: api.stormpath.com
+
+  {
+      "preventReuse": "10"
+  }
+
+This would not allow a user to set their password to any string that matched their previous 10 passwords.
+
 .. _verify-account-email:
 
 4.5. How to Verify an Account's Email
