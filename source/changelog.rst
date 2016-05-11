@@ -28,12 +28,12 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
-2016-05-09
+2016-05-11
 ==========
 
 - **New:** Added missing :ref:`ref-attribute-mapping`, :ref:`ref-sp-metadata` objects to Directory's Provider section of Reference chapter. Also added :ref:`ref-provider-data` to Account section of that chapter. Objects were previously documented and discussed in :ref:`Authentication Chapter <authn>` but were not included in Reference chapter.
 - **New:** Added additional information about attributes of :ref:`Stormpath collections <about-collections>`.
-- **New::** Added simplified ERD to :ref:`Data Model section of About chapter <about-data-model>`.
+- **New:** Added simplified ERD to :ref:`Data Model section of About chapter <about-data-model>`.
 - **Fixed:** Added missing ``kid`` header to :ref:`SAML Account Assertion JWT <saml-response-jwt>` and :ref:`ID Site Assertion JWT <idsite-response-jwt>` documentation.
 
 2016-04-29
