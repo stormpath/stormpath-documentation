@@ -993,6 +993,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
 
+.. _password-reuse:
+
 4.4.5. How to Restrict Password Reuse
 -------------------------------------
 
