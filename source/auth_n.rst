@@ -928,7 +928,7 @@ So you would send the following request:
       :widths: 15 10 60
       :header-rows: 1
 
-      * - Property
+      * - Attribute
         - Type
         - Description
 
@@ -1021,7 +1021,7 @@ So you would send the following request:
       :widths: 15 10 60
       :header-rows: 1
 
-      * - Property
+      * - Attribute
         - Type
         - Description
 
@@ -1569,9 +1569,9 @@ In general, the social login process works as follows:
 
 2. The user will be asked by the Provider to accept the permissions required by your app.
 
-3. The Provider will return the user to your application with an access token.
+3. The Provider will return the user to your application with an Access Token or Authorization Code.
 
-4. Stormpath will take this access token and use it to query the provider for:
+4. Stormpath will take this token/code and use it to query the provider for:
 
    - an email address
    - a first name
@@ -1581,7 +1581,7 @@ In general, the social login process works as follows:
 
     If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
 
-5. Stormpath will first search for a Directory that matches the provider of the access token. If one is not found, an error will return.
+5. Stormpath will search for a Directory that matches the provider of the token/code. If one is not found, an error will be returned.
 
 6. Once the Directory is located, Stormpath will look for an Account in your application's Directories that matches this information.
 
