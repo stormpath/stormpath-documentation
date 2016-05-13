@@ -1640,6 +1640,8 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider)
 
+.. _authn-google:
+
 5.3.1. Google
 --------------
 
@@ -1851,6 +1853,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: python
 
+.. _authn-facebook:
 
 5.3.2. Facebook
 ---------------
@@ -2001,6 +2004,8 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: python
 
+.. _authn-github:
+
 5.3.3. Github
 -------------
 
@@ -2026,6 +2031,7 @@ Creating this Directory requires that you provide information from GitHub as a P
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
+
     {
         "name" : "my-github-directory",
         "description" : "A GitHub directory",
@@ -2042,11 +2048,6 @@ Creating this Directory requires that you provide information from GitHub as a P
 
     .. literalinclude:: code/csharp/authentication/create_directory_github.cs
       :language: csharp
-
-.. _authn-facebook:
-
-5.3.2. Facebook
----------------
 
   .. only:: vbnet
 
@@ -2159,7 +2160,6 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. only:: python
 
  (todo)
-
 
 .. _authn-linkedin:
 
@@ -3208,6 +3208,8 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+.. _okta-attribute-mapping:
+
 Step 6: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
@@ -3221,6 +3223,8 @@ If you have already successfully set-up SAML and authenticated a user with your 
 Specifically, you want that Account's ``providerData`` resource:
 
 .. only:: rest
+
+  .. code-block:: json
 
     {
       "href":"https://api.stormpath.com/v1/accounts/6Y2ViNhE5GOktaExample/providerData",
@@ -3307,7 +3311,9 @@ For example, you could enter:
 * For "Stormpath Attributes" enter ``givenName``
 
 If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
-=======
+
+.. code-block:: json
+
   {
     "href": "https://api.stormpath.com/v1/accounts/6Y2ViNhE5GTDBIGsTMgMD/providerData",
     "createdAt": "2016-03-09T18:16:16.116Z",
@@ -4170,15 +4176,15 @@ The rules have three different components:
       ]
     }
 
-    The rule expressed here is as follows:
+  The rule expressed here is as follows:
 
-    - A SAML Assertion with the name ``uid`` AND
-    - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
-    - maps to the Account Attribute ``username``.
+  - A SAML Assertion with the name ``uid`` AND
+  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+  - maps to the Account Attribute ``username``.
 
-    .. note::
+  .. note::
 
-      It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
 .. only:: csharp or vbnet
 

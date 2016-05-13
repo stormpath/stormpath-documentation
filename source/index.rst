@@ -21,7 +21,6 @@ Contents:
    reference
    configuration
    errors
-   master
    changelog
 
 

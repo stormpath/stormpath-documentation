@@ -1878,7 +1878,7 @@ If this is a valid email in an Account associated with this Application, the req
       }
     }
 
-    For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
+  For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
 
 .. only:: csharp or vbnet
 
