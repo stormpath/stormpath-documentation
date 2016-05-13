@@ -16,7 +16,7 @@ The final step that would allow this Account to actually log in to the applicati
 4.1. Modeling Your User Base
 ============================
 
-The first topic that you need to address is how you are user modeling works inside Stormpath.
+The first topic that we need to address is how user modeling works inside Stormpath.
 
 User Accounts in Stormpath aren't directly associated with Applications, but only indirectly via **Directories**, **Organizations**, and also possibly **Groups**.
 
@@ -27,7 +27,7 @@ All of your Accounts will have to be associated with at least one Directory reso
 4.1.1. Directories
 -------------------
 
-The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
+The **Directory** resource is a top-level container for Account and Group resources. Directories and Groups are both referred to as "Account Stores". A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
 .. only:: rest
 
@@ -388,7 +388,7 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 4.1.2. Groups
 --------------
 
-The Group resource can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
+The other type of Account Store is the Group resource, which can either be imagined as a container for Accounts, or as a label applied to them. Groups can be used in a variety of ways, including organizing people by geographic location, or by their role within a company.
 
 .. only:: rest
 
@@ -1665,7 +1665,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
 4.4.2. Change an Account's Password
 -----------------------------------
 
-At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during account creation. The only ways to change an Account password once it has been created are:
+At no point is the user shown, or does Stormpath have access to, the original password once it has been hashed during Account creation. The only ways to change an Account password once it has been created are:
 
 1. To allow the user to update it (without seeing the original value) after being authenticated, or
 2. To use the :ref:`password reset workflow <password-reset-flow>`.
@@ -1859,7 +1859,7 @@ There are three steps to the password reset flow:
     .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore.py
       :language: python
 
-If this is a valid email in an Account associated with this Application, the request will suceed.
+If this is a valid email in an Account associated with this Application, the request will succeed.
 
 .. only:: rest
 
@@ -1877,8 +1877,6 @@ If this is a valid email in an Account associated with this Application, the req
           "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
       }
     }
-
-  .. note::
 
     For a full description of this endpoint please see :ref:`ref-password-reset-token` in the Reference chapter.
 
@@ -2131,6 +2129,44 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: python
 
+.. _password-change-timestamp-search:
+
+4.4.4. How to Find When An Account's Password Was Changed
+----------------------------------------------------------
+
+You may want to find out when an Account's password was last changed, or return a collection of Accounts that changed their passwords within a certain timespan. This information is contained in the searchable ``passwordModifiedAt`` attribute found in every :ref:`Account resource <ref-account>`.
+
+If you wanted to find all Accounts that hadn't modified their password yet in 2016 you would use :ref:`Datetime search <search-datetime>`:
+
+.. code-block:: http
+
+  GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
+  Host: api.stormpath.com
+
+This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
+
+.. _password-reuse:
+
+4.4.5. How to Restrict Password Reuse
+-------------------------------------
+
+.. todo::
+
+  This is a net-new section!
+
+Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's :ref:`Strength object <ref-password-strength>`, sending any value up to ``25``:
+
+.. code-block:: http
+
+  POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
+  Host: api.stormpath.com
+
+  {
+      "preventReuse": "10"
+  }
+
+This would not allow a user to set their password to any string that matched their previous 10 passwords.
+
 .. _verify-account-email:
 
 4.5. How to Verify an Account's Email
@@ -2171,7 +2207,7 @@ This workflow is disabled by default on Directories, but you can enable it, and 
 4.5.3. Triggering the Verification Email (Creating A Token)
 -----------------------------------------------------------
 
-In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you simply create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
+In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
 
 4.5.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------

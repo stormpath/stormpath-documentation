@@ -7,7 +7,7 @@
 8.1. What is an ID Site?
 ========================
 
-Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication.
+Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication. It supports regular login to your Stormpath Directories, as well as Social and SAML login.
 
 The screens and functionality of ID Site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, JavaScript code, screens, removing screens, and even changing how the screens behave.
 
@@ -272,6 +272,8 @@ Once the user signs up or logs in to your application, they will be redirected b
 
 The ``jwtResponse`` represents a JWT that provides a signed security assertion about who the user is and what they did on ID Site.
 
+.. _idsite-response-jwt:
+
 ID Site Assertion JWT
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -303,6 +305,10 @@ The Header and Body claims found in this JWT are as follows:
   * - ``alg``
     - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+
+  * - ``kid``
+    - Yes
+    - Your Stormpath API Key ID.
 
 **Body**
 
@@ -346,7 +352,11 @@ Once the JWT is validated, you can read information about the user from the JWT.
 Exchanging the ID Site JWT for an OAuth Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For background information, please see :ref:`token-authn`. In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from the ID Site.
+.. note::
+
+  For background information, please see :ref:`token-authn`.
+
+In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from ID Site.
 
 .. code-block:: http
 
@@ -356,7 +366,7 @@ For background information, please see :ref:`token-authn`. In this situation, af
 
   grant_type=id_site_token&token={$JWT_FROM_ID_SITE}
 
-Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that its associated with is still valid) and then return an OAuth 2.0 Access Token:
+Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that it's associated with is still valid) and then return an OAuth 2.0 Access Token:
 
 .. code-block:: http
 
@@ -395,3 +405,14 @@ Resetting Your Password with ID Site
 The Account Management chapter has an overview of :ref:`password-reset-flow` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password. If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. The issue here, however, is bridging the Password Reset Flow and the ID Site flow.
 
 Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
+
+8.5 Using ID Site for Multi-tenancy
+====================================
+
+.. todo::
+
+  There's a lot more to say here for SDKs than there is for REST.
+
+If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
+
+From that point, ID Site (combined with one of our SDKs) is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.

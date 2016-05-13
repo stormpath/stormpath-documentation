@@ -1,8 +1,8 @@
 .. _changelog:
 
-**********
+********************
 Change Log
-**********
+********************
 
 Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` namespace. All changes to the API and documentation are therefore arranged by date, in descending order.
 
@@ -27,6 +27,41 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
     - New:
 
     Link to Tweet or blog post announcing changes (if applicable)
+
+2016-05-11
+==========
+
+- **New:** Password Policy's :ref:`Strength resource <ref-password-strength>` information updated with new ``preventReuse`` attribute. Also added use case information to Account Management chapter in new section :ref:`How to Restrict Password Reuse <password-reuse>`.
+- **New:** Added missing :ref:`ref-attribute-mapping`, :ref:`ref-sp-metadata` objects to Directory's Provider section of Reference chapter. Also added :ref:`ref-provider-data` to Account section of that chapter. Objects were previously documented and discussed in :ref:`Authentication Chapter <authn>` but were not included in Reference chapter.
+- **New:** Added additional information about attributes of :ref:`Stormpath collections <about-collections>`.
+- **New:** Added simplified ERD to :ref:`Data Model section of About chapter <about-data-model>`.
+- **Fixed:** Added missing ``kid`` header to :ref:`SAML Account Assertion JWT <saml-response-jwt>` and :ref:`ID Site Assertion JWT <idsite-response-jwt>` documentation.
+
+2016-04-29
+==========
+
+- **Fixed:** Updated :ref:`Social Login information for LinkedIn <authn-linkedin>` to reflect the fact that Stormpath can handle the exchange of an Authorization Code for an Access Token.
+
+2016-04-28
+==========
+
+- **New:** Added information to :ref:`ref-ldap-agent` section in Reference chapter to clarify which attributes are optional, and which ones are only present for regular LDAP vs Active Directory agents. Also added :ref:`clarifying note <authn-ldap-dir-creation>` to Authentication chapter that explains that Directory, Provider, and Agent must all be passed at the same time in order to create an LDAP Directory.
+
+2016-04-22
+==========
+
+- **New:** Added new SAML Authentication :ref:`configuration instructions for Ping Identity <ping>`.
+- **New:** Added information about :ref:`Mapping SAML Attributes for Okta <okta-attribute-mapping>`.
+
+2016-04-21
+==========
+
+- **New:** Added ``passwordModifiedAt`` attribute to :ref:`ref-account` Resource table, as well as to list of :ref:`searchable-attributes`. Example usage also added to :ref:`new section in Account Management chapter <password-change-timestamp-search>`.
+
+2016-04-18
+==========
+
+- **New:** Added :ref:`errors` page, with list of REST Errors along with explanations.
 
 2016-03-16
 ==========
@@ -74,7 +109,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 2016-01-20
 ==========
 
-- **New:** Added :ref:`Change Log <changelog>`.
+- **New:** Added Change Log.
 - **Modified:** Directory type language changed. "Social", "Mirror" and "SAML" Directories are all actually "Mirror Directories", and the language in the :ref:`Account Management <account-mgmt>` and :ref:`Authentication <authn>` chapters has been updated to reflect this.
 - **New:** Created top-level :ref:`Mirror Directories section <about-mirror-dir>` that discusses all Mirror Directories in general and how to support multiple Mirror Directories.
 - **Modified:** Updated information about :ref:`Master Directories <mirror-login>` and how they function.

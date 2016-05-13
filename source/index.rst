@@ -20,6 +20,8 @@ Contents:
    idsite
    reference
    configuration
+   errors
+   master
    changelog
 
 
