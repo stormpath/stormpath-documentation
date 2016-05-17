@@ -1,12 +1,12 @@
  .. _authz:
 
 *******************************
-6. Authorization With Stormpath
+5. Authorization With Stormpath
 *******************************
 
 This section will provide you with a quick introduction to Authorization with Stormpath. It begins by answering the question "What is authorization?", including the difference between simple authorization checks and permissions-based authorization. It then describes some approaches to modeling authorization in Stormpath. Those include: using the Group resource to model roles, expanding those roles to cover every tenant in your application, and finally how to create fine-grained permissions.
 
-6.1. What is Authorization?
+5.1. What is Authorization?
 ===========================
 
 Authorization is simply the way in which we determine the permissions someone has to do something. In contrast to authentication, which is how we determine who a person is, **authorization** is how we determine **what a person can do**.
@@ -15,12 +15,12 @@ Once a user has entered in a valid login and password (authentication), there ar
 
 One distinction, though, is whether the permission is attached to the user, or to the resource that they are accessing. To go back to our airport scenario, we can imagine the airline has two options.
 
-6.1.1. Simple Authorization
+5.1.1. Simple Authorization
 ---------------------------
 
 First, the airline can have at the gate a master list of all passengers who are allowed to board the plane. This is equivalent to hard-coding permission checks into your application, and then tying them in some way to a user. This means that your authorization logic can be based on checks of a user's particular identity (e.g. ``if (user("jsmith") {...``) or their membership in a particular Group (e.g. ``if (user.group("passengers") {...``).  This simple authorization is perfectly sufficient for many applications, but has some downsides. One downside is that it can result in authorization rules that are more difficult to change dynamically. Another downside is that any change in authorization rules can end-up requiring a lot of refactoring of code, test cases, etc. A more dynamic and powerful way of handling authorization is through the use of permissions.
 
-6.1.2. Permissions-based Authorization
+5.1.2. Permissions-based Authorization
 --------------------------------------
 
 Permissions, at their most basic, are statements of functionality that define a resource and what actions are possible for that resource. Going back to our airport scenario, an alternative to the boarding master list is that the airline sets a requirement: every passenger who wants to board the plan must bring a boarding pass. This pass comes with permission to perform the "board" action onto a specific flight number. So now, instead of basing authorization around a particular user identifier, we could require a certain permission to perform an action on a resource (e.g. ``if (user.isPermitted("flight:board:ac232"))``). This approach has many advantages, including more flexibility with regards to your security model, and separating your application logic from your data model.
@@ -29,14 +29,14 @@ Permissions, at their most basic, are statements of functionality that define a 
 
   This could use a concrete example.
 
-6.2. Modeling Authorization in Stormpath
+5.2. Modeling Authorization in Stormpath
 ========================================
 
 From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
 
 .. _role-groups:
 
-6.2.1. How to Use Groups to Model Authorization Roles
+5.2.1. How to Use Groups to Model Authorization Roles
 -----------------------------------------------------
 
 The Group resource is central to many of the more advanced forms of authorization available with Stormpath. Among other things, you can use Groups for things like :ref:`modelling hierarchies <hierarchy-groups>`, as well as creating user roles that span every organization that is using your application.
@@ -85,7 +85,7 @@ The actual authorization checks that you do here are irrelevant, so you can stil
 
 More information about the APIs that allow you to create, retrieve and search an Application's Groups can be found in the the :ref:`Account Management section <group-mgmt>`, while more information about multi-Tenancy can be found :ref:`in the multi-tenancy section <multitenancy>`.
 
-6.2.2. Using Permissions
+5.2.2. Using Permissions
 ------------------------
 
 If you have decided that your application requires the more advanced authorization modeling possible with permissions, then the first question with every permission is whether it will be tied to an Account or a Group.

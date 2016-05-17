@@ -1,15 +1,15 @@
 .. _multitenancy:
 
 *******************************
-7. Multi-Tenancy with Stormpath
+6. Multi-Tenancy with Stormpath
 *******************************
 
-7.1. What Is a Multi-Tenant Application?
+6.1. What Is a Multi-Tenant Application?
 ========================================
 
 The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model.
 
-7.2. Modeling Tenants in Stormpath
+6.2. Modeling Tenants in Stormpath
 ===================================
 
 Multi-tenant applications come with special user management considerations:
@@ -27,7 +27,7 @@ As with all user base modeling, we'll begin with the basics: Directories and Gro
 
 .. _multitenancy-strategies:
 
-7.2.1. Account Store Strategies for Multi-Tenancy
+6.2.1. Account Store Strategies for Multi-Tenancy
 -------------------------------------------------
 
 Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, the additional consideration is whether you will have each one of your application's tenants represented by a Directory or a Group.
@@ -122,7 +122,7 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
-7.2.2. Organizations
+6.2.2. Organizations
 --------------------
 
 Once you have your application's tenants modeled as Directories or Groups, the final tool that Stormpath gives you is the Organization resource. These are umbrella entities that allow you to better structure and control multi-tenant applications.
@@ -297,7 +297,7 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
     }
 
 
-7.3. Authenticating an Account against an Organization
+6.3. Authenticating an Account against an Organization
 ======================================================
 
 Authenticating an Account against an Organization works essentially the same way as described in :ref:`how-login-works`. The only difference is that adding the Organization resource allows for an additional level of Account Stores.
@@ -316,7 +316,7 @@ If the login attempt does specify an Organization, then we simply jump to that p
 
 .. _multitenant-routing-users:
 
-7.4 Routing Users to their Tenant
+6.4 Routing Users to their Tenant
 ==================================
 
 If you are designing a public multi-tenant web application that supports multiple application tenants with private data partitioning, then you will probably want some way for users to specify which tenant they are logging in to.
@@ -339,7 +339,7 @@ So if an application needs this identifier with every request, how do you ensure
 
 We present here two possible solutions that use this ``nameKey``. You may support both if you wish to give your customers convenience options.
 
-7.4.1. Sub-Domain
+6.4.1. Sub-Domain
 ------------------------
 
 The first solution is to allow your users to access your application via a unique subdomain URL:
@@ -376,7 +376,7 @@ Combine With Login Form Field
 
 If a user from a customer organization ever accesses your app directly (``https://mycompany.io``) instead of using their subdomain (``https://customerA.mycompany.io``), you still might need to provide a tenant-aware login form (described below). After login, you can redirect them to their tenant-specific URL for all subsequent requests.
 
-7.4.2. Login Form Field
+6.4.2. Login Form Field
 ------------------------
 
 An alternative, or complimentary, approach to tenant subdomains is to allow the user to specify their tenant on the login page, then storing that information. Then, for all subsequent requests to your application, you can:

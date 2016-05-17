@@ -1,10 +1,10 @@
 .. _idsite:
 
 ****************
-8. Using ID Site
+7. Using ID Site
 ****************
 
-8.1. What is an ID Site?
+7.1. What is an ID Site?
 ========================
 
 Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication. It supports regular login to your Stormpath Directories, as well as Social and SAML login.
@@ -18,7 +18,7 @@ Building, securing, and maintaining identity screens for your users is time cons
 
 Stormpath ID Site fully decouples your identity screens from your applications, making it incredibly easy to provide the same login / registration pages for multiple applications — achieving centralized user management and authentication with a clean and easy user experience.
 
-8.2. How does ID Site Work?
+7.2. How does ID Site Work?
 ===========================
 
 To demonstrate how the SDK works, we'll use an example. Imagine you are building an application for managing Stormtrooper equipment — like awesome helmets and blasters. The application is "Imperial Exchange", available at http://imperialxchange.com/, and it uses Stormpath ID Site for login and registration.
@@ -38,10 +38,10 @@ After the user has logged-in successfully, they will be redirected back to your 
 
 .. _idsite-set-up:
 
-8.3. ID Site Set Up
+7.3. ID Site Set Up
 ===================
 
-8.3.1. Setting Up Your ID Site
+7.3.1. Setting Up Your ID Site
 -------------------------------
 
 Your ID Site uses a default configuration for testing purposes, but can be fully configured to host customized code or to use your own custom domain.
@@ -141,7 +141,7 @@ In order to set up your application to use ID Site, you will need to install the
 
 .. _idsite-with-rest:
 
-8.4. Using ID Site Via REST API
+7.4. Using ID Site Via REST API
 ===============================
 
 The Stormpath SDKs help developers quickly integrate communication from Stormpath's ID Site to their application. However, it is possible to use ID Site without an Stormpath SDK using the REST API.
@@ -406,7 +406,7 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
 Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
 
-8.5 Using ID Site for Multi-tenancy
+7.5 Using ID Site for Multi-tenancy
 ====================================
 
 .. todo::

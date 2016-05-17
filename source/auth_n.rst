@@ -1,7 +1,7 @@
 .. _authn:
 
 *****************************************
-5. Authenticating Accounts with Stormpath
+4. Authenticating Accounts with Stormpath
 *****************************************
 
 Authentication is the process by which a system identifies that someone is who they say they are. Perhaps the most accessible example of this process is at the airport, where you must present your passport and your plane ticket. The passport is used to authenticate you, that you are who you present yourself to be, and the plane ticket represents your authorization to board a specific flight.
@@ -10,7 +10,7 @@ In this chapter you will cover three of the ways that Stormpath allows you to au
 
 .. _password-authn:
 
-5.1. How Password Authentication Works in Stormpath
+4.1. How Password Authentication Works in Stormpath
 ===================================================
 
 .. contents::
@@ -19,7 +19,7 @@ In this chapter you will cover three of the ways that Stormpath allows you to au
 
 Probably the single most common way of authenticating a user is to ask them for their account credentials. When a user creates an Account in Stormpath, it is required that they provide a username (or email) and a password. Those credentials can then be provided in order to authenticate that Account.
 
-5.1.1. Authenticating An Account
+4.1.1. Authenticating An Account
 --------------------------------
 
 After an Account resource has been created, you can authenticate it given an input of a ``username``/``email`` and a ``password`` from the end-user. When authentication occurs, you are authenticating an Account within a specific Application against that Application’s Organizations, Directories and Groups (more on that :ref:`below <how-login-works>`). The key point is that the Application resource is the starting point for authentication attempts.
@@ -181,7 +181,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. _how-login-works:
 
-5.1.2. How Login Attempts Work in Stormpath
+4.1.2. How Login Attempts Work in Stormpath
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When the "Han Solo" Account tries to log in to the Application, the user submits a request to the Application’s ``/loginAttempts`` endpoint. Stormpath then consults the Application’s assigned **Account Stores** (Organizations, Directories, and Groups) in the order that they are assigned to the Application. When a matching Account is discovered in a mapped Account Store, it is used to verify the authentication attempt and all subsequent Account Stores are ignored. In other words, Accounts are matched for Application login based on a "first match wins" policy.
@@ -261,7 +261,7 @@ This mirror-master approach has two major benefits:
 
 .. _managing-login:
 
-5.1.3. Manage Who Can Log Into Your Application
+4.1.3. Manage Who Can Log Into Your Application
 -----------------------------------------------
 
 As is hopefully evident by now, controlling which Accounts can log in to your Application is largely a matter of manipulating the Application's Account Store Mappings.
@@ -582,7 +582,7 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
 .. _token-authn:
 
-5.2. How Token-Based Authentication Works
+4.2. How Token-Based Authentication Works
 =========================================
 
 .. contents::
@@ -591,7 +591,7 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
 In this section, you will discuss how to use Stormpath to generate and manage OAuth 2.0 Access Token.
 
-5.2.1. Introduction to Token-Based Authentication
+4.2.1. Introduction to Token-Based Authentication
 -------------------------------------------------
 
 Since HTTP is considered a stateless protocol, if your application authenticates a user for one HTTP request, a problem arises when the next request is sent and your application doesn't know who the user is. This is why many applications today pass some information to tie the request to a user. Traditionally, this requires **Server-based authentication**, where state is stored on the server and only a session identifier is stored on the client.
@@ -631,7 +631,7 @@ When using OAuth 2.0, the Access Token and Refresh Token are returned in the sam
 
 .. _token-authn-config:
 
-5.2.2. Using Stormpath for Token-Based Authentication
+4.2.2. Using Stormpath for Token-Based Authentication
 -----------------------------------------------------
 
 Stormpath can be used to generate, manage, check, and revoke both Access and Refresh Tokens. Before diving in, let's talk about configuration.
@@ -1547,7 +1547,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 
 .. _social-authn:
 
-5.3. How Social Authentication Works
+4.3. How Social Authentication Works
 ====================================
 
 .. contents::
@@ -1642,7 +1642,7 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 .. _authn-google:
 
-5.3.1. Google
+4.3.1. Google
 --------------
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
@@ -1855,7 +1855,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. _authn-facebook:
 
-5.3.2. Facebook
+4.3.2. Facebook
 ---------------
 
 Before you integrate Facebook Login with Stormpath, you must complete the following steps:
@@ -2006,7 +2006,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. _authn-github:
 
-5.3.3. Github
+4.3.3. Github
 -------------
 
 Before you integrate GitHub Login with Stormpath, you must complete the following steps:
@@ -2163,7 +2163,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. _authn-linkedin:
 
-5.3.4 LinkedIn
+4.3.4 LinkedIn
 --------------
 
 Before you integrate LinkedIn Login with Stormpath, you must complete the following steps:
@@ -2338,7 +2338,7 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. _ldap-dir-authn:
 
-5.4. Authenticating Against an LDAP Directory
+4.4. Authenticating Against an LDAP Directory
 =============================================
 
 .. contents::
@@ -2519,7 +2519,7 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
 
 .. _saml-authn:
 
-5.5. Authenticating Against a SAML Directory
+4.5. Authenticating Against a SAML Directory
 ============================================
 
 .. contents::
@@ -2538,7 +2538,7 @@ If you'd like to understand the steps involved in a SAML login, see the :ref:`SA
 
 .. _saml-overview:
 
-5.5.1. Stormpath as a Service Provider
+4.5.1. Stormpath as a Service Provider
 --------------------------------------
 
 As mentioned above, Stormpath supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**.
@@ -2574,7 +2574,7 @@ For a more detailed step-by-step account of SAML login, see :ref:`below <saml-fl
 
 .. _saml-configuration:
 
-5.5.2. Configuring SAML
+4.5.2. Configuring SAML
 -----------------------
 
 .. todo::
@@ -2758,7 +2758,7 @@ Step 5: Configure Your Attribute Mappings
 
 When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-5.1. Find the Existing SAML Attributes
+4.1. Find the Existing SAML Attributes
 ++++++++++++++++++++++++++++++++++++++
 
 If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Salesforce sends by retrieving the new user Account that was created inside Stormpath.
@@ -2823,7 +2823,7 @@ Specifically, you want that Account's Provider Data:
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other SAML Attributes to Stormpath Account attributes as well.
 
-5.2. (Optional) Add Any Additional Attributes You Want
+4.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 If there are other attributes that you would like Salesforce to pass other attributes, you can configure this. From your Salesforce settings page:
@@ -2843,7 +2843,7 @@ For example:
 
 You will now be returned to your App's main page, and you will see the attribute you just added in the "Custom Attributes" section. You can add as many attributes as you wish.
 
-5.3. Specify Your Mapping
+4.3. Specify Your Mapping
 +++++++++++++++++++++++++
 
 #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
@@ -2854,7 +2854,7 @@ You will now be returned to your App's main page, and you will see the attribute
 #. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified``
 #. Finally, enter the Account attribute(s) that you would like this Salesforce attribute to map to
 
-For example, you could enter, using the custom attribute from Step 5.2 above:
+For example, you could enter, using the custom attribute from Step 4.2 above:
 
 * For the "Name" enter ``firstname``
 * For "Stormpath Attributes" enter ``givenName``
@@ -3490,7 +3490,7 @@ Step 5: Configure Your Attribute Mappings
 
 When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
-5.1. Find the Existing SAML Attributes
+4.1. Find the Existing SAML Attributes
 +++++++++++++++++++++++++++++++++++++++++++++
 
 If you have already successfully set-up SAML and authenticated a user with your app, you will be able to retrieve the SAML Attributes that Ping sends by retrieving the new user Account that was created inside Stormpath.
@@ -3512,7 +3512,7 @@ Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attrib
 
 If you want, you can map other SAML Attributes to Stormpath Account attributes.
 
-5.2. (Optional) Add Any Additional Attributes You Want
+4.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 If there are other attributes that you would like Ping to pass, you can configure this.
@@ -3528,7 +3528,7 @@ If there are other attributes that you would like Ping to pass, you can configur
 #. Under "Identity Bridge Attribute or Literal Value" you can click on the textbox to see a list of available values. For this example, you'd select **First Name**.
 #. Finally click on **Save & Publish** and, on the next page, **Finish**.
 
-5.3. Specify Your Mapping
+4.3. Specify Your Mapping
 +++++++++++++++++++++++++
 
 #. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
@@ -3538,7 +3538,7 @@ If there are other attributes that you would like Ping to pass, you can configur
 #. Here you will enter the Ping attribute name under "Name"
 #. Finally, enter the Account attribute(s) that you would like this Ping attribute to map to
 
-For example, you could enter, using the custom attribute from Step 5.2 above:
+For example, you could enter, using the custom attribute from Step 4.2 above:
 
 * For the "Name" enter ``firstname``
 * For "Stormpath Attributes" enter ``givenName``
@@ -3549,7 +3549,7 @@ You have now completed the initial steps of setting-up log in via Ping.
 
 .. _saml-configuration-rest:
 
-5.5.3. Configuring SAML via REST
+4.5.3. Configuring SAML via REST
 --------------------------------
 
 Here you will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
@@ -4320,7 +4320,7 @@ Now that we've configured everything, you can take a look at what the actual SAM
 
 .. _saml-flow:
 
-5.5.4. The Stormpath SAML Flow
+4.5.4. The Stormpath SAML Flow
 ------------------------------
 
 .. todo::
@@ -4628,14 +4628,14 @@ At this point your user is authenticated and able to use your app.
 
 .. only:: not rest
 
-  5.6. How API Key Authentication Works in Stormpath
+  4.6. How API Key Authentication Works in Stormpath
   =====================================================
 
   In this section, we discuss how to set up Stormpath to manage and authenticate API Keys and Tokens for developers that are using your API services. Stormpath provides not only the user management piece around API Keys, but also allows you to associate permissions and custom data with the Accounts for advanced use-cases.
 
   Stormpath offers a complete solution that securely and easily helps you manage developer accounts, create and manage API Keys, and generate OAuth 2.0 bearer tokens to support Access Token authentication.
 
-  5.6.1. How to use API Key and Secret Authentication
+  4.6.1. How to use API Key and Secret Authentication
   -----------------------------------------------------------------
 
   First, you will need an Account for a developer. For information about how to create an Account, see :ref:`the Account Management chapter <add-new-account>`.
@@ -4784,7 +4784,7 @@ At this point your user is authenticated and able to use your app.
 
   .. _api-basic-auth:
 
-  5.6.2. How to authenticate using HTTP Basic
+  4.6.2. How to authenticate using HTTP Basic
   -----------------------------------------------------------------
 
   Now that your developer has an API Key, there are two methods that they can use to authenticate their API calls: HTTP Basic and HTTP Bearer. In this section we'll cover Basic Authentication, then we'll discuss :ref:`how to exchange an API Key for an OAuth token <api-key-for-token>`, and finally how to authenticate an API call with that token using :ref:`HTTP Bearer Authentication <api-bearer-auth>`.
@@ -4841,7 +4841,7 @@ At this point your user is authenticated and able to use your app.
 
   .. _api-key-for-token:
 
-  5.6.3. How to exchange an API Key for an Access Token
+  4.6.3. How to exchange an API Key for an Access Token
   -----------------------------------------------------------------
 
   Instead of passing base64 encoded API keys over the wire, you can exchange an API Key Id and Secret for an Access Token, and use the Access Token as a Bearer Token to authentication for a protected API or resource. Exchanging an API Key for a token is essentially a two step process:
@@ -4853,7 +4853,7 @@ At this point your user is authenticated and able to use your app.
 
   .. _api-bearer-auth:
 
-  5.6.4. How to authenticate using HTTP Bearer Access Tokens
+  4.6.4. How to authenticate using HTTP Bearer Access Tokens
   -----------------------------------------------------------------
 
   After you return an OAuth Access Token to a developer using your API service, they can start using the OAuth Access Token to validate authentication to your service.

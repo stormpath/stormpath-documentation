@@ -53,7 +53,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Stormpath REST API'
+project = u'Stormpath Documentation'
 copyright = u'2015, Stormpath, Inc.'
 author = u'Stormpath'
 
@@ -237,7 +237,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'StormpathDocumentation.tex', u'Stormpath Documentation',
-   u'Jakub Swiatczak', 'manual'),
+   u'Stormpath', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
