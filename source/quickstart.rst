@@ -114,6 +114,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
   .. note::
     The asynchronous API is preferred for newer applications. However, the methods available in ``Stormpath.SDK.Sync`` are **natively** synchronous - not just a blocking wrapper over the asynchronous API. These methods can be used safely, even from asynchronous applications.
 
+.. only:: php
+
+  (todo)
+
 .. only:: python
 
   To set up your environment follow these steps:
@@ -134,7 +138,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: java
 
-  To setup your environment for this quickstart, follow these steps:
+  To set up your environment for this quickstart, follow these steps:
 
   Include the following dependencies in your Maven ``pom.xml`` file:
 
@@ -166,12 +170,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: nodejs
 
-  To set up your environment follow these steps:
-
-  First, install the Stormpath Node.js SDK by running the following command on
+  To set up your environment, install the Stormpath Node.js SDK by running the following command on
   the terminal:
 
-  .. code:: console
+  .. code-block:: bash
 
     npm install stormpath
 
@@ -182,6 +184,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 .. only:: csharp or vbnet
 
   These instructions assume that you have Visual Studio installed on your system and that you have already completed the steps above, and now have:
+
+.. only:: php
+
+  (todo)
 
 .. only:: python
 
@@ -197,15 +203,18 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 - A Stormpath account
 - A Stormpath API Key generated and downloaded onto your system
-- A Stormpath Tenant resource. The following associated resources were also automatically created:
-  - Two Application resources: One called "My Application", and the other called "Stormpath"
-  - Two Directory resources: "My Application Directory" and "Stormpath Administrators"
-  - "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
-  - An Account resource representing your Stormpath Administrator user.
+- A Stormpath Tenant resource.
+
+The following associated resources were also automatically created:
+
+- Two Application resources: One called "My Application", and the other called "Stormpath"
+- Two Directory resources: "My Application Directory" and "Stormpath Administrators"
+- "My Application Directory" is set as the default Directory for any new Accounts added to "My Application".
+- An Account resource representing your Stormpath Administrator user.
 
 .. figure:: images/quickstart/default_resources.png
   :align: center
-  :scale: 20%
+  :scale: 100%
   :alt: Default Stormpath Resources
 
   *These are the default resources that exist in your Tenant right after registration*
@@ -227,6 +236,10 @@ Let's get started!
 
 Before you can create user Accounts, you'll need to retrieve your Stormpath Application. An Application in Stormpath represents the project that you are working on. This means that, if you're building a web app named "Lightsabers Galore", you'd want to name your Stormpath Application "Lightsabers Galore" as well. By default, your Stormpath Tenant will have an Application already created for you to use. We will use this Application, named "My Application", for the quickstart.
 
+.. only:: not rest
+
+  **2.4.1. Initialize Your Client**
+
 .. only:: csharp or vbnet
 
   The first thing you need to connect to the Stormpath API is an ``IClient`` object:
@@ -247,20 +260,11 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   Once you have an ``IClient`` instance, keep it around! You should only create it **once** per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
 
-.. only:: python
-
-  The first thing you need to connect to the Stormpath API is a ``Client`` object:
-
-  .. literalinclude:: code/python/quickstart/initialize_client.py
-    :language: python
-
-  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
-
 .. only:: java
 
   .. note::
 
-    The following assumes that you have a file name: ``~/.stormpath/apiKey.properties`` that contains your api key id and your api key secret in this format:
+    The following assumes that you have a file named: ``~/.stormpath/apiKey.properties`` that contains your API key ID and secret in this format:
 
     .. code-block:: console
 
@@ -272,7 +276,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   .. literalinclude:: code/java/quickstart/initialize_client.java
     :language: java
 
-  Once you have a ``Client`` instance, keep it around! You should only created it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
+  Once you have a ``Client`` instance, keep it around! You should only created it once per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: nodejs
 
@@ -283,11 +287,27 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/initialize_client.php
+    :language: php
+
+.. only:: python
+
+  The first thing you need to connect to the Stormpath API is a ``Client`` object:
+
+  .. literalinclude:: code/python/quickstart/initialize_client.py
+    :language: python
+
+  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
+
+.. only:: not rest
+
+  **2.4.2. Retrieve the Application**
+
 .. only:: rest
 
   Before you can get your Application, you must get the location of your Tenant from Stormpath, like so:
-
-.. only:: rest
 
   .. code-block:: bash
 
@@ -358,18 +378,6 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   Make note of the ``accounts``, ``loginAttempts``, and ``href`` URLs in the above response. We're now going to use these to create a new user Account and then authenticate it.
 
-.. only:: php
-
-  .. literalinclude:: code/php/quickstart/retrieve_your_application.php
-    :language: php
-
-.. only:: java
-
-  Next, use the ``getApplications`` method on the ``Client`` and use criteria to search for the "My Application" Application:
-
-  .. literalinclude:: code/java/quickstart/retrieve_your_application.java
-    :language: java
-
 .. only:: csharp or vbnet
 
   Next, use the ``GetApplications()`` collection to search for the "My Application" Application:
@@ -392,17 +400,12 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   ``myApp`` is an ``IApplication`` object, which represents a Stormpath Application resource as a .NET type. We'll use this object to create a new user Account and then authenticate it.
 
-.. only:: python
+.. only:: java
 
-  Next, use the ``client.applications`` generator to search for the "My
-  Application" Application:
+  Next, use the ``getApplications`` method on the ``Client`` and use criteria to search for the "My Application" Application:
 
-  .. literalinclude:: code/python/quickstart/retrieve_your_application.py
-    :language: python
-
-  ``application`` is an ``Application`` object, which represents a Stormpath
-  Application resource as a Python class.  We'll use this object to create a
-  new user Account and then authenticate it.
+  .. literalinclude:: code/java/quickstart/retrieve_your_application.java
+    :language: java
 
 .. only:: nodejs
 
@@ -415,6 +418,23 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   ``application`` is an ``Application`` object, which represents a Stormpath
   Application resource.  We'll use this object to create a new user Account
   and then authenticate it.
+
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/retrieve_your_application.php
+    :language: php
+
+.. only:: python
+
+  Next, use the ``client.applications`` generator to search for the "My
+  Application" Application:
+
+  .. literalinclude:: code/python/quickstart/retrieve_your_application.py
+    :language: python
+
+  ``application`` is an ``Application`` object, which represents a Stormpath
+  Application resource as a Python class.  We'll use this object to create a
+  new user Account and then authenticate it.
 
 .. _quickstart-create-account:
 
@@ -472,18 +492,6 @@ Now that we've created an Application, let's create a user Account so someone ca
 
   You'll notice here that this user Account has a Directory ``href`` returned as well, even though you haven't created one. This is because when you created an Application, Stormpath automatically created a new Directory as well.
 
-.. only:: php
-
-  .. literalinclude:: code/php/quickstart/create_an_account.php
-    :language: php
-
-.. only:: java
-
-  To do this, you'll need to use your ``application`` created in the previous step.
-
-  .. literalinclude:: code/java/quickstart/create_an_account.java
-    :language: java
-
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -498,17 +506,29 @@ Now that we've created an Application, let's create a user Account so someone ca
 
   ``CreateAccountAsync()`` sends a request to Stormpath and returns an ``IAccount`` (after being awaited). Like ``IApplication``, ``IAccount`` is the .NET type that represents a Stormpath Account resource.
 
+.. only:: java
+
+  To do this, you'll need to use your ``application`` created in the previous step.
+
+  .. literalinclude:: code/java/quickstart/create_an_account.java
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/quickstart/create_an_account.js
+    :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/quickstart/create_an_account.php
+    :language: php
+
 .. only:: python
 
   .. literalinclude:: code/python/quickstart/create_an_account.py
     :language: python
 
   The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application``, ``Account`` is the Python class that represents a Stormpath Account resource.
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/quickstart/create_an_account.js
-    :language: javascript
 
 .. _quickstart-auth-user:
 
@@ -568,9 +588,26 @@ Now we have a user Account that can use your Application. But how do you authent
 
   You can use the returned ``href`` to GET the Account's details (first name, last name, email, etc).
 
+  If the authentication attempt fails, you will see an error response instead:
+
+  .. code-block:: json
+
+    {
+      "status": 400,
+      "code": 400,
+      "message": "Invalid username or password.",
+      "developerMessage": "Invalid username or password.",
+      "moreInfo": "mailto:support@stormpath.com"
+    }
+
 .. only:: php
 
+  (todo) Let's make sure this section has the same sort of content as the other SDKs.
+
   .. literalinclude:: code/php/quickstart/authentication_attempt.php
+    :language: php
+
+  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
     :language: php
 
 .. only:: java
@@ -618,22 +655,6 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: rest
 
-  If the authentication attempt fails, you will see an error response instead:
-
-  .. code-block:: json
-
-    {
-      "status": 400,
-      "code": 400,
-      "message": "Invalid username or password.",
-      "developerMessage": "Invalid username or password.",
-      "moreInfo": "mailto:support@stormpath.com"
-    }
-
-.. only:: php
-
-  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
-    :language: php
 
 2.7. Next Steps
 ===============

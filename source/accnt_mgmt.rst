@@ -37,9 +37,21 @@ The **Directory** resource is a top-level container for Account and Group resour
 
   In the Stormpath .NET SDK, the Directory resource is represented by the ``IDirectory`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
 
-.. todo::
+.. only:: java
 
-  This will need links to the generated doc for the SDKs.
+  (todo)
+
+.. only:: nodejs
+
+  (todo)
+
+.. only:: php
+
+  For more detailed information about the Directory object, please see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Directory.html>`__ section in the Reference chapter.
+
+.. only:: python
+
+  (todo)
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -153,6 +165,8 @@ The following request:
 
 .. only:: java
 
+  Would yield the following response:
+
   .. literalinclude:: code/java/account_management/create_cloud_dir_resp.java
       :language: java
 
@@ -171,6 +185,8 @@ The following request:
       :language: php
 
 .. only:: python
+
+  Would yield the following response:
 
   .. literalinclude:: code/python/account_management/create_cloud_dir_resp.py
       :language: python
@@ -655,11 +671,23 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: csharp or vbnet
 
-  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`__.
 
-.. todo::
+.. only:: java
 
-  This will need links to the generated documentation for the SDKs.
+  (todo)
+
+.. only:: nodejs
+
+  (todo)
+
+.. only:: php
+
+  For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__ section of the Reference chapter.
+
+.. only:: python
+
+  (todo)
 
 3.2.1. New Account Creation
 ---------------------------
@@ -772,6 +800,8 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: java
 
+  Would yield this response:
+
   .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
       :language: java
 
@@ -790,6 +820,8 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       :language: php
 
 .. only:: python
+
+  Would yield this response:
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_resp.py
       :language: python

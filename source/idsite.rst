@@ -406,7 +406,7 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
 Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
 
-7.5 Using ID Site for Multi-tenancy
+7.5. Using ID Site for Multi-tenancy
 ====================================
 
 .. todo::
