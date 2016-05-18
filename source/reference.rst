@@ -783,7 +783,7 @@ When you sign up for Stormpath, a private data space is created for you. This sp
     * - ``customData``
       - Link
       - N/A
-      - A link to the Tenant's customData resource that you can use to store your own custom fields.
+      - A link to the Tenant's :ref:`customData <ref-customdata>` resource that you can use to store your own custom fields.
 
     * - ``organizations``
       - Link
@@ -1129,7 +1129,7 @@ An **Application** resource in Stormpath contains information about any real-wor
     * - ``customData``
       - Link
       - N/A
-      - A link to the Tenant's customData resource that you can use to store your own custom fields.
+      - A link to the Tenant's :ref:`customData <ref-customdata>` resource that you can use to store your own custom fields.
 
     * - ``oAuthPolicy``
       - Link
@@ -1948,7 +1948,7 @@ An individual Directory resource may be accessed via its Resource URL:
   * - ``customData``
     - Link
     - N/A
-    - A link to the Directory's :ref:`customData <ref-customData>` resource that you can use to store your own Directory-specific custom fields.
+    - A link to the Directory's :ref:`customData <ref-customdata>` resource that you can use to store your own Directory-specific custom fields.
 
   * - ``passwordPolicy``
     - Link
@@ -3579,7 +3579,7 @@ An individual Organization resource may be accessed via its Resource URL:
   * - ``customData``
     - Link
     - N/A
-    - A link to the Organization's customData resource that you can use to store your own Organization-specific custom fields.
+    - A link to the Organization's :ref:`customData <ref-customdata>` resource that you can use to store your own Organization-specific custom fields.
 
   * - ``defaultAccountStoreMapping``
     - Link
@@ -4067,7 +4067,7 @@ An individual Account resource may be accessed via its Resource URL:
   * - ``customData``
     - Link
     - N/A
-    - A link to the Account’s customData resource that you can use to store your own Account-specific custom fields.
+    - A link to the Account's :ref:`customData <ref-customdata>` resource that you can use to store your own Account-specific custom fields.
 
   * - ``providerData``
     - Link
@@ -4174,7 +4174,7 @@ Account Operations
 Create an Account
 ^^^^^^^^^^^^^^^^^
 
-Because an Account is "owned" by a Directory, you can add it either directly through the Directory that owns it, or indirectly via an Application or Organization that has that Directory as an Account Store:
+Because an Account is "owned" by a Directory, you can add it either directly through the Directory that owns it, or indirectly via an Application or Organization that has that Directory as an Account Store. This is only the case for Cloud Directories. Accounts cannot be directly added to Mirrored Directories since those pull all of their Account information from external sources like Facebook or Active Directory.
 
 .. list-table::
     :widths: 30 15 15 40
@@ -4212,6 +4212,8 @@ Retrieve an Account
 Update an Account
 ^^^^^^^^^^^^^^^^^
 
+Most of an Cloud Directory Account's attributes can be directly updated. Accounts found in Mirror Directories are more restricted, since those Accounts are mirroring data found in an external user directory.
+
 .. list-table::
     :widths: 40 20 40
     :header-rows: 1
@@ -4222,7 +4224,7 @@ Update an Account
 
     * - POST /v1/accounts/$ACCOUNT_ID
       - ``username``, ``email``, ``password``, ``givenName``, ``middleName``, ``surname``, ``status``, ``customData``
-      - Updates the specified attributes with the values provided.
+      - Updates the specified attributes with the values provided. For Accounts found in Mirror Directories, only ``status`` and ``customData`` can be updated.
 
 Delete an Account
 ^^^^^^^^^^^^^^^^^
@@ -4282,7 +4284,7 @@ This query would create an Account with the specified attributes, while also sup
                "hobby": "Kendo"
   }'
 
-This query would update an Account's ``status`` attribute at the same time as it updated/added two entries in the Account's customData resource.
+This query would update an Account's ``status`` attribute at the same time as it updated/added two entries in the Account's :ref:`customData <ref-customdata>` resource.
 
 Using an Account for Look-Up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -127,7 +127,7 @@ As mentioned earlier, Stormpath resources like Accounts and Groups are created a
 
 Permissions in Stormpath can be modeled as an array inside the ``customData`` resource. They can be as simple as a key-value pair, or more complex objects. A user Account could have their user-unique permissions defined in a ``customData`` resource linked to from their Account. At the same time, their Account would be linked to the application-wide "Admin" Group which would have its own linked ``customData`` resource that would contain definitions of the permissions of all the users with the Admin role in your application.
 
-For more information about adding customData to a user, please see the :ref:`Account Management section <add-user-customdata>`. And to find out all the different things you can do with customData please see the `Product Guide <http://docs.stormpath.com/rest/product-guide/#custom-data>`_.
+For more information about adding customData to a user, please see the :ref:`Account Management section <add-user-customdata>`. And to find out all the different things you can do with customData please see the :ref:`Reference chapter <ref-customdata>`.
 
 Checking User and Role Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
