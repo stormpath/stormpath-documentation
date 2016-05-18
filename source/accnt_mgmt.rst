@@ -72,7 +72,7 @@ You can add as many Directories of each type as you require.
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
-These are the standard, default Directory resource.
+This is the standard, default Directory resource.
 
 .. _make-cloud-dir:
 
@@ -191,7 +191,7 @@ The following request:
   .. literalinclude:: code/python/account_management/create_cloud_dir_resp.py
       :language: python
 
-Our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
+At this point, our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
 
 .. figure:: images/accnt_mgmt/am_erd_01.png
   :align: center
@@ -259,7 +259,7 @@ Modeling LDAP Directories
 
 As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with.
 
-The Stormpath Agent (see :ref:`ref-ldap-agent`) is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, you recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
+The Stormpath Agent is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, you recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`ldap-dir-authn`.
 
