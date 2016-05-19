@@ -79,7 +79,7 @@ Stormpath uses the :ref:`ref-customdata` resource to store custom information. I
 
 For more information about all of these, please see the :ref:`reference` section.
 
-.. figure:: images/multitenancy/ERD_TpD.png
+.. figure:: images/about/stormpath_erd.png
     :align: center
     :scale: 100%
     :alt: Simplified Stormpath ERD
