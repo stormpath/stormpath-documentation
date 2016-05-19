@@ -538,6 +538,10 @@ The following request:
       "status" : "enabled"
     }
 
+  .. note::
+
+    Although in this example we use the Directory's `/groups` endpoint, it is also possible to use an Application or Organization's `/groups` endpoint. For more information see :ref:`below <add-to-app-or-org>`.
+
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -699,15 +703,15 @@ The basic steps for creating a new Account are covered in the :ref:`Quickstart <
 Add a New Account to a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`, or an Organization, like in :ref:`the Multi-tenancy Chapter <add-accnt-to-org>`.
+Because Accounts are "owned" by Directories, you create new Accounts by adding them to a Directory. You can add an Account to a Directory directly, or you can add it indirectly by registering an Account with an Application, like in the :ref:`Quickstart <quickstart>`, or an Organization, like in :ref:`the Multi-tenancy Chapter <add-accnt-to-org>`. This is only the case for Cloud Directories. Accounts cannot be directly added to :ref:`Mirror <about-mirror-dir>` Directories since those pull all of their Account information from external sources like Facebook or Active Directory.
 
 .. only:: rest
 
   .. note::
 
-    This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. Just make sure that you have Default Account Stores configured!
+    This section will show examples using a Directory's ``/accounts`` href, but they will also function the same if you use an Application’s or Organization's ``/accounts`` href instead. For more information about, see :ref:`below <add-to-app-or-org>`.
 
-  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory, which has the ``directoryId`` value ``2SKhstu8PlaekcaEXampLE``. The following API request:
 
   .. code-block:: http
 
@@ -840,7 +844,7 @@ The new Account is now in the "Captains" Directory.
 Add an Existing Account to a Group
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory.
+So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group inside the "Captains" Directory. Once again, this is possible because we are working with a Cloud Directory. If we were working with a :ref:`Mirror Directory <about-mirror-dir>`, we would not be able to manually add Groups since that information is pulled from the external user directory.
 
 .. only:: rest
 
@@ -940,6 +944,23 @@ This would leave us with the following resources:
   :alt: Final ERD
 
 This our completed resource set, with an Account that is a member of a Group inside a Directory. That Directory, along with the Application, sit inside the Stormpath Tenant. Notice, however, that there is no association between the Application and the Directory. For more information about this, please see :ref:`the Authentication chapter <create-asm>`.
+
+.. _add-to-app-or-org:
+
+Adding a new Account or Group to an Application or Organization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
+
+  POST /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts HTTP/1.1
+
+Or the same endpoint found on an Organization::
+
+  POST /v1/organizations/2P4XOanz26AUomIexample/accounts HTTP/1.1
+
+This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``/accountStoreMappings`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+
+All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``"isDefaultGroupStore`` set to ``true``.
 
 .. _importing-accounts:
 
@@ -1150,7 +1171,7 @@ For example, you could add information about this user's current location, like 
 
   This information can also be appended as part of the initial Account creation payload.
 
-  For more information about the customData resource, please see the `customData section <http://docs.stormpath.com/rest/product-guide/#custom-data>`_ of the REST API Product Guide.
+  For more information about the customData resource, please see the :ref:`customData section <ref-customdata>` of the REST API Product Guide.
 
 .. only:: java
 

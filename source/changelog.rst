@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-05-18
+==========
+
+- **New:** :ref:`Adding a new Account or Group to an Application or Organization <add-to-app-or-org>` in Account Management chapter.
+
 2016-05-11
 ==========
 
