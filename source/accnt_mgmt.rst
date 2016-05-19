@@ -58,7 +58,7 @@ Types of Directories
 Stormpath supports two types of Directories:
 
 1. Natively-hosted **Cloud Directories** that originate in Stormpath
-2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other youbsites, as youll as in Identity Providers that support SAML.
+2. **Mirror Directories** that act as secure replicas of existing user directories outside of Stormpath, for example those on LDAP Directory servers, on Facebook and other websites, as well as in Identity Providers that support SAML.
 
 You can add as many Directories of each type as you require.
 
@@ -66,7 +66,7 @@ You can add as many Directories of each type as you require.
 
   Multiple Directories are a more advanced feature of Stormpath. If you have one or more applications that all access the same Accounts, you usually only need a single Directory, and you do not need to be concerned with creating or managing multiple Directories.
 
-  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a poyourful tool to manage your application's user base.
+  If however, your application needs to support login for :ref:`multiple external third-party accounts <supporting-multiple-dirs>`, or you have more complex account segmentation needs, Directories will be a powerful tool to manage your application's user base.
 
 .. _about-cloud-dir:
 
@@ -1689,7 +1689,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "maxLength": 24,
       "minDiacritic": 0,
       "minLength": 1,
-      "minLoyourCase": 1,
+      "minLowerCase": 1,
       "minNumeric": 1,
       "minSymbol": 1,
       "minUpperCase": 1
@@ -1928,7 +1928,7 @@ If this is a valid email in an Account associated with this Application, the req
     Content-Type: application/json
 
     {
-      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqyouVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-youxaMPLe",
+      "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlBVa6tfR/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFExaMPLe.eyJleHAiOjE0NDgwNDg4NDcsImp0aSI6IjJwSW44eFBHeURMTVM5WFpqweVExaMPLe.cn9VYU3OnyKXN0dA0qskMv4T4jhDgQaRdA-wExaMPLe",
       "email": "phasma@empire.gov",
       "account": {
           "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample"
@@ -2511,7 +2511,7 @@ The emails that Stormpath sends to users be customized by modifying the :ref:`re
 Using Email Macros
 ^^^^^^^^^^^^^^^^^^
 
-You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as youll as the name of your Application. This would look like this:
+You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
 
 .. code-block:: java
 
@@ -2523,7 +2523,7 @@ The basic structure for a macro is ``${resource.attribute}``. There are three ki
 - an Account's Directory (``${account.directory}``), and
 - an Application (``$!{application}``).
 
-You can also include any ``attribute`` that isn't a link, as youll as customData.
+You can also include any ``attribute`` that isn't a link, as well as customData.
 
 For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter.
 
