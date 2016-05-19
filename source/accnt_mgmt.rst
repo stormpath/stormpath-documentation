@@ -522,6 +522,10 @@ How to Create a Group
 
 So let's say you want to add a new Group resource with the name "Starfleet Officers" to the "Captains" Directory.
 
+.. note::
+
+  Although in this example we use the Directory's `/groups` endpoint, it is also possible to use an Application or Organization's `/groups` endpoint. For more information see :ref:`below <add-to-app-or-org>`.
+
 The following request:
 
 .. only:: rest
