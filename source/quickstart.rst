@@ -116,7 +116,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  (todo)
+  (php.todo)
 
 .. only:: python
 
@@ -187,7 +187,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  (todo)
+  (php.todo)
 
 .. only:: python
 
@@ -602,7 +602,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: php
 
-  (todo) Let's make sure this section has the same sort of content as the other SDKs.
+  (php.todo) Let's make sure this section has the same sort of content as the other SDKs.
 
   .. literalinclude:: code/php/quickstart/authentication_attempt.php
     :language: php
