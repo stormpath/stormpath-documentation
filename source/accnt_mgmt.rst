@@ -39,11 +39,11 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: java
 
-  (todo)
+  (java.todo)
 
 .. only:: nodejs
 
-  (todo)
+  (node.todo)
 
 .. only:: php
 
@@ -51,7 +51,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: python
 
-  (todo)
+  (python.todo)
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -270,16 +270,13 @@ How to Make an LDAP Directory
 
 LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-.. only:: rest
-
-  For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
+    This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console, or consult the REST API documentation.
 
     .. todo::
 
@@ -287,18 +284,19 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
 
 .. only:: java
 
-  (todo)
+  (java.todo)
 
 .. only:: nodejs
 
-  (todo)
+  (java.todo)
 
 .. only:: php
 
    .. warning::
 
-    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
+    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console, or consult the REST API documentation.
 
     .. todo::
 
@@ -306,7 +304,11 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
 
 .. only:: python
 
-  (todo)
+  (java.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
 .. _about-social-dir:
 
@@ -337,11 +339,11 @@ Social Directories can be made using the Stormpath Admin Console, or using the R
 
 .. only:: java
 
-  (todo)
+  For more information about creating them using the Java SDK, please see :ref:`social-authn`.
 
 .. only:: nodejs
 
-  (todo)
+  For more information about creating them using the Node SDK, please see :ref:`social-authn`.
 
 .. only:: php
 
@@ -349,7 +351,7 @@ Social Directories can be made using the Stormpath Admin Console, or using the R
 
 .. only:: python
 
-  (todo)
+  For more information about creating them using the Python SDK, please see :ref:`social-authn`.
 
 .. _about-saml-dir:
 
@@ -368,16 +370,13 @@ How to Make a SAML Directory
 
 SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
 
-.. only:: rest
-
-  For more information about creating them using the REST API, see :ref:`saml-configuration-rest`.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
+    This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console, or consult the REST API documentation.
 
     .. todo::
 
@@ -385,11 +384,11 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 
 .. only:: java
 
-  (todo)
+  (java.todo)
 
 .. only:: nodejs
 
-  (todo)
+  (node.todo)
 
 .. only:: php
 
@@ -397,7 +396,11 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 
 .. only:: python
 
-  (todo)
+  (python.todo)
+
+.. only:: rest or csharp or vbnet
+
+  For more information about creating them using the REST API, see :ref:`saml-configuration-rest`.
 
 .. _group-mgmt:
 
@@ -413,6 +416,22 @@ The other type of Account Store is the Group resource, which can either be imagi
 .. only:: csharp or vbnet
 
   In the Stormpath .NET SDK, the Group resource is represented by the ``IGroup`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  For more information about creating them using the PHP SDK, see :ref:`saml-configuration-rest`.
+
+.. only:: python
+
+  (python.todo)
 
 .. todo::
 
