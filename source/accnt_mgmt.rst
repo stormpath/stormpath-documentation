@@ -39,11 +39,11 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: java
 
-  (java.todo)
+  (java-todo)
 
 .. only:: nodejs
 
-  (node.todo)
+  (node_todo)
 
 .. only:: php
 
@@ -702,11 +702,11 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: java
 
-  (todo)
+  (java.todo)
 
 .. only:: nodejs
 
-  (todo)
+  (node.todo)
 
 .. only:: php
 
@@ -714,7 +714,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: python
 
-  (todo)
+  (python.todo)
 
 3.2.1. New Account Creation
 ---------------------------
