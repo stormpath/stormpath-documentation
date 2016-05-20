@@ -39,11 +39,11 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: java
 
-  (java-todo)
+  (java.todo)
 
 .. only:: nodejs
 
-  (node_todo)
+  (node.todo)
 
 .. only:: php
 
@@ -51,7 +51,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: python
 
-  (pythontodo)
+  (python.todo)
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -288,7 +288,7 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
 
 .. only:: nodejs
 
-  (java.todo)
+  (node.todo)
 
 .. only:: php
 
@@ -304,7 +304,7 @@ LDAP Directories can be made using the Stormpath Admin Console, or using the RES
 
 .. only:: python
 
-  (java.todo)
+  (python.todo)
 
 .. only:: rest or csharp or vbnet or php
 
@@ -752,7 +752,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: csharp or vbnet
 
-  Let's say you want to add a new account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``CreateAccountAsync()`` method:
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``CreateAccountAsync()`` method:
 
   .. only:: csharp
 
