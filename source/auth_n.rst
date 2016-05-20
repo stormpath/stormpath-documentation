@@ -105,7 +105,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: java
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (java.todo)
 
   .. literalinclude:: code/java/authentication/login_attempt_req.java
       :language: java
@@ -124,7 +124,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (node.todo)
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
@@ -162,7 +162,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: python
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (python.todo)
 
   .. literalinclude:: code/python/authentication/login_attempt_req.py
       :language: python
@@ -322,28 +322,28 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: java
 
-  You can find this mapping by... (todo)
+  You can find this mapping by... (java.todo)
 
   .. literalinclude:: code/java/authentication/get_asm_req.java
       :language: java
 
 .. only:: nodejs
 
-  You can find this mapping by...
+  You can find this mapping by... (node.todo)
 
   .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
 
 .. only:: php
 
-  You can find this mapping by...
+  You can find this mapping by... (php.todo)
 
   .. literalinclude:: code/php/authentication/get_asm_req.php
     :language: php
 
   .. note::
 
-    This will return an account store mapping list which you can iterate over to get each account store object.
+    This will return an Account Store Mapping list which you can iterate over to get each Account Store object.
 
     .. code-block:: php
 
@@ -353,11 +353,9 @@ The reason why your user "Han Solo" was able to log in to your application is be
         $accountStores[] = $accountStoreMapping->accountStore;
       }
 
-
-
 .. only:: python
 
-  You can find this mapping by... (todo)
+  You can find this mapping by... (python.todo)
 
   .. literalinclude:: code/python/authentication/get_asm_req.py
       :language: python
@@ -1171,7 +1169,7 @@ To recap, you have done the following:
 
 .. only:: java
 
-  1. (todo)
+  1. (java.todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1186,7 +1184,7 @@ To recap, you have done the following:
 
 .. only:: nodejs
 
-  1. (todo)
+  1. (node.todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1218,7 +1216,7 @@ To recap, you have done the following:
 
 .. only:: python
 
-  1. (todo)
+  1. (python.todo)
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
   The user now attempts to access a secured resource by...?
@@ -1279,7 +1277,7 @@ The token specified in the Authorization header has been digitally signed with t
   .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
       :language: php
 
-  If the token can be validated locally, it will return an object with...(todo)
+  If the token can be validated locally, it will return an object with...(php.todo)
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_local_res.php
       :language: php
@@ -1507,7 +1505,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
     :language: java
 
-  You will get back a ... (todo)
+  You will get back a ... (java.todo)
 
   .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
     :language: java
@@ -1519,7 +1517,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
-  You will get back a ... (todo)
+  You will get back a ... (node.todo)
 
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
     :language: javascript
@@ -1540,7 +1538,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
     :language: python
 
-  You will get back a ... (todo)
+  You will get back a ... (python.todo)
 
   .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp.py
     :language: python
@@ -1603,7 +1601,7 @@ In general, the social login process works as follows:
 
 .. only:: java
 
-    a. If a matching Account is found, (todo)
+    a. If a matching Account is found, (java.todo)
 
     b. If a matching Account is not found, (todo)
 
@@ -1611,7 +1609,7 @@ In general, the social login process works as follows:
 
 .. only:: nodejs
 
-    a. If a matching Account is found, (todo)
+    a. If a matching Account is found, (node.todo)
 
     b. If a matching Account is not found, (todo)
 
@@ -1626,7 +1624,7 @@ In general, the social login process works as follows:
 
 .. only:: python
 
-    a. If a matching Account is found, (todo)
+    a. If a matching Account is found, (python.todo)
 
     b. If a matching Account is not found, (todo)
 
@@ -2151,15 +2149,15 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
- (todo)
+ (java.todo)
 
 .. only:: nodejs
 
- (todo)
+ (node.todo)
 
 .. only:: python
 
- (todo)
+ (python.todo)
 
 .. _authn-linkedin:
 
@@ -2328,11 +2326,11 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: java
 
- (todo)
+  (java.todo)
 
 .. only:: nodejs
 
- (todo)
+  (node.todo)
 
 .. only:: python
 
@@ -4209,7 +4207,7 @@ The rules have three different components:
 
       The rule expressed here is as follows:
 
-      (todo)
+      (dotnet.todo)
 
 .. only:: java
 
@@ -4220,7 +4218,7 @@ The rules have three different components:
 
     The rule expressed here is as follows:
 
-    (todo)
+    (java.todo)
 
 .. only:: nodejs
 
@@ -4231,7 +4229,7 @@ The rules have three different components:
 
     The rule expressed here is as follows:
 
-    (todo)
+    (node.todo)
 
 .. only:: python
 
@@ -4242,7 +4240,7 @@ The rules have three different components:
 
     The rule expressed here is as follows:
 
-    (todo)
+    (python.todo)
 
 In order to create the mapping rules, you send the following request:
 
