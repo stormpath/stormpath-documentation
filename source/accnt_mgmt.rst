@@ -766,20 +766,28 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: java
 
+  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
       :language: java
 
 .. only:: nodejs
+
+  (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req.js
       :language: javascript
 
 .. only:: php
 
+  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/php/account_management/create_account_in_dir_req.php
       :language: php
 
 .. only:: python
+
+  (python.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
       :language: python
@@ -904,20 +912,28 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: java
 
+  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/java/account_management/add_account_to_group_req.java
       :language: java
 
 .. only:: nodejs
+
+  (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_req.js
       :language: javascript
 
 .. only:: php
 
+  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/php/account_management/add_account_to_group_req.php
       :language: php
 
 .. only:: python
+
+  (python.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/python/account_management/add_account_to_group_req.py
       :language: python
@@ -943,6 +959,8 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
     }
 
 .. only:: java
+
+  And get the following response:
 
   .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
       :language: java
@@ -1009,7 +1027,7 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: rest
 
-  This can be done by simply adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
+  This can be done by adding a ``registrationWorkflowEnabled=false`` query parameter to the end of your API like so::
 
     https://api.stormpath.com/v1/directories/WpM9nyZ2TbaEzfbeXaMPLE/accounts?registrationWorkflowEnabled=false
 
@@ -1026,6 +1044,22 @@ In this case, it is recommended that you suppress Account Verification emails.
 
     .. literalinclude:: code/vbnet/account_management/create_account_disable_reg_workflow.vb
         :language: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 .. _importing-mcf:
 
@@ -1068,6 +1102,22 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
     .. literalinclude:: code/vbnet/account_management/create_account_mcf_hash.vb
         :language: vbnet
+
+.. only:: java
+
+  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+
+.. only:: nodejs
+
+  (node.todo) It'd be good to add some explanatory text like we have for csharp.
+
+.. only:: php
+
+  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+
+.. only:: python
+
+  (python.todo) It'd be good to add some explanatory text like we have for csharp.
 
 .. _stormpath2-hash:
 
@@ -1157,20 +1207,28 @@ For example, you could add information about this user's current location, like 
 
 .. only:: java
 
+  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
       :language: java
 
 .. only:: nodejs
+
+  (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req.js
       :language: javascript
 
 .. only:: php
 
+  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+
   .. literalinclude:: code/php/account_management/add_cd_to_account_req.php
       :language: php
 
 .. only:: python
+
+  (python.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/python/account_management/add_cd_to_account_req.py
       :language: python
@@ -1263,11 +1321,19 @@ The Account resource's **searchable attributes** are:
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  (php.todo)
+
 .. only:: python
+
+  (python.todo)
 
 3.3.1. Example Account Searches
 -------------------------------
@@ -1349,6 +1415,10 @@ A Filter search will locate the specified string in any searchable attribute of 
   .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp.java
       :language: java
 
+  .. note::
+
+    Matching is case-insensitive, so (java.todo)
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req.js
@@ -1371,7 +1441,9 @@ A Filter search will locate the specified string in any searchable attribute of 
 
   .. note::
 
-    After getting the response, you can iterate over it with a foreach loop
+    Matching is case-insensitive, so (php.todo)
+
+  After getting the response, you can iterate over it with a ``foreach`` loop
 
     .. code-block:: php
 
@@ -1387,6 +1459,10 @@ A Filter search will locate the specified string in any searchable attribute of 
 
   .. literalinclude:: code/python/account_management/search_app_accounts_for_word_resp.py
       :language: python
+
+  .. note::
+
+    Matching is case-insensitive, so (python.todo)
 
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1464,7 +1540,7 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
 
   .. note::
 
-    After getting the response, you can iterate over it with a foreach loop
+    After getting the response, you can iterate over it with a ``foreach`` loop
 
     .. code-block:: php
 
@@ -1480,9 +1556,13 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
 Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:ref:`search-datetime` is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
+Datetime Search is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.
 
 .. only:: rest
+
+  .. note::
+
+    For more information about Datetime search, please see :ref:`the Reference chapter<search-datetime>`.
 
   **Query**
 
@@ -1562,6 +1642,8 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. only:: java
 
+  (java.todo) Is there anything else to add here? See Dotnet above.
+
   **Query**
 
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req.java
@@ -1573,6 +1655,8 @@ Find All Accounts in a Directory That Were Created on a Particular Day
       :language: java
 
 .. only:: nodejs
+
+  (node.todo) Is there anything else to add here? See Dotnet above.
 
   **Query**
 
@@ -1586,6 +1670,8 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
 .. only:: php
 
+  (php.todo) Is there anything else to add here? See Dotnet above.
+
   **Query**
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req.php
@@ -1598,7 +1684,7 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
   .. note::
 
-    After getting the response, you can iterate over it with a foreach loop
+    After getting the response, you can iterate over it with a ``foreach`` loop
 
     .. code-block:: php
 
@@ -1607,6 +1693,8 @@ Find All Accounts in a Directory That Were Created on a Particular Day
       }
 
 .. only:: python
+
+  (python.todo) Is there anything else to add here? See Dotnet above.
 
   **Query**
 
@@ -1630,8 +1718,7 @@ Find All Accounts in a Directory That Were Created on a Particular Day
 
   .. warning::
 
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
-    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
@@ -2117,12 +2204,11 @@ Manage Password Reset Emails
 
   .. warning::
 
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below
-    to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 The Password Reset Email is configurable for a Directory.
 
-There is a set of properties on the :ref:`ref-password-policy` resource that define its behavior. These properties are:
+There is a set of properties on the Password Policy resource that define its behavior. These properties are:
 
 - ``resetEmailStatus`` which enables or disables the reset email.
 - ``resetEmailTemplates`` which defines the content of the password reset email that is sent to the Account’s email address with a link to reset the Account’s password.
@@ -2180,18 +2266,15 @@ To control whether any email is sent or not is simply a matter of setting the ap
 Password Reset Email Templates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The contents of the password reset and the password reset success emails are both defined in an :ref:`ref-emailtemplates` collection.
-
-.. only:: rest
-
-  To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body.
+The contents of the password reset and the password reset success emails are both defined in an Email Templates collection.
 
 .. only:: csharp or vbnet
 
   .. warning::
 
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
+    This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
+
+     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
   .. todo::
 
@@ -2199,49 +2282,113 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  (php.todo)
+
 .. only:: python
+
+  (python.todo)
+
+.. only:: rest or vbnet or csharp
+
+  To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body. For more information about Email Templates, see the `Email Templates section <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-emailtemplates>`__ of the Reference chapter.
 
 .. _password-change-timestamp-search:
 
 3.4.4. How to Find When An Account's Password Was Changed
 ----------------------------------------------------------
 
-You may want to find out when an Account's password was last changed, or return a collection of Accounts that changed their passwords within a certain timespan. This information is contained in the searchable ``passwordModifiedAt`` attribute found in every :ref:`Account resource <ref-account>`.
+You may want to find out when an Account's password was last changed, or return a collection of Accounts that changed their passwords within a certain timespan. This information is contained in the searchable ``passwordModifiedAt`` attribute found in every Account resource.
 
 If you wanted to find all Accounts that hadn't modified their password yet in 2016 you would use :ref:`Datetime search <search-datetime>`:
 
-.. code-block:: http
+.. only:: rest
 
-  GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
-  Host: api.stormpath.com
+  .. code-block:: http
 
-This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
+    GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
+    Host: api.stormpath.com
+
+  This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 .. _password-reuse:
 
 3.4.5. How to Restrict Password Reuse
 -------------------------------------
 
-.. todo::
+Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength resource, sending any value up to ``25``:
 
-  This is a net-new section!
+.. only:: rest
 
-Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's :ref:`Strength object <ref-password-strength>`, sending any value up to ``25``:
+  .. code-block:: http
 
-.. code-block:: http
+    POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
+    Host: api.stormpath.com
 
-  POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
-  Host: api.stormpath.com
+    {
+        "preventReuse": "10"
+    }
 
-  {
-      "preventReuse": "10"
-  }
+    .. note::
 
-This would not allow a user to set their password to any string that matched their previous 10 passwords.
+    For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+This would now allow a user to set their password to any string that matched their previous 10 passwords.
 
 .. _verify-account-email:
 
@@ -2362,6 +2509,8 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: php
 
+  (php.todo) It would be good to add some explanatory text, like above.
+
   .. literalinclude:: code/php/account_management/verify_email_req.php
       :language: php
 
@@ -2369,6 +2518,8 @@ The email that is sent upon Account creation contains a link to the base URL tha
       :language: php
 
 .. only:: python
+
+  (python.todo) It would be good to add some explanatory text, like above.
 
   .. literalinclude:: code/python/account_management/verify_email_req.py
       :language: python
@@ -2431,10 +2582,14 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: php
 
+  (php.todo) It would be good to add some explanatory text, like above.
+
   .. literalinclude:: code/php/account_management/resend_verification_email.php
       :language: php
 
 .. only:: python
+
+  (python.todo) It would be good to add some explanatory text, like above.
 
   .. literalinclude:: code/python/account_management/resend_verification_email.py
       :language: python
@@ -2450,7 +2605,7 @@ Stormpath can be configured to send emails to users as part of a Directory's Acc
 Account Creation
 ^^^^^^^^^^^^^^^^
 
-Found in: :ref:`ref-accnt-creation-policy`
+Found in: `Account Creation Policy <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account-creation-policy>`__
 
 - *Verification Email*: The initial email that is sent out after Account creation that verifies the email address that was used for registration with a link containing the verification token.
 - *Verification Success Email*: An email that is sent after a successful email verification.
@@ -2461,7 +2616,7 @@ For more information about this, see :ref:`verify-account-email`.
 Password Reset
 ^^^^^^^^^^^^^^
 
-Found in: :ref:`ref-password-policy`
+Found in: `Password Policy <https://docs.stormpath.com/rest/product-guide/latest/reference.html#password-policy>`__
 
 - *Reset Email*: The email that is sent out after a user asks to reset their password. It contains a URL with a password reset token.
 - *Reset Success Email*:  An email that is sent after a successful password reset.
@@ -2473,16 +2628,38 @@ For more information about this, see :ref:`password-reset-flow`.
 3.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the :ref:`ref-emailtemplates` resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via the REST API.
+The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via the REST API.
 
-.. only:: rest
+.. only:: csharp or vbnet
+
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console UI, or the REST API documentation below.
+
+    .. todo::
+
+      Add email templates .NET example
+
+.. only:: java
+
+.. only:: nodejs
+
+  The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
+
+.. only:: php
+
+.. only:: python
+
+.. only:: rest or csharp or vbnet
 
   First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
   .. code-block:: json
 
     {
-      "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojvU1m2Nh",
+      "href":"https://api.stormpath.com/v1/emailTemplates/2jwPxFsnjqxYrojexample",
       "name":"Default Verification Email Template",
       "description":"This is the verification email template that is associated with the directory.",
       "fromName":"Jakub Swiatczak",
@@ -2504,27 +2681,6 @@ The emails that Stormpath sends to users be customized by modifying the :ref:`re
 
   These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
 
-.. only:: csharp or vbnet
-
-  .. warning::
-
-    This feature is not yet available in the .NET SDK. Please use the Stormpath Admin Console UI, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
-
-    .. todo::
-
-      Add email templates .NET example
-
-.. only:: java
-
-.. only:: nodejs
-
-  The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
-
-.. only:: php
-
-.. only:: python
-
 .. _using-email-macros:
 
 Using Email Macros
@@ -2544,7 +2700,7 @@ The basic structure for a macro is ``${resource.attribute}``. There are three ki
 
 You can also include any ``attribute`` that isn't a link, as well as customData.
 
-For a full list of email macros, see the :ref:`ref-email-macros` section of the Reference chapter.
+For a full list of email macros, see the `Email Macros <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ section of the Reference chapter.
 
 Macros and customData
 """""""""""""""""""""
