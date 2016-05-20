@@ -15,6 +15,7 @@
 import sys
 import os
 import shlex
+import datetime
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -52,10 +53,34 @@ source_suffix = '.rst'
 # The master toctree document.
 master_doc = 'index'
 
+# Use the language tag to determine the project name
+if tags.has('rest'):
+    language_name = u'REST'
+elif tags.has('php'):
+    language_name = u'PHP'
+elif tags.has('java'):
+    language_name = u'Java'
+elif tags.has('csharp'):
+    language_name = u'C#'
+elif tags.has('vbnet'):
+    language_name = u'Visual Basic'
+elif tags.has('python'):
+    language_name = u'Python'
+elif tags.has('nodejs'):
+    language_name = u'Node.js'
+else:
+    raise ValueError('Unknown LANGUAGE tag.')
+
 # General information about the project.
-project = u'Stormpath Documentation'
-copyright = u'2015, Stormpath, Inc.'
+project = u'Stormpath %s Documentation' % language_name
+copyright = '%s, Stormpath, Inc.' % datetime.datetime.now().year
 author = u'Stormpath'
+
+# The rst_epilog is automatically added to the end of every source file
+# This makes the |language| substitution available to every rst file
+rst_epilog = """
+.. |language| replace:: %(language_name)s
+""" % { 'language_name': language_name }
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
