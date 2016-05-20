@@ -56,18 +56,32 @@ master_doc = 'index'
 # Use the language tag to determine the project name
 if tags.has('rest'):
     language_name = u'REST'
+    language_slug = u'rest'
+
 elif tags.has('php'):
     language_name = u'PHP'
+    language_slug = u'php'
+
 elif tags.has('java'):
     language_name = u'Java'
+    language_slug = u'java'
+
 elif tags.has('csharp'):
     language_name = u'C#'
+    language_slug = u'csharp'
+
 elif tags.has('vbnet'):
     language_name = u'Visual Basic'
+    language_slug = u'vbnet'
+
 elif tags.has('python'):
     language_name = u'Python'
+    language_slug = u'python'
+
 elif tags.has('nodejs'):
     language_name = u'Node.js'
+    language_slug = u'nodejs'
+
 else:
     raise ValueError('Unknown LANGUAGE tag.')
 
@@ -176,6 +190,7 @@ html_context = {
     'css_files': [
         '_static/theme_overrides.css',  # overrides for wide tables in RTD theme
         ],
+    'language_slug': language_slug
     }
 
 # Add any extra paths that contain custom files (such as robots.txt or
