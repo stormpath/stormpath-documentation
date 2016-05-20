@@ -51,7 +51,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: python
 
-  (python.todo)
+  (pythontodo)
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
