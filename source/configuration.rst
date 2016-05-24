@@ -23,13 +23,12 @@
   10.1. Required API Credentials
   ==============================
 
-  At the very least, these configuration options **must** be set in order for
-  the Stormpath SDK to initialize properly:
+  At the very least, these configuration options **must** be set in order to initialize the Stormpath SDK:
 
   * ``stormpath.client.apiKey.id`` (the Stormpath API Key ID)
   * ``stormpath.client.apiKey.secret`` (the Stormpath API Key Secret)
 
-  If these values aren't set (using one of the :ref:`Configuration Sources <config_sources>` below), the Stormpath SDK will throw an error. See :ref:`api_keys` in the Configuration Reference for examples of how to set these values.
+  If these values aren't set, the Stormpath SDK will throw an error. See :ref:`api_keys` in the Configuration Reference for examples of how to set these values.
 
 
   .. _set_up_caching:
@@ -37,13 +36,15 @@
   10.2. Setting Up Caching
   ========================
 
-  The Stormpath SDK comes with a robust caching layer built in. Reads and writes against the Stormpath API are cached locally, to help your applications reduce the number of API calls made to Stormpath.
+  The Stormpath SDK comes with a robust caching layer built-in. Reads and writes against the Stormpath API are cached locally, to help your applications reduce the number of API calls made to Stormpath.
 
   Stormpath Resources are cached in regions that correspond to the resource type. For example, Stormpath Account resources are cached in a region specific to Accounts.
 
-  It's possible to customize the cache item time-to-live (TTL) and time-to-idle (TTI) of specific cache regions. For example, you might want cached Account resources to expire quickly, but cached Directory resources to stick around longer.
+  You can customize the cache item time-to-live (TTL) and time-to-idle (TTI) of specific cache regions. For example, you might want cached Account resources to expire quickly, but cached Directory resources to stick around longer.
 
-  For any regions that are not specifically configured, the SDK will use default time-to-live and time-to-idle values. See :ref:`caching_config` in the Configuration Reference to understand how to set these values.
+  For any regions that are not specifically configured, the SDK will use default time-to-live and time-to-idle values.
+
+  See :ref:`caching_config` in the Configuration Reference to understand how to set these configuration values.
 
   .. warning::
 
@@ -120,9 +121,9 @@
   10.3. Using a Different Environment
   ===================================
 
-  By default, the Stormpath SDK connects to the Stormpath API Public Cloud at ``https://api.stormpath.com/v1``.
+  By default, the Stormpath SDK connects to the Stormpath API Public Cloud.
 
-  If you are connecting to a Stormpath `Enterprise Deployment`_ or Private Deployment, you'll need to change this base URL before using the Stormpath SDK. See :ref:`Base URL <base_url>` in the Configuration Reference for examples of how to set this value.
+  If you have a Stormpath Enterprise or Private Deployment, you'll need to change this base URL before using the Stormpath SDK. See :ref:`Base URL <base_url>` in the Configuration Reference for examples of how to set this value.
 
 
   .. only:: csharp or vbnet
@@ -192,7 +193,7 @@
       setx STORMPATH_CLIENT_APIKEY_ID your_id_here
       setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
 
-  Any configuration option can be set using environment variables. The above are just examples!
+  Any configuration option can be set using environment variables. The above are just examples! The :ref:`Configuration Reference <config_reference>` covers each option in detail.
 
 
   .. _markup_file:
@@ -286,8 +287,12 @@
 
     (python.todo)
 
-  Values set explicitly via code have the highest precedence. In other words, if you have existing configuration values in environment variables or a markup file, values set in your code will override them.
+  .. note::
 
+    Values set explicitly via code have the highest precedence. In other words, if you have existing configuration values in environment variables or a markup file, values you set in your code will override them.
+
+
+  .. _config_reference:
 
   10.5. Configuration Reference
   =============================
@@ -864,5 +869,4 @@
 
 
 .. _Stormpath Admin Console: https://api.stormpath.com/login
-.. _Enterprise deployment: https://stormpath.com/enterprise
 .. _SDK Defaults: https://github.com/stormpath/stormpath-sdk-spec/blob/master/specifications/config.md#default-configuration
