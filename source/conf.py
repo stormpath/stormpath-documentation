@@ -56,24 +56,38 @@ master_doc = 'index'
 # Use the language tag to determine the project name
 if tags.has('rest'):
     language_name = u'REST'
+    language_slug = u'rest'
+
 elif tags.has('php'):
     language_name = u'PHP'
+    language_slug = u'php'
+
 elif tags.has('java'):
     language_name = u'Java'
+    language_slug = u'java'
+
 elif tags.has('csharp'):
     language_name = u'C#'
+    language_slug = u'csharp'
+
 elif tags.has('vbnet'):
     language_name = u'Visual Basic'
+    language_slug = u'vbnet'
+
 elif tags.has('python'):
     language_name = u'Python'
+    language_slug = u'python'
+
 elif tags.has('nodejs'):
     language_name = u'Node.js'
+    language_slug = u'nodejs'
+
 else:
     raise ValueError('Unknown LANGUAGE tag.')
 
 # General information about the project.
 project = u'Stormpath %s Documentation' % language_name
-copyright = '%s, Stormpath, Inc.' % datetime.datetime.now().year
+copyright = '%s, Stormpath, Inc' % datetime.datetime.now().year
 author = u'Stormpath'
 
 # The rst_epilog is automatically added to the end of every source file
@@ -176,6 +190,7 @@ html_context = {
     'css_files': [
         '_static/theme_overrides.css',  # overrides for wide tables in RTD theme
         ],
+    'language_slug': language_slug
     }
 
 # Add any extra paths that contain custom files (such as robots.txt or
@@ -208,7 +223,7 @@ html_extra_path = ['robots']
 #html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-#html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #html_show_sphinx = True
