@@ -5,11 +5,11 @@
   {{ super () }}
 
   <div class="langpicker-container">
-    <a href="#" onclick="togglePicker()">
+    <a href="#langpicker" class="langpicker-link">
       <i class="fa fa-code"></i>
       Switch Language
     </a>
-    <div class="langpicker" style="display:none;">
+    <div id="langpicker" style="display:none;">
       <div class="{{ 'current' if language_slug == 'rest' }}">
         <a href="/rest/product-guide/latest/">REST</a>
       </div>
