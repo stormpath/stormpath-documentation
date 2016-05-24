@@ -37,12 +37,18 @@
   10.2. Setting Up Caching
   ========================
 
-  The Stormpath SDK comes with a robust caching layer built in. Reads and writes against the Stormpath API are cached locally, so that your applications can reduce the number of API calls made to Stormpath.
+  The Stormpath SDK comes with a robust caching layer built in. Reads and writes against the Stormpath API are cached locally, to help your applications reduce the number of API calls made to Stormpath.
 
-  By default, the SDK uses an in-memory cache implementation. This works well for single-server applications, but if you have multiple servers, you **must** plug in a distributed cache (see below).
+  Stormpath Resources are cached in regions that correspond to the resource type. For example, Stormpath Account resources are cached in a region specific to Accounts.
 
-  .. todo::
-    Default TTL/TTI, per-resource TTL/TTI
+  It's possible to customize the cache item time-to-live (TTL) and time-to-idle (TTI) of specific cache regions. For example, you might want cached Account resources to expire quickly, but cached Directory resources to stick around longer.
+
+  For any regions that are not specifically configured, the SDK will use default time-to-live and time-to-idle values. See :ref:`caching_config` in the Configuration Reference to understand how to set these values.
+
+  .. warning::
+
+    By default, the SDK uses an in-memory cache implementation. This works well for single-server applications, but if you have multiple servers, you **must** plug in a distributed cache (see below).
+
 
   Memcached
   '''''''''
@@ -446,7 +452,7 @@
     (python.todo)
 
 
-  .. _caching_configuration:
+  .. _caching_config:
 
   Cache Manager
   '''''''''''''
@@ -454,8 +460,8 @@
   Configuration keys:
 
   * ``stormpath.client.cacheManager.enabled`` - Controls whether caching is enabled. (Default: ``true``)
-  * ``stormpath.client.cacheManager.defaultTtl`` - Default Time-to-Live of cached resources, in seconds. (Default: ``300``)
-  * ``stormpath.client.cacheManager.defaultTti`` - Default Time-to-Idle of cached resources, in seconds. (Default: ``300``)
+  * ``stormpath.client.cacheManager.defaultTtl`` - Default time-to-live of cached resources, in seconds. (Default: ``300``)
+  * ``stormpath.client.cacheManager.defaultTti`` - Default time-to-idle of cached resources, in seconds. (Default: ``300``)
   * ``stormpath.client.cacheManager.caches.*`` - Resource-specific cache configuration.
 
   These settings allow you to control the caching layer that is built into the SDK. See the :ref:`Setting Up Caching <set_up_caching>` section to understand how this works.
