@@ -6,208 +6,173 @@
   Configuration
   *************
 
-  10.1. Reference Table of Configuration Options
-  ==============================================
+  There are several options you can use to customize the behavior of the SDK. For example, you can set the API Key and Secret used to connect to the Stormpath API, or change the default caching behavior.
 
-  .. only:: csharp or vbnet
+  There are a few ways you can set these configuration options (see the :ref:`Configuration Methods <config_methods>` section):
 
-    (dotnet.todo)
+  * Environment variables
+  * Markup file (YAML or JSON)
+  * API credentials file (for API Key ID/Secret only)
+  * Inline options in code (supplied to the SDK constructor)
 
-    .. only:: csharp
+  The :ref:`API Credentials <required_credentials>` configuration must be set to initialize the SDK. In most cases, you won't have to change any other options, as the SDK falls back to sensible defaults.
 
-    .. only:: vbnet
 
-  .. only:: java
+  .. _required_credentials:
 
-    (java.todo)
+  10.1. Required API Credentials
+  ==============================
 
-  .. only:: nodejs
+  At the very least, these configuration options **must** be set in order for
+  the Stormpath SDK to initialize properly:
 
-    (node.todo)
+  * ``stormpath.client.apiKey.id`` - The Stormpath API Key ID
+  * ``stormpath.client.apiKey.secret`` - The Stormpath API Key Secret
 
-  .. only:: php
+  If these values aren't set (using one of the methods below), the Stormpath SDK with throw an error. See :ref:`api_keys` for examples of how to set these values.
 
-    (php.todo)
 
-  .. only:: python
+  .. _set_up_caching:
 
-    (python.todo)
-
-  10.2. Client
-  =============
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
-
-  10.2.1. Authentication
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  API Keys
-  """"""""
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
-
-  Authentication Scheme
-  """""""""""""""""""""
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
-
-  Proxies
-  """""""
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
-
-  10.2.2. Caching
-  ^^^^^^^^^^^^^^^^^^^^^^^
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
+  10.2. Setting Up Caching
+  ========================
 
   Memcached
-  """""""""
-
-  .. only:: csharp or vbnet
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-    .. only:: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
-  .. only:: nodejs
-
-    (node.todo)
-
-  .. only:: php
-
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
 
   Redis
-  """""
+
+
+  .. _environments:
+
+  10.3. Using a Different Environment
+  ===================================
+
+  By default, the Stormpath SDK connects to the Stormpath API Public Cloud at ``https://api.stormpath.com/v1``. If you are connecting to a Stormpath `Enterprise deployment`_, or a Private Deployment, you'll need to change this base URL before using the Stormpath SDK.
+
+  You can do this via configuration, or directly in your code; see :ref:`Base URL <base_url>` in the Configuration Reference.
+
 
   .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      .. Using a Custom HTTP Client
+      .. ==========================
 
-    .. only:: vbnet
+        You can use a custom HTTP client plugin.
+
+      .. Using a Custom Serializer
+      .. ========================
+
+        You can use a custom JSON serializer plugin.
+
+
+  .. _config_methods:
+
+  10.4. Configuration Methods
+  ===========================
+
+  There are multiple ways to provide the SDK configuration settings. You can load values from local environment variables, or a YAML/JSON configuration file. You can also set them directly in code.
+
+  .. tip::
+
+    We recommend using environment variables or a configuration file in production, especially for your Stormpath API credentials. This makes it easy to manage and update these values as needed. Configuration via code is useful during development.
+
+  .. _env_vars:
+
+  10.2.1. Environment Variables
+  '''''''''''''''''''''''''''''
+
+  Configuration options can be set in environment variables by formatting the key name with underscores. For example, ``stormpath.client.apiKey.id`` becomes ``STORMPATH_CLIENT_APIKEY_ID``.
+
+  In a bash-like shell, you can set environment variables by running these commands:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_APIKEY_ID=your_id_here
+      export STORMPATH_CLIENT_APIKEY_SECRET=your_secret_here
+
+  On Windows, the commands are:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_APIKEY_ID your_id_here
+      setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
+
+  Any configuration option can be set using environment variables. The above are just examples!
+
+
+  .. _markup_file:
+
+  10.2.2. YAML/JSON Markup File
+  '''''''''''''''''''''''''''''
+
+  Configuration options can also be set by placing a file called ``stormpath.yaml`` or ``stormpath.json`` in one of these locations:
+
+  * ``~/.stormpath`` (where ``~`` represents the user's home directory)
+  * The application's base directory
+
+  .. note::
+    On Windows machines, the home directory is usually ``C:\Users\<username>\``.
+
+  For example, this YAML configuration will set the Stormpath API Key and Secret:
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      apiKey:
+        id: "your_id_here"
+        secret: "your_id_here"
+
+  The equivalent JSON is:
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "apiKey": {
+          "id": "your_id_here",
+          "secret": "your_id_here"
+        }
+      }
+    }
+
+  In both cases, the ``stormpath`` root node is implied and should be omitted.
+
+  .. tip::
+    You can refer to the `SDK Defaults`_ to see the entire default library configuration in YAML.
+
+
+  .. _api_credentials_file:
+
+  10.2.3. API Credentials File
+  ''''''''''''''''''''''''''''
+
+  The API Key ID and Secret can be provided by placing the ``apiKey.properties`` generated by the `Stormpath Admin Console`_ file in one of these locations:
+
+  * ``~/.stormpath/`` (where ``~`` represents the user's home directory)
+  * The application's base directory
+
+  If you don't opt to store the Stormpath API credentials in environment variables, this functionality makes it easy to download the ``apiKey.properties`` file from the Admin Console and drop it in.
+
+
+  10.2.4. Inline Code Configuration
+  '''''''''''''''''''''''''''''''''
+
+  You can also configure the SDK directly in code, by passing the appropriate values when you initialize the Client object.
+
+  For example, to disable the SDK's built-in caching features:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/disable_caching.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/disable_caching.vb
+      :language: vbnet
 
   .. only:: java
 
@@ -225,16 +190,77 @@
 
     (python.todo)
 
-  10.2.3. Using a Different Environment
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  .. only:: csharp or vbnet
+  10.5. Configuration Reference
+  =============================
 
-    (dotnet.todo)
+  .. _api_keys:
 
-    .. only:: csharp
+  API Credentials
+  '''''''''''''''
+  Configuration keys:
 
-    .. only:: vbnet
+  * ``stormpath.client.apiKey.id`` - The Stormpath API Key ID
+  * ``stormpath.client.apiKey.secret`` - The Stormpath API Key Secret
+  * ``stormpath.client.apiKey.file`` - Optional. A path to an ``apiKey.properties`` file, if the file is not in one of the standard locations that are searched for :ref:`API Credentials Files <api_credentials_file>`.
+
+  .. tip::
+    You can find the API Key and Secret values in the `Stormpath Admin Console`_.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_APIKEY_ID=your_id_here
+      export STORMPATH_CLIENT_APIKEY_SECRET=your_secret_here
+
+  Windows:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_APIKEY_ID your_id_here
+      setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
+
+  YAML File
+  ^^^^^^^^^
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      apiKey:
+        id: "your_id_here"
+        secret: "your_id_here"
+
+  JSON File
+  ^^^^^^^^^
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "apiKey": {
+          "id": "your_id_here",
+          "secret": "your_id_here"
+        }
+      }
+    }
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/api_credentials.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/api_credentials.vb
+      :language: vbnet
 
   .. only:: java
 
@@ -251,3 +277,523 @@
   .. only:: python
 
     (python.todo)
+
+
+  .. _base_url:
+
+  Base URL
+  ''''''''
+  Configuration key: ``stormpath.client.baseUrl``
+  Default value: ``https://api.stormpath.com/v1``
+
+  This setting controls the URL that the SDK uses to connect to the Stormpath API. You won't need to change this unless you are using a different :ref:`environment <environments>`.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_BASEURL=https://enterprise.stormpath.io/v1
+
+  Windows:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_BASEURL https://enterprise.stormpath.io/v1
+
+  YAML File
+  ^^^^^^^^^
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      baseUrl: "https://enterprise.stormpath.io/v1"
+
+  JSON File
+  ^^^^^^^^^
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "baseUrl": "https://enterprise.stormpath.io/v1"
+      }
+    }
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/use_enterprise_url.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/use_enterprise_url.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+
+  .. _caching_configuration:
+
+  Caching
+  '''''''
+
+  Configuration keys:
+
+  * ``stormpath.client.cacheManager.enabled`` - Controls whether caching is enabled. (Default: ``true``)
+  * ``stormpath.client.cacheManager.defaultTtl`` - Default Time-to-Live of new cache regions, in seconds. (Default: ``300``)
+  * ``stormpath.client.cacheManager.defaultTti`` - Default Time-to-Idle of new cache regions, in seconds (Default: ``300``)
+  * ``stormpath.client.cacheManager.caches.*`` - Resource-specific cache region configuration.
+
+  These settings allow you to control the caching layer that is built into the SDK. See the :ref:`Setting Up Caching <set_up_caching>` section to understand how this works.
+
+  .. note::
+
+    By default, the SDK uses an in-memory cache that is suitable for a single-server application. If you have multiple servers behind a load balancer, you **must** switch to a distributed cache store, or disable caching.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      # Disable caching entirely
+      export STORMPATH_CLIENT_CACHEMANAGER_ENABLED=false
+
+      # Or, change the default TTL and TTI for cached resources
+      # and override this for specific resources:
+      export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL=120
+      export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI=600
+      export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL=900
+      export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI=900
+
+  Windows:
+
+  .. code-block:: powershell
+
+      # Disable caching entirely:
+      setx STORMPATH_CLIENT_CACHEMANAGER_ENABLED false
+
+      # Or, change the default TTL and TTI for cached resources
+      # and override this for specific resources:
+      setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL 120
+      setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI 600
+      setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL 900
+      setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI 900
+
+  YAML File
+  ^^^^^^^^^
+
+  To disable caching entirely:
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      cacheManager:
+        enabled: false
+
+  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources (regions):
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      cacheManager:
+        defaultTtl: 120
+        defaultTti: 600
+        caches:
+          account:
+            ttl: 900
+            tti: 900
+
+  JSON File
+  ^^^^^^^^^
+
+  To disable caching entirely:
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "cacheManager": {
+          "enabled": false
+        }
+      }
+    }
+
+  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources (regions):
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "cacheManager": {
+          "defaultTtl": 120,
+          "defaultTti": 600,
+          "caches": {
+            "account": {
+              "ttl": 900,
+              "tti": 900
+            }
+          }
+        }
+      }
+    }
+
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  To disable caching entirely:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/disable_caching.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/disable_caching.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources (regions):
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/custom_cache_config.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/custom_cache_config.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+  Connection Timeout
+  ''''''''''''''''''
+
+  Configuration key: ``stormpath.client.connectionTimeout``
+  Default value: 30 seconds
+
+  This setting controls the HTTP timeout (in seconds) that is used when connecting to the Stormpath API.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_CONNECTIONTIMEOUT=60
+
+  Windows:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_CONNECTIONTIMEOUT 60
+
+  YAML File
+  ^^^^^^^^^
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      connectionTimeout: 60
+
+  JSON File
+  ^^^^^^^^^
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "connectionTimeout": 60
+      }
+    }
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/connection_timeout.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/connection_timeout.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+
+  Authentication Scheme
+  '''''''''''''''''''''
+
+  Configuration key: ``stormpath.client.authenticationScheme``
+  Default value: ``SAUTHC1``
+
+  This setting allows you to change the authentication scheme used to communicate with the Stormpath API. The available options are ``BASIC`` and ``SAUTHC1`` (the default).
+
+  ``SAUTHC1`` should be used unless you are in an environment that does not support HTTP digest authentication.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_AUTHENTICATIONSCHEME=BASIC
+
+  Windows:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_AUTHENTICATIONSCHEME BASIC
+
+  YAML File
+  ^^^^^^^^^
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      connectionTimeout: "basic"
+
+  JSON File
+  ^^^^^^^^^
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "connectionTimeout": "basic"
+      }
+    }
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/use_basic_auth.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/use_basic_auth.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+
+  HTTP Proxy
+  ''''''''''
+
+  Configuration keys:
+
+  * ``stormpath.client.proxy.host`` - The proxy hostname to use
+  * ``stormpath.client.proxy.port`` - The proxy port to use
+  * ``stormpath.client.proxy.username`` - The proxy username (if any)
+  * ``stormpath.client.proxy.password`` - The proxy password (if any)
+
+  If you need to route communication to the Stormpath API through an HTTP proxy, you can set these configuration options. Null values are ignored.
+
+  Environment Variables
+  ^^^^^^^^^^^^^^^^^^^^^
+
+  Bash-like shell:
+
+  .. code-block:: bash
+
+      export STORMPATH_CLIENT_PROXY_HOST=myproxy.example.com
+      export STORMPATH_CLIENT_PROXY_PORT=8088
+      export STORMPATH_CLIENT_PROXY_USERNAME=proxyuser
+      export STORMPATH_CLIENT_PROXY_PASSWORD=proxypassword
+
+  Windows:
+
+  .. code-block:: powershell
+
+      setx STORMPATH_CLIENT_PROXY_HOST myproxy.example.com
+      setx STORMPATH_CLIENT_PROXY_PORT 8088
+      setx STORMPATH_CLIENT_PROXY_USERNAME proxyuser
+      setx STORMPATH_CLIENT_PROXY_PASSWORD proxypassword
+
+  YAML File
+  ^^^^^^^^^
+
+  .. code-block:: yaml
+
+    ---
+    client:
+      proxy:
+        host: "myproxy.example.com"
+        port: 8088
+        username: "proxyuser"
+        password: "proxypassword"
+
+  JSON File
+  ^^^^^^^^^
+
+  .. code-block:: json
+
+    {
+      "client": {
+        "proxy": {
+          "host": "myproxy.example.com",
+          "port": 8088,
+          "username": "proxyuser",
+          "password": "proxypassword"
+        }
+      }
+    }
+
+  Inline Code
+  ^^^^^^^^^^^
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/use_proxy.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/use_proxy.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+
+
+
+
+  .. todo::
+
+    Any SDK-specific configuration options here.
+
+    .. only:: csharp or vbnet
+
+      (dotnet.todo)
+
+      .. only:: csharp
+
+      .. only:: vbnet
+
+    .. only:: java
+
+      (java.todo)
+
+    .. only:: nodejs
+
+      (node.todo)
+
+    .. only:: php
+
+      (php.todo)
+
+    .. only:: python
+
+      (python.todo)
+
+
+.. _Stormpath Admin Console: https://api.stormpath.com/login
+.. _Enterprise deployment: https://stormpath.com/enterprise
+.. _SDK Defaults: https://github.com/stormpath/stormpath-sdk-spec/blob/master/specifications/config.md#default-configuration
