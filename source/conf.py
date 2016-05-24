@@ -87,7 +87,7 @@ else:
 
 # General information about the project.
 project = u'Stormpath %s Documentation' % language_name
-copyright = '%s, Stormpath, Inc.' % datetime.datetime.now().year
+copyright = '%s, Stormpath, Inc' % datetime.datetime.now().year
 author = u'Stormpath'
 
 # The rst_epilog is automatically added to the end of every source file
