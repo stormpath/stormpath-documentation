@@ -8,7 +8,7 @@
 
   There are several options you can use to customize the behavior of the SDK. For example, you can set the API Key and Secret used to connect to the Stormpath API, or change the default caching behavior.
 
-  There are a few ways you can set these configuration options (see :ref:`Configuration Methods <config_methods>`):
+  There are a few ways you can set these configuration options (see :ref:`Configuration Sources <config_sources>`):
 
   * Environment variables
   * Markup file (YAML or JSON)
@@ -29,7 +29,7 @@
   * ``stormpath.client.apiKey.id`` (the Stormpath API Key ID)
   * ``stormpath.client.apiKey.secret`` (the Stormpath API Key Secret)
 
-  If these values aren't set (using one of the methods below), the Stormpath SDK with throw an error. See :ref:`api_keys` in the Configuration Reference for examples of how to set these values.
+  If these values aren't set (using one of the :ref:`Configuration Sources <config_sources>` below), the Stormpath SDK with throw an error. See :ref:`api_keys` in the Configuration Reference for examples of how to set these values.
 
 
   .. _set_up_caching:
@@ -37,9 +37,75 @@
   10.2. Setting Up Caching
   ========================
 
+  The Stormpath SDK comes with a robust caching layer built in. Reads and writes against the Stormpath API are cached locally, so that your applications can reduce the number of API calls made to Stormpath.
+
+  By default, the SDK uses an in-memory cache implementation. This works well for single-server applications, but if you have multiple servers, you **must** plug in a distributed cache (below).
+
   Memcached
+  '''''''''
+
+  .. only:: csharp or vbnet
+
+    .. note:: The .NET SDK does not currently have a plugin that supports memcached. If you need this functionality, please reach out to us at support@stormpath.com.
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
 
   Redis
+  '''''
+
+  .. only:: csharp or vbnet
+
+    The `Stormpath.SDK.Cache.Redis package <https://www.nuget.org/packages/Stormpath.SDK.Cache.Redis/>`_ provides a cache plugin that works with Redis.
+
+    The source code is available `on Github <https://github.com/stormpath/stormpath-sdk-dotnet/tree/develop/src/Stormpath.SDK.Cache.Redis>`_.
+
+    To use this plugin in your application, install the package from NuGet and pass a Redis connection string to the Redis plugin when initializing the SDK:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/configuration/redis_cache.cs
+      :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/configuration/redis_cache.vb
+      :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+  Other Caches
+  ''''''''''''
+
+  The Stormpath SDK is designed with a modular plugin architecture, so you can plug in other cache technologies as well. Feel free to reach out to us at support@stormpath.com if you need help with a particular cache technology.
 
 
   .. _environments:
@@ -64,10 +130,30 @@
 
         You can use a custom JSON serializer plugin.
 
+    .. todo::
 
-  .. _config_methods:
+      Any SDK-specific configuration options here. If not, delete your section below:
 
-  10.4. Configuration Methods
+      .. only:: java
+
+        (java.todo)
+
+      .. only:: nodejs
+
+        (node.todo)
+
+      .. only:: php
+
+        (php.todo)
+
+      .. only:: python
+
+        (python.todo)
+
+
+  .. _config_sources:
+
+  10.4. Configuration Sources
   ===========================
 
   There are multiple ways to provide the SDK configuration settings. You can load values from local environment variables, or a YAML/JSON configuration file. You can also set them directly in your code.
@@ -366,7 +452,7 @@
 
   These settings allow you to control the caching layer that is built into the SDK. See the :ref:`Setting Up Caching <set_up_caching>` section to understand how this works.
 
-  .. note::
+  .. warning::
 
     By default, the SDK uses an in-memory cache that is suitable for a single-server application. If you have multiple servers behind a load balancer, you **must** switch to a distributed cache store, or disable caching. Plugging in a distributed cache is covered in the :ref:`Setting Up Caching <set_up_caching>` section.
 
@@ -761,38 +847,6 @@
   .. only:: python
 
     (python.todo)
-
-
-
-
-
-  .. todo::
-
-    Any SDK-specific configuration options here.
-
-    .. only:: csharp or vbnet
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-      .. only:: vbnet
-
-    .. only:: java
-
-      (java.todo)
-
-    .. only:: nodejs
-
-      (node.todo)
-
-    .. only:: php
-
-      (php.todo)
-
-    .. only:: python
-
-      (python.todo)
 
 
 .. _Stormpath Admin Console: https://api.stormpath.com/login
