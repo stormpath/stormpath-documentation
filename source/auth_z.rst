@@ -32,7 +32,7 @@ Permissions, at their most basic, are statements of functionality that define a 
 5.2. Modeling Authorization in Stormpath
 ========================================
 
-From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath SDKs and integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
+From the perspective of a REST API, Stormpath only serves as the repository for authorization data. Authorization enforcement must happen on the client-side, and one of the many `Stormpath Integrations <https://docs.stormpath.com/home/>`_ can help you with this. In this section we will discuss how to model the authorization data which is extremely important to your overall security model.
 
 .. _role-groups:
 
@@ -160,7 +160,33 @@ For more information about adding customData to a user, please see the :ref:`Acc
 Checking User and Role Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Since authorization enforcement is handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the REST API is in retrieving a user's permissions. These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+.. only:: rest
+
+  Since authorization enforcement is handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the REST API is in retrieving a user's permissions. These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 Checking User Permissions
 """""""""""""""""""""""""
@@ -243,4 +269,4 @@ This would work in much the same way as checking the permissions for a user's Ac
 
 .. only:: rest
 
-From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.
+  From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.

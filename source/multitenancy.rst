@@ -388,12 +388,3 @@ An alternative, or complimentary, approach to tenant subdomains is to allow the 
 We advise that you auto-remember the login form tenant ID value so that field is pre-populated whenever a user returns to log in. Users don’t like having to remember and type that value in every time they log in.
 
 As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multi-tenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
-
-.. todo::
-
-  The SDKs can show you how to actually accomplish all this. e.g.::
-
-      application.createIdSiteUrl({
-        'callbackUri': 'https://trooperapp.com/callback',
-        'showOrganizationField': true
-    });
