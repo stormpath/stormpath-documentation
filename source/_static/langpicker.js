@@ -1,7 +1,13 @@
 // Language picker dropdown interface
+
+$(document).ready(function() {
+  $(".langpicker-link").click(function() {
+    togglePicker();
+    return false;
+  })
+});
+
 function togglePicker() {
-  var picker = document.getElementsByClassName("langpicker")[0];
-  if (picker) {
-    picker.style.display = picker.style.display === 'none' ? '' : 'none';
-  }
+  var $langpicker = $("#langpicker");
+  $langpicker.slideToggle(300);
 }
