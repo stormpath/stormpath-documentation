@@ -17,10 +17,10 @@ div.langpicker-container a {
   color: white;
 }
 
-div.langpicker div.current {
+div#langpicker div.current {
   background-color: rgba(255,255,255,0.1);
 }
 
-div.langpicker a {
+div#langpicker a {
   color: rgba(255,255,255,0.8);
 }
