@@ -127,7 +127,35 @@ As mentioned earlier, Stormpath resources like Accounts and Groups are created a
 
 Permissions in Stormpath can be modeled as an array inside the ``customData`` resource. They can be as simple as a key-value pair, or more complex objects. A user Account could have their user-unique permissions defined in a ``customData`` resource linked to from their Account. At the same time, their Account would be linked to the application-wide "Admin" Group which would have its own linked ``customData`` resource that would contain definitions of the permissions of all the users with the Admin role in your application.
 
-For more information about adding customData to a user, please see the :ref:`Account Management section <add-user-customdata>`. And to find out all the different things you can do with customData please see the :ref:`Reference chapter <ref-customdata>`.
+For more information about adding customData to a user, please see the :ref:`Account Management section <add-user-customdata>`.
+
+.. only:: rest
+
+  To find out all the different things you can do with customData please see the :ref:`Reference chapter <ref-customdata>`.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo) Add link to SDK documentation for Custom Data?
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo) Add link to SDK documentation for Custom Data?
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo) Add link to SDK documentation for Custom Data?
+
+.. only:: python
+
+  (python.todo) Add link to SDK documentation for Custom Data?
 
 Checking User and Role Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -139,9 +167,12 @@ Checking User Permissions
 
 To check a user's unique permissions, you must retrieve their Account's customData. You can do this in one of two ways:
 
-You can either retrieve the Account along with the expanded customData, by sending an HTTP GET to::
+1. You can retrieve the Account along with the expanded customData, by sending a request:
 
-  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID?expand=customData
+.. code-block:: http
+
+  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe?expand=customData HTTP/1.1
+  Host: api.stormpath.com
 
 This will return the Account resource along with the expanded customData:
 
@@ -171,9 +202,12 @@ This will return the Account resource along with the expanded customData:
     }
   }
 
-Or you can retrieve only the customData by sending a GET to::
+Or you can retrieve only the customData:
 
-  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/customData
+.. code-block:: http
+
+  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
+  Host: api.stormpath.com
 
 Which would return only the customData:
 
@@ -200,8 +234,13 @@ Which would return only the customData:
 Checking Role Permissions
 """""""""""""""""""""""""
 
-This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve their associated Groups, for example by sending a GET to::
+This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve their associated Groups:
 
-  https://api.stormpath.com/v1/accounts/$ACCOUNT_ID/groups
+.. code-block:: http
+
+  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/groups HTTP/1.1
+  Host: api.stormpath.com
+
+.. only:: rest
 
 From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.
