@@ -403,7 +403,7 @@
 
   Windows:
 
-  .. code-block:: powershell
+  .. code-block:: none
 
       setx STORMPATH_CLIENT_BASEURL https://enterprise.stormpath.io/v1
 

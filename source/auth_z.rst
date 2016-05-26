@@ -115,32 +115,32 @@ Stormpath also gives you an enormous amount of flexibility with what these permi
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/example_perm_simple
+    .. literalinclude:: code/csharp/authorization/example_perm_simple.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/example_perm_simple
+    .. literalinclude:: code/vbnet/authorization/example_perm_simple.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/example_perm_simple
+  .. literalinclude:: code/java/authorization/example_perm_simple.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/example_perm_simple
+  .. literalinclude:: code/nodejs/authorization/example_perm_simple.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/example_perm_simple
+  .. literalinclude:: code/php/authorization/example_perm_simple.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/example_perm_simple
+  .. literalinclude:: code/python/authorization/example_perm_simple.py
       :language: python
 
 Or as complex as:
@@ -161,32 +161,32 @@ Or as complex as:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/example_perm_complex
+    .. literalinclude:: code/csharp/authorization/example_perm_complex.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/example_perm_complex
+    .. literalinclude:: code/vbnet/authorization/example_perm_complex.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/example_perm_complex
+  .. literalinclude:: code/java/authorization/example_perm_complex.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/example_perm_complex
+  .. literalinclude:: code/nodejs/authorization/example_perm_complex.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/example_perm_complex
+  .. literalinclude:: code/php/authorization/example_perm_complex.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/example_perm_complex
+  .. literalinclude:: code/python/authorization/example_perm_complex.py
       :language: python
 
 How is this flexibility possible? Custom Data.
@@ -274,32 +274,32 @@ To check a user's unique permissions, you must retrieve their Account's customDa
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/account_with_customdata_req
+    .. literalinclude:: code/csharp/authorization/account_with_customdata_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/account_with_customdata_req
+    .. literalinclude:: code/vbnet/authorization/account_with_customdata_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/account_with_customdata_req
+  .. literalinclude:: code/java/authorization/account_with_customdata_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/account_with_customdata_req
+  .. literalinclude:: code/nodejs/authorization/account_with_customdata_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/account_with_customdata_req
+  .. literalinclude:: code/php/authorization/account_with_customdata_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/account_with_customdata_req
+  .. literalinclude:: code/python/authorization/account_with_customdata_req.py
       :language: python
 
 This will return the Account resource along with the customData:
@@ -336,32 +336,32 @@ This will return the Account resource along with the customData:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/account_with_customdata_resp
+    .. literalinclude:: code/csharp/authorization/account_with_customdata_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/account_with_customdata_resp
+    .. literalinclude:: code/vbnet/authorization/account_with_customdata_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/account_with_customdata_resp
+  .. literalinclude:: code/java/authorization/account_with_customdata_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/account_with_customdata_resp
+  .. literalinclude:: code/nodejs/authorization/account_with_customdata_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/account_with_customdata_resp
+  .. literalinclude:: code/php/authorization/account_with_customdata_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/account_with_customdata_resp
+  .. literalinclude:: code/python/authorization/account_with_customdata_resp.py
       :language: python
 
 Or you can retrieve only the customData:
@@ -377,32 +377,32 @@ Or you can retrieve only the customData:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/account_customdata_only_req
+    .. literalinclude:: code/csharp/authorization/account_customdata_only_req.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/account_customdata_only_req
+    .. literalinclude:: code/vbnet/authorization/account_customdata_only_req.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/account_customdata_only_req
+  .. literalinclude:: code/java/authorization/account_customdata_only_req.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/account_customdata_only_req
+  .. literalinclude:: code/nodejs/authorization/account_customdata_only_req.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/account_customdata_only_req
+  .. literalinclude:: code/php/authorization/account_customdata_only_req.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/account_customdata_only_req
+  .. literalinclude:: code/python/authorization/account_customdata_only_req.py
       :language: python
 
 Which would return only this:
@@ -433,32 +433,32 @@ Which would return only this:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/account_customdata_only_resp
+    .. literalinclude:: code/csharp/authorization/account_customdata_only_resp.cs
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/account_customdata_only_resp
+    .. literalinclude:: code/vbnet/authorization/account_customdata_only_resp.vb
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/account_customdata_only_resp
+  .. literalinclude:: code/java/authorization/account_customdata_only_resp.java
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/account_customdata_only_resp
+  .. literalinclude:: code/nodejs/authorization/account_customdata_only_resp.js
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/account_customdata_only_resp
+  .. literalinclude:: code/php/authorization/account_customdata_only_resp.php
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/account_customdata_only_resp
+  .. literalinclude:: code/python/authorization/account_customdata_only_resp.py
       :language: python
 
 Checking Role Permissions
@@ -479,42 +479,42 @@ This would work in much the same way as checking the permissions for a user's Ac
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/account_groups_req
+    .. literalinclude:: code/csharp/authorization/account_groups_req.cs
         :language: csharp
 
   From here... (dotnet.todo)
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/account_groups_req
+    .. literalinclude:: code/vbnet/authorization/account_groups_req.vb
         :language: vbnet
 
   From here... (dotnet.todo)
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/account_groups_req
+  .. literalinclude:: code/java/authorization/account_groups_req.java
       :language: java
 
   From here... (java.todo)
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/account_groups_req
+  .. literalinclude:: code/nodejs/authorization/account_groups_req.js
       :language: javascript
 
   From here... (node.todo)
 
 .. only:: php
 
-  .. literalinclude:: code/php/authentication/account_groups_req
+  .. literalinclude:: code/php/authorization/account_groups_req.php
     :language: php
 
   From here... (php.todo)
 
 .. only:: python
 
-  .. literalinclude:: code/python/authentication/account_groups_req
+  .. literalinclude:: code/python/authorization/account_groups_req.py
       :language: python
 
   From here... (python.todo)
