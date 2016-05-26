@@ -103,23 +103,91 @@ How to Model Fine-Grained Permissions
 
 Stormpath also gives you an enormous amount of flexibility with what these permissions look like. A permission in Stormpath can be as simple as:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "create_admin": "yes"
-  }
+  .. code-block:: json
+
+    {
+      "create_admin": "yes"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/example_perm_simple
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/example_perm_simple
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/example_perm_simple
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/example_perm_simple
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/example_perm_simple
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/example_perm_simple
+      :language: python
 
 Or as complex as:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "name": "create-admin",
-    "description": "This permission allows the account to create an admin"
-    "action": "read",
-    "resource": "/admin/create",
-    "effect": "allow"
-  }
+  .. code-block:: json
+
+    {
+      "name": "create-admin",
+      "description": "This permission allows the account to create an admin"
+      "action": "read",
+      "resource": "/admin/create",
+      "effect": "allow"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/example_perm_complex
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/example_perm_complex
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/example_perm_complex
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/example_perm_complex
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/example_perm_complex
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/example_perm_complex
+      :language: python
 
 How is this flexibility possible? Custom Data.
 
@@ -195,26 +263,160 @@ To check a user's unique permissions, you must retrieve their Account's customDa
 
 1. You can retrieve the Account along with the expanded customData, by sending a request:
 
-.. code-block:: http
+.. only:: rest
 
-  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe?expand=customData HTTP/1.1
-  Host: api.stormpath.com
+  .. code-block:: http
 
-This will return the Account resource along with the expanded customData:
+    GET /v1/accounts/3apenYvL0Z9v9spExAMpLe?expand=customData HTTP/1.1
+    Host: api.stormpath.com
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
-  Content-Type: application/json;charset=UTF-8
+  .. only:: csharp
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
-    "username" : "jlpicard",
-    "email" : "capt@enterprise.com",
-    "givenName" : "Jean-Luc",
-    "surname" : "Picard",
-    "customData": {
+    .. literalinclude:: code/csharp/authentication/account_with_customdata_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/account_with_customdata_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/account_with_customdata_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/account_with_customdata_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/account_with_customdata_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/account_with_customdata_req
+      :language: python
+
+This will return the Account resource along with the customData:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe",
+      "username" : "jlpicard",
+      "email" : "capt@enterprise.com",
+      "givenName" : "Jean-Luc",
+      "surname" : "Picard",
+      "customData": {
+        "permissions": {
+          "crew_quarters": "&nbsp;9-3601",
+          "lock_override": "all",
+          "command_bridge": {
+            "type": "vessel:bridge",
+            "identifier": "NCC-1701-D",
+            "action": "lockout",
+            "control_key": "173467321476C32789777643T732V73117888732476789764376"
+          }
+        }
+      }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/account_with_customdata_resp
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/account_with_customdata_resp
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/account_with_customdata_resp
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/account_with_customdata_resp
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/account_with_customdata_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/account_with_customdata_resp
+      :language: python
+
+Or you can retrieve only the customData:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
+    Host: api.stormpath.com
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/account_customdata_only_req
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/account_customdata_only_req
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/account_customdata_only_req
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/account_customdata_only_req
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/account_customdata_only_req
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/account_customdata_only_req
+      :language: python
+
+Which would return only this:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
       "permissions": {
         "crew_quarters": "&nbsp;9-3601",
         "lock_override": "all",
@@ -226,47 +428,93 @@ This will return the Account resource along with the expanded customData:
         }
       }
     }
-  }
 
-Or you can retrieve only the customData:
+.. only:: csharp or vbnet
 
-.. code-block:: http
+  .. only:: csharp
 
-  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
-  Host: api.stormpath.com
+    .. literalinclude:: code/csharp/authentication/account_customdata_only_resp
+        :language: csharp
 
-Which would return only the customData:
+  .. only:: vbnet
 
-.. code-block:: http
+    .. literalinclude:: code/vbnet/authentication/account_customdata_only_resp
+        :language: vbnet
 
-  HTTP/1.1 200 OK
-  Location: https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData
-  Content-Type: application/json;charset=UTF-8
+.. only:: java
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spExAMpLe/customData"
-    "permissions": {
-      "crew_quarters": "&nbsp;9-3601",
-      "lock_override": "all",
-      "command_bridge": {
-        "type": "vessel:bridge",
-        "identifier": "NCC-1701-D",
-        "action": "lockout",
-        "control_key": "173467321476C32789777643T732V73117888732476789764376"
-      }
-    }
-  }
+  .. literalinclude:: code/java/authentication/account_customdata_only_resp
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/account_customdata_only_resp
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/account_customdata_only_resp
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/account_customdata_only_resp
+      :language: python
 
 Checking Role Permissions
 """""""""""""""""""""""""
 
-This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve their associated Groups:
-
-.. code-block:: http
-
-  GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/groups HTTP/1.1
-  Host: api.stormpath.com
+This would work in much the same way as checking the permissions for a user's Account. You would first need to retrieve the Account's associated Groups:
 
 .. only:: rest
 
+  .. code-block:: http
+
+    GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/groups HTTP/1.1
+    Host: api.stormpath.com
+
   From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/account_groups_req
+        :language: csharp
+
+  From here... (dotnet.todo)
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/account_groups_req
+        :language: vbnet
+
+  From here... (dotnet.todo)
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/account_groups_req
+      :language: java
+
+  From here... (java.todo)
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/account_groups_req
+      :language: javascript
+
+  From here... (node.todo)
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/account_groups_req
+    :language: php
+
+  From here... (php.todo)
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/account_groups_req
+      :language: python
+
+  From here... (python.todo)
