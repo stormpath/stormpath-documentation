@@ -337,6 +337,10 @@ where ? is the ``tenant_id`` value obtained by inspecting the request.
 
 So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:`Organization resource <ref-organization>` and it's ``nameKey`` attribute.
 
+.. note::
+
+  Stormpath's ID Site supports multi-tenancy right out of the box. For more information about how to handle user login in a multi-tenant set-up with ID Site, please see :ref:`the ID Site chapter <idsite-multitenancy>`.
+
 We present here two possible solutions that use this ``nameKey``. You may support both if you wish to give your customers convenience options.
 
 6.4.1. Sub-Domain
@@ -388,3 +392,5 @@ An alternative, or complimentary, approach to tenant subdomains is to allow the 
 We advise that you auto-remember the login form tenant ID value so that field is pre-populated whenever a user returns to log in. Users don’t like having to remember and type that value in every time they log in.
 
 As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multi-tenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
+
+Stormpath supports quick implementation of all of these strategies with ID Site. For more information, please see :ref:`the ID Site chapter <idsite-multitenancy>`.

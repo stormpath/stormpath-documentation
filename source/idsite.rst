@@ -9,6 +9,13 @@
 
 Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication. It supports regular login to your Stormpath Directories, as well as Social and SAML login.
 
+.. figure:: images/idsite/id_site_screen.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site Screenshot
+
+    *An example ID Site*
+
 The screens and functionality of ID Site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, JavaScript code, screens, removing screens, and even changing how the screens behave.
 
 Why should I use Stormpath ID Site?
@@ -29,7 +36,7 @@ On the ID Site, the user will enter their data and complete the appropriate acti
 
 After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be ``https://imperialxchange.com/idSiteResult``. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to ``/idSiteResult``, validate that the JWT is correct, and return an ``ID Site Account Result``. The ``ID Site Account Result`` will include the Stormpath Account object and additional information, such as any state that was passed by your application or whether or not the Account returned is newly created.
 
-.. figure:: images/idsite/ID-diagram.png
+.. figure:: images/idsite/id_site_flow.png
     :align: center
     :scale: 100%
     :alt: ID Site Flow
@@ -549,18 +556,40 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
   (python.todo)
 
+.. _idsite-multitenancy:
+
 7.5. Using ID Site for Multi-tenancy
 ====================================
-
-.. todo::
-
-  There's a lot more to say here for SDKs than there is for REST. Also, we need to link to this section from the multi-tenancy chapter. It needs to be clear that we offer ID Site as
 
 If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
 
 From that point, ID Site (combined with one of our SDKs) is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
 
+There are specific claims in the :ref:`idsite-auth-jwt` that allow you mix and match multi-tenancy user routing strategies:
+
+**Organization nameKey**
+
+``onk``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
+
+**Show Organization Field**
+
+``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to. If combined with ``onk``, this will pre-populate that field with the Organization's name.
+
+.. note::
+
+  Stormpath will only show the field when you have at least one Organization mapped as an Account Store for your Application.
+
+**Use Sub-Domain**
+
+``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+
+For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+
+  https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
+
 .. todo::
+
+  There's a lot more to say here for SDKs than there is for REST.
 
   The SDKs can show you how to actually accomplish all this. e.g.::
 
@@ -568,36 +597,3 @@ From that point, ID Site (combined with one of our SDKs) is able to handle eithe
         'callbackUri': 'https://trooperapp.com/callback',
         'showOrganizationField': true
     });
-
-You can use one, or all, of the below:
-
-Specifying the Organization
----------------------------
-
-- Pass ``onk``
-
-Show organization in field?
-
-- Pass ``sof``
-
-Allowing the User to Specify their Organization on ID Site
-----------------------------------------------------------
-
-- Pass ``sof`` as true
-
-Using Subdomains
-----------------
-
-- Specify ``onk``
-- Pass ``usd`` as ``true``
-
-The SSO endpoint when receiving this JWT, will
-redirect the ID Site to a subdomain if `usd` is true.
-
-The subdomain will be a subdomain of the configured ID Site domain from the configuration.
-
-For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the organization name key is 'home-depot', then the SSO endpoint will resolve the following URL::
-
-https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
-
-Again, this subdomain will be based on the organization name key that is in associated with the organization in the account store mapping.
