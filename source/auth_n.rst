@@ -2396,8 +2396,6 @@ Step 1: Create an LDAP Directory
               "agentUserDnPassword":"StormpathRulez",
               "baseDn":"dc=example,dc=com",
               "pollInterval":60,
-              "referralMode":"ignore",
-              "ignoreReferralIssues":false,
               "accountConfig":{
                 "dnSuffix":"ou=employees",
                 "objectClass":"person",
