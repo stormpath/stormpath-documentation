@@ -436,6 +436,38 @@ In this situation, after the user has been authenticated via ID Site, a develope
 
 Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that it's associated with is still valid) and then return an OAuth 2.0 Access Token:
 
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/
+      :language: python
+
 .. only:: rest
 
   .. code-block:: http
@@ -450,6 +482,38 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
       "expires_in": 1800,
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/
+      :language: python
 
 For more information about Stormpath's OAuth 2.0 tokens, please see :ref:`generate-oauth-token`.
 

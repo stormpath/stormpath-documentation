@@ -142,90 +142,135 @@ How to Create an Organization
 
 You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
 
-So, if for example one of our application's tenants was the Bank of A, we could send the following POST:
+So, if for example one of our application's tenants was the Bank of A, we could send the following request:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/organizations HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "name": "Bank of A",
-    "nameKey": "bank-of-a",
-    "status": "ENABLED"
-  }
+    POST /v1/organizations HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "name": "Bank of A",
+      "nameKey": "bank-of-a",
+      "status": "ENABLED"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 Which would return the following:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
-    "createdAt": "2015-10-02T15:27:01.658Z",
-    "modifiedAt": "2015-10-02T15:27:01.658Z",
-    "name": "Bank of A",
-    "nameKey": "bank-of-a",
-    "status": "ENABLED",
-    "description": null,
-    "customData": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/customData"
-    },
-    "defaultAccountStoreMapping": null,
-    "defaultGroupStoreMapping": null,
-    "accountStoreMappings": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accountStoreMappings"
-    },
-    "groups": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/groups"
-    },
-    "accounts": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accounts"
-    },
-    "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexAMPLE"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
+      "createdAt": "2015-10-02T15:27:01.658Z",
+      "modifiedAt": "2015-10-02T15:27:01.658Z",
+      "name": "Bank of A",
+      "nameKey": "bank-of-a",
+      "status": "ENABLED",
+      "description": null,
+      "customData": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/customData"
+      },
+      "defaultAccountStoreMapping": null,
+      "defaultGroupStoreMapping": null,
+      "accountStoreMappings": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accountStoreMappings"
+      },
+      "groups": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/groups"
+      },
+      "accounts": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accounts"
+      },
+      "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexAMPLE"
+      }
     }
-  }
 
-Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
+  Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
 
-First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a POST:
+.. only:: rest
 
-.. code-block:: http
+  First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a request:
 
-  POST /v1/organizations HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
-
-  {
-    "organization": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-    }
-  }
-
-These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
-
-- ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
-
-- ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
-
-- ``isDefaultGroupStore``: A ``true`` value indicates that new Groups created by the Organization’s ``/groups`` endpoint will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the accountStore is a Directory.
-
-In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
-
-.. code-block:: http
+  .. code-block:: http
 
     POST /v1/organizations HTTP/1.1
     Host: api.stormpath.com
@@ -237,31 +282,156 @@ In order to be able to add Groups and Accounts to the Organization in the way me
       },
       "accountStore": {
         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-      },
-      "isDefaultAccountStore":true,
-      "isDefaultGroupStore":true
+      }
     }
+
+  These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
+
+  - ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+
+  - ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
+
+  - ``isDefaultGroupStore``: A ``true`` value indicates that new Groups created by the Organization’s ``/groups`` endpoint will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the accountStore is a Directory.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
+
+In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
+
+.. only:: rest
+
+  .. code-block:: http
+
+      POST /v1/organizations HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json;charset=UTF-8
+
+      {
+        "organization": {
+          "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
+        },
+        "accountStore": {
+          "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+        },
+        "isDefaultAccountStore":true,
+        "isDefaultGroupStore":true
+      }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 Which would result in the following ``201 Created`` response:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle"
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle",
-    "listIndex": 0,
-    "isDefaultAccountStore": true,
-    "isDefaultGroupStore": true,
-    "organization": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle"
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle",
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "organization": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+      }
     }
-  }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
@@ -279,7 +449,9 @@ Adding an Account to an Organization
 
 Adding a new Account to an Organization is exactly the same as adding them to a Directory, except that you use the Organization to route the creation request:
 
-.. code-block:: http
+.. only:: rest
+
+  .. code-block:: http
 
     POST /v1/organizations/2P4XOanz26AUomIexAmple/accounts HTTP/1.1
     Host: api.stormpath.com
@@ -295,6 +467,38 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
             "favoriteColor": "fuschia"
         }
     }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 
 6.3. Authenticating an Account against an Organization
