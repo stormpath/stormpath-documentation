@@ -3739,13 +3739,6 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
-.. only:: python
-
-  This will return the Provider:
-
-  .. literalinclude:: code/python/authentication/get_directory_provider_resp.py
-      :language: python
-
 Now you will need to retrieve your Directory Provider's Service Provider Metadata:
 
 .. only:: rest
