@@ -112,13 +112,81 @@ For example, if your Organization's ``nameKey`` is ``bank-of-a``, you could name
 
 This has two benefits:
 
-1. It makes it easy to find all the role Groups for that particular tenant, since you can simply search for the nameKey in the ``name`` field:
+1. It makes it easy to find all the role Groups for that particular tenant, since you can search for the nameKey:
+
+.. only:: rest
 
   ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.role.*``
 
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
+
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
 
+.. only:: rest
+
   GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.*
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/
+      :language: python
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -140,9 +208,7 @@ Although Organizations do not themselves own Accounts in the same way as Directo
 How to Create an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
-
-So, if for example one of our application's tenants was the Bank of A, we could send the following request:
+You can create an Organization in Stormpath by sending the following request:
 
 .. only:: rest
 
@@ -150,7 +216,6 @@ So, if for example one of our application's tenants was the Bank of A, we could 
 
     POST /v1/organizations HTTP/1.1
     Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
 
     {
       "name": "Bank of A",
@@ -440,7 +505,7 @@ Registering an Organization as an Account Store for an Application
 
 As described in :ref:`the Authentication chapter <authn>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future.
 
-To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
+To map an Organization to an Application, follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
 .. _add-accnt-to-org:
 

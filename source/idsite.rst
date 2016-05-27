@@ -517,8 +517,8 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
 For more information about Stormpath's OAuth 2.0 tokens, please see :ref:`generate-oauth-token`.
 
-Step 3: (Optional) Logging Out of ID Site with REST
----------------------------------------------------
+Step 3: (Optional) Logging Out of ID Site
+-----------------------------------------
 
 ID Site will keep a configurable session for authenticated users. When a user is sent from your application to ID Site, it will confirm that the session is still valid for the user. If it is, they will be automatically redirected to the ``cb_uri``. This ``cb_uri`` can be the originating application or any application supported by a Stormpath SDK.
 
@@ -533,27 +533,35 @@ ID Site will keep a configurable session for authenticated users. When a user is
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
   .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/
+        :language: csharp
 
   .. only:: vbnet
 
+    .. literalinclude:: code/vbnet/idsite/
+        :language: vbnet
+
 .. only:: java
 
-  (java.todo)
+  .. literalinclude:: code/java/idsite/
+      :language: java
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/idsite/
+      :language: javascript
 
 .. only:: php
 
-  (php.todo)
+  .. literalinclude:: code/php/idsite/
+    :language: php
 
 .. only:: python
 
-  (python.todo)
+  .. literalinclude:: code/python/idsite/
+      :language: python
 
 Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT.
 
@@ -563,27 +571,35 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
   .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/
+        :language: csharp
 
   .. only:: vbnet
 
+    .. literalinclude:: code/vbnet/idsite/
+        :language: vbnet
+
 .. only:: java
 
-  (java.todo)
+  .. literalinclude:: code/java/idsite/
+      :language: java
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/idsite/
+      :language: javascript
 
 .. only:: php
 
-  (php.todo)
+  .. literalinclude:: code/php/idsite/
+    :language: php
 
 .. only:: python
 
-  (python.todo)
+  .. literalinclude:: code/python/idsite/
+      :language: python
 
 .. _idsite-password-reset:
 
@@ -598,6 +614,51 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
 .. only:: csharp or vbnet
 
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/
+      :language: python
+
+.. _idsite-multitenancy:
+
+7.5. Using ID Site for Multi-tenancy
+====================================
+
+If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
+
+From that point, ID Site is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
+
+.. only:: rest
+
+  There are specific claims in the :ref:`idsite-auth-jwt` that allow you mix and match multi-tenancy user routing strategies:
+
+.. only:: csharp or vbnet
+
   (dotnet.todo)
 
   .. only:: csharp
@@ -620,24 +681,65 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
   (python.todo)
 
-.. _idsite-multitenancy:
-
-7.5. Using ID Site for Multi-tenancy
-====================================
-
-If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
-
-From that point, ID Site (combined with one of our SDKs) is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
-
-There are specific claims in the :ref:`idsite-auth-jwt` that allow you mix and match multi-tenancy user routing strategies:
-
 **Organization nameKey**
 
-``onk``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
+.. only:: rest
+
+  ``onk``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 **Show Organization Field**
 
-``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to. If combined with ``onk``, this will pre-populate that field with the Organization's name.
+.. only:: rest
+
+  ``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to. If combined with ``onk``, this will pre-populate that field with the Organization's name.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 .. note::
 
@@ -645,19 +747,34 @@ There are specific claims in the :ref:`idsite-auth-jwt` that allow you mix and m
 
 **Use Sub-Domain**
 
-``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+.. only:: rest
+
+  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
 
   https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
-
-.. todo::
-
-  There's a lot more to say here for SDKs than there is for REST.
-
-  The SDKs can show you how to actually accomplish all this. e.g.::
-
-      application.createIdSiteUrl({
-        'callbackUri': 'https://trooperapp.com/callback',
-        'showOrganizationField': true
-    });
