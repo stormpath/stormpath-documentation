@@ -440,32 +440,32 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/idsite/
+    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_req
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/idsite/
+    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_req
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/idsite/
+  .. literalinclude:: code/java/idsite/jwt_for_oauth_req
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/idsite/
+  .. literalinclude:: code/nodejs/idsite/jwt_for_oauth_req
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/
+  .. literalinclude:: code/php/idsite/jwt_for_oauth_req
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/
+  .. literalinclude:: code/python/idsite/jwt_for_oauth_req
       :language: python
 
 .. only:: rest
@@ -487,32 +487,32 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/idsite/
+    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/idsite/
+    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/idsite/
+  .. literalinclude:: code/java/idsite/jwt_for_oauth_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/idsite/
+  .. literalinclude:: code/nodejs/idsite/jwt_for_oauth_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/
+  .. literalinclude:: code/php/idsite/jwt_for_oauth_resp
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/
+  .. literalinclude:: code/python/idsite/jwt_for_oauth_resp
       :language: python
 
 For more information about Stormpath's OAuth 2.0 tokens, please see :ref:`generate-oauth-token`.
@@ -535,32 +535,32 @@ ID Site will keep a configurable session for authenticated users. When a user is
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/idsite/
+    .. literalinclude:: code/csharp/idsite/logout_from_idsite_req
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/idsite/
+    .. literalinclude:: code/vbnet/idsite/logout_from_idsite_req
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/idsite/
+  .. literalinclude:: code/java/idsite/logout_from_idsite_req
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/idsite/
+  .. literalinclude:: code/nodejs/idsite/logout_from_idsite_req
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/
+  .. literalinclude:: code/php/idsite/logout_from_idsite_req
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/
+  .. literalinclude:: code/python/idsite/logout_from_idsite_req
       :language: python
 
 Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT.
@@ -573,32 +573,32 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/idsite/
+    .. literalinclude:: code/csharp/idsite/logout_from_idsite_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/idsite/
+    .. literalinclude:: code/vbnet/idsite/logout_from_idsite_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/idsite/
+  .. literalinclude:: code/java/idsite/logout_from_idsite_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/idsite/
+  .. literalinclude:: code/nodejs/idsite/logout_from_idsite_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/
+  .. literalinclude:: code/php/idsite/logout_from_idsite_resp
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/
+  .. literalinclude:: code/python/idsite/logout_from_idsite_resp
       :language: python
 
 .. _idsite-password-reset:
@@ -616,32 +616,32 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/idsite/
+    .. literalinclude:: code/csharp/idsite/idsite_reset_pwd
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/idsite/
+    .. literalinclude:: code/vbnet/idsite/idsite_reset_pwd
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/idsite/
+  .. literalinclude:: code/java/idsite/idsite_reset_pwd
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/idsite/
+  .. literalinclude:: code/nodejs/idsite/idsite_reset_pwd
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/
+  .. literalinclude:: code/php/idsite/idsite_reset_pwd
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/
+  .. literalinclude:: code/python/idsite/idsite_reset_pwd
       :language: python
 
 .. _idsite-multitenancy:

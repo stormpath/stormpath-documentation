@@ -122,32 +122,32 @@ This has two benefits:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/search_groups_by_name_ex1
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/search_groups_by_name_ex1
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/search_groups_by_name_ex1
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/search_groups_by_name_ex1
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/search_groups_by_name_ex1
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex1
       :language: python
 
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
@@ -160,27 +160,27 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/search_groups_by_name_ex2
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/search_groups_by_name_ex2
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/search_groups_by_name_ex2
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/search_groups_by_name_ex2
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/search_groups_by_name_ex2
     :language: php
 
 .. only:: python
@@ -227,32 +227,32 @@ You can create an Organization in Stormpath by sending the following request:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/create_org_req
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/create_org_req
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/create_org_req
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/create_org_req
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/create_org_req
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/create_org_req
       :language: python
 
 Which would return the following:
@@ -298,32 +298,32 @@ Which would return the following:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/create_org_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/create_org_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/create_org_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/create_org_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/create_org_resp
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/create_org_resp
       :language: python
 
 Adding an Account Store to an Organization
@@ -362,32 +362,32 @@ Like other Account Stores, an Organization can be mapped to an Application so th
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/asm_to_org
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/asm_to_org
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/asm_to_org
       :language: python
 
 In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
@@ -415,35 +415,35 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org_with_default_req
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org_with_default_req
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_req
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_req
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_req
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_req
       :language: python
 
-Which would result in the following ``201 Created`` response:
+Which would result in the following response:
 
 .. only:: rest
 
@@ -470,32 +470,32 @@ Which would result in the following ``201 Created`` response:
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org_with_default_resp
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org_with_default_resp
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_resp
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_resp
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_resp
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_resp
       :language: python
 
 So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
@@ -537,32 +537,32 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 
   .. only:: csharp
 
-    .. literalinclude:: code/csharp/multitenancy/
+    .. literalinclude:: code/csharp/multitenancy/add_account_to_org
         :language: csharp
 
   .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/multitenancy/
+    .. literalinclude:: code/vbnet/multitenancy/add_account_to_org
         :language: vbnet
 
 .. only:: java
 
-  .. literalinclude:: code/java/multitenancy/
+  .. literalinclude:: code/java/multitenancy/add_account_to_org
       :language: java
 
 .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/multitenancy/
+  .. literalinclude:: code/nodejs/multitenancy/add_account_to_org
       :language: javascript
 
 .. only:: php
 
-  .. literalinclude:: code/php/multitenancy/
+  .. literalinclude:: code/php/multitenancy/add_account_to_org
     :language: php
 
 .. only:: python
 
-  .. literalinclude:: code/python/multitenancy/
+  .. literalinclude:: code/python/multitenancy/add_account_to_org
       :language: python
 
 
