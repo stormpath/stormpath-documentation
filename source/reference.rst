@@ -4042,7 +4042,7 @@
     * - ``status``
       - String (Enum)
       - ``ENABLED``, ``DISABLED``, ``UNVERIFIED``
-      - Enabled Accounts are able to log in to their assigned Applications, Disabled Accounts may not log in to Applications, Unverified Accounts are disabled because they have not verified their email address.
+      - ``ENABLED`` Accounts are able to log in to their assigned Applications, ``DISABLED`` Accounts may not log in to Applications, ``UNVERIFIED`` Accounts are disabled because they have not verified their email address.
 
     * - ``createdAt``
       - String
@@ -4077,17 +4077,17 @@
     * - ``directory``
       - Link
       - N/A
-      - A link to the Account's Directory.
+      - A link to the Account's :ref:`Directory <ref-directory>`.
 
     * - ``tenant``
       - Link
       - N/A
-      - A link to the Tenant that owns the Account’s Directory.
+      - A link to the :ref:`Tenant <ref-tenant>` that owns the Account’s Directory.
 
     * - ``groups``
       - Link
       - N/A
-      - A link to a collection of the Groups that the Account belongs to.
+      - A link to a collection of the :ref:`Groups <ref-group>` that the Account belongs to.
 
     * - ``groupMemberships``
       - Link
@@ -4097,22 +4097,22 @@
     * - ``applications``
       - Link
       - N/A
-      - A link to the Applications that the Account belongs to.
+      - A link to the :ref:`Applications <ref-application>` that the Account belongs to.
 
     * - ``apiKeys``
       - Link
       - N/A
-      - A link to the apiKeys for this Account.
+      - A link to the :ref:`apiKeys <ref-account-apikeys>` for this Account.
 
     * - ``accessTokens``
       - Link
       - N/A
-      - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication.
+      - A collection of valid JSON Web Tokens associated with this Account, used for token-based authentication. For more information, see :ref:`token-authn`.
 
     * - ``refreshTokens``
       - Link
       - N/A
-      - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication.
+      - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. For more information, see :ref:`token-authn`.
 
   **Account Example**
 
@@ -4243,7 +4243,7 @@
 
   .. warning::
 
-    Be careful deleting an Account for a single application’s needs - ensure that the deletion is OK for any and all applications that may be associated with the Account. More often than not it is advisable to simply update the Account's ``status`` to ``DISABLED``.
+    Be careful deleting an Account for a single application’s needs - ensure that the deletion is OK for any and all applications that may be associated with the Account. Usually it is advisable to simply update the Account's ``status`` to ``DISABLED``.
 
 
   Example Queries
@@ -4356,12 +4356,12 @@
       * - ``account``
         - Link
         - N/A
-        - A link to the Account that this API Key is associated with.
+        - A link to the :ref:`Account <ref-account>` that this API Key is associated with.
 
       * - ``tenant``
         - Link
         - N/A
-        - A link to the Tenant that this API Key is associated with.
+        - A link to the :ref:`Tenant <ref-tenant>` that this API Key is associated with.
 
   **apiKeys Example**
 
@@ -4369,8 +4369,8 @@
 
     {
       "href": "https://api.stormpath.com/v1/apiKeys/5G5KR4W3K1BP235X8KEXAMPLE",
-      "id": "5G5KR4W3K1BP235X8K6EXBL93",
-      "secret": "GRiCelvEblNU7Xl4l3oOCw30c72Rwj8TkRn8cUQCreX",
+      "id": "5G5KR4W3K1BP235X8K6EXPL93",
+      "secret": "GRiCelvExamplel4l3oOCw30c72Rwj8TkRn8cUQCreX",
       "status": "ENABLED",
       "account": {
         "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
@@ -4616,17 +4616,17 @@
       * - ``account``
         - Link
         - N/A
-        - A link to the Account that this Access Token is associated with.
+        - A link to the :ref:`Account <ref-account>` that this Access Token is associated with.
 
       * - ``application``
         - Link
         - N/A
-        - A link to the Application that this Access Token is associated with.
+        - A link to the :ref:`Application <ref-application>` that this Access Token is associated with.
 
       * - ``tenant``
         - Link
         - N/A
-        - A link to the Tenant that this Access Token is associated with.
+        - A link to the :ref:`Tenant <ref-tenant>` that this Access Token is associated with.
 
   **refreshTokens Example**
 
@@ -4686,7 +4686,6 @@
         - ``application.href``
         - Retrieves the specified Account's Refresh Tokens.
 
-
   .. _ref-provider-data:
 
   Provider Data
@@ -4732,7 +4731,7 @@
     * - ``providerId``
       - String
       - *(See Description)*
-      - Contains an identifying string for the source of this Account's information. This will match the ``providerId`` of :ref:`the Directory that owns this Account<ref-provider>`.
+      - Contains an identifying string for the source of this Account's information. This will match the ``providerId`` of :ref:`the Directory that owns this Account <ref-provider>`.
 
   **Provider Data Example (Google)**
 
@@ -4763,7 +4762,7 @@
   Provider Data Operations
   """"""""""""""""""""""""
 
-  The providerData object can be explicitly created as part of the Directory creation POST. Once it has been created, it can be retrieved with a GET, and in some cases updated with a PUT. Provider Data plays a role in both Social Login and SAML Configurations. For more information about the operations possible with Provider Data, please see the :ref:`authn` Chapter.
+  The providerData object can be explicitly created as part of the Directory creation POST. Once it has been created, it can be retrieved with a GET, and in some cases updated with a PUT. Provider Data plays a role in both Social Login and SAML Configurations. For more information about the operations possible with Provider Data, please see the :ref:`Authentication <authn>` Chapter.
 
   .. _ref-jwt:
 
@@ -4969,10 +4968,10 @@
 
       * - GET /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
         - N/A
-        - Retrieves the specified resource's' customData resource.
+        - Retrieves the specified resources' customData resource.
 
   Update a customData
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ^^^^^^^^^^^^^^^^^^^^
 
   .. list-table::
       :widths: 40 20 40
@@ -5014,7 +5013,7 @@
 
   .. _accnt-create-with-customdata:
 
-  **Create an Account and simultaneously populate its custom data**
+  **Create an Account and simultaneously populate its Custom Data**
 
   .. code-block:: bash
 
@@ -5039,7 +5038,7 @@
       }'
     }
 
-  This query would create an Account with the attribute values and custom data specified.
+  This query would create an Account with the attribute values and Custom Data specified.
 
   **Delete a single field from within a customData resource**
 

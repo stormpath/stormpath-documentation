@@ -4046,13 +4046,6 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
 
-.. only:: python
-
-  This request will return a response containing a JWT like this:
-
-  .. literalinclude:: code/python/authentication/get_default_relay_state_resp.py
-      :language: python
-
 This JWT will then need to be entered into your IdP's configuration in order for IdP-initiated authentication to function properly.
 
 This ``defaultRelayStates/`` endpoint also accepts a few optional properties. These properties can be encoded in the defaultRelayState JWT that is stored on your IdP by passing them in the body of your POST:
