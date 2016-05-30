@@ -13,7 +13,7 @@
   REST API Core Concepts
   ======================
 
-  The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this guide.
+  The following information is essential to understanding how the Stormpath API functions. You should familiarize yourself with it before moving on to the rest of this reference.
 
   .. contents::
       :local:
@@ -81,7 +81,7 @@
 
   All Stormpath SDKs (currently Java, Ruby, PHP, and Python) use this more secure Digest authentication so we recommend that you use the SDKs whenever possible. However, if we do not yet have an SDK for your programming language, you should use basic authentication over HTTPS.
 
-  Finally, if you would like to use Stormpath Digest authentication in a programming language that Stormpath does not yet support, you can attempt to port the algorithm to that language. You can try to replicate the algorithm and use Stormpath existing code as examples or the documented algorithm:
+  Finally, if you would like to use Stormpath Digest authentication in a programming language that Stormpath does not yet support, you can attempt to port the algorithm to that language. You can try to replicate the algorithm and use Stormpath's existing code as examples of the documented algorithm:
 
   - Java: `SAuthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-java/blob/master/impl/src/main/java/com/stormpath/sdk/impl/http/authc/SAuthc1RequestAuthenticator.java>`__ (the **authenticate** method)
   - Node: `Sauthc1RequestAuthenticator <https://github.com/stormpath/stormpath-sdk-node/blob/master/lib/authc/Sauthc1RequestAuthenticator.js>`__
@@ -89,7 +89,7 @@
   - Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
   - Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`__ (the **sign_request** method)
 
-  If you port the algorithm to other languages, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
+  If you port the algorithm to another language, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
 
   .. note::
 
@@ -98,7 +98,7 @@
   Creating, Retrieving, Updating, and Deleting Resources
   ------------------------------------------------------
 
-  Stormpath entities have a full set of creation, retrieval, update and deletion actions associated with them. Here we give some information about all of these actions. For a complete description of every resource and the actions that can be performed with it, please see the :ref:`below <ref-tenant>`.
+  Stormpath entities have a full set of creation, retrieval, update and deletion actions associated with them. Here we give some information about all of these actions. For a complete description of a resource and the actions that can be performed with it, please click on one of the resource names in the navigation panel on the left.
 
   Creating Resources
   ^^^^^^^^^^^^^^^^^^
@@ -388,7 +388,7 @@
       - N/A
       - An array of resources, each with their own ``href`` and attributes.
 
-  If you want to interact with multiple resources, you must do so with a Collection Resource. Collection Resources also support additional behavior specific to collections, such as :ref:`pagination <about-pagination>`, :ref:`sorting <about-sorting>`, and :ref:`searching <about-search>`.
+  If you want to interact with multiple resources, you must do so with a Collection Resource. Collection Resources also support additional behavior specific to collections, such as :ref:`pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, and :ref:`searching <about-search>`.
 
   .. _about-pagination:
 
@@ -491,7 +491,7 @@
   #. A more targeted :ref:`attribute-based search <search-attribute>`.
   #. An even more targeted kind of attribute search, the :ref:`Datetime <search-datetime>` search.
 
-  The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
+  The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`Sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
 
   .. _search-filter:
 
@@ -760,7 +760,7 @@
       * - ``href``
         - Link
         - N/A
-        - The resource's fully qualified location URL
+        - The resource's fully qualified location URL.
 
       * - ``name``
         - String
@@ -790,37 +790,37 @@
       * - ``organizations``
         - Link
         - N/A
-        - A link to a Collection of all the Organizations mapped to this Tenant.
+        - A link to a Collection of all the :ref:`Organizations <ref-organization>` mapped to this Tenant.
 
       * - ``applications``
         - Link
         - N/A
-        - A link to a Collection of all the Applications mapped to this Tenant.
+        - A link to a Collection of all the :ref:`Applications <ref-application>` mapped to this Tenant.
 
       * - ``directories``
         - Link
         - N/A
-        - A link to a Collection of all the Directories mapped to this Tenant.
+        - A link to a Collection of all the :ref:`Directories <ref-directory>` mapped to this Tenant.
 
       * - ``accounts``
         - Link
         - N/A
-        - A link to a Collection of the Accounts mapped to this Tenant.
+        - A link to a Collection of the :ref:`Accounts <ref-account>` mapped to this Tenant.
 
       * - ``agents``
         - Link
         - N/A
-        - A link to a Collection of all the Agents configured for this Tenant.
+        - A link to a Collection of all the :ref:`Agents <ref-ldap-agent>` configured for this Tenant.
 
       * - ``groups``
         - Link
         - N/A
-        - A link to a Collection of all the Groups configured for this Tenant.
+        - A link to a Collection of all the :ref:`Groups <ref-group>` configured for this Tenant.
 
       * - ``idSites``
         - Link
         - N/A
-        - A link to a Collection of all the ID Sites configured for this Tenant.
+        - A link to a Collection of all the :ref:`ID Sites <ref-id-site>` configured for this Tenant.
 
   **Tenant Example**
 
@@ -894,11 +894,11 @@
         - Description
 
       * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a collection of all of a Tenant's associated resources of the specified type. Possible resource types are: ``organizations``, ``applications``, ``directories``, ``accounts``, ``agents``, ``groups``, and ``idsites``.
 
       * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Tenant's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Tenant are: ``customData``, ``organizations``, ``applications``, ``directories``, ``accounts``, ``agents``, ``groups``, and ``idsites``.
 
   Example Queries
@@ -941,7 +941,7 @@
   ID Site
   ^^^^^^^
 
-  This resource contains information about this Tenant's ID Site. For more information, see :ref:`idsite`.
+  This resource contains information about this Tenant's ID Site. For more information, see the chapter dedicated to :ref:`using ID Site <idsite>`.
 
   **idSite URL**
 
@@ -1021,7 +1021,7 @@
       * - ``tenant``
         - Link
         - N/A
-        - A link to the Tenant associated with this ID Site.
+        - A link to the :ref:`Tenant <ref-tenant>` associated with this ID Site.
 
   **idSite Example**
 
@@ -1062,11 +1062,7 @@
 
   **Description**
 
-  .. todo::
-
-      Lots of opportunities for hyperlinking here.
-
-  An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs. You control who may log in to an application by assigning (or ‘mapping’) one or more Directory, Group, or Organization resources (generically called Account Stores) to an Application resource. The Accounts in these associated Account Stores collectively form the application’s user base.
+  An **Application** resource in Stormpath contains information about any real-world software that communicates with Stormpath via REST APIs. You control who may log in to an application by assigning (or ‘:ref:`mapping <ref-asm>`’) one or more :ref:`Directory <ref-directory>`, :ref:`Group <ref-group>`, or :ref:`Organization <ref-organization>` resources (generically called Account Stores) to an Application resource. The Accounts in these associated Account Stores collectively form the application’s user base.
 
   **Application URL**
 
@@ -1091,17 +1087,17 @@
       * - ``name``
         - String
         - 1 < N <= 255 characters
-        - Name of the Application. Must be unique across all Applications within a Tenant.
+        - Name of the Application. Must be unique across all Applications within a :ref:`Tenant <ref-tenant>`.
 
       * - ``description``
         - String
         - 0 <= N <= 4000 chars
-        - A description of the application that this resource represents.
+        - (Optional) A description of the application that this resource represents.
 
       * - ``status``
         - String (Enum)
         - ``ENABLED`` (Default), ``DISABLED``
-        - ``ENABLED`` applications allow mapped Accounts to log in. ``DISABLED`` Applications prevent mapped Accounts from logging in.
+        - ``ENABLED`` Applications allow mapped Accounts to log in. ``DISABLED`` Applications prevent mapped Accounts from logging in.
 
       * - ``createdAt``
         - String
@@ -1116,17 +1112,17 @@
       * - ``tenant``
         - Link
         - N/A
-        - A link to the Tenant that owns this Application.
+        - A link to the :ref:`Tenant <ref-tenant>` that owns this Application.
 
       * - ``defaultAccountStoreMapping``
         - Link
         - Could be ``null``
-        - A link to the Account Store Mapping that reflects the default Account Store where the application will store newly created Accounts. A ``null`` value disables the application from directly creating new Accounts.
+        - A link to the :ref:`Account Store Mapping <ref-asm>` that reflects the default Account Store where the application will store newly created Accounts. A ``null`` value disables the Application from directly creating new Accounts.
 
       * - ``defaultGroupStoreMapping``
         - Link
         - Could be ``null``
-        - A link to the Account Store Mapping that reflects the default Group Store where the application will store newly created Groups. A ``null`` value disables the application from directly creating new Groups.
+        - A link to the :ref:`Account Store Mapping <ref-asm>` that reflects the default Group Store where the application will store newly created Groups. A ``null`` value disables the Application from directly creating new Groups.
 
       * - ``customData``
         - Link
@@ -1135,8 +1131,8 @@
 
       * - ``oAuthPolicy``
         - Link
-        -
-        - A link to this Application OAuth policy. For more information, see :ref:`token-authn-config`.
+        - N/A
+        - A link to this Application's OAuth policy. For more information, see :ref:`token-authn-config`.
 
       * - ``accounts``
         - Link
@@ -1166,17 +1162,17 @@
       * - ``apiKeys``
         - Link
         - N/A
-        - A collection of all the API Keys for this Application.
+        - A collection of all the :ref:`API Keys <ref-application-apikeys>` for this Application.
 
       * - ``verificationEmails``
         - Link
         - N/A
-        - The endpoint for Verification Emails for this Application.
+        - The endpoint for :ref:`Verification Emails <ref-verification-email>` for this Application.
 
       * - ``authTokens``
         - Link
         - N/A
-        - A collection of Auth Tokens for this Application. For more information, see :ref:`about-token-validation`.
+        - A collection of :ref:`Auth Tokens <ref-oauth-token>` for this Application. For more information, see :ref:`about-token-validation`.
 
       * - ``authorizedCallbackUris``
         - Array
@@ -1186,7 +1182,7 @@
       * - ``samlPolicy``
         - Object
         - N/A
-        - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`the Authentication chapter <ref-samlpolicy>`.
+        - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`below <ref-samlpolicy>`.
 
   .. _application-accounts-note:
 
@@ -1274,7 +1270,7 @@
       * - POST /v1/applications
         - Required: ``name``; Optional: ``description``, ``status``
         - ``createDirectory``: either ``true`` or a specified "Directory Name"
-        - Creates a new Application resource. If ``createDirectory`` is set to ``true``, a new Directory will be automatically created along with the Application. The generated Directory's ``name`` will reflect the new Application’s ``name`` as best as is possible, guaranteeing that it is unique compared to any of your existing Directories. If you would like a different ``name``, simply put value you would like instead of ``true``.
+        - Creates a new Application resource. If ``createDirectory`` is set to ``true``, a new Directory will be automatically created along with the Application. The generated Directory's ``name`` will reflect the new Application’s ``name`` as best as is possible, guaranteeing that it is unique compared to any of your existing Directories. If you would like a different ``name``, simply put the value you would like instead of ``true``.
 
   .. note::
 
@@ -1327,7 +1323,7 @@
 
   Deleting an application completely erases the application and any of its related data from Stormpath.
 
-  Instead of deleting an Application resource, we recommend that you disable it instead by sending a POST with a ``status`` value of "DISABLED".
+  Instead of deleting an Application resource, we recommend that you disable it instead by sending a POST with a ``status`` value of ``DISABLED``.
 
   Example Queries
   """""""""""""""
@@ -1373,11 +1369,11 @@
         - Description
 
       * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a resource of the specified type. Possible resource types are: ``accounts`` and ``groups``. These collections can also be :ref:`paginated <about-pagination>` and :ref:`sorted <about-sorting>`.
 
       * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Application's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Application are: ``accounts``, ``groups``.
 
   Application Endpoints
@@ -1410,7 +1406,7 @@
       * - ``type``
         - String (Enum)
         - N/A
-        - The type of the login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
+        - The type of login attempt. The only currently supported type is ``basic``. Additional types will likely be supported in the future.
 
       * - ``value``
         - String (Base64)
@@ -1420,11 +1416,11 @@
       * - ``accountStore``
         - String
         - ``href`` or ``nameKey``
-        - An optional link to the Application’s Account Store (Organization, Directory, Group) OR Organization ``nameKey``. You should be certain that the specified Account Store contains the Account attempting to login.
+        - An optional link to the Application’s Account Store (Organization, Directory, Group) OR the Organization ``nameKey``. You should be certain that the specified Account Store contains the Account attempting to login.
 
   .. note::
 
-      Specifying the ``accountStore`` can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (> 15) assigned to the Application.
+      Specifying the ``accountStore`` can speed up logins if you know exactly which of the Application’s assigned Account Stores contains the Account. Stormpath will not have to iterate over the assigned Account Stores to find the Account to authenticate it. This can speed up logins significantly if you have many Account Stores (15<) assigned to the Application.
 
   **loginAttempts Example**
 
@@ -1445,7 +1441,7 @@
   Password Reset Tokens
   ^^^^^^^^^^^^^^^^^^^^^
 
-  This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`. When you send a POST to an Application's ``/passwordResetTokens`` endpoint with a valid email address (and, optionally, accountStore information), you will receive back the Password Reset Token. For a full description, please see the :ref:`Password Reset Flow <password-reset-flow>` section.
+  This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`. When you send a POST to an Application's ``/passwordResetTokens`` endpoint with a valid email address (and, optionally, Account Store information), you will receive back the Password Reset Token. For a full description, please see the :ref:`Password Reset Flow <password-reset-flow>` section.
 
   **passwordResetTokens URL**
 
@@ -1633,7 +1629,7 @@
   SAML Policy Resource
   ^^^^^^^^^^^^^^^^^^^^
 
-  This resource contains information about the Application's SAML policy. For more information about this, please see :ref:`saml-authn`.
+  This resource contains information about the Application's SAML policy. For more information SAML Authentication, please see :ref:`saml-authn`.
 
   **samlPolicy URL**
 
@@ -1658,7 +1654,7 @@
       * - ``serviceProvider``
         - Object
         - N/A
-        - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used to initiate the Service Provider initiated SAML flow, as well as the ``defaultRelayStates`` endpoint used for IdP-initiated SAML authentication.
+        - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used in the Service Provider initiated SAML flow, as well as the ``defaultRelayStates`` endpoint used for IdP-initiated SAML authentication.
 
   **samlPolicy Example**
 
@@ -1688,7 +1684,7 @@
 
   **Description**
 
-  In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it. The following resources may be mapped as Account Stores:
+  In Stormpath, you control who may log in to an Application by associating (or 'mapping') one or more Account Stores to an Application. This mapping between an Application and an Account Store is represented by an Account Store Mapping resource. All of the user Accounts across all of an Application's assigned Account Stores form the Application's effective "user base": those Accounts that may log in to the Application. If no Account Stores are assigned to an Application, no Accounts will be able to log in to it. The following resources may be mapped as Account Stores:
 
   - Organization
   - Directory
@@ -1719,7 +1715,7 @@
       * - ``listIndex``
         - Number
         - 0 <= N < list size
-        - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index; an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
+        - The order (priority) in which the associated Account Store will be consulted by the Application during an authentication attempt. This is a zero-based index: an Account Store with a ``listIndex`` of ``0`` will be consulted first (has the highest priority), followed by the Account Store at ``listIndex`` ``1`` (next highest priority), and so on. Setting a negative value will default the value to 0, placing it first in the list. A ``listIndex`` of larger than the current list size will place the mapping at the end of the list and then default the value to ``(list size - 1)``.
 
       * - ``isDefaultAccountStore``
         - String (boolean)
@@ -1756,7 +1752,7 @@
   .. code-block:: json
 
       {
-        "href": "https://api.stormpath.com/v1/accountStoreMappings/1NUhrCPT0q66bjy6Yv9nS4",
+        "href": "https://api.stormpath.com/v1/accountStoreMappings/1NUhrCPT0q66bjyeXamPLE",
         "listIndex": 0,
         "isDefaultAccountStore": true,
         "isDefaultGroupStore": true,
@@ -1792,7 +1788,7 @@
       * - POST /v1/accountStoreMappings
         - Required: ``application``, ``accountStore``; Optional: ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
         - N/A
-        - Creates a new accountStoreMapping resource, thereby enabling the Accounts in the specified Store to log in to the specified Application. By default ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are set to ``false``.
+        - Creates a new accountStoreMapping resource, thereby enabling the Accounts in the specified Account Store to log in to the specified Application. By default ``isDefaultAccountStore`` and ``isDefaultGroupStore`` are set to ``false``.
 
   Retrieve an Account Store Mapping
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1807,7 +1803,7 @@
 
       * - GET /v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID
         - ``expand``
-        - Retrieves the specified Account Store Mapping resource. ``accountStore` and ``application`` can be expanded. More info :ref:`above <about-links>`.
+        - Retrieves the specified Account Store Mapping resource. ``accountStore`` and ``application`` can be expanded. More info :ref:`above <about-links>`.
 
   Update an Account Store Mapping
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1879,7 +1875,7 @@
 
   **Description**
 
-  The **Directory** resource is a top-level container for Account and Group resources. A Directory also manages security policies (like password strength) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
+  The **Directory** resource is a top-level container for :ref:`Account <ref-account>` and :ref:`Group <ref-group>` resources. A Directory also manages security policies (like :ref:`password strength <ref-password-strength>`) for the Accounts it contains. Directories can be used to cleanly manage segmented user Account populations. For example, you might use one Directory for company employees and another Directory for customers, each with its own security policies.
 
   Additionally:
 
@@ -1920,7 +1916,7 @@
     * - ``description``
       - String
       - 0 < N <= 1000 characters
-      - The description of the Directory.
+      - (Optional) The description of the Directory.
 
     * - ``status``
       - String (Enum)
@@ -2156,11 +2152,11 @@
         - Description
 
       * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a resource of the specified type. Possible resource types are: ``accounts`` and ``groups``.
 
       * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Directory's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Directory are: ``accounts`` and ``groups``
 
   Other Resources Associated with a Directory
@@ -2345,7 +2341,7 @@
     * - ``textBody``
       - String
       - See below.
-      - The body of the email is plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain`` or ``multipart/alternative``.
+      - The body of the email in plain text format. This body is only sent when the ``mimeType`` for the template is set to ``text/plain`` or ``multipart/alternative``.
 
     * - ``mimeType``
       - String
@@ -2355,7 +2351,7 @@
     * - ``defaultModel``
       - Object
       - Object that includes one attribute ``linkBaseUrl`` which is itself a String
-      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ${url} in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
+      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ``${url}`` in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
 
   .. _ref-email-macros:
 
@@ -2408,7 +2404,7 @@
       - The value of the Stormpath token for password reset.
 
     * - ${sptokenNameValuePair}
-      - A string that is shown as "sptoken=$TOKEN" Where "$TOKEN" is either the verification or password reset token.
+      - A string that is formatted as ``sptoken=$TOKEN`` Where ``$TOKEN`` is either the verification or password reset token.
 
   .. note::
 
@@ -2454,7 +2450,7 @@
     * - ``minLowerCase``
       - Number
       - Default is 1
-      - Represents the minimum number of lower case characters required for the password. characters
+      - Represents the minimum number of lower case characters required for the password.
 
     * - ``minUpperCase``
       - Number
@@ -2504,7 +2500,9 @@
 
   The Provider resource contains information about the source of the information found in its associated Directory resource.
 
-  For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). An individual Provider resource may be accessed via its Resource URL:
+  For example, a Social Directory could be created for GitHub. This Directory would contain Accounts created using "Log In With Github", and its Provider resource would contain information about your Github login integration (e.g. the OAuth Client and Secret required for Github login). For more information about creating a Directory to allow for login with GitHub, please see :ref:`Authentication chapter <authn-github>`.
+
+  An individual Provider resource may be accessed via its Resource URL:
 
   **Provider URL**
 
@@ -2524,7 +2522,7 @@
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URL
+      - The resource's fully qualified location URL.
 
     * - ``createdAt``
       - String
@@ -2631,7 +2629,7 @@
   LDAP Agent
   """"""""""
 
-  :ref:`LDAP Directories <about-ldap-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
+  :ref:`LDAP Directories <about-ldap-dir>` have an associated :ref:`Provider resource <ref-provider>` with either the ``ldap`` or ``ad`` value for the ``providerId``. That Provider in turn contains an **Agent** resource. This Agent is what will scan your LDAP directory and map the accounts and groups in that directory to Stormpath Accounts and Groups.
 
   The Agent itself is a complex object, with a number of required objects both above and below it. All of these resources are required for LDAP configuration:
 
@@ -2666,7 +2664,7 @@
     * - ``href``
       - String
       - N/A
-      - The resource's fully qualified location URL
+      - The resource's fully qualified location URL.
 
     * - ``id``
       - String
@@ -2696,7 +2694,7 @@
     * - ``directory``
       - Link
       - N/A
-      - A link to the Directory resource that the Agent belongs to.
+      - A link to the :ref:`Directory <ref-directory>` resource that the Agent belongs to.
 
     * - ``download``
       - Link
@@ -2706,7 +2704,7 @@
     * - ``tenant``
       - Link
       - N/A
-      - A link to the Tenant that owns the Directory this Agent belongs to.
+      - A link to the :ref:`Tenant <ref-tenant>` that owns the Directory this Agent belongs to.
 
   For an example JSON see :ref:`below <agent-json-ex>`.
 
@@ -2857,7 +2855,7 @@
     * - ``dnSuffix``
       - String
       - N/A
-      - *(Optional)* Value appended to the Base DN when accessing groups. If left unspecified, group searches will stem from the Base DN.
+      - (Optional) Value appended to the Base DN when accessing groups. If left unspecified, group searches will stem from the Base DN.
 
     * - ``objectClass``
       - String
@@ -2867,7 +2865,7 @@
     * - ``objectFilter``
       - String
       - N/A
-      - *(Optional)* LDAP query filter to use when searching for Groups.
+      - (Optional) LDAP query filter to use when searching for Groups.
 
     * - ``nameRdn``
       - String
@@ -2882,7 +2880,7 @@
     * - ``membersRdn``
       - String
       - N/A
-      - *(Optional)* The name of the attribute that lists the group members.
+      - (Optional) The name of the attribute that lists the group members.
 
   .. _agent-json-ex:
 
@@ -3157,12 +3155,12 @@
     * - ``description``
       - String
       - 1 < N <= 1000 characters
-      - The description of the Group.
+      - (Optional) The description of the Group.
 
     * - ``status``
       - String (Enum)
       - ``ENABLED``, ``DISABLED``
-      - Enabled Groups can be used as Account Stores for logging in to Applications. Disabled Groups cannot be used for login.
+      - ``ENABLED`` Groups can be used as Account Stores for logging in to Applications. ``DISABLED`` Groups cannot be used for login.
 
     * - ``createdAt``
       - String
@@ -3177,32 +3175,32 @@
     * - ``customData``
       - Link
       - N/A
-      - A link to the Group’s customData resource that you can use to store your own Group-specific custom fields.
+      - A link to the Group’s :ref:`customData <ref-customdata>` resource that you can use to store your own Group-specific custom fields.
 
     * - ``directory``
       - Link
       - N/A
-      - A link to the Directory resource that the Group belongs to.
+      - A link to the :ref:`Directory <ref-directory>` resource that the Group belongs to.
 
     * - ``tenant``
       - Link
       - N/A
-      - A link to the Tenant that owns the Directory containing this Group.
+      - A link to the :ref:`Tenant <ref-tenant>` that owns the Directory containing this Group.
 
     * - ``accounts``
       - Link
       - N/A
-      - A link to a collection of the Accounts that are contained within this Group.
+      - A link to a collection of the :ref:`Accounts <ref-account>` that are contained within this Group.
 
     * - ``accountMemberships``
       - Link
       - N/A
-      - A link to a collection of groupMemberships that this Group is found in.
+      - A link to a collection of :ref:`groupMemberships <ref-groupmembership>` that this Group is found in.
 
     * - ``applications``
       - Link
       - N/A
-      - A link to any Applications associated with this Group.
+      - A link to any :ref:`Applications <ref-application>` associated with this Group.
 
   **Group Example**
 
@@ -3351,11 +3349,11 @@
         - Description
 
       * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a collection of all of a Group's associated resources of the specified type. Possible resource types are: ``accounts`` and ``applications``.
 
       * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Group's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with a Group are: ``accounts`` and ``applications``.
 
   .. _ref-groupmembership:
@@ -3392,12 +3390,12 @@
     * - ``account``
       - Link
       - N/A
-      - A link to the Account for this Group Membership.
+      - A link to the :ref:`Account <ref-account>` for this Group Membership.
 
     * - ``group``
       - Link
       - N/A
-      - A link to the Group for this Group Membership.
+      - A link to the :ref:`Group <ref-group>` for this Group Membership.
 
   **Group Membership Example**
 
@@ -3522,7 +3520,7 @@
   The Organization resource is two things:
 
   1. A top-level container for both :ref:`Directories <ref-directory>` and :ref:`Groups <ref-group>` .
-  2. A pseudo-Account Store that can :ref:`be mapped to an Application <create-asm>` (just like a Directory or Group) for the purposes of user login. Unlike Directories and Groups, however, they do not themselves own Accounts, and Users and Groups cannot be associated to them without also being associated with a Directory.
+  2. A pseudo-Account Store that can :ref:`be mapped to an Application <create-asm>` (just like a Directory or Group) for the purposes of user login. Unlike Directories and Groups, however, they do not themselves own Accounts, and Accounts and Groups cannot be associated to them without also being associated with a Directory.
 
   Organizations are primarily intended to represent "tenants" in multi-tenant applications. For more information about multitenancy in Stormpath, see the :ref:`multitenancy` chapter.
 
@@ -3566,17 +3564,17 @@
     * - ``nameKey``
       - String
       - 1 <= N <= 63 characters.
-      - A name key that represents the Organization. Must be unique across all organizations within your Stormpath tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: a-z, 0-9, and -. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
+      - A name key that represents the Organization. Must be unique across all Organizations within your Stormpath Tenant and must follow `DNS hostname rules <http://www.ietf.org/rfc/rfc0952.txt>`_. That is, it may only consist of: ``a-z``, ``0-9``, and ``-``. It must not start or end with a hyphen. The uniqueness constraint is case insensitive.
 
     * - ``status``
       - String (Enum)
       - ``ENABLED``, ``DISABLED``
-      - Enabled Organizations can be used for logging in to Applications. Disabled Organizations cannot be used for login.
+      - ``ENABLED`` Organizations can be used for logging in to Applications. ``DISABLED`` Organizations cannot be used for login.
 
     * - ``description``
       - String
       - 0 < N <= 1000 characters
-      - The description of the Organization.
+      - (Optional) The description of the Organization.
 
     * - ``customData``
       - Link
@@ -3586,27 +3584,27 @@
     * - ``defaultAccountStoreMapping``
       - Link
       - ``null`` or Link
-      - A link to this Organization's default Account Store Mapping where the organization will store newly created Accounts. A ``null`` value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/accounts`` endpoint.
+      - A link to this Organization's default :ref:`Account Store Mapping <ref-asm>` where the organization will store newly created Accounts. A ``null`` value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/accounts`` endpoint.
 
     * - ``defaultGroupStoreMapping``
       - Link
       - ``null`` or Link
-      - A link to this Organization's default Account Store Mapping where the organization will store newly created Groups. A ``null`` value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/groups`` endpoint.
+      - A link to this Organization's default :ref:`Account Store Mapping <ref-asm>` where the organization will store newly created Groups. A ``null`` value disables the ability to add Groups to the Organization via the ``organizations/$ORGANIZATION_ID/groups`` endpoint.
 
     * - ``accountStoreMappings``
       - Link
       - N/A
-      - A link to the collection of all Account Store Mappings that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
+      - A link to the collection of all :ref:`Account Store Mappings <ref-asm>` that represent the Organization. The Accounts and Groups within the mapped Account Stores are obtainable from the ``accounts`` and ``groups`` links, respectively.
 
     * - ``groups``
       - Link
       - N/A
-      - A link to a collection of the Groups wrapped by this Organization.
+      - A link to a collection of the :ref:`Groups <ref-group>` wrapped by this Organization.
 
     * - ``accounts``
       - Link
       - N/A
-      - A link to a collection of the Accounts wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
+      - A link to a collection of the :ref:`Accounts <ref-account>` wrapped by this Organization. All of the Accounts in this collection can log-in to the Organization.
 
     * - ``tenant``
       - Link
@@ -3771,11 +3769,11 @@
         - Description
 
       * - GET /v1/organizations/$ORGANIZATION_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a collection of all of an Organization's associated resources of the specified type. Possible resource types are: ``accounts``, ``accountStoreMappings``, and ``groups``.
 
       * - GET /v1/Organization/$ORGANIZATION_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Organization's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Searchable collections associated with an Organization are: ``accounts``, and ``groups``.
 
   .. _ref-org-asm:
@@ -3831,12 +3829,12 @@
       * - ``organization``
         - Link
         - N/A
-        - A link to the mapping’s Organization. **Required.**
+        - A link to the mapping’s :ref:`Organization <ref-organization>`. **Required.**
 
       * - ``accountStore``
         - Link
         - N/A
-        - A link to the mapping's Account Store (Group or Directory) containing Accounts that may log in to the Organization. **Required.**
+        - A link to the mapping's Account Store (:ref:`Group <ref-group>` or :ref:`Directory <ref-directory>`) containing Accounts that may log in to the Organization. **Required.**
 
       * - ``createdAt``
         - String
@@ -4302,11 +4300,11 @@
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`
         - Retrieves a collection of all of an Account's associated resources of the specified type. Currently the only possible resource types are ``groups``.
 
       * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE?(searchParams)
-        - :ref:`Pagination <about-pagination>`, :ref:`sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
+        - :ref:`Pagination <about-pagination>`, :ref:`Sorting <about-sorting>`, Search: :ref:`Filter <search-filter>`, :ref:`Attribute <search-attribute>`, :ref:`Datetime <search-datetime>`
         - Searches a collection of all of the Account's associated resources of the specified type. For more about Search, please see :ref:`here <about-search>`. Currently the only searchable collection is ``groups``.
 
 

@@ -87,7 +87,7 @@ The following request:
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
 
     {
       "name" : "Captains",
