@@ -2316,15 +2316,15 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
     GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
     Host: api.stormpath.com
 
-  This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
+.. only:: csharp
 
-.. only:: csharp or vbnet
+  .. literalinclude:: code/csharp/account_management/search_password_modified.cs
+    :language: csharp
 
-  (dotnet.todo)
+.. only:: vbnet
 
-  .. only:: csharp
-
-  .. only:: vbnet
+  .. literalinclude:: code/vbnet/account_management/search_password_modified.vb
+    :language: vbnet
 
 .. only:: java
 
@@ -2341,6 +2341,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 .. only:: python
 
   (python.todo)
+
+This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
 
 .. _password-reuse:
 
@@ -2364,13 +2366,15 @@ Stormpath can store historical password information in order to allow for restri
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
-.. only:: csharp or vbnet
+.. only:: csharp
 
-  (dotnet.todo)
+  .. literalinclude:: code/csharp/account_management/update_prevent_reuse.cs
+    :language: csharp
 
-  .. only:: csharp
+.. only:: vbnet
 
-  .. only:: vbnet
+  .. literalinclude:: code/vbnet/account_management/update_prevent_reuse.vb
+    :language: vbnet
 
 .. only:: java
 

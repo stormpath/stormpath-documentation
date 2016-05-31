@@ -9,6 +9,13 @@
 
 Stormpath ID Site is a set of hosted and pre-built user interface screens that take care of common identity functions for your applications — log in, registration, and password reset. ID Site can be accessed via your own custom domain like ``id.mydomain.com`` and shared across multiple applications to create centralized authentication. It supports regular login to your Stormpath Directories, as well as Social and SAML login.
 
+.. figure:: images/idsite/id_site_screen.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site Screenshot
+
+    *An example ID Site*
+
 The screens and functionality of ID Site are completely customizable. You have full access to the source code of the ID Site screens so you can make simple changes like adding your own logo and changing CSS or more complex changes like adding fields, JavaScript code, screens, removing screens, and even changing how the screens behave.
 
 Why should I use Stormpath ID Site?
@@ -29,7 +36,7 @@ On the ID Site, the user will enter their data and complete the appropriate acti
 
 After the user has logged-in successfully, they will be redirected back to your application’s Callback URI. For illustration purposes, this could be ``https://imperialxchange.com/idSiteResult``. When the ID Site redirects back to your application, it will pass a secure JWT that represents the account in Stormpath. Using the Stormpath SDK, your application will handle the request to ``/idSiteResult``, validate that the JWT is correct, and return an ``ID Site Account Result``. The ``ID Site Account Result`` will include the Stormpath Account object and additional information, such as any state that was passed by your application or whether or not the Account returned is newly created.
 
-.. figure:: images/idsite/ID-diagram.png
+.. figure:: images/idsite/id_site_flow.png
     :align: center
     :scale: 100%
     :alt: ID Site Flow
@@ -141,12 +148,16 @@ In order to set up your application to use ID Site, you will need to install the
 
 .. _idsite-with-rest:
 
-7.4. Using ID Site Via REST API
-===============================
+7.4. Using ID Site Via |language|
+=================================
 
-The Stormpath SDKs help developers quickly integrate communication from Stormpath's ID Site to their application. However, it is possible to use ID Site without an Stormpath SDK using the REST API.
+The Stormpath SDKs help developers quickly integrate communication from Stormpath's ID Site to their application.
 
-To use ID Site without an Stormpath SDK there are two flows that need to be implemented:
+.. only:: rest
+
+  However, it is possible to use ID Site without a Stormpath SDK using the REST API.
+
+To use ID Site there are two flows that need to be implemented:
 
 1. Getting a user to ID Site
 2. Handling the Callback to your Application from ID Site
@@ -168,188 +179,239 @@ A typical set of steps in your application are as follows:
 #. Your server responds with an HTTP 302 which redirects the user to the ID Site SSO endpoint
 #. Stormpath will redirect the user to your ID Site
 
-.. _idsite-auth-jwt:
+.. only:: rest
 
-ID Site Authentication JWT
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .. _idsite-auth-jwt:
 
-First you will have to generate a JWT. Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
+  ID Site Authentication JWT
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- .NET JWT - https://github.com/jwt-dotnet/jwt
-- Ruby JWT - https://github.com/jwt/ruby-jwt
-- Go JWT - https://github.com/dgrijalva/jwt-go
-- PHP JWT - https://github.com/firebase/php-jwt
-- Python JWT - https://github.com/jpadilla/pyjwt
-- Java JWT - https://github.com/jwtk/jjwt
-- Node JWT - https://github.com/jwtk/njwt
+  First you will have to generate a JWT. Below are language specific JWT libraries that Stormpath has sanity tested with ID Site.
 
-.. note::
+  - .NET JWT - https://github.com/jwt-dotnet/jwt
+  - Ruby JWT - https://github.com/jwt/ruby-jwt
+  - Go JWT - https://github.com/dgrijalva/jwt-go
+  - PHP JWT - https://github.com/firebase/php-jwt
+  - Python JWT - https://github.com/jpadilla/pyjwt
+  - Java JWT - https://github.com/jwtk/jjwt
+  - Node JWT - https://github.com/jwtk/njwt
 
-  This key must be signed with your API Key Secret.
+  .. note::
 
-The token itself will contain two parts, a Header and a Body that itself contains claims. You will have to add all of these into the JWT that you generate:
+    This key must be signed with your API Key Secret.
 
-**Header**
+  The token itself will contain two parts, a Header and a Body that itself contains claims. You will have to add all of these into the JWT that you generate:
 
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
+  **Header**
 
-  * - Header Name
-    - Required?
-    - Valid Value(s)
+  .. list-table::
+    :widths: 15 10 60
+    :header-rows: 1
 
-  * - ``kid``
-    - Yes
-    - Your Stormpath API Key ID.
+    * - Header Name
+      - Required?
+      - Valid Value(s)
 
-  * - ``alg``
-    - Yes
-    - The algorithm that was used to sign this key. The only valid value is ``HS256``.
+    * - ``kid``
+      - Yes
+      - Your Stormpath API Key ID.
 
-**Body**
+    * - ``alg``
+      - Yes
+      - The algorithm that was used to sign this key. The only valid value is ``HS256``.
 
-The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body are as follows:
+  **Body**
 
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
+  The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body are as follows:
 
-  * - Claim Name
-    - Required?
-    - Valid Value(s)
+  .. list-table::
+    :widths: 15 10 60
+    :header-rows: 1
 
-  * - ``iat``
-    - Yes
-    - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
+    * - Claim Name
+      - Required?
+      - Valid Value(s)
 
-  * - ``iss``
-    - Yes
-    - The issuer of the token. You should put your Stormpath API Key ID here.
+    * - ``iat``
+      - Yes
+      - The "Issued At Time", which is the time the token was issued, expressed in Unix time.
 
-  * - ``sub``
-    - Yes
-    - The subject of the token. You should put your Stormpath Application resource's href here.
+    * - ``iss``
+      - Yes
+      - The issuer of the token. You should put your Stormpath API Key ID here.
 
-  * - ``cb_uri``
-    - Yes
-    - The callback URI to use once the user takes an action on the ID Site. This must match a Authorized Callback URI on Application resource.
+    * - ``sub``
+      - Yes
+      - The subject of the token. You should put your Stormpath Application resource's href here.
 
-  * - ``jti``
-    - Yes
-    - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
+    * - ``cb_uri``
+      - Yes
+      - The callback URI to use once the user takes an action on the ID Site. This must match a Authorized Callback URI on Application resource.
 
-  * - ``path``
-    - No
-    - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
+    * - ``jti``
+      - Yes
+      - A universally unique identifier for the token. This can be generated using a GUID or UUID function of your choice.
 
-  * - ``state``
-    - No
-    - The state of the application that you need to pass through ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
+    * - ``path``
+      - No
+      - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
 
-  * - ``onk``
-    - No
-    - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+    * - ``state``
+      - No
+      - The state of the application that you need to pass through ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
 
-  * - ``sof``
-    - No
-    - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
+    * - ``onk``
+      - No
+      - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
 
-  * - ``usd``
-    - No
-    - A boolean indicating whether the ID Site should be redirected to a subdomain based on an Organization nameKey.
+    * - ``sof``
+      - No
+      - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
 
+    * - ``usd``
+      - No
+      - A boolean indicating whether the ID Site should be redirected to a subdomain based on an Organization nameKey.
 
-Once the JWT is generated by your server, you must respond with or send the browser to::
+  Once the JWT is generated by your server, you must respond with or send the browser to::
 
-	HTTP/1.1 302 Found
-	Location: https://api.stormpath.com/sso?jwtRequest=$GENERATED_JWT
+  	HTTP/1.1 302 Found
+  	Location: https://api.stormpath.com/sso?jwtRequest=$GENERATED_JWT
 
-The Stormpath ``/sso`` endpoint will validate the JWT, and redirect the user to your ID Site.
+  The Stormpath ``/sso`` endpoint will validate the JWT, and redirect the user to your ID Site.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
 
 Step 2: Handling the Callback to your Application from ID Site
 --------------------------------------------------------------
 
-Once the user signs up or logs in to your application, they will be redirected back to your application using the ``cb_uri`` callback property that was set in the JWT. In addition to the callback URI, ID Site will include a ``jwtResponse`` parameter in the query. For example, if the specified ``cb_uri`` is ``https://yourapp.com/dashboard`` then the user will be redirected to::
+Once the user signs up or logs in to your application, they will be redirected back to your application's configured Callback URI that was set in the JWT. In addition to the Callback URI, ID Site will include a ``jwtResponse`` parameter in the query. For example, if the specified Callback URI is ``https://yourapp.com/dashboard`` then the user will be redirected to::
 
-	https://yourapp.com/dashboard?jwtResponse={GENERATED_ID_SITE_ASSERTION_JWT}
+  https://yourapp.com/dashboard?jwtResponse={GENERATED_ID_SITE_ASSERTION_JWT}
 
 The ``jwtResponse`` represents a JWT that provides a signed security assertion about who the user is and what they did on ID Site.
 
-.. _idsite-response-jwt:
+.. only:: rest
 
-ID Site Assertion JWT
-^^^^^^^^^^^^^^^^^^^^^
+  .. _idsite-response-jwt:
 
-Before you trust any of the information in the JWT, you MUST:
+  ID Site Assertion JWT
+  ^^^^^^^^^^^^^^^^^^^^^
 
-- Validate the signature with your API Key Secret from Stormpath. This will prove that the information stored in the JWT has not been tampered with during transit.
-- Validate that the JWT has not expired
+  Before you trust any of the information in the JWT, you must:
 
-.. note::
+  - Validate the signature with your API Key Secret from Stormpath. This will prove that the information stored in the JWT has not been tampered with during transit.
+  - Validate that the JWT has not expired
 
-	If you are using a library to generate a JWT, these usually have methods to help you validate the JWT. Some libraries will only validate the signature, but not the expiration time. Please review your JWT library to verify its capabilities.
+  .. note::
 
-The Header and Body claims found in this JWT are as follows:
+  	If you are using a library to generate a JWT, these usually have methods to help you validate the JWT. Some libraries will only validate the signature, but not the expiration time. Please review your JWT library to verify its capabilities.
 
-**Header**
+  The Header and Body claims found in this JWT are as follows:
 
-.. list-table::
-  :widths: 15 10 60
-  :header-rows: 1
+  **Header**
 
-  * - Claim Name
-    - Required?
-    - Valid Value(s)
+  .. list-table::
+    :widths: 15 10 60
+    :header-rows: 1
 
-  * - ``typ``
-    - Yes
-    - The type of token, which will be ``JWT``
+    * - Claim Name
+      - Required?
+      - Valid Value(s)
 
-  * - ``alg``
-    - Yes
-    - The algorithm that was used to sign this key. The only possible value is ``HS256``.
+    * - ``typ``
+      - Yes
+      - The type of token, which will be ``JWT``
 
-  * - ``kid``
-    - Yes
-    - Your Stormpath API Key ID.
+    * - ``alg``
+      - Yes
+      - The algorithm that was used to sign this key. The only possible value is ``HS256``.
 
-**Body**
+    * - ``kid``
+      - Yes
+      - Your Stormpath API Key ID.
 
-Once the user has been authenticated by ID Site or the SAML IdP, you will receive back a JWT response. The JWT contains the following information:
+  **Body**
 
-.. list-table::
-  :widths: 15 60
-  :header-rows: 1
+  Once the user has been authenticated by ID Site or the SAML IdP, you will receive back a JWT response. The JWT contains the following information:
 
-  * - Claim Name
-    - Description
+  .. list-table::
+    :widths: 15 60
+    :header-rows: 1
 
-  * - ``iss``
-    - This will match your ID Site domain and can be used for additional validation of the JWT.
+    * - Claim Name
+      - Description
 
-  * - ``sub``
-    - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site / SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
+    * - ``iss``
+      - This will match your ID Site domain and can be used for additional validation of the JWT.
 
-  * - ``aud``
-    - The audience of the JWT. This will match your API Key ID from Stormpath.
+    * - ``sub``
+      - The subject of the JWT. This will be an ``href`` for the Stormpath Account that signed up or logged into the ID Site / SAML IdP. This ``href`` can be queried by using the REST API to get more information about the Account.
 
-  * - ``exp``
-    - The expiration time for the JWT in Unix time.
+    * - ``aud``
+      - The audience of the JWT. This will match your API Key ID from Stormpath.
 
-  * - ``iat``
-    - The time at which the JWT was created, in Unix time.
+    * - ``exp``
+      - The expiration time for the JWT in Unix time.
 
-  * - ``jti``
-    - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
+    * - ``iat``
+      - The time at which the JWT was created, in Unix time.
 
-  * - ``state``
-    - The state of your application, if you have chosen to have this passed back.
+    * - ``jti``
+      - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
 
-  * - ``status``
-    - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+    * - ``state``
+      - The state of your application, if you have chosen to have this passed back.
 
-Once the JWT is validated, you can read information about the user from the JWT. In some cases you may wish to exchange this JWT for a Stormpath OAuth 2.0 token.
+    * - ``status``
+      - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+Once the JWT is validated, you can read information about the user from it. In some cases you may wish to exchange this JWT for a Stormpath OAuth 2.0 token.
 
 .. _idsite-jwt-to-oauth:
 
@@ -362,44 +424,182 @@ Exchanging the ID Site JWT for an OAuth Token
 
 In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from ID Site.
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/x-www-form-urlencoded
+  .. code-block:: http
 
-  grant_type=id_site_token&token={$JWT_FROM_ID_SITE}
+    POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=id_site_token&token={$JWT_FROM_ID_SITE}
 
 Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that it's associated with is still valid) and then return an OAuth 2.0 Access Token:
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  HTTP/1.1 200 OK
-  Content-Type: application/json;charset=UTF-8
+  .. only:: csharp
 
-  {
-    "access_token": "eyJraWQiOiIyWkZNV...TvUt2WBOl3k",
-    "refresh_token": "eyJraWQiOiIyWkZNV...8TvvrB7cBEmNF_g",
-    "token_type": "Bearer",
-    "expires_in": 1800,
-    "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
-  }
+    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_req.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/jwt_for_oauth_req.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/jwt_for_oauth_req.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/jwt_for_oauth_req.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/jwt_for_oauth_req.py
+      :language: python
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "access_token": "eyJraWQiOiIyWkZNV...TvUt2WBOl3k",
+      "refresh_token": "eyJraWQiOiIyWkZNV...8TvvrB7cBEmNF_g",
+      "token_type": "Bearer",
+      "expires_in": 1800,
+      "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_resp.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_resp.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/jwt_for_oauth_resp.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/jwt_for_oauth_resp.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/jwt_for_oauth_resp.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/jwt_for_oauth_resp.py
+      :language: python
 
 For more information about Stormpath's OAuth 2.0 tokens, please see :ref:`generate-oauth-token`.
 
-Step 3: (Optional) Logging Out of ID Site with REST
----------------------------------------------------
+Step 3: (Optional) Logging Out of ID Site
+-----------------------------------------
 
 ID Site will keep a configurable session for authenticated users. When a user is sent from your application to ID Site, it will confirm that the session is still valid for the user. If it is, they will be automatically redirected to the ``cb_uri``. This ``cb_uri`` can be the originating application or any application supported by a Stormpath SDK.
 
-To log the user out and remove the session that ID Site creates, you must create a JWT similar to the one that got the user to ID Site, but instead of redirecting to the ``/sso`` endpoint, you redirect the user to ``/sso/logout``.
+.. only:: rest
 
-So, once the JWT is generated by your server, you must respond with or send the browser to::
+  To log the user out and remove the session that ID Site creates, you must create a JWT similar to the one that got the user to ID Site, but instead of redirecting to the ``/sso`` endpoint, you redirect the user to ``/sso/logout``.
 
-	HTTP/1.1 302 Found
-	Location: https://api.stormpath.com/sso/logout?jwtRequest=%GENERATED_JWT%
+  So, once the JWT is generated by your server, you must respond with or send the browser to::
 
-Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT. Your application will know that the user logged out because the ``jwtResponse`` will contain a status claim of ``LOGOUT``.
+  	HTTP/1.1 302 Found
+  	Location: https://api.stormpath.com/sso/logout?jwtRequest=%GENERATED_JWT%
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/logout_from_idsite_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/logout_from_idsite_req.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/logout_from_idsite_req.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/logout_from_idsite_req.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/logout_from_idsite_req.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/logout_from_idsite_req.py
+      :language: python
+
+Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT.
+
+.. only:: rest
+
+  Your application will know that the user logged out because the ``jwtResponse`` will contain a status claim of ``LOGOUT``.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/logout_from_idsite_resp.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/logout_from_idsite_resp.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/logout_from_idsite_resp.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/logout_from_idsite_resp.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/logout_from_idsite_resp.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/logout_from_idsite_resp.py
+      :language: python
 
 .. _idsite-password-reset:
 
@@ -408,15 +608,173 @@ Resetting Your Password with ID Site
 
 The Account Management chapter has an overview of :ref:`password-reset-flow` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password. If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. The issue here, however, is bridging the Password Reset Flow and the ID Site flow.
 
-Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
+.. only:: rest
+
+  Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/idsite/idsite_reset_pwd.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/idsite_reset_pwd.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/idsite/idsite_reset_pwd.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/idsite/idsite_reset_pwd.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/idsite/idsite_reset_pwd.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/idsite/idsite_reset_pwd.py
+      :language: python
+
+.. _idsite-multitenancy:
 
 7.5. Using ID Site for Multi-tenancy
 ====================================
 
-.. todo::
-
-  There's a lot more to say here for SDKs than there is for REST.
-
 If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
 
-From that point, ID Site (combined with one of our SDKs) is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
+From that point, ID Site is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
+
+.. only:: rest
+
+  There are specific claims in the :ref:`idsite-auth-jwt` that allow you mix and match multi-tenancy user routing strategies:
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+**Organization nameKey**
+
+.. only:: rest
+
+  ``onk``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+**Show Organization Field**
+
+.. only:: rest
+
+  ``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to. If combined with ``onk``, this will pre-populate that field with the Organization's name.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+.. note::
+
+  Stormpath will only show the field when you have at least one Organization mapped as an Account Store for your Application.
+
+**Use Sub-Domain**
+
+.. only:: rest
+
+  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+
+  https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}

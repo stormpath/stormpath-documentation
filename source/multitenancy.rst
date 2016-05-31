@@ -112,13 +112,81 @@ For example, if your Organization's ``nameKey`` is ``bank-of-a``, you could name
 
 This has two benefits:
 
-1. It makes it easy to find all the role Groups for that particular tenant, since you can simply search for the nameKey in the ``name`` field:
+1. It makes it easy to find all the role Groups for that particular tenant, since you can search for the nameKey:
+
+.. only:: rest
 
   ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.role.*``
 
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/search_groups_by_name_ex1.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/search_groups_by_name_ex1.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/search_groups_by_name_ex1.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/search_groups_by_name_ex1.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/search_groups_by_name_ex1.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex1.py
+      :language: python
+
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
 
+.. only:: rest
+
   GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.*
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/search_groups_by_name_ex2.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/search_groups_by_name_ex2.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/search_groups_by_name_ex2.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/search_groups_by_name_ex2.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/search_groups_by_name_ex2.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex2.py
+      :language: python
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -140,92 +208,134 @@ Although Organizations do not themselves own Accounts in the same way as Directo
 How to Create an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can create an Organization in Stormpath by simply performing an HTTP POST to the ``/v1/organizations`` endpoint.
+You can create an Organization in Stormpath by sending the following request:
 
-So, if for example one of our application's tenants was the Bank of A, we could send the following POST:
+.. only:: rest
 
-.. code-block:: http
+  .. code-block:: http
 
-  POST /v1/organizations HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
+    POST /v1/organizations HTTP/1.1
+    Host: api.stormpath.com
 
-  {
-    "name": "Bank of A",
-    "nameKey": "bank-of-a",
-    "status": "ENABLED"
-  }
+    {
+      "name": "Bank of A",
+      "nameKey": "bank-of-a",
+      "status": "ENABLED"
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/create_org_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/create_org_req.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/create_org_req.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/create_org_req.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/create_org_req.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/create_org_req.py
+      :language: python
 
 Which would return the following:
 
-.. code-block:: http
+.. only:: rest
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE
-  Content-Type: application/json;charset=UTF-8
+  .. code-block:: http
 
-  {
-    "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
-    "createdAt": "2015-10-02T15:27:01.658Z",
-    "modifiedAt": "2015-10-02T15:27:01.658Z",
-    "name": "Bank of A",
-    "nameKey": "bank-of-a",
-    "status": "ENABLED",
-    "description": null,
-    "customData": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/customData"
-    },
-    "defaultAccountStoreMapping": null,
-    "defaultGroupStoreMapping": null,
-    "accountStoreMappings": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accountStoreMappings"
-    },
-    "groups": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/groups"
-    },
-    "accounts": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accounts"
-    },
-    "tenant": {
-      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexAMPLE"
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE",
+      "createdAt": "2015-10-02T15:27:01.658Z",
+      "modifiedAt": "2015-10-02T15:27:01.658Z",
+      "name": "Bank of A",
+      "nameKey": "bank-of-a",
+      "status": "ENABLED",
+      "description": null,
+      "customData": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/customData"
+      },
+      "defaultAccountStoreMapping": null,
+      "defaultGroupStoreMapping": null,
+      "accountStoreMappings": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accountStoreMappings"
+      },
+      "groups": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/groups"
+      },
+      "accounts": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE/accounts"
+      },
+      "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexAMPLE"
+      }
     }
-  }
 
-Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
+  Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/create_org_resp.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/create_org_resp.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/create_org_resp.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/create_org_resp.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/create_org_resp.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/create_org_resp.py
+      :language: python
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
 
-First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a POST:
+.. only:: rest
 
-.. code-block:: http
+  First, you will need the ``href`` value for a Directory or Group. This, combined with the ``href`` of the Organization will be sent in a request:
 
-  POST /v1/organizations HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json;charset=UTF-8
-
-  {
-    "organization": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-    }
-  }
-
-These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
-
-- ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
-
-- ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
-
-- ``isDefaultGroupStore``: A ``true`` value indicates that new Groups created by the Organization’s ``/groups`` endpoint will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the accountStore is a Directory.
-
-In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
-
-.. code-block:: http
+  .. code-block:: http
 
     POST /v1/organizations HTTP/1.1
     Host: api.stormpath.com
@@ -237,31 +347,156 @@ In order to be able to add Groups and Accounts to the Organization in the way me
       },
       "accountStore": {
         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+      }
+    }
+
+  These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
+
+  - ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+
+  - ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
+
+  - ``isDefaultGroupStore``: A ``true`` value indicates that new Groups created by the Organization’s ``/groups`` endpoint will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the accountStore is a Directory.
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/asm_to_org.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/asm_to_org.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/asm_to_org.py
+      :language: python
+
+In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
+
+.. only:: rest
+
+  .. code-block:: http
+
+      POST /v1/organizations HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json;charset=UTF-8
+
+      {
+        "organization": {
+          "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
+        },
+        "accountStore": {
+          "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+        },
+        "isDefaultAccountStore":true,
+        "isDefaultGroupStore":true
+      }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org_with_default_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org_with_default_req.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_req.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_req.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_req.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_req.py
+      :language: python
+
+Which would result in the following response:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    HTTP/1.1 201 Created
+    Location: https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle"
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle",
+      "listIndex": 0,
+      "isDefaultAccountStore": true,
+      "isDefaultGroupStore": true,
+      "organization": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
       },
-      "isDefaultAccountStore":true,
-      "isDefaultGroupStore":true
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+      }
     }
 
-Which would result in the following ``201 Created`` response:
+.. only:: csharp or vbnet
 
-.. code-block:: http
+  .. only:: csharp
 
-  HTTP/1.1 201 Created
-  Location: https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle"
-  Content-Type: application/json;charset=UTF-8
+    .. literalinclude:: code/csharp/multitenancy/asm_to_org_with_default_resp.cs
+        :language: csharp
 
-  {
-    "href": "https://api.stormpath.com/v1/organizationAccountStoreMappings/3e9cNxhX8abxmPWexAMPle",
-    "listIndex": 0,
-    "isDefaultAccountStore": true,
-    "isDefaultGroupStore": true,
-    "organization": {
-      "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
-    },
-    "accountStore": {
-      "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-    }
-  }
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/asm_to_org_with_default_resp.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_resp.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_resp.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_resp.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_resp.py
+      :language: python
 
 So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
@@ -270,7 +505,7 @@ Registering an Organization as an Account Store for an Application
 
 As described in :ref:`the Authentication chapter <authn>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future.
 
-To map an Organization to an Application, simply follow the steps you would for any Account Store, as described in :ref:`create-asm`.
+To map an Organization to an Application, follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
 .. _add-accnt-to-org:
 
@@ -279,7 +514,9 @@ Adding an Account to an Organization
 
 Adding a new Account to an Organization is exactly the same as adding them to a Directory, except that you use the Organization to route the creation request:
 
-.. code-block:: http
+.. only:: rest
+
+  .. code-block:: http
 
     POST /v1/organizations/2P4XOanz26AUomIexAmple/accounts HTTP/1.1
     Host: api.stormpath.com
@@ -295,6 +532,38 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
             "favoriteColor": "fuschia"
         }
     }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/add_account_to_org.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/add_account_to_org.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/multitenancy/add_account_to_org.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/multitenancy/add_account_to_org.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/multitenancy/add_account_to_org.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/multitenancy/add_account_to_org.py
+      :language: python
 
 
 6.3. Authenticating an Account against an Organization
@@ -336,6 +605,10 @@ The application needs to know the request user’s tenant identifier so they can
 where ? is the ``tenant_id`` value obtained by inspecting the request.
 
 So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:`Organization resource <ref-organization>` and it's ``nameKey`` attribute.
+
+.. note::
+
+  Stormpath's ID Site supports multi-tenancy right out of the box. For more information about how to handle user login in a multi-tenant set-up with ID Site, please see :ref:`the ID Site chapter <idsite-multitenancy>`.
 
 We present here two possible solutions that use this ``nameKey``. You may support both if you wish to give your customers convenience options.
 
@@ -389,11 +662,4 @@ We advise that you auto-remember the login form tenant ID value so that field is
 
 As already mentioned, it is strongly recommended that your tenant identifier be an Organization ``nameKey``. Firstly because Organizations are the recommended resource to use to model multi-tenancy, but also because the ``nameKey`` attribute is unique and follows the DNS specification, which means that you could at any time adopt the Sub-Domain approach mentioned above.
 
-.. todo::
-
-  The SDKs can show you how to actually accomplish all this. e.g.::
-
-      application.createIdSiteUrl({
-        'callbackUri': 'https://trooperapp.com/callback',
-        'showOrganizationField': true
-    });
+Stormpath supports quick implementation of all of these strategies with ID Site. For more information, please see :ref:`the ID Site chapter <idsite-multitenancy>`.

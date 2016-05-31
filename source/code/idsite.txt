@@ -1,0 +1,5 @@
+jwt_for_oauth_req
+jwt_for_oauth_resp
+logout_from_idsite_req
+logout_from_idsite_resp
+idsite_reset_pwd

@@ -1,5 +1,16 @@
 {% extends "!layout.html" %}
 
+{% block menu %}
+  {{ super() }}
+
+  {% if language_slug == 'csharp' or language_slug == 'vbnet' %}
+    <li class="toctree-l1">
+      <a class="reference internal" href="/dotnet/api/">.NET API Reference</a>
+    </li>
+  {% endif %}
+  
+{% endblock %}
+
 {# Language picker interface #}
 {% block sidebartitle %}
   {{ super () }}
