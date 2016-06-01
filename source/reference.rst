@@ -1550,7 +1550,7 @@
 
   **oAuthPolicy URL**
 
-  ``/v1/oAuthPolicies/$DIRECTORY_ID``
+  ``/v1/oAuthPolicies/$APPLICATION_ID``
 
   **oAuthPolicy Attributes**
 

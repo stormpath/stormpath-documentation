@@ -76,7 +76,7 @@ For more advanced configurations, there are additional properties in the ID Site
 Setting Your Own Custom Domain Name and SSL Certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By default, the address of your ID Site is ``tenant-name.id.stormpath.io``. However, you can change the address to a subdomain of your own website, such as ``id.mysite.com``. The Stormtrooper equipment application’s main website is ``imperialxchange.com``, so the initial address of the ID Site might be something like ``happy-rebel.id.stormpath.io``. You can change the ID Site’s address to a subdomain of your company website, like ``id.trooperxchange.com``. In our example, ImperialXchange.com is actually part of a family of sites owned by the parent company Galactic Gear. Galactic Gear wants single-sign-on across its family of websites, so the ID Site is actually found at ``id.galacticgear.co``.
+By default, the address of your ID Site is ``tenant-name.id.stormpath.io``. However, you can change the address to a subdomain of your own website, such as ``id.mysite.com``. The Stormtrooper equipment application’s main website is ``imperialxchange.com``, so the initial address of the ID Site might be something like ``happy-rebel.id.stormpath.io``. You can change the ID Site’s address to a subdomain of your company website, like ``id.trooperxchange.com``. In our example, ImperialXchange.com is actually part of a family of sites owned by the parent company Galactic Gear. Galactic Gear wants single sign-on across its family of websites, so the ID Site is actually found at ``id.galacticgear.co``.
 
 The workflow for changing the address consists of the following steps:
 
@@ -778,3 +778,28 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
 
   https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
+
+.. todo::
+
+  _ ..idsite-sso:
+
+  7.6. ID Site & Single Sign-On
+
+  You have multiple applications using Stormpath, with ID Site being used for user login
+
+  Both Applications need to have the same Directory as an Account Store
+
+  Both Applications
+
+  - If tokens are between an Application and an Account, how does ID Site know that the second
+
+  1. User goes to Application A while unauthenticated with that application and clicks on "Log in"
+  2. User is redirected to ID Site
+  3. User authenticates successfully
+  4. ID Site redirects the user back to Application A with an ID Site Assertion for Application A
+  5. At this point you can :ref:`exchange the ID Site JWT for an OAuth token <idsite-jwt-to-oauth>` (OPTIONAL!!)
+  6. User now goes to Application B while unauthenticated with that application and clicks on "Log in"
+  7. User is redirected to ID Site
+  8. ID Site detects the user's OAuth cookie and redirects them back to Application B with an ID Site Assertion JWT for Application B
+
+
