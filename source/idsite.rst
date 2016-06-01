@@ -779,27 +779,29 @@ For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` 
 
   https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
 
-.. todo::
+.. _idsite-sso:
 
-  _ ..idsite-sso:
+7.6. ID Site & Single Sign-On
+=============================
 
-  7.6. ID Site & Single Sign-On
+One of the areas where ID Site really shines is if you have multiple applications that need to support single sign-on. All you need to do is to ensure that all your Applications have the same Directory mapped as an Account Store, and any time a user in that Directory logs in to one Application via ID Site, they will be able be authenticated for all other Applications.
 
-  You have multiple applications using Stormpath, with ID Site being used for user login
+As an overview, the flow would look like this:
 
-  Both Applications need to have the same Directory as an Account Store
+#. User goes to Application A while unauthenticated with that application and clicks on "Log in".
 
-  Both Applications
+#. User is redirected to ID Site.
 
-  - If tokens are between an Application and an Account, how does ID Site know that the second
+#. User authenticates successfully on ID Site.
 
-  1. User goes to Application A while unauthenticated with that application and clicks on "Log in"
-  2. User is redirected to ID Site
-  3. User authenticates successfully
-  4. ID Site redirects the user back to Application A with an ID Site Assertion for Application A
-  5. At this point you can :ref:`exchange the ID Site JWT for an OAuth token <idsite-jwt-to-oauth>` (OPTIONAL!!)
-  6. User now goes to Application B while unauthenticated with that application and clicks on "Log in"
-  7. User is redirected to ID Site
-  8. ID Site detects the user's OAuth cookie and redirects them back to Application B with an ID Site Assertion JWT for Application B
+#. ID Site redirects the user back to Application A with an ID Site Assertion for Application A.
+
+#. At this point you could (optionally) :ref:`exchange the ID Site JWT for an OAuth token <idsite-jwt-to-oauth>`.
+
+#. User now goes to Application B while unauthenticated with that application and clicks on "Log in".
+
+#. User is redirected to ID Site.
+
+#. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion JWT for Application B.
 
 

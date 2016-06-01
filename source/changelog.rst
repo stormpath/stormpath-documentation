@@ -28,6 +28,11 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-06-01
+==========
+
+- **New:** Updated ID Site chapter with two new sections: :ref:`idsite-multitenancy` and :ref:`idsite-sso`.
+
 2016-05-25
 ==========
 
