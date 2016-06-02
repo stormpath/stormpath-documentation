@@ -1516,30 +1516,31 @@
   Application API Keys
   ^^^^^^^^^^^^^^^^^^^^
 
-  This collection stores any API Keys that have been generated for this Application.
+  This collection stores any API Keys that have been generated for this Application. However you can only use this endpoint to retrieve a specific API Key by using its Key ID for lookup.
+
+  If the specific Key belongs to an Account that is able to log in to this Application, then you will receive it back in your response. If you specify the ID of an API Key that is not able to log into this Application, you will receive back an empty collection.
 
   **Application apiKeys URL**
 
-  ``/v1/applications/$APPLICATION_ID/apiKeys``
+  ``/v1/applications/$APPLICATION_ID/apiKeys?id=$SP_API_KEY_ID``
 
-  If you would like to retrieve a specific API Key, and you know the Key ID, you can include it as an optional parameter: ``id=$SP_API_KEY_ID``.
-
-  If you would like to retrieve the API Key with the :ref:`ref-account` expanded you can include the ``expand=account`` parameter.
+  If you would like to retrieve the API Key with the :ref:`ref-account` and/or :ref:`ref-tenant` expanded you can include the ``expand`` parameter for one (``expand=account``) or both (``expand=account,tenant``).
 
   Finally, if you would like the API Key's Secret to be encrypted, use the ``encryptSecret=true`` parameter.
 
-  .. note::
+  If ``encryptSecret=true`` is included, then the following parameter must also be included:
 
-    If ``encryptSecret=true`` is included, then the following parameter must also be included:
-      - ``encryptionKeySalt``: This is a `URL-safe Base64-encoded <https://tools.ietf.org/html/rfc4648>`__ 16-byte string that will be added to the secret before it is encrypted.
+  - ``encryptionKeySalt``: This is a `URL-safe Base64-encoded <https://tools.ietf.org/html/rfc4648>`__ 16-byte string that will be added to the secret before it is encrypted.
 
-    There are two more optional parameters than can be included alongside these two:
-      - ``encryptionKeySize``: The size of the key used for encryption. Possible values are ``128``, ``192``, and ``256``. Default value is ``128``.
-      - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Possible values are any whole number from ``1`` to ``65536``.  Default value is ``1024``.
+  There are two more optional parameters than can be included alongside these two:
+
+  - ``encryptionKeySize``: The size of the key used for encryption. Possible values are ``128``, ``192``, and ``256``. Default value is ``128``.
+
+  - ``encryptionKeyIterations``: The number of times the key is hashed before it is sent. Possible values are any whole number from ``1`` to ``65536``.  Default value is ``1024``.
 
   **Application apiKeys Attributes**
 
-  This call would return a collection of :ref:`API Keys <ref-account-apikeys>` for this Application only. For details about what an API Key object looks like you can refer to the :ref:`Account API Keys <ref-account-apikeys>` section.
+  This call would return a specific API Key if it is relevant to this Application. For details about what an API Key object looks like you can refer to the :ref:`Account API Keys <ref-account-apikeys>` section.
 
   .. _ref-oauth-policy:
 
