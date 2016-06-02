@@ -2265,6 +2265,55 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
 
   .. only:: csharp
 
+    .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_auth_code.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_auth_code.vb
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_account_linkedin_providerdata_auth_code.java
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_account_linkedin_providerdata_auth_code.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/create_account_linkedin_providerdata_auth_code.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_auth_code.py
+      :language: python
+
+If you have already exchanged the code for an Access Token, you can send that instead:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "providerData": {
+        "providerId": "linkedin",
+        "accessToken": "ACCESS_TOKEN_FROM_LINKEDIN"
+      }
+    }
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
     .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_access_token.cs
       :language: csharp
 
@@ -2292,27 +2341,6 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
 
   .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token.py
     :language: python
-
-If you have already exchanged the code for an Access Token, you can send that instead:
-
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
-
-    {
-      "providerData": {
-        "providerId": "linkedin",
-        "accessToken": "ACCESS_TOKEN_FROM_LINKEDIN"
-      }
-    }
-
-.. todo::
-
-  only sections for the other languages!
 
 Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account.
 
