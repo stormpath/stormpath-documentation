@@ -1935,13 +1935,13 @@ To access or create an Account in your new Facebook Directory, you need to gathe
 
     It is required that your Facebook application requests the ``email`` scope from Facebook. If the access token does not grant ``email`` scope, you will not be able to get an Account with an access token. For more information about scopes please see `Permissions with Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`_.
 
-Once the User Access Token is gathered, you send an this request:
+Once the User Access Token is gathered, you send this request:
 
 .. only:: rest
 
   .. code-block:: http
 
-    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+    POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
 
@@ -2245,7 +2245,7 @@ Generally, this will include embedding a link in your site that will send an aut
 
     It is required that your LinkedIn application requests the ``r_basicprofile`` and ``r_emailaddress`` scopes (or "fields") from LinkedIn. If the Authorization Code does not grant these scopes, you will not be able to get an Account. For more information about LinkedIn scopes, see `LinkedIn's "Profile Fields" documentation <https://developer.linkedin.com/docs/fields>`_.
 
-Once the Authorization Code is gathered, you can send it to Stormpath::
+Once the Authorization Code is gathered, you can send it to Stormpath:
 
 .. only:: rest
 
