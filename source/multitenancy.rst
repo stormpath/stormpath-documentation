@@ -150,7 +150,7 @@ This has two benefits:
   .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex1.py
       :language: python
 
-Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role"::
+Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role":
 
 .. only:: rest
 
@@ -321,6 +321,8 @@ Which would return the following:
   .. literalinclude:: code/php/multitenancy/create_org_resp.php
     :language: php
 
+  Notice here that both the Default Account Store and Group Store are ``NULL`` which means that Groups and Accounts added to the Organization would fail until a default Account Store is added.
+
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/create_org_resp.py
@@ -384,6 +386,14 @@ Like other Account Stores, an Organization can be mapped to an Application so th
 
   .. literalinclude:: code/php/multitenancy/asm_to_org.php
     :language: php
+
+  These two attributes, ``organization`` and ``accountStore`` are required, though you may add some optional attributes as well:
+
+  - ``listIndex``: Represents the priority in which this accountStore will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+
+  - ``isDefaultAccountStore``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
+
+  - ``isDefaultGroupStore``: A ``true`` value indicates that new Groups created by the Organization’s ``/groups`` endpoint will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the accountStore is a Directory.
 
 .. only:: python
 
@@ -559,6 +569,13 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 
   .. literalinclude:: code/php/multitenancy/add_account_to_org.php
     :language: php
+
+  .. warning::
+
+    Currently, you can not create a new account directly from the organization resource.
+    You are also not able to create a new account directly into a group. The PHP SDK team
+    is currently working on a bug fix for this.  You can follow along on
+    `github issue #152 <https://github.com/stormpath/stormpath-sdk-php/issues/152>`_ for updates.
 
 .. only:: python
 
