@@ -116,7 +116,11 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  (php.todo)
+  The Stormpath PHP SDK installs through `composer <http://getcomposer.org>`_.  After installing this on your system, navigate to your project folder in your terminal and run:
+
+  .. code:: console
+
+    composer install stormpath/sdk
 
 .. only:: python
 
@@ -187,7 +191,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  (php.todo)
+  These instructions assume that you have `composer <http://getcomposer.org>`_ and `PHP 5.5+ <http://php.net>`_ installed on your system and that you have already completed the steps above, and now have:
 
 .. only:: python
 
@@ -602,13 +606,13 @@ Now we have a user Account that can use your Application. But how do you authent
 
 .. only:: php
 
-  (php.todo) Let's make sure this section has the same sort of content as the other SDKs.
-
   .. literalinclude:: code/php/quickstart/authentication_attempt.php
     :language: php
 
-  .. literalinclude:: code/php/quickstart/authentication_attempt_error_result.php
-    :language: php
+  If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
+
+  If the authentication attempt fails, a ``ResourceException`` will be thrown. The ``getMessage()`` and ``getDeveloperMessage()`` methods of the exception will contain details about the authentication failure.
+
 
 .. only:: java
 
