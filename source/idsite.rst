@@ -715,7 +715,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: rest
 
-  ``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to. If combined with ``onk``, this will pre-populate that field with the Organization's name.
+  ``sof``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
+
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
+
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``onk``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: csharp or vbnet
 
