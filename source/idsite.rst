@@ -722,7 +722,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
     :scale: 100%
     :alt: ID Site with sof toggled on
 
-    *ID Site with Organization field on and prepopulated*
+    *ID Site with Organization field enabled*
 
   If combined with ``onk``, this will pre-populate that field with the Organization's name.
 
@@ -731,7 +731,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
     :scale: 100%
     :alt: ID Site with sof and onk toggled on
 
-    *ID Site with Organization field on and prepopulated*
+    *ID Site with Organization field enabled and prepopulated*
 
 .. only:: csharp or vbnet
 
@@ -818,6 +818,6 @@ As an overview, the flow would look like this:
 
 #. User is redirected to ID Site.
 
-#. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion JWT for Application B.
+#. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion for Application B.
 
 
