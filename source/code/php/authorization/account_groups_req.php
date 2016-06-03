@@ -1,0 +1,1 @@
+$accountGroups = $account->groups;
