@@ -4098,26 +4098,11 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 
 A request including these optional properties looks like this:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
-    {
-        "callbackUri": "https://org1.myapp.com",
-        "organization": {
-            "nameKey": "org1",
-        }
-        "state": "IAmAState"
-    }
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4132,6 +4117,21 @@ A request including these optional properties looks like this:
       .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
           :language: vbnet
 
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
+
+    {
+        "callbackUri": "https://org1.myapp.com",
+        "organization": {
+            "nameKey": "org1",
+        }
+        "state": "IAmAState"
+    }
+
 .. only:: java
 
   .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
@@ -4141,6 +4141,10 @@ A request including these optional properties looks like this:
 
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_with_extras.js
       :language: javascript
+
+.. only:: php
+
+  (php.todo)
 
 .. only:: python
 
