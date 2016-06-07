@@ -466,6 +466,8 @@
 
   .. only:: php
 
+    You can inline the settings for API Credentials with the following:
+    
     .. literalinclude:: code/php/configuration/api_credentials.php
       :language: php
 
