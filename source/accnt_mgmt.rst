@@ -2670,6 +2670,18 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
       Add email templates .NET example
 
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console UI, or the REST API documentation below.
+
+    .. todo::
+
+      Add email templates .NET example
+
 .. only:: java
 
   (java.todo)
@@ -2678,15 +2690,11 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
   The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
 
-.. only:: php
-
-  (php.todo)
-
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet
+.. only:: rest or csharp or vbnet or php
 
   First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 

@@ -1853,7 +1853,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: php
 
-  (php.todo)
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: python
 
@@ -2012,7 +2012,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: php
 
-  (php.todo)
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: python
 
@@ -4117,7 +4117,22 @@ A request including these optional properties looks like this:
       .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
           :language: vbnet
 
-.. only:: rest or csharp or vbnet
+.. only:: csharp or vbnet
+
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    For updates, you can follow `ticket #154 <https://github.com/stormpath/stormpath-sdk-php/issues/154>`_ on Github.
+
+  .. todo::
+
+    .. only:: php
+
+      .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras.php
+        :language: php
+
+
+.. only:: rest or csharp or vbnet or php
 
   .. code-block:: http
 
@@ -4141,10 +4156,6 @@ A request including these optional properties looks like this:
 
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_with_extras.js
       :language: javascript
-
-.. only:: php
-
-  (php.todo)
 
 .. only:: python
 
