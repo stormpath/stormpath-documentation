@@ -2004,11 +2004,19 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  (php.todo)
+
 .. only:: python
+
+  (python.todo)
 
 .. _authn-github:
 
@@ -4006,18 +4014,11 @@ Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 
 To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
 .. only:: php
 
   .. warning::
 
-    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #149 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
 
     .. todo::
@@ -4028,7 +4029,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4058,7 +4059,12 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
 
   This request will return a response containing a JWT like this:
 
