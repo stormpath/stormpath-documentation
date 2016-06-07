@@ -398,8 +398,10 @@
   .. tip::
     You can find the API Key and Secret values or download a credentials file via the `Stormpath Admin Console`_.
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+  .. only:: not php
+
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
   Bash-like shell:
 
@@ -866,8 +868,8 @@
         }
       }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
   .. only:: csharp
 
