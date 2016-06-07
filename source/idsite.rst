@@ -281,11 +281,25 @@ A typical set of steps in your application are as follows:
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  This is typically done by creating a controller or action that the login button redirects to. Inside this controller, the ID Site request can be created using the SDK:
 
   .. only:: csharp
 
+    .. literalinclude:: code/csharp/idsite/build_idsite_url.cs
+      :language: csharp
+
   .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/build_idsite_url.vb
+      :language: vbnet
+
+  The ``SetCallbackUri`` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+  .. note::
+
+    To view all of the options available for building ID Site URLs, see the `IIdSiteBuilder API documentation <https://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_IdSite_IIdSiteUrlBuilder.htm>`_.
+
+  Once the URL is built, redirect the user in order to send them to ID Site.
 
 .. only:: java
 
@@ -457,11 +471,25 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  You can use the SDK to consume this assertion:
 
   .. only:: csharp
 
+    .. literalinclude:: code/csharp/idsite/consume_assertion.cs
+      :language: csharp
+
   .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/consume_assertion.vb
+      :language: vbnet
+
+  The SDK will throw an error if the ID Site assertion is expired or invalid. If the assertion is valid, you'll get an ``IAccountResult`` instance with the following properties:
+
+  * ``State`` - An arbitrary string set by the ``SetState()`` method, if any.
+  * ``IsNewAccount`` - ``true`` if the account was newly registered on ID Site, ``false`` if an existing account signed in.
+  * ``Status`` - One of ``IdSiteResultStatus.Registered``, ``IdSiteResultStatus.Authenticated``, ``IdSiteResultStatus.Logout``.
+
+  You can call the ``GetAccountAsync`` method to obtain the Stormpath Account itself.
 
 .. only:: java
 
@@ -504,12 +532,16 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
   (python.todo)
 
-Once the JWT is validated, you can read information about the user from it. In some cases you may wish to exchange this JWT for a Stormpath OAuth 2.0 token.
+.. only:: rest
+
+  Once the ID Site assertion is validated, you can read information about the user from it.
 
 .. _idsite-jwt-to-oauth:
 
 Exchanging the ID Site JWT for an OAuth Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In some cases you may wish to exchange the ID Site assertion (JWT) for a Stormpath OAuth 2.0 token.
 
 .. note::
 
@@ -576,18 +608,6 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_resp.vb
-        :language: vbnet
-
 .. only:: java
 
   .. literalinclude:: code/java/idsite/jwt_for_oauth_resp.java
@@ -626,6 +646,8 @@ ID Site will keep a configurable session for authenticated users. When a user is
 
 .. only:: csharp or vbnet
 
+  To log the user out and remove the session that ID Site creates, you must build another ID Site redirect URL. In this case, use the ``ForLogout`` method to create a logout request:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/idsite/logout_from_idsite_req.cs
@@ -663,6 +685,8 @@ Once the user is logged out of ID Site, they are automatically redirected to the
   Your application will know that the user logged out because the ``jwtResponse`` will contain a status claim of ``LOGOUT``.
 
 .. only:: csharp or vbnet
+
+  When the response is handled, the ``Status`` property will have a value of ``IdSiteResultStatus.Logout``:
 
   .. only:: csharp
 
@@ -929,5 +953,3 @@ As an overview, the flow would look like this:
 #. User is redirected to ID Site.
 
 #. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion for Application B.
-
-
