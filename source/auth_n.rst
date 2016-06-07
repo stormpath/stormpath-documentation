@@ -155,7 +155,7 @@ After an Account resource has been created, you can authenticate it given an inp
     .. literalinclude:: code/php/authentication/login_attempt_req_expand_account.php
       :language: php
 
-  If authentication succeeded, You will either see just the ``href`` referencing the account, or the full account object.
+  If authentication succeeded, You will either see just the ``href`` referencing the Account, or the full Account object.
 
     .. literalinclude:: code/php/authentication/login_attempt_resp.php
       :language: php
@@ -336,7 +336,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: php
 
-  You can find all the account store mappings by using the ``getAccountStoreMappings()`` method or the ``accountStoreMappings`` property on the ``Application`` resource.
+  You can find all the Account Store Mappings by using the ``getAccountStoreMappings()`` method or the ``accountStoreMappings`` property on the Application resource.
 
   .. literalinclude:: code/php/authentication/get_asm_req.php
     :language: php
@@ -687,7 +687,7 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
   .. literalinclude:: code/php/authentication/oauth_policy.php
     :language: php
 
-  This will return
+  This will return:
 
   .. literalinclude:: code/php/authentication/oauth_policy_res.php
 
@@ -1025,19 +1025,19 @@ So you would send the following request:
 
       * - accessToken
         - Object (Stormpath\Resource\AccessToken)
-        - The access token object.
+        - The Access Token as an object.
 
       * - accessTokenString
         - String (JSON Web Token)
-        - The access token for the response.
+        - The Access Token as a JWT-formatted string.
 
       * - refreshToken
         - Object (Stormpath\Resource\RefreshToken)
-        - The refresh token object.
+        - The Refresh Token as an object.
 
       * - refreshTokenString
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The Refresh Token as a JWT-formatted string.
 
       * - accessTokenHref
         - String
@@ -1199,17 +1199,17 @@ To recap, you have done the following:
 
 .. only:: php
 
-  1. Created a ``PasswordGrantRequest`` object with the users email/username and password.
+  1. Created a ``PasswordGrantRequest`` object with the user's email/username and password.
   2. Created a new ``PasswordGrantAuthenticator`` object and passed it the application object.
   3. Made an authenticate attempt with the ``PasswordGrantAuthenticator`` passing the ``PasswordGrantRequest`` object
   4. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-  The user now attempts to access a secured resource by...
+  The user now attempts to access a secured resource:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req.php
     :language: php
 
-  If the access token can be validated, Stormpath will return...
+  If the Access Token can be validated, Stormpath will return this:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
     :language: php
@@ -1845,11 +1845,19 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  (php.todo)
+
 .. only:: python
+
+  (python.todo)
 
 .. _authn-facebook:
 
