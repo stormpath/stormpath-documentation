@@ -155,7 +155,7 @@ After an Account resource has been created, you can authenticate it given an inp
     .. literalinclude:: code/php/authentication/login_attempt_req_expand_account.php
       :language: php
 
-  If authentication succeeded, You will either see just the ``href`` referencing the account, or the full account object.
+  If authentication succeeded, You will either see just the ``href`` referencing the Account, or the full Account object.
 
     .. literalinclude:: code/php/authentication/login_attempt_resp.php
       :language: php
@@ -336,7 +336,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: php
 
-  You can find this mapping by... (php.todo)
+  You can find all the Account Store Mappings by using the ``getAccountStoreMappings()`` method or the ``accountStoreMappings`` property on the Application resource.
 
   .. literalinclude:: code/php/authentication/get_asm_req.php
     :language: php
@@ -687,7 +687,7 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
   .. literalinclude:: code/php/authentication/oauth_policy.php
     :language: php
 
-  This will return
+  This will return:
 
   .. literalinclude:: code/php/authentication/oauth_policy_res.php
 
@@ -1025,19 +1025,19 @@ So you would send the following request:
 
       * - accessToken
         - Object (Stormpath\Resource\AccessToken)
-        - The access token object.
+        - The Access Token as an object.
 
       * - accessTokenString
         - String (JSON Web Token)
-        - The access token for the response.
+        - The Access Token as a JWT-formatted string.
 
       * - refreshToken
         - Object (Stormpath\Resource\RefreshToken)
-        - The refresh token object.
+        - The Refresh Token as an object.
 
       * - refreshTokenString
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The Refresh Token as a JWT-formatted string.
 
       * - accessTokenHref
         - String
@@ -1199,17 +1199,17 @@ To recap, you have done the following:
 
 .. only:: php
 
-  1. Created a ``PasswordGrantRequest`` object with the users email/username and password.
+  1. Created a ``PasswordGrantRequest`` object with the user's email/username and password.
   2. Created a new ``PasswordGrantAuthenticator`` object and passed it the application object.
   3. Made an authenticate attempt with the ``PasswordGrantAuthenticator`` passing the ``PasswordGrantRequest`` object
   4. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-  The user now attempts to access a secured resource by...
+  The user now attempts to access a secured resource:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req.php
     :language: php
 
-  If the access token can be validated, Stormpath will return...
+  If the Access Token can be validated, Stormpath will return this:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
     :language: php
@@ -1277,7 +1277,7 @@ The token specified in the Authorization header has been digitally signed with t
   .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
       :language: php
 
-  If the token can be validated locally, it will return an object with...(php.todo)
+  If the token can be validated locally, it will return an expanded ``JWT``:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_local_res.php
       :language: php
@@ -1845,11 +1845,19 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+
 .. only:: python
+
+  (python.todo)
 
 .. _authn-facebook:
 
@@ -1996,11 +2004,19 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
+
+  (node.todo)
 
 .. only:: php
 
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+
 .. only:: python
+
+  (python.todo)
 
 .. _authn-github:
 
@@ -2154,6 +2170,10 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. only:: nodejs
 
  (node.todo)
+
+.. only:: php
+
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. only:: python
 
@@ -2359,6 +2379,10 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 .. only:: nodejs
 
   (node.todo)
+
+.. only:: php
+
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. only:: python
 
@@ -3998,18 +4022,11 @@ Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 
 To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
 .. only:: php
 
   .. warning::
 
-    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #149 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
 
     .. todo::
@@ -4020,7 +4037,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4050,7 +4067,12 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
 
   This request will return a response containing a JWT like this:
 
@@ -4084,26 +4106,11 @@ This ``defaultRelayStates/`` endpoint also accepts a few optional properties. Th
 
 A request including these optional properties looks like this:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
-    Host: api.stormpath.com
-
-    {
-        "callbackUri": "https://org1.myapp.com",
-        "organization": {
-            "nameKey": "org1",
-        }
-        "state": "IAmAState"
-    }
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4117,6 +4124,36 @@ A request including these optional properties looks like this:
 
       .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
           :language: vbnet
+
+.. only:: csharp or vbnet
+
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    For updates, you can follow `ticket #154 <https://github.com/stormpath/stormpath-sdk-php/issues/154>`_ on Github.
+
+  .. todo::
+
+    .. only:: php
+
+      .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras.php
+        :language: php
+
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
+    Host: api.stormpath.com
+
+    {
+        "callbackUri": "https://org1.myapp.com",
+        "organization": {
+            "nameKey": "org1",
+        }
+        "state": "IAmAState"
+    }
 
 .. only:: java
 

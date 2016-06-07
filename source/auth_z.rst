@@ -136,7 +136,7 @@ Stormpath also gives you an enormous amount of flexibility with what these permi
 .. only:: php
 
   .. literalinclude:: code/php/authorization/example_perm_simple.php
-    :language: php
+    :language: json
 
 .. only:: python
 
@@ -182,7 +182,7 @@ Or as complex as:
 .. only:: php
 
   .. literalinclude:: code/php/authorization/example_perm_complex.php
-    :language: php
+    :language: json
 
 .. only:: python
 
@@ -219,7 +219,7 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
 .. only:: php
 
-  (php.todo) Add link to SDK documentation for Custom Data?
+  To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
 
 .. only:: python
 
@@ -250,7 +250,7 @@ Checking User and Role Permissions
 
 .. only:: php
 
-  (php.todo)
+  Since authorization enforcement is handled by `one of Stormpath's PHP integrations <https://docs.stormpath.com/php/>`_, the primary usefulness of the PHP SDK is in retrieving a user's permissions. These permissions can either be found in the customData tied to a user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
 
 .. only:: python
 
@@ -510,7 +510,7 @@ This would work in much the same way as checking the permissions for a user's Ac
   .. literalinclude:: code/php/authorization/account_groups_req.php
     :language: php
 
-  From here... (php.todo)
+  From here you can retrieve the Group’s customData in the same way as you did with users.
 
 .. only:: python
 

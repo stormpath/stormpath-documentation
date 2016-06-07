@@ -17,10 +17,9 @@
 
   The Stormpath API Key and Secret must be set to initialize the SDK (detailed in the next section). In most cases, you won't have to change any other options, as the SDK will fall back to sensible defaults.
 
-
   .. _required_credentials:
 
-  10.1. Required API Credentials
+  1. Required API Credentials
   ==============================
 
   At the very least, these configuration options **must** be set in order to initialize the Stormpath SDK:
@@ -33,7 +32,7 @@
 
   .. _set_up_caching:
 
-  10.2. Setting Up Caching
+  2. Setting Up Caching
   ========================
 
   The Stormpath SDK comes with a robust caching layer built-in. Reads and writes against the Stormpath API are cached locally, to help your applications reduce the number of API calls made to Stormpath.
@@ -46,17 +45,69 @@
 
   See :ref:`caching_config` in the Configuration Reference to understand how to set these configuration values.
 
-  .. warning::
+  .. only:: not php
 
-    By default, the SDK uses an in-memory cache implementation. This works well for single-server applications, but if you have multiple servers, you **must** plug in a distributed cache (see below).
+    .. warning::
 
+      By default, the SDK uses an in-memory cache implementation. This works well for single-server applications, but if you have multiple servers, you **must** plug in a distributed cache (see below).
+
+  .. only:: php
+
+    .. warning::
+
+      By default, the PHP SDK uses array caching.  Because of this, the cache is cleared on each page request.
+
+    The caching system in the PHP SDK has a set of options that can be passed into the ``Client`` resource caching manager options.
+
+    .. code-block:: php
+
+      $cacheManagerOptions = array(
+        'cachemanager' => 'Array', //Array, Memcached, Redis, Null, or the full namespaced CacheManager instance
+        'memcached' => array(
+            array('host' => '127.0.0.1', 'port' => 11211, 'weight' => 100),
+        ),
+        'redis' => array(
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'password' => NULL
+        ),
+        'ttl' => 60, // This value is set in minutes
+        'tti' => 120, // This value is set in minutes
+        'regions' => array(
+          'accounts' => array(
+              'ttl' => 60,
+               'tti' => 120
+            ),
+           'applications' => array(
+               'ttl' => 60,
+               'tti' => 120
+            ),
+           'directories' => array(
+               'ttl' => 60,
+               'tti' => 120
+            ),
+           'groups' => array(
+               'ttl' => 60,
+               'tti' => 120
+            ),
+           'tenants' => array(
+               'ttl' => 60,
+               'tti' => 120
+            ),
+
+         )
+      );
+
+      \Stormpath\Client::$cacheManagerOptions = $cacheManagerOptions;
 
   Memcached
   '''''''''
 
   .. only:: csharp or vbnet
 
-    .. note:: The .NET SDK does not currently have a plugin that supports Memcached. If you need this functionality, please reach out to us at support@stormpath.com.
+    .. note::
+
+      The .NET SDK does not currently have a plugin that supports Memcached. If you need this functionality, please reach out to us at support@stormpath.com.
 
   .. only:: java
 
@@ -68,7 +119,16 @@
 
   .. only:: php
 
-    (php.todo)
+    The `MemcachedCacheManager` provides a cache plugin that works with Memcached.
+
+    To use this caching method in your application, initialize the ``MemcachedCachedManager`` in your ``ClientBuilder``:
+
+    .. code-block:: php
+
+      $builder = new \Stormpath\ClientBuilder();
+      $client = $builder->setCacheManager('Memcached') //setting this will ignore the 'cachemanager' in options array
+          ->setCacheManagerOptions($cacheManagerOptions)
+          ->build();
 
   .. only:: python
 
@@ -104,7 +164,16 @@
 
   .. only:: php
 
-    (php.todo)
+    The `RedisCacheManager` provides a cache plugin that works with Redis.
+
+    To use this caching method in your application, initialize the ``RedisCachedManager`` in your ``ClientBuilder``:
+
+    .. code-block:: php
+
+      $builder = new \Stormpath\ClientBuilder();
+      $client = $builder->setCacheManager('Redis') //setting this will ignore the 'cachemanager' in options array
+          ->setCacheManagerOptions($cacheManagerOptions)
+          ->build();
 
   .. only:: python
 
@@ -118,7 +187,7 @@
 
   .. _environments:
 
-  10.3. Using a Different Environment
+  3. Using a Different Environment
   ===================================
 
   By default, the Stormpath SDK connects to the Stormpath API Public Cloud.
@@ -152,10 +221,6 @@
 
         (node.todo)
 
-      .. only:: php
-
-        (php.todo)
-
       .. only:: python
 
         (python.todo)
@@ -163,7 +228,7 @@
 
   .. _config_sources:
 
-  10.4. Configuration Sources
+  4. Configuration Sources
   ===========================
 
   There are multiple ways to provide the SDK configuration settings. You can load values from local environment variables, or a YAML/JSON configuration file. You can also set them directly in your code.
@@ -174,7 +239,7 @@
 
   .. _env_vars:
 
-  10.4.1. Environment Variables
+  4.1. Environment Variables
   '''''''''''''''''''''''''''''
 
   Configuration options can be set in environment variables by formatting the configuration key with underscores. For example, ``stormpath.client.apiKey.id`` becomes ``STORMPATH_CLIENT_APIKEY_ID``.
@@ -198,49 +263,59 @@
 
   .. _markup_file:
 
-  10.4.2. YAML/JSON Markup File
+  4.2. YAML/JSON Markup File
   '''''''''''''''''''''''''''''
 
-  Configuration options can also be set by placing a file called ``stormpath.yaml`` or ``stormpath.json`` in one of these locations:
+  .. only:: php
 
-  * The application's base directory
-  * ``~/.stormpath`` (where ``~`` represents the user's home directory)
+    .. warning::
 
-  .. note::
-    On Windows machines, the home directory is ``C:\Users\<username>\``.
+      Currently, the PHP SDK does not allow for configuration through this file. For updates, you can follow `ticket #153 <https://github.com/stormpath/stormpath-sdk-php/issues/153>`_ on Github.
 
-  For example, this YAML configuration will set the Stormpath API Key and Secret:
+      In the meantime, please use the ``ClientBuilder`` class to build a client with all configuration you need.
 
-  .. code-block:: yaml
+  .. only:: not php
 
-    ---
-    client:
-      apiKey:
-        id: "your_id_here"
-        secret: "your_id_here"
+    Configuration options can also be set by placing a file called ``stormpath.yaml`` or ``stormpath.json`` in one of these locations:
 
-  The equivalent JSON is:
+    * The application's base directory
+    * ``~/.stormpath`` (where ``~`` represents the user's home directory)
 
-  .. code-block:: json
+    .. note::
+      On Windows machines, the home directory is ``C:\Users\<username>\``.
 
-    {
-      "client": {
-        "apiKey": {
-          "id": "your_id_here",
-          "secret": "your_id_here"
+    For example, this YAML configuration will set the Stormpath API Key and Secret:
+
+    .. code-block:: yaml
+
+      ---
+      client:
+        apiKey:
+          id: "your_id_here"
+          secret: "your_id_here"
+
+    The equivalent JSON is:
+
+    .. code-block:: json
+
+      {
+        "client": {
+          "apiKey": {
+            "id": "your_id_here",
+            "secret": "your_id_here"
+          }
         }
       }
-    }
 
-  In both cases, the ``stormpath`` root node is implied and should be omitted.
+    In both cases, the ``stormpath`` root node is implied and should be omitted.
 
-  .. tip::
-    You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
+    .. tip::
 
+      You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
 
   .. _api_credentials_file:
 
-  10.4.3. API Credentials File
+  4.3. API Credentials File
   ''''''''''''''''''''''''''''
 
   The API Key ID and Secret can be provided by placing the ``apiKey.properties`` generated by the `Stormpath Admin Console`_ file in one of these locations:
@@ -249,17 +324,20 @@
   * ``~/.stormpath/`` (where ``~`` represents the user's home directory)
 
   .. note::
+
     On Windows machines, the home directory is ``C:\Users\<username>\``.
 
   If you don't opt to store the Stormpath API credentials in environment variables, this functionality makes it easy to download the ``apiKey.properties`` file from the Admin Console and drop it into your application.
 
 
-  10.4.4. Inline Code Configuration
+  4.4. Inline Code Configuration
   '''''''''''''''''''''''''''''''''
 
-  You can also configure the SDK directly in code, by passing the appropriate values when you initialize the Client object.
+  .. only:: not php
 
-  For example, to set the API Key and Secret via code:
+    You can also configure the SDK directly in code, by passing the appropriate values when you initialize the Client object.
+
+    For example, to set the API Key and Secret via code:
 
   .. only:: csharp
 
@@ -281,7 +359,16 @@
 
   .. only:: php
 
-    (php.todo)
+    You can also configure the SDK directly in code, by building a client with the ``ClientBuilder`` and passing the appropriate values.
+
+    For example, to set the API Key and Secret via code:
+
+    .. literalinclude:: code/php/configuration/api_credentials.php
+      :language: php
+
+    .. note::
+
+      The ``setApiKeyProperties()`` method will accept any string, however you need to pass a valid ini string.
 
   .. only:: python
 
@@ -291,10 +378,9 @@
 
     Values set explicitly via code have the highest precedence. In other words, if you have existing configuration values in environment variables or a markup file, values you set in your code will override them.
 
-
   .. _config_reference:
 
-  10.5. Configuration Reference
+  5. Configuration Reference
   =============================
 
   .. _api_keys:
@@ -308,10 +394,13 @@
   * ``stormpath.client.apiKey.file`` - (Optional) The path to an ``apiKey.properties`` file, if the file is not in one of the standard locations that are searched for :ref:`API Credentials files <api_credentials_file>`.
 
   .. tip::
+
     You can find the API Key and Secret values or download a credentials file via the `Stormpath Admin Console`_.
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+  .. only:: not php
+
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
   Bash-like shell:
 
@@ -327,33 +416,35 @@
       setx STORMPATH_CLIENT_APIKEY_ID your_id_here
       setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
 
-  YAML File
-  ^^^^^^^^^
+  .. only:: not php
 
-  .. code-block:: yaml
+    YAML File
+    ^^^^^^^^^
 
-    ---
-    client:
-      apiKey:
-        id: "your_id_here"
-        secret: "your_id_here"
+    .. code-block:: yaml
 
-  JSON File
-  ^^^^^^^^^
+      ---
+      client:
+        apiKey:
+          id: "your_id_here"
+          secret: "your_id_here"
 
-  .. code-block:: json
+    JSON File
+    ^^^^^^^^^
 
-    {
-      "client": {
-        "apiKey": {
-          "id": "your_id_here",
-          "secret": "your_id_here"
+    .. code-block:: json
+
+      {
+        "client": {
+          "apiKey": {
+            "id": "your_id_here",
+            "secret": "your_id_here"
+          }
         }
       }
-    }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
   .. only:: csharp
 
@@ -375,60 +466,76 @@
 
   .. only:: php
 
-    (php.todo)
+    You can inline the settings for API Credentials with the following:
+
+    .. literalinclude:: code/php/configuration/api_credentials.php
+      :language: php
+
+    .. note::
+
+      The ``setApiKeyProperties()`` method will accept any string, however you need to pass a valid ini string.
 
   .. only:: python
 
     (python.todo)
 
-
   .. _base_url:
 
   Base URL
   ''''''''
-  Configuration key: ``stormpath.client.baseUrl``
+
+  .. only:: not php
+
+    Configuration key: ``stormpath.client.baseUrl``
 
   Default value: ``https://api.stormpath.com/v1``
 
   This setting controls the URL that the SDK uses to connect to the Stormpath API. You won't need to change this unless you are using a :ref:`different environment <environments>`.
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+  .. only:: not php
 
-  Bash-like shell:
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: bash
 
-      export STORMPATH_CLIENT_BASEURL=https://enterprise.stormpath.io/v1
+    Bash-like shell:
 
-  Windows:
+    .. code-block:: bash
 
-  .. code-block:: none
+       export STORMPATH_CLIENT_BASEURL=https://enterprise.stormpath.io/v1
 
-      setx STORMPATH_CLIENT_BASEURL https://enterprise.stormpath.io/v1
+    Windows:
 
-  YAML File
-  ^^^^^^^^^
+    .. code-block:: none
 
-  .. code-block:: yaml
+       setx STORMPATH_CLIENT_BASEURL https://enterprise.stormpath.io/v1
 
-    ---
-    client:
-      baseUrl: "https://enterprise.stormpath.io/v1"
+  .. only:: not php
 
-  JSON File
-  ^^^^^^^^^
+    YAML File
+    ^^^^^^^^^
 
-  .. code-block:: json
+    .. code-block:: yaml
 
-    {
-      "client": {
-        "baseUrl": "https://enterprise.stormpath.io/v1"
+      ---
+      client:
+        baseUrl: "https://enterprise.stormpath.io/v1"
+
+  .. only:: not php
+
+    JSON File
+    ^^^^^^^^^
+
+    .. code-block:: json
+
+      {
+        "client": {
+          "baseUrl": "https://enterprise.stormpath.io/v1"
+        }
       }
-    }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
   .. only:: csharp
 
@@ -450,7 +557,14 @@
 
   .. only:: php
 
-    (php.todo)
+    .. code-block:: php
+
+      $apiKeyProperties = "apiKey.id=APIKEYID\napiKey.secret=APIKEYSECRET";
+      $builder = new \Stormpath\ClientBuilder();
+      $client = $builder
+        ->setBaseUrl('https://enterprise.stormpath.io/v1')
+        ->build();
+
 
   .. only:: python
 
@@ -462,109 +576,111 @@
   Cache Manager
   '''''''''''''
 
-  Configuration keys:
+  .. only:: not php
 
-  * ``stormpath.client.cacheManager.enabled`` - Controls whether caching is enabled. (Default: ``true``)
-  * ``stormpath.client.cacheManager.defaultTtl`` - Default time-to-live of cached resources, in seconds. (Default: ``300``)
-  * ``stormpath.client.cacheManager.defaultTti`` - Default time-to-idle of cached resources, in seconds. (Default: ``300``)
-  * ``stormpath.client.cacheManager.caches.*`` - Resource-specific cache configuration.
+    Configuration keys:
 
-  These settings allow you to control the caching layer that is built into the SDK. See the :ref:`Setting Up Caching <set_up_caching>` section to understand how this works.
+    * ``stormpath.client.cacheManager.enabled`` - Controls whether caching is enabled. (Default: ``true``)
+    * ``stormpath.client.cacheManager.defaultTtl`` - Default time-to-live of cached resources, in seconds. (Default: ``300``)
+    * ``stormpath.client.cacheManager.defaultTti`` - Default time-to-idle of cached resources, in seconds. (Default: ``300``)
+    * ``stormpath.client.cacheManager.caches.*`` - Resource-specific cache configuration.
 
-  .. warning::
+    These settings allow you to control the caching layer that is built into the SDK. See the :ref:`Setting Up Caching <set_up_caching>` section to understand how this works.
 
-    By default, the SDK uses an in-memory cache that is suitable for a single-server application. If you have multiple servers behind a load balancer, you **must** switch to a distributed cache store, or disable caching. Plugging in a distributed cache is covered in the :ref:`Setting Up Caching <set_up_caching>` section.
+    .. warning::
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+      By default, the SDK uses an in-memory cache that is suitable for a single-server application. If you have multiple servers behind a load balancer, you **must** switch to a distributed cache store, or disable caching. Plugging in a distributed cache is covered in the :ref:`Setting Up Caching <set_up_caching>` section.
 
-  Bash-like shell:
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: bash
+    Bash-like shell:
 
-      # Disable caching entirely
-      export STORMPATH_CLIENT_CACHEMANAGER_ENABLED=false
+    .. code-block:: bash
 
-      # Or, change the default TTL and TTI for cached resources
-      # and override this for specific resources:
-      export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL=120
-      export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI=600
-      export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL=900
-      export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI=900
+        # Disable caching entirely
+        export STORMPATH_CLIENT_CACHEMANAGER_ENABLED=false
 
-  Windows:
+        # Or, change the default TTL and TTI for cached resources
+        # and override this for specific resources:
+        export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL=120
+        export STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI=600
+        export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL=900
+        export STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI=900
 
-  .. code-block:: powershell
+    Windows:
 
-      # Disable caching entirely:
-      setx STORMPATH_CLIENT_CACHEMANAGER_ENABLED false
+    .. code-block:: powershell
 
-      # Or, change the default TTL and TTI for cached resources
-      # and override this for specific resources:
-      setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL 120
-      setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI 600
-      setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL 900
-      setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI 900
+        # Disable caching entirely:
+        setx STORMPATH_CLIENT_CACHEMANAGER_ENABLED false
 
-  YAML File
-  ^^^^^^^^^
+        # Or, change the default TTL and TTI for cached resources
+        # and override this for specific resources:
+        setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTL 120
+        setx STORMPATH_CLIENT_CACHEMANAGER_DEFAULTTTI 600
+        setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTL 900
+        setx STORMPATH_CLIENT_CACHEMANAGER_CACHES_ACCOUNT_TTI 900
 
-  To disable caching entirely:
+    YAML File
+    ^^^^^^^^^
 
-  .. code-block:: yaml
+    To disable caching entirely:
 
-    ---
-    client:
-      cacheManager:
-        enabled: false
+    .. code-block:: yaml
 
-  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
+      ---
+      client:
+        cacheManager:
+          enabled: false
 
-  .. code-block:: yaml
+    Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
 
-    ---
-    client:
-      cacheManager:
-        defaultTtl: 120
-        defaultTti: 600
-        caches:
-          account:
-            ttl: 900
-            tti: 900
+    .. code-block:: yaml
 
-  JSON File
-  ^^^^^^^^^
+      ---
+      client:
+        cacheManager:
+          defaultTtl: 120
+          defaultTti: 600
+          caches:
+            account:
+              ttl: 900
+              tti: 900
 
-  To disable caching entirely:
+    JSON File
+    ^^^^^^^^^
 
-  .. code-block:: json
+    To disable caching entirely:
 
-    {
-      "client": {
-        "cacheManager": {
-          "enabled": false
+    .. code-block:: json
+
+      {
+        "client": {
+          "cacheManager": {
+            "enabled": false
+          }
         }
       }
-    }
 
-  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
+    Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
 
-  .. code-block:: json
+    .. code-block:: json
 
-    {
-      "client": {
-        "cacheManager": {
-          "defaultTtl": 120,
-          "defaultTti": 600,
-          "caches": {
-            "account": {
-              "ttl": 900,
-              "tti": 900
+      {
+        "client": {
+          "cacheManager": {
+            "defaultTtl": 120,
+            "defaultTti": 600,
+            "caches": {
+              "account": {
+                "ttl": 900,
+                "tti": 900
+              }
             }
           }
         }
       }
-    }
 
 
   Inline Code
@@ -592,7 +708,11 @@
 
   .. only:: php
 
-    (php.todo)
+    .. code-block:: php
+
+      $builder = new \Stormpath\ClientBuilder();
+      $client = $builder->setCacheManager('Null') //setting this will ignore the 'cachemanager' in options array
+          ->build();
 
   .. only:: python
 
@@ -620,90 +740,91 @@
 
   .. only:: php
 
-    (php.todo)
+    .. literalinclude:: code/php/configuration/custom_cache_config.php
+      :language: php
 
   .. only:: python
 
     (python.todo)
 
-  Connection Timeout
-  ''''''''''''''''''
+  .. only:: not php
 
-  Configuration key: ``stormpath.client.connectionTimeout``
+    Connection Timeout
+    ''''''''''''''''''
 
-  Default value: 30 seconds
+    Configuration key: ``stormpath.client.connectionTimeout``
 
-  This setting controls the HTTP timeout (in seconds) that is observed when connecting to the Stormpath API.
+    Default value: 30 seconds
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+    This setting controls the HTTP timeout (in seconds) that is observed when connecting to the Stormpath API.
 
-  Bash-like shell:
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: bash
+    Bash-like shell:
 
-      export STORMPATH_CLIENT_CONNECTIONTIMEOUT=60
+    .. code-block:: bash
 
-  Windows:
+        export STORMPATH_CLIENT_CONNECTIONTIMEOUT=60
 
-  .. code-block:: powershell
+    Windows:
 
-      setx STORMPATH_CLIENT_CONNECTIONTIMEOUT 60
+    .. code-block:: powershell
 
-  YAML File
-  ^^^^^^^^^
+        setx STORMPATH_CLIENT_CONNECTIONTIMEOUT 60
 
-  .. code-block:: yaml
+    YAML File
+    ^^^^^^^^^
 
-    ---
-    client:
-      connectionTimeout: 60
+    .. code-block:: yaml
 
-  JSON File
-  ^^^^^^^^^
+      ---
+      client:
+        connectionTimeout: 60
 
-  .. code-block:: json
+    JSON File
+    ^^^^^^^^^
 
-    {
-      "client": {
-        "connectionTimeout": 60
+    .. code-block:: json
+
+      {
+        "client": {
+          "connectionTimeout": 60
+        }
       }
-    }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/configuration/connection_timeout.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/configuration/connection_timeout.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/configuration/connection_timeout.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/configuration/connection_timeout.vb
+        :language: vbnet
 
-  .. only:: java
+    .. only:: java
 
-    (java.todo)
+      (java.todo)
 
-  .. only:: nodejs
+    .. only:: nodejs
 
-    (node.todo)
+      (node.todo)
 
-  .. only:: php
+    .. only:: python
 
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
+      (python.todo)
 
 
   Authentication Scheme
   '''''''''''''''''''''
 
-  Configuration key: ``stormpath.client.authenticationScheme``
+  .. only:: not php
+
+    Configuration key: ``stormpath.client.authenticationScheme``
 
   Default value: ``SAUTHC1``
 
@@ -711,43 +832,45 @@
 
   For stronger security, ``SAUTHC1`` should be used unless you are in an environment that does not support HTTP digest authentication.
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+  .. only:: not php
 
-  Bash-like shell:
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: bash
+    Bash-like shell:
 
-      export STORMPATH_CLIENT_AUTHENTICATIONSCHEME=BASIC
+    .. code-block:: bash
 
-  Windows:
+        export STORMPATH_CLIENT_AUTHENTICATIONSCHEME=BASIC
 
-  .. code-block:: powershell
+    Windows:
 
-      setx STORMPATH_CLIENT_AUTHENTICATIONSCHEME BASIC
+    .. code-block:: powershell
 
-  YAML File
-  ^^^^^^^^^
+        setx STORMPATH_CLIENT_AUTHENTICATIONSCHEME BASIC
 
-  .. code-block:: yaml
+    YAML File
+    ^^^^^^^^^
 
-    ---
-    client:
-      connectionTimeout: "basic"
+    .. code-block:: yaml
 
-  JSON File
-  ^^^^^^^^^
+      ---
+      client:
+        connectionTimeout: "basic"
 
-  .. code-block:: json
+    JSON File
+    ^^^^^^^^^
 
-    {
-      "client": {
-        "connectionTimeout": "basic"
+    .. code-block:: json
+
+      {
+        "client": {
+          "connectionTimeout": "basic"
+        }
       }
-    }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
   .. only:: csharp
 
@@ -769,103 +892,102 @@
 
   .. only:: php
 
-    (php.todo)
+    .. literalinclude:: code/php/configuration/use_basic_auth.php
+      :language: php
 
   .. only:: python
 
     (python.todo)
 
 
-  HTTP Proxy
-  ''''''''''
+  .. only:: not php
 
-  Configuration keys:
+    HTTP Proxy
+    ''''''''''
 
-  * ``stormpath.client.proxy.host`` - The proxy hostname to use
-  * ``stormpath.client.proxy.port`` - The proxy port to use
-  * ``stormpath.client.proxy.username`` - The proxy username (if any)
-  * ``stormpath.client.proxy.password`` - The proxy password (if any)
+    Configuration keys:
 
-  If you need to route communication to the Stormpath API through an HTTP proxy, you can set these configuration options. Null values are ignored.
+    * ``stormpath.client.proxy.host`` - The proxy hostname to use
+    * ``stormpath.client.proxy.port`` - The proxy port to use
+    * ``stormpath.client.proxy.username`` - The proxy username (if any)
+    * ``stormpath.client.proxy.password`` - The proxy password (if any)
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+    If you need to route communication to the Stormpath API through an HTTP proxy, you can set these configuration options. Null values are ignored.
 
-  Bash-like shell:
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
-  .. code-block:: bash
+    Bash-like shell:
 
-      export STORMPATH_CLIENT_PROXY_HOST=myproxy.example.com
-      export STORMPATH_CLIENT_PROXY_PORT=8088
-      export STORMPATH_CLIENT_PROXY_USERNAME=proxyuser
-      export STORMPATH_CLIENT_PROXY_PASSWORD=proxypassword
+    .. code-block:: bash
 
-  Windows:
+        export STORMPATH_CLIENT_PROXY_HOST=myproxy.example.com
+        export STORMPATH_CLIENT_PROXY_PORT=8088
+        export STORMPATH_CLIENT_PROXY_USERNAME=proxyuser
+        export STORMPATH_CLIENT_PROXY_PASSWORD=proxypassword
 
-  .. code-block:: powershell
+    Windows:
 
-      setx STORMPATH_CLIENT_PROXY_HOST myproxy.example.com
-      setx STORMPATH_CLIENT_PROXY_PORT 8088
-      setx STORMPATH_CLIENT_PROXY_USERNAME proxyuser
-      setx STORMPATH_CLIENT_PROXY_PASSWORD proxypassword
+    .. code-block:: powershell
 
-  YAML File
-  ^^^^^^^^^
+        setx STORMPATH_CLIENT_PROXY_HOST myproxy.example.com
+        setx STORMPATH_CLIENT_PROXY_PORT 8088
+        setx STORMPATH_CLIENT_PROXY_USERNAME proxyuser
+        setx STORMPATH_CLIENT_PROXY_PASSWORD proxypassword
 
-  .. code-block:: yaml
+    YAML File
+    ^^^^^^^^^
 
-    ---
-    client:
-      proxy:
-        host: "myproxy.example.com"
-        port: 8088
-        username: "proxyuser"
-        password: "proxypassword"
+    .. code-block:: yaml
 
-  JSON File
-  ^^^^^^^^^
+      ---
+      client:
+        proxy:
+          host: "myproxy.example.com"
+          port: 8088
+          username: "proxyuser"
+          password: "proxypassword"
 
-  .. code-block:: json
+    JSON File
+    ^^^^^^^^^
 
-    {
-      "client": {
-        "proxy": {
-          "host": "myproxy.example.com",
-          "port": 8088,
-          "username": "proxyuser",
-          "password": "proxypassword"
+    .. code-block:: json
+
+      {
+        "client": {
+          "proxy": {
+            "host": "myproxy.example.com",
+            "port": 8088,
+            "username": "proxyuser",
+            "password": "proxypassword"
+          }
         }
       }
-    }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/configuration/use_proxy.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/configuration/use_proxy.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/configuration/use_proxy.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/configuration/use_proxy.vb
+        :language: vbnet
 
-  .. only:: java
+    .. only:: java
 
-    (java.todo)
+      (java.todo)
 
-  .. only:: nodejs
+    .. only:: nodejs
 
-    (node.todo)
+      (node.todo)
 
-  .. only:: php
+    .. only:: python
 
-    (php.todo)
-
-  .. only:: python
-
-    (python.todo)
+      (python.todo)
 
 
 .. _Stormpath Admin Console: https://api.stormpath.com/login

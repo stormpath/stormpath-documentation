@@ -780,7 +780,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: php
 
-  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+  Let’s say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_req.php
       :language: php
@@ -926,7 +926,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: php
 
-  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+  This time, use the existing Account instance you created before, and the ``addAccount()`` method of the Group object:
 
   .. literalinclude:: code/php/account_management/add_account_to_group_req.php
       :language: php
@@ -1055,7 +1055,10 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: php
 
-  (php.todo)
+  This can be done by setting the ``RegistrationWorkflowEnabled`` flag when creating the Account:
+
+  .. literalinclude:: code/php/account_management/create_account_disable_reg_workflow.php
+      :language: php
 
 .. only:: python
 
@@ -1113,7 +1116,10 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: php
 
-  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+  This can be done by setting the ``PasswordFormat`` option when creating the Account:
+
+  .. literalinclude:: code/php/account_management/create_account_mcf_hash.php
+        :language: php
 
 .. only:: python
 
@@ -1221,9 +1227,18 @@ For example, you could add information about this user's current location, like 
 
 .. only:: php
 
-  (php.todo) It'd be good to add some explanatory text like we have for csharp.
+  The Jean-Luc Picard Account you created earlier has a CustomData property that allows you to write to the resource’s Custom Data:
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_req.php
+      :language: php
+
+  .. warning::
+
+    Any Custom Data changes you make are not preserved until you call ``save()`` on the custom data resource to send the updates to the Stormpath API.
+
+  To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method which returns the following:
+
+  .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
       :language: php
 
 .. only:: python
@@ -1267,13 +1282,6 @@ For example, you could add information about this user's current location, like 
       :language: javascript
 
   For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
-
-.. only:: php
-
-  Which returns the following:
-
-  .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
-      :language: php
 
 .. only:: python
 
@@ -1329,7 +1337,7 @@ The Account resource's **searchable attributes** are:
 
 .. only:: php
 
-  (php.todo)
+  Any resource type that exposes a ``getAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
 .. only:: python
 
@@ -1441,7 +1449,7 @@ A Filter search will locate the specified string in any searchable attribute of 
 
   .. note::
 
-    Matching is case-insensitive, so (php.todo)
+    Matching is case-insensitive, so `['q'=>'luc']` and `['q'=>'Luc']` will return the same results.
 
   After getting the response, you can iterate over it with a ``foreach`` loop
 
@@ -1670,8 +1678,6 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 .. only:: php
 
-  (php.todo) Is there anything else to add here? See Dotnet above.
-
   **Query**
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req.php
@@ -1718,7 +1724,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
   .. warning::
 
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by the REST calls provided below to enable or disable the password reset email. For updates, you can follow this `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
@@ -2054,14 +2060,14 @@ If this is a valid email in an Account associated with this Application, the req
 
 .. only:: nodejs
 
-  The success response will look like:
+  The success response will look like this:
 
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
       :language: javascript
 
 .. only:: php
 
-  The success response will look like:
+  The success response will look like this:
 
   .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
       :language: php
@@ -2290,13 +2296,18 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: php
 
-  (php.todo)
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
+
+     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+
 
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or vbnet or csharp
+.. only:: rest or vbnet or csharp or php
 
   To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body. For more information about Email Templates, see the `Email Templates section <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-emailtemplates>`__ of the Reference chapter.
 
@@ -2336,7 +2347,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 .. only:: php
 
-  (php.todo)
+  .. literalinclude:: code/php/account_management/search_password_modified.php
+    :language: php
 
 .. only:: python
 
@@ -2351,20 +2363,6 @@ This would then return all Accounts in the specified Directory that had their pa
 
 Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength resource, sending any value up to ``25``:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
-    Host: api.stormpath.com
-
-    {
-        "preventReuse": "10"
-    }
-
-    .. note::
-
-    For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
 .. only:: csharp
 
@@ -2386,11 +2384,31 @@ Stormpath can store historical password information in order to allow for restri
 
 .. only:: php
 
-  (php.todo)
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #151 <https://github.com/stormpath/stormpath-sdk-php/issues/151>`_ on Github.
+
+     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+
 
 .. only:: python
 
   (python.todo)
+
+.. only:: rest or php
+
+  .. code-block:: http
+
+    POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
+    Host: api.stormpath.com
+
+    {
+        "preventReuse": "10"
+    }
+
+    .. note::
+
+    For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
 This would now allow a user to set their password to any string that matched their previous 10 passwords.
 
@@ -2513,13 +2531,19 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: php
 
-  (php.todo) It would be good to add some explanatory text, like above.
+  You can use the ``verifyEmailToken()`` method on the client's ``\Stormpath\Resource\Tenant`` object, plus the token you capture from the query string, to verify the Account:
 
   .. literalinclude:: code/php/account_management/verify_email_req.php
       :language: php
 
+  Which will return a result that looks like this:
+
   .. literalinclude:: code/php/account_management/verify_email_resp.php
       :language: php
+
+  If the validation succeeds, you will receive an Account instance for the account that was verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
+
+  If the verification token is not found, a error is returned with a message explaining why the attempt failed.
 
 .. only:: python
 
@@ -2586,7 +2610,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: php
 
-  (php.todo) It would be good to add some explanatory text, like above.
+  To resend the email, use the ``sendVerificationEmail()`` method:
 
   .. literalinclude:: code/php/account_management/resend_verification_email.php
       :language: php
@@ -2646,17 +2670,31 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
       Add email templates .NET example
 
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console UI, or the REST API documentation below.
+
+    .. todo::
+
+      Add email templates .NET example
+
 .. only:: java
+
+  (java.todo)
 
 .. only:: nodejs
 
   The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
 
-.. only:: php
-
 .. only:: python
 
-.. only:: rest or csharp or vbnet
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
 
   First, let's look at the default template that comes with the Stormpath Administrator's Directory:
 
