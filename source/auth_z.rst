@@ -250,7 +250,7 @@ Checking User and Role Permissions
 
 .. only:: php
 
-  Since authorization enforcement is handled by `one of Stormpath's PHP integrations <https://docs.stormpath.com/php/>`_, the primary usefulness of the PHP SDK is in retrieving a user's permissions. These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+  Since authorization enforcement is handled by `one of Stormpath's PHP integrations <https://docs.stormpath.com/php/>`_, the primary usefulness of the PHP SDK is in retrieving a user's permissions. These permissions can either be found in the customData tied to a user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
 
 .. only:: python
 
