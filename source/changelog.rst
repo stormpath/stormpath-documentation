@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-07
+  ==========
+
+  - **New:** Added language switcher to left-side navigation bar. You can use it to check out our SDK Documentation. If you are on a page (for example Authorization), it will take you to the equivalent page (if applicable) in the SDK of your choosing. Currently only the PHP SDK is available in this format.
+
   2016-06-03
   ==========
 
