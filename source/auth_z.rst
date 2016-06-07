@@ -203,11 +203,9 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo) Add link to SDK documentation for Custom Data?
+  .. note::
 
-  .. only:: csharp
-
-  .. only:: vbnet
+    See the `ICustomData documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_CustomData_ICustomData.htm>`_ in the .NET API reference for more information on interacting with Custom Data in .NET.
 
 .. only:: java
 
@@ -230,15 +228,11 @@ Checking User and Role Permissions
 
 .. only:: rest
 
-  Since authorization enforcement is handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the REST API is in retrieving a user's permissions. These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+  Since authorization enforcement is handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the REST API is in retrieving a user's permissions.
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  Since authorization enforcement is typically handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the .NET SDK is in retrieving a user's permissions and building custom authorization logic.
 
 .. only:: java
 
@@ -250,18 +244,20 @@ Checking User and Role Permissions
 
 .. only:: php
 
-  Since authorization enforcement is handled by `one of Stormpath's PHP integrations <https://docs.stormpath.com/php/>`_, the primary usefulness of the PHP SDK is in retrieving a user's permissions. These permissions can either be found in the customData tied to a user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+  Since authorization enforcement is handled by `one of Stormpath's PHP integrations <https://docs.stormpath.com/php/>`_, the primary usefulness of the PHP SDK is in retrieving a user's permissions.
 
 .. only:: python
 
   (python.todo)
 
+These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+
 Checking User Permissions
 """""""""""""""""""""""""
 
-To check a user's unique permissions, you must retrieve their Account's customData. You can do this in one of two ways:
+To check a user's unique permissions, you must retrieve their Account's Custom Data. You can do this in one of two ways:
 
-1. You can retrieve the Account along with the expanded customData, by sending a request:
+1. You can retrieve the Account along with the expanded Custom Data, by sending a request:
 
 .. only:: rest
 
@@ -281,6 +277,8 @@ To check a user's unique permissions, you must retrieve their Account's customDa
 
     .. literalinclude:: code/vbnet/authorization/account_with_customdata_req.vb
         :language: vbnet
+
+  If :ref:`caching is enabled <set_up_caching>`, the expanded request will "prime" the cache with the Account's Custom Data, so that the request to ``GetCustomDataAsync`` will bypass the network and hit the cache immediately.
 
 .. only:: java
 
@@ -302,9 +300,9 @@ To check a user's unique permissions, you must retrieve their Account's customDa
   .. literalinclude:: code/python/authorization/account_with_customdata_req.py
       :language: python
 
-This will return the Account resource along with the customData:
-
 .. only:: rest
+
+  This will return the Account resource along with the customData:
 
   .. code-block:: http
 
@@ -332,39 +330,35 @@ This will return the Account resource along with the customData:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authorization/account_with_customdata_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authorization/account_with_customdata_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  This will return the Account resource along with the customData:
 
   .. literalinclude:: code/java/authorization/account_with_customdata_resp.java
       :language: java
 
 .. only:: nodejs
 
+  This will return the Account resource along with the customData:
+
   .. literalinclude:: code/nodejs/authorization/account_with_customdata_resp.js
       :language: javascript
 
 .. only:: php
+
+  This will return the Account resource along with the customData:
 
   .. literalinclude:: code/php/authorization/account_with_customdata_resp.php
     :language: php
 
 .. only:: python
 
+  This will return the Account resource along with the customData:
+
   .. literalinclude:: code/python/authorization/account_with_customdata_resp.py
       :language: python
 
-Or you can retrieve only the customData:
+Or you can retrieve only the Custom Data:
 
 .. only:: rest
 
@@ -405,9 +399,9 @@ Or you can retrieve only the customData:
   .. literalinclude:: code/python/authorization/account_customdata_only_req.py
       :language: python
 
-Which would return only this:
-
 .. only:: rest
+
+  Which would return only this:
 
   .. code-block:: http
 
@@ -429,34 +423,30 @@ Which would return only this:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authorization/account_customdata_only_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authorization/account_customdata_only_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  Which would return only this:
 
   .. literalinclude:: code/java/authorization/account_customdata_only_resp.java
       :language: java
 
 .. only:: nodejs
 
+  Which would return only this:
+
   .. literalinclude:: code/nodejs/authorization/account_customdata_only_resp.js
       :language: javascript
 
 .. only:: php
 
+  Which would return only this:
+
   .. literalinclude:: code/php/authorization/account_customdata_only_resp.php
     :language: php
 
 .. only:: python
+
+  Which would return only this:
 
   .. literalinclude:: code/python/authorization/account_customdata_only_resp.py
       :language: python
@@ -482,14 +472,22 @@ This would work in much the same way as checking the permissions for a user's Ac
     .. literalinclude:: code/csharp/authorization/account_groups_req.cs
         :language: csharp
 
-  From here... (dotnet.todo)
-
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/authorization/account_groups_req.vb
         :language: vbnet
 
-  From here... (dotnet.todo)
+  Then, you can retrieve the Custom Data from each Group:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authorization/get_first_group_customData.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authorization/get_first_group_customData.vb
+        :language: vbnet
 
 .. only:: java
 
