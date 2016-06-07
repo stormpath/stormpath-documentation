@@ -49,7 +49,7 @@ After the user has logged-in successfully, they will be redirected back to your 
 ===================
 
 7.3.1. Setting Up Your ID Site
--------------------------------
+------------------------------
 
 Your ID Site uses a default configuration for testing purposes, but can be fully configured to host customized code or to use your own custom domain.
 
@@ -297,7 +297,68 @@ A typical set of steps in your application are as follows:
 
 .. only:: php
 
-  (php.todo)
+  The PHP SDK has built in functionality to generate a URL to redirect your users to for login.
+  To generate this URL, you need to first get access to your ``Application`` resource object:
+
+  .. code-block:: php
+
+    $application = $client
+                    ->dataStore
+                    ->getResource(
+                        'https://api.stormpath.com/v1/applications/16k5PC57Imx4nWXQXi74HO',
+                        \Stormpath\Resource\Application::class
+                    );
+
+  Once you have your account, we get access to a ``createIdSiteUrl()`` method.  This method is the core of the ID Site usage in the PHP SDK.
+  It accepts one parameter, an options array.
+
+  .. list-table::
+    :widths: 15 10 60
+    :header-rows: 1
+
+    * - Key
+      - Required?
+      - Description
+
+    * - ``callbackUri``
+      - Yes
+      - The callback URI to use once the user takes an action on the ID Site. This must match a Authorized Callback URI on Application resource.
+
+    * - ``path``
+      - No
+      - The path on the ID Site that you want the user to land on. Use ``/`` for login page, ``/#/register`` for the sign up page, ``/#/forgot`` for the forgot password page, ``/#/reset`` for the password reset page.
+
+    * - ``state``
+      - No
+      - The state of the application that you need to pass through ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
+
+    * - ``organizationNameKey``
+      - No
+      - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+
+    * - ``showOrganizationField``
+      - No
+      - A boolean representing if the "Organization" field should show on the forms that ID Site renders.
+
+    * - ``useSubDomain``
+      - No
+      - A boolean indicating whether the ID Site should be redirected to a subdomain based on an Organization nameKey.
+
+  To use the ``createIdSiteUrl()`` method for login, you would need to first add the callback URI for your application. This callback URI is where ID Site is allowed to send the request back to and where you would handle the response. This will be explained in the next section.
+
+  .. code-block:: php
+
+    $loginLink = $application->createIdSiteUri([
+        'callbackUri' => 'https://mysite.com/handleIdSiteCallback.php'
+    ]);
+
+    header('Location: ' . $loginLink); // Or another form of redirect to generated URI
+
+  .. note::
+
+    The code above should be the only code for the login.  The ``createIdSiteUri()`` method will set the issued at time.  These tokens do expire and will display errors if it is generated before the user clicks to login.
+
+
 
 .. only:: python
 
@@ -405,7 +466,33 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: php
 
-  (php.todo)
+  With the full URI that includes the ``jwtResponse`` query param, you will need to call the ``handleIdSiteCallback()`` method on the ``Application`` resource.
+
+  .. code-block:: php
+
+    $response = $application->handleIdSiteCallback($requestUri);
+
+  This will result in a new ``\StdClass`` being returned with four properties
+
+  .. list-table::
+    :widths: 15 60
+    :header-rows: 1
+
+    * - Property
+      - Description
+
+    * - ``account``
+      - The ``Account`` resource that contains all information about the user who was just returned from ID Site.
+
+    * - ``state``
+      - The state of your application, if you have chosen to have this passed back.
+
+    * - ``isNew``
+      - If the user is a new user to the application.
+
+    * - ``status``
+      - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+
 
 .. only:: python
 
@@ -593,8 +680,7 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
 .. only:: php
 
-  .. literalinclude:: code/php/idsite/logout_from_idsite_resp.php
-    :language: php
+  From here, you handle it the same as any other ID Site callback.  The difference here is that you should guarantee the status is ``LOGOUT`` from the returned object and then remove any stored cookies based on the logging in.
 
 .. only:: python
 
@@ -639,6 +725,8 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
   .. literalinclude:: code/php/idsite/idsite_reset_pwd.php
     :language: php
 
+  The above ``{{SP_TOKEN}}`` is the token that the user received from the forgot password email.
+
 .. only:: python
 
   .. literalinclude:: code/python/idsite/idsite_reset_pwd.py
@@ -675,7 +763,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  (php.todo)
+  In the ``options`` array that can be passed in the ``createIdSiteUri()``, there are a couple properties that can be used in this array to allow for multi-tenancy.
 
 .. only:: python
 
@@ -705,7 +793,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  (php.todo)
+  ``organizationNameKey``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: python
 
@@ -751,7 +839,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  (php.todo)
+  ``showOrganizationField``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
+
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
+
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``organizationNameKey``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: python
 
@@ -785,7 +889,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  (php.todo)
+  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
 
 .. only:: python
 
