@@ -397,8 +397,10 @@
 
     You can find the API Key and Secret values or download a credentials file via the `Stormpath Admin Console`_.
 
-  Environment Variables
-  ^^^^^^^^^^^^^^^^^^^^^
+  .. only:: not php
+
+    Environment Variables
+    ^^^^^^^^^^^^^^^^^^^^^
 
   Bash-like shell:
 
@@ -464,6 +466,8 @@
 
   .. only:: php
 
+    You can inline the settings for API Credentials with the following:
+    
     .. literalinclude:: code/php/configuration/api_credentials.php
       :language: php
 
@@ -865,8 +869,8 @@
         }
       }
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
   .. only:: csharp
 
