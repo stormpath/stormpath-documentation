@@ -116,7 +116,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  The Stormpath PHP SDK installs through `composer <http://getcomposer.org>`_.  After installing this on your system, navigate to your project folder in your terminal and run:
+  The Stormpath PHP SDK installs through `Composer <http://getcomposer.org>`_.  After installing this on your system, navigate to your project folder in the terminal and run:
 
   .. code:: console
 
@@ -191,7 +191,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: php
 
-  These instructions assume that you have `composer <http://getcomposer.org>`_ and `PHP 5.5+ <http://php.net>`_ installed on your system and that you have already completed the steps above, and now have:
+  These instructions assume that you have `Composer <http://getcomposer.org>`_ and `PHP 5.5+ <http://php.net>`_ installed on your system, and that you have already completed the steps above, and now have:
 
 .. only:: python
 

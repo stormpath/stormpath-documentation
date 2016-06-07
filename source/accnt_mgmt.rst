@@ -780,7 +780,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: php
 
-  Let’s say you want to add a new Account for user “Jean-Luc Picard” to the “Captains” Directory that you created earlier. You can use the Directory’s createAccount() method:
+  Let’s say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_req.php
       :language: php
@@ -926,7 +926,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: php
 
-  This time, use the existing Account instance you created before, and the addAccount() method of the Group object:
+  This time, use the existing Account instance you created before, and the ``addAccount()`` method of the Group object:
 
   .. literalinclude:: code/php/account_management/add_account_to_group_req.php
       :language: php
@@ -1724,7 +1724,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
   .. warning::
 
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
+    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by the REST calls provided below to enable or disable the password reset email. For updates, you can follow this `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
@@ -2060,14 +2060,14 @@ If this is a valid email in an Account associated with this Application, the req
 
 .. only:: nodejs
 
-  The success response will look like:
+  The success response will look like this:
 
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
       :language: javascript
 
 .. only:: php
 
-  The success response will look like:
+  The success response will look like this:
 
   .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
       :language: php
@@ -2672,13 +2672,19 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: java
 
+  (java.todo)
+
 .. only:: nodejs
 
   The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
 
 .. only:: php
 
+  (php.todo)
+
 .. only:: python
+
+  (python.todo)
 
 .. only:: rest or csharp or vbnet
 
