@@ -336,7 +336,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: php
 
-  You can find this mapping by... (php.todo)
+  You can find all the account store mappings by using the ``getAccountStoreMappings()`` method or the ``accountStoreMappings`` property on the ``Application`` resource.
 
   .. literalinclude:: code/php/authentication/get_asm_req.php
     :language: php
@@ -1277,7 +1277,7 @@ The token specified in the Authorization header has been digitally signed with t
   .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
       :language: php
 
-  If the token can be validated locally, it will return an object with...(php.todo)
+  If the token can be validated locally, it will return an expanded ``JWT``:
 
   .. literalinclude:: code/php/authentication/validate_oauth_token_local_res.php
       :language: php
