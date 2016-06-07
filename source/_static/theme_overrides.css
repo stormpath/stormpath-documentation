@@ -24,3 +24,7 @@ div#langpicker div.current {
 div#langpicker a {
   color: rgba(255,255,255,0.8);
 }
+
+.rst-footer-buttons {
+    display:none;
+}

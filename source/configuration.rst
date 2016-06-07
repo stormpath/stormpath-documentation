@@ -17,7 +17,6 @@
 
   The Stormpath API Key and Secret must be set to initialize the SDK (detailed in the next section). In most cases, you won't have to change any other options, as the SDK will fall back to sensible defaults.
 
-
   .. _required_credentials:
 
   10.1. Required API Credentials
@@ -57,8 +56,6 @@
     .. warning::
 
       By default, the PHP SDK uses array caching.  Because of this, the cache is cleared on each page request.
-
-  .. only:: php
 
     The caching system in the PHP SDK has a set of options that can be passed into the ``Client`` resource caching manager options.
 
@@ -103,14 +100,14 @@
 
       \Stormpath\Client::$cacheManagerOptions = $cacheManagerOptions;
 
-
-
   Memcached
   '''''''''
 
   .. only:: csharp or vbnet
 
-    .. note:: The .NET SDK does not currently have a plugin that supports Memcached. If you need this functionality, please reach out to us at support@stormpath.com.
+    .. note::
+
+      The .NET SDK does not currently have a plugin that supports Memcached. If you need this functionality, please reach out to us at support@stormpath.com.
 
   .. only:: java
 
@@ -271,11 +268,11 @@
 
   .. only:: php
 
-      .. warning::
+    .. warning::
 
-        Currently, the PHP SDK does not allow for configuration through this file. For updates, you can follow `ticket #153 <https://github.com/stormpath/stormpath-sdk-php/issues/153>`_ on Github.
+      Currently, the PHP SDK does not allow for configuration through this file. For updates, you can follow `ticket #153 <https://github.com/stormpath/stormpath-sdk-php/issues/153>`_ on Github.
 
-         In the meantime, please use the ``ClientBuilder`` class to build a client with all configuration you need.
+      In the meantime, please use the ``ClientBuilder`` class to build a client with all configuration you need.
 
   .. only:: not php
 
@@ -313,8 +310,8 @@
     In both cases, the ``stormpath`` root node is implied and should be omitted.
 
     .. tip::
-      You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
 
+      You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
 
   .. _api_credentials_file:
 
@@ -327,6 +324,7 @@
   * ``~/.stormpath/`` (where ``~`` represents the user's home directory)
 
   .. note::
+
     On Windows machines, the home directory is ``C:\Users\<username>\``.
 
   If you don't opt to store the Stormpath API credentials in environment variables, this functionality makes it easy to download the ``apiKey.properties`` file from the Admin Console and drop it into your application.
@@ -369,6 +367,7 @@
       :language: php
 
     .. note::
+
       The ``setApiKeyProperties()`` method will accept any string, however you need to pass a valid ini string.
 
   .. only:: python
@@ -378,7 +377,6 @@
   .. note::
 
     Values set explicitly via code have the highest precedence. In other words, if you have existing configuration values in environment variables or a markup file, values you set in your code will override them.
-
 
   .. _config_reference:
 
@@ -396,6 +394,7 @@
   * ``stormpath.client.apiKey.file`` - (Optional) The path to an ``apiKey.properties`` file, if the file is not in one of the standard locations that are searched for :ref:`API Credentials files <api_credentials_file>`.
 
   .. tip::
+
     You can find the API Key and Secret values or download a credentials file via the `Stormpath Admin Console`_.
 
   .. only:: not php
@@ -471,18 +470,18 @@
       :language: php
 
     .. note::
-      The ``setApiKeyProperties()`` method will accept any string, however you need to pass a valid ini string.
 
+      The ``setApiKeyProperties()`` method will accept any string, however you need to pass a valid ini string.
 
   .. only:: python
 
     (python.todo)
 
-
   .. _base_url:
 
   Base URL
   ''''''''
+
   .. only:: not php
 
     Configuration key: ``stormpath.client.baseUrl``
@@ -983,10 +982,6 @@
     .. only:: nodejs
 
       (node.todo)
-
-    .. only:: php
-
-      (php.todo)
 
     .. only:: python
 

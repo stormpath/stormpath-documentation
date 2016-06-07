@@ -297,7 +297,8 @@ A typical set of steps in your application are as follows:
 
 .. only:: php
 
-  The PHP SDK has built in functionality to generate a URL to redirect your users to for login.
+  The PHP SDK has built-in functionality to generate a URL to redirect your users to for login.
+
   To generate this URL, you need to first get access to your ``Application`` resource object:
 
   .. code-block:: php
@@ -309,8 +310,7 @@ A typical set of steps in your application are as follows:
                         \Stormpath\Resource\Application::class
                     );
 
-  Once you have your account, we get access to a ``createIdSiteUrl()`` method.  This method is the core of the ID Site usage in the PHP SDK.
-  It accepts one parameter, an options array.
+  Once you have your Account, you get access to a ``createIdSiteUrl()`` method.  This method is the core of the ID Site usage in the PHP SDK. It accepts one parameter, an options array.
 
   .. list-table::
     :widths: 15 10 60
@@ -334,7 +334,7 @@ A typical set of steps in your application are as follows:
 
     * - ``organizationNameKey``
       - No
-      - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
+      - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multi-tenant applications that use ID Site.
 
     * - ``showOrganizationField``
       - No
@@ -357,8 +357,6 @@ A typical set of steps in your application are as follows:
   .. note::
 
     The code above should be the only code for the login.  The ``createIdSiteUri()`` method will set the issued at time.  These tokens do expire and will display errors if it is generated before the user clicks to login.
-
-
 
 .. only:: python
 
@@ -466,13 +464,13 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: php
 
-  With the full URI that includes the ``jwtResponse`` query param, you will need to call the ``handleIdSiteCallback()`` method on the ``Application`` resource.
+  With the full URI that includes the ``jwtResponse`` query parameter, you will need to call the ``handleIdSiteCallback()`` method on the ``Application`` resource.
 
   .. code-block:: php
 
     $response = $application->handleIdSiteCallback($requestUri);
 
-  This will result in a new ``\StdClass`` being returned with four properties
+  This will result in a new ``\StdClass`` being returned with four properties:
 
   .. list-table::
     :widths: 15 60
@@ -482,17 +480,16 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
       - Description
 
     * - ``account``
-      - The ``Account`` resource that contains all information about the user who was just returned from ID Site.
+      - The Account resource that contains all information about the user who was just returned from ID Site.
 
     * - ``state``
       - The state of your application, if you have chosen to have this passed back.
 
     * - ``isNew``
-      - If the user is a new user to the application.
+      - If the Account is a new Account to the Application.
 
     * - ``status``
       - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
-
 
 .. only:: python
 
@@ -680,7 +677,7 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
 .. only:: php
 
-  From here, you handle it the same as any other ID Site callback.  The difference here is that you should guarantee the status is ``LOGOUT`` from the returned object and then remove any stored cookies based on the logging in.
+  From here, you handle it the same as any other ID Site callback.  The difference here is that you should guarantee the status is ``LOGOUT`` from the returned object and then remove any stored cookies associated with the session.
 
 .. only:: python
 
@@ -793,7 +790,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  ``organizationNameKey``: Allows you to specify an Organization's ``namekey``. User is sent to the ID Site for that Organization, and is forced to log in to that Organization.
+  ``organizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: python
 
