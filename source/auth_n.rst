@@ -2171,6 +2171,10 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
  (node.todo)
 
+.. only:: php
+
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+
 .. only:: python
 
  (python.todo)
@@ -2375,6 +2379,10 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 .. only:: nodejs
 
   (node.todo)
+
+.. only:: php
+
+  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. only:: python
 
