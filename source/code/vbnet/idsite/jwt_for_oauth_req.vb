@@ -1,4 +1,4 @@
-Dim jwt = "incoming_uri".Split("="c)(1)
+Dim jwt = incoming_uri.Split("="c)(1)
 
 Dim idSiteTokenExchangeRequest = OauthRequests _
     .NewIdSiteTokenAuthenticationRequest() _

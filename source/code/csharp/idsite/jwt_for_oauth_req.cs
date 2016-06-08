@@ -1,4 +1,4 @@
-var jwt = "incoming_uri".Split('=')[1];
+var jwt = incoming_uri.Split('=')[1];
 
 var idSiteTokenExchangeRequest = OauthRequests
     .NewIdSiteTokenAuthenticationRequest()

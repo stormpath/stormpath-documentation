@@ -783,11 +783,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  There are a few methods on ``IIdSiteUrlBuilder`` that you can use to implement your particular multi-tenancy strategy:
 
 .. only:: java
 
@@ -813,11 +809,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  ``SetOrganizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: java
 
@@ -859,11 +851,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  ``SetShowOrganizationField``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
 
-  .. only:: csharp
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
 
-  .. only:: vbnet
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``SetOrganizationNameKey``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: java
 
@@ -905,15 +909,11 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: rest
 
-  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  ``SetUseSubdomain``: If combined with ``SetOrganizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: java
 
@@ -925,7 +925,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: python
 
