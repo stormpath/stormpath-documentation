@@ -471,7 +471,7 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: csharp or vbnet
 
-  You can use the SDK to consume this assertion:
+  You'll need to create a controller or action that handles the Callback URI. Then, you can use the SDK to consume this assertion:
 
   .. only:: csharp
 
@@ -722,13 +722,17 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 Resetting Your Password with ID Site
 ------------------------------------
 
-The Account Management chapter has an overview of :ref:`password-reset-flow` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password. If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. The issue here, however, is bridging the Password Reset Flow and the ID Site flow.
+The Account Management chapter has an overview of :ref:`Password Reset <password-reset-flow>` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password.
+
+If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. All you have to do is send the user to ID Site with a special path (``/#/reset``) and a claim containing the password reset token from the email link.
 
 .. only:: rest
 
   Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
 
 .. only:: csharp or vbnet
+
+  The password token should be pulled out of the request URL (the ``sptoken=`` parameter). Then, the path and token can be supplied when building the ID Site redirect URL:
 
   .. only:: csharp
 
@@ -739,6 +743,8 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
     .. literalinclude:: code/vbnet/idsite/idsite_reset_pwd.vb
         :language: vbnet
+
+  Once the URL is generated, redirect the user to that URL to start the Password Reset flow on ID Site.
 
 .. only:: java
 
