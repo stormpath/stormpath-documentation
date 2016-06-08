@@ -35,7 +35,7 @@
   2. Setting Up Caching
   ========================
 
-  The Stormpath SDK comes with a robust caching layer built-in. Reads and writes against the Stormpath API are cached locally, to help your applications reduce the number of API calls made to Stormpath.
+  The Stormpath SDK comes with a robust caching layer built-in. Reads and writes against the Stormpath API are cached locally to improve the performance of your application.
 
   Stormpath Resources are cached in regions that correspond to the resource type. For example, Stormpath Account resources are cached in a region specific to Accounts.
 
