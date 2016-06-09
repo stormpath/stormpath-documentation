@@ -4354,6 +4354,16 @@
         - ``ENABLED`` or ``DISABLED``
         - Indicates whether this API Key is enabled or not.
 
+      * - ``name``
+        - String
+        - N/A
+        - (Optional) The name of this API Key.
+
+      * - ``description``
+        - String
+        - N/A
+        - (Optional) The description of this API Key.
+
       * - ``account``
         - Link
         - N/A
@@ -4369,15 +4379,17 @@
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/apiKeys/5G5KR4W3K1BP235X8KEXAMPLE",
-      "id": "5G5KR4W3K1BP235X8K6EXPL93",
-      "secret": "GRiCelvExamplel4l3oOCw30c72Rwj8TkRn8cUQCreX",
+      "href": "https://api.stormpath.com/v1/apiKeys/2ZFMV4WVVCVG35XATII9T96J7",
+      "id": "2ZFMV4WVVCVG35XATIEXAMPLE",
+      "secret": "XEPJolhnMYEDw2bSCfRnD+nyqK+OTdlQp8C/EXAMPLE",
       "status": "ENABLED",
+      "name": "An Optional Name",
+      "description": "An Optional Description",
       "account": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
+        "href": "https://api.stormpath.com/v1/accounts/1gCwajgjFAHzvFXexample"
       },
       "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexample"
       }
     }
 
@@ -4437,9 +4449,9 @@
         - Attributes
         - Description
 
-      * - POST /v1/accounts/$ACCOUNT_ID/apiKeys
-        - ``status``
-        - Can be used to update the ``status`` field for an API Key to either ``ENABLED`` or ``DISABLED``.
+      * - POST /v1/apiKeys/$API_KEY_ID
+        - ``status``, ``name``, ``description``
+        - Can be used to update the the API Key.
 
   Deleting an API Key
   +++++++++++++++++++
@@ -4452,7 +4464,7 @@
         - Attributes
         - Description
 
-      * - DELETE /v1/apiKeys/$SP_API_KEY_ID
+      * - DELETE /v1/apiKeys/$API_KEY_ID
         - N/A
         - Deletes the specified API Key resource.
 
