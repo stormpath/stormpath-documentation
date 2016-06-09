@@ -330,7 +330,7 @@
 
       * - ``code``
         - Number
-        - A `Stormpath-specific error code <http://docs.stormpath.com/errors>`_ that can be used to obtain more information.
+        - A `Stormpath-specific error code <https://docs.stormpath.com/rest/product-guide/latest/errors.html>`_ that can be used to obtain more information.
 
       * - ``message``
         - String
