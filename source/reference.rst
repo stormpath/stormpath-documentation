@@ -1584,12 +1584,12 @@
 
       * - ``accessTokenTtl``
         - String
-        - ISO-8601 (``PT1S``< x <``P10Y``)
+        - ISO-8601 Duration
         - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``refreshTokenTtl``
         - String
-        - ISO-8601 (``PT1S``< x <``P10Y``)
+        - ISO-8601 Duration
         - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``createdAt``
@@ -4482,7 +4482,7 @@
         - Deletes the specified API Key resource.
 
 
-  .. _access-tokens:
+  .. _ref-access-token:
 
   Access Tokens
   ^^^^^^^^^^^^^
@@ -4550,6 +4550,7 @@
       "expandedJwt": {
         "header": {
           "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+          "stt": "access",
           "alg": "HS256"
         },
         "claims": {
@@ -4665,6 +4666,7 @@
       "expandedJwt": {
         "header": {
           "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+          "stt": "refresh,"
           "alg": "HS256"
         },
         "claims": {
@@ -4808,15 +4810,20 @@
         - Valid Value(s)
         - Description
 
-      * - ``typ``
+      * - ``kid``
         - String
         - N/A
-        - The type of Token.
+        - The API Key ID used to sign the JWT.
 
       * - ``alg``
         - String
         - N/A
         - The hashing algorithm that is being used for this token. For JWT, this is HMAC-SHA-256.
+
+      * - ``stt``
+        - String
+        - ``access``, ``refresh``
+        - The Stormpath Token Type.
 
   *Claims* (AKA "Payload")
 
@@ -4865,7 +4872,7 @@
         - Valid Value(s)
         - Description
 
-      * - signature
+      * - ``signature``
         - String
         - N/A
         - A hash of the header, claims, and the issuing server's hashing secret.
@@ -4877,6 +4884,7 @@
     {
       "header": {
         "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+        "stt": "refresh"
         "alg": "HS256"
       },
       "claims": {
@@ -4886,7 +4894,7 @@
         "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple",
         "exp": 1448478972
       },
-      "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"
+      "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJexampleM6ZHRG_tk"
     }
 
   .. _ref-customdata:

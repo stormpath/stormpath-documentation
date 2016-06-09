@@ -4457,9 +4457,13 @@ This JWT again contains both Headers and a Body with Claims.
     - Yes
     - The algorithm that was used to sign this key. The only possible value is ``HS256``.
 
+  * - ``stt``
+    - Yes
+    - The Stormpath Token Type. In this case it will always be ``assertion``.
+
   * - ``kid``
     - Yes
-    - Your Stormpath API Key ID.
+    - The ID of the Stormpath API Key that signed this JWT.
 
 **Body**
 
