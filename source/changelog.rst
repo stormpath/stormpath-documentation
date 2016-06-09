@@ -124,7 +124,7 @@
   2016-02-10
   ==========
 
-  - Changed Sphinx Theme to `Read The Docs <http://docs.readthedocs.org/en/latest/theme.html>`_.
+  - Changed Sphinx Theme to Read The Docs.
 
   2016-02-02
   ==========
