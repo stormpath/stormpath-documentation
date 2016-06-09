@@ -34,6 +34,7 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 - **New:** :ref:`Account API Keys <ref-account-apikeys>` now have optional ``name`` and ``description`` attributes.
 - **New:** Added information about :ref:`Request UUIDs <request-id>` to Reference chapter.
 - **New:** REST Errors now return the Request UUID in the error body in a new ``requestId`` attribute.
+- **Modified:** OAuth Access and Refresh Tokens now have a maximum TTL of 10 years (``P10Y``). The :ref:`OAuth Policy <ref-oauth-policy>` documentation has been updated to reflect this.
 
 2016-06-01
 ==========

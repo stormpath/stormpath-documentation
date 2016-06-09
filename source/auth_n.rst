@@ -652,7 +652,7 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
         "comment":" // This JSON has been truncated for readability"
     }
 
-  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 180 days.
+  The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_. By **default**, the TTL for the Access Token is 1 hour and the Refresh Token's is 60 days. The maximum value for both is 10 years and 1 day (``P10Y``), while the minimum value is 1 second (``PT1S``).
 
 .. only:: csharp or vbnet
 

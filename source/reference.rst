@@ -1584,13 +1584,13 @@
 
       * - ``accessTokenTtl``
         - String
-        - ISO-8601
-        - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+        - ISO-8601 (``PT1S``< x <``P10Y``)
+        - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``refreshTokenTtl``
         - String
-        - ISO-8601
-        - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+        - ISO-8601 (``PT1S``< x <``P10Y``)
+        - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``createdAt``
         - String
