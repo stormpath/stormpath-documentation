@@ -214,7 +214,7 @@ A typical set of steps in your application are as follows:
 
     * - ``kid``
       - Yes
-      - Your Stormpath API Key ID.
+      - The ID of the Stormpath API Key that signed this JWT.
 
     * - ``alg``
       - Yes
@@ -409,7 +409,7 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
     * - ``kid``
       - Yes
-      - Your Stormpath API Key ID.
+      - The ID of the Stormpath API Key that signed this JWT.
 
   **Body**
 
@@ -440,11 +440,20 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
     * - ``jti``
       - A one-time-use-token for the JWT. If you require additional security around the validation of the token, you can store the ``jti`` in your application to validate that a particular JWT has only been used once.
 
+    * - ``irt``
+      - The ``jti`` of the :ref:`ID Site Authentication JWT <idsite-auth-jwt>` that was sent to generate this Assertion JWT.
+
     * - ``state``
       - The state of your application, if you have chosen to have this passed back.
 
+    * - ``isNewSub``
+      - A boolean value indicating whether this is a new Account in Stormpath.
+
     * - ``status``
       - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+
+    * - ``cb_uri``
+      - The callback URI for this JWT.
 
 .. only:: csharp or vbnet
 

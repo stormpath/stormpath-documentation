@@ -38,6 +38,13 @@
   ---------------
   The Stormpath REST API currently only supports JSON resource representations. If you would like other formats supported, please email us at support@stormpath.com to let us know!
 
+  .. _request-id:
+
+  Request Identifiers
+  -------------------
+
+  Every request to Stormpath has a universally unique identifier (UUID). In the case of a successful API request, this UUID is passed as a ``Stormpath-Request-Id`` header in the response. In the case of an error response, the UUID will be returned in :ref:`the body of the error message <ref-error-responses>`.
+
   Authentication
   --------------
 
@@ -302,6 +309,8 @@
       * - ``503 SERVICE UNAVAILABLE``
         - We are temporarily unable to service the request. Please wait for a bit and try again.
 
+  .. _ref-error-responses:
+
   REST Error Responses
   --------------------
 
@@ -334,6 +343,10 @@
       * - ``moreInfo``
         - String
         - A fully qualified URL that may be accessed to obtain more information about the error.
+
+      * - ``requestId``
+        - String
+        - The universally unique identifier of the request that generated this error.
 
   .. _about-collections:
 
@@ -1571,13 +1584,13 @@
 
       * - ``accessTokenTtl``
         - String
-        - ISO-8601
-        - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+        - ISO-8601 Duration
+        - The time-to-live for the OAuth Access Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``refreshTokenTtl``
         - String
-        - ISO-8601
-        - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
+        - ISO-8601 Duration
+        - The time-to-live for the OAuth Refresh Token, represented as an `ISO 8601 Duration <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_ between 1 second (``PT1S``) and 10 years (``P10Y``).
 
       * - ``createdAt``
         - String
@@ -4354,6 +4367,16 @@
         - ``ENABLED`` or ``DISABLED``
         - Indicates whether this API Key is enabled or not.
 
+      * - ``name``
+        - String
+        - N/A
+        - (Optional) The name of this API Key.
+
+      * - ``description``
+        - String
+        - N/A
+        - (Optional) The description of this API Key.
+
       * - ``account``
         - Link
         - N/A
@@ -4369,15 +4392,17 @@
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/apiKeys/5G5KR4W3K1BP235X8KEXAMPLE",
-      "id": "5G5KR4W3K1BP235X8K6EXPL93",
-      "secret": "GRiCelvExamplel4l3oOCw30c72Rwj8TkRn8cUQCreX",
+      "href": "https://api.stormpath.com/v1/apiKeys/2ZFMV4WVVCVG35XATII9T96J7",
+      "id": "2ZFMV4WVVCVG35XATIEXAMPLE",
+      "secret": "XEPJolhnMYEDw2bSCfRnD+nyqK+OTdlQp8C/EXAMPLE",
       "status": "ENABLED",
+      "name": "An Optional Name",
+      "description": "An Optional Description",
       "account": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
+        "href": "https://api.stormpath.com/v1/accounts/1gCwajgjFAHzvFXexample"
       },
       "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexAMPLE"
+        "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexample"
       }
     }
 
@@ -4437,9 +4462,9 @@
         - Attributes
         - Description
 
-      * - POST /v1/accounts/$ACCOUNT_ID/apiKeys
-        - ``status``
-        - Can be used to update the ``status`` field for an API Key to either ``ENABLED`` or ``DISABLED``.
+      * - POST /v1/apiKeys/$API_KEY_ID
+        - ``status``, ``name``, ``description``
+        - Can be used to update the the API Key.
 
   Deleting an API Key
   +++++++++++++++++++
@@ -4452,12 +4477,12 @@
         - Attributes
         - Description
 
-      * - DELETE /v1/apiKeys/$SP_API_KEY_ID
+      * - DELETE /v1/apiKeys/$API_KEY_ID
         - N/A
         - Deletes the specified API Key resource.
 
 
-  .. _access-tokens:
+  .. _ref-access-token:
 
   Access Tokens
   ^^^^^^^^^^^^^
@@ -4525,6 +4550,7 @@
       "expandedJwt": {
         "header": {
           "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+          "stt": "access",
           "alg": "HS256"
         },
         "claims": {
@@ -4640,6 +4666,7 @@
       "expandedJwt": {
         "header": {
           "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+          "stt": "refresh,"
           "alg": "HS256"
         },
         "claims": {
@@ -4783,15 +4810,20 @@
         - Valid Value(s)
         - Description
 
-      * - ``typ``
+      * - ``kid``
         - String
         - N/A
-        - The type of Token.
+        - The API Key ID used to sign the JWT.
 
       * - ``alg``
         - String
         - N/A
         - The hashing algorithm that is being used for this token. For JWT, this is HMAC-SHA-256.
+
+      * - ``stt``
+        - String
+        - ``access``, ``refresh``
+        - The Stormpath Token Type.
 
   *Claims* (AKA "Payload")
 
@@ -4840,7 +4872,7 @@
         - Valid Value(s)
         - Description
 
-      * - signature
+      * - ``signature``
         - String
         - N/A
         - A hash of the header, claims, and the issuing server's hashing secret.
@@ -4852,6 +4884,7 @@
     {
       "header": {
         "kid": "2ZFMV4WVVCVG35XATII9T96J7",
+        "stt": "refresh"
         "alg": "HS256"
       },
       "claims": {
@@ -4861,7 +4894,7 @@
         "sub": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple",
         "exp": 1448478972
       },
-      "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJaqdkM6ZHRG_tk"
+      "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJexampleM6ZHRG_tk"
     }
 
   .. _ref-customdata:
