@@ -28,6 +28,13 @@ Stormpath is currently on Version 1 of its API, and all APIs use the ``/v1/`` na
 
     Link to Tweet or blog post announcing changes (if applicable)
 
+2016-06-09
+==========
+
+- **New:** :ref:`Account API Keys <ref-account-apikeys>` now have optional ``name`` and ``description`` attributes.
+- **New:** Added information about :ref:`Request UUIDs <request-id>` to Reference chapter.
+- **New:** REST Errors now return the Request UUID in the error body in a new ``requestId`` attribute.
+
 2016-06-01
 ==========
 

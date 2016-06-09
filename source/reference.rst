@@ -38,6 +38,13 @@
   ---------------
   The Stormpath REST API currently only supports JSON resource representations. If you would like other formats supported, please email us at support@stormpath.com to let us know!
 
+  .. _request-id:
+
+  Request Identifiers
+  -------------------
+
+  Every request to Stormpath has a universally unique identifier (UUID). In the case of a successful API request, this UUID is passed as a ``Stormpath-Request-Id`` header in the response. In the case of an error response, the UUID will be returned in :ref:`the body of the error message <ref-error-responses>`.
+
   Authentication
   --------------
 
@@ -302,6 +309,8 @@
       * - ``503 SERVICE UNAVAILABLE``
         - We are temporarily unable to service the request. Please wait for a bit and try again.
 
+  .. _ref-error-responses:
+
   REST Error Responses
   --------------------
 
@@ -334,6 +343,10 @@
       * - ``moreInfo``
         - String
         - A fully qualified URL that may be accessed to obtain more information about the error.
+
+      * - ``requestId``
+        - String
+        - The universally unique identifier of the request that generated this error.
 
   .. _about-collections:
 
