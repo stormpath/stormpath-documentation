@@ -262,7 +262,7 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
     You can skip building the ``IClientApiKey`` object and the call to ``SetApiKey()`` if you store your API Key and Secret in environment variables, or put the ``apiKey.properties`` file in the default location (``~\.stormpath\apiKey.properties``). Calling ``IClientBuilder.Build()`` without specifying an API Key will check the default location.
 
-  Once you have an ``IClient`` instance, keep it around! You should only create it **once** per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
+  Once you have an ``IClient`` instance, keep it around! You should only create it once per application. It's thread-safe, so you can safely reuse it, even in an ASP.NET application.
 
 .. only:: java
 
