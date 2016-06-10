@@ -235,6 +235,10 @@ You can create an Organization in Stormpath by sending the following request:
     .. literalinclude:: code/vbnet/multitenancy/create_org_req.vb
         :language: vbnet
 
+  .. note::
+
+    A new Organization resource will have ``null`` Default Account and Group stores. That means adding new Groups and Accounts to the Organization will fail until a default Account Store is added.
+
 .. only:: java
 
   .. literalinclude:: code/java/multitenancy/create_org_req.java
@@ -255,9 +259,9 @@ You can create an Organization in Stormpath by sending the following request:
   .. literalinclude:: code/python/multitenancy/create_org_req.py
       :language: python
 
-Which would return the following:
-
 .. only:: rest
+
+  Which would return the following:
 
   .. code-block:: http
 
@@ -294,29 +298,23 @@ Which would return the following:
 
   Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/multitenancy/create_org_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/multitenancy/create_org_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  Which would return the following:
 
   .. literalinclude:: code/java/multitenancy/create_org_resp.java
       :language: java
 
 .. only:: nodejs
 
+  Which would return the following:
+
   .. literalinclude:: code/nodejs/multitenancy/create_org_resp.js
       :language: javascript
 
 .. only:: php
+
+  Which would return the following:
 
   .. literalinclude:: code/php/multitenancy/create_org_resp.php
     :language: php
@@ -324,6 +322,8 @@ Which would return the following:
   Notice here that both the Default Account Store and Group Store are ``NULL`` which means that Groups and Accounts added to the Organization would fail until a default Account Store is added.
 
 .. only:: python
+
+  Which would return the following:
 
   .. literalinclude:: code/python/multitenancy/create_org_resp.py
       :language: python
@@ -453,9 +453,9 @@ In order to be able to add Groups and Accounts to the Organization in the way me
   .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_req.py
       :language: python
 
-Which would result in the following response:
-
 .. only:: rest
+
+  Which would result in the following response:
 
   .. code-block:: http
 
@@ -476,39 +476,57 @@ Which would result in the following response:
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/multitenancy/asm_to_org_with_default_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/multitenancy/asm_to_org_with_default_resp.vb
-        :language: vbnet
-
 .. only:: java
+
+  Which would result in the following response:
 
   .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_resp.java
       :language: java
 
 .. only:: nodejs
 
+  Which would result in the following response:
+
   .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_resp.js
       :language: javascript
 
 .. only:: php
+
+  Which would result in the following response:
 
   .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_resp.php
     :language: php
 
 .. only:: python
 
+  Which would result in the following response:
+
   .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_resp.py
       :language: python
 
-So our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
+.. only:: csharp or vbnet
+
+  A mapping between an Organization and an Account Store is represented by an ``IOrganizationAccountStoreMapping`` object. There are a few optional properties that can be set:
+
+  - ``ListIndex``: Represents the priority in which this Account Store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``ListIndex`` of 0 will be consulted first, followed by the Account Store at index 1, etc. Setting a negative value will default the value to 0, placing it first in the list. An index larger than the current list size will place the mapping at the end of the list and then set the value to (list size – 1).
+
+  - ``IsDefaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organizationn will be automatically saved to this mapping’s Directory or Group.
+
+  - ``IsDefaultGroupStore``: A ``true`` value indicates that new Groups created in the Organization will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the Account Store is a Directory.
+
+  This example sets all the properties of the Organization Account Store Mapping at creation time:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/multitenancy/create_oasm_full_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/multitenancy/create_oasm_full_req.vb
+        :language: vbnet
+
+Our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
 Registering an Organization as an Account Store for an Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -522,7 +540,7 @@ To map an Organization to an Application, follow the steps you would for any Acc
 Adding an Account to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Adding a new Account to an Organization is exactly the same as adding them to a Directory, except that you use the Organization to route the creation request:
+Adding a new Account to an Organization is exactly the same as adding them to a Directory, except that you use the Organization to handle the creation request:
 
 .. only:: rest
 

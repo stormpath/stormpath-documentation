@@ -281,11 +281,25 @@ A typical set of steps in your application are as follows:
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  This is typically done by creating a controller or action that the login button redirects to. Inside this controller, the ID Site request can be created using the SDK:
 
   .. only:: csharp
 
+    .. literalinclude:: code/csharp/idsite/build_idsite_url.cs
+      :language: csharp
+
   .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/build_idsite_url.vb
+      :language: vbnet
+
+  The ``SetCallbackUri`` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+  .. note::
+
+    To view all of the options available for building ID Site URLs, see the `IIdSiteBuilder API documentation <https://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_IdSite_IIdSiteUrlBuilder.htm>`_.
+
+  Once the URL is built, redirect the user in order to send them to ID Site.
 
 .. only:: java
 
@@ -457,11 +471,25 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  You'll need to create a controller or action that handles the Callback URI. Then, you can use the SDK to consume this assertion:
 
   .. only:: csharp
 
+    .. literalinclude:: code/csharp/idsite/consume_assertion.cs
+      :language: csharp
+
   .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/idsite/consume_assertion.vb
+      :language: vbnet
+
+  The SDK will throw an error if the ID Site assertion is expired or invalid. If the assertion is valid, you'll get an ``IAccountResult`` instance with the following properties:
+
+  * ``State`` - An arbitrary string set by the ``SetState()`` method, if any.
+  * ``IsNewAccount`` - ``true`` if the account was newly registered on ID Site, ``false`` if an existing account signed in.
+  * ``Status`` - One of ``IdSiteResultStatus.Registered``, ``IdSiteResultStatus.Authenticated``, ``IdSiteResultStatus.Logout``.
+
+  You can call the ``GetAccountAsync`` method to obtain the Stormpath Account itself.
 
 .. only:: java
 
@@ -504,12 +532,16 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
   (python.todo)
 
-Once the JWT is validated, you can read information about the user from it. In some cases you may wish to exchange this JWT for a Stormpath OAuth 2.0 token.
+.. only:: rest
+
+  Once the ID Site assertion is validated, you can read information about the user from it.
 
 .. _idsite-jwt-to-oauth:
 
 Exchanging the ID Site JWT for an OAuth Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In some cases you may wish to exchange the ID Site assertion (JWT) for a Stormpath OAuth 2.0 token.
 
 .. note::
 
@@ -576,18 +608,6 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
 
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/idsite/jwt_for_oauth_resp.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/idsite/jwt_for_oauth_resp.vb
-        :language: vbnet
-
 .. only:: java
 
   .. literalinclude:: code/java/idsite/jwt_for_oauth_resp.java
@@ -625,6 +645,8 @@ ID Site will keep a configurable session for authenticated users. When a user is
   	Location: https://api.stormpath.com/sso/logout?jwtRequest=%GENERATED_JWT%
 
 .. only:: csharp or vbnet
+
+  To log the user out and remove the session that ID Site creates, you must build another ID Site redirect URL. In this case, use the ``ForLogout`` method to create a logout request:
 
   .. only:: csharp
 
@@ -664,6 +686,8 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
 .. only:: csharp or vbnet
 
+  When the response is handled, the ``Status`` property will have a value of ``IdSiteResultStatus.Logout``:
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/idsite/logout_from_idsite_resp.cs
@@ -698,13 +722,17 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 Resetting Your Password with ID Site
 ------------------------------------
 
-The Account Management chapter has an overview of :ref:`password-reset-flow` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password. If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. The issue here, however, is bridging the Password Reset Flow and the ID Site flow.
+The Account Management chapter has an overview of :ref:`Password Reset <password-reset-flow>` in Stormpath. In that flow, a user chooses to reset their password, then receives an email with a link to a page on your application that allows them to set a new password.
+
+If you are using ID Site for login, then it stands to reason that you would want them to land on your ID Site for password reset as well. All you have to do is send the user to ID Site with a special path (``/#/reset``) and a claim containing the password reset token from the email link.
 
 .. only:: rest
 
   Using a JWT library, you have to generate a new JWT, with all of :ref:`the usual required claims <idsite-auth-jwt>`. The ``path`` claim should be set to ``/#/reset`` and you will also have to include an additional claim: ``sp_token``. This is the ``sp_token`` value that you will have received from the link that the user clicked in their password reset email. This JWT is then passed to the ``/sso`` endpoint (as described in Step 1 above), and the user is taken to the Password Reset page on your ID Site.
 
 .. only:: csharp or vbnet
+
+  The password token should be pulled out of the request URL (the ``sptoken=`` parameter). Then, the path and token can be supplied when building the ID Site redirect URL:
 
   .. only:: csharp
 
@@ -715,6 +743,8 @@ The Account Management chapter has an overview of :ref:`password-reset-flow` in 
 
     .. literalinclude:: code/vbnet/idsite/idsite_reset_pwd.vb
         :language: vbnet
+
+  Once the URL is generated, redirect the user to that URL to start the Password Reset flow on ID Site.
 
 .. only:: java
 
@@ -753,11 +783,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  There are a few methods on ``IIdSiteUrlBuilder`` that you can use to implement your particular multi-tenancy strategy:
 
 .. only:: java
 
@@ -783,11 +809,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  ``SetOrganizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: java
 
@@ -829,11 +851,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  ``SetShowOrganizationField``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
 
-  .. only:: csharp
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
 
-  .. only:: vbnet
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``SetOrganizationNameKey``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: java
 
@@ -875,15 +909,11 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: rest
 
-  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+  ``usd``: If combined with ``onk``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
+  ``SetUseSubdomain``: If combined with ``SetOrganizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: java
 
@@ -895,7 +925,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: php
 
-  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``namekey`` as a sub-domain in its URL.
+  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: python
 
@@ -929,5 +959,3 @@ As an overview, the flow would look like this:
 #. User is redirected to ID Site.
 
 #. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion for Application B.
-
-

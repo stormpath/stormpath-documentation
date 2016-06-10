@@ -2283,15 +2283,21 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
 
 .. only:: csharp or vbnet
 
-  .. only:: csharp
+  .. warning::
 
-    .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_auth_code.cs
-        :language: csharp
+    The ability post an authorization code to LinkedIn is not yet available in the .NET SDK. For updates, you can follow `ticket #183 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/183>`_ on Github.
 
-  .. only:: vbnet
+  .. todo::
 
-    .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_auth_code.vb
-        :language: vbnet
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_account_linkedin_providerdata_auth_code.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_account_linkedin_providerdata_auth_code.vb
+          :language: vbnet
 
 .. only:: java
 
