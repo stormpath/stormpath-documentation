@@ -88,7 +88,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
   If the authentication succeeds, you receive an ``IAuthenticationResult`` that contains a link you can traverse to retrieve the Account details. If the authentication fails, a ``ResourceException`` will be thrown.
 
-  To retreive Account details, call ``GetAccountAsync()``. To avoid making a separate network request, you can request the Account details during authentication by making an *expanded* request (assuming you have caching enabled):
+  To retrieve Account details, call ``GetAccountAsync()``. To avoid making a separate network request, you can request the Account details during authentication by making an expanded request (assuming you have caching enabled):
 
   .. only:: csharp
 
@@ -308,7 +308,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: csharp or vbnet
 
-  You can find all the Account Store Mappings for an application by using the ``GetAccountStoreMappings()`` collection:
+  You can find all the Account Store Mappings for an Application by using the ``GetAccountStoreMappings()`` collection:
 
   .. only:: csharp
 
@@ -881,7 +881,7 @@ So you would send the following request:
 
   .. note::
 
-      Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``SetAccountStore()`` method when you are building the request.
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``SetAccountStore()`` method when you are building the request.
 
 .. only:: java
 
@@ -1165,7 +1165,7 @@ To recap, you have done the following:
     .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
       :language: vbnet
 
-  If the access token can be validated, Stormpath will return the access token to you as an ``IAccessToken``. If the access token is invalid or expired, a ``ResourceException`` will be thrown.
+  If the Access Token can be validated, Stormpath will return the token to you as an ``IAccessToken``. If the Access Token is invalid or expired, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
@@ -1486,7 +1486,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
 
 .. only:: csharp or vbnet
 
-  After you retrieve the tokens, it's a simple matter of telling Stormpath to delete them:
+  After you retrieve the tokens, it's just a matter of telling Stormpath to delete them:
 
   .. only:: csharp
 
@@ -2285,7 +2285,7 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
 
   .. warning::
 
-    The ability post an authorization code to LinkedIn is not yet available in the .NET SDK. For updates, you can follow `ticket #183 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/183>`_ on Github.
+    The ability to post an authorization code to LinkedIn is not yet available in the .NET SDK. For updates, you can follow `ticket #183 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/183>`_ on Github.
 
   .. todo::
 
@@ -2415,7 +2415,42 @@ The step-by-step process for setting-up LDAP login is as follows:
 Step 1: Create an LDAP Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest
+.. only:: csharp or vbnet
+
+  .. warning::
+
+    The ability to create an LDAP directory is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
+
+    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/create_directory_ldap.java
+    :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/create_directory_ldap.js
+    :language: javascript
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
+
+    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
+
+    .. todo::
+
+      Add SAML directory creation .NET example
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/create_directory_ldap.py
+    :language: python
+
+.. only:: rest or vbnet or csharp or php
 
   HTTP POST a new Directory resource to the ``/directories`` endpoint. This Directory will contain a :ref:`ref-provider` resource with ``providerId`` set to ``ldap`` or ``ad``. This Provider resource will in turn contain an :ref:`ref-ldap-agent` object, which in turn also contains a few nested configuration resources.
 
@@ -2478,40 +2513,8 @@ Step 1: Create an LDAP Directory
         }
       }
 
-  For more information about all of these values, please see the Reference chapter :ref:`ref-directory` section.
+  For more information about all of these values, please see the Reference chapter's `Directory <https://docs.stormpath.com/rest/product-guide/latest/reference.html#directory>`__ section.
 
-.. only:: csharp or vbnet
-
-  .. warning::
-
-    The ability to create an LDAP directory is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/167>`_ on Github.
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/create_directory_ldap.java
-    :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/create_directory_ldap.js
-    :language: javascript
-
-.. only:: php
-
-  .. warning::
-
-    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
-    For updates, you can follow `ticket #148 <https://github.com/stormpath/stormpath-sdk-php/issues/148>`_ on Github.
-
-    .. todo::
-
-      Add SAML directory creation .NET example
-
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/create_directory_ldap.py
-    :language: python
 
 Step 2: Install your LDAP Agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2819,28 +2822,11 @@ If you have already successfully set-up SAML and authenticated a user with your 
 
 Specifically, you want that Account's Provider Data:
 
-.. only:: rest
-
-  .. code-block:: json
-
-    {
-      "href":"https://api.stormpath.com/v1/accounts/xbKQemsqSForceXAMPLE/providerData",
-      "createdAt":"2016-01-20T17:56:25.532Z",
-      "modifiedAt":"2016-01-20T17:57:22.530Z",
-      "email":"saml+testuser@email.com",
-      "is_portal_user":"false",
-      "providerId":"saml",
-      "userId":"00536000000G4ft",
-      "username":"saml+testuser@email.com"
-    }
-
-  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or read the REST documentation below.
     For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
   .. todo::
@@ -2874,6 +2860,23 @@ Specifically, you want that Account's Provider Data:
 
   .. literalinclude:: code/python/authentication/saml_salesforce_account_providerdata.py
       :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/accounts/xbKQemsqSForceXAMPLE/providerData",
+      "createdAt":"2016-01-20T17:56:25.532Z",
+      "modifiedAt":"2016-01-20T17:57:22.530Z",
+      "email":"saml+testuser@email.com",
+      "is_portal_user":"false",
+      "providerId":"saml",
+      "userId":"00536000000G4ft",
+      "username":"saml+testuser@email.com"
+    }
+
+  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by Salesforce.
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other SAML Attributes to Stormpath Account attributes as well.
 
@@ -3047,28 +3050,11 @@ If you have already successfully set-up SAML and authenticated a user with your 
 
 Specifically, you want that Account's ``providerData`` resource:
 
-.. only:: rest
-
-  .. code-block:: json
-
-    {
-      "href":"https://api.stormpath.com/v1/accounts/2i6RxkcOneLogineXaMPle/providerData",
-      "createdAt":"2016-01-21T18:11:09.838Z",
-      "modifiedAt":"2016-01-21T18:13:39.102Z",
-      "PersonImmutableID":"samltestuser",
-      "User.FirstName":"John",
-      "User.LastName":"Samlton",
-      "User.email":"saml+testuser@example.com",
-      "providerId":"saml"
-    }
-
-  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by OneLogin.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or read the REST documentation below..
     For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
   .. todo::
@@ -3102,6 +3088,23 @@ Specifically, you want that Account's ``providerData`` resource:
 
   .. literalinclude:: code/python/authentication/saml_onelogin_account_providerdata.py
       :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/accounts/2i6RxkcOneLogineXaMPle/providerData",
+      "createdAt":"2016-01-21T18:11:09.838Z",
+      "modifiedAt":"2016-01-21T18:13:39.102Z",
+      "PersonImmutableID":"samltestuser",
+      "User.FirstName":"John",
+      "User.LastName":"Samlton",
+      "User.email":"saml+testuser@example.com",
+      "providerId":"saml"
+    }
+
+  Everything here other than ``href``, ``createdAt`` and ``modifiedAt`` are Attributes passed by OneLogin.
 
 Now the ``email`` Attribute has already been passed as part of the Account creation, but you can also map the other attributes to Stormpath Account attributes as well.
 
@@ -3276,22 +3279,11 @@ If you have already successfully set-up SAML and authenticated a user with your 
 
 Specifically, you want that Account's ``providerData`` resource:
 
-.. only:: rest
-
-  .. code-block:: json
-
-    {
-      "href":"https://api.stormpath.com/v1/accounts/6Y2ViNhE5GOktaExample/providerData",
-      "createdAt":"2016-03-09T18:16:16.116Z",
-      "modifiedAt":"2016-03-25T14:49:30.098Z",
-      "providerId":"saml"
-    }
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to inspect SAML Provider Data is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or read the REST documentation below.
     For updates, you can follow `ticket #171 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/171>`_ on Github.
 
   .. todo::
@@ -3325,6 +3317,17 @@ Specifically, you want that Account's ``providerData`` resource:
 
   .. literalinclude:: code/python/authentication/saml_okta_account_providerdata.py
     :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/accounts/6Y2ViNhE5GOktaExample/providerData",
+      "createdAt":"2016-03-09T18:16:16.116Z",
+      "modifiedAt":"2016-03-25T14:49:30.098Z",
+      "providerId":"saml"
+    }
 
 As you can see there are no default attributes passed by Okta, but you can map any attributes you like to the Stormpath Account attributes as well.
 
@@ -3633,31 +3636,12 @@ Step 2: Configure Your SAML Directory
 
 Input the data you gathered in Step 1 above into your Directory's Provider resource, and then pass that along as part of the Directory creation request:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/directories HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
-
-    {
-      "name" : "My SAML Directory",
-      "description" : "A Directory used for SAML Authorization",
-      "provider": {
-        "providerId":"saml",
-        "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
-        "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
-        "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
-        "requestSignatureAlgorithm":"RSA-SHA256"
-      }
-    }
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to create SAML Directories is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to create SAML Directories is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST documentation below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -3692,6 +3676,26 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
   .. literalinclude:: code/python/authentication/create_directory_saml.py
       :language: python
 
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    POST /v1/directories HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "name" : "My SAML Directory",
+      "description" : "A Directory used for SAML Authorization",
+      "provider": {
+        "providerId":"saml",
+        "ssoLoginUrl":"https://yourIdp.com/saml2/sso/login",
+        "ssoLogoutUrl":"https://yourIdp.com/saml2/sso/logout",
+        "encodedX509SigningCert":"-----BEGIN CERTIFICATE-----\n...Certificate goes here...\n-----END CERTIFICATE-----",
+        "requestSignatureAlgorithm":"RSA-SHA256"
+      }
+    }
+
 .. note::
 
   Notice that new lines in the certificate are separated with a ``\n`` character.
@@ -3705,19 +3709,12 @@ Next you will have to configure your Stormpath-powered application as a Service 
 
 In order to retrieve the required values, start by sending this request:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/xml
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -3752,7 +3749,13 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/python/authentication/get_directory_provider_req.py
       :language: python
 
-.. only:: rest
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/xml
 
   This will return the Provider:
 
@@ -3799,23 +3802,12 @@ In order to retrieve the required values, start by sending this request:
 
 Now you will need to retrieve your Directory Provider's Service Provider Metadata:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/xml
-
-  .. note::
-
-    This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to retrieve SAML Provider metadata is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -3849,6 +3841,18 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
   .. literalinclude:: code/python/authentication/get_serviceprovider_metadata_req.py
       :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/xml
+
+  .. note::
+
+    This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
 
 **Example XML**
 
@@ -3917,26 +3921,12 @@ Your Stormpath Application Resource has two parts that are relevant to SAML:
 
 You should create any URIs here that you would like included as authorized callback URIs.
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/applications/$APPLICATION_ID HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
-
-    {
-      "authorizedCallbackUris": [
-        "https://myapplication.com/whatever/callback",
-        "https://myapplication.com/whatever/callback2"
-      ]
-    }
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to update the authorized callbackURIs is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to update the authorized callbackURIs is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
     For updates, you can follow `ticket #172 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/172>`_ on Github.
 
   .. todo::
@@ -3970,6 +3960,21 @@ You should create any URIs here that you would like included as authorized callb
 
   .. literalinclude:: code/python/authentication/create_callback_uris.py
       :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    POST /v1/applications/$APPLICATION_ID HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "authorizedCallbackUris": [
+        "https://myapplication.com/whatever/callback",
+        "https://myapplication.com/whatever/callback2"
+      ]
+    }
 
 2. There is also an embedded ``samlPolicy`` object that contains information about the SAML flow configuration and endpoints:
 
@@ -4032,7 +4037,8 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. warning::
 
-    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    This feature is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
     For updates, you can follow `ticket #149 <https://github.com/stormpath/stormpath-sdk-php/issues/149>`_ on Github.
 
     .. todo::
@@ -4043,7 +4049,8 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4116,7 +4123,8 @@ A request including these optional properties looks like this:
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    The ability to get the default relay state is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4131,11 +4139,12 @@ A request including these optional properties looks like this:
       .. literalinclude:: code/vbnet/authentication/get_default_relay_state_with_extras.vb
           :language: vbnet
 
-.. only:: csharp or vbnet
+.. only:: php
 
   .. warning::
 
-    The ability to get the default relay state is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API documentation below.
+    The ability to get the default relay state is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
     For updates, you can follow `ticket #154 <https://github.com/stormpath/stormpath-sdk-php/issues/154>`_ on Github.
 
   .. todo::
@@ -4217,33 +4226,12 @@ The rules have three different components:
 
 **Example Rule**
 
-.. only:: rest or php
-
-  .. code-block:: json
-
-    {
-      "name": "uid",
-      "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
-      "accountAttributes":[
-        "username"
-      ]
-    }
-
-  The rule expressed here is as follows:
-
-  - A SAML Assertion with the name ``uid`` AND
-  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
-  - maps to the Account Attribute ``username``.
-
-  .. note::
-
-    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
-
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to modify attribute mappings is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4286,6 +4274,12 @@ The rules have three different components:
 
     (node.todo)
 
+.. only:: php
+
+  .. warning::
+
+    The ability to modify attribute mappings is not yet available in the PHP SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
 .. only:: python
 
   .. literalinclude:: code/python/authentication/example_saml_rule.py
@@ -4297,44 +4291,36 @@ The rules have three different components:
 
     (python.todo)
 
-In order to create the mapping rules, you send the following request:
+.. only:: rest or csharp or vbnet or php
 
-.. only:: rest
-
-  .. code-block:: http
-
-    POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
+  .. code-block:: json
 
     {
-      "items":[
-        {
-          "name":"uid",
-          "accountAttributes":[
-            "username"
-          ]
-        },
-        {
-          "name":"mail",
-          "accountAttributes":[
-            "email"
-          ]
-        },
-        {
-          "name":"location",
-          "accountAttributes":[
-            "customData.location"
-          ]
-        }
+      "name": "uid",
+      "nameFormat": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+      "accountAttributes":[
+        "username"
       ]
     }
+
+  The rule expressed here is as follows:
+
+  - A SAML Assertion with the name ``uid`` AND
+  - the name format ``urn:oasis:names:tc:SAML:2.0:attrname-format:basic``
+  - maps to the Account Attribute ``username``.
+
+  .. note::
+
+    It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
+
+In order to create the mapping rules, you send the following request:
 
 .. only:: csharp or vbnet
 
   .. warning::
 
-    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or switch this page to the REST API documentation.
+    The ability to modify attribute mapping is not yet available in the .NET SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+
     For updates, you can follow `ticket #111 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/111>`_ on Github.
 
   .. todo::
@@ -4368,6 +4354,37 @@ In order to create the mapping rules, you send the following request:
 
   .. literalinclude:: code/python/authentication/create_mapping_rule.py
       :language: python
+
+.. only:: rest or csharp or vbnet
+
+  .. code-block:: http
+
+    POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "items":[
+        {
+          "name":"uid",
+          "accountAttributes":[
+            "username"
+          ]
+        },
+        {
+          "name":"mail",
+          "accountAttributes":[
+            "email"
+          ]
+        },
+        {
+          "name":"location",
+          "accountAttributes":[
+            "customData.location"
+          ]
+        }
+      ]
+    }
 
 Now that we've configured everything, you can take a look at what the actual SAML authentication flow looks like.
 

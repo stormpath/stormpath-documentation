@@ -35,7 +35,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: csharp or vbnet
 
-  In the Stormpath .NET SDK, the Directory resource is represented by the ``IDirectory`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+  In the Stormpath .NET SDK, the Directory resource is represented by the ``IDirectory`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_Directory_IDirectory.htm>`__.
 
 .. only:: java
 
@@ -157,11 +157,11 @@ The following request:
 
 .. only:: csharp or vbnet
 
-  Would create the directory "Captains" in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
+  Would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
 
   .. note::
 
-    See the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_ for a full list of available properties and methods on the ``IDirectory`` type (or any other Stormpath SDK type).
+    See the `.NET API documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_Directory_IDirectory.htm>`__ for a full list of available properties and methods on the ``IDirectory`` type (or any other Stormpath SDK type).
 
 .. only:: java
 
@@ -333,25 +333,9 @@ Social Directories can be made using the Stormpath Admin Console, or using the R
 
   For more information about creating them using the REST API, please see :ref:`social-authn`.
 
-.. only:: csharp or vbnet
+.. only:: not rest
 
-  For more information about creating them using the .NET SDK, please see :ref:`social-authn`.
-
-.. only:: java
-
-  For more information about creating them using the Java SDK, please see :ref:`social-authn`.
-
-.. only:: nodejs
-
-  For more information about creating them using the Node SDK, please see :ref:`social-authn`.
-
-.. only:: php
-
-  For more information about creating them using the PHP SDK, please see :ref:`social-authn`.
-
-.. only:: python
-
-  For more information about creating them using the Python SDK, please see :ref:`social-authn`.
+  For more information about creating them using the |language| SDK, please see :ref:`social-authn`.
 
 .. _about-saml-dir:
 
@@ -415,7 +399,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: csharp or vbnet
 
-  In the Stormpath .NET SDK, the Group resource is represented by the ``IGroup`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`_.
+  In the Stormpath .NET SDK, the Group resource is represented by the ``IGroup`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_Group_IGroup.htm>`__.
 
 .. only:: java
 
@@ -640,7 +624,7 @@ The following request:
 
   .. note::
 
-    By default, new Groups created will have a ``Status`` of Enabled. If you'd like to create an initially-disabled Group, use this more-expressive syntax:
+    By default, new Groups created will have a ``Status`` of ``enabled``. If you'd like to create an initially-disabled Group, use this more-expressive syntax:
 
     .. only:: csharp
 
@@ -698,7 +682,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: csharp or vbnet
 
-  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api>`__.
+  In the Stormpath .NET SDK, the Account resource is represented by the ``IAccount`` interface. For more information, see the `.NET API documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_Account_IAccount.htm>`__.
 
 .. only:: java
 
@@ -2280,7 +2264,7 @@ The contents of the password reset and the password reset success emails are bot
 
     This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #158 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/158>`_ on Github.
 
-     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
   .. todo::
 
@@ -2300,7 +2284,7 @@ The contents of the password reset and the password reset success emails are bot
 
     This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
 
-     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
 
 .. only:: python
