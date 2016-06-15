@@ -2649,6 +2649,8 @@ This section will show you how to set-up Stormpath to allow your users to log in
     - :ref:`Okta <okta>`
     - :ref:`Ping Identity <ping>`
 
+We also provide authentication against an Active Directory via :ref:`ADFS SAML <adfs>`.
+
 .. note::
 
     These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.

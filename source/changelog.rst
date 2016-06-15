@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-15
+  ==========
+
+  - **New:** The SAML section of the Authentication chapter now contains instructions for how to configure login via :ref:`ADFS <adfs>`.
+
   2016-06-09
   ==========
 
