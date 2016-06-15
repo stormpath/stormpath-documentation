@@ -3609,6 +3609,8 @@ You have now completed the initial steps of setting-up log in via Ping.
 Active Directory Federation Services
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Stormpath's allows you to link your Active Directory to Stormpath via SAML and Active Directory Federation Services (ADFS). In order to link the two, you must configure your ADFS server with information about your Stormpath Directory, and vice versa. This will then allow users to log in to your application by authenticating with the ADFS server, and have their Active Directory user information mirrored into Stormpath.
+
 **Prerequisites:**
 
 - A Stormpath account with at least an Advanced plan
@@ -3650,6 +3652,8 @@ Step 2: Create your ADFS Directory in Stormpath
 
 #. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
 
+#. Find and click on your Directory to enter its information page.
+
 #. On this page, in the "SAML Configuration" section, click on the **Identity Provider** tab. We will be returning here in the next step.
 
 Step 3: Configure Your Relying Party Trust in ADFS
@@ -3660,11 +3664,17 @@ Step 3: Configure Your Relying Party Trust in ADFS
 
 #. Back in Windows' Administrative Tools, click on **AD FS Management**.
 
-#. **Expand** "Trust Relationships", then click on **Relying Party Trusts** > **Add Relying Part Trust...**
+#. **Expand** "Trust Relationships", then click on **Relying Party Trusts** and in the right-hand navigation panel click on **Add Relying Part Trust...**. This will open the "Add Relying Party Trust Wizard".
+
+#. Click **Start** and make sure that "Import data about the relying party published online" is selected.
 
 #. Back in the Stormpath Admin Console, in your Directory's "Identity Provider" information, you will see a "Service Provider Metadata Link". Copy this URL into the AD FS Management "Federation metadata address" text box and click **Next**. Keep your Admin Console tab open, we will be returning to it later.
 
-#. Click **Next** to delay setting up multi-factor auth, then keep "Permit All" selected and click **Next**.
+#. Enter in whatever "Display name" that you wish, as well as any description.
+
+#. Make sure "I do not want to configure multi-factor authentication settings..." is selected and click **Next**.
+
+#. Keep "Permit All" selected and click **Next**.
 
 #. Review the settings if so desired and click **Next**.
 
@@ -3678,9 +3688,9 @@ Step 3: Configure Your Relying Party Trust in ADFS
 #. Select "Transform an Incoming Claim" as your Rule Template. Then fill out the following information:
 
 - Put "Add UPN as Name ID" into the "Claim rule name:" text box.
-- Select "UPN" for "Incoming claim type".
-- Select "Name ID" for "Outgoing claim type".
-- Select "Email" for "Outgoing name ID format".
+- For "Incoming claim type" select "UPN".
+- For "Outgoing claim type" select "Name ID".
+- For "Outgoing name ID format" select "Email".
 - Keep "Pass through all claim values" selected.
 - Click **Finish**.
 - Back in the "Edit Claim Rules" window, click **OK**.
@@ -3693,10 +3703,6 @@ Step 3: Configure Your Relying Party Trust in ADFS
 #. In the "Monitoring" tab, uncheck "Automatically update relying party" and click **Apply**.
 
 #. Switch to the "Identifiers" tab, and copy your Stormpath Directory's HREF into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
-
-#. You will now be back in the main ADFS window. On the left-hand side, expand "Authentication Policies" and click on **Per Relying Party Trust**. On the right-hand side, click on **Edit Custom Primary Authentication**.
-
-#. In the "Edit Authentication Policy" window, check off "Users are required to provide credentials each time at sign in." and click **OK**.
 
 #. Finally, go to Windows and open a Powershell window. In Powershell, enter the following command: "Set-AdfsRelyingPartyTrust -TargetName api.stormpath.com -SigningCertificateRevocationCheck None".
 
@@ -3717,10 +3723,30 @@ Step 4: Configure Your Application in Stormpath
 
 #. Click **Create Mappings**.
 
-Step 5: Configure Your Attribute Mappings
-""""""""""""""""""""""""""""""""""""""""""""""
+Step 5: Configure Your Attribute Mappings (Optional)
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-(todo)
+By default, the only user information that is passed by ADFS is the User Principal Name (UPN). Stormpath will use this to populate the user Account's ``username`` and ``email`` attributes. Other attributes, like ``surname`` will appear as ``NOT_PROVIDED``. If you would like other Active Directory attributes to be passed to Stormpath and mapped to Account attributes, you can configure this now.
+
+5.1. Add the Claim Rule
+++++++++++++++++++++++++++++
+
+#. Go to Administrative Tools and "AD FS Management", and on the left-hand side expand **Trust Relationships**. Select the "Relying Party Trust" for Stormpath, and then in the right-hand panel click on "Edit Claim Rules...".
+
+#. In the "Edit Claim Rules" window, click on **Add Rule**.
+
+#. For the "Claim rule template" make sure that "Send LDAP Attributes as Claims" is selected and click **Next**.
+
+#. Enter a "Claim Rule Name" and for Attribute Store select "Active Directory".
+
+#. Then specify whatever mapping you might want. Make sure that the "LDAP Attribute" matches whatever is in your Active Directory. From Stormpath's perspective the "Outgoing Claim Type" can have any value, since you will be specifying how this Outgoing Claim should be interpreted by Stormpath. For example, you could specify that the LDAP Attribute "Given-Name" maps to an Outgoing Claim Type "firstName".
+
+5.2. Create the Attribute Mapping
++++++++++++++++++++++++++++++++++
+
+#. Back in the Stormpath Admin Console, on your ADFS Directory page, find the "SAML Configuration" section, and go to the "Attribute Mappings" tab.
+
+#. Here you can specify which of the ADFS Claims you would like to map to which Stormpath Account attribute. For example, if you mapped the LDAP Attribute "Given-Name" to the ADFS Claim "firstName", then you would put the "Attribute Name" as "firstName" and the "Stormpath Field Name" as "surname".
 
 .. _saml-configuration-rest:
 
