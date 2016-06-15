@@ -3604,6 +3604,124 @@ If a user now logs in, Stormpath will take the ``firstname`` attribute and map i
 
 You have now completed the initial steps of setting-up log in via Ping.
 
+.. _adfs:
+
+Active Directory Federation Services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Prerequisites:**
+
+- A Stormpath account with at least an Advanced plan
+- An instance of Windows Server 2012 R2 running ADFS 3.0, fully configured and with existing users
+
+Configuration:
+
+Step 1: Download Your Signing Certificate
+""""""""""""""""""""""""""""""""""""""""""""""
+
+#. Go to Windows Server's Administrative Tools, and then to "AD FS Management".
+
+#. Expand **Services**, then click on **Certificates** > **Token-Signing Certificate** > **View Certificate**.
+
+#. Click **Details** and then **Copy to File** > **Next** > Select **Base-64 encoded X.509 (.CER)** and save the file somewhere.
+
+#. Open this file in your text editor of choice. The contents will be an x509 certificate starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your “SAML X.509 Signing Cert”.
+
+Step 2: Create your ADFS Directory in Stormpath
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+#. Log in to the Stormpath Admin Console: https://api.stormpath.com
+
+#. Click on the **Directories** tab.
+
+#. Click on **Create Directory**.
+
+#. From the "Directory Type" drop-down menu, select "SAML", which will bring up a Directory creation dialog.
+
+#. Next, enter in a name and (optionally) a description, then set the Directory's status.
+
+#. For "SAML SSO Login Url" enter in: ``https://{HOST}:{PORT}/adfs/ls/idpinitiatedsignon.aspx``.
+
+#. For "SAML SSO Logout Url" enter in: ``https://{HOST}:{PORT}/adfs/ls/idpinitiatedsignout.aspx``
+
+#. For the "SAML X.509 Signing Cert" field, paste in the text content from the signing certificate you downloaded in Step 1.
+
+#. Finally, select "RSA-SHA256" as the "SAML Request Signature Algorithm".
+
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
+
+#. On this page, in the "SAML Configuration" section, click on the **Identity Provider** tab. We will be returning here in the next step.
+
+Step 3: Configure Your Relying Party Trust in ADFS
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+3.1. Add a Relying Party Trust
+++++++++++++++++++++++++++++++++
+
+#. Back in Windows' Administrative Tools, click on **AD FS Management**.
+
+#. **Expand** "Trust Relationships", then click on **Relying Party Trusts** > **Add Relying Part Trust...**
+
+#. Back in the Stormpath Admin Console, in your Directory's "Identity Provider" information, you will see a "Service Provider Metadata Link". Copy this URL into the AD FS Management "Federation metadata address" text box and click **Next**. Keep your Admin Console tab open, we will be returning to it later.
+
+#. Click **Next** to delay setting up multi-factor auth, then keep "Permit All" selected and click **Next**.
+
+#. Review the settings if so desired and click **Next**.
+
+#. Keep the "Open the Edit Claim Rules..." option selected and click "Close".
+
+3.2. Add a Claim Rule
+++++++++++++++++++++++++++++++++
+
+#. In the "Edit Claim Rules" window, click **Add Rule** again.
+
+#. Select "Transform an Incoming Claim" as your Rule Template. Then fill out the following information:
+
+- Put "Add UPN as Name ID" into the "Claim rule name:" text box.
+- Select "UPN" for "Incoming claim type".
+- Select "Name ID" for "Outgoing claim type".
+- Select "Email" for "Outgoing name ID format".
+- Keep "Pass through all claim values" selected.
+- Click **Finish**.
+- Back in the "Edit Claim Rules" window, click **OK**.
+
+3.4. Finish Configuring the Relying Third Party
++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. In the main AD FS window, with "api.stormpath.com" selected under "Relying Party Trusts", click **Properties** on the right-hand side. This will open a "Properties" window and the "Monitoring" tab.
+
+#. In the "Monitoring" tab, uncheck "Automatically update relying party" and click **Apply**.
+
+#. Switch to the "Identifiers" tab, and copy your Stormpath Directory's HREF into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
+
+#. You will now be back in the main ADFS window. On the left-hand side, expand "Authentication Policies" and click on **Per Relying Party Trust**. On the right-hand side, click on **Edit Custom Primary Authentication**.
+
+#. In the "Edit Authentication Policy" window, check off "Users are required to provide credentials each time at sign in." and click **OK**.
+
+#. Finally, go to Windows and open a Powershell window. In Powershell, enter the following command: "Set-AdfsRelyingPartyTrust -TargetName api.stormpath.com -SigningCertificateRevocationCheck None".
+
+Step 4: Configure Your Application in Stormpath
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
+
+#. Select the Application that will be using the ADFS Directory.
+
+#. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
+
+#. Next click on **Account Stores** in the navigation pane.
+
+#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog.
+
+#. Ensure that you are in the "Directories" tab and select your SAML Directory from the list.
+
+#. Click **Create Mappings**.
+
+Step 5: Configure Your Attribute Mappings
+""""""""""""""""""""""""""""""""""""""""""""""
+
+(todo)
+
 .. _saml-configuration-rest:
 
 4.5.3. Configuring SAML via REST
