@@ -1,5 +1,5 @@
 $cacheManagerOptions = array(
-  'cachemanager' => 'Array', //Array, Memcached, Redis, Null, or the full namespaced CacheManager instance
+  'cachemanager' => 'Array', //Array, Memcached, Redis, Null, or the full namespaced PSR6CacheManager instance
   'memcached' => array(
   array(
     'host' => '127.0.0.1', 'port' => 11211, 'weight' => 100),

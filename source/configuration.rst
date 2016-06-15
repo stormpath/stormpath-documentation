@@ -45,6 +45,14 @@
 
   See :ref:`caching_config` in the Configuration Reference to understand how to set these configuration values.
 
+  .. only:: php
+
+    .. note::
+
+      The PHP SDK follows PSR-6 caching.  By default, the SDK ships with ``Array``, ``Redis``, ``Memcached``, and ``Null`` caching.
+      Because of the implementation of PSR-6 in the SDK, you are able to use any caching that follows the standard that can be found
+      on the `PHP Cache Documentation <http://php-cache.readthedocs.io/en/latest/>`__.
+
   .. only:: not php
 
     .. warning::
@@ -594,6 +602,14 @@
 
   Cache Manager
   '''''''''''''
+
+  .. only:: php
+
+    .. note::
+
+      The PHP SDK follows PSR-6 caching.  By default, the SDK ships with ``Array``, ``Redis``, ``Memcached``, and ``Null`` caching.
+      Because of the implementation of PSR-6 in the SDK, you are able to use any caching that follows the standard that can be found
+      on the `PHP Cache Documentation <http://php-cache.readthedocs.io/en/latest/>`__.
 
   .. only:: not php
 
