@@ -3613,12 +3613,7 @@ Active Directory Federation Services
 
 Stormpath's allows you to link your Active Directory to Stormpath via SAML and Active Directory Federation Services (ADFS). In order to link the two, you must configure your ADFS server with information about your Stormpath Directory, and vice versa. This will then allow users to log in to your application by authenticating with the ADFS server, and have their Active Directory user information mirrored into Stormpath.
 
-**Prerequisites:**
-
-- A Stormpath account with at least an Advanced plan
-- An instance of Windows Server 2012 R2 running ADFS 3.0, fully configured and with existing users
-
-Configuration:
+These instructions assume that you have an instance of Windows Server 2012 R2 running ADFS 3.0, fully configured and with existing users.
 
 Step 1: Download Your Signing Certificate
 """"""""""""""""""""""""""""""""""""""""""""""
@@ -3633,6 +3628,8 @@ Step 1: Download Your Signing Certificate
 
 Step 2: Create your ADFS Directory in Stormpath
 """""""""""""""""""""""""""""""""""""""""""""""""
+
+First we must create a Directory in Stormpath that will mirror our ADFS users.
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
 
@@ -3660,6 +3657,8 @@ Step 2: Create your ADFS Directory in Stormpath
 
 Step 3: Configure Your Relying Party Trust in ADFS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+
+Now we will enter the information from the Stormpath Directory that we just created into ADFS.
 
 3.1. Add a Relying Party Trust
 ++++++++++++++++++++++++++++++++
