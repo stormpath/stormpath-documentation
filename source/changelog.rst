@@ -20,6 +20,12 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-20
+  ==========
+
+  - **Modified:** When :ref:`idsite-jwt-to-oauth`, the ``grant_type`` should now be ``stormpath_token``.
+  - **Fixed:** Various attributes on Resources in :ref:`reference` had attributes with incorrect lengths of "1 < N <= 255". This has been corrected to be "0 < N < 256".
+
   2016-06-15
   ==========
 

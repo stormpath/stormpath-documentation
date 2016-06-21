@@ -547,7 +547,7 @@ In some cases you may wish to exchange the ID Site assertion (JWT) for a Stormpa
 
   For background information, please see :ref:`token-authn`.
 
-In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``id_site_token`` type and pass the JWT we got from ID Site.
+In this situation, after the user has been authenticated via ID Site, a developer may want to control their authorization with an OAuth 2.0 Token. This is done by passing the JWT similar to the way we passed the user's credentials as described in :ref:`generate-oauth-token`. The difference is that instead of using the ``password`` grant type and passing credentials, we will use the ``stormpath_token`` type and pass the JWT we got from ID Site.
 
 .. only:: rest
 
@@ -557,7 +557,7 @@ In this situation, after the user has been authenticated via ID Site, a develope
     Host: api.stormpath.com
     Content-Type: application/x-www-form-urlencoded
 
-    grant_type=id_site_token&token={$JWT_FROM_ID_SITE}
+    grant_type=stormpath_token&token={$JWT_FROM_ID_SITE}
 
 Stormpath will validate the JWT (i.e. ensure that it has not been tampered with, is not expired, and the Account that it's associated with is still valid) and then return an OAuth 2.0 Access Token:
 
