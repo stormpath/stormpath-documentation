@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-20
+  ==========
+
+  - **Modified:** When :ref:`idsite-jwt-to-oauth`, the ``grant_type`` should now be ``stormpath_token``.
+
   2016-06-09
   ==========
 
