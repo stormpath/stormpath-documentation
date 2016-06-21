@@ -26,6 +26,11 @@
   - **Modified:** When :ref:`idsite-jwt-to-oauth`, the ``grant_type`` should now be ``stormpath_token``.
   - **Fixed:** Various attributes on Resources in :ref:`reference` had attributes with incorrect lengths of "1 < N <= 255". This has been corrected to be "0 < N < 256".
 
+  2016-06-15
+  ==========
+
+  - **New:** The SAML section of the Authentication chapter now contains instructions for how to configure login via :ref:`ADFS <adfs>`.
+
   2016-06-09
   ==========
 
