@@ -460,7 +460,7 @@ Now that we've created an Application, let's create a user Account so someone ca
       "surname": "Stormtrooper",
       "username": "tk421",
       "email": "tk421@stormpath.com",
-      "password":"Changeme1",
+      "password":"Changeme1"
       }'
 
   This would return this response:
