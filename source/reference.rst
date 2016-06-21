@@ -777,7 +777,7 @@
 
       * - ``name``
         - String
-        - 1 < N <= 255 characters
+        - 1 < N < 256 characters
         - Name of the Tenant, by default this is the same as the key, but can be modified.
 
       * - ``key``
@@ -1099,7 +1099,7 @@
 
       * - ``name``
         - String
-        - 1 < N <= 255 characters
+        - 1 < N < 256 characters
         - Name of the Application. Must be unique across all Applications within a :ref:`Tenant <ref-tenant>`.
 
       * - ``description``
@@ -1924,7 +1924,7 @@
 
     * - ``name``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - Name of the Directory. Must be unique within a Tenant.
 
     * - ``description``
@@ -2453,37 +2453,37 @@
 
     * - ``minLength``
       - Number
-      - Default is 8
+      - 0 < N < 256, default is 8
       - Represents the minimum length for a password. For example ``minLength`` of ``5`` requires that a password has no less than 5 characters.
 
     * - ``maxLength``
       - Number
-      - Default is 100
+      - 0 < N < 256, default is 100
       - Represents the maximum length for a password. For example ``maxLength`` of ``10`` indicates that a password can have no more than 10 characters.
 
     * - ``minLowerCase``
       - Number
-      - Default is 1
+      - 0 < N < 256, default is 1
       - Represents the minimum number of lower case characters required for the password.
 
     * - ``minUpperCase``
       - Number
-      - Default is 1
+      - 0 < N < 256, default is 1
       - Represents the minimum number of upper case characters required for the password.
 
     * - ``minNumeric``
       - Number
-      - Default is 1
+      - 0 < N < 256, default is 1
       - Represents the minimum number of numeric characters required for the password.
 
     * - ``minSymbol``
       - Number
-      - Default is 0
+      - 0 < N < 256, default is 0
       - Represents the minimum number of symbol characters required for the password.
 
     * - ``minDiacritic``
       - Number
-      - Default is 0
+      - 0 < N < 256, default is 0
       - Represents the minimum number of diacritic characters required for the password.
 
     * - ``preventReuse``
@@ -3163,7 +3163,7 @@
 
     * - ``name``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - The name of the Group. Must be unique within a Directory.
 
     * - ``description``
@@ -4020,27 +4020,27 @@
 
     * - ``username``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - The username for the Account. Must be unique across the owning Directory. If not specified, the username will default to the same value as the ``email`` field.
 
     * - ``email``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - The email address for the Account. Must be unique across the owning Directory.
 
     * - ``password``
       - String
-      - 1 < N <= 255 characters
-      - The password for the Account. Only include this attribute if setting or changing the Account password.
+      - 1 < N < 256 characters
+      - The password for the Account. Only include this attribute if setting or changing the Account password. The actual valid length is configured as part of the owning Directory's :ref:`ref-password-strength` policy.
 
     * - ``givenName``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - The given (first) name for the Account holder.
 
     * - ``middleName``
       - String
-      - 1 < N <= 255 characters
+      - 1 < N < 256 characters
       - The middle (second) name for the Account holder.
 
     * - ``surname``
