@@ -124,17 +124,14 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (node.todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below.
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
-
-    .. literalinclude:: code/nodejs/authentication/login_attempt_req_expand_account.js
-      :language: javascript
+    When authenticating the account is always automatically expanded.
 
   If authentication succeeded, you would receive back ... (todo)
 
@@ -329,7 +326,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  You can find this mapping by... (node.todo)
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` collection:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
@@ -1184,15 +1181,15 @@ To recap, you have done the following:
 
 .. only:: nodejs
 
-  1. (node.todo)
+  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-  The user now attempts to access a secured resource by...?
+  The user now attempts to access a secured resource:
 
   .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
     :language: javascript
 
-  If the access token can be validated, Stormpath will return...?
+  If the access token can be validated, Stormpath will return this:
 
   .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
     :language: javascript
@@ -1517,7 +1514,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
-  You will get back a ... (node.todo)
+  If successful, ``err`` will be ``null`` and the following will be written to console:
 
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
     :language: javascript
@@ -1609,11 +1606,11 @@ In general, the social login process works as follows:
 
 .. only:: nodejs
 
-    a. If a matching Account is found, (node.todo)
+    a. If a matching Account is found, Stormpath will return the existing Account.
 
-    b. If a matching Account is not found, (todo)
+    b. If a matching Account is not found, Stormpath will create one and return it.
 
- 7. At this point, (todo)
+  7. The Account can now be used like any other Account in Stormpath.
 
 .. only:: php
 
@@ -1849,7 +1846,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2008,7 +2005,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2169,7 +2166,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: nodejs
 
- (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2384,7 +2381,7 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -4264,6 +4261,8 @@ The rules have three different components:
     (java.todo)
 
 .. only:: nodejs
+
+    The ability to modify attribute mappings is not yet available in the Node.js SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
