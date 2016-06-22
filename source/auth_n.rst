@@ -2714,6 +2714,12 @@ Step 1: Set-up Salesforce
 1.3. Create a Connected App
 +++++++++++++++++++++++++++
 
+Every Salesforce app will need its own Stormpath Directory. The users for that Salesforce app will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have a Salesforce application with SAML enabled, you can skip to Step 4.
+
 #. In the navigation pane on the left, under **Build**, find the **Create** section, then click on **Apps**.
 
 #. From the "Apps" page, find the "Connected Apps" section and click the **New** button.
@@ -2934,6 +2940,12 @@ OneLogin
 Step 1: Set-up OneLogin
 """""""""""""""""""""""
 
+Every OneLogin application will need its own Stormpath Directory. The users for that OneLogin application will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have a OneLogin application of this type (``SAML Test Connector (IdP w/ attr w/ sign response)``), you can skip this step.
+
 #. Complete the OneLogin set-up, including adding your subdomain, users, etc.
 
 #. On the "Find Applications" page, search for "SAML"
@@ -2945,14 +2957,14 @@ Step 1: Set-up OneLogin
 Step 2: Gather Your Identity Provider Information
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now need to gather the following pieces of information:
+You will now need to gather the following pieces of information from your OneLogin application:
 
 - X.509 Signing Certificate
 - SSO Login URL
 - SSO Logout URL
 - Request Signature Algorithm
 
-Click on **SSO** in your App's navigation pane.
+To start, click on **SSO** in your App's navigation pane.
 
 2.1 IdP Signing Certificate
 +++++++++++++++++++++++++++
@@ -2972,7 +2984,7 @@ Return to the **App** > **SSO** section. On this page there are two different UR
 Step 3: Create Your SAML Directory in Stormpath
 """""""""""""""""""""""""""""""""""""""""""""""
 
-We will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
+We will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in OneLogin in the next step.
 
 3.1. Create Your SAML Directory
 +++++++++++++++++++++++++++++++
@@ -3161,6 +3173,12 @@ Okta
 Step 1: Set-up Okta
 """""""""""""""""""
 
+Every Okta application will need its own Stormpath Directory. The users for that Okta application will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have an Okta application, you can skip to Step 5.
+
 #. Log in to your Okta Administrator Account. From the landing page click on **Admin** to go to your Admin Dashboard.
 
 #. From here, click on **Add Applications** in the shortcuts on the right.
@@ -3186,7 +3204,7 @@ You will now arrive at your App's Admin page.
 Step 2: Gather Information From Your Identity Provider
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now need to gather the required IdP information:
+You will now need to gather the required information from Okta:
 
 #. Copy the "Identity Provider Single Sign-On URL". This will be the value for both the "SSO Login URL" and "SSO Logout URL" in your Stormpath configuration.
 
@@ -3196,7 +3214,7 @@ You will now need to gather the required IdP information:
 
 .. note::
 
-    It is recommended that you stay on this page, as you will be returning here in Step 3 to add more configuration details.
+  It is recommended that you stay on this page, as you will be returning here in Step 3 to add more configuration details.
 
 Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -3385,7 +3403,7 @@ As you can see, by default Okta does not pass any attributes.
 6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-If there are attributes that you would like Okta, you can configure this. From your Okta Admin settings page:
+If there are attributes that you would like Okta to pass to Stormpath, you can configure this. From your Okta Admin settings page:
 
 #. Click on the **Applications** tab in the top navigation pane
 #. Select your Application
@@ -4542,14 +4560,14 @@ Now that we've configured everything, you can take a look at what the actual SAM
 
   This is probably most irrelevant to the SDKs.
 
-The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning.
+The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so :ref:`the Service Provider (SP) initiated flow <saml-sp-init-flow>` is really just the Identity Provider (IdP) initiated flow with a different starting point.
+
+.. _saml-idp-init-flow:
 
 The Identity Provider Initiated Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-
-  Preamble goes here.
+In the Identity Provider Initiated flow, the user starts at the Identity Provider (IdP). After logging-in to the IdP, the user selects the Stormpath-enabled web application from within the IdP's site, and is redirected to the application in an authenticated state.
 
 .. figure:: images/auth_n/SamlFlow_IdpInit.png
     :align: center
@@ -4679,9 +4697,7 @@ At this point your user is authenticated and able to use your app.
 The Service Provider Initiated Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-
-  Add some preamble
+In the Service Provider Initiated flow, the user starts at a login page (either ID Site or one inside a Stormpath-powered application), then is redirected to the Identity Provider. After authenticating with the Identity Provider, the user is returned to the application in an authenticate state.
 
 .. figure:: images/auth_n/SamlFlow_SpInit.png
     :align: center
