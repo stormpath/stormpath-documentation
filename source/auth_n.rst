@@ -2659,15 +2659,11 @@ We also provide authentication against an Active Directory via :ref:`ADFS SAML <
 
 .. todo::
 
-  ----
-
   **Conventions:**
 
   - Clickable navigation items are in **bold**
 
   - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL").
-
-  ---
 
 .. _salesforce:
 
