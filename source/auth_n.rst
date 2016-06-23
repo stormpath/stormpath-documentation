@@ -3381,7 +3381,7 @@ You will now be returned to your App's "Sign on" page. If you click on the "Gene
 #. Select your Okta SAML Directory
 #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
 #. Here you will enter the Okta attribute name under "Name"
-#. (Optional) Under "Name Format" you can enter ``Basic``
+#. (Optional) Under "Name Format" you can enter ``Basic``.
 #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to.
 
 For example, you could enter:
@@ -3390,6 +3390,10 @@ For example, you could enter:
 * For "Stormpath Attributes" enter ``givenName``
 
 If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
+
+.. note::
+
+  If you do choose to enter in an "Attribute Name Format" in Stormpath, it must match the SAML "NameFormat" passed by Okta. To ensure that you are entering the right one you can click on **Preview the SAML Assertion** on the "Configure SAML" page in your Okta application.
 
 6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
