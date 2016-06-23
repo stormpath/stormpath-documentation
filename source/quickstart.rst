@@ -549,7 +549,7 @@ Now we have a user Account that can use your Application. But how do you authent
 
   .. code-block:: bash
 
-    curl --request GET \
+    curl --request POST \
       --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
       --header 'content-type: application/json' \
       --url "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlEXampLE/loginAttempts"
