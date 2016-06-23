@@ -2585,7 +2585,7 @@ SAML is an XML-based standard for exchanging authentication and authorization da
 
 If you'd like a high-level description of Stormpath's SAML support, see :ref:`Stormpath as a Service Provider <saml-overview>`.
 
-If you want a step-by-step guide to configuring Stormpath to work with Identity Providers like Salesforce, OneLogin and Okta, see :ref:`Configuring SAML <saml-configuration>`.
+If you want a step-by-step guide to configuring Stormpath to work with Identity Providers like Salesforce, OneLogin and Okta, as well as with your ADFS deployment, see :ref:`Configuring SAML <saml-configuration>`.
 
 If you'd like to know about how to configure SAML using just the REST API, please see :ref:`Configuring SAML via REST <saml-configuration-rest>`.
 
@@ -2651,21 +2651,17 @@ We also provide authentication against an Active Directory via :ref:`ADFS SAML <
 
 .. note::
 
-    These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.
+  These are not the only SAML-enabled Identity Providers that Stormpath can integrate with, but they are the ones that have been tested and verified as working.
 
-    Currently these instructions only cover SP-initiated SAML and not the IdP-initiated flow configuration.
+  Currently these instructions only cover SP-initiated SAML and not the IdP-initiated flow configuration.
 
 .. todo::
 
-    ---
+  **Conventions:**
 
-    **Conventions:**
+  - Clickable navigation items are in **bold**
 
-    - Clickable navigation items are in **bold**
-
-    - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL").
-
-    ---
+  - Page elements (things to look for on a page) will be in "quotes". So the name of the value on the IdP's settings page, as well as the name of what that value is in the Stormpath API (e.g. "SP-Initiated Redirect Endpoint" and "SSO Login URL").
 
 .. _salesforce:
 
@@ -2683,7 +2679,7 @@ Step 1: Set-up Salesforce
 
     Before you start, make sure that you have set-up a Salesforce subdomain for your organization. You can do this under **Administer** > **Domain Management** > **My Domain**.
 
-1.1. Set-up Your Identity Provider
+1.1. Set-up Salesforce
 ++++++++++++++++++++++++++++++++++
 
 #. Under **Administer**, click on **Security Controls** > **Identity Provider**
@@ -2696,7 +2692,7 @@ Step 1: Set-up Salesforce
 
 #. Open this file in your text editor of choice. The contents will be an x509 certificate starting with the line ``-----BEGIN CERTIFICATE-----`` and ending with ``-----END CERTIFICATE-----``. The contents of this file are your "SAML X.509 Signing Cert".
 
-#. Also click on **Download Metadata**, which will download an XML file which you will use in the very next step.
+#. Also click on **Download Metadata**, which will download an XML file which you will use in step 2.
 
 1.2. Set-up Single Sign On
 ++++++++++++++++++++++++++
@@ -2711,6 +2707,12 @@ Step 1: Set-up Salesforce
 
 1.3. Create a Connected App
 +++++++++++++++++++++++++++
+
+Every Salesforce app will need its own Stormpath Directory. The users for that Salesforce app will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have a Salesforce application with SAML enabled, you can skip to Step 4 here.
 
 #. In the navigation pane on the left, under **Build**, find the **Create** section, then click on **Apps**.
 
@@ -2740,7 +2742,7 @@ You will now be on your Connected App's page.
 Step 2: Create Your SAML Directory in Stormpath
 """""""""""""""""""""""""""""""""""""""""""""""
 
-You will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
+You will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in Salesforce in the next step.
 
 2.1. Create Your SAML Directory
 +++++++++++++++++++++++++++++++
@@ -2776,10 +2778,10 @@ On this page, you will need the follow information:
 
 We will now input these values into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+Step 3: Configure Your Service Provider in Salesforce
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-#. Back on your Connected App's page (found under **Administer** > **Connected Apps**), click **Edit**.
+Back on your Connected App's page (found under **Administer** > **Connected Apps**), click **Edit**.
 
 You will now enter in your Directory information:
 
@@ -2794,7 +2796,7 @@ You will now enter in your Directory information:
 Step 4: Configure Your Application in Stormpath
 """""""""""""""""""""""""""""""""""""""""""""""
 
-We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Application, and mapping your SAML Directory to your Application.
+We will now complete the final steps in the Stormpath Admin Console: adding one or more Callback URIs to the Stormpath Application, and mapping your SAML Directory to your Application.
 
 #. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
 
@@ -2810,10 +2812,12 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+You have now completed the initial steps of setting-up log in via Salesforce.
+
 Step 5: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
-When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+When a new Account logs in via SAML, Salesforce sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these Salesforce SAML Attributes are mapped to Stormpath attributes.
 
 4.1. Find the Existing SAML Attributes
 ++++++++++++++++++++++++++++++++++++++
@@ -2883,7 +2887,7 @@ Now the ``email`` Attribute has already been passed as part of the Account creat
 4.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-If there are other attributes that you would like Salesforce to pass other attributes, you can configure this. From your Salesforce settings page:
+If there are other attributes that you would like Salesforce to pass, you can configure this. From your Salesforce settings page:
 
 #. Under **Administer**, click on **Connected Apps**.
 #. Select the App you would like to configure.
@@ -2911,14 +2915,12 @@ You will now be returned to your App's main page, and you will see the attribute
 #. (Optional) Under "Name Format" you can enter ``urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified``
 #. Finally, enter the Account attribute(s) that you would like this Salesforce attribute to map to
 
-For example, you could enter, using the custom attribute from Step 4.2 above:
+For example, using the custom attribute from Step 4.2 above:
 
 * For the "Name" enter ``firstname``
 * For "Stormpath Attributes" enter ``givenName``
 
-If a user now logs in, Stormpath will take the ``firstname`` attribute and map it to the ``givenName`` field on the Account resource.
-
-You have now completed the initial steps of setting-up log in via Salesforce.
+If a user now logs in, Stormpath will take the ``firstname`` SAML attribute and map it to the ``givenName`` field on the Stormpath Account resource.
 
 .. _onelogin:
 
@@ -2932,6 +2934,12 @@ OneLogin
 Step 1: Set-up OneLogin
 """""""""""""""""""""""
 
+Every OneLogin application will need its own Stormpath Directory. The users for that OneLogin application will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have a OneLogin application of this type (``SAML Test Connector (IdP w/ attr w/ sign response)``), you can skip this step.
+
 #. Complete the OneLogin set-up, including adding your subdomain, users, etc.
 
 #. On the "Find Applications" page, search for "SAML"
@@ -2940,17 +2948,17 @@ Step 1: Set-up OneLogin
 
 #. Give your app a name and click **Save**
 
-Step 2: Gather Your Identity Provider Information
+Step 2: Gather Your OneLogin Information
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now need to gather the following pieces of information:
+You will now need to gather the following pieces of information from your OneLogin application:
 
 - X.509 Signing Certificate
 - SSO Login URL
 - SSO Logout URL
 - Request Signature Algorithm
 
-Click on **SSO** in your App's navigation pane.
+To start, click on **SSO** in your App's navigation pane.
 
 2.1 IdP Signing Certificate
 +++++++++++++++++++++++++++
@@ -2970,7 +2978,7 @@ Return to the **App** > **SSO** section. On this page there are two different UR
 Step 3: Create Your SAML Directory in Stormpath
 """""""""""""""""""""""""""""""""""""""""""""""
 
-We will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
+We will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in OneLogin in the next step.
 
 3.1. Create Your SAML Directory
 +++++++++++++++++++++++++++++++
@@ -3008,10 +3016,10 @@ We will now create your SAML Directory in Stormpath, using the values you gather
 
 We will now input this value into the Identity Provider.
 
-Step 4: Configure Your Service Provider in Your IdP
+Step 4: Configure Your Service Provider in OneLogin
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-#. Back in your App's settings page (found under **Apps** > **Company Apps**), click **Configuration** in the App's navigation pane.
+#. Back in your OneLogin App's settings page (found under **Apps** > **Company Apps**), click **Configuration** in the App's navigation pane.
 
 #. Copy your Directory's "Assertion Consumer Service URL" into both the "ACS (Consumer) URL Validator" and "ACS (Consumer) URL" fields.
 
@@ -3041,7 +3049,7 @@ You have now completed the initial steps of setting-up log in via OneLogin.
 Step 6: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
-When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+When a new Account logs in via SAML, OneLogin sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these OneLogin SAML Attributes are mapped to Stormpath attributes.
 
 6.1. Find the Existing SAML Attributes
 ++++++++++++++++++++++++++++++++++++++
@@ -3111,7 +3119,7 @@ Now the ``email`` Attribute has already been passed as part of the Account creat
 6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-If there are other attributes that you would like OneLogin to pass other attributes, you can configure this. From your OneLogin settings page:
+If there are other attributes that you would like OneLogin to pass, you can configure this. From your OneLogin settings page:
 
 #. Click on **Apps** > **Company Apps**
 #. Select the App that you want to configure
@@ -3159,6 +3167,12 @@ Okta
 Step 1: Set-up Okta
 """""""""""""""""""
 
+Every Okta application will need its own Stormpath Directory. The users for that Okta application will only be able to log in if that application's information is properly entered into a corresponding Stormpath Directory.
+
+.. note::
+
+  If you already have an Okta application, you can skip to Step 5.
+
 #. Log in to your Okta Administrator Account. From the landing page click on **Admin** to go to your Admin Dashboard.
 
 #. From here, click on **Add Applications** in the shortcuts on the right.
@@ -3181,10 +3195,10 @@ You will now arrive at your App's Admin page.
 
 #. Click on **View Setup Instructions**
 
-Step 2: Gather Information From Your Identity Provider
+Step 2: Gather Information From Okta
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now need to gather the required IdP information:
+You will now need to gather the required information from Okta:
 
 #. Copy the "Identity Provider Single Sign-On URL". This will be the value for both the "SSO Login URL" and "SSO Logout URL" in your Stormpath configuration.
 
@@ -3194,7 +3208,7 @@ You will now need to gather the required IdP information:
 
 .. note::
 
-    It is recommended that you stay on this page, as you will be returning here in Step 3 to add more configuration details.
+  It is recommended that you stay on this page, as you will be returning here in Step 3 to add more configuration details.
 
 Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -3235,7 +3249,7 @@ In the "SAML Identity Provider Configuration" section:
 
 We will now input these values into the Identity Provider.
 
-Step 4: Configure Your Service Provider in Your IdP
+Step 4: Configure Your Service Provider in Okta
 """""""""""""""""""""""""""""""""""""""""""""""""""
 
 #. Back in your App's "General" tab, find the "SAML Settings" section and click **Edit**.
@@ -3265,12 +3279,14 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+You have now completed the initial steps of setting-up login via Okta.
+
 .. _okta-attribute-mapping:
 
 Step 6: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
-When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+When a new Account logs in via SAML, Okta sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step you will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
 
 6.1. Find the Existing SAML Attributes
 ++++++++++++++++++++++++++++++++++++++
@@ -3334,7 +3350,7 @@ As you can see there are no default attributes passed by Okta, but you can map a
 6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-If there are attributes that you would like Okta to pass other attributes, you can configure this. From your Okta Admin settings page:
+If there are attributes that you would like Okta to pass, you can configure this. From your Okta Admin settings page:
 
 #. Click on the **Applications** tab in the top navigation pane
 #. Select your Application
@@ -3359,7 +3375,7 @@ You will now be returned to your App's "Sign on" page. If you click on the "Gene
 #. Select your Okta SAML Directory
 #. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
 #. Here you will enter the Okta attribute name under "Name"
-#. (Optional) Under "Name Format" you can enter ``Basic``
+#. (Optional) Under "Name Format" you can enter ``Basic``.
 #. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to.
 
 For example, you could enter:
@@ -3369,21 +3385,14 @@ For example, you could enter:
 
 If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
 
-.. code-block:: json
+.. note::
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/6Y2ViNhE5GTDBIGsTMgMD/providerData",
-    "createdAt": "2016-03-09T18:16:16.116Z",
-    "modifiedAt": "2016-03-25T14:49:30.098Z",
-    "providerId": "saml"
-  }
-
-As you can see, by default Okta does not pass any attributes.
+  If you do choose to enter in an "Attribute Name Format" in Stormpath, it must match the SAML "NameFormat" passed by Okta. To ensure that you are entering the right one you can click on **Preview the SAML Assertion** on the "Configure SAML" page in your Okta application.
 
 6.2. (Optional) Add Any Additional Attributes You Want
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-If there are attributes that you would like Okta, you can configure this. From your Okta Admin settings page:
+If there are attributes that you would like Okta to pass to Stormpath, you can configure this. From your Okta Admin settings page:
 
 #. Click on the **Applications** tab in the top navigation pane
 #. Select your Application
@@ -3435,7 +3444,7 @@ Step 1: Set-up Ping
 #. Click on **Add Application** > **New SAML Application**
 #. Fill in the information, the click on **Continue to Next Step**
 
-Step 2: Gather Your Identity Provider Information
+Step 2: Gather Your Ping Information
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now need to gather the following pieces of information:
@@ -3476,7 +3485,7 @@ What you should now have is something that looks like this:
 Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now create our SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
+You will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
 2.1. Create Your SAML Directory
 ++++++++++++++++++++++++++++++++++
@@ -3512,14 +3521,14 @@ From this page, you will need the follow information:
 
 We will now input these values into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP
+Step 3: Configure Your Service Provider in Ping
 """""""""""""""""""""""""""""""""""""""""""""""""""
 
 Back on your Ping Application's page (where we previously downloaded the SAML Metadata), you will now enter in your Directory information:
 
-#. The "Assertion Consumer Service (ACS)" is the "Assertion Consumer Service URL" from the previous step.
+#. The "Assertion Consumer Service (ACS)" is the Stormpath "Assertion Consumer Service URL" from the previous step.
 
-#. The "Entity ID" is the Directory "HREF" for your SAML Directory.
+#. The "Entity ID" is the Directory "HREF" for your Stormpth SAML Directory.
 
 #. Click **Continue to Next Step**, then click **Save & Publish**
 
@@ -3542,10 +3551,12 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+You have now completed the initial steps of configuring login via SAML for Ping Identity.
+
 Step 5: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
-When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath :ref:`Account attributes <ref-account>` (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+When a new Account logs in via SAML, Ping sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these Ping SAML Attributes are mapped to Stormpath attributes.
 
 4.1. Find the Existing SAML Attributes
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -3601,8 +3612,6 @@ For example, you could enter, using the custom attribute from Step 4.2 above:
 * For "Stormpath Attributes" enter ``givenName``
 
 If a user now logs in, Stormpath will take the ``firstname`` attribute and map it to the ``givenName`` field on the Account resource.
-
-You have now completed the initial steps of setting-up log in via Ping.
 
 .. _adfs:
 
@@ -4540,14 +4549,14 @@ Now that we've configured everything, you can take a look at what the actual SAM
 
   This is probably most irrelevant to the SDKs.
 
-The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so the Service Provider (SP) initiated flow is really just the Identity Provider (IdP) initiated flow with a few extra steps at the beginning.
+The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so :ref:`the Service Provider (SP) initiated flow <saml-sp-init-flow>` is really just the Identity Provider (IdP) initiated flow with a different starting point.
+
+.. _saml-idp-init-flow:
 
 The Identity Provider Initiated Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-
-  Preamble goes here.
+In the Identity Provider Initiated flow, the user starts at the Identity Provider (IdP). After logging-in to the IdP, the user selects the Stormpath-enabled web application from within the IdP's site, and is redirected to the application in an authenticated state.
 
 .. figure:: images/auth_n/SamlFlow_IdpInit.png
     :align: center
@@ -4677,9 +4686,7 @@ At this point your user is authenticated and able to use your app.
 The Service Provider Initiated Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. todo::
-
-  Add some preamble
+In the Service Provider Initiated flow, the user starts at a login page (either ID Site or one inside a Stormpath-powered application), then is redirected to the Identity Provider. After authenticating with the Identity Provider, the user is returned to the application in an authenticate state.
 
 .. figure:: images/auth_n/SamlFlow_SpInit.png
     :align: center
