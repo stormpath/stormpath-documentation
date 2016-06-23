@@ -3446,7 +3446,7 @@ Step 1: Set-up Ping
 #. Click on **Add Application** > **New SAML Application**
 #. Fill in the information, the click on **Continue to Next Step**
 
-Step 2: Gather Your Identity Provider Information
+Step 2: Gather Your Ping Information
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 You will now need to gather the following pieces of information:
@@ -3487,7 +3487,7 @@ What you should now have is something that looks like this:
 Step 3: Create Your SAML Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-You will now create our SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
+You will now create your SAML Directory in Stormpath, using the values you gathered in the previous step. Then you will use information from this newly-created Directory to configure Stormpath as a Service Provider in the IdP in the next step.
 
 2.1. Create Your SAML Directory
 ++++++++++++++++++++++++++++++++++
@@ -3523,14 +3523,14 @@ From this page, you will need the follow information:
 
 We will now input these values into the Identity Provider.
 
-Step 3: Configure Your Service Provider in Your IdP
+Step 3: Configure Your Service Provider in Ping
 """""""""""""""""""""""""""""""""""""""""""""""""""
 
 Back on your Ping Application's page (where we previously downloaded the SAML Metadata), you will now enter in your Directory information:
 
-#. The "Assertion Consumer Service (ACS)" is the "Assertion Consumer Service URL" from the previous step.
+#. The "Assertion Consumer Service (ACS)" is the Stormpath "Assertion Consumer Service URL" from the previous step.
 
-#. The "Entity ID" is the Directory "HREF" for your SAML Directory.
+#. The "Entity ID" is the Directory "HREF" for your Stormpth SAML Directory.
 
 #. Click **Continue to Next Step**, then click **Save & Publish**
 
@@ -3553,10 +3553,12 @@ We will now complete the final steps in the Stormpath Admin Console: adding one 
 
 #. Click **Create Mappings**.
 
+You have now completed the initial steps of configuring login via SAML for Ping Identity.
+
 Step 5: Configure Your Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""
 
-When a new Account logs in via SAML, the IdP sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these IdP SAML Attributes are mapped to Stormpath attributes.
+When a new Account logs in via SAML, Ping sends along a number of SAML attributes. These attributes are mapped to Stormpath `Account attributes <https://docs.stormpath.com/rest/product-guide/latest/reference.html#account>`__ (such as ``givenName`` or ``email``) and these values are either stored, if the Account is new, or updated, if the Account exists but the values are different. In this step we will configure how these Ping SAML Attributes are mapped to Stormpath attributes.
 
 4.1. Find the Existing SAML Attributes
 +++++++++++++++++++++++++++++++++++++++++++++
@@ -3612,8 +3614,6 @@ For example, you could enter, using the custom attribute from Step 4.2 above:
 * For "Stormpath Attributes" enter ``givenName``
 
 If a user now logs in, Stormpath will take the ``firstname`` attribute and map it to the ``givenName`` field on the Account resource.
-
-You have now completed the initial steps of setting-up log in via Ping.
 
 .. _adfs:
 
