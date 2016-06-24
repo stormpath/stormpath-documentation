@@ -1583,23 +1583,23 @@ Datetime Search is used when you want to search for Accounts that have a certain
     Content-Type: application/json;charset=UTF-8
 
     {
-        "href": "https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp/accounts",
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE/accounts",
         "offset": 0,
         "limit": 25,
         "size": 1,
         "items": [
             {
-                "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHILydAid",
-                "username": "first2shoot",
-                "email": "han@newrepublic.gov",
-                "givenName": "Han",
-                "middleName": null,
-                "surname": "Solo",
-                "fullName": "Han Solo",
-                "status": "DISABLED",
-                "createdAt": "2015-08-28T16:07:38.347Z",
-                "modifiedAt": "2015-12-01T21:22:56.608Z",
-                "...": "..."
+              "href": "https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexample",
+              "username": "first2shoot",
+              "email": "han@newrepublic.gov",
+              "givenName": "Han",
+              "middleName": null,
+              "surname": "Solo",
+              "fullName": "Han Solo",
+              "status": "DISABLED",
+              "createdAt": "2015-08-28T16:07:38.347Z",
+              "modifiedAt": "2015-12-01T21:22:56.608Z",
+              "...": "..."
             }
         ]
     }
@@ -1928,7 +1928,7 @@ There are three steps to the password reset flow:
       {
         "email":"phasma@empire.gov"
         "accountStore": {
-          "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcai8lghrp"
+          "href": "https://api.stormpath.com/v1/groups/2SKhstu8PlaekcaEXampLE"
         }
       }
 
@@ -2383,7 +2383,7 @@ Stormpath can store historical password information in order to allow for restri
 
   .. code-block:: http
 
-    POST /v1/passwordPolicies/2SKhstu8Plaekcai8lghrp/strength HTTP/1.1
+    POST /v1/passwordPolicies/2SKhstu8PlaekcaEXampLE/strength HTTP/1.1
     Host: api.stormpath.com
 
     {
@@ -2892,3 +2892,138 @@ To delete an SMTP Server, send the following:
 .. only:: python
 
   (python.todo)
+
+.. _email-domain-restriction:
+
+3.6.4 Restricting User Email Domains
+-------------------------------------
+
+As a developer, you are able to restrict which emails can be used by Accounts within a particular Directory. You control this adding domains to either a Domain Whitelist or Blacklist, both of which are attached to your Directory's Account Creation Policies. This means that if an email is used as part of user registration, or a user later tries to update their Account with a new email, that email will be checked against that Whitelist and/or Blacklist.
+
+If your Whitelist contains only ``gmail.com`` then only email addresses from that domain will be allowed for your user Accounts. If a user tries to register a new Account without using a Gmail address, then the Account creation will error. If they try to update their Account with a new address that isn't a Gmail, the update will also fail.
+
+Rules
+""""""
+
+Examples of rules include:
+
+- ``*site.com``
+- ``*.site.com``
+- ``site.*.com``
+- ``site.*``
+- ``*.com``
+
+You can enter in a ``*`` wildcard at any point in the email domain, and this will either allow or disallow (depending on which list you add it to) all emails fitting that pattern.
+
+For example, the rule ``*gmail.com`` would allow/disallow::
+
+gmail.com
+zgmail.com
+id.gmail.com
+
+The slightly different rule ``*.gmail.com`` would allow/disallow::
+
+id.gmail.com
+
+But would not allow/disallow::
+
+gmail.com
+zgmail.com
+
+The rule ``mail.*.ru`` would allow/disallow::
+
+mail.google.ru
+mail.xyz.ru
+
+But would not allow/disallow::
+
+email.google.ru
+mail.xyz.ca
+
+Working with the Lists
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Working with the Whitelist and Blacklist is exactly the same. In both cases, you send an array in this format:
+
+.. code-block:: json
+
+[
+"*domain.com",
+"*.another.ca"
+]
+
+If you would like to specify domains that are to be allowed, you add entries to the ``emailDomainWhitelist`` array, and for domains that are to be disallowed, you add entries to the ``emailDomainBlacklist``.
+
+Both arrays start out as empty. An empty ``emailDomainWhitelist`` means that all email domains are allowed. An empty ``emailDomainBlacklist`` means that no email domains are disallowed.
+
+Adding a Domain
+"""""""""""""""
+
+If you wanted to allow only users using emails from ``gmail.com`` and ``stormpath.com`` to register for this Directory, you could add the following entries to the Whitelist:
+
+.. code-block:: json
+
+  POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+
+  {
+    "emailDomainWhitelist": [
+        "*stormpath.com",
+        "*gmail.com"
+        ]
+  }
+
+And you would get back the Account Creation Policies resource:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
+    "verificationEmailStatus": "DISABLED",
+    "verificationSuccessEmailStatus": "DISABLED",
+    "welcomeEmailStatus": "DISABLED",
+    "emailDomainWhitelist": [
+      "*stormpath.com",
+      "*gmail.com"
+    ],
+    "emailDomainBlacklist": [],
+    "...":"..."
+    }
+  }
+
+Removing a Domain
+"""""""""""""""""
+
+If you changed our mind and wanted to only allow users to register with ``stormpath.com`` emails, then you would just overwrite the existing Whitelist:
+
+.. code-block:: json
+
+  POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+
+  {
+    "emailDomainWhitelist": [
+        "*stormpath.com"
+        ]
+  }
+
+And then you'd get back the Account Policies, with the updated Whitelist:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
+    "verificationEmailStatus": "DISABLED",
+    "verificationSuccessEmailStatus": "DISABLED",
+    "welcomeEmailStatus": "DISABLED",
+    "emailDomainWhitelist": [
+      "*stormpath.com"
+    ],
+    "emailDomainBlacklist": [],
+    "...":"..."
+    }
+  }
+
+Working with the Blacklist is exactly the same, except you add entries to the ``emailDomainBlacklist`` array instead.
