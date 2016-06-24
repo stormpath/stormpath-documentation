@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-??
+  ==========
+
+  - **New:** Tenants can now be assigned a Custom SMTP Server. New documentation has been added in the Account Management Chapter section :ref:`add-custom-smtp`, as well as a new :ref:`ref-custom-smtp` section under the Tenant resource in the Reference chapter.
+
   2016-06-20
   ==========
 

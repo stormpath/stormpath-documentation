@@ -1452,3 +1452,53 @@ The ID Site token that was submitted was not authenticated by ID Site. Stormpath
 **User Message**
 
 *(Same as above)*
+
+.. _errors-130xx:
+
+130XX: SMTP Server
+==================
+
+Error 13000
+-----------
+
+**Message**
+
+Unable to connect to an SMTP server located at the address and port provided.
+
+**User Message**
+
+*(Same as above)*
+
+
+Error 13001
+-----------
+
+**Message**
+
+Unable to authenticate to an SMTP server with the username and password provided.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13002
+-----------
+
+**Message**
+
+Unable to connect to an SMTP server using the security protocol provided.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13003
+-----------
+
+**Message**
+
+You cannot create a new email server because one already exists for your Tenant.
+
+**User Message**
+
+*(Same as above)*

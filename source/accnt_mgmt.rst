@@ -2757,3 +2757,138 @@ To avoid this, you include the ``!`` which puts the macro into "quiet reference"
 ``Is your favorite color ?``
 
 Since customData can contain any arbitrary key-value pairs, Stormpath recommends that any email macro references to customData keys use the ``!`` quiet reference. Applications should also use the quiet reference because there are possible cases where the templating engine might not have access to an Application resource.
+
+.. _add-custom-smtp:
+
+3.6.3. Customizing Your SMTP Server
+-----------------------------------
+
+Normally, the emails that Stormpath sends as a part of processes like Account creation and password reset come from Stormpath's SMTP server. However, it is possible to configure Stormpath to send emails using an SMTP server of your choosing.
+
+Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
+
+``v1/smtpServers/$SMTP_SERVER_ID``
+
+Or off of your Tenant:
+
+``v1/tenants/$TENANT_ID/smtpServers``
+
+
+In the event that sending an email using the custom SMTP server fails repeatedly, Stormpath will fall back to its own server. In this situation, Stormpath will also send you an email alerting you to the error.
+
+.. note::
+
+  If Stormpath uses its own SMTP server to send email, this may cause a conflict with your `SPF records <http://www.openspf.org/Introduction>`__ which might result in those emails being marked as spam by email clients.
+
+Adding a new Custom Server
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Adding a custom SMTP server via the REST API is done in the same way as creating any other Stormpath resource.
+
+In addition to the location and port of the server, you must also pass valid credentials. Before creating the resource, Stormpath will confirm that the information given is valid and that a connection can be established. If the ``host``, ``port``, ``username`` or ``password`` are incorrect, you will receive back :ref:`an error <errors-130xx>`. If a custom server already exists for your Stormpath Tenant, then you will also receive :ref:`an error <errors-130xx>`.
+
+.. only:: rest
+
+  For the full description of what is inside an SMTP Server resource, please see :ref:`the Reference chapter <ref-custom-smtp>`. A successful custom server POST would look like this:
+
+  .. code-block:: http
+
+    POST /v1/smtpServers HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+    {
+      "name":"My SMTP Server",
+      "description":"My Awesome SMTP Server",
+      "username":"ausername",
+      "password":"Apassw0rd",
+      "securityProtocol":"tls",
+      "host":"email.host.com",
+      "port":25
+    }
+
+  With the following response:
+
+  .. code-block:: http
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json;charset=UTF-8
+
+    {
+        "createdAt": "2016-06-23T22:04:47.163Z",
+        "description": "My Awesome SMTP Server",
+        "host": "email.host.com",
+        "href": "https://api.stormpath.com/v1/smtpServers/3svYfnFPh3q2Hbfexample",
+        "modifiedAt": "2016-06-23T22:04:47.163Z",
+        "name": "My SMTP Server",
+        "port": 25,
+        "securityProtocol": "TLS",
+        "status": "ENABLED",
+        "tenant": {
+            "href": "api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexample"
+        },
+        "username": "ausername"
+    }
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
+
+Deleting a Custom Server
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you would like to stop using the custom server, you can disable it by setting its ``status`` to ``DISABLED``. A more permanent solution is to delete the SMTP Server resource entirely. This is also required if you would like to use a different server, since your Tenant can only have one of these resources at any given time.
+
+To delete an SMTP Server, send the following:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    DELETE /v1/smtpServers/3svYfnFPh3q2Hbfexample HTTP/1.1
+
+  Upon successful deletion you will get back a ``204 No Content`` message.
+
+.. only:: csharp or vbnet
+
+  (dotnet.todo)
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  (php.todo)
+
+.. only:: python
+
+  (python.todo)
