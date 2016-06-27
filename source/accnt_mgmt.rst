@@ -2765,14 +2765,51 @@ Since customData can contain any arbitrary key-value pairs, Stormpath recommends
 
 Normally, the emails that Stormpath sends as a part of processes like Account creation and password reset come from Stormpath's SMTP server. However, it is possible to configure Stormpath to send emails using an SMTP server of your choosing.
 
-Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
+.. only:: csharp or vbnet
 
-``v1/smtpServers/$SMTP_SERVER_ID``
+  .. warning::
 
-Or off of your Tenant:
+    This feature is not yet available in the .NET SDK. In the meantime, please consult the REST API documentation below.
 
-``v1/tenants/$TENANT_ID/smtpServers``
+  .. todo::
 
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
+
+  ``v1/smtpServers/$SMTP_SERVER_ID``
+
+  Or off of your Tenant:
+
+  ``v1/tenants/$TENANT_ID/smtpServers``
 
 In the event that sending an email using the custom SMTP server fails repeatedly, Stormpath will fall back to its own server. In this situation, Stormpath will also send you an email alerting you to the error.
 
@@ -2787,9 +2824,45 @@ Adding a custom SMTP server via the REST API is done in the same way as creating
 
 In addition to the location and port of the server, you must also pass valid credentials. Before creating the resource, Stormpath will confirm that the information given is valid and that a connection can be established. If the ``host``, ``port``, ``username`` or ``password`` are incorrect, you will receive back :ref:`an error <errors-130xx>`. If a custom server already exists for your Stormpath Tenant, then you will also receive :ref:`an error <errors-130xx>`.
 
-.. only:: rest
+.. only:: csharp or vbnet
 
-  For the full description of what is inside an SMTP Server resource, please see :ref:`the Reference chapter <ref-custom-smtp>`. A successful custom server POST would look like this:
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  For the full description of what is inside an SMTP Server resource, please see `the Reference chapter <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-custom-smtp>`__. A successful custom server POST would look like this:
 
   .. code-block:: http
 
@@ -2830,30 +2903,6 @@ In addition to the location and port of the server, you must also pass valid cre
         "username": "ausername"
     }
 
-.. only:: csharp or vbnet
-
-  (dotnet.todo)
-
-  .. only:: csharp
-
-  .. only:: vbnet
-
-.. only:: java
-
-  (java.todo)
-
-.. only:: nodejs
-
-  (node.todo)
-
-.. only:: php
-
-  (php.todo)
-
-.. only:: python
-
-  (python.todo)
-
 Deleting a Custom Server
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2861,17 +2910,11 @@ If you would like to stop using the custom server, you can disable it by setting
 
 To delete an SMTP Server, send the following:
 
-.. only:: rest
-
-  .. code-block:: http
-
-    DELETE /v1/smtpServers/3svYfnFPh3q2Hbfexample HTTP/1.1
-
-  Upon successful deletion you will get back a ``204 No Content`` message.
-
 .. only:: csharp or vbnet
 
-  (dotnet.todo)
+  .. todo::
+
+    This.
 
   .. only:: csharp
 
@@ -2887,11 +2930,21 @@ To delete an SMTP Server, send the following:
 
 .. only:: php
 
-  (php.todo)
+  .. todo::
+
+    This.
 
 .. only:: python
 
   (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    DELETE /v1/smtpServers/3svYfnFPh3q2Hbfexample HTTP/1.1
+
+  Upon successful deletion you will get back a ``204 No Content`` message.
 
 .. _email-domain-restriction:
 
@@ -2900,7 +2953,7 @@ To delete an SMTP Server, send the following:
 
 As a developer, you are able to restrict which emails can be used by Accounts within a particular Directory. You control this by adding domains to either a Domain Whitelist or Blacklist, both of which are attached to your Directory's Account Creation Policies. This means that if an email is used as part of user registration, or a user later tries to update their Account with a new email, that email will be checked against that Whitelist and/or Blacklist.
 
-If your Whitelist contains only ``gmail.com`` then only email addresses from that domain will be allowed for your user Accounts. If a user tries to register a new Account without using a Gmail address, then the Account creation will error. If they try to update their Account with a new address that isn't a Gmail, the update will also fail.
+If your Whitelist contains only ``stormpath.com`` then only email addresses from that domain will be allowed for your user Accounts. If a user tries to register a new Account without using a Stormpath address, then the Account creation will error. If they try to update their Account with a new address that isn't a Stormpath address, the update will also fail.
 
 Domain Entries
 ^^^^^^^^^^^^^^
@@ -2915,42 +2968,72 @@ Examples of domain entries include:
 
 You can enter in a ``*`` wildcard at any point in the email domain, and this will either allow or disallow (depending on which list you add it to) all emails fitting that pattern.
 
-For example, the entry ``*gmail.com`` would match::
+For example, the entry ``*site.com`` would match::
 
-  gmail.com
-  zgmail.com
-  id.gmail.com
+  site.com
+  zsite.com
+  id.site.com
 
-The slightly different entry ``*.gmail.com`` would match::
+The slightly different entry ``*.site.com`` would match::
 
-  id.gmail.com
-
-But would not allow/disallow::
-
-  gmail.com
-  zgmail.com
-
-The entry ``mail.*.ru`` would match::
-
-  mail.google.ru
-  mail.xyz.ru
+  id.site.com
 
 But would not match::
 
-  email.google.ru
-  mail.xyz.ca
+  site.com
+  zsite.com
 
 Working with the Lists
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Working with the Whitelist and Blacklist is exactly the same. In both cases, you send an array in this format:
+Working with the Whitelist and Blacklist is exactly the same.
 
-.. code-block:: json
+.. only:: csharp or vbnet
 
-  [
-  "*domain.com",
-  "*.another.ca"
-  ]
+  .. warning::
+
+    This feature is not yet available in the .NET SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  In both cases, you send an array in this format:
+
+  .. code-block:: json
+
+    [
+    "*domain.com",
+    "*.another.ca"
+    ]
 
 Keep in mind the following when you work with the Whitelist and Blacklist:
 
@@ -2960,73 +3043,210 @@ Keep in mind the following when you work with the Whitelist and Blacklist:
 - An empty ``emailDomainWhitelist`` means that all email domains are allowed.
 - An empty ``emailDomainBlacklist`` means that no email domains are disallowed.
 - To add or remove entries, you must overwrite the entire list. See examples below.
+- The Blacklist takes precedence over the Whitelist. That means that if ``site.com`` is found in both lists, the Blacklist will take priority, and users will not be able to use any emails from the ``site.com`` domain.
 
 Adding a Domain
 """""""""""""""
 
-If you wanted to allow only users using emails from ``gmail.com`` and ``stormpath.com`` to register for this Directory, you could add the following entries to the Whitelist:
+If you wanted to allow only users using emails from ``site.com`` and ``stormpath.com`` to register for this Directory, you could add the following entries to the Whitelist:
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
+  .. warning::
 
-  {
-    "emailDomainWhitelist": [
-        "*stormpath.com",
-        "*gmail.com"
-        ]
-  }
+    This feature is not yet available in the .NET SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+    {
+      "emailDomainWhitelist": [
+          "*stormpath.com",
+          "*site.com"
+          ]
+    }
 
 And you would get back the Account Creation Policies resource:
 
-.. code-block:: json
+.. only:: csharp or vbnet
 
-  {
-    "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
-    "verificationEmailStatus": "DISABLED",
-    "verificationSuccessEmailStatus": "DISABLED",
-    "welcomeEmailStatus": "DISABLED",
-    "emailDomainWhitelist": [
-      "*stormpath.com",
-      "*gmail.com"
-    ],
-    "emailDomainBlacklist": [],
-    "...":"..."
-  }
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: json
+
+    {
+      "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
+      "verificationEmailStatus": "DISABLED",
+      "verificationSuccessEmailStatus": "DISABLED",
+      "welcomeEmailStatus": "DISABLED",
+      "emailDomainWhitelist": [
+        "*stormpath.com",
+        "*site.com"
+      ],
+      "emailDomainBlacklist": [],
+      "...":"..."
+    }
 
 Removing a Domain
 """""""""""""""""
 
 If you changed our mind and wanted to only allow users to register with ``stormpath.com`` emails, then you would just overwrite the existing Whitelist:
 
-.. code-block:: http
+.. only:: csharp or vbnet
 
-  POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
+  .. warning::
 
-  {
-    "emailDomainWhitelist": [
-        "*stormpath.com"
-        ]
-  }
+    This feature is not yet available in the .NET SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: http
+
+    POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+    {
+      "emailDomainWhitelist": [
+          "*stormpath.com"
+          ]
+    }
 
 And then you'd get back the Account Policies, with the updated Whitelist:
 
-.. code-block:: json
+.. only:: csharp or vbnet
 
-  {
-    "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
-    "verificationEmailStatus": "DISABLED",
-    "verificationSuccessEmailStatus": "DISABLED",
-    "welcomeEmailStatus": "DISABLED",
-    "emailDomainWhitelist": [
-      "*stormpath.com"
-    ],
-    "emailDomainBlacklist": [],
-    "...":"..."
-  }
+  .. todo::
+
+    This.
+
+  .. only:: csharp
+
+  .. only:: vbnet
+
+.. only:: java
+
+  (java.todo)
+
+.. only:: nodejs
+
+  (node.todo)
+
+.. only:: php
+
+  .. todo::
+
+    This.
+
+.. only:: python
+
+  (python.todo)
+
+.. only:: rest or csharp or vbnet or php
+
+  .. code-block:: json
+
+    {
+      "href": "https://staging-api-b.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE",
+      "verificationEmailStatus": "DISABLED",
+      "verificationSuccessEmailStatus": "DISABLED",
+      "welcomeEmailStatus": "DISABLED",
+      "emailDomainWhitelist": [
+        "*stormpath.com"
+      ],
+      "emailDomainBlacklist": [],
+      "...":"..."
+    }
 
 Working with the Blacklist is exactly the same, except you add entries to the ``emailDomainBlacklist`` array instead.
