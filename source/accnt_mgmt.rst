@@ -3148,6 +3148,10 @@ And you would get back the Account Creation Policies resource:
       "...":"..."
     }
 
+Now, if an Account is passed to Stormpath with an email domain that does not match the entries on this Whitelist, you will get back `an error <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-7206>`__.
+
+If you were instead working with a Blacklist, and you had added ``*stormpath.com`` and ``*site.com`` to there, then if an Account were passed to Stormpath that contained an email from either of those domains, you would also get back `an error <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-7205>`__.
+
 Removing a Domain
 """""""""""""""""
 

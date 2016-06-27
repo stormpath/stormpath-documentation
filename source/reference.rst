@@ -2362,10 +2362,10 @@
         "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/welcomeEmailTemplates"
       }
       "emailDomainWhitelist":[
-        "*.stormpath.com"
+        "*stormpath.com"
       ],
       "emailDomainBlacklist":[
-        "*.gmail.com"
+        "*gmail.com"
       ]
     }
 
