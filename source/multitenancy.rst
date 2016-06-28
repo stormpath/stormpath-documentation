@@ -7,52 +7,136 @@
 6.1. What Is a Multi-Tenant Application?
 ========================================
 
-Is your application a multi-tenant application? Answer the following questions:
+Is your application a multi-tenant application? If you already know, then feel free to :ref:`skip this section <multitenancy-modeling>`. If you are unsure, consider the following questions:
 
-**Will your application's users only interact with your application on an individual basis?**
+**Will your application's customers share the same resources?**
 
-To understand this, consider the difference between two internet chat applications: WhatsApp and Slack. WhatsApp is not a multi-tenant application, because everyone has their own account, and their relationship to the application only exists in that simple connection: A user can have a WhatsApp account. From WhatsApp's perspective, they do not belong to any larger organized user base. WhatsApp is a "multi-user" application, but it is not a "multi-tenant" application.
+The best way to understand this first aspect of multi-tenancy is by thinking of a condo: lots of residents making use of a shared building infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application infrastructure that services multiple organization tenants simultaneously.
 
-Tenants are organizations of people who use your application in some shared way. So Slack has the concept of "teams", and when you log in to Slack you are also logging in to a team. This also means that before a user can create an account with Slack, they must indicate what team they are joining. So, with WhatsApp, a user has a WhatsApp account. With Slack, a user belongs to a Slack Team, and then has an Account within that team. And here we have the beginnings of multi-tenancy.
+For example, if you are creating your own cloud-based team chat application, you will have multiple organizations connecting to the same servers and databases, and using the same basic application code. The infrastructure, both hardware and software, will be shared among all of your customers.
 
-**Will your application's tenants all share the same resources?**
+However, there are plenty of cloud-based services that are not multi-tenant! So now we need to ask another question.
 
-The best way to understand this aspect of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple customers, or "tenants", simultaneously.
+**If your application offered subscriptions, would those be paid by individuals or organizations?**
 
-For example, if you are creating a cloud-based team chat application, you will have multiple customers (or "tenants") connecting to the same servers and databases, and using the same basic application code. The infrastructure of the team chat will be shared among all of your customers.
+Perhaps your application will be totally free to use, but don't worry, payment here is simply a way of understand the relationship your users have to your application.
 
-At the same time, you don't want one company that uses your application to be able to see another company's chat logs without explicit permission. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model.
+Consider the difference between two internet chat applications: WhatsApp and Slack. When WhatsApp briefly offered a paid subscription, it was paid on a per-account basis. With Slack, an individual user can't pay for a subscription, that has to happen on the Team level. So what's the difference here?
 
-6.2 Multi-Tenancy and the Stormpath Data Model
-==============================================
+WhatsApp is not a multi-tenant application, because every user's relationship to the application only exists in that simple connection: A user has a WhatsApp account. WhatsApp is a "multi-user" application, but it is not a "multi-tenant" application.
+
+Tenants are organizations of people who use your application in some shared way. So Slack calls their tenants "Teams", and when you log in to Slack you are also logging in to a Team. This also means that a user cannot create an account with Slack, they must create an account with a Slack Team. So, with WhatsApp, a user has a WhatsApp account. With Slack, a user belongs to a Slack Team, and then has an Account within that Team.
+
+If your application is offering (1) shared software and hardware infrastructure to (2) client organizations, then you have a multi-tenant application! Now, for privacy and security purposes, it's very important that your application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to everything that we offer.
+
+6.2. Why Use Stormpath for Multi-Tenancy?
+=========================================
+
+This entire chapter will serve as an answer to this question. However, it's good to provide an overview.
+
+Your multi-tenant application might need any or all of the following:
+
+- Per-tenant :ref:`authentication flows <multitenancy-auth-to-org>` and :ref:`login pages <multitenancy-routing-users>`.
+- Social, LDAP, or SAML login available for each tenant
+- Per-tenant or application-wide password policies and registration emails
+- User roles customized to each tenant, or even shared across tenants
+
+.. _multitenancy-modeling:
 
 6.2. Modeling Tenants in Stormpath
 ===================================
 
-Multi-tenant applications come with special user management considerations:
-
-- How will tenants be represented?
-- How will user data in one tenant be kept secure and separate from other tenant partitions?
-
-In our :ref:`Account Management <account-mgmt>` chapter we discussed two kinds of Account Stores: :ref:`Directories <directory-mgmt>`, and :ref:`Groups <group-mgmt>`. For multi-tenant applications there is an additional :ref:`Organization <ref-organization>` resource, which functions like a virtual Account Store that itself wraps both Directories and Groups.
+Now that we have an understanding of what a multi-tenant application is, as well as the broad strokes of what Stormpath can offer you, we can move on to the next important step, which is understanding how your multi-tenant userbase can be modeled using Stormpath's Data model.
 
 .. note::
 
-  A Directory or Group can be added to multiple Organizations.
+  Stormpath's data model is designed to be as flexible (and therefore powerful) as it can be, but this can also sometimes result in complexity. If at any point you have a question, do not hesitate to `get in touch <support@stormpath.com>`__.
 
-As with all user base modeling, we'll begin with the basics: Directories and Groups. Then we will move on to an explanation of how the Organization resource is used when modeling multi-tenancy.
+6.2.1 Multi-Tenancy and the Stormpath Data Model
+------------------------------------------------
+
+Let's start with a quick overview of the Stormpath resources involved in a multi-tenant data model, starting with the one resource that is purpose-built for multi-tenancy:
+
+**Organizations**
+
+Organizations are the most important modeling resource for multi-tenancy, as each Stormpath Organization maps to one of your application's tenants. They serve as the first point of contact between your Application resource and the rest of your user base, so any login attempts to Stormpath will first be directed to an Organization. The Organization will then in turn use either Directories or Groups to store its user Accounts.
+
+.. warning::
+
+  **Remember:** Stormpath itself is a multi-tenant application, so your Stormpath Tenant resource represents your space within Stormpath.
+
+  Your application's tenants are represented by Organization resources. Do not confuse the two! The Stormpath Tenant has no relevance to this multi-tenancy discussion.
+
+For more about user log-in, see :ref:`how-login-works`.
+
+For more information about the Organization resource, see:
+
+- :ref:`multitenancy-why-orgs`
+- :ref:`Working With Organizations <multitenancy-organizations>`
+
+**Directories**
+
+Directories are the the top-level account store for both Accounts and Groups. All of your Accounts will have to exist inside a Directory. Here is a very simple example of how an Application, Organization and Directory can relate to one another:
+
+.. figure:: images/multitenancy/simple_ERD_TpD.png
+  :align: center
+  :scale: 100%
+  :alt: Directory with Organization and Application
+
+  *Application + Organization + Directory*
+
+A few more relevant points about the Directory resource:
+
+- All Accounts within a Directory must have a unique email address
+- All Groups within a Directory must have a unique name
+- Password and Account Creation Policies are defined on a per-Directory basis
+- Emails are configured on a per-Directory basis
+
+Whether you choose to have one Directory for each Organization, or multiple Organizations within one Directory depends on your requirements. More on that distinction can be found :ref:`below <multitenancy-strategies>`.
+
+**Groups**
+
+Groups must always belong to a Directory, but they are otherwise very flexible. Specifically, they have two functions worth mentioning in this context. First of all, Groups can be the primary account store for your Organization: So you could have one Directory for your application, and then one Group for each tenant Organization. More on this :ref:`below <multitenancy-strategies>`. Secondly, Groups can also be used to model user roles, like an "admin" user role. Below you can find a simple diagram with a Group being used both to model a tenant and a role:
+
+.. figure:: images/multitenancy/simple_ERD_TpG.png
+  :align: center
+  :scale: 100%
+  :alt: Group with Directory, Organization, and Application
+
+  *Application + Organization + Directory*
+
+.. _multitenancy-why-orgs:
+
+Why use Organizations?
+^^^^^^^^^^^^^^^^^^^^^^
+
+The Organization resource allows your application's tenants to have as many, or as few, Directories and Groups as they want, while also maintaining strict data segregation. So if a tenant requires a Cloud Directory, a Google Social Directory, and an LDAP Directory, all of these can sit under the umbrella of a single Organization resource that represents their data space in your app.
+
+Although Organizations do not themselves own Accounts in the same way as Directories and Groups, they can be mapped to Applications as Account Stores for the purposes of user log in. This means that they can be used as, among other things, a single-point of access control to an Application. For example, if you wanted to enable login for a new tenant in your multi-tenant application, all you would have to do is map all of the relevant Directories and/or Groups to your Organization, and then map that Organization to your Application as an Account Store. If at some future point you want to disable that tenant, all you have to do is remove the Account Store Mapping between that Organization and your Application, and the tenant's users would no longer be able to log in.
 
 .. _multitenancy-strategies:
 
 6.2.1. Account Store Strategies for Multi-Tenancy
 -------------------------------------------------
 
-Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, the additional consideration is whether you will have each one of your application's tenants represented by a Directory or a Group.
+Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, you have one Organization resource for every one of your tenants. The additional consideration is whether each of those Organizations has its own Directory, or whether all Organizations share a single Directory.
 
-Strategy 1: Tenants as Directories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To help you decide which strategy is best, answer the following questions:
 
-To understand the multi-tenancy considerations in modeling tenants as :ref:`Directories <ref-directory>`, there are three characteristics of Directories that are worth remembering:
+- **Can a user sign up for multiple tenants with the same email address?**
+
+- **Will your tenants all have the same password strength requirements?**
+
+If the answer to either of these questions is "No", then you will want to map each Organization to its own Directory. We will call this the :ref:`"Directory per Organization" strategy <multitenancy-dpo>`.
+
+If the answer to either of them is "Yes", then you will want to map each Organization to its own Group. We will call this the :ref:`"Group per Organization" strategy <multitenancy-gpo>`.
+
+.. _multitenancy-dpo:
+
+Strategy 1: Directory per Organization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To understand the multi-tenancy considerations in modeling tenants as Directories, there are three characteristics of Directories that are worth remembering:
 
 - All Accounts within a Directory must have a unique ``email`` and ``username``
 - All Groups within a Directory must have a unique ``name``
@@ -84,8 +168,10 @@ An example implementation of the Tenants-as-Directories strategy is shown in the
 - Any role Groups must be created separately, on a per-Directory basis. If you decided to create a new role, a new Group resource representing that role would have to be added to each of your tenant Directories if you wanted the Accounts in that Directory to be able to be assigned that role.
 - In order to allow Application Administrators to log in to the app, you'd have to create a new Directory just for them, which is separately mapped to the Application as an Account Store. Since this Directory does not represent a tenant, no Organization resource is created.
 
-Strategy 2: Tenants as Groups
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _multitenancy-gpo:
+
+Strategy 2: Group per Organization
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The other multi-tenancy option is to have a single Directory under which each of your application's tenants has their own Group. Choosing this strategy is likely right for you if:
 
@@ -207,18 +293,16 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
-6.2.2. Organizations
---------------------
+.. _multitenancy-organizations:
 
-Once you have your application's tenants modeled as Directories or Groups, the final tool that Stormpath gives you is the Organization resource. These are umbrella entities that allow you to better structure and control multi-tenant applications.
+6.2.2. Working with Organizations
+---------------------------------
 
-.. note::
+Once you have your application's tenants modeled as Directories or Groups, the final tool that Stormpath gives you is the Organization resource. You will recall that Organizations are umbrella entities that allow you to better structure and control multi-tenant applications.
 
-  The :ref:`ref-organization` resource is not to be confused with the Tenant resource. While the :ref:`ref-tenant` resource is so-called because it represents your tenancy inside the Stormpath server, the Organization resource represents the space alloted for a tenant of your application.
+.. todo::
 
-The Organization resource allows your application's tenants to have as many, or as few, Directories and Groups as they want, while also maintaining strict data segregation. So if a tenant requires a Cloud Directory, a Google Social Directory, and an LDAP Directory, all of these can sit under the umbrella of a single Organization resource that represents their data space in your app.
-
-Although Organizations do not themselves own Accounts in the same way as Directories and Groups, they can be mapped to Applications as Account Stores for the purposes of user log in. This means that they can be used as, among other things, a single-point of access control to an Application. For example, if you wanted to enable login for a new tenant in your multi-tenant application, all you would have to do is map all of the relevant Directories and/or Groups to your Organization, and then map that Organization to your Application as an Account Store. If at some future point you want to disable that tenant, all you have to do is remove the Account Store Mapping between that Organization and your Application, and the tenant's users would no longer be able to log in.
+  Add link to "you will recall" above.
 
 .. _create-org:
 
@@ -617,6 +701,7 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
   .. literalinclude:: code/python/multitenancy/add_account_to_org.py
       :language: python
 
+.. _multitenancy-auth-to-org:
 
 6.3. Authenticating an Account against an Organization
 ======================================================
@@ -635,7 +720,7 @@ When a login attempt is made against an Application’s ``/loginAttempts`` endpo
 
 If the login attempt does specify an Organization, then we simply jump to that point in the steps, and the Organization's Account Stores are iterated through as described above.
 
-.. _multitenant-routing-users:
+.. _multitenancy-routing-users:
 
 6.4 Routing Users to their Tenant
 ==================================
