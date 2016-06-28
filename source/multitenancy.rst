@@ -7,6 +7,8 @@
 6.1. What Is a Multi-Tenant Application?
 ========================================
 
+Multiple apps VS multi-tenancy
+
 Is your application a multi-tenant application? If you already know, then feel free to :ref:`skip this section <multitenancy-modeling>`. If you are unsure, consider the following questions:
 
 **Will your application's customers share the same resources?**
@@ -119,38 +121,39 @@ Although Organizations do not themselves own Accounts in the same way as Directo
 6.2.1. Account Store Strategies for Multi-Tenancy
 -------------------------------------------------
 
-Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, you have one Organization resource for every one of your tenants. The additional consideration is whether each of those Organizations has its own Directory, or whether all Organizations share a single Directory.
+Your primary consideration when modeling users in Stormpath always begins with the Directory that will contain the user Accounts. With multi-tenancy, you always have one Organization resource for every one of your tenants. The additional consideration is whether each of those Organizations has its own Directory, or whether all Organizations share a single Directory.
 
 To help you decide which strategy is best, answer the following questions:
 
 - **Can a user sign up for multiple tenants with the same email address?**
 
-- **Will your tenants all have the same password strength requirements?**
+- **Will your tenants all have different password strength requirements?**
 
-If the answer to either of these questions is "No", then you will want to map each Organization to its own Directory. We will call this the :ref:`"Directory per Organization" strategy <multitenancy-dpo>`.
+If the answer to either of these questions is "Yes", then you will want to map each Organization to its own Directory. We will call this the :ref:`"Directory per Organization" strategy <multitenancy-dpo>`.
 
-If the answer to either of them is "Yes", then you will want to map each Organization to its own Group. We will call this the :ref:`"Group per Organization" strategy <multitenancy-gpo>`.
+If the answer to either of them is "No", then you will want to have only one Directory, and map each Organization to its own Group. We will call this the :ref:`"Group per Organization" strategy <multitenancy-gpo>`.
 
 .. _multitenancy-dpo:
 
 Strategy 1: Directory per Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To understand the multi-tenancy considerations in modeling tenants as Directories, there are three characteristics of Directories that are worth remembering:
+This first strategy has, as the name implies, one Directory for every tenant Organization.
+
+- If a user has signed up for an Account with one of your tenants, are they able to use that same email to create an Account in another tenant?
+- Should each tenant have the ability to define their own password strength policy?
+- Should each tenant have the ability to send different emails as part of the user Account creation process?
+- Does each tenant require different user Groups and/or :ref:`role Groups <role-groups>`?
+- Do you not require application-wide Groups that are available for all tenants?
+
+If you the answer to all of the above is "Yes", then mapping one Directory for each of your tenant Organizations is the right way to go. This is because:
 
 - All Accounts within a Directory must have a unique ``email`` and ``username``
 - All Groups within a Directory must have a unique ``name``
 - User policies, such as the :ref:`Password Policy <ref-password-policy>` and the :ref:`Account Creation Policy <ref-accnt-creation-policy>` are set at the Directory level
 
-From these points we can derive a few conditions where the tenants-as-Directories strategy is optimal. If your tenants satisfy one or more of these conditions:
-
-- You do not require email uniqueness across tenants. If a user has signed up for an Account with one tenant, they are able to use that same email to create an email for another Account in another tenant.
-- Each tenant has its own password strength policy.
-- Each tenant has different emails that need to be sent (or not sent) as part of the user Account creation process.
-- Each tenant requires different user Groups and/or :ref:`role Groups <role-groups>`. Application-wide Groups that span across tenants are not required.
-
-Tenants as Directories Example
-""""""""""""""""""""""""""""""
+Directory per Organization Example
+""""""""""""""""""""""""""""""""""
 
 Here is an example implementation that uses Directories to model tenants. It is important to note that this is just an example. Stormpath has a very flexible data model with intentionally versatile resources. If you'd like to discuss your particular implementation needs please `get in touch <support@stormpath.com>`_!
 
@@ -159,7 +162,7 @@ Here is an example implementation that uses Directories to model tenants. It is 
     :scale: 100%
     :alt: Tenant per Directory
 
-    *Tenants as Directories ERD.*
+    *Directory per Organization ERD.*
 
 An example implementation of the Tenants-as-Directories strategy is shown in the diagram above. Please note that everything discussed occurs inside the private data space that we refer to as your Stormpath Tenant, which is represented by the Tenant resource but does not play any part in multi-tenancy. The scenario demonstrates a multi-tenant userbase with two tenants, each of who is represented by two resources: an Organization and a Directory. There are a few points to highlight in this diagram:
 
