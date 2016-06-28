@@ -7,7 +7,24 @@
 6.1. What Is a Multi-Tenant Application?
 ========================================
 
-The best way to understand the concept of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple tenants simultaneously. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model.
+Is your application a multi-tenant application? Answer the following questions:
+
+**Will your application's users only interact with your application on an individual basis?**
+
+To understand this, consider the difference between two internet chat applications: WhatsApp and Slack. WhatsApp is not a multi-tenant application, because everyone has their own account, and their relationship to the application only exists in that simple connection: A user can have a WhatsApp account. From WhatsApp's perspective, they do not belong to any larger organized user base. WhatsApp is a "multi-user" application, but it is not a "multi-tenant" application.
+
+Tenants are organizations of people who use your application in some shared way. So Slack has the concept of "teams", and when you log in to Slack you are also logging in to a team. This also means that before a user can create an account with Slack, they must indicate what team they are joining. So, with WhatsApp, a user has a WhatsApp account. With Slack, a user belongs to a Slack Team, and then has an Account within that team. And here we have the beginnings of multi-tenancy.
+
+**Will your application's tenants all share the same resources?**
+
+The best way to understand this aspect of multi-tenancy is by thinking of a condo: lots of residents making use of a shared infrastructure while maintaining their own private and secure living areas. Similar to this, a **multi-tenant application** is a single application that services multiple customers, or "tenants", simultaneously.
+
+For example, if you are creating a cloud-based team chat application, you will have multiple customers (or "tenants") connecting to the same servers and databases, and using the same basic application code. The infrastructure of the team chat will be shared among all of your customers.
+
+At the same time, you don't want one company that uses your application to be able to see another company's chat logs without explicit permission. For privacy and security purposes, it's very important that the application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to our data model.
+
+6.2 Multi-Tenancy and the Stormpath Data Model
+==============================================
 
 6.2. Modeling Tenants in Stormpath
 ===================================
