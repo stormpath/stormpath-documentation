@@ -896,7 +896,7 @@
   Example Query
   """""""""""""
 
-  .. code-block:: http
+  .. code-block:: bash
 
     curl --request GET \
     --url https://api.stormpath.com/v1/tenants/current \
@@ -1356,9 +1356,10 @@
   .. code-block:: bash
 
     curl --request POST \
-    --url 'https://api.stormpath.com/v1/applications?createDirectory=true' \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET
     --header 'content-type: application/json' \
     --header 'createdirectory: true' \
+    --url 'https://api.stormpath.com/v1/applications?createDirectory=true' \
     --data '{\n    "name":"Example App"\n}'
 
   This query would create the specified Application. Because we are also including the ``createDirectory`` query parameter, Stormpath will also create a Directory of the same name.
