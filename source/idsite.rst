@@ -967,6 +967,8 @@ As an overview, the flow would look like this:
 
 In Stormpath's public cloud (api.stormpath.com), ID Site is automatically setup and hosted for you. When you are on Stormpath's Enterprise environment (enterprise.stormpath.io) or on a Private Deployment, you will need to host ID Site in your infrastructure. This is a best practice for security and is very easy to accomplish.
 
+Note: These instructions can be followed for public cloud users as well.
+
 ID Site is a static website and thus can be easily hosted on any type of web server. It *must* be secured with https. Below is one approach that is both robust and very low cost. It does require some knowledge of working on the command line and setting DNS (Domain Name Service) records.
 
 The approach outlined below uses:
