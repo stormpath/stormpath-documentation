@@ -959,3 +959,307 @@ As an overview, the flow would look like this:
 #. User is redirected to ID Site.
 
 #. ID Site detects the user's authenticated session and redirects them back to Application B with an ID Site Assertion for Application B.
+
+.. _idsite-hosting:
+
+7.7. ID Site Hosting Guide
+==========================
+
+In Stormpath's public cloud (api.stormpath.com), ID Site is automatically setup and hosted for you. When you are on Stormpath's Enterprise environment (enterprise.stormpath.io) or on a Private Deployment, you will need to host ID Site in your infrastructure. This is a best practice for security and is very easy to accomplish.
+
+Note: These instructions can be followed for public cloud users as well if you determine that you want to host ID Site on you own.
+
+ID Site is a static website and thus can be easily hosted on any type of web server. It *must* be secured with https. Below is one approach that is both robust and very low cost. It does require some knowledge of working on the command line and setting DNS (Domain Name Service) records.
+
+The approach outlined below uses:
+
+#. Amazon S3 to store and serve ID Site
+#. Amazon Cloudfront to provide robust distributed delivery
+#. Letsencrypt to create free SSL certificates for your ID Site
+
+.. _build-id-site:
+
+Step 1: Build ID Site
+---------------------
+An in depth discussion of customizing ID Site is out of scope for this documentation. More information can be found `here <https://github.com/stormpath/idsite-src>`_.
+
+To build ID Site, follow these steps:
+
+.. code-block:: bash
+   :linenos:
+
+   git clone https://github.com/stormpath/idsite-src.git
+   cd idsite-src
+   npm install
+   bower install
+   grunt build
+
+As you might guess, you will need `npm <https://docs.npmjs.com/getting-started/installing-node>`_, `bower <https://bower.io/>`_ and `grunt <http://gruntjs.com/>`_ installed.
+
+If you've followed the steps above, you will now have a built and minified ID Site in the *dist* folder.
+
+.. _host-id-site-on-s3:
+
+Step 2: Host ID Site on S3
+-----------------------------
+You will need to have an `AWS <http://aws.amazon.com/>`_ account setup for this step.
+
+#. Log in to the Amazon AWS `Console <http://aws.amazon.com/console>`_.
+#. Go to the `S3 services page <https://console.aws.amazon.com/s3>`_.
+#. Click the **Create Bucket** button.
+
+   |
+   .. image:: images/idsite_hosting/create_bucket.png
+   |
+
+#. Enter a name for the bucket and choose a region.
+
+   |
+   .. image:: images/idsite_hosting/bucket_name.png
+   |
+
+#. Enable **Static Website Hosting** on the right side of the page.
+
+   |
+   .. image:: images/idsite_hosting/enable_website.png
+   |
+
+   Remember to click the **Save** button.
+
+   |
+
+#. Update the bucket policy
+
+   #. Open the **Permissions** section of the console
+
+      |
+      .. image:: images/idsite_hosting/bucket_permissions.png
+      |
+
+   #. Click the **Add bucket policy** button
+
+      |
+      .. image:: images/idsite_hosting/bucket_policy_empty.png
+      |
+
+   #. Enter the policy information
+
+      |
+      .. image:: images/idsite_hosting/bucket_policy.png
+      |
+
+      .. code-block:: javascript
+
+         {
+           "Version":"2012-10-17",
+           "Statement":[{
+               "Sid":"PublicReadGetObject",
+               "Effect":"Allow",
+               "Principal": {
+                   "AWS": "*"
+               },
+               "Action":["s3:GetObject"],
+               "Resource":["arn:aws:s3:::custom-idsite-host/*"]
+           }]
+         }
+
+      Note: Make sure that you use the name of your bucket in the **Resource** section.
+
+#. Transfer the ID Site content to your bucket
+
+   There are numerous tools you can use to transfer files to your S3 bucket.
+   Below is an example using the AWS Command Line Interface.
+
+   Here's the command to transfer the ID Site minified files to your S3 bucket:
+
+   .. code-block:: bash
+
+      AWS_ACCESS_KEY_ID=<your AWS access key> AWS_SECRET_ACCESS_KEY=<your AWS secret> \
+      aws s3 sync dist/ s3://<your bucket name>
+
+      upload: dist/images/logo.png to s3://<your bucket name>/images/logo.png
+      upload: dist/favicon.ico to s3://<your bucket name>/favicon.ico
+      upload: dist/robots.txt to s3://<your bucket name>/robots.txt
+      upload: dist/error.html to s3://<your bucket name>/error.html
+      upload: dist/styles/main.css to s3://<your bucket name>/styles/main.css
+      upload: dist/scripts/iecompat.js to s3://<your bucket name>/scripts/iecompat.js
+      upload: dist/scripts/app.js to s3://<your bucket name>/scripts/app.js
+      upload: dist/index.html to s3://<your bucket name>/index.html
+      upload: dist/scripts/vendor.js to s3://<your bucket name>/scripts/vendor.js
+
+#. Confirm that ID Site is being served
+
+   Make note of the **Endpoint** assigned to your S3 bucket
+
+   |
+   .. image:: images/idsite_hosting/website_domain_name.png
+   |
+
+   Put that endpoint in your browser. You should see the **Sorry! There was a problem.** message. This indicates
+   that ID Site is, in fact, being served as a static website from Amazon S3.
+
+   |
+   .. image:: images/idsite_hosting/sorry.png
+   |
+
+.. _setup-cloudfront:
+
+Step 3: Setup Cloudfront
+------------------------
+
+Cloudfront speeds up response times for your static website and provides fault tolerance by automatically distributing it through a worldwide network
+of edge servers.
+
+Follow these steps to setup Cloudfront:
+
+#. Go the `Cloudfront Admin Console <https://console.aws.amazon.com/cloudfront>`_
+
+   |
+   .. image:: images/idsite_hosting/cloudfront_console.png
+   |
+
+#. Click the **Create Distribution** button
+
+   |
+   .. image:: images/idsite_hosting/cloudfront_delivery.png
+   |
+
+#. Click the **Get Started** button in the ``Web`` section
+
+   Fill out the following on the form (leave the rest as defaults):
+
+   #. Origin Domain Name: click in the field and you'll be able to select your S3 bucket
+   #. Viewer Protocol Policy: Choose ``HTTP and HTTPS`` (we will cirlce back to this later to update)
+   #. Object Caching: Choose Customize
+   #. Default TTL: set to 360 (you can make this a larger value once everything is set and working)
+   #. Alternate Domain Names: Enter your custom domain name for your ID Site. We will You will need to setup a DNS CNAME for this later on
+   #. Default Root Object: Enter index.html here
+
+   Scroll to the bottom and click the **Create Distribution** button.
+
+   Note: Pay attention to the Status column in the table of Cloudfront distributions. It can take some time until it's fully deployed.
+   During this time, it will say: In Progress
+
+   When the distribution is fully deployed, you should be able to browse to the assigned domain name. It will be something like:
+   <random string>.cloudfront.net. When you browse to ``https://<random string>.cloudfront.net`` you should see the
+   **Sorry! There was a problem.** message as before.
+
+.. _setup-dns:
+
+Step 4: Setup DNS to point to Cloudfront
+----------------------------------------
+
+You need to create a CNAME entry with your DNS provider. The source should be the domain you want to use for your ID Site, like:
+idsite.example.com. The destination should be the assigned domain from Cloudfront, like: <random string>.cloudfront.net
+
+You should now be able to browse to the CNAME you setup. If you make an https connection to this domain name at this stage, you
+will see a certificate error in your browser. This is because the SSL certificate bound to cloudfront.net does not match your
+domain name. We will resolve this in the next step.
+
+|
+.. image:: images/idsite_hosting/privacy_error.png
+|
+
+.. _create-ssl-cert:
+
+Step 5: Install SSL Cert with Let's Encrypt
+-------------------------------------------
+
+There are any number of commercial SSL certificate providers with varying costs. For the purposes of this example, we
+are going to use the `Let's Encrypt <https://letsencrypt.org/>`_ service. There are two primary benefits: 1) completely
+free SSL certificates and 2) There's a plugin for the Let's Encrypt client that will automatically install the SSL
+certificate into your Cloudfront distribution.
+
+You will need the ``pip`` python package installer to follow the steps in this section.
+
+We'll start by installing the ``letsencrypt`` client and the ``s3front`` plugin.
+
+.. code:: bash
+
+   pip install letsencrypt
+   pip install letsencrypt-s3front
+
+Next, we'll use the s3front plugin to generate and install the certificate in your Cloudfront distribution
+
+.. code:: bash
+
+   AWS_ACCESS_KEY_ID=<your AWS access key> \
+   AWS_SECRET_ACCESS_KEY=<your AWS secret> \
+   letsencrypt --agree-tos -a letsencrypt-s3front:auth \
+   --letsencrypt-s3front:auth-s3-bucket <your S3 bucket name> \
+   -i letsencrypt-s3front:installer \
+   --letsencrypt-s3front:installer-cf-distribution-id <your cloudfront distribution id> \
+   -d <your custom domain name>
+
+If all goes well, you will see a text-based confirmation screen.
+
+|
+.. image:: images/idsite_hosting/letsencrypt_success.png
+|
+
+Note: The Let's Encrypt SSL certificate is only valid for 90 days (that's what you get for free).
+However, you can simply re-run the command to install a new SSL certificate.
+
+You can verify that your SSL backed ID Site is properly configured by going to the ``ssllabs`` test site:
+``https://www.ssllabs.com/ssltest/analyze.html?d=<your DNS CNAME>``
+
+To close out this section, we need to update the Cloudfront settings so that HTTP connections redirect to HTTPS.
+
+Click on the the Cloudfront ID for your distribution to get into its settings. Click the ``Behaviors`` tab. Click
+the checkbox to the left of the configuration and click the ``Edit`` button. Change the ``Viewer Protocol Policy``
+to ``Redirect HTTP to HTTPS`` and click the ``Yes, Edit`` button on the bottom of the screen to save it.
+
+.. _configure-stormpath:
+
+Step 6: Configure Stormpath to use your ID Site
+-----------------------------------------------
+
+The last step is to set your Stormpath Admin Console to use your newly configured ID Site.
+
+Browse to the Admin Console and click the ID Site tab. Enter your ID Site domain in the Domain Name
+field.
+
+|
+.. image:: images/idsite_hosting/admin_console_idsite.png
+|
+
+Scroll to the bottom and click the ``Save`` button. That's all there is to it!
+
+Note: After ID Site is setup in this way, the ``SSL Public Certificate / Chain``, ``SSL Private Key``,
+``Git Repository HTTPS URL``, and ``Git Repository Branch Name`` fields are *all* no longer used.
+
+From this point forward, all you need to do to update your ID Site is to publish the minified contents
+to the S3 bucket like you did earlier. Note: it may take some time for the updates to propagate to all
+the Cloudfront edge nodes.
+
+Let's test making a change to the ID Site content and see it in action.
+
+#. Edit the ``app/views/login.html``
+
+   Add ``<h2>Custom!</h2>`` just before the line containing ``<span>Log In</span>``.
+
+   |
+   .. image:: images/idsite_hosting/custom_login.png
+   |
+
+#. Build ID Site as before
+
+   .. code:: bash
+
+      grunt build
+
+#. Publish the ``dist`` contents to your S3 bucket as before
+
+   .. code:: bash
+
+      AWS_ACCESS_KEY_ID=<your AWS access key> AWS_SECRET_ACCESS_KEY=<your AWS secret> \
+      aws s3 sync dist/ s3://<your bucket name>
+
+Now, we can see our change in action. You'll need to fire up an example application that uses ID Site.
+The screenshot below shows the ``/login`` endpoint response from ID Site:
+
+|
+.. image:: images/idsite_hosting/custom_login_response.png
+|
+
+As you can see, ID Site is using the custom domain we set up and is showing the customized content.
