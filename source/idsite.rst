@@ -1067,8 +1067,8 @@ You will need to have an `AWS <http://aws.amazon.com/>`_ account setup for this 
 
 #. Transfer the ID Site content to your bucket
 
-   There are numerous tools you can use to transfer files to your S3 bucket. I prefer the
-   AWS Command Line Interface.
+   There are numerous tools you can use to transfer files to your S3 bucket.
+   Below is an example using the AWS Command Line Interface.
 
    Here's the command to transfer the ID Site minified files to your S3 bucket:
 
