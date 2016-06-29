@@ -965,7 +965,8 @@ As an overview, the flow would look like this:
 7.7. ID Site Hosting Guide
 ==========================
 
-In Stormpath's public cloud (api.stormpath.com), ID Site is automatically setup and hosted for you. When you are on Stormpath's Enterprise environment (enterprise.stormpath.io) or on a Private Deployment, you will need to host ID Site in your infrastructure. This is a best practice for security and is very easy to accomplish.
+In Stormpath's Community Cloud (api.stormpath.com) and Enterprise Cloud (enterprise.stormpath.io), ID Site is automatically set up and hosted for you.
+But sometimes customers might want full control and host ID site themselves.
 
 .. note::
 
@@ -977,7 +978,7 @@ The approach outlined below uses:
 
 #. Amazon S3 to store and serve ID Site
 #. Amazon Cloudfront to provide robust distributed delivery
-#. Letsencrypt to create free SSL certificates for your ID Site
+#. Let's Encrypt to create free SSL certificates for your ID Site
 
 .. _build-id-site:
 
