@@ -893,6 +893,16 @@
         - N/A
         - Retrieves the Tenant with the specified ID.
 
+  Example Query
+  """""""""""""
+
+  .. code-block:: http
+
+    curl --request GET \
+    --url https://api.stormpath.com/v1/tenants/current \
+    --header 'accept: application/json'
+
+
   Using A Tenant for Look-Up
   ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1340,6 +1350,18 @@
 
   Example Queries
   """""""""""""""
+
+  **Create an Application**
+
+  .. code-block:: bash
+
+    curl --request POST \
+    --url 'https://api.stormpath.com/v1/applications?createDirectory=true' \
+    --header 'content-type: application/json' \
+    --header 'createdirectory: true' \
+    --data '{\n    "name":"Example App"\n}'
+
+  This query would create the specified Application. Because we are also including the ``createDirectory`` query parameter, Stormpath will also create a Directory of the same name.
 
   **Retrieve an Application**
 
