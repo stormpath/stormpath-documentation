@@ -1139,8 +1139,8 @@ Follow these steps to setup Cloudfront:
    During this time, it will say: In Progress
 
    When the distribution is fully deployed, you should be able to browse to the assigned domain name. It will be something like:
-   <random string>.cloudfront.net. When you put that domain in your browser, it should automatically redirect to ``https://<random string>.cloudfront.net``
-   and you should see the **Sorry! There was a problem.** message as before.
+   <random string>.cloudfront.net. When you browse to ``https://<random string>.cloudfront.net`` you should see the
+   **Sorry! There was a problem.** message as before.
 
 .. _setup-dns:
 
@@ -1150,7 +1150,7 @@ Step 4: Setup DNS to point to Cloudfront
 You need to create a CNAME entry with your DNS provider. The source should be the domain you want to use for your ID Site, like:
 idsite.example.com. The destination should be the assigned domain from Cloudfront, like: <random string>.cloudfront.net
 
-You should now be able to browse to the CNAME you setup. It should automatically redirect to https. However, at this stage, you
+You should now be able to browse to the CNAME you setup. If you make an https connection to this domain name at this stage, you
 will see a certificate error in your browser. This is because the SSL certificate bound to cloudfront.net does not match your
 domain name. We will resolve this in the next step.
 
