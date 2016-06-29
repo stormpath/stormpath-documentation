@@ -882,7 +882,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/tenants/current
@@ -903,7 +903,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/tenants/$TENANT_ID/$RESOURCE_TYPE
@@ -1277,7 +1277,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/applications
@@ -1297,7 +1297,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/applications/$APPLICATION_ID
@@ -1378,7 +1378,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/tenants/$APPLICATION_ID/$RESOURCE_TYPE
@@ -1545,7 +1545,7 @@
 
   - ``encryptionKeySalt``: This is a `URL-safe Base64-encoded <https://tools.ietf.org/html/rfc4648>`__ 16-byte string that will be added to the secret before it is encrypted.
 
-  There are two more optional parameters than can be included alongside these two:
+  There are two more optional query parameters than can be included alongside these two:
 
   - ``encryptionKeySize``: The size of the key used for encryption. Possible values are ``128``, ``192``, and ``256``. Default value is ``128``.
 
@@ -1796,7 +1796,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/accountStoreMappings
@@ -1812,7 +1812,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accountStoreMappings/$ACCOUNT_STORE_MAPPING_ID
@@ -2067,7 +2067,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/directories
@@ -2083,7 +2083,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/directories/$DIRECTORY_ID
@@ -2162,7 +2162,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/tenants/$DIRECTORY_ID/$RESOURCE_TYPE
@@ -3267,7 +3267,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST v1/directories/$DIRECTORY_ID/groups
@@ -3283,7 +3283,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/groups/$GROUP_ID
@@ -3359,7 +3359,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/groups/$GROUP_ID/$RESOURCE_TYPE
@@ -3451,7 +3451,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
@@ -3467,7 +3467,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
@@ -3674,7 +3674,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/organizations
@@ -3694,7 +3694,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/organizations/$ORGANIZATION_ID
@@ -3779,7 +3779,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/organizations/$ORGANIZATION_ID/$RESOURCE_TYPE
@@ -3895,7 +3895,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/organizationAccountStoreMappings
@@ -3911,7 +3911,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
@@ -4196,7 +4196,7 @@
 
       * - Operation
         - Attributes
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - POST /v1/directories/$DIRECTORY_ID/accounts *or* /v1/applications/$APPLICATION_ID/accounts *or* /v1/organizations/$ORGANIZATION_ID/accounts
@@ -4216,7 +4216,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID
@@ -4310,7 +4310,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID/$RESOURCE_TYPE
@@ -4435,7 +4435,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID/apiKeys
@@ -4592,7 +4592,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID/accessTokens
@@ -4707,7 +4707,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/accounts/$ACCOUNT_ID/refreshTokens
@@ -4997,7 +4997,7 @@
       :header-rows: 1
 
       * - Operation
-        - Optional Parameters
+        - Optional Query Parameters
         - Description
 
       * - GET /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
