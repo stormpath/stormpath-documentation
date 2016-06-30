@@ -20,10 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
-  2016-06-??
+  2016-06-30
   ==========
 
-  - **New:** Tenants can now be assigned a Custom SMTP Server. New documentation has been added in the Account Management Chapter section :ref:`add-custom-smtp`, as well as a new :ref:`ref-custom-smtp` section under the Tenant resource in the Reference chapter.
+  - **New:** Tenants can now be assigned a Custom SMTP Server. New documentation has been added in the Account Management Chapter section :ref:`Customizing Your SMTP Server <add-custom-smtp>`, as well as a new :ref:`ref-custom-smtp` section under the Tenant resource in the Reference chapter.
+  - **New:** Directories are now able to :ref:`restrict user email domains <email-domain-restriction>` using email domain whitelists and blacklists.
 
   2016-06-29
   ==========
