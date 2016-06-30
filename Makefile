@@ -56,14 +56,14 @@ clean:
 
 html:
 	@rm -rf $(BUILDDIR)
-	$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
+	$(SPHINXBUILD) -nW -b html -E $(ALLSPHINXOPTS) -t $(LANGUAGE) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html"
 
 allhtml:
 	@rm -rf $(BUILDDIR)
 	@for target in $(LANGUAGES); do \
-		$(SPHINXBUILD) -b html -E $(ALLSPHINXOPTS) -t $$target $(BUILDDIR)/html/$$target; \
+		$(SPHINXBUILD) -nW -b html -E $(ALLSPHINXOPTS) -t $$target $(BUILDDIR)/html/$$target; \
 	done
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
