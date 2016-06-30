@@ -835,6 +835,11 @@
         - N/A
         - A link to a Collection of all the :ref:`ID Sites <ref-id-site>` configured for this Tenant.
 
+      * - ``smtpServers``
+        - Link
+        - N/A
+        - A link to a collection containing the :ref:`Custom SMTP server <ref-custom-smtp>` (if any) for this Tenant.
+
   **Tenant Example**
 
   .. code-block:: json
@@ -868,6 +873,9 @@
         },
         "idSites": {
           "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/idSites"
+        }
+        "smtpServers": {
+          "href": "https://staging-api-b.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/smtpServers"
         }
       }
 
@@ -1073,6 +1081,98 @@
           "href":"https://api.stormpath.com/v1/tenants/7g9HG1YMBX8ohFbu0KAFKR"
         }
       }
+
+  .. _ref-custom-smtp:
+
+  SMTP Server
+  ^^^^^^^^^^^^
+
+  This resource contains information about this Tenant's optional custom SMTP server.
+
+  **smtpServer URL**
+
+  ``/v1/smtpServers/$SMTP_SERVER_ID``
+
+  **SMTP Server Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``name``
+      - String
+      - N/A
+      - (Optional) A name for this SMTP server.
+
+    * - ``description``
+      - String
+      - N/A
+      - (Optional) A description for this SMTP server.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``username``
+      - String
+      - N/A
+      - A username to use to connect to this SMTP server.
+
+    * - ``password``
+      - String
+      - N/A
+      - A password to use to connect to this SMTP server.
+
+    * - ``host``
+      - String
+      - N/A
+      - The location of this SMTP server.
+
+    * - ``port``
+      - Number
+      - N/A
+      - The port to connect to this SMTP server on.
+
+    * - ``securityProtocol``
+      - String
+      - ``tls``, ``ssl``, or ``null``
+      - (Optional) The protocol to use when connecting to this SMTP server. Default value is ``null``.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED`` , ``DISABLED``
+      - Indicates whether this SMTP server is enabled or not. Default value is ``ENABLED``.
+
+  **SMTP Server Example**
+
+  .. code-block:: json
+
+    {
+      "createdAt": "2016-06-23T22:04:47.163Z",
+      "description": "My Awesome SMTP Server",
+      "host": "email.host.com",
+      "href": "https://api.stormpath.com/v1/smtpServers/3svYfnFPh3q2Hbfexample",
+      "modifiedAt": "2016-06-23T22:04:47.163Z",
+      "name": "My SMTP Server",
+      "port": 25,
+      "securityProtocol": "TLS",
+      "status": "ENABLED",
+      "tenant": {
+        "href": "api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgexample"
+      },
+      "username": "ausername"
+    }
 
   .. _ref-application:
 
@@ -2256,6 +2356,16 @@
       - N/A
       - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending a welcome email.
 
+    * - ``emailDomainWhitelist``
+      - Array
+      - N/A
+      - An array of Email Domains that :ref:`can be used to for user registration in this Directory <email-domain-restriction>`.
+
+    * - ``emailDomainBlacklist``
+      - Array
+      - N/A
+      - An array of Email Domains that :ref:`cannot be used to for user registration in this Directory <email-domain-restriction>`.
+
   **Account Creation Policy Example**
 
   .. code-block:: json
@@ -2274,6 +2384,12 @@
       "welcomeEmailTemplates":{
         "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/welcomeEmailTemplates"
       }
+      "emailDomainWhitelist":[
+        "*stormpath.com"
+      ],
+      "emailDomainBlacklist":[
+        "*gmail.com"
+      ]
     }
 
   .. _ref-password-policy:
