@@ -205,15 +205,17 @@ Strategy 2: Group per Organization
 
 The other multi-tenancy option is to have a single Directory under which each of your application's tenants has their own Group. A few questions to think about this for this strategy:
 
-** Do you want to guarantee ``email`` and ``username`` uniqueness across all tenants? **
+**Do you want to guarantee ``email`` and ``username`` uniqueness across all tenants?**
 
-**This allows for a unified user identity, which allows for things like single-sign-on and account sharing between tenants on your application.**
+With this strategy, all of your user Accounts are contained within the same Directory, so no two Accounts can have the same email address. This means you can create unified cross-tenant user identities, which allows for things like single-sign-on and account sharing between tenants on your application.
 
 **Do all tenants share password and email policies?**
 
+These policies are configured on the Directory. Since all of your tenants will be represented by Groups inside one Directory, they will all share one password policy, and one email policy.
+
 **Do you want to ensure that tenant names are unique?**
 
-since the Group ``name`` must be unique within a Directory.
+Since the Group ``name`` must be unique within a Directory, you can guarantee that your tenants names will not be duplicates.
 
 **You want to have application-wide roles that span across tenants.**
 
@@ -223,11 +225,11 @@ Tenants as Groups Example
 Below we have an example of an implementation that uses Groups to model tenants. This shows just one possible scenario, and if you'd like to discuss your particular implementation needs please `get in touch <support@stormpath.com>`_!
 
 .. figure:: images/multitenancy/ERD_TpG.png
-    :align: center
-    :scale: 100%
-    :alt: Tenant per Group
+  :align: center
+  :scale: 100%
+  :alt: Tenant per Group
 
-    *Tenants as Groups ERD*
+  *Tenants as Groups ERD*
 
 .. note::
 
@@ -340,11 +342,7 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 6.2.2. Working with Organizations
 ---------------------------------
 
-Once you have your application's tenants modeled as Directories or Groups, the final tool that Stormpath gives you is the Organization resource. You will recall that Organizations are umbrella entities that allow you to better structure and control multi-tenant applications.
-
-.. todo::
-
-  Add link to "you will recall" above.
+You will recall that Organizations are umbrella entities that model your tenants in Stormpath, and allow you to better structure and control multi-tenant applications.
 
 .. _create-org:
 
@@ -474,7 +472,7 @@ You can create an Organization in Stormpath by sending the following request:
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Like other Account Stores, an Organization can be mapped to an Application so that users in the Organization can log-in to that application (for more about how logging-in works with Stormpath, please see :ref:`the Authentication chapter <authn>`). But before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
+An Organization can be mapped to an Application so that users in the Organization can log-in to that application. Before you do this, you must first associate some users with the Organization so that there is someone to log in! To do this, you have to map some Account Stores to your Organization.
 
 .. only:: rest
 
@@ -482,7 +480,7 @@ Like other Account Stores, an Organization can be mapped to an Application so th
 
   .. code-block:: http
 
-    POST /v1/organizations HTTP/1.1
+    POST /v1/organizationAccountStoreMappings HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
 
@@ -549,7 +547,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   .. code-block:: http
 
-      POST /v1/organizations HTTP/1.1
+      POST /v1/organizationAccountStoreMappings HTTP/1.1
       Host: api.stormpath.com
       Content-Type: application/json;charset=UTF-8
 
@@ -674,7 +672,7 @@ Our Organization now has an associated Directory which can be used as an Account
 Registering an Organization as an Account Store for an Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described in :ref:`the Authentication chapter <authn>`, in order to allow users to log-in to an Application, you must map some kind of Account Store (e.g. a Group or Directory) to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future.
+As described in :ref:`the Authentication chapter <authn>`, in order to allow users to log-in to an Application, you must map some kind of Account Store to it. One approach is to go one-by-one and map each Directory and/or Group to the Application. However, since we are building a multi-tenant app, and the Organization is itself an Account Store, we can just map our Organization resource to our Application resource. This would enable login for all of the Directories and Groups currently inside that Organization, as well as any we add in the future.
 
 To map an Organization to an Application, follow the steps you would for any Account Store, as described in :ref:`create-asm`.
 
@@ -781,7 +779,7 @@ The application needs to know the request user’s tenant identifier so they can
 
   SELECT * from purchases where tenant_id = ?;
 
-where ? is the ``tenant_id`` value obtained by inspecting the request.
+where ``?`` is the ``tenant_id`` value obtained by inspecting the request.
 
 So if an application needs this identifier with every request, how do you ensure it is transmitted to the application in the easiest possible way for your end users? The best method is to use the :ref:`Organization resource <ref-organization>` and it's ``nameKey`` attribute.
 
