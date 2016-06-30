@@ -20,6 +20,10 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-06-29
+  ==========
+  - **New:** New :ref:`ID Site Hosting Guide <idsite-hosting>` added to ID Site chapter.
+
   2016-06-20
   ==========
 
