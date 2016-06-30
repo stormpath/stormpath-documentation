@@ -1148,6 +1148,28 @@ This property is a read-only property on a externally managed Directory Account,
 
 *(Same as above)*
 
+Error 7205
+-------------
+
+**Message**
+
+Cannot create the Account because the email matches the Directory's emailDomainBlacklist
+
+**User Message**
+
+Cannot create the Account because your email's domain is not allowed.
+
+Error 7206
+-------------
+
+**Message**
+
+Cannot create the Account because the email domain does not match the Directory's emailDomainWhitelist
+
+**User Message**
+
+Cannot create the Account because your email's domain is not allowed
+
 Error 7301
 -------------
 

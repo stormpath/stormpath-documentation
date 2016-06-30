@@ -2356,6 +2356,16 @@
       - N/A
       - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending a welcome email.
 
+    * - ``emailDomainWhitelist``
+      - Array
+      - N/A
+      - An array of Email Domains that :ref:`can be used to for user registration in this Directory <email-domain-restriction>`.
+
+    * - ``emailDomainBlacklist``
+      - Array
+      - N/A
+      - An array of Email Domains that :ref:`cannot be used to for user registration in this Directory <email-domain-restriction>`.
+
   **Account Creation Policy Example**
 
   .. code-block:: json
@@ -2374,6 +2384,12 @@
       "welcomeEmailTemplates":{
         "href":"https://api.stormpath.com/v1/accountCreationPolicies/2SKhstu8PlaekcaexaMPLe/welcomeEmailTemplates"
       }
+      "emailDomainWhitelist":[
+        "*stormpath.com"
+      ],
+      "emailDomainBlacklist":[
+        "*gmail.com"
+      ]
     }
 
   .. _ref-password-policy:
