@@ -241,9 +241,6 @@ Just as with the Tenants-as-Directories strategy, every Tenant is modeled by its
 - Application Administrators just need their own Role Group, which is then mapped as an Account Store with the Application.
 - Claire and Esther do not have access to your application's Admin Console, because that is only allowed for members of the "App Admins" role Group. If, however, Claire were hired as an Application Administrator, then she could be easily added to the "App Admins" Group and inherit all of its permissions.
 
-|
-.. image:: images/multitenancy/ERD_TpG.png
-|
 
 Naming Your Tenant Groups
 """""""""""""""""""""""""
