@@ -25,11 +25,15 @@
 
   - **New:** Tenants can now be assigned a Custom SMTP Server. New documentation has been added in the Account Management Chapter section :ref:`add-custom-smtp`, as well as a new :ref:`ref-custom-smtp` section under the Tenant resource in the Reference chapter.
 
+  2016-06-29
+  ==========
+  - **New:** New :ref:`ID Site Hosting Guide <idsite-hosting>` added to ID Site chapter.
+
   2016-06-20
   ==========
 
   - **Modified:** When :ref:`idsite-jwt-to-oauth`, the ``grant_type`` should now be ``stormpath_token``.
-  - **Fixed:** Various attributes on Resources in :ref:`reference` had attributes with incorrect lengths of "1 < N <= 255". This has been corrected to be "0 < N < 256".
+  - **Fixed:** Various Resources in :ref:`reference` had attributes with incorrect lengths of "1 < N <= 255". This has been corrected to be "0 < N < 256".
 
   2016-06-15
   ==========
