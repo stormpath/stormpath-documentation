@@ -6,8 +6,6 @@
 Welcome to Stormpath's |language| documentation!
 ===================================================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
