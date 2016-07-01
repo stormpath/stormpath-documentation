@@ -20,7 +20,7 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
-  2016-??-??
+  2016-07-01
   ==========
 
   - **New:** Added documentation for new Custom Data Search feature. The bulk of the new information is in Reference chapter under :ref:`search-customdata`, with a smaller section :ref:`howto-search-account-customdata` in Account Management.
