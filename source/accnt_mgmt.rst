@@ -1272,6 +1272,7 @@ For example, you could add information about this user's current location, like 
   .. literalinclude:: code/python/account_management/add_cd_to_account_resp.py
       :language: python
 
+.. _howto-search-accounts:
 
 3.3. How to Search Accounts
 ===========================
@@ -1696,10 +1697,35 @@ Datetime Search is used when you want to search for Accounts that have a certain
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_resp.py
       :language: python
 
+.. _howto-search-account-customdata:
+
+4.3.2. Searching for Accounts with Custom Data
+-----------------------------------------------
+
+It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
+
+.. note::
+
+  Currently, only Directory Accounts can have their customData searched.
+
+If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?customData.startDate=[2012,2015]&limit=5&offset=0 HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+
+  For a full description please see :ref:`the Reference chapter <search-customdata>`.
+
 .. _managing-account-pwd:
 
 3.4. How to Manage an Account's Password
 ========================================
+
+One of the major categories of user management tasks that Stormpath handles and simplifies for you is managing user passwords. All of these different use cases are discussed in the section below.
 
 3.4.1. Manage Password Policies
 --------------------------------

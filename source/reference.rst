@@ -503,6 +503,7 @@
   #. A generic :ref:`filter-based search <search-filter>`.
   #. A more targeted :ref:`attribute-based search <search-attribute>`.
   #. An even more targeted kind of attribute search, the :ref:`Datetime <search-datetime>` search.
+  #. A search of :ref:`customData <search-customdata>`.
 
   The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`Sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
 
@@ -666,18 +667,29 @@
 
       Omitting the beginning or ending date is valid for requests. Omitting the begin datetime range [,ISO-8601-END-DATETIME] would include all resources created or modified before the end datetime. Omitting the end datetime range [ISO-8601-BEGIN-DATETIME,] would include all resources created or modified after the the begin datetime.
 
-  As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this::
+  As an example, if you want wanted to get all Accounts created between January 12, 2015 and January 14, 2015 your query would look like this:
 
-      /v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14]
+  .. code-block:: bash
+
+    curl --request GET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url 'https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14]'
+
 
   The response would be a Collection of Accounts created between the two days.
 
   Exclusion vs Inclusion
   ++++++++++++++++++++++
 
-  The square brackets [] denote **inclusion**, but ``createdAt`` and ``modifiedAt`` also support **exclusion** with parentheses (). For example, if you wanted to get all accounts created between Jan 12, 2015 and Jan 14, 2015 not including the 14th, your request would look like this::
+  The square brackets [] denote **inclusion**, but ``createdAt`` and ``modifiedAt`` also support **exclusion** with parentheses (). For example, if you wanted to get all Accounts created between January 12 and January 14, 2015 **not including the 14th**, your request would look like this:
 
-      v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14)
+  .. code-block:: bash
+
+    curl --request GET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url 'https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?createdAt=[2015-01-12, 2015-01-14)'
 
   Precision
   +++++++++
@@ -686,32 +698,203 @@
 
   For example, if you need precision in seconds::
 
-      ?createdAt=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
+    ?createdAt=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
+
+  This query would return all Accounts created in the 5 seconds after noon on December 12, 2015.
 
   And, if you need precision in years::
 
-      ?createdAt=[2014, 2015]
+    ?createdAt=[2014, 2015]
+
+  This query would return all Accounts created between January 01 and December 31 in 2014.
+
+  .. _search-datetime-shorthand:
 
   Shorthand
   +++++++++
 
   It is also possible to use shorthand with ranges of ``createdAt`` and ``modifiedAt`` to simplify the query parameter. This is useful for queries where the range can be encapsulated in a particular year, month, day, hour, minute or second.
 
-  For example if you wanted all accounts created in Jan 2015, instead of::
+  For example if you wanted all accounts created in Jan 2015, instead of this::
 
-      ?createdAt=[2015-01-01T00:00:00.000Z,2015-02-01T00:00:00.000)
+    ?createdAt=[2015-01-01T00:00:00.000Z,2015-02-01T00:00:00.000)
 
   You could just write::
 
-      ?createdAt=2015-01
+    ?createdAt=2015-01
 
   And if you want all Accounts modified on the 12th hour UTC on Feb 03, 2015, instead of this query::
 
-      ?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
+    ?modifiedAt=[2015-02-03T12:00:00.000Z, 2015-02-04T13:00:00.000)
 
   You can write::
 
-      ?modifiedAt=2015-02-03T12
+    ?modifiedAt=2015-02-03T12
+
+  .. _search-customdata:
+
+  Custom Data Search
+  """"""""""""""""""
+
+  It is also possible to search a collection's Custom Data. This means that you send a query to a collection:
+
+  ``?customData=customData.{key}={value}``
+
+  You will receive back an array of resources that contain that value in their Custom Data.
+
+  Currently, the following resources' Custom Data can be searched:
+
+  - Accounts
+
+  Searches can be performed on the following endpoints:
+
+  - ``/v1/directory/$DIRECTORY_ID/accounts``
+
+  As an example, if we know that Accounts have a ``favoriteColor`` key in their customData, we could find all Accounts in a Directory that have a Custom Data key ``favoriteColor`` set to ``white`` by sending a GET to:
+
+  ``/v1/directories/2SKhstu8Plaekcai8lghrp/accounts?customData.favoriteColor=white'``
+
+  Custom Data search supports all of the usual :ref:`Pagination <about-pagination>` and :ref:`Sorting <about-sorting>` parameters.
+
+  The following GET would return Accounts ordered by their ``topScore`` value, with a ``limit`` of ``50`` Accounts in the returned collection::
+
+    /v1/directories/2SKhstu8Plaekcai8lghrp/accounts?orderBy=customData.topScore&limit=50'
+
+  Matching Logic
+  ++++++++++++++
+
+  A customData parameter value triggers one of four types of matching criteria:
+
+     #. No asterisk at the beginning or end of the value indicates a direct match.
+     #. An asterisk only at the beginning of the value indicates that value is at the end.
+     #. An asterisk only at the end of the value indicates that the value is at the beginning.
+     #. An asterisk at the end AND at the beginning of the value indicates the value is contained in the string.
+
+  ..note ::
+
+    Just like with Filter and Attribute search, queries are case-insensitive.
+
+  So if instead of finding all Accounts that had customData where ``favoriteColor=white`` we wanted to find all Accounts where ``favoriteColor`` was any of the colors starting with "b", we would simply change the query to:
+
+  ``?customData.favoriteColor=b*``
+
+  Since we would actually want to see what the values were, we'd also throw in a :ref:`link expansion <about-links>` parameter as well:
+
+  ``?customData.favoriteColor=b*&expand=customData``
+
+  Leaving us with this request:
+
+  .. code-block:: bash
+
+    curl --request GET \
+    --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+    --header 'content-type: application/json' \
+    --url 'https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/accounts?customData.favoriteColor=b*&expand=customData'
+
+  Which would result in the following response:
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/accounts",
+      "offset":0,
+      "limit":25,
+      "size":2,
+      "items":[
+        {
+          "href":"https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample",
+          "username":"phasma",
+          "email":"jakub@swiatczak.com",
+          "givenName":"Gwen",
+          "comment": "// This JSON has been truncated for readability",
+          "customData":{
+            "href":"https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample/customData",
+            "createdAt":"2015-11-19T19:46:56.188Z",
+            "modifiedAt":"2016-02-25T18:49:39.412Z",
+            "favoriteColor":"black"
+          }
+          "providerData": {
+            "href": "https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample/providerData"
+          },
+        }
+        {
+          "href":"https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexample",
+          "username":"first2shoot",
+          "email":"han@newrepublic.gov",
+          "givenName":"Han",
+          "comment": "// This JSON has been truncated for readability",
+          "customData":{
+            "href":"https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexample/customData",
+            "createdAt":"2015-08-28T16:07:38.347Z",
+            "modifiedAt":"2015-08-28T16:07:38.354Z",
+            "favoriteColor":"beige"
+          },
+          "providerData":{
+            "href":"https://api.stormpath.com/v1/accounts/72EaYgOaq8lwTFHexample/providerData"
+          }
+        }
+      ]
+    }
+
+  Searching Datetime in Custom Data
+  ++++++++++++++++++++++++++++++++++
+
+  It is, of course, possible to store Datetime-formatted String values in customData. So you could have a customData key called ``startDate`` which stored values like ``2011-08-15``. You can then query these values like any other string, so to find all Accounts that were created in 2011 you could use this parameter:
+
+  ``?customData.startDate=2011*``
+
+  It is also possible to use Exclusion, Inclusion and Precision just like with other :ref:`Datetime searches <search-datetime>`.
+
+  As usual, the square brackets [] denote **inclusion**, and parentheses () denote **exclusion**. For example, if you wanted to get all Accounts with a customData ``startDate`` key value between January 12 and January 14, 2015 **not including** the 14th, your request parameters would look like this:
+
+  ``/accounts?customData.startDate=[2015-01-12, 2015-01-13)``
+
+  If you wanted more **precision**, to find only the Accounts that had a customData ``startDate`` value representing the first five seconds after noon on December 12::
+
+    ?customData.startDate=[2015-01-12T12:00:00, 2015-01-12T12:00:05]
+
+  Or if you wanted precision in years, to find all Accounts with a ``startDate`` value between and including 2014-01-01 and 2014-12-31:
+
+  ``?customData.startDate=[2014, 2015]``
+
+  Just as with Datetime search, if you omit the beginning or end date, it will simply search for all Datetime values that are smaller than (if you omit the beginning date) or greater than (if you omit the end date) the specified date. So the following query:
+
+  ``?customData.startDate[2014,]``
+
+  Would find all Datetime values after 2014-01-01. Conversely, if you wrote [,2014] it would find all dates that occurred before 2014-01-01.
+
+  .. note::
+
+    Unlike with normal Datetime search, :ref:`search-datetime-shorthand` is not supported. So with normal Datetime search, if you search for something like ``createdAt=2015``, matching would include all dates that included ``2015``. With Custom Data, a query like ``customData.startDate=2015`` would only return values with the exact value ``2015``. If you wanted to find all values of that included 2015, you would need to use inclusion brackets: ``customData.startDate=[2015]``.
+
+  Searching Numbers in Custom Data
+  ++++++++++++++++++++++++++++++++
+
+  In addition to searching for String values it is also possible to search numbers. As well as searching for a specific number value (e.g. ``?customData.topScore=10`` or ``?customData.topScore=1*``) Custom Data searches for numbers also support:
+
+  **Number Ranges**
+
+  To retrieve all values between (and including both) ``0`` and ``1000``:
+
+  ``?customData.topScore=[0,1000]``
+
+  **Exclusion & Inclusion**
+
+  To retrieve all values between ``0`` and ``1000``, but not including ``0``:
+
+  ``?customData.topScore=(0,1000]``
+
+  **Precision**
+
+  To retrieve all values between (and including both) ``0.01`` and ``999.99``:
+
+  ``?customData.topScore=[0.01,999.99]``
+
+  **Greater/Less Than**
+
+  To retrieve all values greater than 50:
+
+  ``?customData.topScore[50,]``
 
   .. _about-links:
 
