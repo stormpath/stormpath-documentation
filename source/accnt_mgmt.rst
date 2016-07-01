@@ -1699,7 +1699,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 .. _howto-search-account-customdata:
 
-4.3.2. Searching for Accounts with Custom Data
+3.3.2. Searching for Accounts with Custom Data
 -----------------------------------------------
 
 It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
