@@ -1,8 +1,0 @@
-search_groups_by_name_ex1
-search_groups_by_name_ex2
-create_org_req
-create_org_resp
-asm_to_org
-asm_to_org_with_default_req
-asm_to_org_with_default_resp
-add_account_to_org

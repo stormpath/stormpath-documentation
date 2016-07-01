@@ -1710,37 +1710,39 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
 If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. only:: csharp
+  .. only:: csharp or vbnet
 
-    .. literalinclude:: code/csharp/accnt_mgmt/
-        :language: csharp
+    .. only:: csharp
 
-  .. only:: vbnet
+      .. literalinclude:: code/csharp/account_management/cd_search.cs
+          :language: csharp
 
-    .. literalinclude:: code/vbnet/accnt_mgmt/
-        :language: vbnet
+    .. only:: vbnet
 
-.. only:: java
+      .. literalinclude:: code/vbnet/account_management/cd_search.vb
+          :language: vbnet
 
-  .. literalinclude:: code/java/accnt_mgmt/
-      :language: java
+  .. only:: java
 
-.. only:: nodejs
+    .. literalinclude:: code/java/account_management/cd_search.java
+        :language: java
 
-  .. literalinclude:: code/nodejs/accnt_mgmt/
-      :language: javascript
+  .. only:: nodejs
 
-.. only:: php
+    .. literalinclude:: code/nodejs/account_management/cd_search.js
+        :language: javascript
 
-  .. literalinclude:: code/php/accnt_mgmt/
-    :language: php
+  .. only:: php
 
-.. only:: python
+    .. literalinclude:: code/php/account_management/cd_search.php
+      :language: php
 
-  .. literalinclude:: code/python/accnt_mgmt/
-      :language: python
+  .. only:: python
+
+    .. literalinclude:: code/python/account_management/cd_search.py
+        :language: python
 
 .. only:: rest
 
