@@ -756,13 +756,13 @@
 
   As an example, if we know that Accounts have a ``favoriteColor`` key in their customData, we could find all Accounts in a Directory that have a Custom Data key ``favoriteColor`` set to ``white`` by sending a GET to:
 
-  ``/v1/directories/2SKhstu8Plaekcai8lghrp/accounts?customData.favoriteColor=white'``
+  ``/v1/directories/2SKhstu8Plaekcai8lghrp/accounts?customData.favoriteColor=white``
 
   Custom Data search supports all of the usual :ref:`Pagination <about-pagination>` and :ref:`Sorting <about-sorting>` parameters.
 
-  The following GET would return Accounts ordered by their ``topScore`` value, with a ``limit`` of ``50`` Accounts in the returned collection::
+  The following GET would return Accounts ordered by their ``topScore`` value, with a ``limit`` of ``50`` Accounts in the returned collection:
 
-    /v1/directories/2SKhstu8Plaekcai8lghrp/accounts?orderBy=customData.topScore&limit=50'
+  ``/v1/directories/2SKhstu8Plaekcai8lghrp/accounts?orderBy=customData.topScore&limit=50``
 
   Matching Logic
   ++++++++++++++
