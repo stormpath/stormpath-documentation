@@ -1148,6 +1148,28 @@ This property is a read-only property on a externally managed Directory Account,
 
 *(Same as above)*
 
+Error 7205
+-------------
+
+**Message**
+
+Cannot create the Account because the email matches the Directory's emailDomainBlacklist
+
+**User Message**
+
+Cannot create the Account because your email's domain is not allowed.
+
+Error 7206
+-------------
+
+**Message**
+
+Cannot create the Account because the email domain does not match the Directory's emailDomainWhitelist
+
+**User Message**
+
+Cannot create the Account because your email's domain is not allowed
+
 Error 7301
 -------------
 
@@ -1448,6 +1470,56 @@ Error 12002
 **Message**
 
 The ID Site token that was submitted was not authenticated by ID Site. Stormpath can only generate an access token for ID Site tokens that include the status claim of ``AUTHENTICATED``, meaning that ID Site authenticated the Account with a valid login attempt.
+
+**User Message**
+
+*(Same as above)*
+
+.. _errors-130xx:
+
+130XX: SMTP Server
+==================
+
+Error 13000
+-----------
+
+**Message**
+
+Unable to connect to an SMTP server located at the address and port provided.
+
+**User Message**
+
+*(Same as above)*
+
+
+Error 13001
+-----------
+
+**Message**
+
+Unable to authenticate to an SMTP server with the username and password provided.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13002
+-----------
+
+**Message**
+
+Unable to connect to an SMTP server using the security protocol provided.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13003
+-----------
+
+**Message**
+
+You cannot create a new email server because one already exists for your Tenant.
 
 **User Message**
 
