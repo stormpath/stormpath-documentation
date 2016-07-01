@@ -96,7 +96,7 @@
   - Python: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-python/blob/master/stormpath/auth.py>`__ (the **call** method)
   - Ruby: `Sauthc1Signer <https://github.com/stormpath/stormpath-sdk-ruby/blob/master/lib/stormpath-sdk/http/authc/sauthc1_signer.rb>`__ (the **sign_request** method)
 
-  If you port the algorithm to another language, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
+  If you port the algorithm to other languages, please let us know. We are happy to help. Email us at support@stormpath.com and we will help as best as we can.
 
   .. note::
 
@@ -496,16 +496,16 @@
   Search
   ^^^^^^
 
-  Search in the contest of the Stormpath REST API means retrieving only the members of a Collection that match a specific query. You search by sending a GET for a Collection, along with query parameters, and Stormpath returns only the resources from the Collection that match your parameters.
+  Search in the context of the Stormpath REST API means retrieving only the members of a Collection that match a specific query. You search by sending a GET for a Collection, along with query parameters, and Stormpath returns only the resources from the Collection that match your parameters.
 
-  There are currently three different types of searches that might be performed:
+  There are currently four different types of searches that might be performed:
 
   #. A generic :ref:`filter-based search <search-filter>`.
   #. A more targeted :ref:`attribute-based search <search-attribute>`.
   #. An even more targeted kind of attribute search, the :ref:`Datetime <search-datetime>` search.
   #. A search of :ref:`customData <search-customdata>`.
 
-  The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`Sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
+  The primary difference between the first two is that the **filter search** matches across all attributes, while **attribute search** looks only for matches in a specified attribute. The **Datetime search** is a kind of attribute search which is used to find resources based on the time they were created or modified. All three options support result :ref:`sorting <about-sorting>`, :ref:`pagination<about-pagination>`, and :ref:`link expansion <about-links>`.
 
   .. _search-filter:
 
@@ -514,16 +514,16 @@
 
   A filter search consists of specifying a query parameter ``q`` and a corresponding search value on a Collection Resource URL::
 
-      /v1/$CONTAINER_TYPE/$CONTAINER_ID/$RESOURCE_TYPE?q=some+criteria
+    /v1/$CONTAINER_TYPE/$CONTAINER_ID/$RESOURCE_TYPE?q=some+criteria
 
   For example, to search across an Application’s Accounts for any Account that has a :ref:`searchable attribute <searchable-attributes>` containing the text "Joe":
 
-      .. code-block:: bash
+    .. code-block:: bash
 
-        curl --request GET \
-        --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
-        --header 'content-type: application/json' \
-        --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?q=Joe"
+      curl --request GET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/applications/$APPLICATION_ID/accounts?q=Joe"
 
   Matching Logic
   ++++++++++++++
@@ -534,10 +534,10 @@
 
     .. code-block:: bash
 
-        curl --request GET \
-        --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
-        --header 'content-type: application/json' \
-        --url "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accounts?q=Joe"
+      curl --request GET \
+      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+      --header 'content-type: application/json' \
+      --url "https://api.stormpath.com/v1/groups/1ORBsz2iCNpV8yJExaMPLe/accounts?q=Joe"
 
   Returns all Accounts where:
 
@@ -549,10 +549,10 @@
 
   It may help to think about each attribute comparison as similar to a ‘like’ operation in a traditional relational database context. For example, if SQL was used to execute the query, it might look like this::
 
-      select * from my_tenant_accounts where
-          (lower(givenName) like '%joe%' OR
-           lower(middlename) like '%joe%' OR
-           lower(email) like '%joe%' OR ... );
+    select * from my_tenant_accounts where
+        (lower(givenName) like '%joe%' OR
+         lower(middlename) like '%joe%' OR
+         lower(email) like '%joe%' OR ... );
 
   .. _search-attribute:
 

@@ -1710,6 +1710,38 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
 If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
 
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/accnt_mgmt/
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/accnt_mgmt/
+        :language: vbnet
+
+.. only:: java
+
+  .. literalinclude:: code/java/accnt_mgmt/
+      :language: java
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/accnt_mgmt/
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/accnt_mgmt/
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/accnt_mgmt/
+      :language: python
+
 .. only:: rest
 
   .. code-block:: http
