@@ -770,11 +770,11 @@
      #. An asterisk only at the end of the value indicates that the value is at the beginning.
      #. An asterisk at the end AND at the beginning of the value indicates the value is contained in the string.
 
-  ..note ::
+  .. note::
 
     Just like with Filter and Attribute search, queries are case-insensitive.
 
-  So if instead of finding all Accounts that had customData where ``favoriteColor=white`` we wanted to find all Accounts where ``favoriteColor`` was any of the colors starting with "b", we would simply change the query to:
+  If instead of finding all Accounts that had customData where ``favoriteColor=white`` we wanted to find all Accounts where ``favoriteColor`` was any of the colors starting with "b", we would simply change the query to:
 
   ``?customData.favoriteColor=b*``
 
@@ -804,7 +804,7 @@
         {
           "href":"https://api.stormpath.com/v1/accounts/2FvPkChR78oFnyfexample",
           "username":"phasma",
-          "email":"jakub@swiatczak.com",
+          "email":"jakub@example.com",
           "givenName":"Gwen",
           "comment": "// This JSON has been truncated for readability",
           "customData":{
@@ -845,7 +845,7 @@
 
   It is also possible to use Exclusion, Inclusion and Precision just like with other :ref:`Datetime searches <search-datetime>`.
 
-  As usual, the square brackets [] denote **inclusion**, and parentheses () denote **exclusion**. For example, if you wanted to get all Accounts with a customData ``startDate`` key value between January 12 and January 14, 2015 **not including** the 14th, your request parameters would look like this:
+  As usual, the square brackets ``[]`` denote **inclusion**, and parentheses ``()`` denote **exclusion**. For example, if you wanted to get all Accounts with a customData ``startDate`` key value between January 12 and January 14, 2015 **not including** the 14th, your request parameters would look like this:
 
   ``/accounts?customData.startDate=[2015-01-12, 2015-01-13)``
 
