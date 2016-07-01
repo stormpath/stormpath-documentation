@@ -1706,7 +1706,7 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
 .. note::
 
-  Currently, only Directory Accounts can have their customData searched.
+  This feature is currently in beta, any questions comments or suggestions, reach out to us at support@stormpath.com
 
 If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
 

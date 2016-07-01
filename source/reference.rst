@@ -736,6 +736,10 @@
   Custom Data Search
   """"""""""""""""""
 
+  .. note::
+
+    This feature is currently in beta, any questions comments or suggestions, reach out to us at support@stormpath.com
+
   It is also possible to search a collection's Custom Data. This means that you send a query to a collection:
 
   ``?customData=customData.{key}={value}``
