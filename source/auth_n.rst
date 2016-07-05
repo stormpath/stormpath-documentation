@@ -3389,44 +3389,6 @@ If a user now logs in, Stormpath will take the ``firstName`` attribute and map i
 
   If you do choose to enter in an "Attribute Name Format" in Stormpath, it must match the SAML "NameFormat" passed by Okta. To ensure that you are entering the right one you can click on **Preview the SAML Assertion** on the "Configure SAML" page in your Okta application.
 
-6.2. (Optional) Add Any Additional Attributes You Want
-++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-If there are attributes that you would like Okta to pass to Stormpath, you can configure this. From your Okta Admin settings page:
-
-#. Click on the **Applications** tab in the top navigation pane
-#. Select your Application
-#. In the "SAML Settings" section, click on **Edit**
-#. You will arrive on "General Settings", click **Next**
-#. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional attributes you would like to be passed.
-
-For example:
-
-* For "Name" enter ``firstName``
-* For the "Value" you would choose "user.firstName"
-* Scroll down to the bottom and click **Next**
-* On the next page click **Finish**
-
-You will now be take to your App's "Sign On" tab, but if you return to the "General" tab you can scroll down and see the attribute you just added in the "SAML Settings" section, under "Attribute Statements". You can add as many attributes as you wish.
-
-6.3. Specify Your Mapping
-+++++++++++++++++++++++++
-
-#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
-#. Click on the **Directories** tab
-#. Select your Okta SAML Directory
-#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-#. Here you will enter the Okta attribute name under "Name"
-#. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
-#. Click **Save**
-
-For example, you could enter:
-
-* For the "Name" enter ``firstName``
-* For "Stormpath Attributes" enter ``givenName``
-
-If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
-
 .. _ping:
 
 Ping
