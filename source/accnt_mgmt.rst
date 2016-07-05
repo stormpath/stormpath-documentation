@@ -213,7 +213,7 @@ Mirror Directories
 - Social Directories, such as Facebook and GitHub
 - SAML-enabled Identity Provider Directories, such as Salesforce and OneLogin
 
-For all Mirror Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record".
+For all Mirror Directories, since the relationship with the outside directory is read-only, the remote directory is still the "system of record". This means that you cannot do things like create your own Groups, only read the Groups (if any) synchronized from the external directory.
 
 .. _supporting-multiple-dirs:
 

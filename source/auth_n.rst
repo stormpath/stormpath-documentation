@@ -1557,6 +1557,8 @@ Social authentication essentially means using the "Log in with x" button in your
 - :ref:`Github <authn-github>`
 - :ref:`LinkedIn <authn-linkedin>`
 
+Social Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath Social Directory if they are mirrored in from the external Social provider. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
+
 *The Social Login Process*
 
 In general, the social login process works as follows:
@@ -2406,6 +2408,9 @@ Mirror Directories and LDAP
 
 To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory. If this fulfills your requirements, then the story ends here. However, if you need to support other kinds of login (and therefore other kinds of Directories) it is recommended that you maintain a "master" Directory alongside your Mirror Directory. For more about this, see :ref:`mirror-login` above.
 
+Setting Up Login With LDAP
+--------------------------
+
 The step-by-step process for setting-up LDAP login is as follows:
 
 .. _authn-ldap-dir-creation:
@@ -2583,6 +2588,8 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
 
 SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Stormpath supports both the Service Provider initiated flow and the Identity Provider initiated flow.
 
+SAML Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath SAML Directory if they are mirrored in from the external SAML IdP. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
+
 If you'd like a high-level description of Stormpath's SAML support, see :ref:`Stormpath as a Service Provider <saml-overview>`.
 
 If you want a step-by-step guide to configuring Stormpath to work with Identity Providers like Salesforce, OneLogin and Okta, as well as with your ADFS deployment, see :ref:`Configuring SAML <saml-configuration>`.
@@ -2623,7 +2630,7 @@ The broad strokes of the process are as follows:
 #. Identity provider redirects user back to Service Provider along with SAML assertions.
 #. Service Provider receives SAML assertions and either creates or retrieves Account information
 
-In both cases, just like with Mirror and Social Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In the following section you will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works.
+In both cases, just like with Mirror and Directories, the user information that is returned from the IdP is used by Stormpath to either identify an existing Account resource, or create a new one. In the case of new Account creation, Stormpath will map the information in the response onto its own resources. In the following section you will walk you through the process of configuring your SAML Directory, as well as giving you an overview of how the SAML Authentication process works.
 
 For a more detailed step-by-step account of SAML login, see :ref:`below <saml-flow>`.
 
@@ -3388,44 +3395,6 @@ If a user now logs in, Stormpath will take the ``firstName`` attribute and map i
 .. note::
 
   If you do choose to enter in an "Attribute Name Format" in Stormpath, it must match the SAML "NameFormat" passed by Okta. To ensure that you are entering the right one you can click on **Preview the SAML Assertion** on the "Configure SAML" page in your Okta application.
-
-6.2. (Optional) Add Any Additional Attributes You Want
-++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-If there are attributes that you would like Okta to pass to Stormpath, you can configure this. From your Okta Admin settings page:
-
-#. Click on the **Applications** tab in the top navigation pane
-#. Select your Application
-#. In the "SAML Settings" section, click on **Edit**
-#. You will arrive on "General Settings", click **Next**
-#. On the "Configure SAML" page, you will see a section called "Attribute Statements". Here you can specify whatever additional attributes you would like to be passed.
-
-For example:
-
-* For "Name" enter ``firstName``
-* For the "Value" you would choose "user.firstName"
-* Scroll down to the bottom and click **Next**
-* On the next page click **Finish**
-
-You will now be take to your App's "Sign On" tab, but if you return to the "General" tab you can scroll down and see the attribute you just added in the "SAML Settings" section, under "Attribute Statements". You can add as many attributes as you wish.
-
-6.3. Specify Your Mapping
-+++++++++++++++++++++++++
-
-#. Go to your `Stormpath Admin Console <https://api.stormpath.com/>`__
-#. Click on the **Directories** tab
-#. Select your Okta SAML Directory
-#. Under the "SAML Attribute Statement Mapping Rules" section you will see three fields: "Name", "Name Format", and "Stormpath Attributes"
-#. Here you will enter the Okta attribute name under "Name"
-#. Finally, enter the Account attribute(s) that you would like this Okta attribute to map to
-#. Click **Save**
-
-For example, you could enter:
-
-* For the "Name" enter ``firstName``
-* For "Stormpath Attributes" enter ``givenName``
-
-If a user now logs in, Stormpath will take the ``firstName`` attribute and map it to the ``givenName`` field on the Account resource.
 
 .. _ping:
 
