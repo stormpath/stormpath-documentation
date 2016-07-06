@@ -851,7 +851,7 @@
 
   As usual, the square brackets ``[]`` denote **inclusion**, and parentheses ``()`` denote **exclusion**. For example, if you wanted to get all Accounts with a customData ``startDate`` key value between January 12 and January 14, 2015 **not including** the 14th, your request parameters would look like this:
 
-  ``/accounts?customData.startDate=[2015-01-12, 2015-01-13)``
+  ``/accounts?customData.startDate=[2015-01-12, 2015-01-14)``
 
   If you wanted more **precision**, to find only the Accounts that had a customData ``startDate`` value representing the first five seconds after noon on December 12::
 
@@ -1764,7 +1764,7 @@
   Password Reset Tokens
   ^^^^^^^^^^^^^^^^^^^^^
 
-  This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`. When you send a POST to an Application's ``/passwordResetTokens`` endpoint with a valid email address (and, optionally, Account Store information), you will receive back the Password Reset Token. For a full description, please see the :ref:`Password Reset Flow <password-reset-flow>` section.
+  This is the endpoint for Password Reset Tokens that are passed as part of the :ref:`Password Reset Flow <password-reset-flow>`. When you send a POST to an Application's ``/passwordResetTokens`` endpoint with a valid email address (and, optionally, Account Store information), you will receive back the Password Reset Token. Things like the email that is sent, as well as the TTL of the token, are defined as part of the Directory's :ref:`Password Policy <ref-password-policy>`. For a full description, please see the :ref:`Password Reset Flow <password-reset-flow>` section.
 
   **passwordResetTokens URL**
 
