@@ -47,7 +47,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: php
 
-  For more detailed information about the Directory object, please see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Directory.html>`__ section in the Reference chapter.
+  For more detailed information about the Directory object, please see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Directory.html>`__.
 
 .. only:: python
 
@@ -694,7 +694,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: php
 
-  For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__ section of the Reference chapter.
+  For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__.
 
 .. only:: python
 
