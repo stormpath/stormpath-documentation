@@ -1,0 +1,1 @@
+Authenticated with access token (access token result)

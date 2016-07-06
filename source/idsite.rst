@@ -307,7 +307,14 @@ A typical set of steps in your application are as follows:
 
 .. only:: nodejs
 
-  (node.todo)
+  This is typically done by creating a controller or action that the login button redirects to. Inside this controller, the ID Site request can be created using the SDK:
+
+  .. literalinclude:: code/nodejs/idsite/build_idsite_url.js
+    :language: javascript
+
+  The ``callbackUri`` option to the `createIdSiteUrl()` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+  Once the URL is built, redirect the user in order to send them to ID Site.
 
 .. only:: php
 
@@ -497,7 +504,38 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: nodejs
 
-  (node.todo)
+  With the full URI that includes the ``jwtResponse`` query parameter, you will need to call the ``handleIdSiteCallback()`` method on the ``Application`` instance.
+
+  .. code-block:: javascript
+
+    application.handleIdSiteCallback(requestUri, function (err, idSiteResult) {
+      if (err) {
+        return console.error(err);
+      }
+
+      console.log('Authenticated as account', idSiteResult.account);
+    });
+
+  This will result in a object instance (`idSiteResult`) being returned with four properties:
+
+  .. list-table::
+    :widths: 15 60
+    :header-rows: 1
+
+    * - Property
+      - Description
+
+    * - ``account``
+      - The Account resource that contains all information about the user who was just returned from ID Site.
+
+    * - ``state``
+      - The state of your application, if you have chosen to have this passed back.
+
+    * - ``isNew``
+      - If the Account is a new Account to the Application.
+
+    * - ``status``
+      - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
 
 .. only:: php
 
@@ -791,7 +829,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: nodejs
 
-  (node.todo)
+  In the ``options`` array that can be passed in the ``createIdSiteUri()``, there are a couple properties that can be used in this array to allow for multi-tenancy.
 
 .. only:: php
 
@@ -817,7 +855,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: nodejs
 
-  (node.todo)
+  ``organizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: php
 
@@ -875,7 +913,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: nodejs
 
-  (node.todo)
+  ``showOrganizationField``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
+
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
+
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``organizationNameKey``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: php
 
@@ -921,7 +975,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: nodejs
 
-  (node.todo)
+  ``useSubDomain``: If combined with ``organizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: php
 

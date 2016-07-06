@@ -4,9 +4,8 @@ client.getApplication(applicationHref, function (err, application) {
   }
 
   var redirectUrl = application.createIdSiteUrl({
-    callbackUri: 'http://mysite.foo/idsiteCallback',
-    logout: true
+    callbackUri: 'http://mysite.foo/idsiteCallback'
   });
 
-  console.log('ID site logout redirect URL', redirectUrl);
+  console.log('ID site redirect URL', redirectUrl);
 });

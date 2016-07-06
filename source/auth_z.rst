@@ -213,7 +213,7 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
 .. only:: nodejs
 
-  (node.todo)
+  To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
 
 .. only:: php
 
@@ -240,7 +240,7 @@ Checking User and Role Permissions
 
 .. only:: nodejs
 
-  (node.todo)
+  Since authorization enforcement is typically handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Node.js SDK is in retrieving a user's permissions and building custom authorization logic.
 
 .. only:: php
 
@@ -501,7 +501,7 @@ This would work in much the same way as checking the permissions for a user's Ac
   .. literalinclude:: code/nodejs/authorization/account_groups_req.js
       :language: javascript
 
-  From here... (node.todo)
+  From here you can retrieve the Group’s CustomData in the same way as you did with users.
 
 .. only:: php
 
