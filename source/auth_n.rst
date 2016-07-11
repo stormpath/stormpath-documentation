@@ -1,4 +1,4 @@
- .. _authn:
+.. _authn:
 
 *****************************************
 4. Authenticating Accounts with Stormpath
