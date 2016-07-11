@@ -849,7 +849,7 @@ Generating an OAuth 2.0 Access Token
 
 Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
 
-- **Client Credentials Grant Type:** a client's credentials (e.g. API Key ID and Secret)
+- **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
 - **Password Grant Type**: a user's credentials (e.g. username and password)
 - **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
@@ -863,9 +863,9 @@ Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth
 
 The first two kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token.
 
-So for the **Client Credentials Grant Type**, you pass the **API Key ID** and **Secret**:
+So for the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
 
-``grant_type=client_credentials&apiKeyId=2ZFMV4WVVexample&apiKeySecret=XEPJolhnMYexample``
+``grant_type=client_credentials&client_id=2ZFMV4WVVexample&client_secret=XEPJolhnMYexample``
 
 And for the **Password Grant Type**, you pass the **username** and **password**:
 
