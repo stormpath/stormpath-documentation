@@ -54,7 +54,7 @@ Now that we have an understanding of what a multi-tenant application is we can m
 
 .. note::
 
-  Stormpath's data model is designed to be as flexible (and therefore powerful) as it can be, but this can also sometimes result in complexity. If at any point you have a question, do not hesitate to `get in touch <support@stormpath.com>`__.
+  Stormpath's data model is designed to be as flexible (and therefore powerful) as it can be. If at any point you have a question, do not hesitate to `get in touch <support@stormpath.com>`__.
 
 6.2.1 Multi-Tenancy and the Stormpath Data Model
 ------------------------------------------------
