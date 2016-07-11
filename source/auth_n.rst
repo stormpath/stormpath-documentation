@@ -48,6 +48,24 @@ After an Account resource has been created, you can authenticate it given an inp
 
   You are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
+  .. note::
+
+    It is also possible to specify an Organization's ``nameKey`` instead of an Account Store's ``href``:
+
+    .. code-block:: http
+
+      POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json
+
+      {
+        "type": "basic",
+        "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+        "accountStore": {
+          "nameKey":"anOrgNameKey"
+        }
+      }
+
   On success you would get back the ``href`` for the "Han Solo" Account:
 
   .. code-block:: http
@@ -603,12 +621,10 @@ OAuth 2.0 is an authorization framework and provides a protocol to interact with
 Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
 
 - **Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
-
+- **Client Credentials Grant Type**: Provides the ability to exchange an API Key for an Access Token.
 - **Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
 
-- **Client Credentials Grant Type**: Provides the ability to exchange an API Key for the Access Token. This is supported through the API Key Management feature.
-
-To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available.
+To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available. To see how to generate an OAuth token, see :ref:`below <generate-oauth-token>`.
 
 What Tokens Are Available for Token-Based Authentication?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -828,17 +844,36 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Password Grant** flow.
+Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
+
+- **Client Credentials Grant Type:** a client's credentials (e.g. API Key ID and Secret)
+- **Password Grant Type**: a user's credentials (e.g. username and password)
+- **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
 
-  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
+  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol:
 
-      https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+  ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token``
 
-  This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
+  This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
-Your application will act as a proxy to the Stormpath API. For example:
+The first two kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token.
+
+So for the **Client Credentials Grant Type**, you pass the **API Key ID** and **Secret**:
+
+``grant_type=client_credentials&apiKeyId=2ZFMV4WVVexample&apiKeySecret=XEPJolhnMYexample``
+
+And for the **Password Grant Type**, you pass the **username** and **password**:
+
+``grant_type=password&username=tom%40stormpath.com&password=Secret1``
+
+In both cases they are passed as URL encoded strings.
+
+Token Generation Example
+"""""""""""""""""""""""""
+
+In this example:
 
 - The user inputs their credentials into a form and submits them.
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
@@ -852,15 +887,18 @@ So you would send the following request:
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpGTVY0V1ZWQ1Z...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=password&username=tom%40stormpath.com&password=Secret1
 
   .. note::
 
-    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store or Organization. To do so, specify the Account Store's ``href`` or Organization's ``nameKey`` as a parameter in the body::
 
-        grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+      grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+
+      grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=companyA
 
 .. only:: csharp or vbnet
 
@@ -989,7 +1027,7 @@ So you would send the following request:
       :language: java
 
   .. todo::
-    Describe the result.
+    (java.todo)
 
 .. only:: nodejs
 
@@ -999,7 +1037,7 @@ So you would send the following request:
       :language: javascript
 
   .. todo::
-    Describe the result.
+    (node.todo)
 
 .. only:: php
 
@@ -1054,7 +1092,7 @@ So you would send the following request:
       :language: python
 
   .. todo::
-    Describe the result.
+    (python.todo)
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1281,6 +1319,8 @@ The token specified in the Authorization header has been digitally signed with t
 
   .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
       :language: python
+
+.. _refresh-oauth-token:
 
 Refreshing Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
