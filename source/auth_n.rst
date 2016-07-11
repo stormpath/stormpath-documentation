@@ -48,6 +48,24 @@ After an Account resource has been created, you can authenticate it given an inp
 
   You are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
+  .. note::
+
+    It is also possible to specify an Organization's ``nameKey`` instead of an Account Store's ``href``:
+
+    .. code-block:: http
+
+      POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json
+
+      {
+        "type": "basic",
+        "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+        "accountStore": {
+          "nameKey":"anOrgNameKey"
+        }
+      }
+
   On success you would get back the ``href`` for the "Han Solo" Account:
 
   .. code-block:: http
@@ -831,36 +849,32 @@ Generating an OAuth 2.0 Access Token
 
 Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
 
-- **Client Credential Grant Type:** a client's credentials (e.g. API Key ID and Secret)
+- **Client Credentials Grant Type:** a client's credentials (e.g. API Key ID and Secret)
 - **Password Grant Type**: a user's credentials (e.g. username and password)
 - **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
 
-  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
+  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol:
 
-      https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+  ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token``
 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
 The first two kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token.
 
-Client Credentials Grant Example
-""""""""""""""""""""""""""""""""
+So for the **Client Credentials Grant Type**, you pass the **API Key ID** and **Secret**:
 
-.. only:: rest
+``grant_type=client_credentials&apiKeyId=2ZFMV4WVVexample&apiKeySecret=XEPJolhnMYexample``
 
-  .. code-block:: http
+And for the **Password Grant Type**, you pass the **username** and **password**:
 
-    POST /v1/applications/1gDDswrSeoAppLDexample/oauth/token HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpGTVY0V1ZWQ1Z...
-    Content-Type: application/x-www-form-urlencoded
+``grant_type=password&username=tom%40stormpath.com&password=Secret1``
 
-    grant_type=client_credentials&apiKeyId=2ZFMV4WVVexample&apiKeySecret=XEPJolhnMYexample
+In both cases they are passed as URL encoded strings.
 
-Password Grant Example
-""""""""""""""""""""""
+Token Generation Example
+"""""""""""""""""""""""""
 
 In this example:
 
@@ -883,9 +897,11 @@ So you would send the following request:
 
   .. note::
 
-    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store or Organization. To do so, specify the Account Store's ``href`` or Organization's ``nameKey`` as a parameter in the body::
 
-        grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+      grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+
+      grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=companyA
 
 .. only:: csharp or vbnet
 
@@ -1014,7 +1030,7 @@ So you would send the following request:
       :language: java
 
   .. todo::
-    Describe the result.
+    (java.todo)
 
 .. only:: nodejs
 
@@ -1024,7 +1040,7 @@ So you would send the following request:
       :language: javascript
 
   .. todo::
-    Describe the result.
+    (node.todo)
 
 .. only:: php
 
@@ -1079,7 +1095,7 @@ So you would send the following request:
       :language: python
 
   .. todo::
-    Describe the result.
+    (python.todo)
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
