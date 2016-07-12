@@ -1714,9 +1714,11 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
     .. only:: csharp
 
-      Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
+      .. tip::
 
-If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
+        Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
+
+For example, if some or all of your Accounts in a particular Directory have a Custom Data key called ``startDate`` that contains the date that user started using your application, you could search for the Accounts that started within a particular date range:
 
 .. only:: csharp or vbnet
 
@@ -1759,6 +1761,10 @@ If, for example, we wanted all Accounts in the Directory that had started betwee
     GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?customData.startDate=[2012,2015]&limit=5&offset=0 HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json
+
+This query will match Accounts with a ``startDate`` value between 2012-01-01 and 2015-12-31. Additionally, only the top five Accounts will be returned from the result set, with an offset of zero.
+
+.. only:: rest
 
   For a full description please see :ref:`the Reference chapter <search-customdata>`.
 
