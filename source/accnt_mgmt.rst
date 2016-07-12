@@ -1706,7 +1706,7 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
 .. note::
 
-  This feature is currently in beta, any questions comments or suggestions, reach out to us at support@stormpath.com
+  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
 
 .. only:: csharp or vbnet
 
