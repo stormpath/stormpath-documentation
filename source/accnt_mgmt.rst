@@ -1708,21 +1708,29 @@ It is also possible to retrieve a collection of Accounts by searching the data s
 
   This feature is currently in beta, any questions comments or suggestions, reach out to us at support@stormpath.com
 
-If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
+.. only:: csharp or vbnet
 
-.. todo::
-
-  .. only:: csharp or vbnet
+    In a LINQ-to-Stormpath query, you can assert a Custom Data key and value using the ``CustomData`` property on the ``IAccount`` object.
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/account_management/cd_search.cs
-          :language: csharp
+      Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
 
-    .. only:: vbnet
+If, for example, we wanted all Accounts in the Directory that had started between 2012-01-01 and 2015-12-31, and we wanted to paginate the results by limiting the returned number of Accounts to 5 and an offset of 0, we would send the following query:
 
-      .. literalinclude:: code/vbnet/account_management/cd_search.vb
-          :language: vbnet
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/account_management/cd_search.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/account_management/cd_search.vb
+        :language: vbnet
+
+.. todo::
 
   .. only:: java
 
