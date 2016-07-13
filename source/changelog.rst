@@ -134,7 +134,7 @@
   2016-02-24
   ==========
 
-  - **New:** Added section on :ref:`how to route users to their tenant <multitenant-routing-users>`.
+  - **New:** Added section on :ref:`how to route users to their tenant <multitenancy-routing-users>`.
 
   2016-02-19
   ==========

@@ -813,7 +813,7 @@ If you are using ID Site for login, then it stands to reason that you would want
 
 If you are :ref:`using Organizations to model multi-tenancy <create-org>`, then you will want to map these as Account Stores for your Application.
 
-From that point, ID Site is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenant-routing-users>`.
+From that point, ID Site is able to handle either of the multi-tenant user routing methods described in :ref:`the Multi-tenancy Chapter <multitenancy-routing-users>`.
 
 .. only:: rest
 
