@@ -29,22 +29,6 @@ Tenants are organizations of people who use your application in some shared way.
 
 If your application is offering (1) shared software and hardware infrastructure to (2) client organizations, then you have a multi-tenant application! Now, for privacy and security purposes, it's very important that your application maintain data segmentation between its multiple tenants. At Stormpath, this segmentation is baked-in to everything that we offer.
 
-
-.. todo::
-
-  6.2. Why Use Stormpath for Multi-Tenancy?
-
-  (This might make sense, but I'm not 100% what goes in here without getting super repetitive.)
-
-  This entire chapter will serve as an answer to this question. However, it's good to provide an overview.
-
-  Your multi-tenant application might need any or all of the following:
-
-  - Per-tenant :ref:`authentication flows <multitenancy-auth-to-org>` and :ref:`login pages <multitenancy-routing-users>`.
-  - Social, LDAP, or SAML login available for each tenant
-  - Per-tenant or application-wide password policies and registration emails
-  - User roles customized to each tenant, or even shared across tenants
-
 .. _multitenancy-modeling:
 
 6.2. Modeling Tenants in Stormpath
@@ -84,7 +68,7 @@ Directories are the the top-level Account Store for both Accounts and Groups. Al
 
 .. figure:: images/multitenancy/simple_ERD_TpD.png
   :align: center
-  :scale: 100%
+  :scale: 33%
   :alt: Directory with Organization and Application
 
   *Application + Organization + Directory*
@@ -107,7 +91,7 @@ Groups must always belong to a Directory, but they are otherwise very flexible. 
 
 .. figure:: images/multitenancy/simple_ERD_TpG.png
   :align: center
-  :scale: 100%
+  :scale: 33%
   :alt: Group with Directory, Organization, and Application
 
   *Application + Organization + Directory*
@@ -132,7 +116,7 @@ Your primary consideration when modeling users in Stormpath always begins with t
 
 To help you decide which strategy is best, answer the following questions:
 
-- **Can a user sign up for multiple tenants with the same email address?**
+- **Can a user access multiple tenants with the same credentials?**
 
 - **Will your tenants all have different password strength requirements?**
 
@@ -140,18 +124,12 @@ If the answer to either of these questions is "Yes", then you will want to map e
 
 If the answer to either of them is "No", then you will want to have only one Directory, and map each Organization to its own Group. We will call this the :ref:`"Group per Organization" strategy <multitenancy-gpo>`.
 
-
-
 The reasoning here is very simple: because Stormpath stores certain things on the Directory resource, if you want each of your tenants to be able to customize things that are stored on the Directory level, then each one will need their own Directory!
 
 .. _multitenancy-dpo:
 
 Strategy 1: Directory per Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo::
-
-  Some of this might be possible with the other strategy too, just needs more work...
 
 This first strategy has, as the name implies, one Directory for every tenant Organization. A few questions to think about this for this strategy:
 
@@ -178,12 +156,12 @@ Here is an example implementation that uses Directories to model tenants. It is 
 
 .. figure:: images/multitenancy/ERD_TpD.png
     :align: center
-    :scale: 100%
+    :scale: 90%
     :alt: Tenant per Directory
 
     *Directory per Organization ERD.*
 
-.. note:
+.. note::
 
   Everything discussed occurs inside the private data space that we refer to as your Stormpath Tenant, which is represented by the Tenant resource but does not play any part in multi-tenancy.
 
@@ -198,10 +176,6 @@ The scenario demonstrates a multi-tenant userbase with two tenants, each of whic
 
 Strategy 2: Group per Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. todo::
-
-  Some of this might be possible with the other strategy too, just needs more work...
 
 The other multi-tenancy option is to have a single Directory under which each of your application's tenants has their own Group. A few questions to think about this for this strategy:
 
@@ -226,7 +200,7 @@ Below we have an example of an implementation that uses Groups to model tenants.
 
 .. figure:: images/multitenancy/ERD_TpG.png
   :align: center
-  :scale: 100%
+  :scale: 90%
   :alt: Tenant per Group
 
   *Tenants as Groups ERD*
