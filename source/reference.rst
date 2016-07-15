@@ -5243,6 +5243,8 @@
   - Organization
   - Account
 
+  Custom Data is also searchable. For more information, see :ref:`search-customdata`.
+
   **customData URL**
 
   ``/v1/$RESOURCE_TYPE/$RESOURCE_ID/customData``
