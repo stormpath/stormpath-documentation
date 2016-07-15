@@ -1753,7 +1753,7 @@
 
     {
         "type": "basic",
-        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk"
+        "value": "YmFzZTY0LWVuY29kZWQtbG9naW4tYW5kLXBhc3N3b3Jk",
         "accountStore": {
              "href": "https://api.stormpath.com/v1/groups/$YOUR_GROUP_ID"
        }
