@@ -742,7 +742,7 @@
 
   It is also possible to search a collection's Custom Data. This means that you send a query to a collection:
 
-  ``?customData=customData.{key}={value}``
+  ``?customData.{key}={value}``
 
   You will receive back an array of resources that contain that value in their Custom Data.
 
