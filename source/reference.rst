@@ -4270,7 +4270,7 @@
         - Optional Query Parameters
         - Description
 
-      * - GET /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      * - GET /v1/organizationAccountStoreMappings/ $ORG_ACCOUNT_STORE_MAPPING_ID
         - ``expand``
         - Retrieves the specified Organization Account Store Mapping resource. ``accountStore`` and ``organization`` can be expanded. More info :ref:`above <about-links>`.
 
@@ -4285,7 +4285,7 @@
         - Attributes
         - Description
 
-      * - POST /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      * - POST /v1/organizationAccountStoreMappings/ $ORG_ACCOUNT_STORE_MAPPING_ID
         - ``listIndex``, ``isDefaultAccountStore``, ``isDefaultGroupStore``
         - Updates the specified attributes with the values provided.
 
@@ -4300,7 +4300,7 @@
         - Attributes
         - Description
 
-      * - DELETE /v1/organizationAccountStoreMappings/$ORG_ACCOUNT_STORE_MAPPING_ID
+      * - DELETE /v1/organizationAccountStoreMappings/ $ORG_ACCOUNT_STORE_MAPPING_ID
         - N/A
         - Deletes the specified Organization Account Store Mapping.
 
@@ -5395,7 +5395,7 @@
         - N/A
         - Deletes the specified customData resource.
 
-      * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData/$KEY_OR_OBJECT_NAME
+      * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/ customData/$KEY_OR_OBJECT_NAME
         - ``"$FIELD_NAME": null``
         - Deletes only the specified Custom Data field or object. If you are deleting a key, you must specify the value of the key as ``null`` in order for the call to succeed. If you are deleting an object you can just pass the object name without adding anything to the request body.
 
