@@ -840,6 +840,36 @@
       ]
     }
 
+  Searching Objects in Custom Data
+  ++++++++++++++++++++++++++++++++
+
+  If you are storing JSON objects in your Custom Data, then the query has the following form:
+
+  ``?customData.{objectName}.{key}=value``
+
+  So in the following Custom Data, we have an object named ``greetings`` and another named ``phoneNumbers``:
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/2o33FbmQzqAa88cexample/customData",
+      "createdAt": "2016-04-27T15:47:34.872Z",
+      "modifiedAt": "2016-07-18T19:34:11.308Z",
+      "greetings": {
+        "morning": "Good morning",
+        "afternoon": "Good afternoon",
+        "evening": "Good evening"
+      },
+      "phoneNumbers": {
+        "home": 9054586867,
+        "mobile": 4168993119
+      }
+    }
+
+  We could search for a key-value pair in the ``greetings`` object like so:
+
+  ``?customData.greetings.morning=good*``
+
   Searching Datetime in Custom Data
   ++++++++++++++++++++++++++++++++++
 
@@ -5275,7 +5305,7 @@
         - ISO-8601 Datetime
         - Indicates when this resource’s attributes were last modified.
 
-  You can store an unlimited number of additional name/value pairs in the customData resource, with the following restrictions:
+  You can store an unlimited number of additional key/value pairs or entire JSON objects in the customData resource, with the following restrictions:
 
   - The total storage size of a single customData resource cannot exceed 10 MB (megabytes). The ``href``, ``createdAt`` and ``modifiedAt`` field names and values do not count against your resource size quota.
 
@@ -5289,14 +5319,19 @@
   .. code-block:: json
 
     {
-      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/customData",
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
       "createdAt":"2015-08-25T19:57:05.976Z",
-      "modifiedAt":"2015-08-26T19:27:29.699Z",
+      "modifiedAt":"2016-07-18T20:05:02.283Z",
       "birthDate":"2305-07-13",
       "birthPlace":"La Barre, France",
       "currentAssignment":"USS Enterprise (NCC-1701-E)",
-      "favoriteDrink":"Earl Grey tea",
-      "rank":"Captain"
+      "preferences":{
+        "favoriteColor":"red",
+        "favoriteDrink":"tea"
+      },
+      "rank":"Captain",
+      "startDate":"2014-10-01",
+      "topScore":1000
     }
 
   .. _customdata-operations:
@@ -5308,14 +5343,14 @@
       :local:
       :depth: 1
 
-  Create a customData
+  Create Custom Data
   ^^^^^^^^^^^^^^^^^^^
 
-  Whenever you create an Stormpath resource, an empty customData resource is created for that resource automatically – you do not need to explicitly execute a request to create it.
+  Whenever you create a Stormpath resource, an empty customData resource is created for that resource automatically – you do not need to explicitly execute a request to create it.
 
-  However, it is often useful to populate custom data at the same time you create a resource. You can do this by embedding the customData directly in the resource. For an example, see :ref:`below <accnt-create-with-customdata>`.
+  However, it is often useful to populate custom data at the same time you create a resource. You can do this by embedding the customData directly into the resource creation request. For an example, see :ref:`below <accnt-create-with-customdata>`.
 
-  Retrieve a customData
+  Retrieve Custom Data
   ^^^^^^^^^^^^^^^^^^^^^
 
   .. list-table::
@@ -5330,7 +5365,7 @@
         - N/A
         - Retrieves the specified resources' customData resource.
 
-  Update a customData
+  Update Custom Data
   ^^^^^^^^^^^^^^^^^^^^
 
   .. list-table::
@@ -5343,9 +5378,9 @@
 
       * - POST /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData
         - N/A
-        - Updates the specified attributes with the values provided.
+        - Updates the specified attributes with the values provided. Can also be used to add new JSON objects and/or key-value pairs. (See example queries below)
 
-  Delete a customData
+  Delete Custom Data
   ^^^^^^^^^^^^^^^^^^^^
 
   .. list-table::
@@ -5360,9 +5395,9 @@
         - N/A
         - Deletes the specified customData resource.
 
-      * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData/$FIELD_NAME
+      * - DELETE /v1/$RESOURCE_TYPE/$RESOURCE_ID/customData/$KEY_OR_OBJECT_NAME
         - ``"$FIELD_NAME": null``
-        - Deletes only the specified Custom Data field. You must specify the value of the field as ``null`` in order for the call to succeed.
+        - Deletes only the specified Custom Data field or object. If you are deleting a key, you must specify the value of the key as ``null`` in order for the call to succeed. If you are deleting an object you can just pass the object name without adding anything to the request body.
 
   .. note::
 
@@ -5413,3 +5448,21 @@
       }'
 
   This query would delete only the ``favoriteColor`` field from this customData resource.
+
+  **Add a JSON object along with a key-value pair to an Account's Custom Data**
+
+  .. code-block:: bash
+
+    curl --request POST \
+    --url https://api.stormpath.com/v1/accounts/2o33FbmQzqAa88cexample/customData \
+    --header 'authorization: Basic NE5YUT...' \
+    --header 'content-type: application/json' \
+    --data '{
+        "object": {
+            "key1":"value1",
+            "key2":"value2"
+        },
+        "keyA":"valueA"
+    }'
+
+  This query would add a JSON object called ``object`` to this Account's Custom Data resource. It would also add a separate ``keyA`` key.

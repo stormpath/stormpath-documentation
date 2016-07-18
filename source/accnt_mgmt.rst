@@ -1153,9 +1153,17 @@ In this case you will be using the API in the same way as usual, except with the
 3.2.3. How to Store Additional User Information as Custom Data
 --------------------------------------------------------------
 
-While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
+While Stormpath’s default Account attributes are useful to many applications, you might want to add your own Custom Data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
 
-One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+Custom Data can store:
+
+- String values
+- Boolean values
+- Number values
+- Arrays
+- JSON Objects (with nesting)
+
+One simple use case for Custom Data could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
 For example, you could add information about this user's current location, like the ship this Captain is currently assigned to.
 
