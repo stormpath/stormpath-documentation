@@ -51,7 +51,8 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: python
 
-  (python.todo)
+  .. todo::
+    Add a link to the API docs.
 
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
@@ -79,7 +80,9 @@ This is the standard, default Directory resource.
 How to Make a Cloud Directory
 """""""""""""""""""""""""""""
 
-The following request:
+.. only:: not python
+
+  The following request:
 
 .. only:: rest
 
@@ -183,13 +186,6 @@ The following request:
 
   .. literalinclude:: code/php/account_management/create_cloud_dir_resp.php
       :language: php
-
-.. only:: python
-
-  Would yield the following response:
-
-  .. literalinclude:: code/python/account_management/create_cloud_dir_resp.py
-      :language: python
 
 At this point, our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
 
