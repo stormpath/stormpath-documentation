@@ -2458,7 +2458,7 @@ Stormpath can store historical password information in order to allow for restri
         "preventReuse": "10"
     }
 
-    .. note::
+  .. note::
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
