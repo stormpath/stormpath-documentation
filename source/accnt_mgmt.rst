@@ -328,7 +328,13 @@ Modeling your users who authorize via Social Login is by necessity very simple, 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
 
-Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+.. only:: rest
+
+  Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+
+.. only:: not rest
+
+  Social Directories can be made using the Stormpath Admin Console, or using the |language| SDK. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
 .. only:: rest
 
@@ -353,7 +359,13 @@ The only modeling considerations for SAML Directories are: you will need a Direc
 How to Make a SAML Directory
 ++++++++++++++++++++++++++++
 
-SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
+.. only:: rest
+
+  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
+
+.. only:: not rest
+
+  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the |language| SDK.
 
 .. only:: csharp or vbnet
 
@@ -377,11 +389,11 @@ SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-confi
 
 .. only:: php
 
-  For more information about creating them using the PHP SDK, see :ref:`saml-configuration-rest`.
+  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
 .. only:: python
 
-  (python.todo)
+  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
 .. only:: rest or csharp or vbnet
 
