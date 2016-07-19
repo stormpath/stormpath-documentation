@@ -424,11 +424,14 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: php
 
-  For more information about creating them using the PHP SDK, see :ref:`saml-configuration-rest`.
+  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
 .. only:: python
 
-  (python.todo)
+  To create a Group using the Python SDK...
+
+  .. literalinclude:: code/python/account_management/create_group_req.py
+      :language: python
 
 .. todo::
 
