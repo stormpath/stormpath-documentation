@@ -3122,13 +3122,11 @@ Working with the Whitelist and Blacklist is exactly the same.
 
 .. only:: php
 
-  Working with the whitelist or blacklist uses the same method names, just changing ``Blacklist`` to ``Whitelist``
-
   To replace the current list, pass an array to the method.
 
   .. code-block:: php
 
-    $accountCreationPolicy->setEmailDomainBlacklist(['abc.com', 'xyz.com'])->save();
+    $accountCreationPolicy->setEmailDomainWhitelist(['abc.com', 'xyz.com'])->save();
 
 
 .. only:: python
@@ -3188,7 +3186,7 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
   .. code-block:: php
 
-    $accountCreationPolicy->addEmailDomainBlacklist('stormpath.com')->save();
+    $accountCreationPolicy->addEmailDomainWhitelist('stormpath.com')->save();
 
 
 .. only:: python
@@ -3289,7 +3287,7 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
   .. code-block:: php
 
-    $accountCreationPolicy->removeEmailDomainBlacklist('stormpath.com')->save();
+    $accountCreationPolicy->removeEmailDomainWhitelist('stormpath.com')->save();
 
 
 .. only:: python
