@@ -1683,16 +1683,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 .. only:: python
 
-  (python.todo) Is there anything else to add here? See Dotnet above.
-
-  **Query**
-
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req.py
-      :language: python
-
-  **Response**
-
-  .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_resp.py
       :language: python
 
 .. _howto-search-account-customdata:
@@ -1730,6 +1721,11 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     .. literalinclude:: code/vbnet/account_management/cd_search.vb
         :language: vbnet
 
+.. only:: python
+
+  .. literalinclude:: code/python/account_management/cd_search.py
+      :language: python
+
 .. todo::
 
   .. only:: java
@@ -1746,11 +1742,6 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
 
     .. literalinclude:: code/php/account_management/cd_search.php
       :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/account_management/cd_search.py
-        :language: python
 
 .. only:: rest
 
@@ -1880,11 +1871,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
       :language: php
 
-.. only:: python
-
-  .. literalinclude:: code/python/account_management/update_dir_pwd_strength_resp.py
-      :language: python
-
 .. _change-account-pwd:
 
 3.4.2. Change an Account's Password
@@ -1945,6 +1931,8 @@ At no point is the user shown, or does Stormpath have access to, the original pa
       :language: php
 
 .. only:: python
+
+  To update the password, you send the updated password to the Account resource:
 
   .. literalinclude:: code/python/account_management/update_account_pwd.py
       :language: python
