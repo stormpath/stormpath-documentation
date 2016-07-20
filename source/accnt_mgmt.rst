@@ -1153,9 +1153,17 @@ In this case you will be using the API in the same way as usual, except with the
 3.2.3. How to Store Additional User Information as Custom Data
 --------------------------------------------------------------
 
-While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
+While Stormpath’s default Account attributes are useful to many applications, you might want to add your own Custom Data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
 
-One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+Custom Data can store:
+
+- String values
+- Boolean values
+- Number values
+- Arrays
+- JSON Objects (with nesting)
+
+One simple use case for Custom Data could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
 For example, you could add information about this user's current location, like the ship this Captain is currently assigned to.
 
@@ -2464,7 +2472,7 @@ Stormpath can store historical password information in order to allow for restri
         "preventReuse": "10"
     }
 
-    .. note::
+  .. note::
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
@@ -2754,7 +2762,13 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: rest or csharp or vbnet or php
 
-  First, let's look at the default template that comes with the Stormpath Administrator's Directory:
+  **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory's **Account Creation Policies**.
+
+  **Password Reset**, and **Reset Success** Email Templates can be found under the Directory's **Password Policies**.
+
+  To modify any of these emails via REST, it is just a matter of updating the appropriate ``/emailTemplates/$TEMPLATE_ID`` resource with a POST.
+
+  As an example, let's look at a default Verification Email template that comes with the Stormpath Administrator Directory's Account Creation Policies:
 
   .. code-block:: json
 
@@ -2773,20 +2787,35 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
       }
     }
 
+  If you wanted to change the ``fromEmailAddress`` attribute, you would just update this attribute:
+
+  .. code-block:: http
+
+    POST /v1/emailTemplates/2jwPxFsnjqxYrojexample HTTP/1.1
+    Host: api.stormpath.com
+
+    {
+        "fromEmailAddress":"jakub@stormpath.com"
+    }
+
+  You would then receive a ``200 OK`` along with the updated template.
+
+  For more information about Stormpath's email templates, keep reading!
+
   **Message Format**
 
   The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
   **textBody and htmlBody**
 
-  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
+  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
 
 .. _using-email-macros:
 
 Using Email Macros
 ^^^^^^^^^^^^^^^^^^
 
-You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
+Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
 
 .. code-block:: java
 
