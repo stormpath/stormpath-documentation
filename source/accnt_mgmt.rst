@@ -300,7 +300,7 @@ How to Make an LDAP Directory
 
   LDAP Directories can be made using the Stormpath Admin Console, or using the Python SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
 
-  To do it with the Python SDK...
+  Here's how you can create an LDAP Directory:
 
   .. literalinclude:: code/python/account_management/create_ldap_dir_req.py
       :language: python
@@ -428,7 +428,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: python
 
-  To create a Group using the Python SDK...
+  Here's how you can create a Group:
 
   .. literalinclude:: code/python/account_management/create_group_req.py
       :language: python
