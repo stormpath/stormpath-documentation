@@ -1,4 +1,4 @@
-group = directory.groups.create({
-    'name': 'Admins',
-    'description': 'A group of Admin users.',
+group = captains_directory.groups.create({
+    'name': 'Starfleet Officers',
+    'description': 'A group of high ranking officers.',
 })

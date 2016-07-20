@@ -545,9 +545,9 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
   Although in this example we use the Directory's `/groups` endpoint, it is also possible to use an Application or Organization's `/groups` endpoint. For more information see :ref:`below <add-to-app-or-org>`.
 
-The following request:
-
 .. only:: rest
+
+  The following request:
 
   .. code-block:: http
 
@@ -593,6 +593,8 @@ The following request:
       :language: php
 
 .. only:: python
+
+  You would do this by issuing the following request:
 
   .. literalinclude:: code/python/account_management/create_group_req.py
       :language: python
@@ -671,11 +673,6 @@ The following request:
   .. literalinclude:: code/php/account_management/create_group_resp.php
       :language: php
 
-.. only:: python
-
-  .. literalinclude:: code/python/account_management/create_group_resp.py
-      :language: python
-
 You can now see how this Group would look in our Tenant:
 
 .. figure:: images/accnt_mgmt/am_erd_02.png
@@ -711,10 +708,6 @@ The Account resource is a unique identity within your application. It is usually
 .. only:: php
 
   For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__.
-
-.. only:: python
-
-  (python.todo)
 
 3.2.1. New Account Creation
 ---------------------------
@@ -787,7 +780,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: python
 
-  (python.todo) It'd be good to add some explanatory text like we have for csharp.
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can do this like so:
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
       :language: python
@@ -853,13 +846,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_resp.php
       :language: php
-
-.. only:: python
-
-  Would yield this response:
-
-  .. literalinclude:: code/python/account_management/create_account_in_dir_resp.py
-      :language: python
 
 Going back to our resource diagram:
 
@@ -933,7 +919,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: python
 
-  (python.todo) It'd be good to add some explanatory text like we have for csharp.
+  This time, use the existing Account instance you created before, like so:
 
   .. literalinclude:: code/python/account_management/add_account_to_group_req.py
       :language: python
@@ -971,11 +957,6 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp.js
       :language: javascript
-
-.. only:: python
-
-  .. literalinclude:: code/python/account_management/add_account_to_group_resp.py
-      :language: python
 
 This would leave us with the following resources:
 
