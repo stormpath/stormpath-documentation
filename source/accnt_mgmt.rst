@@ -1043,7 +1043,10 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: python
 
-  (python.todo)
+  This can be done by setting the ``registration_workflow_enabled`` flag when creating the Account:
+
+  .. literalinclude:: code/python/account_management/create_account_disable_reg_workflow.py
+      :language: python
 
 .. _importing-mcf:
 
@@ -1104,7 +1107,10 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: python
 
-  (python.todo) It'd be good to add some explanatory text like we have for csharp.
+  This can be done by setting the ``password_format`` option when creating the Account:
+
+  .. literalinclude:: code/python/account_management/create_account_mcf_hash.py
+        :language: python
 
 .. _stormpath2-hash:
 
@@ -1224,10 +1230,14 @@ For example, you could add information about this user's current location, like 
 
 .. only:: python
 
-  (python.todo) It'd be good to add some explanatory text like we have for csharp.
+  The ``jean_luc`` Account you created earlier has a ``custom_data`` property that allows you to write to the resource's Custom Data:
 
   .. literalinclude:: code/python/account_management/add_cd_to_account_req.py
       :language: python
+
+  .. warning::
+
+    Any Custom Data changes you make are not preserved until you call ``save()`` on the Account resource to send the updates to the Stormpath API.
 
 .. only:: rest
 
@@ -1263,11 +1273,6 @@ For example, you could add information about this user's current location, like 
       :language: javascript
 
   For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
-
-.. only:: python
-
-  .. literalinclude:: code/python/account_management/add_cd_to_account_resp.py
-      :language: python
 
 .. _howto-search-accounts:
 
