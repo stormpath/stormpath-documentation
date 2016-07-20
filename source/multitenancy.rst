@@ -703,12 +703,6 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
   .. literalinclude:: code/php/multitenancy/add_account_to_org.php
     :language: php
 
-  .. warning::
-
-    Currently, you cannot create a new Account directly from the Organization resource.
-
-    You are also not able to create a new Account directly into a Group. The PHP SDK team is currently working on a bug fix for this.  You can follow along on
-    `github issue #152 <https://github.com/stormpath/stormpath-sdk-php/issues/152>`_ for updates.
 
 .. only:: python
 

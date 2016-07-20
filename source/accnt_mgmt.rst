@@ -1786,12 +1786,6 @@ One of the major categories of user management tasks that Stormpath handles and 
 3.4.1. Manage Password Policies
 --------------------------------
 
-.. only:: php
-
-  .. warning::
-
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by the REST calls provided below to enable or disable the password reset email. For updates, you can follow this `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
-
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
 .. note::
@@ -1800,7 +1794,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory.
 
-.. only:: rest or php
+.. only:: rest
 
   To update Password Strength, make this call:
 
@@ -1842,7 +1836,9 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req.js
       :language: javascript
 
-.. only:: notyetphp
+.. only:: php
+
+  To retrieve the password policy, use the ``getPasswordPolidy()`` and ``getStrength()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
 
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req.php
       :language: php
@@ -1852,7 +1848,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req.py
       :language: python
 
-.. only:: rest or php
+.. only:: rest
 
   Which results in the following response:
 
@@ -1884,11 +1880,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
       :language: javascript
-
-.. only:: notyetphp
-
-  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
-      :language: php
 
 .. only:: python
 
@@ -2272,12 +2263,6 @@ On success, the response will include a link to the Account that the password wa
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: php
-
-  .. warning::
-
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
-
 The Password Reset Email is configurable for a Directory.
 
 There is a set of properties on the Password Policy resource that define its behavior. These properties are:
@@ -2289,7 +2274,7 @@ There is a set of properties on the Password Policy resource that define its beh
 
 To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, perform the following:
 
-.. only:: rest or php
+.. only:: rest
 
   .. code-block:: http
 
@@ -2323,7 +2308,7 @@ To control whether any email is sent or not is simply a matter of setting the ap
   .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email.js
       :language: javascript
 
-.. only:: notyetphp
+.. only:: php
 
   .. literalinclude:: code/php/account_management/enable_pwd_reset_email.php
       :language: php
@@ -2362,11 +2347,8 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: php
 
-  .. warning::
-
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
-
-    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+  .. literalinclude:: code/php/account_management/pwd_reset_email_template.php
+      :language: php
 
 
 .. only:: python
@@ -2450,18 +2432,15 @@ Stormpath can store historical password information in order to allow for restri
 
 .. only:: php
 
-  .. warning::
-
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #151 <https://github.com/stormpath/stormpath-sdk-php/issues/151>`_ on Github.
-
-     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+  .. literalinclude:: code/php/account_management/update_prevent_reuse.php
+      :language: php
 
 
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or php
+.. only:: rest
 
   .. code-block:: http
 
@@ -2738,15 +2717,43 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: php
 
-  .. warning::
+  **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory's **Account Creation Policies**.
 
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
+  **Password Reset**, and **Reset Success** Email Templates can be found under the Directory's **Password Policies**.
 
-    In the meantime, please use the Stormpath Admin Console UI, or the REST API documentation below.
+  As an example, let's look at a default Verification Email template that comes with the Stormpath Administrator Directory's Account Creation Policies:
 
-    .. todo::
+  .. code-block:: php
 
-      Add email templates .NET example
+    $verificationEmailTemplates = $directory->getAccountCreationPolicy()
+                                        ->getVerificationEmailTemplates();
+
+    foreach($verificaitonEmailTemplates as $template) {
+        $template
+            ->setName('Default Verification Email Template')
+            ->setDescription('This is the verification email template that is associated with the directory.')
+            ->setFromName('Jakub Swiatczak')
+            ->setFromEmailAddress('change-me@stormpath.com')
+            ->setSubject('Verify your account')
+            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
+            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
+            ->setMimeType(\Stormpath\Stormpath::MIME_PLAIN_TEXT)
+            ->setDefaultModel(['linkBaseUrl'=>'https://api.stormpath.com/emailVerificationTokens'])
+            ->save();
+    }
+
+    You would then receive a ``200 OK`` along with the updated template.
+
+    For more information about Stormpath's email templates, keep reading!
+
+    **Message Format**
+
+    The ``mimeType`` designates whether the email is sent as plain text (``\Stormpath\Stormpath::MIME_PLAIN_TEXT``), HTML (``\Stormpath\Stormpath::MIME_HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+
+    **textBody and htmlBody**
+
+    These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
+
 
 .. only:: java
 
@@ -2760,7 +2767,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory's **Account Creation Policies**.
 
@@ -3115,19 +3122,18 @@ Working with the Whitelist and Blacklist is exactly the same.
 
 .. only:: php
 
-  .. warning::
+  To replace the current list, pass an array to the method.
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+  .. code-block:: php
 
-  .. todo::
+    $accountCreationPolicy->setEmailDomainWhitelist(['abc.com', 'xyz.com'])->save();
 
-    This.
 
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   In both cases, you send an array in this format:
 
@@ -3177,19 +3183,17 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
 .. only:: php
 
-  .. warning::
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+  .. code-block:: php
 
-  .. todo::
+    $accountCreationPolicy->addEmailDomainWhitelist('stormpath.com')->save();
 
-    This.
 
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   .. code-block:: http
 
@@ -3204,7 +3208,9 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
           ]
     }
 
-And you would get back the Account Creation Policies resource:
+.. only:: not php
+
+  And you would get back the Account Creation Policies resource:
 
 .. only:: csharp or vbnet
 
@@ -3224,17 +3230,12 @@ And you would get back the Account Creation Policies resource:
 
   (node.todo)
 
-.. only:: php
-
-  .. todo::
-
-    This.
 
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   .. code-block:: json
 
@@ -3284,13 +3285,10 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 .. only:: php
 
-  .. warning::
+  .. code-block:: php
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+    $accountCreationPolicy->removeEmailDomainWhitelist('stormpath.com')->save();
 
-  .. todo::
-
-    This.
 
 .. only:: python
 
@@ -3310,7 +3308,9 @@ If you changed our mind and wanted to only allow users to register with ``stormp
           ]
     }
 
-And then you'd get back the Account Policies, with the updated Whitelist:
+.. only:: not php
+
+  And then you'd get back the Account Policies, with the updated Whitelist:
 
 .. only:: csharp or vbnet
 
@@ -3330,17 +3330,11 @@ And then you'd get back the Account Policies, with the updated Whitelist:
 
   (node.todo)
 
-.. only:: php
-
-  .. todo::
-
-    This.
-
 .. only:: python
 
   (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   .. code-block:: json
 
