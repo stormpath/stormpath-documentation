@@ -2341,10 +2341,9 @@ The contents of the password reset and the password reset success emails are bot
 
     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
-
 .. only:: python
 
-  (python.todo)
+  To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body. For more information about Email Templates, see the `Email Templates section <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-emailtemplates>`__ of the Reference chapter.
 
 .. only:: rest or vbnet or csharp or php
 
@@ -2391,7 +2390,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 .. only:: python
 
-  (python.todo)
+  .. literalinclude:: code/python/account_management/search_password_modified.py
+    :language: python
 
 This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
 
@@ -2429,12 +2429,15 @@ Stormpath can store historical password information in order to allow for restri
 
      In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
-
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or php
+    This feature is not yet available in the |language| SDK. For updates, you can follow `ticket #278 <https://github.com/stormpath/stormpath-sdk-python/issues/278>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+
+.. only:: rest or php or python
 
   .. code-block:: http
 
