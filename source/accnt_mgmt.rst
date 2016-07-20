@@ -2589,12 +2589,9 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: python
 
-  (python.todo) It would be good to add some explanatory text, like above.
+  You can use the ``verify_email_token()`` method on the Client's ``accounts`` collection, plus the token you capture from the query string, to verify the Account:
 
   .. literalinclude:: code/python/account_management/verify_email_req.py
-      :language: python
-
-  .. literalinclude:: code/python/account_management/verify_email_resp.py
       :language: python
 
 .. note::
@@ -2659,7 +2656,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: python
 
-  (python.todo) It would be good to add some explanatory text, like above.
+  To resend the email, use the ``send_verification_email()`` method:
 
   .. literalinclude:: code/python/account_management/resend_verification_email.py
       :language: python
