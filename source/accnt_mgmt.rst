@@ -2116,11 +2116,6 @@ If this is a valid email in an Account associated with this Application, the req
   .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
       :language: php
 
-.. only:: python
-
-  .. literalinclude:: code/python/account_management/reset1_trigger_resp.py
-      :language: python
-
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
 ``http://yoursite.com/path/to/reset/page?sptoken=$TOKEN``
