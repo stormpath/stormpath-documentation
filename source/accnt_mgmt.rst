@@ -1328,7 +1328,7 @@ The Account resource's **searchable attributes** are:
 
 .. only:: python
 
-  (python.todo)
+  Any resource type that exposes an ``accounts`` collection (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
 3.3.1. Example Account Searches
 -------------------------------
@@ -1446,18 +1446,14 @@ A Filter search will locate the specified string in any searchable attribute of 
         var_dump($account);  // object(Stormpath\Resource\Account)
       }
 
-
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req.py
       :language: python
 
-  .. literalinclude:: code/python/account_management/search_app_accounts_for_word_resp.py
-      :language: python
-
   .. note::
 
-    Matching is case-insensitive, so (python.todo)
+    Matching is case-insensitive, so ``.search('luc')`` and ``.search('Luc')`` will return the same results.
 
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
