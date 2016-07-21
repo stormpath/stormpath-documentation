@@ -618,11 +618,12 @@ Why OAuth 2.0?
 
 OAuth 2.0 is an authorization framework and provides a protocol to interact with a service that can delegate authentication or provide authorization. Its primary advantage as a standard is its wide adoption rate across many mobile and web applications today. If you have ever logged-in to a website using Facebook or Google, you have used one of OAuth 2.0's many authorization flows. You can read more about the different OAuth 2.0 authorization flows or grant types in depth on `Stormpath’s blog <https://stormpath.com/blog/what-the-heck-is-oauth/>`_.
 
-Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
+Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports the following:
 
-- **Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
+- **Password Grant Type:** Provides the ability to get an Access Token based on a login and password.
 - **Client Credentials Grant Type**: Provides the ability to exchange an API Key for an Access Token.
-- **Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
+- **Social Grant Type:** Allows you to exchange a user's social Access Token or Authorization Code
+- **Refresh Grant Type:** Provides the ability to generate another Access Token based on a special Refresh Token.
 
 To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available. To see how to generate an OAuth token, see :ref:`below <generate-oauth-token>`.
 
@@ -847,7 +848,8 @@ Generating an OAuth 2.0 Access Token
 Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
 
 - **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
-- **Password Grant Type**: a user's credentials (e.g. username and password)
+- **Password Grant Type:** a user's credentials (e.g. username and password)
+- **Social Grant Type:** a user's social login Access Token or Authorization Code
 - **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
@@ -858,22 +860,39 @@ Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth
 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
-The first two kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token.
+The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+
+Client Credentials
+""""""""""""""""""
 
 So for the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
 
 ``grant_type=client_credentials&client_id=2ZFMV4WVVexample&client_secret=XEPJolhnMYexample``
 
-And for the **Password Grant Type**, you pass the **username** and **password**:
+Social
+""""""
+
+For the **Social Grant Type** you must pass:
+
+- The **Provider ID** which matches the Provider ID of the :ref:`Social Directory <social-authn>` (e.g. `facebook` or `github`)
+- And either the Authorization **Code** or
+- The **Access Token** for that Social Provider
+
+All together, this would look like this:
+
+``grant_type=stormpath_social&providerId=facebook&accessToken=EAA68kW...``
+
+Password
+"""""""""
+
+Finally, for the **Password Grant Type**, you pass the user's **username** and **password**:
 
 ``grant_type=password&username=tom%40stormpath.com&password=Secret1``
-
-In both cases they are passed as URL encoded strings.
 
 Token Generation Example
 """""""""""""""""""""""""
 
-In this example:
+In this example we will demonstrated the Password Grant Type:
 
 - The user inputs their credentials into a form and submits them.
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
