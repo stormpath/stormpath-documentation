@@ -24,6 +24,7 @@
   ==========
 
   - **New:** :ref:`Custom Data Search <search-customdata>` now supports searching a Tenant's Accounts.
+  - **New:** Two new OAuth 2.0 Grant Types: ``client_credentials`` and ``stormpath_social``. When :ref:`generate-oauth-token`, it is now possible to use the Client ID and Secret, or a user's social login Authorization Code / Access Token.
 
   2016-07-01
   ==========

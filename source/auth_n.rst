@@ -845,7 +845,7 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
+Stormpath can generate a brand new Access Token using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
 
 - **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
 - **Password Grant Type:** a user's credentials (e.g. username and password)
@@ -860,12 +860,12 @@ Stormpath can generate a brand new Access Tokens using the above-mentioned OAuth
 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
-The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
 
 Client Credentials
 """"""""""""""""""
 
-So for the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
+For the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
 
 ``grant_type=client_credentials&client_id=2ZFMV4WVVexample&client_secret=XEPJolhnMYexample``
 
@@ -892,7 +892,7 @@ Finally, for the **Password Grant Type**, you pass the user's **username** and *
 Token Generation Example
 """""""""""""""""""""""""
 
-In this example we will demonstrated the Password Grant Type:
+In this example we will demonstrate the Password Grant Type:
 
 - The user inputs their credentials into a form and submits them.
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
