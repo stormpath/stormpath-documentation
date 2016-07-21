@@ -969,7 +969,7 @@ So you would send the following request:
 
       * - refresh_token
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
 
       * - token_type
         - String
@@ -1005,7 +1005,7 @@ So you would send the following request:
 
       * - RefreshTokenString
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
 
       * - TokenType
         - String
@@ -1066,7 +1066,7 @@ So you would send the following request:
 
       * - refreshToken
         - Object (Stormpath\Resource\RefreshToken)
-        - The Refresh Token as an object.
+        - The Refresh Token as an object. (Only available via the Password Grant Type)
 
       * - refreshTokenString
         - String (JSON Web Token)
