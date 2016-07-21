@@ -28,3 +28,7 @@ div#langpicker a {
 .rst-footer-buttons {
     display:none;
 }
+
+img {
+   border:1px solid #D6D2D1;
+}

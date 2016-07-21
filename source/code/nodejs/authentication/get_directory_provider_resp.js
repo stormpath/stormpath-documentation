@@ -1,0 +1,1 @@
+Retrieved provider for directory https://api.stormpath.com/v1/directories/1joyMCilyf1xSravQxaHxy/provider

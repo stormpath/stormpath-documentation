@@ -48,6 +48,24 @@ After an Account resource has been created, you can authenticate it given an inp
 
   You are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
+  .. note::
+
+    It is also possible to specify an Organization's ``nameKey`` instead of an Account Store's ``href``:
+
+    .. code-block:: http
+
+      POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json
+
+      {
+        "type": "basic",
+        "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+        "accountStore": {
+          "nameKey":"anOrgNameKey"
+        }
+      }
+
   On success you would get back the ``href`` for the "Han Solo" Account:
 
   .. code-block:: http
@@ -124,17 +142,14 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (node.todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below.
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
-
-    .. literalinclude:: code/nodejs/authentication/login_attempt_req_expand_account.js
-      :language: javascript
+    When authenticating the account is always automatically expanded.
 
   If authentication succeeded, you would receive back ... (todo)
 
@@ -329,7 +344,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  You can find this mapping by... (node.todo)
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` collection:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
@@ -603,15 +618,14 @@ Why OAuth 2.0?
 
 OAuth 2.0 is an authorization framework and provides a protocol to interact with a service that can delegate authentication or provide authorization. Its primary advantage as a standard is its wide adoption rate across many mobile and web applications today. If you have ever logged-in to a website using Facebook or Google, you have used one of OAuth 2.0's many authorization flows. You can read more about the different OAuth 2.0 authorization flows or grant types in depth on `Stormpath’s blog <https://stormpath.com/blog/what-the-heck-is-oauth/>`_.
 
-Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports three of them:
+Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath currently supports the following:
 
-- **Password Grant Type**: Provides the ability to get an Access Token based on a login and password.
+- **Password Grant Type:** Provides the ability to get an Access Token based on a login and password.
+- **Client Credentials Grant Type**: Provides the ability to exchange an API Key for an Access Token.
+- **Social Grant Type:** Allows you to exchange a user's social Access Token or Authorization Code
+- **Refresh Grant Type:** Provides the ability to generate another Access Token based on a special Refresh Token.
 
-- **Refresh Grant Type**: Provides the ability to generate another Access Token based on a special Refresh Token.
-
-- **Client Credentials Grant Type**: Provides the ability to exchange an API Key for the Access Token. This is supported through the API Key Management feature.
-
-To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available.
+To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available. To see how to generate an OAuth token, see :ref:`below <generate-oauth-token>`.
 
 What Tokens Are Available for Token-Based Authentication?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -831,17 +845,54 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 Generating an OAuth 2.0 Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Stormpath can generate Access Tokens using the above-mentioned OAuth 2.0 **Password Grant** flow.
+Stormpath can generate a brand new Access Token using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
+
+- **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
+- **Password Grant Type:** a user's credentials (e.g. username and password)
+- **Social Grant Type:** a user's social login Access Token or Authorization Code
+- **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
 
-  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol::
+  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol:
 
-      https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token
+  ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token``
 
-  This endpoint is used to generate an OAuth token for any valid Account associated with the specified Application. It uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
+  This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
-Your application will act as a proxy to the Stormpath API. For example:
+The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+
+Client Credentials
+""""""""""""""""""
+
+For the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
+
+``grant_type=client_credentials&client_id=2ZFMV4WVVexample&client_secret=XEPJolhnMYexample``
+
+Social
+""""""
+
+For the **Social Grant Type** you must pass:
+
+- The **Provider ID** which matches the Provider ID of the :ref:`Social Directory <social-authn>` (e.g. `facebook` or `github`)
+- And either the Authorization **Code** or
+- The **Access Token** for that Social Provider
+
+All together, this would look like this:
+
+``grant_type=stormpath_social&providerId=facebook&accessToken=EAA68kW...``
+
+Password
+"""""""""
+
+Finally, for the **Password Grant Type**, you pass the user's **username** and **password**:
+
+``grant_type=password&username=tom%40stormpath.com&password=Secret1``
+
+Token Generation Example
+"""""""""""""""""""""""""
+
+In this example we will demonstrate the Password Grant Type:
 
 - The user inputs their credentials into a form and submits them.
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
@@ -855,15 +906,18 @@ So you would send the following request:
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpGTVY0V1ZWQ1Z...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=password&username=tom%40stormpath.com&password=Secret1
 
   .. note::
 
-    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, specify the Account Store's ``href`` as a parameter in the body::
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store or Organization. To do so, specify the Account Store's ``href`` or Organization's ``nameKey`` as a parameter in the body::
 
-        grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+      grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+
+      grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=companyA
 
 .. only:: csharp or vbnet
 
@@ -934,7 +988,7 @@ So you would send the following request:
 
       * - refresh_token
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
 
       * - token_type
         - String
@@ -970,7 +1024,7 @@ So you would send the following request:
 
       * - RefreshTokenString
         - String (JSON Web Token)
-        - The refresh token that can be used to get refreshed Access Tokens.
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
 
       * - TokenType
         - String
@@ -992,7 +1046,7 @@ So you would send the following request:
       :language: java
 
   .. todo::
-    Describe the result.
+    (java.todo)
 
 .. only:: nodejs
 
@@ -1002,7 +1056,7 @@ So you would send the following request:
       :language: javascript
 
   .. todo::
-    Describe the result.
+    (node.todo)
 
 .. only:: php
 
@@ -1031,7 +1085,7 @@ So you would send the following request:
 
       * - refreshToken
         - Object (Stormpath\Resource\RefreshToken)
-        - The Refresh Token as an object.
+        - The Refresh Token as an object. (Only available via the Password Grant Type)
 
       * - refreshTokenString
         - String (JSON Web Token)
@@ -1057,7 +1111,7 @@ So you would send the following request:
       :language: python
 
   .. todo::
-    Describe the result.
+    (python.todo)
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1182,15 +1236,15 @@ To recap, you have done the following:
 
 .. only:: nodejs
 
-  1. (node.todo)
+  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
   2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-  The user now attempts to access a secured resource by...?
+  The user now attempts to access a secured resource:
 
   .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
     :language: javascript
 
-  If the access token can be validated, Stormpath will return...?
+  If the access token can be validated, Stormpath will return this:
 
   .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
     :language: javascript
@@ -1284,6 +1338,8 @@ The token specified in the Authorization header has been digitally signed with t
 
   .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
       :language: python
+
+.. _refresh-oauth-token:
 
 Refreshing Access Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1515,7 +1571,7 @@ There are cases where you might want to revoke the Access and Refresh Tokens tha
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
     :language: javascript
 
-  You will get back a ... (node.todo)
+  If successful, ``err`` will be ``null`` and the following will be written to console:
 
   .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
     :language: javascript
@@ -1609,11 +1665,11 @@ In general, the social login process works as follows:
 
 .. only:: nodejs
 
-    a. If a matching Account is found, (node.todo)
+    a. If a matching Account is found, Stormpath will return the existing Account.
 
-    b. If a matching Account is not found, (todo)
+    b. If a matching Account is not found, Stormpath will create one and return it.
 
- 7. At this point, (todo)
+  7. The Account can now be used like any other Account in Stormpath.
 
 .. only:: php
 
@@ -1849,7 +1905,7 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2008,7 +2064,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2169,7 +2225,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: nodejs
 
- (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -2384,7 +2440,7 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: nodejs
 
-  (node.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
@@ -4385,6 +4441,8 @@ The rules have three different components:
     (java.todo)
 
 .. only:: nodejs
+
+    The ability to modify attribute mappings is not yet available in the Node.js SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
