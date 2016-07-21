@@ -2695,7 +2695,87 @@ For more information about this, see :ref:`password-reset-flow`.
 3.6.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or via the REST API.
+The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
+
+**Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory’s **Account Creation Policies**:
+
+.. only:: rest
+
+  .. todo::
+
+    (rest.todo)
+
+.. only:: csharp or vbnet
+
+  .. todo::
+
+    (csharp.todo)
+    (vbnet.todo)
+
+.. only:: php
+
+  .. todo::
+
+    (php.todo)
+
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+.. only:: nodejs
+
+  .. todo::
+
+    (nodejs.todo)
+
+.. only:: python
+
+  .. literalinclude:: code/python/account_management/list_account_creation_templates.py
+      :language: python
+
+**Password Reset**, and **Reset Success** Email Templates can be found under the Directory’s **Password Policies**:
+
+.. only:: rest
+
+  .. todo::
+
+    (rest.todo)
+
+.. only:: csharp or vbnet
+
+  .. todo::
+
+    (csharp.todo)
+    (vbnet.todo)
+
+.. only:: php
+
+  .. todo::
+
+    (php.todo)
+
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+.. only:: nodejs
+
+  .. todo::
+
+    (nodejs.todo)
+
+.. only:: python
+
+  .. literalinclude:: code/python/account_management/list_password_policy_templates.py
+      :language: python
+
+.. only:: rest
+
+  To modify any of these emails via REST, it is just a matter of updating the appropriate ``/emailTemplates/$TEMPLATE_ID`` resource with a POST.
 
 .. only:: csharp or vbnet
 
@@ -2731,11 +2811,11 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: python
 
-  (python.todo)
+  To modify any of these emails via the |language| SDK, it is just a matter of updating the appropriate Template resource.
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or python
 
-  First, let's look at the default template that comes with the Stormpath Administrator's Directory:
+  As an example, let’s look at a default Verification Email template that comes with the Stormpath Administrator Directory’s Account Creation Policies:
 
   .. code-block:: json
 
@@ -2754,13 +2834,38 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
       }
     }
 
+  If you wanted to change the ``fromEmailAddress`` attribute, you would just update this attribute:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/emailTemplates/2jwPxFsnjqxYrojexample HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "fromEmailAddress": "jakub@stormpath.com"
+    }
+
+    You would then receive a ``200 OK`` along with the updated template.
+
+.. only:: python
+
+  .. literalinclude:: code/python/account_management/update_from_email_address_attr.py
+      :language: python
+
+.. only:: rest or python
+
+  For more information about Stormpath's email templates, keep reading!
+
   **Message Format**
 
   The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
   **textBody and htmlBody**
 
-  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros.
+  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
 
 .. _using-email-macros:
 
