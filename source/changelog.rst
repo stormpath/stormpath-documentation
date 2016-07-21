@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-07-21
+  ==========
+
+  - **New:** :ref:`Custom Data Search <search-customdata>` now supports searching a Tenant's Accounts.
+
   2016-07-01
   ==========
 

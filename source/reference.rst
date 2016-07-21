@@ -753,6 +753,7 @@
   Searches can be performed on the following endpoints:
 
   - ``/v1/directory/$DIRECTORY_ID/accounts``
+  - ``/v1/tenant/$TENANT_ID/accounts``
 
   As an example, if we know that Accounts have a ``favoriteColor`` key in their customData, we could find all Accounts in a Directory that have a Custom Data key ``favoriteColor`` set to ``white`` by sending a GET to:
 

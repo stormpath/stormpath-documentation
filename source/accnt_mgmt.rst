@@ -1712,21 +1712,15 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
 
-.. note::
-
-  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
-
 .. only:: csharp or vbnet
 
-    In a LINQ-to-Stormpath query, you can assert a Custom Data key and value using the ``CustomData`` property on the ``IAccount`` object.
+  In a LINQ-to-Stormpath query, you can assert a Custom Data key and value using the ``CustomData`` property on the ``IAccount`` object.
 
-    .. only:: csharp
+  .. only:: csharp
 
-      .. tip::
+    .. tip::
 
-        Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
-
-For example, if some or all of your Accounts in a particular Directory have a Custom Data key called ``startDate`` that contains the date that user started using your application, you could search for the Accounts that started within a particular date range:
+      Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
 
 .. only:: csharp or vbnet
 
@@ -1739,6 +1733,12 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
 
     .. literalinclude:: code/vbnet/account_management/cd_search.vb
         :language: vbnet
+
+.. only:: php
+
+  .. warning::
+
+    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
 
 .. todo::
 
@@ -1762,7 +1762,9 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     .. literalinclude:: code/python/account_management/cd_search.py
         :language: python
 
-.. only:: rest
+For example, if some or all of your Accounts in a particular Directory have a Custom Data key called ``startDate`` that contains the date that user started using your application, you could search for the Accounts that started within a particular date range:
+
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -1770,11 +1772,15 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     Host: api.stormpath.com
     Content-Type: application/json
 
-This query will match Accounts with a ``startDate`` value between 2012-01-01 and 2015-12-31. Additionally, only the top five Accounts will be returned from the result set, with an offset of zero.
+This query will match Accounts with a ``startDate`` value between ``2012-01-01`` and ``2015-12-31``. Additionally, only the top five Accounts will be returned from the result set, with an ``offset`` of ``0``.
 
 .. only:: rest
 
   For a full description please see :ref:`the Reference chapter <search-customdata>`.
+
+.. note::
+
+  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
 
 .. _managing-account-pwd:
 
@@ -1838,7 +1844,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: php
 
-  To retrieve the password policy, use the ``getPasswordPolidy()`` and ``getStrength()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
+  To retrieve the password policy, use the ``getPasswordPolicy()`` and ``getStrength()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
 
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req.php
       :language: php
