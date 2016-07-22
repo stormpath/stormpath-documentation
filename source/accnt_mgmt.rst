@@ -2875,7 +2875,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
       "fromEmailAddress": "jakub@stormpath.com"
     }
 
-    You would then receive a ``200 OK`` along with the updated template.
+  You would then receive a ``200 OK`` along with the updated template.
 
 .. only:: python
 
@@ -2986,7 +2986,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
   .. warning::
 
-    This feature is not yet available in the |langauge| SDK. In the meantime, please consult the REST API documentation below.
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
   .. todo::
 
