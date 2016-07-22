@@ -102,22 +102,22 @@ How to Make a Cloud Directory
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_cloud_dir_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/create_cloud_dir_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/create_cloud_dir_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/create_cloud_dir_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
@@ -127,7 +127,7 @@ How to Make a Cloud Directory
 .. only:: python
 
   .. literalinclude:: code/python/account_management/create_cloud_dir_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -171,21 +171,21 @@ How to Make a Cloud Directory
   Would yield the following response:
 
   .. literalinclude:: code/java/account_management/create_cloud_dir_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   Would yield the following response:
 
   .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   Would yield the following response:
 
   .. literalinclude:: code/php/account_management/create_cloud_dir_resp.php
-      :language: php
+    :language: php
 
 At this point, our current resources (**not including the default ones** created in the :ref:`Quickstart<quickstart>`) can be visualized like this:
 
@@ -303,7 +303,7 @@ How to Make an LDAP Directory
   Here's how you can create an LDAP Directory:
 
   .. literalinclude:: code/python/account_management/create_ldap_dir_req.py
-      :language: python
+    :language: python
 
 .. only:: rest or csharp or vbnet or php
 
@@ -431,7 +431,7 @@ The other type of Account Store is the Group resource, which can either be imagi
   Here's how you can create a Group:
 
   .. literalinclude:: code/python/account_management/create_group_req.py
-      :language: python
+    :language: python
 
 .. todo::
 
@@ -459,32 +459,32 @@ A geographical region can, for example, be represented as ``"North America/US/US
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_directory_group_description1.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_directory_group_description1.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/search_directory_group_description1.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/search_directory_group_description1.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/search_directory_group_description1.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_directory_group_description1.py
-      :language: python
+    :language: python
 
 Or, to find all Groups in the US East region only, you would send this request:
 
@@ -505,32 +505,32 @@ Or, to find all Groups in the US East region only, you would send this request:
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_directory_group_description2.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_directory_group_description2.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/search_directory_group_description2.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/search_directory_group_description2.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/search_directory_group_description2.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_directory_group_description2.py
-      :language: python
+    :language: python
 
 It can also be included in the customData resource, as a series of key-value relations.
 
@@ -570,34 +570,34 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_group_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/create_group_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/create_group_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/create_group_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/create_group_req.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   You would do this by issuing the following request:
 
   .. literalinclude:: code/python/account_management/create_group_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -647,31 +647,31 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
     .. only:: csharp
 
       .. literalinclude:: code/csharp/account_management/create_disabled_group_req.cs
-          :language: csharp
+        :language: csharp
 
     .. only:: vbnet
 
       .. literalinclude:: code/vbnet/account_management/create_disabled_group_req.vb
-          :language: vbnet
+        :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/create_group_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   Would yield this response:
 
   .. literalinclude:: code/nodejs/account_management/create_group_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   Would yield this response:
 
   .. literalinclude:: code/php/account_management/create_group_resp.php
-      :language: php
+    :language: php
 
 You can now see how this Group would look in our Tenant:
 
@@ -750,40 +750,40 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_account_in_dir_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/create_account_in_dir_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   (java.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   Let’s say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_req.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can do this like so:
 
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
-      :language: python
+    :language: python
 
 .. note::
 
@@ -831,21 +831,21 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
   Would yield this response:
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   Would yield this response:
 
   .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   Would yield this response:
 
   .. literalinclude:: code/php/account_management/create_account_in_dir_resp.php
-      :language: php
+    :language: php
 
 Going back to our resource diagram:
 
@@ -889,40 +889,40 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/add_account_to_group_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/add_account_to_group_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   (java.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/java/account_management/add_account_to_group_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   This time, use the existing Account instance you created before, and the ``addAccount()`` method of the Group object:
 
   .. literalinclude:: code/php/account_management/add_account_to_group_req.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   This time, use the existing Account instance you created before, like so:
 
   .. literalinclude:: code/python/account_management/add_account_to_group_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -949,14 +949,14 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
   And get the following response:
 
   .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   And get the following response:
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_resp.js
-      :language: javascript
+    :language: javascript
 
 This would leave us with the following resources:
 
@@ -1019,12 +1019,12 @@ In this case, it is recommended that you suppress Account Verification emails.
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_account_disable_reg_workflow.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/create_account_disable_reg_workflow.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
@@ -1039,14 +1039,14 @@ In this case, it is recommended that you suppress Account Verification emails.
   This can be done by setting the ``RegistrationWorkflowEnabled`` flag when creating the Account:
 
   .. literalinclude:: code/php/account_management/create_account_disable_reg_workflow.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   This can be done by setting the ``registration_workflow_enabled`` flag when creating the Account:
 
   .. literalinclude:: code/python/account_management/create_account_disable_reg_workflow.py
-      :language: python
+    :language: python
 
 .. _importing-mcf:
 
@@ -1083,12 +1083,12 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/create_account_mcf_hash.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/create_account_mcf_hash.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
@@ -1103,14 +1103,14 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
   This can be done by setting the ``PasswordFormat`` option when creating the Account:
 
   .. literalinclude:: code/php/account_management/create_account_mcf_hash.php
-        :language: php
+    :language: php
 
 .. only:: python
 
   This can be done by setting the ``password_format`` option when creating the Account:
 
   .. literalinclude:: code/python/account_management/create_account_mcf_hash.py
-        :language: python
+    :language: python
 
 .. _stormpath2-hash:
 
@@ -1156,9 +1156,17 @@ In this case you will be using the API in the same way as usual, except with the
 3.2.3. How to Store Additional User Information as Custom Data
 --------------------------------------------------------------
 
-While Stormpath’s default Account attributes are useful to many applications, you might want to add your own custom data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
+While Stormpath’s default Account attributes are useful to many applications, you might want to add your own Custom Data to a Stormpath Account. If you want, you can store all of your custom account information in Stormpath so you don’t have to maintain another separate database to store your specific account data.
 
-One example of this could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+Custom Data can store:
+
+- String values
+- Boolean values
+- Number values
+- Arrays
+- JSON Objects (with nesting)
+
+One simple use case for Custom Data could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
 
 For example, you could add information about this user's current location, like the ship this Captain is currently assigned to.
 
@@ -1183,12 +1191,12 @@ For example, you could add information about this user's current location, like 
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/add_cd_to_account_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/add_cd_to_account_req.vb
-        :language: vbnet
+      :language: vbnet
 
   You can also use the ``Put()`` method to add items to Custom Data. The ``Remove()`` method will remove a single item (by key). ``Clear()`` will remove all items.
 
@@ -1203,21 +1211,21 @@ For example, you could add information about this user's current location, like 
   (java.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   The Jean-Luc Picard Account you created earlier has a CustomData property that allows you to write to the resource’s Custom Data:
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_req.php
-      :language: php
+    :language: php
 
   .. warning::
 
@@ -1226,14 +1234,14 @@ For example, you could add information about this user's current location, like 
   To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method which returns the following:
 
   .. literalinclude:: code/php/account_management/add_cd_to_account_resp.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   The ``jean_luc`` Account you created earlier has a ``custom_data`` property that allows you to write to the resource's Custom Data:
 
   .. literalinclude:: code/python/account_management/add_cd_to_account_req.py
-      :language: python
+    :language: python
 
   .. warning::
 
@@ -1263,14 +1271,14 @@ For example, you could add information about this user's current location, like 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   Which returns the following:
 
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
-      :language: javascript
+    :language: javascript
 
   For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
 
@@ -1387,14 +1395,14 @@ A Filter search will locate the specified string in any searchable attribute of 
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_app_accounts_for_word_req.cs
-        :language: csharp
+      :language: csharp
 
     ``ToListAsync()`` will materialize the results as a ``List<IAccount>`` containing zero or more items.
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_app_accounts_for_word_req.vb
-        :language: vbnet
+      :language: vbnet
 
     ``ToListAsync()`` will materialize the results as a ``List(Of IAccount)`` containing zero or more items.
 
@@ -1405,10 +1413,10 @@ A Filter search will locate the specified string in any searchable attribute of 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/search_app_accounts_for_word_req.java
-      :language: java
+    :language: java
 
   .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp.java
-      :language: java
+    :language: java
 
   .. note::
 
@@ -1417,22 +1425,22 @@ A Filter search will locate the specified string in any searchable attribute of 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_req.js
-      :language: javascript
+    :language: javascript
 
   .. note::
 
     Matching is case-insensitive. So ``{ q: 'luc' }`` and ``{ q: 'Luc' }`` will return the same results.
 
   .. literalinclude:: code/nodejs/account_management/search_app_accounts_for_word_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/search_app_accounts_for_word_req.php
-      :language: php
+    :language: php
 
   .. literalinclude:: code/php/account_management/search_app_accounts_for_word_resp.php
-      :language: php
+    :language: php
 
   .. note::
 
@@ -1449,7 +1457,7 @@ A Filter search will locate the specified string in any searchable attribute of 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_app_accounts_for_word_req.py
-      :language: python
+    :language: python
 
   .. note::
 
@@ -1507,27 +1515,27 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_disabled_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_disabled_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_disabled_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_disabled_req.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_disabled_req.php
-      :language: php
+    :language: php
 
   .. note::
 
@@ -1542,7 +1550,7 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req.py
-      :language: python
+    :language: python
 
 Find All Accounts in a Directory That Were Created on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1612,24 +1620,24 @@ Datetime Search is used when you want to search for Accounts that have a certain
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_date_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_date_req.vb
-        :language: vbnet
+      :language: vbnet
 
   Use a ``DateTimeOffset`` comparison when you want more granularity. You can specify an exact moment in time, and use either inclusive (greater/less than or equal to) or exclusive (greater/less than) matching:
 
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/search_dir_accounts_for_create_after_date_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/search_dir_accounts_for_create_after_date_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
@@ -1638,12 +1646,12 @@ Datetime Search is used when you want to search for Accounts that have a certain
   **Query**
 
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req.java
-      :language: java
+    :language: java
 
   **Response**
 
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
@@ -1652,24 +1660,24 @@ Datetime Search is used when you want to search for Accounts that have a certain
   **Query**
 
   .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_req.js
-      :language: javascript
+    :language: javascript
 
   **Response**
 
   .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   **Query**
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_req.php
-      :language: php
+    :language: php
 
   **Response**
 
   .. literalinclude:: code/php/account_management/search_dir_accounts_for_create_date_resp.php
-      :language: php
+    :language: php
 
   .. note::
 
@@ -1684,7 +1692,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 .. only:: python
 
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req.py
-      :language: python
+    :language: python
 
 .. _howto-search-account-customdata:
 
@@ -1693,57 +1701,55 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
 
-.. note::
+.. only:: java or nodejs or php
 
-  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
+  .. warning::
 
-.. only:: csharp or vbnet
-
-    In a LINQ-to-Stormpath query, you can assert a Custom Data key and value using the ``CustomData`` property on the ``IAccount`` object.
-
-    .. only:: csharp
-
-      .. tip::
-
-        Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
 For example, if some or all of your Accounts in a particular Directory have a Custom Data key called ``startDate`` that contains the date that user started using your application, you could search for the Accounts that started within a particular date range:
 
 .. only:: csharp or vbnet
 
+  In a LINQ-to-Stormpath query, you can assert a Custom Data key and value using the ``CustomData`` property on the ``IAccount`` object.
+
   .. only:: csharp
 
+    .. tip::
+
+      Since the ``CustomData`` property represents values as ``object``, you'll need to cast to the proper type inside the LINQ expression. This cast isn't actually performed, but it tells .NET how to compile the LINQ expression.
+
     .. literalinclude:: code/csharp/account_management/cd_search.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/cd_search.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/cd_search.py
-      :language: python
+    :language: python
 
 .. todo::
 
   .. only:: java
 
     .. literalinclude:: code/java/account_management/cd_search.java
-        :language: java
+      :language: java
 
   .. only:: nodejs
 
     .. literalinclude:: code/nodejs/account_management/cd_search.js
-        :language: javascript
+      :language: javascript
 
   .. only:: php
 
     .. literalinclude:: code/php/account_management/cd_search.php
       :language: php
 
-.. only:: rest
+.. only:: rest or java or nodejs or php
 
   .. code-block:: http
 
@@ -1751,11 +1757,15 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     Host: api.stormpath.com
     Content-Type: application/json
 
-This query will match Accounts with a ``startDate`` value between 2012-01-01 and 2015-12-31. Additionally, only the top five Accounts will be returned from the result set, with an offset of zero.
+This query will match Accounts with a ``startDate`` value between ``2012-01-01`` and ``2015-12-31``. Additionally, only the top five Accounts will be returned from the result set, with an ``offset`` of ``0``.
 
 .. only:: rest
 
   For a full description please see :ref:`the Reference chapter <search-customdata>`.
+
+.. note::
+
+  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
 
 .. _managing-account-pwd:
 
@@ -1767,12 +1777,6 @@ One of the major categories of user management tasks that Stormpath handles and 
 3.4.1. Manage Password Policies
 --------------------------------
 
-.. only:: php
-
-  .. warning::
-
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by the REST calls provided below to enable or disable the password reset email. For updates, you can follow this `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
-
 In Stormpath, password policies are defined on a Directory level. Specifically, they are controlled in a **Password Policy** resource associated with the Directory. Modifying this resource also modifies the behavior of all Accounts that are included in this Directory. For more information about this resource, see the :ref:`Password Policy section in the Reference chapter <ref-password-policy>`.
 
 .. note::
@@ -1781,7 +1785,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory.
 
-.. only:: rest or php
+.. only:: rest
 
   To update Password Strength, make this call:
 
@@ -1804,36 +1808,38 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/update_dir_pwd_strength_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/update_dir_pwd_strength_req.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/update_dir_pwd_strength_req.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   To update Password Strength, make this call:
 
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_req.js
-      :language: javascript
+    :language: javascript
 
-.. only:: notyetphp
+.. only:: php
+
+  To retrieve the password policy, use the ``getPasswordPolicy()`` and ``getStrength()`` methods. The Password Strength Policy resource can be modified and saved back to the server to update the policy.
 
   .. literalinclude:: code/php/account_management/update_dir_pwd_strength_req.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req.py
-      :language: python
+    :language: python
 
-.. only:: rest or php
+.. only:: rest
 
   Which results in the following response:
 
@@ -1856,6 +1862,8 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: java
 
+  Which results in the following response:
+
   .. literalinclude:: code/java/account_management/update_dir_pwd_strength_resp.java
       :language: java
 
@@ -1866,10 +1874,16 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
       :language: javascript
 
-.. only:: notyetphp
+.. todo::
 
-  .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
-      :language: php
+  .. only:: php
+
+    (php.todo)
+
+    Which results in the following response:
+
+    .. literalinclude:: code/php/account_management/update_dir_pwd_strength_resp.php
+        :language: php
 
 .. _change-account-pwd:
 
@@ -1904,38 +1918,38 @@ At no point is the user shown, or does Stormpath have access to, the original pa
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/update_account_pwd.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/update_account_pwd.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/update_account_pwd.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   To update the password, you send the updated password to the Account resource:
 
   .. literalinclude:: code/nodejs/account_management/update_account_pwd.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   To update the password, you send the updated password to the Account resource:
 
   .. literalinclude:: code/php/account_management/update_account_pwd.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   To update the password, you send the updated password to the Account resource:
 
   .. literalinclude:: code/python/account_management/update_account_pwd.py
-      :language: python
+    :language: python
 
 For more information about resetting the password, read on.
 
@@ -1999,12 +2013,12 @@ There are three steps to the password reset flow:
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/reset1_trigger_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/reset1_trigger_req.vb
-        :language: vbnet
+      :language: vbnet
 
   .. note::
 
@@ -2025,7 +2039,7 @@ There are three steps to the password reset flow:
 .. only:: java
 
   .. literalinclude:: code/java/account_management/reset1_trigger_req.java
-      :language: java
+    :language: java
 
   .. note::
 
@@ -2039,7 +2053,7 @@ There are three steps to the password reset flow:
   To trigger the password reset workflow, you call the ``resetPassword(options, callback)`` method on your Application instance:
 
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_req.js
-      :language: javascript
+    :language: javascript
 
   .. note::
 
@@ -2051,7 +2065,7 @@ There are three steps to the password reset flow:
 .. only:: php
 
   .. literalinclude:: code/php/account_management/reset1_trigger_req.php
-      :language: php
+    :language: php
 
   .. note::
 
@@ -2063,7 +2077,7 @@ There are three steps to the password reset flow:
 .. only:: python
 
   .. literalinclude:: code/python/account_management/reset1_trigger_req.py
-      :language: python
+    :language: python
 
   .. note::
 
@@ -2100,21 +2114,21 @@ If this is a valid email in an Account associated with this Application, the req
 .. only:: java
 
   .. literalinclude:: code/java/account_management/reset1_trigger_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   The success response will look like this:
 
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   The success response will look like this:
 
   .. literalinclude:: code/php/account_management/reset1_trigger_resp.php
-      :language: php
+    :language: php
 
 At this point, an email will be built using the password reset base URL specified in the Stormpath Admin Console. Stormpath sends an email (that you :ref:`can customize <password-reset-email-templates>`) to the user with a link in the format that follows:
 
@@ -2155,36 +2169,36 @@ Once the user clicks this link, your controller should retrieve the token from t
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/reset2_verify_token.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/reset2_verify_token.vb
-        :language: vbnet
+      :language: vbnet
 
   If the token is not valid, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/reset2_verify_token.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   This can be accomplished by calling the ``verifyPasswordResetToken(token, callback)`` method on your Application instance:
 
   .. literalinclude:: code/nodejs/account_management/reset2_verify_token.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/reset2_verify_token.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/reset2_verify_token.py
-      :language: python
+    :language: python
 
 **Update the password**
 
@@ -2211,45 +2225,39 @@ After verifying that the token from the query string is valid, you can direct th
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/reset3_update.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/reset3_update.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/reset3_update.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   Once you have the password, you can call the ``verifyPasswordResetToken(token, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
 
   .. literalinclude:: code/nodejs/account_management/reset3_update.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   .. literalinclude:: code/php/account_management/reset3_update.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/reset3_update.py
-      :language: python
+    :language: python
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the Account.
 
 Manage Password Reset Emails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. only:: php
-
-  .. warning::
-
-    This feature is not yet available in PHP.  Please use the Stormpath Admin Console UI or by using the REST calls provided below to enable or disable the password reset email. For updates, you can follow the `ticket on Github <https://github.com/stormpath/stormpath-sdk-php/issues/106>`_.
 
 The Password Reset Email is configurable for a Directory.
 
@@ -2262,7 +2270,7 @@ There is a set of properties on the Password Policy resource that define its beh
 
 To control whether any email is sent or not is simply a matter of setting the appropriate value to either ``ENABLED`` or ``DISABLED``. For example, if you would like a Password Reset email to be sent, perform the following:
 
-.. only:: rest or php
+.. only:: rest
 
   .. code-block:: http
 
@@ -2279,32 +2287,32 @@ To control whether any email is sent or not is simply a matter of setting the ap
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/enable_pwd_reset_email.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/enable_pwd_reset_email.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/enable_pwd_reset_email.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/enable_pwd_reset_email.js
-      :language: javascript
+    :language: javascript
 
-.. only:: notyetphp
+.. only:: php
 
   .. literalinclude:: code/php/account_management/enable_pwd_reset_email.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   .. literalinclude:: code/python/account_management/enable_pwd_reset_email.py
-      :language: python
+    :language: python
 
 .. _password-reset-email-templates:
 
@@ -2335,11 +2343,8 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: php
 
-  .. warning::
-
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
-
-    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+  .. literalinclude:: code/php/account_management/pwd_reset_email_template.php
+    :language: php
 
 .. only:: python
 
@@ -2402,7 +2407,6 @@ This would then return all Accounts in the specified Directory that had their pa
 
 Stormpath can store historical password information in order to allow for restrictions on password reuse. This is controlled on the Directory Password Policy's Strength object, which has an attribute called ``preventReuse``. By default this feature is disabled and set to ``0``. In order to enable this feature, you have to modify the Directory Password Policy's Strength resource, sending any value up to ``25``:
 
-
 .. only:: csharp
 
   .. literalinclude:: code/csharp/account_management/update_prevent_reuse.cs
@@ -2423,11 +2427,8 @@ Stormpath can store historical password information in order to allow for restri
 
 .. only:: php
 
-  .. warning::
-
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #151 <https://github.com/stormpath/stormpath-sdk-php/issues/151>`_ on Github.
-
-     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+  .. literalinclude:: code/php/account_management/update_prevent_reuse.php
+    :language: php
 
 .. only:: python
 
@@ -2437,7 +2438,7 @@ Stormpath can store historical password information in order to allow for restri
 
     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
-.. only:: rest or php or python
+.. only:: rest or python
 
   .. code-block:: http
 
@@ -2448,7 +2449,7 @@ Stormpath can store historical password information in order to allow for restri
         "preventReuse": "10"
     }
 
-    .. note::
+  .. note::
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
@@ -2475,7 +2476,6 @@ If you create a new Account in a Directory with both Account Registration and Ve
 .. note::
 
   Accounts created in a Directory that has the Verification workflow enabled will have an ``UNVERIFIED`` status by default. ``UNVERIFIED`` is the same as ``DISABLED``, but additionally indicates why the Account is disabled. When the email link is clicked, the Account's status will change ``ENABLED``.
-
 
 The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2538,34 +2538,34 @@ The email that is sent upon Account creation contains a link to the base URL tha
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/verify_email_req.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/verify_email_req.vb
-        :language: vbnet
+      :language: vbnet
 
   If the token is valid, the Account details are returned. If the token is invalid, a ``ResourceException`` will be thrown.
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/verify_email_req.java
-      :language: java
+    :language: java
 
   .. literalinclude:: code/java/account_management/verify_email_resp.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
   .. literalinclude:: code/nodejs/account_management/verify_email_req.js
-      :language: javascript
+    :language: javascript
 
   Which will return a result that looks like this:
 
   .. literalinclude:: code/nodejs/account_management/verify_email_resp.js
-      :language: javascript
+    :language: javascript
 
   If the validation succeeds, you will receive an Account instance for the account that was verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
 
@@ -2576,12 +2576,12 @@ The email that is sent upon Account creation contains a link to the base URL tha
   You can use the ``verifyEmailToken()`` method on the client's ``\Stormpath\Resource\Tenant`` object, plus the token you capture from the query string, to verify the Account:
 
   .. literalinclude:: code/php/account_management/verify_email_req.php
-      :language: php
+    :language: php
 
   Which will return a result that looks like this:
 
   .. literalinclude:: code/php/account_management/verify_email_resp.php
-      :language: php
+    :language: php
 
   If the validation succeeds, you will receive an Account instance for the account that was verified. An email confirming the verification will be automatically sent to the Account’s email address by Stormpath afterwards, and the Account will then be able to authenticate successfully.
 
@@ -2592,7 +2592,7 @@ The email that is sent upon Account creation contains a link to the base URL tha
   You can use the ``verify_email_token()`` method on the Client's ``accounts`` collection, plus the token you capture from the query string, to verify the Account:
 
   .. literalinclude:: code/python/account_management/verify_email_req.py
-      :language: python
+    :language: python
 
 .. note::
 
@@ -2628,38 +2628,38 @@ If a user accidentally deletes their verification email, or it was undeliverable
   .. only:: csharp
 
     .. literalinclude:: code/csharp/account_management/resend_verification_email.cs
-        :language: csharp
+      :language: csharp
 
   .. only:: vbnet
 
     .. literalinclude:: code/vbnet/account_management/resend_verification_email.vb
-        :language: vbnet
+      :language: vbnet
 
 .. only:: java
 
   .. literalinclude:: code/java/account_management/resend_verification_email.java
-      :language: java
+    :language: java
 
 .. only:: nodejs
 
   To resend the email, use the ``resendVerificationEmail(options, callback)`` method of your Application instance.
 
   .. literalinclude:: code/nodejs/account_management/resend_verification_email.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 
   To resend the email, use the ``sendVerificationEmail()`` method:
 
   .. literalinclude:: code/php/account_management/resend_verification_email.php
-      :language: php
+    :language: php
 
 .. only:: python
 
   To resend the email, use the ``send_verification_email()`` method:
 
   .. literalinclude:: code/python/account_management/resend_verification_email.py
-      :language: python
+    :language: python
 
 3.6. Customizing Stormpath Emails via REST
 ==========================================
@@ -2733,7 +2733,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 .. only:: python
 
   .. literalinclude:: code/python/account_management/list_account_creation_templates.py
-      :language: python
+    :language: python
 
 **Password Reset**, and **Reset Success** Email Templates can be found under the Directory’s **Password Policies**:
 
@@ -2771,7 +2771,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 .. only:: python
 
   .. literalinclude:: code/python/account_management/list_password_policy_templates.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -2791,15 +2791,42 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: php
 
-  .. warning::
+  **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory's **Account Creation Policies**.
 
-    This feature is not yet available in the PHP SDK. For updates, you can follow `ticket #150 <https://github.com/stormpath/stormpath-sdk-php/issues/150>`_ on Github.
+  **Password Reset**, and **Reset Success** Email Templates can be found under the Directory's **Password Policies**.
 
-    In the meantime, please use the Stormpath Admin Console UI, or the REST API documentation below.
+  As an example, let's look at a default Verification Email template that comes with the Stormpath Administrator Directory's Account Creation Policies:
 
-    .. todo::
+  .. code-block:: php
 
-      Add email templates .NET example
+    $verificationEmailTemplates = $directory->getAccountCreationPolicy()
+                                        ->getVerificationEmailTemplates();
+
+    foreach($verificaitonEmailTemplates as $template) {
+        $template
+            ->setName('Default Verification Email Template')
+            ->setDescription('This is the verification email template that is associated with the directory.')
+            ->setFromName('Jakub Swiatczak')
+            ->setFromEmailAddress('change-me@stormpath.com')
+            ->setSubject('Verify your account')
+            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
+            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
+            ->setMimeType(\Stormpath\Stormpath::MIME_PLAIN_TEXT)
+            ->setDefaultModel(['linkBaseUrl'=>'https://api.stormpath.com/emailVerificationTokens'])
+            ->save();
+    }
+
+    You would then receive a ``200 OK`` along with the updated template.
+
+    For more information about Stormpath's email templates, keep reading!
+
+    **Message Format**
+
+    The ``mimeType`` designates whether the email is sent as plain text (``\Stormpath\Stormpath::MIME_PLAIN_TEXT``), HTML (``\Stormpath\Stormpath::MIME_HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+
+    **textBody and htmlBody**
+
+    These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
 
 .. only:: java
 
@@ -2842,7 +2869,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
     POST /v1/emailTemplates/2jwPxFsnjqxYrojexample HTTP/1.1
     Host: api.stormpath.com
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
 
     {
       "fromEmailAddress": "jakub@stormpath.com"
@@ -2853,26 +2880,24 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 .. only:: python
 
   .. literalinclude:: code/python/account_management/update_from_email_address_attr.py
-      :language: python
+    :language: python
 
-.. only:: rest or python
+For more information about Stormpath's email templates, keep reading!
 
-  For more information about Stormpath's email templates, keep reading!
+**Message Format**
 
-  **Message Format**
+The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
-  The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+**textBody and htmlBody**
 
-  **textBody and htmlBody**
-
-  These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
+These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
 
 .. _using-email-macros:
 
 Using Email Macros
 ^^^^^^^^^^^^^^^^^^
 
-You can use macros in your email templates. Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
+Macros are placeholder text that are converted into actual values at the time the email is generated. You could use a macro to insert your user's first name into the email, as well as the name of your Application. This would look like this:
 
 .. code-block:: java
 
@@ -2959,9 +2984,15 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or csharp or vbnet or php
+    This feature is not yet available in the |langauge| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
+
+.. only:: rest or csharp or vbnet or php or python
 
   Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
 
@@ -3018,9 +3049,15 @@ In addition to the location and port of the server, you must also pass valid cre
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or csharp or vbnet or php
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
+
+.. only:: rest or csharp or vbnet or php or python
 
   For the full description of what is inside an SMTP Server resource, please see `the Reference chapter <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-custom-smtp>`__. A successful custom server POST would look like this:
 
@@ -3096,9 +3133,15 @@ To delete an SMTP Server, send the following:
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or csharp or vbnet or php
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
+
+.. only:: rest or csharp or vbnet or php or python
 
   .. code-block:: http
 
@@ -3172,27 +3215,31 @@ Working with the Whitelist and Blacklist is exactly the same.
 
 .. only:: php
 
-  .. warning::
+  To replace the current list, pass an array to the method.
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+  .. code-block:: php
 
-  .. todo::
-
-    This.
+    $accountCreationPolicy->setEmailDomainWhitelist(['abc.com', 'xyz.com'])->save();
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or csharp or vbnet or php
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
+
+.. only:: rest or csharp or vbnet or python
 
   In both cases, you send an array in this format:
 
   .. code-block:: json
 
     [
-    "*domain.com",
-    "*.another.ca"
+      "*domain.com",
+      "*.another.ca"
     ]
 
 Keep in mind the following when you work with the Whitelist and Blacklist:
@@ -3234,19 +3281,21 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
 .. only:: php
 
-  .. warning::
+  .. code-block:: php
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
-
-  .. todo::
-
-    This.
+    $accountCreationPolicy->addEmailDomainWhitelist('stormpath.com')->save();
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
 
-.. only:: rest or csharp or vbnet or php
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
+
+.. only:: rest or csharp or vbnet or python
 
   .. code-block:: http
 
@@ -3256,12 +3305,14 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
     {
       "emailDomainWhitelist": [
-          "*stormpath.com",
-          "*site.com"
-          ]
+        "*stormpath.com",
+        "*site.com"
+      ]
     }
 
-And you would get back the Account Creation Policies resource:
+.. only:: not (php or python)
+
+  And you would get back the Account Creation Policies resource:
 
 .. only:: csharp or vbnet
 
@@ -3281,17 +3332,7 @@ And you would get back the Account Creation Policies resource:
 
   (node.todo)
 
-.. only:: php
-
-  .. todo::
-
-    This.
-
-.. only:: python
-
-  (python.todo)
-
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet
 
   .. code-block:: json
 
@@ -3341,13 +3382,10 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 .. only:: php
 
-  .. warning::
+  .. code-block:: php
 
-    This feature is not yet available in the PHP SDK. In the meantime, please consult the REST API documentation below.
+    $accountCreationPolicy->removeEmailDomainWhitelist('stormpath.com')->save();
 
-  .. todo::
-
-    This.
 
 .. only:: python
 
@@ -3367,7 +3405,9 @@ If you changed our mind and wanted to only allow users to register with ``stormp
           ]
     }
 
-And then you'd get back the Account Policies, with the updated Whitelist:
+.. only:: not php
+
+  And then you'd get back the Account Policies, with the updated Whitelist:
 
 .. only:: csharp or vbnet
 
@@ -3387,17 +3427,17 @@ And then you'd get back the Account Policies, with the updated Whitelist:
 
   (node.todo)
 
-.. only:: php
+.. only:: python
+
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
   .. todo::
 
-    This.
+    (python.todo)
 
-.. only:: python
-
-  (python.todo)
-
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet or python
 
   .. code-block:: json
 

@@ -9,6 +9,4 @@ $account = \Stormpath\Resource\Account::instantiate([
     "password" => "Changeme1"
 ]);
 
-$defaultMapping = $org->getDefaultAccountStoreMapping()->getProperty('accountStore');
-
-$directory = \Stormpath\Resource\Directory::get($defaultMapping->href);
+$account = $organization->createAccount($account);
