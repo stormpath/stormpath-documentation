@@ -369,15 +369,15 @@ A typical set of steps in your application are as follows:
 
   .. code-block:: php
 
-    $loginLink = $application->createIdSiteUri([
+    $loginLink = $application->createIdSiteUrl([
         'callbackUri' => 'https://mysite.com/handleIdSiteCallback.php'
     ]);
 
-    header('Location: ' . $loginLink); // Or another form of redirect to generated URI
+    header('Location: ' . $loginLink); // Or another form of redirect to generated URL
 
   .. note::
 
-    The code above should be the only code for the login.  The ``createIdSiteUri()`` method will set the issued at time.  These tokens do expire and will display errors if it is generated before the user clicks to login.
+    The code above should be the only code for the login.  The ``createIdSiteUrl()`` method will set the issued at time.  These tokens do expire and will display errors if it is generated before the user clicks to login.
 
 .. only:: python
 
