@@ -1299,8 +1299,6 @@ Validating the Token Locally
 
     This feature is not yet available in the Python SDK. For updates, you can follow `ticket #280 <https://github.com/stormpath/stormpath-sdk-python/issues/280>`_ on Github.
 
-  .. todo::
-
 .. only:: not python
 
   Local validation would also begin at the point of the request to a secure resource:
