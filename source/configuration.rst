@@ -878,8 +878,7 @@
 
       .. todo::
 
-        .. literalinclude:: code/python/configuration/connection_timeout.py
-          :language: python
+        (python.todo)
 
   Authentication Scheme
   '''''''''''''''''''''
