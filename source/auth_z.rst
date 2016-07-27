@@ -211,15 +211,7 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
   (java.todo) Add link to SDK documentation for Custom Data?
 
-.. only:: nodejs
-
-  To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
-
-.. only:: php
-
-  To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
-
-.. only:: python
+.. only:: nodejs or php or python
 
   To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
 
@@ -240,7 +232,7 @@ Checking User and Role Permissions
 
 .. only:: nodejs
 
-  Since authorization enforcement is typically handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Node.js SDK is in retrieving a user's permissions and building custom authorization logic.
+  Since authorization enforcement is typically handled by `one of Stormpath's Node integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Node.js SDK is in retrieving a user's permissions and building custom authorization logic.
 
 .. only:: php
 

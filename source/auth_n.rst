@@ -475,7 +475,7 @@ We would now like to map a new Account Store that will have the following charac
   .. literalinclude:: code/python/authentication/create_asm.py
     :language: python
 
-If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
+If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the Account Store Mapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
 .. figure:: images/auth_n/authn_asm_erd.png
   :align: center
@@ -793,41 +793,22 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. literalinclude:: code/php/authentication/update_oauth_ttl_resp.php
     :language: php
 
-.. only:: rest
+.. only:: rest or java or nodejs or php or python
 
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+
+  .. only:: java
+
+    (java.todo)
 
 .. only:: (csharp or vbnet)
 
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of ``TimeSpan.Zero``.
-
-.. only:: java
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: nodejs
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: php
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: python
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
 
 .. _generate-oauth-token:
 
@@ -1099,11 +1080,11 @@ So you would send the following request:
   properties from the ``PasswordAuthenticationResult`` object:
 
   - ``result.app`` - The Stormpath Application.
-  - ``result.stormpath_access_token`` - The Stormapth ``AuthToken`` object.
+  - ``result.stormpath_access_token`` - The Stormpath ``AuthToken`` object.
   - ``result.expires_in`` - The time in seconds before this token expires.
   - ``result.token_type`` - The type of token.
   - ``result.refresh_token`` - The ``RefreshToken`` object.
-  - ``result.account`` - The Stormpath Account object of the authenticated user.
+  - ``result.account`` - The Stormpath Account object for the authenticated user.
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1273,20 +1254,7 @@ Using Stormpath to Validate Tokens
 
   .. only:: python
 
-    1. Created a new ``PasswordGrantAuthenticator`` object and passed it the application object.
-    2. Made an authenticate attempt with the ``PasswordGrantAuthenticator`` passing an ``email|username`` and ``password``.
-    3. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format (``result.stormpath_access_token``).
-
-    You can then attempt to verify the user's OAuth2 Bearer token by doing the
-    following:
-
-    .. literalinclude:: code/python/authentication/validate_oauth_token_sp_req.py
-      :language: python
-
-    If the access token can be validated, Stormpath will return...?
-
-    .. literalinclude:: code/python/authentication/validate_oauth_token_sp_resp.py
-      :language: python
+    (python.todo)
 
   With the confirmation that the token is valid, you can now allow the user to access the secured resource that they requested.
 
