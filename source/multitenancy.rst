@@ -275,7 +275,7 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
 .. only:: rest
 
-  GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.*
+  ``GET https://api.stormpath.com/v1/directories/29E0XzabMwPGluegBqAl0Y/groups?name=bank-of-a.*``
 
 .. only:: csharp or vbnet
 
@@ -521,20 +521,20 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   .. code-block:: http
 
-      POST /v1/organizationAccountStoreMappings HTTP/1.1
-      Host: api.stormpath.com
-      Content-Type: application/json;charset=UTF-8
+    POST /v1/organizationAccountStoreMappings HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json;charset=UTF-8
 
-      {
-        "organization": {
-          "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
-        },
-        "accountStore": {
-          "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
-        },
-        "isDefaultAccountStore":true,
-        "isDefaultGroupStore":true
-      }
+    {
+      "organization": {
+        "href": "https://api.stormpath.com/v1/organizations/DhfD17pJrUbsofEXaMPLE"
+      },
+      "accountStore": {
+        "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+      },
+      "isDefaultAccountStore":true,
+      "isDefaultGroupStore":true
+    }
 
 .. only:: csharp or vbnet
 
