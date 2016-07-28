@@ -861,7 +861,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: python
 
-  In the arguments that can be passed in the ``build_id_site_redirect_url()`` method, there are a couple arguments that can be used to allow for multi-tenancy.
+  In the arguments that can be passed in the ``build_id_site_redirect_url()`` method, there are a few that can be used to allow for multi-tenancy.
 
 **Organization nameKey**
 

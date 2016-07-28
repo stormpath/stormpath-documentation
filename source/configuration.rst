@@ -274,7 +274,7 @@
 
     .. warning::
 
-      Using environment variables for configuration is not currently support by
+      Using environment variables for configuration is not currently supported by
       default in the Python SDK. This functionality will be released in the near
       future.
 
