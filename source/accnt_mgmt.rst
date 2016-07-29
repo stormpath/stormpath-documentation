@@ -3385,7 +3385,13 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (python.todo)
 
 .. only:: rest or csharp or vbnet or php
 
@@ -3422,16 +3428,6 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 .. only:: nodejs
 
   (node.todo)
-
-.. only:: python
-
-  .. warning::
-
-    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
-
-  .. todo::
-
-    (python.todo)
 
 .. only:: rest or csharp or vbnet or python
 
