@@ -229,11 +229,6 @@
 
         (node.todo)
 
-      .. only:: python
-
-        (python.todo)
-
-
   .. _config_sources:
 
   4. Configuration Sources
