@@ -2346,11 +2346,7 @@ The contents of the password reset and the password reset success emails are bot
   .. literalinclude:: code/php/account_management/pwd_reset_email_template.php
     :language: php
 
-.. only:: python
-
-  To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body. For more information about Email Templates, see the `Email Templates section <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-emailtemplates>`__ of the Reference chapter.
-
-.. only:: rest or vbnet or csharp or php
+.. only:: rest or vbnet or csharp or php or python
 
   To modify the emails that get sent during the password reset workflow, all you have to do is send an HTTP POST with the desired property in the payload body. For more information about Email Templates, see the `Email Templates section <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-emailtemplates>`__ of the Reference chapter.
 
