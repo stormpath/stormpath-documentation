@@ -140,8 +140,8 @@
 
   .. only:: python
 
-    (python.todo)
-
+    .. literalinclude:: code/python/configuration/memcached_cache.py
+      :language: python
 
   Redis
   '''''
@@ -185,7 +185,8 @@
 
   .. only:: python
 
-    (python.todo)
+    .. literalinclude:: code/python/configuration/redis_cache.py
+      :language: python
 
   Other Caches
   ''''''''''''
@@ -201,7 +202,6 @@
   By default, the Stormpath SDK connects to the Stormpath API Public Cloud.
 
   If you have a Stormpath Enterprise or Private Deployment, you'll need to change this base URL before using the Stormpath SDK. See :ref:`Base URL <base_url>` in the Configuration Reference for examples of how to set this value.
-
 
   .. only:: csharp or vbnet
 
@@ -229,11 +229,6 @@
 
         (node.todo)
 
-      .. only:: python
-
-        (python.todo)
-
-
   .. _config_sources:
 
   4. Configuration Sources
@@ -250,86 +245,106 @@
   4.1. Environment Variables
   '''''''''''''''''''''''''''''
 
-  Configuration options can be set in environment variables by formatting the configuration key with underscores. For example, ``stormpath.client.apiKey.id`` becomes ``STORMPATH_CLIENT_APIKEY_ID``.
+  .. only:: not python
 
-  In a bash-like shell, you can set environment variables by running these commands:
+    Configuration options can be set in environment variables by formatting the configuration key with underscores. For example, ``stormpath.client.apiKey.id`` becomes ``STORMPATH_CLIENT_APIKEY_ID``.
 
-  .. code-block:: bash
+    In a bash-like shell, you can set environment variables by running these commands:
 
-      export STORMPATH_CLIENT_APIKEY_ID=your_id_here
-      export STORMPATH_CLIENT_APIKEY_SECRET=your_secret_here
+    .. code-block:: bash
 
-  On Windows, the commands are:
+        export STORMPATH_CLIENT_APIKEY_ID=your_id_here
+        export STORMPATH_CLIENT_APIKEY_SECRET=your_secret_here
 
-  .. code-block:: powershell
+    On Windows, the commands are:
 
-      setx STORMPATH_CLIENT_APIKEY_ID your_id_here
-      setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
+    .. code-block:: powershell
 
-  Any configuration option can be set using environment variables. The above are just examples! The :ref:`Configuration Reference <config_reference>` covers each option in detail.
+        setx STORMPATH_CLIENT_APIKEY_ID your_id_here
+        setx STORMPATH_CLIENT_APIKEY_SECRET your_secret_here
 
+    Any configuration option can be set using environment variables. The above are just examples! The :ref:`Configuration Reference <config_reference>` covers each option in detail.
+
+  .. only:: python
+
+    .. warning::
+
+      Using environment variables for configuration is not currently supported by
+      default in the Python SDK. This functionality will be released in the near
+      future.
 
   .. _markup_file:
 
   4.2. YAML/JSON Markup File
   '''''''''''''''''''''''''''''
 
-  .. only:: php
+  .. only:: not python
+
+    .. only:: php
+
+      .. warning::
+
+        Currently, the PHP SDK does not allow for configuration through this file. For updates, you can follow `ticket #153 <https://github.com/stormpath/stormpath-sdk-php/issues/153>`_ on Github.
+
+        In the meantime, please use the ``ClientBuilder`` class to build a client with all configuration you need.
+
+    .. only:: not php
+
+      Configuration options can also be set by placing a file called ``stormpath.yaml`` or ``stormpath.json`` in one of these locations:
+
+      * **Hidden .stormpath Directory**
+
+      On Unix-like machines, the path ``~/.stormpath/`` is searched.
+
+      On Windows machines, the path is ``%HOMEDRIVE%%HOMEPATH%%\.stormpath``. This is typically resolved to ``C:\Users\<username>\.stormpath``.
+
+      * **Application Base Directory**
+
+      .. only:: not (csharp or vbnet)
+
+        The application's base or content root directory.
+
+      .. only:: csharp or vbnet
+
+        In a .NET web application, this is the directory that ``web.config`` or ``appsettings.json`` resides.
+
+      For example, this YAML configuration will set the Stormpath API Key and Secret:
+
+      .. code-block:: yaml
+
+        ---
+        client:
+          apiKey:
+            id: "your_id_here"
+            secret: "your_id_here"
+
+      The equivalent JSON is:
+
+      .. code-block:: json
+
+        {
+          "client": {
+            "apiKey": {
+              "id": "your_id_here",
+              "secret": "your_id_here"
+            }
+          }
+        }
+
+      In both cases, the ``stormpath`` root node is implied and should be omitted.
+
+      .. tip::
+
+        You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
+
+  .. only:: python
 
     .. warning::
 
-      Currently, the PHP SDK does not allow for configuration through this file. For updates, you can follow `ticket #153 <https://github.com/stormpath/stormpath-sdk-php/issues/153>`_ on Github.
+      Using environment variables for configuration is not currently support by
+      default in the Python SDK. This functionality will be released in the near
+      future.
 
-      In the meantime, please use the ``ClientBuilder`` class to build a client with all configuration you need.
-
-  .. only:: not php
-
-    Configuration options can also be set by placing a file called ``stormpath.yaml`` or ``stormpath.json`` in one of these locations:
-
-    * **Hidden .stormpath Directory**
-
-    On Unix-like machines, the path ``~/.stormpath/`` is searched.
-
-    On Windows machines, the path is ``%HOMEDRIVE%%HOMEPATH%%\.stormpath``. This is typically resolved to ``C:\Users\<username>\.stormpath``.
-
-    * **Application Base Directory**
-
-    .. only:: not (csharp or vbnet)
-
-      The application's base or content root directory.
-
-    .. only:: csharp or vbnet
-
-      In a .NET web application, this is the directory that ``web.config`` or ``appsettings.json`` resides.
-
-    For example, this YAML configuration will set the Stormpath API Key and Secret:
-
-    .. code-block:: yaml
-
-      ---
-      client:
-        apiKey:
-          id: "your_id_here"
-          secret: "your_id_here"
-
-    The equivalent JSON is:
-
-    .. code-block:: json
-
-      {
-        "client": {
-          "apiKey": {
-            "id": "your_id_here",
-            "secret": "your_id_here"
-          }
-        }
-      }
-
-    In both cases, the ``stormpath`` root node is implied and should be omitted.
-
-    .. tip::
-
-      You can refer to the `SDK Defaults`_ to see the entire default configuration in YAML.
 
   .. _api_credentials_file:
 
@@ -399,7 +414,8 @@
 
   .. only:: python
 
-    (python.todo)
+    .. literalinclude:: code/python/configuration/api_credentials.py
+      :language: python
 
   .. note::
 
@@ -504,7 +520,10 @@
 
   .. only:: python
 
-    (python.todo)
+    You can inline the settings for API Credentials with the following:
+
+    .. literalinclude:: code/python/configuration/api_credentials.py
+      :language: python
 
   .. _base_url:
 
@@ -592,11 +611,10 @@
         ->setBaseUrl('https://enterprise.stormpath.io/v1')
         ->build();
 
-
   .. only:: python
 
-    (python.todo)
-
+    .. literalinclude:: code/python/configuration/base_url.py
+      :language: python
 
   .. _caching_config:
 
@@ -751,7 +769,8 @@
 
   .. only:: python
 
-    (python.todo)
+    .. literalinclude:: code/python/configuration/disable_caching.py
+      :language: python
 
   Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
 
@@ -780,7 +799,8 @@
 
   .. only:: python
 
-    (python.todo)
+    .. literalinclude:: code/python/configuration/custom_cache_config.py
+      :language: python
 
   .. only:: not php
 
@@ -851,8 +871,9 @@
 
     .. only:: python
 
-      (python.todo)
+      .. todo::
 
+        (python.todo)
 
   Authentication Scheme
   '''''''''''''''''''''
@@ -932,8 +953,8 @@
 
   .. only:: python
 
-    (python.todo)
-
+    .. literalinclude:: code/python/configuration/use_basic_auth.py
+      :language: python
 
   .. only:: not php
 
@@ -1022,8 +1043,8 @@
 
     .. only:: python
 
-      (python.todo)
-
+      .. literalinclude:: code/python/configuration/use_proxy.py
+        :language: python
 
 .. _Stormpath Admin Console: https://api.stormpath.com/login
 .. _SDK Defaults: https://github.com/stormpath/stormpath-sdk-spec/blob/master/specifications/config.md#default-configuration

@@ -177,22 +177,25 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: python
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (python.todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``authenticate_account`` method:
 
   .. literalinclude:: code/python/authentication/login_attempt_req.py
-      :language: python
+    :language: python
 
-  .. note::
+  .. todo::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
+    .. note::
 
-    .. literalinclude:: code/python/authentication/login_attempt_req_expand_account.py
-      :language: python
+      Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this,
 
-  If authentication succeeded, you would receive back ... (todo)
+      .. literalinclude:: code/python/authentication/login_attempt_req_expand_account.py
+        :language: python
+
+  If authentication succeeded, you will get back a non-empty result, and can
+  access the resulting ``account`` property:
 
   .. literalinclude:: code/python/authentication/login_attempt_resp.py
-      :language: python
+    :language: python
 
 .. _how-login-works:
 
@@ -370,11 +373,11 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: python
 
-  You can find this mapping by... (python.todo)
+  You can find this mapping by iterating through the ``account_store_mappings``
+  collection:
 
   .. literalinclude:: code/python/authentication/get_asm_req.py
-      :language: python
-
+    :language: python
 
 .. only:: java
 
@@ -396,13 +399,6 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
   .. literalinclude:: code/php/authentication/get_asm_resp.php
     :language: php
-
-.. only:: python
-
-  This will return the Account Store Mapping:
-
-  .. literalinclude:: code/python/authentication/get_asm_resp.py
-      :language: python
 
 .. _create-asm:
 
@@ -477,9 +473,9 @@ We would now like to map a new Account Store that will have the following charac
 .. only:: python
 
   .. literalinclude:: code/python/authentication/create_asm.py
-      :language: python
+    :language: python
 
-If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the accountStoreMapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
+If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the Account Store Mapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
 .. figure:: images/auth_n/authn_asm_erd.png
   :align: center
@@ -536,7 +532,7 @@ For example, if you want to update an existing Account Store to now have highest
 .. only:: python
 
   .. literalinclude:: code/python/authentication/change_login_priority.py
-      :language: python
+    :language: python
 
 The accountStoreMapping resource will be updated and all of the other Account Stores will have their ``listIndex`` incremented up by 1.
 
@@ -587,7 +583,7 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 .. only:: python
 
   .. literalinclude:: code/python/authentication/change_default_stores.py
-      :language: python
+    :language: python
 
 .. note::
 
@@ -706,7 +702,7 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
 .. only:: python
 
   .. literalinclude:: code/python/authentication/oauth_policy.py
-      :language: python
+    :language: python
 
   The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
 
@@ -759,7 +755,7 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 .. only:: python
 
   .. literalinclude:: code/python/authentication/update_oauth_ttl_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -797,48 +793,22 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. literalinclude:: code/php/authentication/update_oauth_ttl_resp.php
     :language: php
 
-.. only:: python
-
-  And you would get the following response:
-
-  .. literalinclude:: code/python/authentication/update_oauth_ttl_resp.py
-      :language: python
-
-.. only:: rest
+.. only:: rest or java or nodejs or php or python
 
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
+
+
+  .. only:: java
+
+    (java.todo)
 
 .. only:: (csharp or vbnet)
 
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of ``TimeSpan.Zero``.
-
-.. only:: java
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: nodejs
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: php
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-.. only:: python
-
-  .. note::
-
-    Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
 
 .. _generate-oauth-token:
 
@@ -953,7 +923,7 @@ So you would send the following request:
 .. only:: python
 
   .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -1105,13 +1075,16 @@ So you would send the following request:
 
 .. only:: python
 
-  Which would result in this response:
+  Which would result in a ``None`` response (on failure), or an object on
+  success.  If the authentication attempt succeeds, you can access the following
+  properties from the ``PasswordAuthenticationResult`` object:
 
-  .. literalinclude:: code/python/authentication/generate_oauth_token_resp.py
-      :language: python
-
-  .. todo::
-    (python.todo)
+  - ``result.app`` - The Stormpath Application.
+  - ``result.stormpath_access_token`` - The Stormpath ``AuthToken`` object.
+  - ``result.expires_in`` - The time in seconds before this token expires.
+  - ``result.token_type`` - The type of token.
+  - ``result.refresh_token`` - The ``RefreshToken`` object.
+  - ``result.account`` - The Stormpath Account object for the authenticated user.
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1170,16 +1143,133 @@ It is up to you to determine which kind of validation is important for your appl
 
 Using Stormpath to Validate Tokens
 """"""""""""""""""""""""""""""""""
-To see how to validate tokens with Stormpath, let's go back to the example where a user has already generated an access token.
 
-To recap, you have done the following:
+.. only:: python
 
-.. only:: rest
+  .. warning::
 
-  1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type you wanted, as well as your user's username and password.
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+    This feature is not yet available in the Python SDK. For updates, you can follow `ticket #279 <https://github.com/stormpath/stormpath-sdk-python/issues/279>`_ on Github.
 
-  The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header:
+  .. todo::
+
+    (python.todo)
+
+.. only:: not python
+
+  To see how to validate tokens with Stormpath, let's go back to the example where a user has already generated an access token.
+
+  To recap, you have done the following:
+
+  .. only:: rest
+
+    1. Sent a POST to ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token`` with a body that included information about the OAuth Grant Type you wanted, as well as your user's username and password.
+    2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+    The user now attempts to access a secured resource by passing the ``access_token`` JWT value from the Access Token Response in the ``Authorization`` header:
+
+    .. code-block:: http
+
+      GET /secure-resource HTTP/1.1
+      Host: https://yourapplication.com
+      Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
+
+    The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token:
+
+    .. code-block:: none
+
+        https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
+
+    If the access token can be validated, Stormpath will return a 302 to the Access Token resource:
+
+    .. code-block:: http
+
+      HTTP/1.1 302 Location Found
+      Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+
+  .. only:: csharp or vbnet
+
+    1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
+    2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in string (JWT) format.
+
+    The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_req.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
+        :language: vbnet
+
+    If the Access Token can be validated, Stormpath will return the token to you as an ``IAccessToken``. If the Access Token is invalid or expired, a ``ResourceException`` will be thrown.
+
+  .. only:: java
+
+    1. (java.todo)
+    2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+    The user now attempts to access a secured resource by...?
+
+    .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
+      :language: java
+
+    If the access token can be validated, Stormpath will return...?
+
+    .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp.java
+      :language: java
+
+  .. only:: nodejs
+
+    1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
+    2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+    The user now attempts to access a secured resource:
+
+    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
+      :language: javascript
+
+    If the access token can be validated, Stormpath will return this:
+
+    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
+      :language: javascript
+
+  .. only:: php
+
+    1. Created a ``PasswordGrantRequest`` object with the user's email/username and password.
+    2. Created a new ``PasswordGrantAuthenticator`` object and passed it the application object.
+    3. Made an authenticate attempt with the ``PasswordGrantAuthenticator`` passing the ``PasswordGrantRequest`` object
+    4. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+
+    The user now attempts to access a secured resource:
+
+    .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req.php
+      :language: php
+
+    If the Access Token can be validated, Stormpath will return this:
+
+    .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+  With the confirmation that the token is valid, you can now allow the user to access the secured resource that they requested.
+
+Validating the Token Locally
+""""""""""""""""""""""""""""
+
+.. only:: python
+
+  .. warning::
+
+    This feature is not yet available in the Python SDK. For updates, you can follow `ticket #280 <https://github.com/stormpath/stormpath-sdk-python/issues/280>`_ on Github.
+
+.. only:: not python
+
+  Local validation would also begin at the point of the request to a secure resource:
 
   .. code-block:: http
 
@@ -1187,157 +1277,50 @@ To recap, you have done the following:
     Host: https://yourapplication.com
     Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
 
-  The ``Authorization`` header contains the Access Token. To validate this Token with Stormpath, you can issue an HTTP GET to your Stormpath Application’s ``/authTokens/`` endpoint with the JWT token:
+  The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token.
 
-  .. code-block:: none
+  .. only:: rest
 
-      https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/authTokens/eyJraWQiOiIyWkZNVjRXV[...]
+    This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
 
-  If the access token can be validated, Stormpath will return a 302 to the Access Token resource:
+  .. only:: csharp or vbnet
 
-  .. code-block:: http
+    Validating the token locally is simply a matter of using the ``WithLocalValidation`` flag when creating the request:
 
-    HTTP/1.1 302 Location Found
-    Location: https://api.stormpath.com/v1/accessTokens/6zVrviSEIf26ggXdJG097f
+    .. only:: csharp
 
-.. only:: csharp or vbnet
+      .. literalinclude:: code/csharp/authentication/validate_oauth_token_local.cs
+          :language: csharp
 
-  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in string (JWT) format.
+    .. only:: vbnet
 
-  The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
+      .. literalinclude:: code/vbnet/authentication/validate_oauth_token_local.vb
+          :language: vbnet
 
-  .. only:: csharp
+  .. only:: java
 
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_sp_req.cs
-      :language: csharp
+    .. literalinclude:: code/java/authentication/validate_oauth_token_local.java
+        :language: java
 
-  .. only:: vbnet
+  .. only:: nodejs
 
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_sp_req.vb
-      :language: vbnet
+    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local.js
+        :language: javascript
 
-  If the Access Token can be validated, Stormpath will return the token to you as an ``IAccessToken``. If the Access Token is invalid or expired, a ``ResourceException`` will be thrown.
+  .. only:: php
 
-.. only:: java
+    .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
+        :language: php
 
-  1. (java.todo)
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
+    If the token can be validated locally, it will return an expanded ``JWT``:
 
-  The user now attempts to access a secured resource by...?
+    .. literalinclude:: code/php/authentication/validate_oauth_token_local_res.php
+        :language: php
 
-  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
-    :language: java
+  .. only:: python
 
-  If the access token can be validated, Stormpath will return...?
-
-  .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp.java
-    :language: java
-
-.. only:: nodejs
-
-  1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
-
-  The user now attempts to access a secured resource:
-
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
-    :language: javascript
-
-  If the access token can be validated, Stormpath will return this:
-
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
-    :language: javascript
-
-.. only:: php
-
-  1. Created a ``PasswordGrantRequest`` object with the user's email/username and password.
-  2. Created a new ``PasswordGrantAuthenticator`` object and passed it the application object.
-  3. Made an authenticate attempt with the ``PasswordGrantAuthenticator`` passing the ``PasswordGrantRequest`` object
-  4. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
-
-  The user now attempts to access a secured resource:
-
-  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_req.php
-    :language: php
-
-  If the Access Token can be validated, Stormpath will return this:
-
-  .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
-    :language: php
-
-.. only:: python
-
-  1. (python.todo)
-  2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
-
-  The user now attempts to access a secured resource by...?
-
-  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_req.py
-    :language: python
-
-  If the access token can be validated, Stormpath will return...?
-
-  .. literalinclude:: code/python/authentication/validate_oauth_token_sp_resp.py
-    :language: python
-
-With the confirmation that the token is valid, you can now allow the user to access the secured resource that they requested.
-
-Validating the Token Locally
-""""""""""""""""""""""""""""
-
-Local validation would also begin at the point of the request to a secure resource:
-
-.. code-block:: http
-
-  GET /secure-resource HTTP/1.1
-  Host: https://yourapplication.com
-  Authorization: Bearer eyJraWQiOiIyWkZNVjRXV[...]
-
-The token specified in the Authorization header has been digitally signed with the Stormpath API Key Secret that was used to generate the token.
-
-.. only:: rest
-
-  This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
-
-.. only:: csharp or vbnet
-
-  Validating the token locally is simply a matter of using the ``WithLocalValidation`` flag when creating the request:
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/validate_oauth_token_local.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/validate_oauth_token_local.vb
-        :language: vbnet
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/validate_oauth_token_local.java
-      :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local.js
-      :language: javascript
-
-.. only:: php
-
-  .. literalinclude:: code/php/authentication/validate_oauth_token_local.php
-      :language: php
-
-  If the token can be validated locally, it will return an expanded ``JWT``:
-
-  .. literalinclude:: code/php/authentication/validate_oauth_token_local_res.php
-      :language: php
-
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
-      :language: python
+    .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
+        :language: python
 
 .. _refresh-oauth-token:
 
@@ -1434,168 +1417,168 @@ In the event that the Access Token expires, the user can generate a new one usin
   .. literalinclude:: code/php/authentication/refresh_access_token_resp.php
     :language: php
 
-.. only:: python
-
-  This would be the response:
-
-  .. literalinclude:: code/python/authentication/refresh_access_token_resp.py
-    :language: python
-
 Note that this response contains the same Refresh Token as was in the request. This is because when Stormpath generates a new Access Token for a Refresh Token it does not generate a new Refresh token, nor does it modify its expiration time. This means that once the Refresh Token expires, the user must authenticate again to get a new Access and Refresh Tokens.
 
 Revoking Access and Refresh Tokens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There are cases where you might want to revoke the Access and Refresh Tokens that you have generated for a user. For example:
+.. only:: python
 
-- The user has explicitly logged out, and your application needs to revoke their access, requiring re-authentication.
-- The application, device, and/or client has been compromised and you need to revoke tokens for an Account.
+  .. warning::
 
-.. only:: rest
+    This feature is not yet available in the Python SDK. For updates, you can follow `ticket #281 <https://github.com/stormpath/stormpath-sdk-python/issues/281>`_ on Github.
 
-  To revoke the tokens, all you have to do is delete the Account's ``/accessTokens/:accessTokenId`` resource.
+  .. todo::
 
-  First, you retrieve an Account's Access and Refresh tokens. To do this, make an HTTP GET call for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections:
+    (python.todo)
 
-  .. code-block:: json
+.. only:: not python
 
-    {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
-      "username": "jlpicard",
-      "comment":" // This JSON has been truncated for readability",
-      "accessTokens": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
-      },
-      "refreshTokens": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/refreshTokens"
-      }
-    }
+  There are cases where you might want to revoke the Access and Refresh Tokens that you have generated for a user. For example:
 
-  If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens:
+  - The user has explicitly logged out, and your application needs to revoke their access, requiring re-authentication.
+  - The application, device, and/or client has been compromised and you need to revoke tokens for an Account.
 
-  .. code-block:: json
+  .. only:: rest
 
-    {
-      "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/accessTokens",
-      "offset": 0,
-      "limit": 25,
-      "size": 1,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCexample",
-          "comment":" // This JSON has been truncated for readability"
+    To revoke the tokens, all you have to do is delete the Account's ``/accessTokens/:accessTokenId`` resource.
+
+    First, you retrieve an Account's Access and Refresh tokens. To do this, make an HTTP GET call for the Account information, then you will find the tokens inside the ``/accessTokens`` and ``/refreshTokens`` collections:
+
+    .. code-block:: json
+
+      {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey",
+        "username": "jlpicard",
+        "comment":" // This JSON has been truncated for readability",
+        "accessTokens": {
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accessTokens"
+        },
+        "refreshTokens": {
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/refreshTokens"
         }
-      ]
-    }
+      }
 
-  .. note::
+    If you then perform a GET on the ``accessTokens`` link, you will get back the individual tokens:
 
-    You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
+    .. code-block:: json
 
-    .. code-block:: bash
+      {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample/accessTokens",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/accessTokens/6NrWIs5ikmIPVJCexample",
+            "comment":" // This JSON has been truncated for readability"
+          }
+        ]
+      }
 
-      curl --request GET \
-      --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
-      --header 'content-type: application/json' \
-      --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
+    .. note::
 
-.. only:: (csharp or vbnet)
+      You can query the Access Tokens that an Account has for a specific Application by specifying the Application's href as a URL parameter:
 
-  First, you have to get a reference to the Access or Refresh token you'd like to delete. You can do this by retrieving all the tokens for the Account in question and examining the returned items for the token you need to revoke:
+      .. code-block:: bash
 
-  .. only:: csharp
+        curl --request GET \
+        --user $SP_API_KEY_ID:$SP_API_KEY_SECRET \
+        --header 'content-type: application/json' \
+        --url "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample//accessTokens?application.href=https://api.stormpath.com/v1/applications/1p4R1r9UBMQz0e5EXAMPLE"
 
-    .. literalinclude:: code/csharp/authentication/get_access_tokens.cs
-      :language: csharp
+  .. only:: (csharp or vbnet)
 
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/get_access_tokens.vb
-      :language: vbnet
-
-  .. note::
-
-    You can restrict your search to only the Access or Refresh tokens related to a specific Application by specifying the Application's href:
+    First, you have to get a reference to the Access or Refresh token you'd like to delete. You can do this by retrieving all the tokens for the Account in question and examining the returned items for the token you need to revoke:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/get_access_tokens_for_app.cs
+      .. literalinclude:: code/csharp/authentication/get_access_tokens.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/get_access_tokens_for_app.vb
+      .. literalinclude:: code/vbnet/authentication/get_access_tokens.vb
         :language: vbnet
 
-.. only:: rest
+    .. note::
 
-  To revoke the token, send the following request:
+      You can restrict your search to only the Access or Refresh tokens related to a specific Application by specifying the Application's href:
 
-  .. code-block:: http
+      .. only:: csharp
 
-    DELETE /v1/accessTokens/6NrWIs5ikmIPVJCexample HTTP/1.1
-    Host: api.stormpath.com
+        .. literalinclude:: code/csharp/authentication/get_access_tokens_for_app.cs
+          :language: csharp
 
-  You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
+      .. only:: vbnet
 
-.. only:: csharp or vbnet
+        .. literalinclude:: code/vbnet/authentication/get_access_tokens_for_app.vb
+          :language: vbnet
 
-  After you retrieve the tokens, it's just a matter of telling Stormpath to delete them:
+  .. only:: rest
 
-  .. only:: csharp
+    To revoke the token, send the following request:
 
-    .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req.cs
-      :language: csharp
+    .. code-block:: http
 
-  .. only:: vbnet
+      DELETE /v1/accessTokens/6NrWIs5ikmIPVJCexample HTTP/1.1
+      Host: api.stormpath.com
 
-    .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req.vb
-      :language: vbnet
+    You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
 
-.. only:: java
+  .. only:: csharp or vbnet
 
-  To revoke the token, send the following request:
+    After you retrieve the tokens, it's just a matter of telling Stormpath to delete them:
 
-  .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
-    :language: java
+    .. only:: csharp
 
-  You will get back a ... (java.todo)
+      .. literalinclude:: code/csharp/authentication/delete_user_access_tokens_req.cs
+        :language: csharp
 
-  .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
-    :language: java
+    .. only:: vbnet
 
-.. only:: nodejs
+      .. literalinclude:: code/vbnet/authentication/delete_user_access_tokens_req.vb
+        :language: vbnet
 
-  To revoke the token, send the following request:
+  .. only:: java
 
-  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
-    :language: javascript
+    To revoke the token, send the following request:
 
-  If successful, ``err`` will be ``null`` and the following will be written to console:
+    .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
+      :language: java
 
-  .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
-    :language: javascript
+    You will get back a ... (java.todo)
 
-.. only:: php
+    .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
+      :language: java
 
-  To revoke the token, send the following request:
+  .. only:: nodejs
 
-  .. literalinclude:: code/php/authentication/delete_user_access_tokens_req.php
-    :language: php
+    To revoke the token, send the following request:
 
-  If successful, ``null`` will be returned
+    .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
+      :language: javascript
 
-.. only:: python
+    If successful, ``err`` will be ``null`` and the following will be written to console:
 
-  To revoke the token, send the following request:
+    .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
+      :language: javascript
 
-  .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
-    :language: python
+  .. only:: php
 
-  You will get back a ... (python.todo)
+    To revoke the token, send the following request:
 
-  .. literalinclude:: code/python/authentication/delete_user_access_tokens_resp.py
-    :language: python
+    .. literalinclude:: code/php/authentication/delete_user_access_tokens_req.php
+      :language: php
+
+    If successful, ``null`` will be returned
+
+  .. only:: python
+
+    To revoke the token, send the following request:
+
+    .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
+      :language: python
 
 .. _social-authn:
 
@@ -1680,11 +1663,11 @@ In general, the social login process works as follows:
 
 .. only:: python
 
-    a. If a matching Account is found, (python.todo)
+    a. If a matching Account is found, Stormpath will return the existing Account.
 
-    b. If a matching Account is not found, (todo)
+    b. If a matching Account is not found, Stormpath will create one and return the new Account.
 
- 7. At this point, (todo)
+ 7. At this point, the Account can be used like any other Stormpath Account.
 
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
@@ -1911,10 +1894,6 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
   In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
 
-.. only:: python
-
-  (python.todo)
-
 .. _authn-facebook:
 
 4.3.2. Facebook
@@ -2069,10 +2048,6 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. only:: php
 
   In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
-
-.. only:: python
-
-  (python.todo)
 
 .. _authn-github:
 
@@ -2230,10 +2205,6 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. only:: php
 
   In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
-
-.. only:: python
-
- (python.todo)
 
 .. _authn-linkedin:
 
@@ -2445,8 +2416,6 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 .. only:: php
 
   In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
-
-.. only:: python
 
 .. _ldap-dir-authn:
 
@@ -4926,7 +4895,7 @@ At this point your user is authenticated and able to use your app.
   .. only:: python
 
     .. literalinclude:: code/python/authentication/create_apikey_req.py
-        :language: python
+      :language: python
 
   .. only:: csharp or vbnet
 
@@ -4952,13 +4921,6 @@ At this point your user is authenticated and able to use your app.
 
     .. literalinclude:: code/php/authentication/create_apikey_resp.php
       :language: php
-
-  .. only:: python
-
-    You will then get back the newly-created API Key:
-
-    .. literalinclude:: code/python/authentication/create_apikey_resp.py
-        :language: python
 
   Managing API Keys
   ^^^^^^^^^^^^^^^^^
@@ -4997,7 +4959,7 @@ At this point your user is authenticated and able to use your app.
   .. only:: python
 
     .. literalinclude:: code/python/authentication/delete_apikey.py
-        :language: python
+      :language: python
 
   **Disable an API Key**
 
@@ -5031,7 +4993,7 @@ At this point your user is authenticated and able to use your app.
   .. only:: python
 
     .. literalinclude:: code/python/authentication/disable_apikey.py
-        :language: python
+      :language: python
 
   .. _api-basic-auth:
 
@@ -5084,7 +5046,7 @@ At this point your user is authenticated and able to use your app.
   .. only:: python
 
     .. literalinclude:: code/python/authentication/authenticate_basic_req.py
-        :language: python
+      :language: python
 
   The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
 
@@ -5159,4 +5121,4 @@ At this point your user is authenticated and able to use your app.
   .. only:: python
 
     .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
-        :language: python
+      :language: python

@@ -141,7 +141,7 @@ Stormpath also gives you an enormous amount of flexibility with what these permi
 .. only:: python
 
   .. literalinclude:: code/python/authorization/example_perm_simple.py
-      :language: python
+    :language: json
 
 Or as complex as:
 
@@ -187,7 +187,7 @@ Or as complex as:
 .. only:: python
 
   .. literalinclude:: code/python/authorization/example_perm_complex.py
-      :language: python
+    :language: json
 
 How is this flexibility possible? Custom Data.
 
@@ -211,17 +211,9 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
   (java.todo) Add link to SDK documentation for Custom Data?
 
-.. only:: nodejs
+.. only:: nodejs or php or python
 
   To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
-
-.. only:: php
-
-  To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
-
-.. only:: python
-
-  (python.todo) Add link to SDK documentation for Custom Data?
 
 Checking User and Role Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -240,7 +232,7 @@ Checking User and Role Permissions
 
 .. only:: nodejs
 
-  Since authorization enforcement is typically handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Node.js SDK is in retrieving a user's permissions and building custom authorization logic.
+  Since authorization enforcement is typically handled by `one of Stormpath's Node integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Node.js SDK is in retrieving a user's permissions and building custom authorization logic.
 
 .. only:: php
 
@@ -248,9 +240,9 @@ Checking User and Role Permissions
 
 .. only:: python
 
-  (python.todo)
+  Since authorization enforcement is handled by `one of Stormpath's Python integrations <https://docs.stormpath.com/python/>`_, the primary usefulness of the Python SDK is in retrieving a user's permissions.
 
-These permissions can either be found in the customData tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
+These permissions can either be found in the custom_data tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
 
 Checking User Permissions
 """""""""""""""""""""""""
@@ -298,7 +290,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 .. only:: python
 
   .. literalinclude:: code/python/authorization/account_with_customdata_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -353,10 +345,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
 .. only:: python
 
-  This will return the Account resource along with the customData:
-
-  .. literalinclude:: code/python/authorization/account_with_customdata_resp.py
-      :language: python
+  This will return the Account resource along with the customData.
 
 Or you can retrieve only the Custom Data:
 
@@ -397,7 +386,7 @@ Or you can retrieve only the Custom Data:
 .. only:: python
 
   .. literalinclude:: code/python/authorization/account_customdata_only_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -446,10 +435,7 @@ Or you can retrieve only the Custom Data:
 
 .. only:: python
 
-  Which would return only this:
-
-  .. literalinclude:: code/python/authorization/account_customdata_only_resp.py
-      :language: python
+  Which would return only the CustomData object.
 
 Checking Role Permissions
 """""""""""""""""""""""""
@@ -513,6 +499,6 @@ This would work in much the same way as checking the permissions for a user's Ac
 .. only:: python
 
   .. literalinclude:: code/python/authorization/account_groups_req.py
-      :language: python
+    :language: python
 
-  From here... (python.todo)
+  From here you can retrieve the Group’s CustomData in the same way as you did with users.

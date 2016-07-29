@@ -381,7 +381,14 @@ A typical set of steps in your application are as follows:
 
 .. only:: python
 
-  (python.todo)
+  This is typically done by calling the ``build_id_site_redirect_url`` method on your Application object to generate a URL that you will then redirect your user to:
+
+  .. literalinclude:: code/python/idsite/build_idsite_url.py
+    :language: python
+
+  The ``callback_uri`` option to the ``build_id_site_redirect_url()`` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+  Once the URL is built, redirect the user in order to send them to ID Site.
 
 Step 2: Handling the Callback to your Application from ID Site
 --------------------------------------------------------------
@@ -568,7 +575,28 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: python
 
-  (python.todo)
+  With the full URI that includes the ``jwtResponse`` query parameter, you will need to call the ``handle_stormpath_callback()`` method on the ``Application`` object:
+
+  .. literalinclude:: code/python/idsite/consume_assertion.py
+    :language: python
+
+  This will result in a object instance being returned with four properties:
+
+  .. list-table::
+    :widths: 15 60
+    :header-rows: 1
+
+    * - Property
+      - Description
+
+    * - ``account``
+      - The Account resource that contains all information about the user who was just returned from ID Site.
+
+    * - ``state``
+      - The state of your application, if you have chosen to have this passed back.
+
+    * - ``status``
+      - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
 
 .. only:: rest
 
@@ -628,7 +656,13 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
 .. only:: python
 
-  .. literalinclude:: code/python/idsite/jwt_for_oauth_req.py
+  .. warning::
+
+    This feature is not yet available in the Python SDK. To follow along with this issue, see `Github Issue #282 <https://github.com/stormpath/stormpath-sdk-python/issues/282>`_.
+
+  .. todo::
+
+    .. literalinclude:: code/python/idsite/jwt_for_oauth_req.py
       :language: python
 
 .. only:: rest
@@ -660,11 +694,6 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
   .. literalinclude:: code/php/idsite/jwt_for_oauth_resp.php
     :language: php
-
-.. only:: python
-
-  .. literalinclude:: code/python/idsite/jwt_for_oauth_resp.py
-      :language: python
 
 For more information about Stormpath's OAuth 2.0 tokens, please see :ref:`generate-oauth-token`.
 
@@ -714,7 +743,7 @@ ID Site will keep a configurable session for authenticated users. When a user is
 .. only:: python
 
   .. literalinclude:: code/python/idsite/logout_from_idsite_req.py
-      :language: python
+    :language: python
 
 Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT.
 
@@ -749,11 +778,6 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 .. only:: php
 
   From here, you handle it the same as any other ID Site callback.  The difference here is that you should guarantee the status is ``LOGOUT`` from the returned object and then remove any stored cookies associated with the session.
-
-.. only:: python
-
-  .. literalinclude:: code/python/idsite/logout_from_idsite_resp.py
-      :language: python
 
 .. _idsite-password-reset:
 
@@ -804,7 +828,7 @@ If you are using ID Site for login, then it stands to reason that you would want
 .. only:: python
 
   .. literalinclude:: code/python/idsite/idsite_reset_pwd.py
-      :language: python
+    :language: python
 
 .. _idsite-multitenancy:
 
@@ -837,7 +861,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: python
 
-  (python.todo)
+  In the arguments that can be passed in the ``build_id_site_redirect_url()`` method, there are a few that can be used to allow for multi-tenancy.
 
 **Organization nameKey**
 
@@ -863,7 +887,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: python
 
-  (python.todo)
+  ``organization_name_key``: Allows you to specify an Organization's ``name_key``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 **Show Organization Field**
 
@@ -953,7 +977,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: python
 
-  (python.todo)
+  ``show_organization_field``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
+
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
+
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``organization_name_key``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. note::
 
@@ -983,7 +1023,13 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: python
 
-  (python.todo)
+  .. warning::
+
+    This feature is not yet available in the Python SDK. To follow along with this issue, see `Github Issue #283 <https://github.com/stormpath/stormpath-sdk-python/issues/283>`_.
+
+  .. todo::
+
+    (python.todo)
 
 For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
 

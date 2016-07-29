@@ -18,6 +18,32 @@
   />
 </noscript>
 <!-- End Facebook Pixel Code -->
+
+<!-- Algolia Search Header Code -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+
+<!-- End Algolia Search Header Code -->
+
+{% endblock %}
+
+{# block body}
+
+<!-- Algolia Search Body Code -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+
+<script type="text/javascript"> docsearch({
+  apiKey: 'fe00029900e0fafe2046298d041c7586',
+  indexName: 'stormpath',
+  inputSelector: '### REPLACE ME ####',
+  debug: false // Set debug to true if you want to inspect the dropdown
+});
+
+</script>
+
+<!-- End Algolia Search Body Code -->
+
 {% endblock %}
 
 {% block menu %}
@@ -53,6 +79,9 @@
       <div class="{{ 'current' if language_slug == 'php' }}">
         <a href="/php/product-guide/latest/{{ pagename }}{{ file_suffix}}">PHP</a>
       </div>
+      <div class="{{ 'current' if language_slug == 'python' }}">
+        <a href="/csharp/product-guide/latest/{{ pagename }}{{ file_suffix}}">Python</a>
+      </div>
       <div class="{{ 'current' if language_slug == 'rest' }}">
         <a href="/rest/product-guide/latest/{{ pagename }}{{ file_suffix}}">REST</a>
       </div>
@@ -62,9 +91,6 @@
       <!--
       <div class="{{ 'current' if language_slug == 'java' }}">
         <a href="/java/product-guide/latest/{{ pagename }}{{ file_suffix}}">Java</a>
-      </div>
-      <div class="{{ 'current' if language_slug == 'python' }}">
-        <a href="/csharp/product-guide/latest/{{ pagename }}{{ file_suffix}}">Python</a>
       </div>
       <div class="{{ 'current' if language_slug == 'nodejs' }}">
         <a href="/nodejs/product-guide/latest/{{ pagename }}{{ file_suffix}}">Node.js</a>

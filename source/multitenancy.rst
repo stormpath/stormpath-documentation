@@ -269,7 +269,7 @@ This has two benefits:
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex1.py
-      :language: python
+    :language: python
 
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role":
 
@@ -307,7 +307,7 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex2.py
-      :language: python
+    :language: python
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -372,7 +372,7 @@ You can create an Organization in Stormpath by sending the following request:
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/create_org_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -438,10 +438,7 @@ You can create an Organization in Stormpath by sending the following request:
 
 .. only:: python
 
-  Which would return the following:
-
-  .. literalinclude:: code/python/multitenancy/create_org_resp.py
-      :language: python
+  Which would return a new Organization object.
 
 Adding an Account Store to an Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -513,7 +510,13 @@ An Organization can be mapped to an Application so that users in the Organizatio
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/asm_to_org.py
-      :language: python
+    :language: python
+
+  These two attributes, ``organization`` and ``account_store`` are required, though you may add some optional attributes as well:
+
+  - ``listIndex``: Represents the priority in which this account_store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+
+  - ``is_default_account_store``: A ``True`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
 
 In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
 
@@ -566,7 +569,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_req.py
-      :language: python
+    :language: python
 
 .. only:: rest
 
@@ -611,13 +614,6 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_resp.php
     :language: php
-
-.. only:: python
-
-  Which would result in the following response:
-
-  .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_resp.py
-      :language: python
 
 .. only:: csharp or vbnet
 
@@ -707,7 +703,7 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 .. only:: python
 
   .. literalinclude:: code/python/multitenancy/add_account_to_org.py
-      :language: python
+    :language: python
 
 .. _multitenancy-auth-to-org:
 
