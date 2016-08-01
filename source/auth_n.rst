@@ -3750,6 +3750,81 @@ By default, the only user information that is passed by ADFS is the User Princip
 
 #. Here you can specify which of the ADFS Claims you would like to map to which Stormpath Account attribute. For example, if you mapped the LDAP Attribute "Given-Name" to the ADFS Claim "firstName", then you would put the "Attribute Name" as "firstName" and the "Stormpath Field Name" as "surname".
 
+.. _azure:
+
+Azure Active Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stormpath's also supports linking your Azure Active Directory (AD) to Stormpath via SAML. In order to link the two, you must configure your Azure AD server with information about your Stormpath Directory, and vice versa. This will then allow users to log in to your application by authenticating with Azure server, and have their Active Directory user information mirrored into Stormpath.
+
+These instructions assume that you have an instance of Windows Azure Active Directory, fully configured and with existing users as well as a Stormpath account with at least an Advanced tier.
+
+Step 1: Add Your Application in Azure
+""""""""""""""""""""""""""""""""""""""""""""""
+
+1. Log in to Azure and select your AD directory.
+
+2. Select the **Application** sub-heading and then click **Add** at the bottom of the page.
+
+3. Click **Add an application my organization is developing**
+
+4. Name your application and click the right **arrow**.
+
+5. Add two temporary URLs. They can be any valid URL, since we will be changing them later. Then click the **checkmark**.
+
+6. You will now arrive at your application/s main page.
+
+Step 2: Create your Azure Directory in Stormpath
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+2.1 Add the SSO Login/Logout URLs
++++++++++++++++++++++++++++++++++
+
+Next we must create a Directory in Stormpath that will mirror our ADFS users. Keep your Azure window open, since you will be copying information back and forth between Azure and Stormpath.
+
+#. Log in to the Stormpath Admin Console: https://api.stormpath.com
+
+#. Click on the **Directories** tab.
+
+#. Click on **Create Directory**.
+
+#. From the "Directory Type" drop-down menu, select "SAML", which will bring up a Directory creation dialog.
+
+#. Next, enter in a name and (optionally) a description, then set the Directory's status.
+
+#. Switch to your Azure application and click on **View Endpoints** in the bottom navigation bar. This will bring up an "App Endpoints" dialog.
+
+#. Your Azure "SAML-P Sign-on Endpoint" needs to be copied into your Stormpath Directory's "SAML SSO Login Url" field.
+
+#. Similarly, the "SAML-P Sign-out Endpoint" goes into your Stormpath Directory's "SAML SSO Logout Url".
+
+2.2 Add the x509 Certificate
+++++++++++++++++++++++++++++
+
+#. Take the URL in your Azure app's "Federate Metadata Document" and paste it into a new window.
+
+#. Find the ``IDPSSODescriptor`` tag. Inside this there are multiple ``<X509Certificate>`` tags.
+
+#. Take the first ``<X509Certificate>`` and copy it into your text editor of choice.
+
+#. Add ``-----BEGIN CERTIFICATE-----`` as the first line and ``-----END CERTIFICATE-----`` as the last line.
+
+#. Now take the entire contents inside your text editor and paste them into your Stormpath Directory's "SAML X.509 Signing Cert" field.
+
+#. Finally, make sure that "RSA-SHA256" is selected as the "SAML Request Signature Algorithm".
+
+#. Once all this information is entered, click on **Create Directory**. At this point, you will arrive back on the main Directories page.
+
+#. Find and click on your Directory to enter its information page.
+
+#. On this page, in the "SAML Configuration" section, click on the **Identity Provider** tab. We will be returning here in the next step.
+
+Step 3: Configure SSO in Azure
+"""""""""""""""""""""""""""""""
+
+Step 4: (Optional) Configure Attribute Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""
+
 .. _saml-configuration-rest:
 
 4.5.3. Configuring SAML via REST
