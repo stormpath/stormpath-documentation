@@ -3777,10 +3777,10 @@ Step 1: Add Your Application in Azure
 Step 2: Create your Azure Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""
 
+Next we must create a Directory in Stormpath that will mirror our ADFS users. Keep your Azure window open, since you will be copying information back and forth between Azure and Stormpath.
+
 2.1 Add the SSO Login/Logout URLs
 +++++++++++++++++++++++++++++++++
-
-Next we must create a Directory in Stormpath that will mirror our ADFS users. Keep your Azure window open, since you will be copying information back and forth between Azure and Stormpath.
 
 #. Log in to the Stormpath Admin Console: https://api.stormpath.com
 
@@ -3822,7 +3822,36 @@ Next we must create a Directory in Stormpath that will mirror our ADFS users. Ke
 Step 3: Configure SSO in Azure
 """""""""""""""""""""""""""""""
 
-Step 4: (Optional) Configure Attribute Mappings
+#. Back in Azure, click on **Configure** under your application's name.
+
+#. Find the "Single Sign-on" section. We will be copying various fields from your Stormpath Directory page into these fields.
+
+#. Set "App ID URI" as your Stormpath Directory's HREF.
+
+#. Set "Reply URL" as your Stormpath Directory's "Assertion Consumer Service URL".
+
+#. In the bottom of your Azure application's navigation pane, click on **Save**.
+
+Step 4: Configure Your Application in Stormpath
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+#. Switch back to the `Stormpath Admin Console <https://api.stormpath.com>`__ and go to the **Applications** tab.
+
+#. Select the Application that will be using the Azure  Directory.
+
+#. On the main "Details" page, you will see "Authorized Callback URIs". You should include here a list of the URLs that your users will be redirected to at the end of the SAML authentication flow.
+
+#. Next click on **Account Stores** in the navigation pane.
+
+#. Once you are on your Application's Account Stores page, click "Add Account Store". This will bring up the "Map Account Store" dialog.
+
+#. Ensure that you are in the "Directories" tab and select your Azure Directory from the list.
+
+#. Click **Create Mappings**.
+
+You should now be able to log-in to your Stormpath-powered application with Azure Active Directory!
+
+Step 5: (Optional) Configure Attribute Mappings
 """""""""""""""""""""""""""""""""""""""""""""""
 
 .. _saml-configuration-rest:
