@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-08-02
+  ==========
+
+  - **New:** Instructions for setting-up login via :ref:`Azure Active Directory <azure>` are now available in the Authentication chapter.
+
   2016-07-21
   ==========
 
