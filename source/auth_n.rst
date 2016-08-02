@@ -3753,7 +3753,7 @@ By default, the only user information that is passed by ADFS is the User Princip
 .. _azure:
 
 Azure Active Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Stormpath's also supports linking your Azure Active Directory (AD) to Stormpath via SAML. In order to link the two, you must configure your Azure AD server with information about your Stormpath Directory, and vice versa. This will then allow users to log in to your application by authenticating with Azure server, and have their Active Directory user information mirrored into Stormpath.
 
@@ -3803,7 +3803,7 @@ Next we must create a Directory in Stormpath that will mirror our ADFS users. Ke
 
 #. Take the URL in your Azure app's "Federate Metadata Document" and paste it into a new window.
 
-#. Find the ``IDPSSODescriptor`` tag. Inside this there are multiple ``<X509Certificate>`` tags.
+#. Find the ``IDPSSODescriptor`` tag. Inside this tag there are multiple ``<X509Certificate>`` tags.
 
 #. Take the first ``<X509Certificate>`` and copy it into your text editor of choice.
 
@@ -3851,8 +3851,9 @@ Step 4: Configure Your Application in Stormpath
 
 You should now be able to log-in to your Stormpath-powered application with Azure Active Directory!
 
-Step 5: (Optional) Configure Attribute Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""
+.. todo::
+
+  Step 5: (Optional) Configure Attribute Mappings
 
 .. _saml-configuration-rest:
 
