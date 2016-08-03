@@ -1991,7 +1991,7 @@ There are three steps to the password reset flow:
 
   .. note::
 
-    It is also possible to specify the Account Store in your Password Reset POST:
+    It is also possible to specify the Organization, Directory, or Group in your Password Reset POST:
 
     .. code-block:: http
 
@@ -2607,15 +2607,32 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
   .. code-block:: http
 
-    POST /v1/applications/$APPLICATION_ID/verificationEmails HTTP/1.1
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/verificationEmails HTTP/1.1
     Host: api.stormpath.com
     Content-Type: application/json;charset=UTF-8
 
     {
-      "login": "email@address.com"
+      "login": "email@address.com",
     }
 
   If this calls succeeds, an ``HTTP 202 ACCEPTED`` will return.
+
+  .. note::
+
+    It is also possible to specify the Organization, Directory, or Group in your Verification Email resend request:
+
+    .. code-block:: http
+
+      POST /v1/applications/1gk4Dxzi6o4Pbdlexample/verificationEmails HTTP/1.1
+      Host: api.stormpath.com
+      Content-Type: application/json;charset=UTF-8
+
+      {
+        "login":"email@address.com",
+        "accountStore": {
+          "href": "https://api.stormpath.com/v1/groups/2SKhstu8PlaekcaEXampLE"
+        }
+      }
 
 .. only:: csharp or vbnet
 
