@@ -1552,7 +1552,7 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req.py
     :language: python
 
-Find All Accounts in a Directory That Were Created on a Particular Day
+Find All Accounts in a Directory That Were Modified on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Datetime Search is used when you want to search for Accounts that have a certain point or period in time that interests you. So you could search for all of the Accounts in a Directory that were modified on Dec 1, 2015.

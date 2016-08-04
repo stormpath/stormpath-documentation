@@ -179,7 +179,7 @@ Strategy 2: Group per Organization
 
 The other multi-tenancy option is to have a single Directory under which each of your application's tenants has their own Group. A few questions to think about this for this strategy:
 
-**Do you want to guarantee ``email`` and ``username`` uniqueness across all tenants?**
+**Do you want to guarantee email and username uniqueness across all tenants?**
 
 With this strategy, all of your user Accounts are contained within the same Directory, so no two Accounts can have the same email address. This means you can create unified cross-tenant user identities, which allows for things like single-sign-on and account sharing between tenants on your application.
 
