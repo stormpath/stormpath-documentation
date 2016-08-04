@@ -2547,6 +2547,10 @@ Step 1: Create an LDAP Directory
 Step 2: Install your LDAP Agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+
+  The LDAP Agent can be installed anywhere, as long as the location allows it access to your LDAP server.
+
 Once the Directory, Provider and Agent are created, installing your Agent is done in three steps.
 
 **1. Download**
