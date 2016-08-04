@@ -116,7 +116,7 @@ Your primary consideration when modeling users in Stormpath always begins with t
 
 To help you decide which strategy is best, answer the following questions:
 
-- **Can a user access multiple tenants with the same credentials?**
+- **Can a user only sign-up for one tenant with a particular email address?** (As opposed to being able to use the same email address to access multiple tenants)
 
 - **Will your tenants all have different password strength requirements?**
 
