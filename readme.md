@@ -2,7 +2,7 @@
 
 *The Stormpath Product Guide documentation repo*
 
-#### Install
+### Install
 
 `pip install Sphinx sphinx_rtd_theme`
 
@@ -14,7 +14,7 @@ If you already have Sphinx, then just upgrade:
 
 Then clone this repo.
 
-#### Structure
+### Structure
 
 ```
 ├── build
@@ -48,7 +48,7 @@ Then clone this repo.
 - All code samples are in `source/code/`, sorted by chapter name.
 - All images are in `source/images/`, sorted by chapter name.
 
-#### How To Generate The Docs
+### How To Generate The Docs
 
 `make html` will generate the REST Product Guide
 
@@ -70,7 +70,7 @@ If you would like to generate all of the Product Guides in one go, you can use t
 
 This will iterate through every language and generate the Product Guide for that language.
 
-#### Viewing the Docs
+### Viewing the Docs
 
 Once you are finished generating the docs, you can view them with the following command:
 
