@@ -70,6 +70,8 @@ If you would like to generate all of the Product Guides in one go, you can use t
 
 This will iterate through every language and generate the Product Guide for that language.
 
+**Note:** This command has an additional `-W` flag that converts all warnings into errors. This means that the build stops at the first warning.
+
 ### Viewing the Docs
 
 Once you are finished generating the docs, you can view them with the following command:
