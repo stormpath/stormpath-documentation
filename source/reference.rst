@@ -1981,8 +1981,8 @@
 
   .. _ref-samlpolicy:
 
-  SAML Policy Resource
-  ^^^^^^^^^^^^^^^^^^^^
+  SAML Policy
+  ^^^^^^^^^^^^
 
   This resource contains information about the Application's SAML policy. For more information SAML Authentication, please see :ref:`saml-authn`.
 
