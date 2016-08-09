@@ -108,6 +108,14 @@
 
       \Stormpath\Client::$cacheManagerOptions = $cacheManagerOptions;
 
+  .. only:: java
+
+    Hazelcast
+    '''''''''
+
+    .. literalinclude:: code/java/configuration/hazelcast_cache.java
+       :language: java
+
   Memcached
   '''''''''
 
@@ -119,7 +127,9 @@
 
   .. only:: java
 
-    (java.todo)
+    .. note::
+
+      The Java SDK does not currently have a plugin that supports Memcached. If you nned this functionality, please, reach out to us at support@stormpath.com.
 
   .. only:: nodejs
 
@@ -164,7 +174,9 @@
 
   .. only:: java
 
-    (java.todo)
+    .. note::
+
+      The Java SDK does not currently have a plugin that supports Memcached. If you nned this functionality, please, reach out to us at support@stormpath.com.
 
   .. only:: nodejs
 
@@ -393,7 +405,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/api_credentials.java
+      :language: java
 
   .. only:: nodejs
 
@@ -501,7 +514,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/api_credentials.java
+      :language: java
 
   .. only:: nodejs
 
@@ -595,7 +609,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/base_url.java
+      :language: java
 
   .. only:: nodejs
 
@@ -753,7 +768,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/disable_caching.java
+      :language: java
 
   .. only:: nodejs
 
@@ -786,7 +802,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/custom_cache_config.java
+      :language: java
 
   .. only:: nodejs
 
@@ -863,7 +880,8 @@
 
     .. only:: java
 
-      (java.todo)
+      .. literalinclude:: code/java/configuration/connection_timeout.java
+        :language: java
 
     .. only:: nodejs
 
@@ -940,7 +958,8 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/use_basic_auth.java
+      :language: java
 
   .. only:: nodejs
 
@@ -1035,7 +1054,8 @@
 
     .. only:: java
 
-      (java.todo)
+      .. literalinclude:: code/java/configuration/use_proxy.java
+        :language: java
 
     .. only:: nodejs
 
