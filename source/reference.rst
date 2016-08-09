@@ -1585,7 +1585,7 @@
         "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
       },
       "samlPolicy" : {
-        "href" : "http://localhost:9191/v1/samlPolicies/1gk4Dxzi6o4PbdlexaMple"
+        "href" : "https://api.stormpath.com/v1/samlPolicies/1gk4Dxzi6o4PbdlexaMple"
       }
     }
 
@@ -1988,7 +1988,7 @@
 
   **samlPolicy URL**
 
-  ``https://api.stormpath.com/v1/samlPolicies/$DIRECTORY_ID``
+  ``https://api.stormpath.com/v1/samlPolicies/$APPLICATION_ID``
 
   **samlPolicy Attributes**
 
