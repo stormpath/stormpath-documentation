@@ -1,2 +1,3 @@
 # Since we build locally, this directory is not included
 /build
+.DS_Store
