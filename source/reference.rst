@@ -1585,7 +1585,7 @@
         "href": "https://api.stormpath.com/v1/applications/1gk4Dxzi6o4PbdlexaMple/authTokens"
       },
       "samlPolicy" : {
-        "href" : "http://localhost:9191/v1/samlPolicies/QONHxosYAWIwIvZnFA85E"
+        "href" : "http://localhost:9191/v1/samlPolicies/1gk4Dxzi6o4PbdlexaMple"
       }
     }
 
@@ -1988,7 +1988,7 @@
 
   **samlPolicy URL**
 
-  ``https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID``
+  ``https://api.stormpath.com/v1/applicationSamlPolicies/$DIRECTORY_ID``
 
   **samlPolicy Attributes**
 
@@ -2016,7 +2016,7 @@
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$POLICY_ID",
+      "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$DIRECTORY_ID",
       "serviceProvider": {
         "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
           "ssoInitiationEndpoint": {
