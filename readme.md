@@ -54,7 +54,7 @@ Then clone this repo.
 
 `make html LANGUAGE={name}` will generate the Product Guide for the specified language.
 
-The possible values for name are:
+The possible values for `{name}` are:
 
 - `rest`
 - `php`
