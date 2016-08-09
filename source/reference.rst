@@ -1988,7 +1988,7 @@
 
   **samlPolicy URL**
 
-  ``https://api.stormpath.com/v1/applicationSamlPolicies/$DIRECTORY_ID``
+  ``https://api.stormpath.com/v1/samlPolicies/$DIRECTORY_ID``
 
   **samlPolicy Attributes**
 
@@ -2016,15 +2016,27 @@
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/applicationSamlPolicies/$DIRECTORY_ID",
-      "serviceProvider": {
-        "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID",
-          "ssoInitiationEndpoint": {
-            "href": "https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
-          },
-          "defaultRelayStates": {
-            "href": "https://api.stormpath.com/v1/samlServiceProviders/$SERVICE_PROVIDER_ID/defaultRelayStates"
-          }
+      "href":"https://api.stormpath.com/v1/samlPolicies/$APPLICATION_ID",
+      "createdAt":"2016-01-18T21:02:24.504Z",
+      "modifiedAt":"2016-01-18T21:02:24.504Z",
+      "serviceProvider":{
+        "href":"https://api.stormpath.com/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID"
+      }
+    }
+
+  **serviceProvider Example**
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID",
+      "createdAt":"2016-01-18T21:02:24.501Z",
+      "modifiedAt":"2016-01-18T21:02:24.501Z",
+      "ssoInitiationEndpoint":{
+        "href":"https://api.stormpath.com/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect"
+      },
+      "defaultRelayStates":{
+        "href":"https://api.stormpath.com/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID/defaultRelayStates"
       }
     }
 
