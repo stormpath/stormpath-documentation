@@ -207,11 +207,7 @@ For more information about adding customData to a user, please see the :ref:`Acc
 
     See the `ICustomData documentation <http://docs.stormpath.com/dotnet/api/html/T_Stormpath_SDK_CustomData_ICustomData.htm>`_ in the .NET API reference for more information on interacting with Custom Data in .NET.
 
-.. only:: java
-
-  (java.todo) Add link to SDK documentation for Custom Data?
-
-.. only:: nodejs or php or python
+.. only:: nodejs or php or python or java
 
   To find out all the different things you can do with customData please see the :ref:`Account Custom Data Section <add-user-customdata>`.
 
@@ -228,7 +224,7 @@ Checking User and Role Permissions
 
 .. only:: java
 
-  (java.todo)
+  Since authorization enforcement is typically handled by `one of Stormpath's integrations <https://docs.stormpath.com/home/>`_, the primary usefulness of the Java SDK is in retrieving a user's permissions and building custom authorization logic.
 
 .. only:: nodejs
 
@@ -324,10 +320,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
 .. only:: java
 
-  This will return the Account resource along with the customData:
-
-  .. literalinclude:: code/java/authorization/account_with_customdata_resp.java
-      :language: java
+  This will return the Account resource along with the customData
 
 .. only:: nodejs
 
@@ -414,10 +407,7 @@ Or you can retrieve only the Custom Data:
 
 .. only:: java
 
-  Which would return only this:
-
-  .. literalinclude:: code/java/authorization/account_customdata_only_resp.java
-      :language: java
+  Which would return only the CustomData object.
 
 .. only:: nodejs
 
@@ -480,7 +470,7 @@ This would work in much the same way as checking the permissions for a user's Ac
   .. literalinclude:: code/java/authorization/account_groups_req.java
       :language: java
 
-  From here... (java.todo)
+  From here you can retrieve each Group’s CustomData in the same way as you did with users.
 
 .. only:: nodejs
 
