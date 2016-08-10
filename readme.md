@@ -17,13 +17,7 @@ Then clone this repo.
 ### Structure
 
 ```
-├── build
-│   ├── doctrees
-│   └── html
-│       ├── _images
-│       ├── _sources
-│       └── _static
-└── source
+├── source
     ├── _static
     ├── _templates
     ├── code
@@ -50,7 +44,9 @@ Then clone this repo.
 
 ### How To Generate The Docs
 
-`make html` will generate the REST Product Guide
+#### Generating Static Docs
+
+`make html` will generate the REST Product Guide as HTML.
 
 `make html LANGUAGE={name}` will generate the Product Guide for the specified language.
 
@@ -71,6 +67,18 @@ If you would like to generate all of the Product Guides in one go, you can use t
 This will iterate through every language and generate the Product Guide for that language.
 
 **Note:** This command has an additional `-W` flag that converts all warnings into errors. This means that the build stops at the first warning.
+
+#### Generating Live Docs
+
+In order to generate auto-reloading "live" documentation, use the following command:
+
+`make livehtml`
+
+Just like `make html`, this command can also take a language parameter:
+
+`make livehtml LANGUAGE={name}`
+
+The values for `{name}` are the same as for generating static documentation.
 
 ### Viewing the Docs
 
