@@ -23,7 +23,7 @@ First, the airline can have at the gate a master list of all passengers who are 
 5.1.2. Permissions-based Authorization
 --------------------------------------
 
-Permissions, at their most basic, are statements of functionality that define a resource and what actions are possible for that resource. Going back to our airport scenario, an alternative to the boarding master list is that the airline sets a requirement: every passenger who wants to board the plan must bring a boarding pass. This pass comes with permission to perform the "board" action onto a specific flight number. So now, instead of basing authorization around a particular user identifier, we could require a certain permission to perform an action on a resource (e.g. ``if (user.isPermitted("flight:board:ac232"))``). This approach has many advantages, including more flexibility with regards to your security model, and separating your application logic from your data model.
+Permissions, at their most basic, are statements of functionality that define a resource and what actions are possible for that resource. Going back to our airport scenario, an alternative to the boarding master list is that the airline sets a requirement: every passenger who wants to board the plane must bring a boarding pass. This pass comes with permission to perform the "board" action onto a specific flight number. So now, instead of basing authorization around a particular user identifier, we could require a certain permission to perform an action on a resource (e.g. ``if (user.isPermitted("flight:board:ac232"))``). This approach has many advantages, including more flexibility with regards to your security model, and separating your application logic from your data model.
 
 .. todo::
 
