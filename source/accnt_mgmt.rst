@@ -434,7 +434,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: java
 
-  (java.todo)
+  In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
 
 .. only:: nodejs
 
@@ -674,8 +674,16 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_group_resp.java
-    :language: java
+  Would create the "Starfleet Officers" Group in the "Captains" Directory in Stormpath, and update the local ``officersGroup`` variable to reflect the API resource.
+
+  .. note::
+
+    By default, new Groups created will have a ``Status`` of ``enabled``. If you'd like to create an initially-disabled Group, use this syntax:
+
+    .. only:: java
+
+      .. literalinclude:: code/java/account_management/create_disabled_group_req.java
+        :language: java
 
 .. only:: nodejs
 

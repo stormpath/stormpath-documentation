@@ -1,5 +1,5 @@
-Directory captainsDirectory = client.instantiate(Directory.class);
-dir.setName("Captains");
-dir.setDescription("Captains from a variety of stories");
-dir.setStatus(DirectoryStatus.ENABLED);
-captainsDirectory = client.createDirectory(dir);
+Directory captainsDirectory = client.instantiate(Directory.class)
+    .setName("Captains")
+    .setDescription("All the Captains");
+
+client.createDirectory(captainsDirectory);
