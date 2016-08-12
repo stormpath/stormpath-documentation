@@ -133,7 +133,41 @@
 
   .. only:: nodejs
 
-    (node.todo)
+    For a simple use-case, you can allow the Node SDK to create a Memcached Client for you.  This assumes that a Memcached server is running locally on the default port:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached'
+        }
+      });
+
+    If the Memcached server is running on a different port, you can pass that configuration information to the Memcached client that is created for you:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached',
+          connection: 'localhost:11211'
+        }
+      });
+
+    Otherwise, if you have a more complex client configuration, we suggest you create your own client instance and pass that to this library:
+
+    .. code-block:: javascript
+
+      var Memcached = require('memcached');
+
+      var memcachedClient = new Memcached('localhost:11211');
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached',
+          client: memcachedClient
+        }
+      });
 
   .. only:: php
 
@@ -180,7 +214,45 @@
 
   .. only:: nodejs
 
-    (node.todo)
+    For a simple use-case, you can allow the Node SDK to create a Redis Client for you.  This assumes that a Redis server is running locally on the default port:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis'
+        }
+      });
+
+    If the Redis server is running on a different port, you can pass that configuration information to the Redis client that is created for you:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis',
+          connection: {
+            host: 'localhost',
+            port: 7777
+          }
+        }
+      });
+
+
+    Otherwise, if you have a more complex client configuration, we suggest you create your own client instance and pass that to this library:
+
+    .. code-block:: javascript
+
+      var redis = require('redis');
+
+      var redisClient = redis.createClient();
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis',
+          client: redisClient
+        }
+      });
 
   .. only:: php
 
@@ -483,7 +555,7 @@
       client:
         apiKey:
           id: "your_id_here"
-          secret: "your_id_here"
+          secret: "your_secret_here"
 
     JSON File
     ^^^^^^^^^
@@ -494,7 +566,7 @@
         "client": {
           "apiKey": {
             "id": "your_id_here",
-            "secret": "your_id_here"
+            "secret": "your_secret_here"
           }
         }
       }
@@ -519,7 +591,14 @@
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        apiKey : {
+          id : 'your_id_here',
+          secret : 'your_secret_here'
+        }
+      });
 
   .. only:: php
 
@@ -614,7 +693,11 @@
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        baseUrl: 'https://enterprise.stormpath.io/v1'
+      });
 
   .. only:: php
 
@@ -885,7 +968,11 @@
 
     .. only:: nodejs
 
-      (node.todo)
+      .. code-block:: javascript
+
+        var client = new stormpath.Client({
+          timeout: 30000 // milliseconds
+        });
 
     .. only:: python
 
@@ -963,7 +1050,11 @@
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        authenticationScheme: 'BASIC'
+      });
 
   .. only:: php
 
@@ -1059,7 +1150,11 @@
 
     .. only:: nodejs
 
-      (node.todo)
+      .. code-block:: javascript
+
+        var client = new stormpath.Client({
+          proxy: 'http://user:pass@proxyhost:proxyport'
+        });
 
     .. only:: python
 
