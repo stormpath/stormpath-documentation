@@ -1,11 +1,12 @@
-var groupOptions = {
-  expand: 'customData'
-};
-
-account.getGroups(groupOptions, function (err, groups) {
+account.getGroups({expand: 'customData'}, function (err, groups) {
   if (err) {
     return console.error(err);
   }
 
-  console.log('Retrieved groups for account:', groups);
+  groups.each(function(group, next){
+    console.log('Account is in group "' + group.name +'"');
+    console.log('The customData object of the group contains: ', group.customData);
+    next();
+  });
+
 });

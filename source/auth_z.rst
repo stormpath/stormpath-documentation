@@ -322,13 +322,6 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
   This will return the Account resource along with the customData
 
-.. only:: nodejs
-
-  This will return the Account resource along with the customData:
-
-  .. literalinclude:: code/nodejs/authorization/account_with_customdata_resp.js
-      :language: javascript
-
 .. only:: php
 
   This will return the Account resource along with the customData:
@@ -340,7 +333,13 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
   This will return the Account resource along with the customData.
 
-Or you can retrieve only the Custom Data:
+.. only:: not nodejs
+
+  2. Or you can retrieve only the Custom Data:
+
+.. only:: nodejs
+
+  2. Or you can fetch the Custom Data resource of an existing Account object:
 
 .. only:: rest
 
@@ -411,7 +410,7 @@ Or you can retrieve only the Custom Data:
 
 .. only:: nodejs
 
-  Which would return only this:
+  In either case, you can now see the custom data object of the account:
 
   .. literalinclude:: code/nodejs/authorization/account_customdata_only_resp.js
       :language: javascript
