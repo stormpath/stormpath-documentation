@@ -41,10 +41,6 @@ The **Directory** resource is a top-level container for Account and Group resour
 
   In the Stormpath Java SDK, the Directory resource is represented by the ``Directory`` interface. For more information, see the `javadoc for Directory <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__.
 
-.. only:: nodejs
-
-  (node.todo)
-
 .. only:: php
 
   For more detailed information about the Directory object, please see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Directory.html>`__.
@@ -291,7 +287,8 @@ How to Make an LDAP Directory
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/create_ldap_dir_req.js
+    :language: javascript
 
 .. only:: php
 
@@ -401,15 +398,7 @@ How to Make a SAML Directory
   .. literalinclude:: code/java/account_management/create_saml_dir_req.java
       :language: java
 
-.. only:: nodejs
-
-  (node.todo)
-
-.. only:: php
-
-  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
-
-.. only:: python
+.. only:: (python or php or nodejs)
 
   For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
@@ -435,10 +424,6 @@ The other type of Account Store is the Group resource, which can either be imagi
 .. only:: java
 
   In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
-
-.. only:: nodejs
-
-  (node.todo)
 
 .. only:: php
 
@@ -727,10 +712,6 @@ The Account resource is a unique identity within your application. It is usually
 
   In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
 
-.. only:: nodejs
-
-  (node.todo)
-
 .. only:: php
 
   For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__.
@@ -924,7 +905,8 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: nodejs
 
-  (node.todo) It'd be good to add some explanatory text like we have for csharp.
+  Using the SDK, you will want to fetch the Group and the Account objects.  Then you can use the ``addAccount()`` method
+  of the Group to create the membership:
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_req.js
     :language: javascript
@@ -1065,7 +1047,8 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/create_account_disable_reg_workflow.js
+    :language: javascript
 
 .. only:: php
 
