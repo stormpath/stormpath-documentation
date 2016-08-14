@@ -725,7 +725,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: java
 
-  (java.todo)
+  In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
 
 .. only:: nodejs
 
@@ -738,7 +738,7 @@ The Account resource is a unique identity within your application. It is usually
 3.2.1. New Account Creation
 ---------------------------
 
-The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, you show how to add an Account to an Application. Below, you will also show how to add an Account to a specific Directory, or Group.
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show you how to add an Account to an Application. Below, we will also show you how to add an Account to a specific Directory, or Group.
 
 .. _add-new-account:
 
@@ -785,7 +785,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
     :language: java
@@ -852,13 +852,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: java
-
-  Would yield this response:
-
-  .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
-    :language: java
-
 .. only:: nodejs
 
   Would yield this response:
@@ -924,7 +917,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  This time, use the existing Account instance you created before, and the ``addAccount()`` method of the Group object:
 
   .. literalinclude:: code/java/account_management/add_account_to_group_req.java
     :language: java
@@ -970,13 +963,6 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
       }
     }
 
-.. only:: java
-
-  And get the following response:
-
-  .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
-    :language: java
-
 .. only:: nodejs
 
   And get the following response:
@@ -998,17 +984,35 @@ This our completed resource set, with an Account that is a member of a Group ins
 Adding a new Account or Group to an Application or Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
+.. only:: rest or csharp or vbnet or nodejs or php or python
 
-  POST /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts HTTP/1.1
+  Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
 
-Or the same endpoint found on an Organization::
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts HTTP/1.1
 
-  POST /v1/organizations/2P4XOanz26AUomIexample/accounts HTTP/1.1
+  Or the same endpoint found on an Organization::
 
-This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``/accountStoreMappings`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+    POST /v1/organizations/2P4XOanz26AUomIexample/accounts HTTP/1.1
 
-All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``"isDefaultGroupStore`` set to ``true``.
+  This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``/accountStoreMappings`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+
+  All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``isDefaultGroupStore`` set to ``true``.
+
+.. only:: java
+
+  Instead of adding an ``Account`` via the ``Directory``, it is also possible to use the ``Application``:
+
+  .. literalinclude:: code/java/account_management/add_account_using_application.java
+    :language: java
+
+  Or you can do the same with an ``Organization``:
+
+  .. literalinclude:: code/java/account_management/add_account_using_organization.java
+      :language: java
+
+  This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``AccountStoreMapping`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+
+  All of this is also true for adding Groups, except in that case you would use a ``Group`` object and Stormpath would add the Group to the Account Store Mapping that had ``isDefaultGroupStore`` set to ``true``.
 
 .. _importing-accounts:
 
@@ -1054,7 +1058,10 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: java
 
-  (java.todo)
+  This can be done by setting the ``registrationWorkflowEnabled`` flag when creating the Account:
+
+  .. literalinclude:: code/java/account_management/create_account_disable_reg_workflow.java
+    :language: java
 
 .. only:: nodejs
 
@@ -1118,7 +1125,10 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  This can be done by setting the ``PasswordFormat`` option when creating the Account:
+
+  .. literalinclude:: code/java/account_management/create_account_mcf_hash.java
+    :language: java
 
 .. only:: nodejs
 
@@ -1234,10 +1244,18 @@ For example, you could add information about this user's current location, like 
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  The ``picard`` Account you created earlier has a ``CustomData`` property that allows you to write to the resource's Custom Data:
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
     :language: java
+
+  The ``remove()`` method will remove a single item (by key). ``clear()`` will remove all items.
+
+  .. warning::
+
+    Any Custom Data changes you make are not preserved until you call ``save()`` on the parent resource to send the updates to the Stormpath API.
+
+  To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method. For more information about the ``CustomData`` interface, see the `javadocs API documentation <http://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/CustomData.html>`_.
 
 .. only:: nodejs
 
@@ -1293,11 +1311,6 @@ For example, you could add information about this user's current location, like 
   This information can also be appended as part of the initial Account creation payload.
 
   For more information about the customData resource, please see the :ref:`customData section <ref-customdata>` of the REST API Product Guide.
-
-.. only:: java
-
-  .. literalinclude:: code/java/account_management/add_cd_to_account_resp.java
-    :language: java
 
 .. only:: nodejs
 
