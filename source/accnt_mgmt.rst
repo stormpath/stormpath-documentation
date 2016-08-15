@@ -39,7 +39,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: java
 
-  (java.todo)
+  In the Stormpath Java SDK, the Directory resource is represented by the ``Directory`` interface. For more information, see the `javadoc for Directory <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__.
 
 .. only:: nodejs
 
@@ -168,10 +168,11 @@ How to Make a Cloud Directory
 
 .. only:: java
 
-  Would yield the following response:
+  Would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
 
-  .. literalinclude:: code/java/account_management/create_cloud_dir_resp.java
-    :language: java
+  .. note::
+
+    See the `javadocs <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__ for a full list of available properties and methods on the ``Directory`` interface (or any other Stormpath SDK type).
 
 .. only:: nodejs
 
@@ -278,7 +279,15 @@ How to Make an LDAP Directory
 
 .. only:: java
 
-  (java.todo)
+  .. warning::
+
+    This feature is not yet available in the Java SDK.
+
+    In the meantime, please use the Stormpath Admin Console, or consult the REST API documentation.
+
+    .. todo::
+
+      Add LDAP directory creation Java example
 
 .. only:: nodejs
 
@@ -381,7 +390,16 @@ How to Make a SAML Directory
 
 .. only:: java
 
-  (java.todo)
+  In order to create a SAML Directory using the Java SDK, you will need to gather some information from your SAML service provider:
+
+  * X509 Certificate
+  * SSO Login URL
+  * SSO Logout URL
+
+  With this information in hand, you make a ``CreateProviderRequest`` and pass that to a ``CreateDirectoryRequest``.
+
+  .. literalinclude:: code/java/account_management/create_saml_dir_req.java
+      :language: java
 
 .. only:: nodejs
 
@@ -416,7 +434,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: java
 
-  (java.todo)
+  In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
 
 .. only:: nodejs
 
@@ -656,8 +674,16 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/create_group_resp.java
-    :language: java
+  Would create the "Starfleet Officers" Group in the "Captains" Directory in Stormpath, and update the local ``officersGroup`` variable to reflect the API resource.
+
+  .. note::
+
+    By default, new Groups created will have a ``Status`` of ``enabled``. If you'd like to create an initially-disabled Group, use this syntax:
+
+    .. only:: java
+
+      .. literalinclude:: code/java/account_management/create_disabled_group_req.java
+        :language: java
 
 .. only:: nodejs
 
@@ -699,7 +725,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: java
 
-  (java.todo)
+  In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
 
 .. only:: nodejs
 
@@ -712,7 +738,7 @@ The Account resource is a unique identity within your application. It is usually
 3.2.1. New Account Creation
 ---------------------------
 
-The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, you show how to add an Account to an Application. Below, you will also show how to add an Account to a specific Directory, or Group.
+The basic steps for creating a new Account are covered in the :ref:`Quickstart <quickstart>` chapter. In that example, we show you how to add an Account to an Application. Below, we will also show you how to add an Account to a specific Directory, or Group.
 
 .. _add-new-account:
 
@@ -759,7 +785,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
     :language: java
@@ -826,13 +852,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: java
-
-  Would yield this response:
-
-  .. literalinclude:: code/java/account_management/create_account_in_dir_resp.java
-    :language: java
-
 .. only:: nodejs
 
   Would yield this response:
@@ -898,7 +917,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  This time, use the existing Account instance you created before, and the ``addAccount()`` method of the Group object:
 
   .. literalinclude:: code/java/account_management/add_account_to_group_req.java
     :language: java
@@ -944,13 +963,6 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
       }
     }
 
-.. only:: java
-
-  And get the following response:
-
-  .. literalinclude:: code/java/account_management/add_account_to_group_resp.java
-    :language: java
-
 .. only:: nodejs
 
   And get the following response:
@@ -972,17 +984,35 @@ This our completed resource set, with an Account that is a member of a Group ins
 Adding a new Account or Group to an Application or Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
+.. only:: rest or csharp or vbnet or nodejs or php or python
 
-  POST /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts HTTP/1.1
+  Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
 
-Or the same endpoint found on an Organization::
+    POST /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts HTTP/1.1
 
-  POST /v1/organizations/2P4XOanz26AUomIexample/accounts HTTP/1.1
+  Or the same endpoint found on an Organization::
 
-This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``/accountStoreMappings`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+    POST /v1/organizations/2P4XOanz26AUomIexample/accounts HTTP/1.1
 
-All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``"isDefaultGroupStore`` set to ``true``.
+  This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``/accountStoreMappings`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+
+  All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``isDefaultGroupStore`` set to ``true``.
+
+.. only:: java
+
+  Instead of adding an ``Account`` via the ``Directory``, it is also possible to use the ``Application``:
+
+  .. literalinclude:: code/java/account_management/add_account_using_application.java
+    :language: java
+
+  Or you can do the same with an ``Organization``:
+
+  .. literalinclude:: code/java/account_management/add_account_using_organization.java
+      :language: java
+
+  This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``AccountStoreMapping`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
+
+  All of this is also true for adding Groups, except in that case you would use a ``Group`` object and Stormpath would add the Group to the Account Store Mapping that had ``isDefaultGroupStore`` set to ``true``.
 
 .. _importing-accounts:
 
@@ -1028,7 +1058,10 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. only:: java
 
-  (java.todo)
+  This can be done by setting the ``registrationWorkflowEnabled`` flag when creating the Account:
+
+  .. literalinclude:: code/java/account_management/create_account_disable_reg_workflow.java
+    :language: java
 
 .. only:: nodejs
 
@@ -1092,7 +1125,10 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  This can be done by setting the ``PasswordFormat`` option when creating the Account:
+
+  .. literalinclude:: code/java/account_management/create_account_mcf_hash.java
+    :language: java
 
 .. only:: nodejs
 
@@ -1208,10 +1244,18 @@ For example, you could add information about this user's current location, like 
 
 .. only:: java
 
-  (java.todo) It'd be good to add some explanatory text like we have for csharp.
+  The ``picard`` Account you created earlier has a ``CustomData`` property that allows you to write to the resource's Custom Data:
 
   .. literalinclude:: code/java/account_management/add_cd_to_account_req.java
     :language: java
+
+  The ``remove()`` method will remove a single item (by key). ``clear()`` will remove all items.
+
+  .. warning::
+
+    Any Custom Data changes you make are not preserved until you call ``save()`` on the parent resource to send the updates to the Stormpath API.
+
+  To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method. For more information about the ``CustomData`` interface, see the `javadocs API documentation <http://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/CustomData.html>`_.
 
 .. only:: nodejs
 
@@ -1268,11 +1312,6 @@ For example, you could add information about this user's current location, like 
 
   For more information about the customData resource, please see the :ref:`customData section <ref-customdata>` of the REST API Product Guide.
 
-.. only:: java
-
-  .. literalinclude:: code/java/account_management/add_cd_to_account_resp.java
-    :language: java
-
 .. only:: nodejs
 
   Which returns the following:
@@ -1324,7 +1363,10 @@ The Account resource's **searchable attributes** are:
 
 .. only:: java
 
-  (java.todo)
+  With the Stormpath Java SDK, you can easily perform searches either using a fluent interface of search methods or by passing in a ``Map`` of query parameters.
+  Search expressions begin on resources that contain collections.
+
+  Any resource type that exposes a ``getAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
 .. only:: nodejs
 
@@ -1415,12 +1457,9 @@ A Filter search will locate the specified string in any searchable attribute of 
   .. literalinclude:: code/java/account_management/search_app_accounts_for_word_req.java
     :language: java
 
-  .. literalinclude:: code/java/account_management/search_app_accounts_for_word_resp.java
-    :language: java
-
   .. note::
 
-    Matching is case-insensitive, so (java.todo)
+    Matching is case-insensitive, so ``queryParams.put("q", "Luc")`` and ``queryParams.put("givenName", "luc")`` will all return the same results.
 
 .. only:: nodejs
 
@@ -1641,16 +1680,24 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 .. only:: java
 
-  (java.todo) Is there anything else to add here? See Dotnet above.
+  There are two ways to search date fields in the Java SDK: using methods and using a ``String`` format for matching.
 
-  **Query**
+  **Methods**
+
+  All of the method-based calls for searching on dates take one or more Java ``Date`` object as parameters. All comparisons are based on UTC times.
 
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req.java
     :language: java
 
-  **Response**
+  Using the ``in`` method above, we are searching for all accounts modified between midnight, December 1, 2015 and the following 24 hours.
 
-  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_resp.java
+  Other date searching methods include ``equals``, ``gt``, ``gte``, ``lt``, and ``lte``
+
+  **String Match**
+
+  String match date searches use `Interval Notation <https://en.wikipedia.org/wiki/Interval_(mathematics)>`__ and `ISO 8601 <https://en.wikipedia.org/wiki/ISO_8601>`__ dates to specify a range of dates to search for.
+
+  .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_match_req.java
     :language: java
 
 .. only:: nodejs
@@ -1701,7 +1748,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
 
-.. only:: java or nodejs or php
+.. only:: nodejs or php
 
   .. warning::
 
@@ -1727,17 +1774,16 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     .. literalinclude:: code/vbnet/account_management/cd_search.vb
       :language: vbnet
 
+.. only:: java
+
+  .. literalinclude:: code/java/account_management/cd_search.java
+
 .. only:: python
 
   .. literalinclude:: code/python/account_management/cd_search.py
     :language: python
 
 .. todo::
-
-  .. only:: java
-
-    .. literalinclude:: code/java/account_management/cd_search.java
-      :language: java
 
   .. only:: nodejs
 
@@ -1749,7 +1795,7 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
     .. literalinclude:: code/php/account_management/cd_search.php
       :language: php
 
-.. only:: rest or java or nodejs or php
+.. only:: rest or nodejs or php
 
   .. code-block:: http
 
@@ -1817,6 +1863,8 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
 .. only:: java
 
+  To  retrieve the password policy, use the ``getPasswordPolicy()`` and ``getStrength()`` methods. The Password Strength resource can be modified and saved back to the server to update the policy.
+
   .. literalinclude:: code/java/account_management/update_dir_pwd_strength_req.java
     :language: java
 
@@ -1859,13 +1907,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "minSymbol": 1,
       "minUpperCase": 1
     }
-
-.. only:: java
-
-  Which results in the following response:
-
-  .. literalinclude:: code/java/account_management/update_dir_pwd_strength_resp.java
-      :language: java
 
 .. only:: nodejs
 
@@ -2048,6 +2089,8 @@ There are three steps to the password reset flow:
     .. literalinclude:: code/java/account_management/reset1_trigger_req_accountstore.java
       :language: java
 
+    The second parameter can be any object that implements ``AccountStore`` (Directories, Groups, Organizations).
+
 .. only:: nodejs
 
   To trigger the password reset workflow, you call the ``resetPassword(options, callback)`` method on your Application instance:
@@ -2113,8 +2156,7 @@ If this is a valid email in an Account associated with this Application, the req
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/reset1_trigger_resp.java
-    :language: java
+  If the email is not valid, a ``ResourceException`` will be thrown. The returned value is an ``PasswordResetToken`` instance that represents a copy of the token that can be used to reset the user's password.
 
 .. only:: nodejs
 
@@ -2180,6 +2222,8 @@ Once the user clicks this link, your controller should retrieve the token from t
 
 .. only:: java
 
+  This can be accomplished by using the ``verifyPasswordResetToken`` method:
+
   .. literalinclude:: code/java/account_management/reset2_verify_token.java
     :language: java
 
@@ -2233,6 +2277,8 @@ After verifying that the token from the query string is valid, you can direct th
       :language: vbnet
 
 .. only:: java
+
+  Once you have the password, you can update the Account resource with the ``resetPassword()`` method:
 
   .. literalinclude:: code/java/account_management/reset3_update.java
     :language: java
@@ -2335,7 +2381,7 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: java
 
-  (java.todo)
+  .. literalinclude:: code/java/account_management/pwd_reset_email_template.java
 
 .. only:: nodejs
 
@@ -2378,7 +2424,7 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 .. only:: java
 
-  (java.todo)
+  .. literalinclude:: code/java/account_management/search_password_modified.java
 
 .. only:: nodejs
 
@@ -2413,10 +2459,6 @@ Stormpath can store historical password information in order to allow for restri
   .. literalinclude:: code/vbnet/account_management/update_prevent_reuse.vb
     :language: vbnet
 
-.. only:: java
-
-  (java.todo)
-
 .. only:: nodejs
 
   (node.todo)
@@ -2434,7 +2476,15 @@ Stormpath can store historical password information in order to allow for restri
 
     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
 
-.. only:: rest or python
+.. only:: java
+
+  .. warning::
+
+    This feature is not yet available in the Java SDK. For updates, you can follow `ticket #901 <https://github.com/stormpath/stormpath-sdk-java/issues/901>`_ on Github.
+
+    In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+
+.. only:: rest or python or java
 
   .. code-block:: http
 
@@ -2449,7 +2499,7 @@ Stormpath can store historical password information in order to allow for restri
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
-This would now allow a user to set their password to any string that matched their previous 10 passwords.
+This would compel a user to choose a password that was different than any of the previous 10 passwords.
 
 .. _verify-account-email:
 
@@ -2545,10 +2595,9 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. only:: java
 
-  .. literalinclude:: code/java/account_management/verify_email_req.java
-    :language: java
+  You can use the ``verifyAccountEmail()`` method on the ``Client`` type, plus the token you capture from the query string, to verify the Account:
 
-  .. literalinclude:: code/java/account_management/verify_email_resp.java
+  .. literalinclude:: code/java/account_management/verify_email_req.java
     :language: java
 
 .. only:: nodejs
@@ -2650,6 +2699,8 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: java
 
+  To resend the email, use the ``sendVerificationEmail()`` method:
+
   .. literalinclude:: code/java/account_management/resend_verification_email.java
     :language: java
 
@@ -2733,9 +2784,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: java
 
-  .. todo::
-
-    (java.todo)
+.. literalinclude:: code/java/account_management/list_account_creation_templates.java
+  :language: java
 
 .. only:: nodejs
 
@@ -2771,9 +2821,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: java
 
-  .. todo::
-
-    (java.todo)
+  .. literalinclude:: code/java/account_management/list_password_policy_templates.java
+    :language: java
 
 .. only:: nodejs
 
@@ -2829,21 +2878,32 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
             ->save();
     }
 
-    You would then receive a ``200 OK`` along with the updated template.
+  You would then receive a ``200 OK`` along with the updated template.
 
-    For more information about Stormpath's email templates, keep reading!
+  For more information about Stormpath's email templates, keep reading!
 
-    **Message Format**
+  **Message Format**
 
-    The ``mimeType`` designates whether the email is sent as plain text (``\Stormpath\Stormpath::MIME_PLAIN_TEXT``), HTML (``\Stormpath\Stormpath::MIME_HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
-
-    **textBody and htmlBody**
-
-    These define the actual content of the email. The only difference is that ``htmlBody`` is allowed to contain HTML markup while ``textBody`` only accepts plaintext. Both are also able to use `Java Escape Sequences <http://web.cerritos.edu/jwilson/SitePages/java_language_resources/Java_Escape_Sequences.htm>`__. Both ``htmlBody`` and ``textBody`` can have customized output generated using template macros. For more on those, see the very next section.
+  The ``mimeType`` designates whether the email is sent as plain text (``\Stormpath\Stormpath::MIME_PLAIN_TEXT``), HTML (``\Stormpath\Stormpath::MIME_HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
 .. only:: java
 
-  (java.todo)
+  **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory's **Account Creation Policies**.
+
+  **Password Reset**, and **Reset Success** Email Templates can be found under the Directory's **Password Policies**.
+
+  As an example, let's look at a default Verification Email template that comes with the Stormpath Administrator Directory's Account Creation Policies:
+
+  .. literalinclude:: code/java/account_management/update_password_policy_template.java
+    :language: java
+
+  You would then receive a ``200 OK`` along with the updated template.
+
+  For more information about Stormpath's email templates, keep reading!
+
+  **Message Format**
+
+  The ``mimeType`` designates whether the email is sent as plain text (``MimeType.PLAIN_TEXT``), HTML (``MimeType.HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
 .. only:: nodejs
 
@@ -2895,11 +2955,13 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
   .. literalinclude:: code/python/account_management/update_from_email_address_attr.py
     :language: python
 
-For more information about Stormpath's email templates, keep reading!
+.. only:: rest or python or nodejs or csharp or vbnet
 
-**Message Format**
+  For more information about Stormpath's email templates, keep reading!
 
-The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
+  **Message Format**
+
+  The ``mimeType`` designates whether the email is sent as plain text (``text/plain``), HTML (``text/html``), or both (``multipart/alternative``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
 **textBody and htmlBody**
 
@@ -2979,7 +3041,13 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
 .. only:: java
 
-  (java.todo)
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (java.todo)
 
 .. only:: nodejs
 
@@ -3005,7 +3073,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php or python
+.. only:: rest or csharp or vbnet or php or python or java
 
   Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
 
@@ -3044,6 +3112,12 @@ In addition to the location and port of the server, you must also pass valid cre
 
 .. only:: java
 
+.. warning::
+
+  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+.. todo::
+
   (java.todo)
 
 .. only:: nodejs
@@ -3070,7 +3144,7 @@ In addition to the location and port of the server, you must also pass valid cre
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php or python
+.. only:: rest or csharp or vbnet or php or python or java
 
   For the full description of what is inside an SMTP Server resource, please see `the Reference chapter <https://docs.stormpath.com/rest/product-guide/latest/reference.html#ref-custom-smtp>`__. A successful custom server POST would look like this:
 
@@ -3132,6 +3206,12 @@ To delete an SMTP Server, send the following:
 
 .. only:: java
 
+.. warning::
+
+  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+.. todo::
+
   (java.todo)
 
 .. only:: nodejs
@@ -3154,7 +3234,7 @@ To delete an SMTP Server, send the following:
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php or python
+.. only:: rest or csharp or vbnet or php or python or java
 
   .. code-block:: http
 
@@ -3220,6 +3300,12 @@ Working with the Whitelist and Blacklist is exactly the same.
 
 .. only:: java
 
+.. warning::
+
+  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+.. todo::
+
   (java.todo)
 
 .. only:: nodejs
@@ -3244,7 +3330,7 @@ Working with the Whitelist and Blacklist is exactly the same.
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or python
+.. only:: rest or csharp or vbnet or python or java
 
   In both cases, you send an array in this format:
 
@@ -3286,7 +3372,13 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
 .. only:: java
 
-  (java.todo)
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (java.todo)
 
 .. only:: nodejs
 
@@ -3308,7 +3400,7 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or python
+.. only:: rest or csharp or vbnet or python or java
 
   .. code-block:: http
 
@@ -3337,15 +3429,11 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
   .. only:: vbnet
 
-.. only:: java
-
-  (java.todo)
-
 .. only:: nodejs
 
   (node.todo)
 
-.. only:: rest or csharp or vbnet
+.. only:: rest or csharp or vbnet or java
 
   .. code-block:: json
 
@@ -3387,7 +3475,13 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 .. only:: java
 
-  (java.todo)
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    (java.todo)
 
 .. only:: nodejs
 
@@ -3410,7 +3504,7 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet or php or java
 
   .. code-block:: http
 
@@ -3438,15 +3532,11 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
   .. only:: vbnet
 
-.. only:: java
-
-  (java.todo)
-
 .. only:: nodejs
 
   (node.todo)
 
-.. only:: rest or csharp or vbnet or python
+.. only:: rest or csharp or vbnet or python or java
 
   .. code-block:: json
 

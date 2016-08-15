@@ -1,0 +1,1 @@
+application.createAccount(picard);
