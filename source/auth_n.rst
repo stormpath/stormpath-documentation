@@ -123,22 +123,22 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: java
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (java.todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``authenticateAccount`` method on the ``Application`` object.
 
   .. literalinclude:: code/java/authentication/login_attempt_req.java
       :language: java
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do use the ``withResponseOptions`` method on the ``UsernamePasswordRequestBuilder``
 
     .. literalinclude:: code/java/authentication/login_attempt_req_expand_account.java
       :language: java
 
-  If authentication succeeded, you would receive back... (todo)
+  If authentication succeeded, you would receive back an ``AuthenticationResult`` object
 
-  .. literalinclude:: code/java/authentication/login_attempt_resp.java
-      :language: java
+  .. note::
+    It's also possible to specify a specific Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``inAccountStore(AccountStore accountStore)`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
 
 .. only:: nodejs
 
@@ -340,7 +340,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: java
 
-  You can find this mapping by... (java.todo)
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` method:
 
   .. literalinclude:: code/java/authentication/get_asm_req.java
       :language: java
@@ -378,13 +378,6 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
   .. literalinclude:: code/python/authentication/get_asm_req.py
     :language: python
-
-.. only:: java
-
-  This will return the Account Store Mapping:
-
-  .. literalinclude:: code/java/authentication/get_asm_resp.java
-      :language: java
 
 .. only:: nodejs
 
@@ -774,13 +767,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: java
-
-  And you would get the following response:
-
-  .. literalinclude:: code/java/authentication/update_oauth_ttl_resp.java
-      :language: java
-
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp.js
@@ -798,11 +784,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-
-  .. only:: java
-
-    (java.todo)
 
 .. only:: (csharp or vbnet)
 
@@ -910,6 +891,10 @@ So you would send the following request:
   .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
       :language: java
 
+  .. note::
+
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``setAccountStore(AccountStore accountStore)`` method when you are building the request.
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
@@ -1012,11 +997,8 @@ So you would send the following request:
 
   Which would result in this response:
 
-  .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
-      :language: java
-
-  .. todo::
-    (java.todo)
+  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.java
+      :language: javascript
 
 .. only:: nodejs
 
@@ -1207,15 +1189,15 @@ Using Stormpath to Validate Tokens
 
   .. only:: java
 
-    1. (java.todo)
+    1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
     2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-    The user now attempts to access a secured resource by...?
+    The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
       :language: java
 
-    If the access token can be validated, Stormpath will return...?
+    If the access token can be validated, Stormpath will return a ``OAuthBearerRequestAuthenticationResult`` object:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp.java
       :language: java
@@ -1298,6 +1280,8 @@ Validating the Token Locally
           :language: vbnet
 
   .. only:: java
+
+    Validating the token locally is simply a matter of using the ``withLocalValidation()`` method when creating the authenticator:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_local.java
         :language: java
@@ -1547,11 +1531,6 @@ Revoking Access and Refresh Tokens
     .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
       :language: java
 
-    You will get back a ... (java.todo)
-
-    .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
-      :language: java
-
   .. only:: nodejs
 
     To revoke the token, send the following request:
@@ -1640,11 +1619,11 @@ In general, the social login process works as follows:
 
 .. only:: java
 
-    a. If a matching Account is found, (java.todo)
+     a. If a matching Account is found, Stormpath will return the existing Account.
 
-    b. If a matching Account is not found, (todo)
+     b. If a matching Account is not found, Stormpath will create one and return it.
 
- 7. At this point, (todo)
+ 7. At this point, the Account can now be used like any other Account in Stormpath.
 
 .. only:: nodejs
 
@@ -1884,15 +1863,15 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the account was created or if it already existed in the Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. _authn-facebook:
 
@@ -2039,7 +2018,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: nodejs
 
@@ -2196,7 +2175,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
- (java.todo)
+ In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: nodejs
 
@@ -2204,7 +2183,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the account was created or if it already existed in the Stormpath’s GitHub Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _authn-linkedin:
 
@@ -2407,7 +2386,7 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
 
 .. only:: nodejs
 
@@ -2415,7 +2394,7 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the account was created or if it already existed in the Stormpath’s LinkedIn Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _ldap-dir-authn:
 
@@ -2453,8 +2432,9 @@ Step 1: Create an LDAP Directory
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_ldap.java
-    :language: java
+.. warning::
+
+  The ability to create an LDAP directory is not yet available in the Java SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
 
 .. only:: nodejs
 
