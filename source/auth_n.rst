@@ -3776,12 +3776,12 @@ Step 1: Add Your Application in Azure
 
 5. Add two temporary URLs. They can be any valid URL, since we will be changing them later. Then click the **checkmark**.
 
-6. You will now arrive at your application/s main page.
+6. You will now arrive at your Application's main page.
 
 Step 2: Create your Azure Directory in Stormpath
 """"""""""""""""""""""""""""""""""""""""""""""""
 
-Next we must create a Directory in Stormpath that will mirror our ADFS users. Keep your Azure window open, since you will be copying information back and forth between Azure and Stormpath.
+Next we must create a Directory in Stormpath that will mirror our Azure users. Keep your Azure window open, since you will be copying information back and forth between Azure and Stormpath.
 
 2.1 Add the SSO Login/Logout URLs
 +++++++++++++++++++++++++++++++++
