@@ -2499,7 +2499,7 @@ Stormpath can store historical password information in order to allow for restri
 
     For more information on Password Policy for password Strength see :ref:`here <ref-password-strength>`.
 
-This would compel a user to choose a password that was different than any of the previous 10 passwords.
+This would prevent a user from choosing a password that is the same as any of their previous 10 passwords.
 
 .. _verify-account-email:
 
