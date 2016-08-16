@@ -1,5 +1,3 @@
-import com.stormpath.sdk.saml;
-
 SamlPolicy policy = application.getSamlPolicy();
 
 SamlServiceProvider servicePovider = policy.getSamlServiceProvider();

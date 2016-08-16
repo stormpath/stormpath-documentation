@@ -224,7 +224,7 @@ You can map multiple Account Stores to an Application, but only one is required 
 How Login Works with Master Directories
 """""""""""""""""""""""""""""""""""""""
 
-If you require a number of Mirror Directories, then you recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
+If you require a number of Mirror Directories, then it is recommended that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
 
 If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store a link to the Account in the Mirror Directory, for example:
 
@@ -1196,6 +1196,10 @@ Using Stormpath to Validate Tokens
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
       :language: java
+
+    .. note::
+
+      ``JWTException`` is part of the `JJWT <https://github.com/jwtk/jjwt>`_ library. If you don't want to include that as a dependency in your code, you can simply catch ``Exception`` rather than ``JWTException``.
 
     If the access token can be validated, Stormpath will return a ``OAuthBearerRequestAuthenticationResult`` object:
 
