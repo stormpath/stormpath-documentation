@@ -1,0 +1,1 @@
+SamlServiceProviderMetadata metadata = samlProvider.getServiceProviderMetadata();
