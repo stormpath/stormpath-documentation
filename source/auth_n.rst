@@ -4016,7 +4016,7 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: java
 
-  This will return the Provider:
+  This will return an implementation of the ``SamlProvider`` interface:
 
   .. literalinclude:: code/java/authentication/get_directory_provider_resp.java
       :language: java
@@ -4089,24 +4089,26 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
     This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
 
-**Example XML**
+.. only:: rest
 
-.. code-block:: xml
+  **Example XML**
 
-  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:5rHYCSu9IjzKz5pkyId5eR:provider:sp">
-      <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-          <md:KeyDescriptor use="signing">
-              <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-                  <ds:X509Data>
-                      <ds:X509Certificate>MIIC2DCCAcCgAwIBAgIRAMExAMPLE</ds:X509Certificate>
-                  </ds:X509Data>
-              </ds:KeyInfo>
-          </md:KeyDescriptor>
-          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
-      </md:SPSSODescriptor>
-  </md:EntityDescriptor>
+  .. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:5rHYCSu9IjzKz5pkyId5eR:provider:sp">
+        <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <md:KeyDescriptor use="signing">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIC2DCCAcCgAwIBAgIRAMExAMPLE</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+            <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
+        </md:SPSSODescriptor>
+    </md:EntityDescriptor>
 
 .. only:: rest
 
@@ -4126,6 +4128,13 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
         "href":"http://api.stormpath.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
       }
     }
+
+.. only:: java
+
+  This will return an implementation of the ``SamlServiceProviderMetadata`` interface:
+
+  .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_res.java
+      :language: java
 
 .. only:: php
 
@@ -4302,8 +4311,14 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_req.java
-      :language: java
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the Java SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
+  .. todo::
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_req.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4315,7 +4330,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet or php or java
 
   .. code-block:: http
 
@@ -4330,12 +4345,14 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
       "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
     }
 
-.. only:: java
+.. todo::
 
-  This request will return a response containing a JWT like this:
+  .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
-      :language: java
+    This request will return a response containing a JWT like this:
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4389,8 +4406,18 @@ A request including these optional properties looks like this:
       .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras.php
         :language: php
 
+.. only:: java
 
-.. only:: rest or csharp or vbnet or php
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the Java SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
+  .. todo::
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
+        :language: java
+
+.. only:: rest or csharp or vbnet or php or java
 
   .. code-block:: http
 
@@ -4404,11 +4431,6 @@ A request including these optional properties looks like this:
         }
         "state": "IAmAState"
     }
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
-      :language: java
 
 .. only:: nodejs
 
