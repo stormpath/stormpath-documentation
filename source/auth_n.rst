@@ -5014,10 +5014,7 @@ At this point your user is authenticated and able to use your app.
 
   .. only:: java
 
-    You will then get back the newly-created API Key:
-
-    .. literalinclude:: code/java/authentication/create_apikey_resp.java
-        :language: java
+    The returned ``ApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
 
   .. only:: nodejs
 
