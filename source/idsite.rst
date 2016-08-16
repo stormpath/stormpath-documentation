@@ -303,7 +303,18 @@ A typical set of steps in your application are as follows:
 
 .. only:: java
 
-  (java.todo)
+    This is typically done by creating a controller or action that the login button redirects to. Inside this controller, the ID Site request can be created using the SDK:
+
+    .. literalinclude:: code/java/idsite/build_idsite_url.java
+      :language: java
+
+    The ``setCallbackUri`` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+    .. note::
+
+      To view all of the options available for building ID Site URLs, see the `IdSiteUrlBuilder API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/idsite/IdSiteUrlBuilder.html>`_.
+
+    Once the URL is built, redirect the user in order to send them to ID Site.
 
 .. only:: nodejs
 
@@ -507,7 +518,17 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: java
 
-  (java.todo)
+  You'll need to create a controller or action that handles the Callback URI. Then, you can use the SDK to consume this assertion:
+
+  .. literalinclude:: code/java/idsite/consume_assertion.java
+    :language: csharp
+
+  The SDK will throw an error if the ID Site assertion is expired or invalid. If the assertion is valid, you'll get an ``AccountResult`` instance with the following properties:
+
+  * ``state`` - An arbitrary string set by the ``setState()`` method, if any.
+  * ``newAccount`` - ``true`` if the account was newly registered on ID Site, ``false`` if an existing account signed in.
+
+  You can call the ``getAccount()`` method to obtain the Stormpath Account itself.
 
 .. only:: nodejs
 
@@ -680,11 +701,6 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
       "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
     }
 
-.. only:: java
-
-  .. literalinclude:: code/java/idsite/jwt_for_oauth_resp.java
-      :language: java
-
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/idsite/jwt_for_oauth_resp.js
@@ -727,6 +743,8 @@ ID Site will keep a configurable session for authenticated users. When a user is
 
 .. only:: java
 
+  To log the user out and remove the session that ID Site creates, you must build another ID Site redirect URL. In this case, use the ``forLogout`` method to create a logout request:
+
   .. literalinclude:: code/java/idsite/logout_from_idsite_req.java
       :language: java
 
@@ -764,11 +782,6 @@ Once the user is logged out of ID Site, they are automatically redirected to the
 
     .. literalinclude:: code/vbnet/idsite/logout_from_idsite_resp.vb
         :language: vbnet
-
-.. only:: java
-
-  .. literalinclude:: code/java/idsite/logout_from_idsite_resp.java
-      :language: java
 
 .. only:: nodejs
 
@@ -849,7 +862,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: java
 
-  (java.todo)
+  There are a few methods on ``IdSiteUrlBuilder`` that you can use to implement your particular multi-tenancy strategy:
 
 .. only:: nodejs
 
@@ -875,7 +888,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: java
 
-  (java.todo)
+  ``setOrganizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
 .. only:: nodejs
 
@@ -933,7 +946,23 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: java
 
-  (java.todo)
+  ``setShowOrganizationField``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
+
+  .. figure:: images/idsite/id_site_sof_empty.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof toggled on
+
+    *ID Site with Organization field on and prepopulated*
+
+  If combined with ``setOrganizationNameKey``, this will pre-populate that field with the Organization's name.
+
+  .. figure:: images/idsite/id_site_sof_prepop.png
+    :align: center
+    :scale: 100%
+    :alt: ID Site with sof and onk toggled on
+
+    *ID Site with Organization field on and prepopulated*
 
 .. only:: nodejs
 
@@ -1011,7 +1040,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: java
 
-  (java.todo)
+  ``setUseSubdomain``: If combined with ``setOrganizationNameKey``, will redirect the user to an ID Site with the Organization's ``nameKey`` as a sub-domain in its URL.
 
 .. only:: nodejs
 
