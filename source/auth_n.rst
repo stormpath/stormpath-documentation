@@ -997,7 +997,7 @@ So you would send the following request:
 
   Which would result in this response:
 
-  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.java
+  .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
       :language: javascript
 
 .. only:: nodejs
