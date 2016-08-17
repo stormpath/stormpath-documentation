@@ -39,7 +39,7 @@ The **Directory** resource is a top-level container for Account and Group resour
 
 .. only:: java
 
-  In the Stormpath Java SDK, the Directory resource is represented by the ``Directory`` interface. For more information, see the `javadoc for Directory <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__.
+  In the Stormpath Java SDK, the Directory resource is represented by the ``Directory`` interface. For more information, see the `Javadoc for Directory <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__.
 
 .. only:: nodejs
 
@@ -172,7 +172,7 @@ How to Make a Cloud Directory
 
   .. note::
 
-    See the `javadocs <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__ for a full list of available properties and methods on the ``Directory`` interface (or any other Stormpath SDK type).
+    See the `Javadocs <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__ for a full list of available properties and methods on the ``Directory`` interface (or any other Stormpath SDK type).
 
 .. only:: nodejs
 
@@ -434,7 +434,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: java
 
-  In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
+  In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `Javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
 
 .. only:: nodejs
 
@@ -678,7 +678,7 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
   .. note::
 
-    By default, new Groups created will have a ``Status`` of ``enabled``. If you'd like to create an initially-disabled Group, use this syntax:
+    By default, newly created Groups will have a ``Status`` of ``enabled``. If you'd like to create an initially-disabled Group, use this syntax:
 
     .. only:: java
 
@@ -725,7 +725,7 @@ The Account resource is a unique identity within your application. It is usually
 
 .. only:: java
 
-  In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
+  In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `Javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
 
 .. only:: nodejs
 
@@ -1255,7 +1255,7 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``save()`` on the parent resource to send the updates to the Stormpath API.
 
-  To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method. For more information about the ``CustomData`` interface, see the `javadocs API documentation <http://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/CustomData.html>`_.
+  To retrieve the Account's Custom Data after it's been saved, use the ``getCustomData()`` method. For more information about the ``CustomData`` interface, see the `Javadocs API documentation <http://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/CustomData.html>`_.
 
 .. only:: nodejs
 
@@ -1364,6 +1364,7 @@ The Account resource's **searchable attributes** are:
 .. only:: java
 
   With the Stormpath Java SDK, you can easily perform searches either using a fluent interface of search methods or by passing in a ``Map`` of query parameters.
+
   Search expressions begin on resources that contain collections.
 
   Any resource type that exposes a ``getAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
@@ -1459,7 +1460,7 @@ A Filter search will locate the specified string in any searchable attribute of 
 
   .. note::
 
-    Matching is case-insensitive, so ``queryParams.put("q", "Luc")`` and ``queryParams.put("givenName", "luc")`` will all return the same results.
+    Matching is case-insensitive, so ``queryParams.put("q", "Luc")`` and ``queryParams.put("givenName", "luc")`` will both return the same results.
 
 .. only:: nodejs
 
@@ -1689,9 +1690,9 @@ Datetime Search is used when you want to search for Accounts that have a certain
   .. literalinclude:: code/java/account_management/search_dir_accounts_for_create_date_req.java
     :language: java
 
-  Using the ``in`` method above, we are searching for all accounts modified between midnight, December 1, 2015 and the following 24 hours.
+  Using the ``in`` method above, we are searching for all Accounts modified between midnight, December 1, 2015 and the following 24 hours.
 
-  Other date searching methods include ``equals``, ``gt``, ``gte``, ``lt``, and ``lte``
+  Other date searching methods include ``equals``, ``gt``, ``gte``, ``lt``, and ``lte``.
 
   **String Match**
 
