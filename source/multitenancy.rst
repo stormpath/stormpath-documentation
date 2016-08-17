@@ -611,7 +611,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   - ``ListIndex``: Represents the priority in which this Account Store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``ListIndex`` of 0 will be consulted first, followed by the Account Store at index 1, etc. Setting a negative value will default the value to 0, placing it first in the list. An index larger than the current list size will place the mapping at the end of the list and then set the value to (list size – 1).
 
-  - ``IsDefaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organizationn will be automatically saved to this mapping’s Directory or Group.
+  - ``IsDefaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organization will be automatically saved to this mapping’s Directory or Group.
 
   - ``IsDefaultGroupStore``: A ``true`` value indicates that new Groups created in the Organization will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the Account Store is a Directory.
 
@@ -633,7 +633,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   - ``listIndex``: Represents the priority in which this Account Store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``ListIndex`` of 0 will be consulted first, followed by the Account Store at index 1, etc. Setting a negative value will default the value to 0, placing it first in the list. An index larger than the current list size will place the mapping at the end of the list and then set the value to (list size – 1).
 
-  - ``defaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organizationn will be automatically saved to this mapping’s Directory or Group.
+  - ``defaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organization will be automatically saved to this mapping’s Directory or Group.
 
   - ``defaultGroupStore``: A ``true`` value indicates that new Groups created in the Organization will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the Account Store is a Directory.
 

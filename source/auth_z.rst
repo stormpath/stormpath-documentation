@@ -320,7 +320,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
 .. only:: java
 
-  This will return the Account resource along with the customData
+  This will return the Account resource along with the customData.
 
 .. only:: php
 

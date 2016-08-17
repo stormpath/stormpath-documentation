@@ -518,7 +518,7 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
 
 .. only:: java
 
-  You'll need to create a controller or action that handles the Callback URI. Then, you can use the SDK to consume this assertion:
+  You'll need to create a controller or action that handles the Callback URI. Then you can use the SDK to consume this assertion:
 
   .. literalinclude:: code/java/idsite/consume_assertion.java
     :language: csharp
@@ -526,7 +526,7 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
   The SDK will throw an error if the ID Site assertion is expired or invalid. If the assertion is valid, you'll get an ``AccountResult`` instance with the following properties:
 
   * ``state`` - An arbitrary string set by the ``setState()`` method, if any.
-  * ``newAccount`` - ``true`` if the account was newly registered on ID Site, ``false`` if an existing account signed in.
+  * ``newAccount`` - ``true`` if the Account was newly registered on ID Site, ``false`` if an existing Account signed in.
 
   You can call the ``getAccount()`` method to obtain the Stormpath Account itself.
 

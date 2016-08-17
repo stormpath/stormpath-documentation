@@ -305,10 +305,6 @@
 
       Any SDK-specific configuration options here. If not, delete your section below:
 
-      .. only:: java
-
-        (java.todo)
-
   .. _config_sources:
 
   4. Configuration Sources
