@@ -992,17 +992,17 @@ All of this is also true for adding Groups, except in that case you would use th
 3.2.2. Importing Accounts
 -------------------------
 
-Stormpath also makes it very easy to transfer your existing user directory into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
+Stormpath also makes it very easy to transfer your existing users into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
 
-1. **Passwords in Plaintext:** If you stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
-2. **Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are detailed :ref:`below <importing-mcf>`.
-3. **Passwords With Non-MCF Hash:** If you hashed passwords in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to use their passwords to login.
+1. **Plaintext Passwords:** If your stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
+2. **Supported Password Hashes:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly using Modular Crypt Format (MCF). Supported formats and instructions are detailed :ref:`below <importing-mcf>`.
+3. **Unsupported Password Hashes:** If your password hashes are in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to to log in.
 
 .. note::
 
   To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
-Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What you recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
+Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script can use our API to upload the users to Stormpath.
 
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1050,25 +1050,15 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. _importing-mcf:
 
-Importing Accounts with MCF Hash Passwords
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Importing Accounts with Supported Password Hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string.
-This works as follows:
+You can import existing hashed passwords *only if* the hashing format is one that Stormpath supports:
 
-1. Create the Account specifying the password hash instead of a plain text password. Stormpath will use the password hash to authenticate the Account’s login attempt.
+- **bcrypt**: Stormpath supports importing bcrypt hashes directly. These password hashes have the identifier prefix ``$2a$``, ``$2b$``, or ``$2x$``.
+- **MD5 or SHA**: Stormpath supports hahes generated with MD5 and SHA. You must create an MCF string with the prefix ``$stormpath2$`` as detailed :ref:`below <stormpath2-hash>`.
 
-2. If the login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
-
-Supported Hashing Algorithms
-""""""""""""""""""""""""""""
-
-Stormpath only supports password hashes that use the following algorithms:
-
-- **bcrypt**: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
-- **stormpath2**: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
-
-Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the specified hash.
+In both cases, once you have an MCF-compatible string that represents the password hash, you can create an Account in Stormpath.
 
 .. only:: rest
 
@@ -1109,12 +1099,14 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
   (python.todo) It'd be good to add some explanatory text like we have for csharp.
 
+Once the Account is created, Stormpath will use the password hash to authenticate the Account’s **first** login attempt. If the first login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
+
 .. _stormpath2-hash:
 
-The stormpath2 Hashing Algorithm
-++++++++++++++++++++++++++++++++
+The stormpath2 Format
++++++++++++++++++++++
 
-stormpath2 has a format which allows you to derive an MCF hash that Stormpath can read to understand how to recreate the password hash to use during a login attempt. stormpath2 hash format is formatted as::
+If your passwords are hashed with MD5 or SHA, you can import them by creating a ``$``-delimited MCF string that describes the hashing algorithm and parameters. The string should be prefixed with the token ``$stormpath2`` and must follow this format::
 
   $stormpath2$ALGORITHM_NAME$ITERATION_COUNT$BASE64_SALT$BASE64_PASSWORD_HASH
 
@@ -1136,17 +1128,21 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 
   * - ``BASE64_SALT``
     - The salt byte array used to salt the first hash iteration.
-    - String (Base64). If your password hashes do you have salt, you can leave it out entirely.
+    - String (Base64). If your password hashes do not have salt, you can omit it entirely.
 
   * - ``BASE64_PASSWORD_HASH``
     - The computed hash byte array.
     - String (Base64)
 
 
-Importing Accounts with Non-MCF Hash Passwords
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Importing Accounts with Unsupported Password Hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
+If your passwords are hashed in a format that Stormpath does not support, you're not out of luck. You can still import your users into Stormpath, with an additional step:
+
+1. Create the Account and set the password to a large randomly-generated string.
+2. Prompt the user to complete the password reset workflow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
+
 
 .. _add-user-customdata:
 
