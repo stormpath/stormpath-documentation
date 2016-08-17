@@ -130,7 +130,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do use the ``withResponseOptions`` method on the ``UsernamePasswordRequestBuilder``
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do so, use the ``withResponseOptions`` method on the ``UsernamePasswordRequestBuilder``
 
     .. literalinclude:: code/java/authentication/login_attempt_req_expand_account.java
       :language: java
@@ -138,7 +138,8 @@ After an Account resource has been created, you can authenticate it given an inp
   If authentication succeeded, you would receive back an ``AuthenticationResult`` object
 
   .. note::
-    It's also possible to specify a specific Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``inAccountStore(AccountStore accountStore)`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
+
+    It's also possible to specify an Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``inAccountStore(AccountStore accountStore)`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
 
 .. only:: nodejs
 
@@ -1867,15 +1868,15 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: java
 
-  In order to know if the account was created or if it already existed in the Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. _authn-facebook:
 
@@ -2022,15 +2023,15 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
-  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Facebook Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. _authn-github:
 
@@ -2179,15 +2180,15 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
- In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
+ In order to know if the Account was created or if it already existed in Stormpath's GitHub Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s GitHub Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s GitHub Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _authn-linkedin:
 
@@ -2390,15 +2391,15 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: java
 
-  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's LinkedIn Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s LinkedIn Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s LinkedIn Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _ldap-dir-authn:
 
