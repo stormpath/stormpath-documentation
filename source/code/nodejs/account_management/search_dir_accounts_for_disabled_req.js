@@ -1,8 +1,8 @@
-var accountOptions = {
+var query = {
   status: 'DISABLED'
 };
 
-directory.getAccounts(accountOptions, function (err, result) {
+directory.getAccounts(query, function (err, result) {
   if (err) {
     return console.error(err);
   }

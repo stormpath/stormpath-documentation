@@ -1,6 +1,6 @@
-account.password = 'some_New+Value1234';
+picard.password = 'some_New+Value1234';
 
-account.save(function (err) {
+picard.save(function (err) {
   if (err) {
     return console.error(err);
   }

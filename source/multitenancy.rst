@@ -359,6 +359,10 @@ You can create an Organization in Stormpath by sending the following request:
   .. literalinclude:: code/java/multitenancy/create_org_req.java
       :language: java
 
+  .. note::
+
+    A new Organization resource will have ``null`` Default Account and Group stores. That means adding new Groups and Accounts to the Organization will fail until a default Account Store is added.
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/multitenancy/create_org_req.js
@@ -412,13 +416,6 @@ You can create an Organization in Stormpath by sending the following request:
     }
 
   Notice here that both the Default Account Store and Group Store are ``null`` which means that Groups and Accounts added to the Organization (e.g. A POST to ``/v1/organizations/$ORGANIZATION_ID/groups``) would fail until a default Account Store is added.
-
-.. only:: java
-
-  Which would return the following:
-
-  .. literalinclude:: code/java/multitenancy/create_org_resp.java
-      :language: java
 
 .. only:: nodejs
 
@@ -594,13 +591,6 @@ In order to be able to add Groups and Accounts to the Organization in the way me
       }
     }
 
-.. only:: java
-
-  Which would result in the following response:
-
-  .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_resp.java
-      :language: java
-
 .. only:: nodejs
 
   Which would result in the following response:
@@ -621,7 +611,7 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
   - ``ListIndex``: Represents the priority in which this Account Store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``ListIndex`` of 0 will be consulted first, followed by the Account Store at index 1, etc. Setting a negative value will default the value to 0, placing it first in the list. An index larger than the current list size will place the mapping at the end of the list and then set the value to (list size – 1).
 
-  - ``IsDefaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organizationn will be automatically saved to this mapping’s Directory or Group.
+  - ``IsDefaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organization will be automatically saved to this mapping’s Directory or Group.
 
   - ``IsDefaultGroupStore``: A ``true`` value indicates that new Groups created in the Organization will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the Account Store is a Directory.
 
@@ -636,6 +626,21 @@ In order to be able to add Groups and Accounts to the Organization in the way me
 
     .. literalinclude:: code/vbnet/multitenancy/create_oasm_full_req.vb
         :language: vbnet
+
+.. only:: java
+
+  A mapping between an Organization and an Account Store is represented by an ``OrganizationAccountStoreMapping`` object. There are a few optional properties that can be set:
+
+  - ``listIndex``: Represents the priority in which this Account Store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``ListIndex`` of 0 will be consulted first, followed by the Account Store at index 1, etc. Setting a negative value will default the value to 0, placing it first in the list. An index larger than the current list size will place the mapping at the end of the list and then set the value to (list size – 1).
+
+  - ``defaultAccountStore``: A ``true`` value indicates that new Accounts created in the Organization will be automatically saved to this mapping’s Directory or Group.
+
+  - ``defaultGroupStore``: A ``true`` value indicates that new Groups created in the Organization will be automatically saved to this mapping’s Directory. Note that a ``true`` value will only be valid here if the Account Store is a Directory.
+
+  This example sets all the properties of the Organization Account Store Mapping at creation time:
+
+  .. literalinclude:: code/java/multitenancy/create_oasm_full_req.java
+      :language: java
 
 Our Organization now has an associated Directory which can be used as an Account Store to add new Accounts and Groups. To enable login for the Accounts in this Organization, we must now map the Organization to an Application.
 
