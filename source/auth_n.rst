@@ -123,22 +123,23 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: java
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would... (java.todo)
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``authenticateAccount`` method on the ``Application`` object.
 
   .. literalinclude:: code/java/authentication/login_attempt_req.java
       :language: java
 
   .. note::
 
-    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do this... (todo)
+    Instead of just receiving an authentication result, it is possible to receive the full Account object. To do so, use the ``withResponseOptions`` method on the ``UsernamePasswordRequestBuilder``
 
     .. literalinclude:: code/java/authentication/login_attempt_req_expand_account.java
       :language: java
 
-  If authentication succeeded, you would receive back... (todo)
+  If authentication succeeded, you would receive back an ``AuthenticationResult`` object
 
-  .. literalinclude:: code/java/authentication/login_attempt_resp.java
-      :language: java
+  .. note::
+
+    It's also possible to specify an Account Store to authenticate against, instead of relying on the default login flow (see below). To do this, use the ``inAccountStore(AccountStore accountStore)`` method on the ``UsernamePasswordRequestBuilder`` syntax shown above.
 
 .. only:: nodejs
 
@@ -224,7 +225,7 @@ You can map multiple Account Stores to an Application, but only one is required 
 How Login Works with Master Directories
 """""""""""""""""""""""""""""""""""""""
 
-If you require a number of Mirror Directories, then you recommend that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
+If you require a number of Mirror Directories, then it is recommended that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
 
 If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store a link to the Account in the Mirror Directory, for example:
 
@@ -340,7 +341,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: java
 
-  You can find this mapping by... (java.todo)
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` method:
 
   .. literalinclude:: code/java/authentication/get_asm_req.java
       :language: java
@@ -378,13 +379,6 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
   .. literalinclude:: code/python/authentication/get_asm_req.py
     :language: python
-
-.. only:: java
-
-  This will return the Account Store Mapping:
-
-  .. literalinclude:: code/java/authentication/get_asm_resp.java
-      :language: java
 
 .. only:: nodejs
 
@@ -774,13 +768,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: java
-
-  And you would get the following response:
-
-  .. literalinclude:: code/java/authentication/update_oauth_ttl_resp.java
-      :language: java
-
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp.js
@@ -798,11 +785,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
   .. note::
 
     Refresh Tokens are optional. If you would like to disable the Refresh Token from being generated, set a duration value of 0 (e.g. ``PT0M``).
-
-
-  .. only:: java
-
-    (java.todo)
 
 .. only:: (csharp or vbnet)
 
@@ -910,6 +892,10 @@ So you would send the following request:
   .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
       :language: java
 
+  .. note::
+
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``setAccountStore(AccountStore accountStore)`` method when you are building the request.
+
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
@@ -1013,10 +999,7 @@ So you would send the following request:
   Which would result in this response:
 
   .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
-      :language: java
-
-  .. todo::
-    (java.todo)
+      :language: javascript
 
 .. only:: nodejs
 
@@ -1207,15 +1190,19 @@ Using Stormpath to Validate Tokens
 
   .. only:: java
 
-    1. (java.todo)
+    1. Created and sent an OAuth request to Stormpath (see :ref:`generate-oauth-token`).
     2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
-    The user now attempts to access a secured resource by...?
+    The user now attempts to access a secured resource and provides their Access Token (as in the example of passing a Bearer header to a protected web controller). To validate the Access Token, create and send a validation request to Stormpath:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_sp_req.java
       :language: java
 
-    If the access token can be validated, Stormpath will return...?
+    .. note::
+
+      ``JWTException`` is part of the `JJWT <https://github.com/jwtk/jjwt>`_ library. If you don't want to include that as a dependency in your code, you can simply catch ``Exception`` rather than ``JWTException``.
+
+    If the access token can be validated, Stormpath will return a ``OAuthBearerRequestAuthenticationResult`` object:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_sp_resp.java
       :language: java
@@ -1298,6 +1285,8 @@ Validating the Token Locally
           :language: vbnet
 
   .. only:: java
+
+    Validating the token locally is simply a matter of using the ``withLocalValidation()`` method when creating the authenticator:
 
     .. literalinclude:: code/java/authentication/validate_oauth_token_local.java
         :language: java
@@ -1547,11 +1536,6 @@ Revoking Access and Refresh Tokens
     .. literalinclude:: code/java/authentication/delete_user_access_tokens_req.java
       :language: java
 
-    You will get back a ... (java.todo)
-
-    .. literalinclude:: code/java/authentication/delete_user_access_tokens_resp.java
-      :language: java
-
   .. only:: nodejs
 
     To revoke the token, send the following request:
@@ -1640,11 +1624,11 @@ In general, the social login process works as follows:
 
 .. only:: java
 
-    a. If a matching Account is found, (java.todo)
+     a. If a matching Account is found, Stormpath will return the existing Account.
 
-    b. If a matching Account is not found, (todo)
+     b. If a matching Account is not found, Stormpath will create one and return it.
 
- 7. At this point, (todo)
+ 7. At this point, the Account can now be used like any other Account in Stormpath.
 
 .. only:: nodejs
 
@@ -1884,15 +1868,15 @@ Either way, Stormpath will use the code or access token provided to retrieve inf
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. _authn-facebook:
 
@@ -2039,15 +2023,15 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the Account was created or if it already existed in Stormpath's Facebook Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's Facebook Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath’s Facebook Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. _authn-github:
 
@@ -2196,15 +2180,15 @@ Stormpath will use the Access Token provided to retrieve information about your 
 
 .. only:: java
 
- (java.todo)
+ In order to know if the Account was created or if it already existed in Stormpath's GitHub Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's GitHub Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s GitHub Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _authn-linkedin:
 
@@ -2407,15 +2391,15 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
 
 .. only:: java
 
-  (java.todo)
+  In order to know if the Account was created or if it already existed in Stormpath's LinkedIn Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: nodejs
 
-  In order to know if the account was created or if it already existed in the Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in Stormpath's LinkedIn Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly-created Account, or ``false`` if it already existed.
 
 .. only:: php
 
-  In order to know if the account was created or if it already existed in the Stormpath’s Facebook Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
+  In order to know if the Account was created or if it already existed in the Stormpath’s LinkedIn Directory you can use the isNewAccount(); method on the result object. It will return true if it is a newly created account; false otherwise.
 
 .. _ldap-dir-authn:
 
@@ -2453,8 +2437,9 @@ Step 1: Create an LDAP Directory
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_directory_ldap.java
-    :language: java
+.. warning::
+
+  The ability to create an LDAP directory is not yet available in the Java SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
 
 .. only:: nodejs
 
@@ -4036,7 +4021,7 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: java
 
-  This will return the Provider:
+  This will return an implementation of the ``SamlProvider`` interface:
 
   .. literalinclude:: code/java/authentication/get_directory_provider_resp.java
       :language: java
@@ -4109,24 +4094,26 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
     This will return XML by default, but you can also specify ``application/json`` if you'd like to receive JSON instead.
 
-**Example XML**
+.. only:: rest
 
-.. code-block:: xml
+  **Example XML**
 
-  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:5rHYCSu9IjzKz5pkyId5eR:provider:sp">
-      <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-          <md:KeyDescriptor use="signing">
-              <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-                  <ds:X509Data>
-                      <ds:X509Certificate>MIIC2DCCAcCgAwIBAgIRAMExAMPLE</ds:X509Certificate>
-                  </ds:X509Data>
-              </ds:KeyInfo>
-          </md:KeyDescriptor>
-          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
-          <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
-      </md:SPSSODescriptor>
-  </md:EntityDescriptor>
+  .. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="urn:stormpath:directory:5rHYCSu9IjzKz5pkyId5eR:provider:sp">
+        <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <md:KeyDescriptor use="signing">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIC2DCCAcCgAwIBAgIRAMExAMPLE</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+            <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://api.stormpath.com/v1/directories/5rHYCSu9IjzKz5pEXample/saml/sso/post" index="0"/>
+        </md:SPSSODescriptor>
+    </md:EntityDescriptor>
 
 .. only:: rest
 
@@ -4146,6 +4133,13 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
         "href":"http://api.stormpath.com/v1/x509certificates/1712LVrz0fNSMk2y20EzfL"
       }
     }
+
+.. only:: java
+
+  This will return an implementation of the ``SamlServiceProviderMetadata`` interface:
+
+  .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_res.java
+      :language: java
 
 .. only:: php
 
@@ -4322,8 +4316,14 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_req.java
-      :language: java
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the Java SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
+  .. todo::
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_req.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4335,7 +4335,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
 
-.. only:: rest or csharp or vbnet or php
+.. only:: rest or csharp or vbnet or php or java
 
   .. code-block:: http
 
@@ -4350,12 +4350,14 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
       "defaultRelayState": "eyJ0aWQiOiIxZ0JUbmNXc3AyT2JRR2dEbjlSOTFSIiwiYWxnIjoiSFMyNTYifQ.eyJzcFVpZCI6IjZ2b0F5YTFCdnJOZUZPQW9neGJ4T2UiLCJqdGkiOiIxdjdjT1l1SE1kQzA0Z2Vucm1wU2lZIn0.WvfWRxTfjRoPxA803HyOR380u2dWpdtQiO0I2kislFY"
     }
 
-.. only:: java
+.. todo::
 
-  This request will return a response containing a JWT like this:
+  .. only:: java
 
-  .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
-      :language: java
+    This request will return a response containing a JWT like this:
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_resp.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4409,8 +4411,18 @@ A request including these optional properties looks like this:
       .. literalinclude:: code/php/authentication/get_default_relay_state_with_extras.php
         :language: php
 
+.. only:: java
 
-.. only:: rest or csharp or vbnet or php
+  .. warning::
+
+    The ability to get the default relay state is not yet available in the Java SDK. Please use the Stormpath Admin Console, or use the the REST API instructions below.
+
+  .. todo::
+
+    .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
+        :language: java
+
+.. only:: rest or csharp or vbnet or php or java
 
   .. code-block:: http
 
@@ -4424,11 +4436,6 @@ A request including these optional properties looks like this:
         }
         "state": "IAmAState"
     }
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/get_default_relay_state_with_extras.java
-      :language: java
 
 .. only:: nodejs
 
@@ -5012,10 +5019,7 @@ At this point your user is authenticated and able to use your app.
 
   .. only:: java
 
-    You will then get back the newly-created API Key:
-
-    .. literalinclude:: code/java/authentication/create_apikey_resp.java
-        :language: java
+    The returned ``ApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
 
   .. only:: nodejs
 

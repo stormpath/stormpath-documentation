@@ -200,8 +200,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 .. only:: java
 
   These instructions assume that you have
-  `java <http://java.com>`_ and `maven <https://maven.apache.org/index.html>`_ installed on your system and that you have
-  already completed the steps above, and now have:
+  `Java <http://java.com>`_ and `Maven <https://maven.apache.org/index.html>`_ installed on your system and that you have already completed the steps above, and now have:
 
 - A Stormpath account
 - A Stormpath API Key generated and downloaded onto your system

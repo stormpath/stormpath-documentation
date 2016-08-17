@@ -1,4 +1,4 @@
-var accountData = {
+var picard = {
   username: 'jlpicard',
   email: 'capt@enterprise.com',
   givenName: 'Jean-Luc',
@@ -6,7 +6,7 @@ var accountData = {
   password: 'uGhd%a8Kl!'
 };
 
-directory.createAccount(accountData, function (err, account) {
+directory.createAccount(picard, function (err, account) {
   if (err) {
     return console.error(err);
   }

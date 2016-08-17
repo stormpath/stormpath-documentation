@@ -108,6 +108,14 @@
 
       \Stormpath\Client::$cacheManagerOptions = $cacheManagerOptions;
 
+  .. only:: java
+
+    Hazelcast
+    '''''''''
+
+    .. literalinclude:: code/java/configuration/hazelcast_cache.java
+       :language: java
+
   Memcached
   '''''''''
 
@@ -119,11 +127,47 @@
 
   .. only:: java
 
-    (java.todo)
+    .. note::
+
+      The Java SDK does not currently have a plugin that supports Memcached. If you need this functionality, please reach out to us at support@stormpath.com.
 
   .. only:: nodejs
 
-    (node.todo)
+    For a simple use-case, you can allow the Node SDK to create a Memcached Client for you.  This assumes that a Memcached server is running locally on the default port:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached'
+        }
+      });
+
+    If the Memcached server is running on a different port, you can pass that configuration information to the Memcached client that is created for you:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached',
+          connection: 'localhost:11211'
+        }
+      });
+
+    Otherwise, if you have a more complex client configuration, we suggest you create your own client instance and pass that to this library:
+
+    .. code-block:: javascript
+
+      var Memcached = require('memcached');
+
+      var memcachedClient = new Memcached('localhost:11211');
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'memcached',
+          client: memcachedClient
+        }
+      });
 
   .. only:: php
 
@@ -164,11 +208,51 @@
 
   .. only:: java
 
-    (java.todo)
+    .. note::
+
+      The Java SDK does not currently have a plugin that supports Memcached. If you need this functionality please, reach out to us at support@stormpath.com.
 
   .. only:: nodejs
 
-    (node.todo)
+    For a simple use-case, you can allow the Node SDK to create a Redis Client for you.  This assumes that a Redis server is running locally on the default port:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis'
+        }
+      });
+
+    If the Redis server is running on a different port, you can pass that configuration information to the Redis client that is created for you:
+
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis',
+          connection: {
+            host: 'localhost',
+            port: 7777
+          }
+        }
+      });
+
+
+    Otherwise, if you have a more complex client configuration, we suggest you create your own client instance and pass that to this library:
+
+    .. code-block:: javascript
+
+      var redis = require('redis');
+
+      var redisClient = redis.createClient();
+
+      var client = new stormpath.Client({
+        cacheOptions: {
+          store: 'redis',
+          client: redisClient
+        }
+      });
 
   .. only:: php
 
@@ -220,14 +304,6 @@
     .. todo::
 
       Any SDK-specific configuration options here. If not, delete your section below:
-
-      .. only:: java
-
-        (java.todo)
-
-      .. only:: nodejs
-
-        (node.todo)
 
   .. _config_sources:
 
@@ -393,11 +469,19 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/api_credentials.java
+      :language: java
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        apiKey : {
+          id : 'your_id_here',
+          secret : 'your_secret_here'
+        }
+      });
 
   .. only:: php
 
@@ -470,7 +554,7 @@
       client:
         apiKey:
           id: "your_id_here"
-          secret: "your_id_here"
+          secret: "your_secret_here"
 
     JSON File
     ^^^^^^^^^
@@ -481,7 +565,7 @@
         "client": {
           "apiKey": {
             "id": "your_id_here",
-            "secret": "your_id_here"
+            "secret": "your_secret_here"
           }
         }
       }
@@ -501,11 +585,19 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/api_credentials.java
+      :language: java
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        apiKey : {
+          id : 'your_id_here',
+          secret : 'your_secret_here'
+        }
+      });
 
   .. only:: php
 
@@ -595,11 +687,16 @@
 
   .. only:: java
 
-    (java.todo)
+    .. literalinclude:: code/java/configuration/base_url.java
+      :language: java
 
   .. only:: nodejs
 
-    (node.todo)
+    .. code-block:: javascript
+
+      var client = new stormpath.Client({
+        baseUrl: 'https://enterprise.stormpath.io/v1'
+      });
 
   .. only:: php
 
@@ -629,7 +726,13 @@
       Because of the implementation of PSR-6 in the SDK, you are able to use any caching that follows the standard that can be found
       on the `PHP Cache Documentation <http://php-cache.readthedocs.io/en/latest/>`__.
 
-  .. only:: not php
+  .. only:: nodejs
+
+    At the moment the Node SDK only supports cache configuration through static
+    code configuration, some examples are below.  For a full reference of the
+    available options please see `Stormpath Node SDK JsDoc: CacheOptions <https://docs.stormpath.com/nodejs/jsdoc/global.html#CacheOptions>`_
+
+  .. only:: not (php or nodejs)
 
     Configuration keys:
 
@@ -735,118 +838,128 @@
         }
       }
 
+  .. only:: not nodejs
 
-  Inline Code
-  ^^^^^^^^^^^
+    Inline Code
+    ^^^^^^^^^^^
 
-  To disable caching entirely:
+    To disable caching entirely:
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/configuration/disable_caching.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/configuration/disable_caching.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/configuration/disable_caching.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/configuration/disable_caching.vb
+        :language: vbnet
 
-  .. only:: java
+    .. only:: java
 
-    (java.todo)
+      .. literalinclude:: code/java/configuration/disable_caching.java
+        :language: java
 
-  .. only:: nodejs
+    .. only:: nodejs
 
-    (node.todo)
+      (node.todo)
 
-  .. only:: php
+    .. only:: php
 
-    .. code-block:: php
+      .. code-block:: php
 
-      $builder = new \Stormpath\ClientBuilder();
-      $client = $builder->setCacheManager('Null') //setting this will ignore the 'cachemanager' in options array
-          ->build();
+        $builder = new \Stormpath\ClientBuilder();
+        $client = $builder->setCacheManager('Null') //setting this will ignore the 'cachemanager' in options array
+            ->build();
 
-  .. only:: python
+    .. only:: python
 
-    .. literalinclude:: code/python/configuration/disable_caching.py
-      :language: python
+      .. literalinclude:: code/python/configuration/disable_caching.py
+        :language: python
 
-  Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
+    Or, to change the default TTL and TTI for cached resources and override the defaults for specific resources:
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/configuration/custom_cache_config.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/configuration/custom_cache_config.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/configuration/custom_cache_config.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/configuration/custom_cache_config.vb
+        :language: vbnet
 
-  .. only:: java
+    .. only:: java
 
-    (java.todo)
+      .. literalinclude:: code/java/configuration/custom_cache_config.java
+        :language: java
 
-  .. only:: nodejs
+    .. only:: nodejs
 
-    (node.todo)
+      (node.todo)
 
-  .. only:: php
+    .. only:: php
 
-    .. literalinclude:: code/php/configuration/custom_cache_config.php
-      :language: php
+      .. literalinclude:: code/php/configuration/custom_cache_config.php
+        :language: php
 
-  .. only:: python
+    .. only:: python
 
-    .. literalinclude:: code/python/configuration/custom_cache_config.py
-      :language: python
+      .. literalinclude:: code/python/configuration/custom_cache_config.py
+        :language: python
 
   .. only:: not php
 
     Connection Timeout
     ''''''''''''''''''
 
-    Configuration key: ``stormpath.client.connectionTimeout``
+    .. only:: nodejs
 
-    Default value: 30 seconds
+      At the moment the Node SDK only supports the request timeout through static
+      code configuration.
 
-    This setting controls the HTTP timeout (in seconds) that is observed when connecting to the Stormpath API.
+    .. only:: not nodejs
 
-    Environment Variables
-    ^^^^^^^^^^^^^^^^^^^^^
+      Configuration key: ``stormpath.client.connectionTimeout``
 
-    Bash-like shell:
+      Default value: 30 seconds
 
-    .. code-block:: bash
+      This setting controls the HTTP timeout (in seconds) that is observed when connecting to the Stormpath API.
 
-        export STORMPATH_CLIENT_CONNECTIONTIMEOUT=60
+      Environment Variables
+      ^^^^^^^^^^^^^^^^^^^^^
 
-    Windows:
+      Bash-like shell:
 
-    .. code-block:: powershell
+      .. code-block:: bash
 
-        setx STORMPATH_CLIENT_CONNECTIONTIMEOUT 60
+          export STORMPATH_CLIENT_CONNECTIONTIMEOUT=60
 
-    YAML File
-    ^^^^^^^^^
+      Windows:
 
-    .. code-block:: yaml
+      .. code-block:: powershell
 
-      ---
-      client:
-        connectionTimeout: 60
+          setx STORMPATH_CLIENT_CONNECTIONTIMEOUT 60
 
-    JSON File
-    ^^^^^^^^^
+      YAML File
+      ^^^^^^^^^
 
-    .. code-block:: json
+      .. code-block:: yaml
 
-      {
-        "client": {
-          "connectionTimeout": 60
+        ---
+        client:
+          connectionTimeout: 60
+
+      JSON File
+      ^^^^^^^^^
+
+      .. code-block:: json
+
+        {
+          "client": {
+            "connectionTimeout": 60
+          }
         }
-      }
 
     Inline Code
     ^^^^^^^^^^^
@@ -863,11 +976,16 @@
 
     .. only:: java
 
-      (java.todo)
+      .. literalinclude:: code/java/configuration/connection_timeout.java
+        :language: java
 
     .. only:: nodejs
 
-      (node.todo)
+      .. code-block:: javascript
+
+        var client = new stormpath.Client({
+          timeout: 30000 // milliseconds
+        });
 
     .. only:: python
 
@@ -878,147 +996,166 @@
   Authentication Scheme
   '''''''''''''''''''''
 
-  .. only:: not php
-
-    Configuration key: ``stormpath.client.authenticationScheme``
-
-  Default value: ``SAUTHC1``
-
-  This setting allows you to change the authentication scheme used to communicate with the Stormpath API. The available options are ``BASIC`` and ``SAUTHC1`` (the default).
-
-  For stronger security, ``SAUTHC1`` should be used unless you are in an environment that does not support HTTP digest authentication.
-
-  .. only:: not php
-
-    Environment Variables
-    ^^^^^^^^^^^^^^^^^^^^^
-
-    Bash-like shell:
-
-    .. code-block:: bash
-
-        export STORMPATH_CLIENT_AUTHENTICATIONSCHEME=BASIC
-
-    Windows:
-
-    .. code-block:: powershell
-
-        setx STORMPATH_CLIENT_AUTHENTICATIONSCHEME BASIC
-
-    YAML File
-    ^^^^^^^^^
-
-    .. code-block:: yaml
-
-      ---
-      client:
-        connectionTimeout: "basic"
-
-    JSON File
-    ^^^^^^^^^
-
-    .. code-block:: json
-
-      {
-        "client": {
-          "connectionTimeout": "basic"
-        }
-      }
-
-    Inline Code
-    ^^^^^^^^^^^
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/configuration/use_basic_auth.cs
-      :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/configuration/use_basic_auth.vb
-      :language: vbnet
-
-  .. only:: java
-
-    (java.todo)
-
   .. only:: nodejs
 
-    (node.todo)
+    At the moment the Node SDK uses BASIC authentication by default, SAUTHC1 is
+    not yet implemented.
 
-  .. only:: php
+  .. only:: not nodejs
 
-    .. literalinclude:: code/php/configuration/use_basic_auth.php
-      :language: php
+    .. only:: not php
 
-  .. only:: python
+      Configuration key: ``stormpath.client.authenticationScheme``
 
-    .. literalinclude:: code/python/configuration/use_basic_auth.py
-      :language: python
+    Default value: ``SAUTHC1``
+
+    This setting allows you to change the authentication scheme used to communicate with the Stormpath API. The available options are ``BASIC`` and ``SAUTHC1`` (the default).
+
+    For stronger security, ``SAUTHC1`` should be used unless you are in an environment that does not support HTTP digest authentication.
+
+    .. only:: not php
+
+      Environment Variables
+      ^^^^^^^^^^^^^^^^^^^^^
+
+      Bash-like shell:
+
+      .. code-block:: bash
+
+          export STORMPATH_CLIENT_AUTHENTICATIONSCHEME=BASIC
+
+      Windows:
+
+      .. code-block:: powershell
+
+          setx STORMPATH_CLIENT_AUTHENTICATIONSCHEME BASIC
+
+      YAML File
+      ^^^^^^^^^
+
+      .. code-block:: yaml
+
+        ---
+        client:
+          connectionTimeout: "basic"
+
+      JSON File
+      ^^^^^^^^^
+
+      .. code-block:: json
+
+        {
+          "client": {
+            "connectionTimeout": "basic"
+          }
+        }
+
+      Inline Code
+      ^^^^^^^^^^^
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/configuration/use_basic_auth.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/configuration/use_basic_auth.vb
+        :language: vbnet
+
+    .. only:: java
+
+      .. literalinclude:: code/java/configuration/use_basic_auth.java
+        :language: java
+
+    .. only:: nodejs
+
+      .. code-block:: javascript
+
+        var client = new stormpath.Client({
+          authenticationScheme: 'BASIC'
+        });
+
+    .. only:: php
+
+      .. literalinclude:: code/php/configuration/use_basic_auth.php
+        :language: php
+
+    .. only:: python
+
+      .. literalinclude:: code/python/configuration/use_basic_auth.py
+        :language: python
 
   .. only:: not php
 
     HTTP Proxy
     ''''''''''
 
-    Configuration keys:
+    .. only:: nodejs
 
-    * ``stormpath.client.proxy.host`` - The proxy hostname to use
-    * ``stormpath.client.proxy.port`` - The proxy port to use
-    * ``stormpath.client.proxy.username`` - The proxy username (if any)
-    * ``stormpath.client.proxy.password`` - The proxy password (if any)
+    At the moment the Node SDK only supports request proxy configuration through
+    static code configuration.
 
-    If you need to route communication to the Stormpath API through an HTTP proxy, you can set these configuration options. Null values are ignored.
+    .. only:: not nodejs
 
-    Environment Variables
-    ^^^^^^^^^^^^^^^^^^^^^
+      Configuration keys:
 
-    Bash-like shell:
+      * ``stormpath.client.proxy.host`` - The proxy hostname to use
+      * ``stormpath.client.proxy.port`` - The proxy port to use
+      * ``stormpath.client.proxy.username`` - The proxy username (if any)
+      * ``stormpath.client.proxy.password`` - The proxy password (if any)
 
-    .. code-block:: bash
+      If you need to route communication to the Stormpath API through an HTTP proxy, you can set these configuration options. Null values are ignored.
 
-        export STORMPATH_CLIENT_PROXY_HOST=myproxy.example.com
-        export STORMPATH_CLIENT_PROXY_PORT=8088
-        export STORMPATH_CLIENT_PROXY_USERNAME=proxyuser
-        export STORMPATH_CLIENT_PROXY_PASSWORD=proxypassword
+      Environment Variables
+      ^^^^^^^^^^^^^^^^^^^^^
 
-    Windows:
+      Bash-like shell:
 
-    .. code-block:: powershell
+      .. code-block:: bash
 
-        setx STORMPATH_CLIENT_PROXY_HOST myproxy.example.com
-        setx STORMPATH_CLIENT_PROXY_PORT 8088
-        setx STORMPATH_CLIENT_PROXY_USERNAME proxyuser
-        setx STORMPATH_CLIENT_PROXY_PASSWORD proxypassword
+          export STORMPATH_CLIENT_PROXY_HOST=myproxy.example.com
+          export STORMPATH_CLIENT_PROXY_PORT=8088
+          export STORMPATH_CLIENT_PROXY_USERNAME=proxyuser
+          export STORMPATH_CLIENT_PROXY_PASSWORD=proxypassword
 
-    YAML File
-    ^^^^^^^^^
+      Windows:
 
-    .. code-block:: yaml
+      .. code-block:: powershell
 
-      ---
-      client:
-        proxy:
-          host: "myproxy.example.com"
-          port: 8088
-          username: "proxyuser"
-          password: "proxypassword"
+          setx STORMPATH_CLIENT_PROXY_HOST myproxy.example.com
+          setx STORMPATH_CLIENT_PROXY_PORT 8088
+          setx STORMPATH_CLIENT_PROXY_USERNAME proxyuser
+          setx STORMPATH_CLIENT_PROXY_PASSWORD proxypassword
 
-    JSON File
-    ^^^^^^^^^
+      YAML File
+      ^^^^^^^^^
 
-    .. code-block:: json
+      .. code-block:: yaml
 
-      {
-        "client": {
-          "proxy": {
-            "host": "myproxy.example.com",
-            "port": 8088,
-            "username": "proxyuser",
-            "password": "proxypassword"
+        ---
+        client:
+          proxy:
+            host: "myproxy.example.com"
+            port: 8088
+            username: "proxyuser"
+            password: "proxypassword"
+
+      JSON File
+      ^^^^^^^^^
+
+      .. code-block:: json
+
+        {
+          "client": {
+            "proxy": {
+              "host": "myproxy.example.com",
+              "port": 8088,
+              "username": "proxyuser",
+              "password": "proxypassword"
+            }
           }
         }
-      }
 
     Inline Code
     ^^^^^^^^^^^
@@ -1035,11 +1172,16 @@
 
     .. only:: java
 
-      (java.todo)
+      .. literalinclude:: code/java/configuration/use_proxy.java
+        :language: java
 
     .. only:: nodejs
 
-      (node.todo)
+      .. code-block:: javascript
+
+        var client = new stormpath.Client({
+          proxy: 'http://user:pass@proxyhost:proxyport'
+        });
 
     .. only:: python
 
