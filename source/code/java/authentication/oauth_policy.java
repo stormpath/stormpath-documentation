@@ -1,0 +1,1 @@
+OAuthPolicy oauthPolicy = application.getOAuthPolicy();

@@ -5,5 +5,5 @@ application.verifyPasswordResetToken(resetPasswordToken, function (err) {
     return console.error(err);
   }
 
-  console.log('Password has been reset.')
+  console.log('Password is valid, and can be used for password reset.')
 });

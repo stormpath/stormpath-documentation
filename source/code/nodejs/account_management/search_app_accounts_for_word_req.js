@@ -1,8 +1,8 @@
-var accountOptions = {
+var query = {
   q: 'luc'
 };
 
-application.getAccounts(accountOptions, function (err, result) {
+application.getAccounts(query, function (err, result) {
   if (err) {
     return console.error(err);
   }

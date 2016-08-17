@@ -41,10 +41,6 @@ The **Directory** resource is a top-level container for Account and Group resour
 
   In the Stormpath Java SDK, the Directory resource is represented by the ``Directory`` interface. For more information, see the `Javadoc for Directory <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/directory/Directory.html>`__.
 
-.. only:: nodejs
-
-  (node.todo)
-
 .. only:: php
 
   For more detailed information about the Directory object, please see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Directory.html>`__.
@@ -291,7 +287,8 @@ How to Make an LDAP Directory
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/create_ldap_dir_req.js
+    :language: javascript
 
 .. only:: php
 
@@ -401,15 +398,7 @@ How to Make a SAML Directory
   .. literalinclude:: code/java/account_management/create_saml_dir_req.java
       :language: java
 
-.. only:: nodejs
-
-  (node.todo)
-
-.. only:: php
-
-  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
-
-.. only:: python
+.. only:: (python or php or nodejs)
 
   For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
@@ -435,10 +424,6 @@ The other type of Account Store is the Group resource, which can either be imagi
 .. only:: java
 
   In the Stormpath Java SDK, the Group resource is represented by the ``Group`` interface. For more information, see the `Javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/group/Group.html>`__.
-
-.. only:: nodejs
-
-  (node.todo)
 
 .. only:: php
 
@@ -727,10 +712,6 @@ The Account resource is a unique identity within your application. It is usually
 
   In the Stormpath Java SDK, the Account resource is represented by the ``Account`` interface. For more information, see the `Javadocs API documentation <https://docs.stormpath.com/java/apidocs/com/stormpath/sdk/account/Account.html>`__.
 
-.. only:: nodejs
-
-  (node.todo)
-
 .. only:: php
 
   For more detailed information about the Account resource, see the `PHP API Documentation <https://docs.stormpath.com/php/apidocs/Stormpath/Resource/Account.html>`__.
@@ -783,16 +764,16 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
     .. literalinclude:: code/vbnet/account_management/create_account_in_dir_req.vb
       :language: vbnet
 
-.. only:: java
+.. only:: (java or nodejs)
 
   Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can use the Directory's ``createAccount()`` method:
+
+.. only:: java
 
   .. literalinclude:: code/java/account_management/create_account_in_dir_req.java
     :language: java
 
 .. only:: nodejs
-
-  (node.todo) It'd be good to add some explanatory text like we have for csharp.
 
   .. literalinclude:: code/nodejs/account_management/create_account_in_dir_req.js
     :language: javascript
@@ -851,13 +832,6 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
       },
       "comment":" // This JSON has been truncated for readability"
     }
-
-.. only:: nodejs
-
-  Would yield this response:
-
-  .. literalinclude:: code/nodejs/account_management/create_account_in_dir_resp.js
-    :language: javascript
 
 .. only:: php
 
@@ -924,7 +898,8 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
 .. only:: nodejs
 
-  (node.todo) It'd be good to add some explanatory text like we have for csharp.
+  Using the SDK, you will want to fetch the Group and the Account objects.  Then you can use the ``addAccount()`` method
+  of the Group to create the membership:
 
   .. literalinclude:: code/nodejs/account_management/add_account_to_group_req.js
     :language: javascript
@@ -984,7 +959,7 @@ This our completed resource set, with an Account that is a member of a Group ins
 Adding a new Account or Group to an Application or Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest or csharp or vbnet or nodejs or php or python
+.. only:: rest or csharp or vbnet or php or python
 
   Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
 
@@ -998,17 +973,31 @@ Adding a new Account or Group to an Application or Organization
 
   All of this is also true for adding Groups, except in that case you would use the ``/groups`` endpoint and Stormpath would add the Group to the Account Store Mapping that had ``isDefaultGroupStore`` set to ``true``.
 
-.. only:: java
+.. only:: java or nodejs
 
   Instead of adding an ``Account`` via the ``Directory``, it is also possible to use the ``Application``:
 
-  .. literalinclude:: code/java/account_management/add_account_using_application.java
-    :language: java
+  .. only:: java
+
+    .. literalinclude:: code/java/account_management/add_account_using_application.java
+      :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/account_management/add_account_using_application.js
+      :language: javascript
 
   Or you can do the same with an ``Organization``:
 
-  .. literalinclude:: code/java/account_management/add_account_using_organization.java
-      :language: java
+  .. only:: java
+
+    .. literalinclude:: code/java/account_management/add_account_using_organization.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/account_management/add_account_using_organization.js
+        :language: javascript
 
   This will then add the Account to the Directory that is set as that Application or Organization's **Default Account Store**. What this means is that Stormpath will go through the Application/Organization's list of Account Store Mappings (found in the ``AccountStoreMapping`` collection) and find the Account Store Mapping where ``isDefaultAccountStore`` is set to ``true``. The Account will then be added to that Account Store.
 
@@ -1056,16 +1045,19 @@ In this case, it is recommended that you suppress Account Verification emails.
     .. literalinclude:: code/vbnet/account_management/create_account_disable_reg_workflow.vb
       :language: vbnet
 
-.. only:: java
+.. only:: java or nodejs
 
   This can be done by setting the ``registrationWorkflowEnabled`` flag when creating the Account:
 
-  .. literalinclude:: code/java/account_management/create_account_disable_reg_workflow.java
-    :language: java
+  .. only:: java
 
-.. only:: nodejs
+    .. literalinclude:: code/java/account_management/create_account_disable_reg_workflow.java
+      :language: java
 
-  (node.todo)
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/account_management/create_account_disable_reg_workflow.js
+      :language: javascript
 
 .. only:: php
 
@@ -1132,7 +1124,10 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
 
 .. only:: nodejs
 
-  (node.todo) It'd be good to add some explanatory text like we have for csharp.
+  This can be done by setting the ``passwordFormat`` option when creating the Account:
+
+  .. literalinclude:: code/nodejs/account_management/create_account_mcf_hash.js
+    :language: javascript
 
 .. only:: php
 
@@ -1259,7 +1254,7 @@ For example, you could add information about this user's current location, like 
 
 .. only:: nodejs
 
-  (node.todo) It'd be good to add some explanatory text like we have for csharp.
+  The ``picard`` Account you created earlier has a ``CustomData`` property that allows you to write to the resource's Custom Data:
 
   .. literalinclude:: code/nodejs/account_management/add_cd_to_account_req.js
     :language: javascript
@@ -1314,12 +1309,7 @@ For example, you could add information about this user's current location, like 
 
 .. only:: nodejs
 
-  Which returns the following:
-
-  .. literalinclude:: code/nodejs/account_management/add_cd_to_account_resp.js
-    :language: javascript
-
-  For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/api/customData>`_ of the Node.js SDK API Documentation.
+  For more information about Custom Data, please see the `Custom Data section <http://docs.stormpath.com/nodejs/jsdoc/CustomData.html>`_ of the Node.js SDK API Documentation.
 
 .. _howto-search-accounts:
 
@@ -1371,7 +1361,7 @@ The Account resource's **searchable attributes** are:
 
 .. only:: nodejs
 
-  (node.todo)
+  With the Stormpath Node SDK, you can perform searches on any object that provides a `getAccounts()` method (such as Applications, Directories, Groups, and Organizations).
 
 .. only:: php
 
@@ -1703,8 +1693,6 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 .. only:: nodejs
 
-  (node.todo) Is there anything else to add here? See Dotnet above.
-
   **Query**
 
   .. literalinclude:: code/nodejs/account_management/search_dir_accounts_for_create_date_req.js
@@ -1749,7 +1737,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
 It is also possible to retrieve a collection of Accounts by searching the data stored in their Custom Data.
 
-.. only:: nodejs or php
+.. only:: php
 
   .. warning::
 
@@ -1784,19 +1772,19 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
   .. literalinclude:: code/python/account_management/cd_search.py
     :language: python
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/cd_search.js
+    :language: javascript
+
 .. todo::
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/account_management/cd_search.js
-      :language: javascript
 
   .. only:: php
 
     .. literalinclude:: code/php/account_management/cd_search.php
       :language: php
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -1908,13 +1896,6 @@ Changing the Password Strength resource for a Directory modifies the requirement
       "minSymbol": 1,
       "minUpperCase": 1
     }
-
-.. only:: nodejs
-
-  Which results in the following response:
-
-  .. literalinclude:: code/nodejs/account_management/update_dir_pwd_strength_resp.js
-      :language: javascript
 
 .. todo::
 
@@ -2094,7 +2075,7 @@ There are three steps to the password reset flow:
 
 .. only:: nodejs
 
-  To trigger the password reset workflow, you call the ``resetPassword(options, callback)`` method on your Application instance:
+  To trigger the password reset workflow, you call the ``sendPasswordResetEmail(passwordResetRequest, callback)`` method on your Application instance:
 
   .. literalinclude:: code/nodejs/account_management/reset1_trigger_req.js
     :language: javascript
@@ -2158,13 +2139,6 @@ If this is a valid email in an Account associated with this Application, the req
 .. only:: java
 
   If the email is not valid, a ``ResourceException`` will be thrown. The returned value is an ``PasswordResetToken`` instance that represents a copy of the token that can be used to reset the user's password.
-
-.. only:: nodejs
-
-  The success response will look like this:
-
-  .. literalinclude:: code/nodejs/account_management/reset1_trigger_resp.js
-    :language: javascript
 
 .. only:: php
 
@@ -2286,7 +2260,7 @@ After verifying that the token from the query string is valid, you can direct th
 
 .. only:: nodejs
 
-  Once you have the password, you can call the ``verifyPasswordResetToken(token, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
+  Once you have the password, you can call the ``resetPassword(resetPasswordToken, newPassword, callback)`` method on your Application instance. This is the same method call that you used to validate the token above.
 
   .. literalinclude:: code/nodejs/account_management/reset3_update.js
     :language: javascript
@@ -2386,7 +2360,12 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: nodejs
 
-  (node.todo)
+  Using the Stormpath Node SDK, you can fetch the Account Creation Policy of the
+  Directory, and expand the Verification Email Templates Collectio at the same time.
+  Once you have a reference to the template, you can update it, calling the ``save()``
+  method on the parent policy to persist the changes:
+
+  .. literalinclude:: code/nodejs/account_management/pwd_reset_email_template.js
 
 .. only:: php
 
@@ -2429,7 +2408,7 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/search_password_modified.js
 
 .. only:: php
 
@@ -2462,7 +2441,7 @@ Stormpath can store historical password information in order to allow for restri
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/update_prevent_reuse.js
 
 .. only:: php
 
@@ -2707,7 +2686,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: nodejs
 
-  To resend the email, use the ``resendVerificationEmail(options, callback)`` method of your Application instance.
+  To resend the email, use the ``resendVerificationEmail(resendVerificationRequest, callback)`` method of your Application instance.
 
   .. literalinclude:: code/nodejs/account_management/resend_verification_email.js
     :language: javascript
@@ -2785,14 +2764,12 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: java
 
-.. literalinclude:: code/java/account_management/list_account_creation_templates.java
-  :language: java
+  .. literalinclude:: code/java/account_management/list_account_creation_templates.java
+    :language: java
 
 .. only:: nodejs
 
-  .. todo::
-
-    (nodejs.todo)
+  .. literalinclude:: code/nodejs/account_management/list_account_creation_templates.js
 
 .. only:: python
 
@@ -2827,9 +2804,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
 .. only:: nodejs
 
-  .. todo::
-
-    (nodejs.todo)
+  .. literalinclude:: code/nodejs/account_management/list_password_policy_templates.js
 
 .. only:: python
 
@@ -2905,10 +2880,6 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
   **Message Format**
 
   The ``mimeType`` designates whether the email is sent as plain text (``MimeType.PLAIN_TEXT``), HTML (``MimeType.HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
-
-.. only:: nodejs
-
-  The Node.js SDK does not support customizing the email templates that Stormpath sends. So if you want to change these, then this should be done via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__.
 
 .. only:: python
 
@@ -3113,17 +3084,22 @@ In addition to the location and port of the server, you must also pass valid cre
 
 .. only:: java
 
-.. warning::
+  .. warning::
 
-  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
-.. todo::
+  .. todo::
 
-  (java.todo)
+    (java.todo)
 
 .. only:: nodejs
 
-  (node.todo)
+  .. warning::
+
+    This feature does not yet have a proper interface in the Node SDK, but you can
+    still create the necessary resources by using the client directly:
+
+  .. literalinclude:: code/nodejs/account_management/create_smtp_server.js
 
 .. only:: php
 
@@ -3207,17 +3183,22 @@ To delete an SMTP Server, send the following:
 
 .. only:: java
 
-.. warning::
+  .. warning::
 
-  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
-.. todo::
+  .. todo::
 
-  (java.todo)
+    (java.todo)
 
 .. only:: nodejs
 
-  (node.todo)
+  .. warning::
+
+    This feature does not yet have a proper interface in the Node SDK, but you can
+    still create the necessary resources by using the client directly:
+
+  .. literalinclude:: code/nodejs/account_management/delete_smtp_server.js
 
 .. only:: php
 
@@ -3283,7 +3264,7 @@ But would not match::
 Working with the Lists
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Working with the Whitelist and Blacklist is exactly the same.
+Working with the Whitelist and Blacklist is done through the Account Creation Policy of a Directory.
 
 .. only:: csharp or vbnet
 
@@ -3301,17 +3282,13 @@ Working with the Whitelist and Blacklist is exactly the same.
 
 .. only:: java
 
-.. warning::
+  .. warning::
 
-  This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
-.. todo::
+  .. todo::
 
-  (java.todo)
-
-.. only:: nodejs
-
-  (node.todo)
+    (java.todo)
 
 .. only:: php
 
@@ -3383,7 +3360,7 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/add_email_domain_whitelist.js
 
 .. only:: php
 
@@ -3416,7 +3393,7 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
       ]
     }
 
-.. only:: not (php or python)
+.. only:: not (php or python or nodejs)
 
   And you would get back the Account Creation Policies resource:
 
@@ -3429,10 +3406,6 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
   .. only:: csharp
 
   .. only:: vbnet
-
-.. only:: nodejs
-
-  (node.todo)
 
 .. only:: rest or csharp or vbnet or java
 
@@ -3458,7 +3431,7 @@ If you were instead working with a Blacklist, and you had added ``*stormpath.com
 Removing a Domain
 """""""""""""""""
 
-If you changed our mind and wanted to only allow users to register with ``stormpath.com`` emails, then you would just overwrite the existing Whitelist:
+If you changed our mind and wanted to only allow users to register with ``stormpath.com`` emails, then you would just update and overwrite the existing Whitelist:
 
 .. only:: csharp or vbnet
 
@@ -3486,7 +3459,7 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 .. only:: nodejs
 
-  (node.todo)
+  .. literalinclude:: code/nodejs/account_management/remove_email_domain_whitelist.js
 
 .. only:: php
 
@@ -3519,7 +3492,7 @@ If you changed our mind and wanted to only allow users to register with ``stormp
           ]
     }
 
-.. only:: not php
+.. only:: not php or node
 
   And then you'd get back the Account Policies, with the updated Whitelist:
 
@@ -3533,9 +3506,6 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
   .. only:: vbnet
 
-.. only:: nodejs
-
-  (node.todo)
 
 .. only:: rest or csharp or vbnet or python or java
 
