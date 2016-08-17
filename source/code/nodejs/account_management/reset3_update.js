@@ -1,8 +1,8 @@
-var resetPasswordOptions = {
-  password: 'updated+Password1234'
-};
+var newPassword = 'updated+Password1234'
 
-application.resetPassword(resetPasswordOptions, function (err) {
+var resetPasswordToken = 'eyJraWQiOiIxZ0JUbmNXc[...]';
+
+application.resetPassword(resetPasswordToken, newPassword, function (err) {
   if (err) {
     return console.error(err);
   }

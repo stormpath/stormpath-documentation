@@ -1,1 +1,0 @@
-A reset password email has been sent!
