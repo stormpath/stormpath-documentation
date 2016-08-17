@@ -1,8 +1,8 @@
-var resetPasswordOptions = {
+var passwordResetRequest = {
   email: 'phasma@empire.gov'
 };
 
-application.resetPassword(resetPasswordOptions, function (err) {
+application.sendPasswordResetEmail(passwordResetRequest, function (err) {
   if (err) {
     return console.error(err);
   }

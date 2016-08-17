@@ -1,8 +1,8 @@
-var emailVerificationOptions = {
+var resendVerificationRequest = {
   login: 'email@address.com'
 };
 
-application.resendVerificationEmail(emailVerificationOptions, function (err) {
+application.resendVerificationEmail(resendVerificationRequest, function (err) {
   if (err) {
     return console.error(err);
   }
