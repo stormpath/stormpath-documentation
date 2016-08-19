@@ -2734,7 +2734,7 @@
     * - ``defaultModel``
       - Object
       - Object that includes one attribute ``linkBaseUrl`` which is itself a String
-      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ``${url}`` in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
+      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ``$!{url}`` in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
 
   .. _ref-email-macros:
 
@@ -2750,22 +2750,22 @@
     * - Macro
       - Description
 
-    * - ${account.givenName}
+    * - $!{account.givenName}
       - The Account's first name.
 
-    * - ${account.surname}
+    * - $!{account.surname}
       - The Account's surname.
 
-    * - ${account.fullName}
+    * - $!{account.fullName}
       - The Account's full name (first name and surname).
 
-    * - ${account.username}
+    * - $!{account.username}
       - The Account's username.
 
-    * - ${account.email}
+    * - $!{account.email}
       - The Account's email.
 
-    * - ${account.directory.name}
+    * - $!{account.directory.name}
       - The name of the Directory that the Account belongs to.
 
     * - $!{application.name}
@@ -2780,18 +2780,18 @@
     * - $!{account.directory.customData.$KEY}
       - Some value from the Directory’s customData resource. Replace ``$KEY`` with a key from the Directory's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
 
-    * - ${url}
+    * - $!{url}
       - The ``linkBaseUrl`` value from the template's associated ``defaultModel`` object.
 
-    * - ${sptoken}
+    * - $!{sptoken}
       - The value of the Stormpath token for password reset.
 
-    * - ${sptokenNameValuePair}
+    * - $!{sptokenNameValuePair}
       - A string that is formatted as ``sptoken=$TOKEN`` Where ``$TOKEN`` is either the verification or password reset token.
 
   .. note::
 
-    If you are using Angular and routing with ``#`` in your URLs, the default ``${url}`` macro will not work here because it treats ``#`` as an HTML fragment. Instead, you will have to hardcode the URL into your email template and include the ``{sptokenNameValuePair}`` macro at the end.
+    If you are using Angular and routing with ``#`` in your URLs, the default ``$!{url}`` macro will not work here because it treats ``#`` as an HTML fragment. Instead, you will have to hardcode the URL into your email template and include the ``$!{sptokenNameValuePair}`` macro at the end.
 
   .. _ref-password-strength:
 

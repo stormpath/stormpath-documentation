@@ -2847,8 +2847,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
             ->setFromName('Jakub Swiatczak')
             ->setFromEmailAddress('change-me@stormpath.com')
             ->setSubject('Verify your account')
-            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
-            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
+            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n$!{url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
+            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"$!{url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
             ->setMimeType(\Stormpath\Stormpath::MIME_PLAIN_TEXT)
             ->setDefaultModel(['linkBaseUrl'=>'https://api.stormpath.com/emailVerificationTokens'])
             ->save();
@@ -2898,8 +2898,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
       "fromName":"Jakub Swiatczak",
       "fromEmailAddress":"change-me@stormpath.com",
       "subject":"Verify your account",
-      "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
-      "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
+      "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n$!{url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
+      "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"$!{url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
       "mimeType":"text/plain",
       "defaultModel":{
         "linkBaseUrl":"https://api.stormpath.com/emailVerificationTokens"
@@ -2948,12 +2948,12 @@ Macros are placeholder text that are converted into actual values at the time th
 
 .. code-block:: java
 
-  "Hi ${account.givenName}, welcome to $!{application.name}!"
+  "Hi $!{account.givenName}, welcome to $!{application.name}!"
 
-The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with:
+The basic structure for a macro is ``$!{resource.attribute}``. There are three kinds of ``resource`` that you can work with:
 
-- Account (``${account}``)
-- an Account's Directory (``${account.directory}``), and
+- Account (``$!{account}``)
+- an Account's Directory (``$!{account.directory}``), and
 - an Application (``$!{application}``).
 
 You can also include any ``attribute`` that isn't a link, as well as customData.
@@ -2976,13 +2976,13 @@ You may have noticed here and with the Application resource that there is an inc
 Quiet References
 """"""""""""""""
 
-Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Stormpath was able to find the value as ``blue``, it would output:
+Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color $!{account.customData.favoriteColor}?``, and Stormpath was able to find the value as ``blue``, it would output:
 
 ``Is your favorite color blue?``
 
 However, if the value could not be found, it would output:
 
-``Is your favorite color ${account.customData.favoriteColor}?``
+``Is your favorite color $!{account.customData.favoriteColor}?``
 
 To avoid this, you include the ``!`` which puts the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
 
