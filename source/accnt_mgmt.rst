@@ -1104,7 +1104,7 @@ Once the Account is created, Stormpath will use the password hash to authenticat
 .. _stormpath2-hash:
 
 The stormpath2 Format
-+++++++++++++++++++++
+"""""""""""""""""""""
 
 If your passwords are hashed with MD5 or SHA, you can import them by creating a ``$``-delimited MCF string that describes the hashing algorithm and parameters. The string should be prefixed with the token ``$stormpath2`` and must follow this format::
 
