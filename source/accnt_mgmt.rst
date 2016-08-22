@@ -2486,7 +2486,7 @@ This would prevent a user from choosing a password that is the same as any of th
 3.5. How to Manage an Account's Required Attributes
 ===================================================
 
-Every Directory has its own Account Schema. This Schema allows you to control which Account attributes must be passed as part of new Account creation.
+Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
@@ -2555,9 +2555,9 @@ And get back the Account Schema:
     }
   }
 
-The two Account attributes that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
+The two Account attributes (or ``fields``) that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
 
-This means that (providing your Directory was created after 2016-08-13) you can create a new Account by passing only two attributes, ``email`` and ``password``:
+This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
 .. code-block:: http
 
