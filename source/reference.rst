@@ -2355,6 +2355,11 @@
       - N/A
       - A link to a collection of any :ref:`organizationAccountStoreMappings <ref-org-asm>` resources that include this Directory.
 
+    * - ``accountSchema``
+      - Link
+      - N/A
+      - A link to the :ref:`Account Schema <ref-account-schema>` for this Directory.
+
 
   **Directory Example**
 
@@ -2399,6 +2404,9 @@
       },
       "organizationMappings":{
         "href":"https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe/organizationMappings"
+      },
+      "accountSchema":{
+        "href":"https://api.stormpath.com/v1/schemas/4YieniebnB9QRGNexample"
       }
     }
 
@@ -2622,6 +2630,94 @@
       ]
     }
 
+  .. _ref-account-schema:
+
+  Account Schema
+  ^^^^^^^^^^^^^^
+
+  The Directory's Account Schema allows developers to enable or disable certain Account attributes as either being required or not during Account creation. For example, it requires a developer to control whether a ``surname`` is required during Account creation. For more information, see the :ref:`Account Management chapter<account-schema>`.
+
+  **Account Schema URL**
+
+  ``/v1/schemas/$SCHEMA_ID``
+
+  **passwordPolicy Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - String
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``fields``
+      - Link
+      - N/A
+      - A link to the collection of ``fields``. Each item has a ``required`` boolean attribute that controls whether it is required or not.
+
+    * - ``directory``
+      - Link
+      - N/A
+      - A link to the Directory that this Account Schema belongs to.
+
+  **accountSchema Example** (with fields expanded)
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/schemas/4YieniebnB9QRGNexample",
+      "createdAt": "2016-08-19T19:42:41.961Z",
+      "modifiedAt": "2016-08-19T19:42:41.961Z",
+      "fields": {
+        "href": "https://api.stormpath.com/v1/schemas/4YieniebnB9QRGNexample/fields",
+        "offset": 0,
+        "limit": 25,
+        "size": 2,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T19:42:41.961Z",
+            "name": "givenName",
+            "required": true,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/4YieniebnB9QRGNexample"
+            }
+          },
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T20:03:25.497Z",
+            "name": "surname",
+            "required": false,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/4YieniebnB9QRGNexample"
+            }
+          }
+        ]
+      },
+      "directory": {
+        "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaexaMPLe"
+      }
+    }
+
   .. _ref-password-policy:
 
   Password Policy
@@ -2679,6 +2775,26 @@
       - N/A
       - A collection of :ref:`email templates <ref-emailtemplates>` that can be used for sending password reset success emails. A template stores all relevant attributes needed for an email. This is a collection but currently only allows one value. It is not possible to create new ``resetEmailTemplates`` with a POST.
 
+  **passwordPolicy Example**
+
+  .. code-block:: json
+
+    {
+      "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe",
+      "resetTokenTtl":24,
+      "resetEmailStatus":"ENABLED",
+      "resetSuccessEmailStatus":"ENABLED",
+      "strength":{
+        "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe/strength"
+      },
+      "resetEmailTemplates":{
+        "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe/resetEmailTemplates"
+      },
+      "resetSuccessEmailTemplates":{
+        "href":"https://api.stormpath.com/v1/passwordPolicies/2SKhstu8PlaekcaexaMPLe/resetSuccessEmailTemplates"
+      }
+    }
+
   .. _ref-emailtemplates:
 
   Email Templates
@@ -2734,7 +2850,7 @@
     * - ``defaultModel``
       - Object
       - Object that includes one attribute ``linkBaseUrl`` which is itself a String
-      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ``${url}`` in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
+      - An object that defines the model of the email template. The defaultModel currently holds one value, which is the ``linkBaseUrl``. The ``linkBaseUrl`` is retrieved when using the macro ``$!{url}`` in an email template. This macro generates a URL that includes the ``linkBaseUrl`` and the ``sptoken`` used in Account creation and password reset workflows.
 
   .. _ref-email-macros:
 
@@ -2750,22 +2866,22 @@
     * - Macro
       - Description
 
-    * - ${account.givenName}
+    * - $!{account.givenName}
       - The Account's first name.
 
-    * - ${account.surname}
+    * - $!{account.surname}
       - The Account's surname.
 
-    * - ${account.fullName}
+    * - $!{account.fullName}
       - The Account's full name (first name and surname).
 
-    * - ${account.username}
+    * - $!{account.username}
       - The Account's username.
 
-    * - ${account.email}
+    * - $!{account.email}
       - The Account's email.
 
-    * - ${account.directory.name}
+    * - $!{account.directory.name}
       - The name of the Directory that the Account belongs to.
 
     * - $!{application.name}
@@ -2780,18 +2896,18 @@
     * - $!{account.directory.customData.$KEY}
       - Some value from the Directory’s customData resource. Replace ``$KEY`` with a key from the Directory's Custom Data. Should always be used with the ``!`` :ref:`quiet reference notation <quiet-macro-reference>`.
 
-    * - ${url}
+    * - $!{url}
       - The ``linkBaseUrl`` value from the template's associated ``defaultModel`` object.
 
-    * - ${sptoken}
+    * - $!{sptoken}
       - The value of the Stormpath token for password reset.
 
-    * - ${sptokenNameValuePair}
+    * - $!{sptokenNameValuePair}
       - A string that is formatted as ``sptoken=$TOKEN`` Where ``$TOKEN`` is either the verification or password reset token.
 
   .. note::
 
-    If you are using Angular and routing with ``#`` in your URLs, the default ``${url}`` macro will not work here because it treats ``#`` as an HTML fragment. Instead, you will have to hardcode the URL into your email template and include the ``{sptokenNameValuePair}`` macro at the end.
+    If you are using Angular and routing with ``#`` in your URLs, the default ``$!{url}`` macro will not work here because it treats ``#`` as an HTML fragment. Instead, you will have to hardcode the URL into your email template and include the ``$!{sptokenNameValuePair}`` macro at the end.
 
   .. _ref-password-strength:
 
@@ -4569,11 +4685,23 @@
         - Description
 
       * - POST /v1/directories/$DIRECTORY_ID/accounts *or* /v1/applications/$APPLICATION_ID/accounts *or* /v1/organizations/$ORGANIZATION_ID/accounts
-        - Required: ``email``, ``password``, ``givenName``, ``surname``; Optional: ``username``, ``middleName``, ``status``, ``customData``
-        - ``registrationWorkflowEnabled=false``, ``passwordFormat=mcf`` (see note below)
+        - Required: ``email``, ``password``; Optional: ``username``, ``givenName``, ``middleName``, ``surname``, ``status``, ``customData`` (See Note 1 below)
+        - ``registrationWorkflow`` ``Enabled=false``, ``passwordFormat=mcf`` (see Note 2 below)
         - Creates a new Account resource.
 
+  .. todo::
+
+    Once we have better CSS, that registration workflow thing should be fixed.
+
   .. note::
+
+    **Note 1**
+
+    Some required attributes for Account creation are configured as part of the Directory's :ref:`Account Schema <ref-account-schema>`. Any Directory created after 2016-08-13 will have ``givenName`` and ``surname`` set as optional (i.e. the Account Schema has ``required:false``) by default.
+
+  .. note::
+
+    **Note 2**
 
     The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`.
 

@@ -1008,17 +1008,17 @@ Adding a new Account or Group to an Application or Organization
 3.2.2. Importing Accounts
 -------------------------
 
-Stormpath also makes it very easy to transfer your existing user directory into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
+Stormpath also makes it very easy to transfer your existing users into a Stormpath Directory using our API. Depending on how you store your passwords, you will use one of three approaches:
 
-1. **Passwords in Plaintext:** If you stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
-2. **Passwords With MCF Hash:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly. Available formats and instructions are detailed :ref:`below <importing-mcf>`.
-3. **Passwords With Non-MCF Hash:** If you hashed passwords in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to use their passwords to login.
+1. **Plaintext Passwords:** If your stored passwords in plaintext, you can use the Stormpath API to import them directly. Stormpath will create the Accounts and secure their passwords automatically (within our system). Make sure that your Stormpath Directory is configured to *not* send Account Verification emails before beginning import.
+2. **Supported Password Hashes:** If your password hashing algorithm follows a format Stormpath supports, you can use the API to import Accounts directly using Modular Crypt Format (MCF). Supported formats and instructions are detailed :ref:`below <importing-mcf>`.
+3. **Unsupported Password Hashes:** If your password hashes are in a format Stormpath does not support, you can still use the API to create the Accounts, but you will need to issue a password reset afterwards. Otherwise, your users won't be able to to log in.
 
 .. note::
 
   To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
 
-Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What you recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script uses our APIs to re-create the user base in the Stormpath database.
+Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script can use our API to upload the users to Stormpath.
 
 Importing Accounts with Plaintext Passwords
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1075,25 +1075,15 @@ In this case, it is recommended that you suppress Account Verification emails.
 
 .. _importing-mcf:
 
-Importing Accounts with MCF Hash Passwords
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Importing Accounts with Supported Password Hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are moving from an existing user repository to Stormpath, you may have existing password hashes that you want to reuse in order to provide a seamless upgrade path for your end users. Stormpath does not allow for Account creation with *any* password hash, the password hash must follow modular crypt format (MCF), which is a ``$`` delimited string.
-This works as follows:
+You can import existing hashed passwords *only if* the hashing format is one that Stormpath supports:
 
-1. Create the Account specifying the password hash instead of a plain text password. Stormpath will use the password hash to authenticate the Account’s login attempt.
+- **bcrypt**: Stormpath supports importing bcrypt hashes directly. These password hashes have the identifier prefix ``$2a$``, ``$2b$``, or ``$2x$``.
+- **MD5 or SHA**: Stormpath supports hahes generated with MD5 and SHA. You must create an MCF string with the prefix ``$stormpath2$`` as detailed :ref:`below <stormpath2-hash>`.
 
-2. If the login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
-
-Supported Hashing Algorithms
-""""""""""""""""""""""""""""
-
-Stormpath only supports password hashes that use the following algorithms:
-
-- **bcrypt**: These password hashes have the identifier ``$2a$``, ``$2b$``, ``$2x$``, ``$2a$``
-- **stormpath2**: A Stormpath-specific password hash format that can be generated with common password hash information, such as algorithm, iterations, salt, and the derived cryptographic hash. For more information see :ref:`below <stormpath2-hash>`.
-
-Once you have a bcrypt or stormpath2 MCF password hash, you can create the Account in Stormpath with the specified hash.
+In both cases, once you have an MCF-compatible string that represents the password hash, you can create an Account in Stormpath.
 
 .. only:: rest
 
@@ -1143,12 +1133,14 @@ Once you have a bcrypt or stormpath2 MCF password hash, you can create the Accou
   .. literalinclude:: code/python/account_management/create_account_mcf_hash.py
     :language: python
 
+Once the Account is created, Stormpath will use the password hash to authenticate the Account’s **first** login attempt. If the first login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
+
 .. _stormpath2-hash:
 
-The stormpath2 Hashing Algorithm
-++++++++++++++++++++++++++++++++
+The stormpath2 Format
+"""""""""""""""""""""
 
-stormpath2 has a format which allows you to derive an MCF hash that Stormpath can read to understand how to recreate the password hash to use during a login attempt. stormpath2 hash format is formatted as::
+If your passwords are hashed with MD5 or SHA, you can import them by creating a ``$``-delimited MCF string that describes the hashing algorithm and parameters. The string should be prefixed with the token ``$stormpath2`` and must follow this format::
 
   $stormpath2$ALGORITHM_NAME$ITERATION_COUNT$BASE64_SALT$BASE64_PASSWORD_HASH
 
@@ -1170,17 +1162,21 @@ stormpath2 has a format which allows you to derive an MCF hash that Stormpath ca
 
   * - ``BASE64_SALT``
     - The salt byte array used to salt the first hash iteration.
-    - String (Base64). If your password hashes do you have salt, you can leave it out entirely.
+    - String (Base64). If your password hashes do not have salt, you can omit it entirely.
 
   * - ``BASE64_PASSWORD_HASH``
     - The computed hash byte array.
     - String (Base64)
 
 
-Importing Accounts with Non-MCF Hash Passwords
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Importing Accounts with Unsupported Password Hashes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this case you will be using the API in the same way as usual, except with the Password Reset Workflow enabled. That is, you should set the Account's password to a large randomly generated string, and then force the user through the password reset flow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
+If your passwords are hashed in a format that Stormpath does not support, you're not out of luck. You can still import your users into Stormpath, with an additional step:
+
+1. Create the Account and set the password to a large randomly-generated string.
+2. Prompt the user to complete the password reset workflow. For more information, please see the :ref:`Password Reset section below <password-reset-flow>`.
+
 
 .. _add-user-customdata:
 
@@ -2481,14 +2477,150 @@ Stormpath can store historical password information in order to allow for restri
 
 This would prevent a user from choosing a password that is the same as any of their previous 10 passwords.
 
+.. _account-schema:
+
+3.5. How to Manage an Account's Required Attributes
+===================================================
+
+Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
+
+3.5.1. Retrieving your Directory's Account Schema
+-------------------------------------------------
+
+You will find a link to the ``accountSchema`` resource in your Directory:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
+    "name": "Account Schema Test",
+    "description": "A Directory to test Account Schema restrictions",
+    "...": "...",
+    "accountSchema": {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
+    }
+  }
+
+You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
+
+.. code-block:: http
+
+  GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+And get back the Account Schema:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
+    "createdAt": "2016-08-19T19:42:41.961Z",
+    "modifiedAt": "2016-08-19T19:42:41.961Z",
+    "fields": {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
+      "offset": 0,
+      "limit": 25,
+      "size": 2,
+      "items": [
+        {
+          "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
+          "createdAt": "2016-08-19T19:42:41.961Z",
+          "modifiedAt": "2016-08-19T19:42:41.961Z",
+          "name": "givenName",
+          "required": false,
+          "schema": {
+            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+          }
+        },
+        {
+          "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+          "createdAt": "2016-08-19T19:42:41.961Z",
+          "modifiedAt": "2016-08-19T20:03:25.497Z",
+          "name": "surname",
+          "required": false,
+          "schema": {
+            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+          }
+        }
+      ]
+    },
+    "directory": {
+      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
+    }
+  }
+
+The two Account attributes (or ``fields``) that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
+
+This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
+
+.. code-block:: http
+
+  POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic Mlp...
+
+  {
+    "email":"test123@email.com",
+    "password":"APassword1234"
+  }
+
+3.5.2. Modifying your Directory's Account Schema
+-------------------------------------------------
+
+Any attributes that are in the ``fields`` collection can have ``required`` toggled to either ``true`` or ``false``.
+
+If you wanted to set ``surname`` as required, you would send the following ``POST``:
+
+.. code-block:: http
+
+  POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic Mlp...
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+  {
+    "required":"true"
+  }
+
+And get back the following ``200 OK``:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+    "createdAt": "2016-08-19T19:42:41.961Z",
+    "modifiedAt": "2016-08-19T20:03:25.497Z",
+    "name": "surname",
+    "required": true,
+    "schema": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+    }
+  }
+
+If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+
+.. code-block:: json
+
+  {
+    "status": 400,
+    "code": 2000,
+    "message": "Account surname is required; it cannot be null, empty, or blank.",
+    "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
+    "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
+    "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
+  }
+
 .. _verify-account-email:
 
-3.5. How to Verify an Account's Email
+3.6. How to Verify an Account's Email
 =====================================
 
 If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
 
-3.5.1. The Email Verification Workflow
+3.6.1. The Email Verification Workflow
 --------------------------------------
 
 This workflow involves 3 parties: your application's end-user, your application, and the Stormpath API server.
@@ -2512,17 +2644,17 @@ It is also expected that the workflow’s **Account Verification Base URL** has 
 
   The Account Verification Base URL defaults to a Stormpath API Sever URL which, while it is functional, is a Stormpath API server web page. Because it will likely confuse your application end-users if they see a Stormpath web page, we strongly recommended that you specify a URL that points to your web application.
 
-3.5.2. Configuring the Verification Workflow
+3.6.2. Configuring the Verification Workflow
 ---------------------------------------------
 
 This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_ for complete instructions.
 
-3.5.3. Triggering the Verification Email (Creating A Token)
+3.6.3. Triggering the Verification Email (Creating A Token)
 -----------------------------------------------------------
 
 In order to verify an Account’s email address, an ``emailVerificationToken`` must be created for that Account. To create this token, you create an Account in a Directory, either programmatically or via a public account creation form of your own design, that has the account registration and verification workflows enabled.
 
-3.5.4. Verifying the Email Address (Consuming The Token)
+3.6.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
 
 The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
@@ -2625,7 +2757,7 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
 .. _resending-verification-email:
 
-3.5.5. Resending the Verification Email
+3.6.5. Resending the Verification Email
 ---------------------------------------
 
 If a user accidentally deletes their verification email, or it was undeliverable for some reason, it is possible to resend the email.
@@ -2705,10 +2837,10 @@ If a user accidentally deletes their verification email, or it was undeliverable
   .. literalinclude:: code/python/account_management/resend_verification_email.py
     :language: python
 
-3.6. Customizing Stormpath Emails via REST
+3.7. Customizing Stormpath Emails via REST
 ==========================================
 
-3.6.1. What Emails Does Stormpath Send?
+3.7.1. What Emails Does Stormpath Send?
 ---------------------------------------
 
 Stormpath can be configured to send emails to users as part of a Directory's Account Creation and Password Reset policies.
@@ -2736,7 +2868,7 @@ For more information about this, see :ref:`password-reset-flow`.
 
 .. _customizing-email-templates:
 
-3.6.2. Customizing Stormpath Email Templates
+3.7.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
 The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
@@ -2847,8 +2979,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
             ->setFromName('Jakub Swiatczak')
             ->setFromEmailAddress('change-me@stormpath.com')
             ->setSubject('Verify your account')
-            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
-            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
+            ->setTextBody('Hi,\nYou have been registered for an application that uses Stormpath.\n\n$!{url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com')
+            ->setHtmlBody('<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"$!{url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>')
             ->setMimeType(\Stormpath\Stormpath::MIME_PLAIN_TEXT)
             ->setDefaultModel(['linkBaseUrl'=>'https://api.stormpath.com/emailVerificationTokens'])
             ->save();
@@ -2898,8 +3030,8 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
       "fromName":"Jakub Swiatczak",
       "fromEmailAddress":"change-me@stormpath.com",
       "subject":"Verify your account",
-      "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n${url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
-      "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"${url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
+      "textBody":"Hi,\nYou have been registered for an application that uses Stormpath.\n\n$!{url}\n\nOnce you verify, you will be able to login.\n\n---------------------\nFor general inquiries or to request support with your account, please email change-me@stormpath.com",
+      "htmlBody":"<p>Hi,</p>\n<p>You have been registered for an application that uses Stormpath.</p><a href=\"$!{url}\">Click here to verify your account</a><p>Once you verify, you will be able to login.</p><p>--------------------- <br />For general inquiries or to request support with your account, please email change-me@stormpath.com</p>",
       "mimeType":"text/plain",
       "defaultModel":{
         "linkBaseUrl":"https://api.stormpath.com/emailVerificationTokens"
@@ -2948,12 +3080,12 @@ Macros are placeholder text that are converted into actual values at the time th
 
 .. code-block:: java
 
-  "Hi ${account.givenName}, welcome to $!{application.name}!"
+  "Hi $!{account.givenName}, welcome to $!{application.name}!"
 
-The basic structure for a macro is ``${resource.attribute}``. There are three kinds of ``resource`` that you can work with:
+The basic structure for a macro is ``$!{resource.attribute}``. There are three kinds of ``resource`` that you can work with:
 
-- Account (``${account}``)
-- an Account's Directory (``${account.directory}``), and
+- Account (``$!{account}``)
+- an Account's Directory (``$!{account.directory}``), and
 - an Application (``$!{application}``).
 
 You can also include any ``attribute`` that isn't a link, as well as customData.
@@ -2976,13 +3108,13 @@ You may have noticed here and with the Application resource that there is an inc
 Quiet References
 """"""""""""""""
 
-Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color ${account.customData.favoriteColor}?``, and Stormpath was able to find the value as ``blue``, it would output:
+Quiet references (``!``) tell Stormpath that, if it can't resolve the object, it should just show nothing. Normally, if a macro was  ``Is your favorite color $!{account.customData.favoriteColor}?``, and Stormpath was able to find the value as ``blue``, it would output:
 
 ``Is your favorite color blue?``
 
 However, if the value could not be found, it would output:
 
-``Is your favorite color ${account.customData.favoriteColor}?``
+``Is your favorite color $!{account.customData.favoriteColor}?``
 
 To avoid this, you include the ``!`` which puts the macro into "quiet reference" mode. This means that if the value is not found, the output will be:
 
@@ -2992,7 +3124,7 @@ Since customData can contain any arbitrary key-value pairs, Stormpath recommends
 
 .. _add-custom-smtp:
 
-3.6.3. Customizing Your SMTP Server
+3.7.3. Customizing Your SMTP Server
 -----------------------------------
 
 Normally, the emails that Stormpath sends as a part of processes like Account creation and password reset come from Stormpath's SMTP server. However, it is possible to configure Stormpath to send emails using an SMTP server of your choosing.
@@ -3226,7 +3358,7 @@ To delete an SMTP Server, send the following:
 
 .. _email-domain-restriction:
 
-3.6.4 Restricting User Email Domains
+3.7.4 Restricting User Email Domains
 -------------------------------------
 
 As a developer, you are able to restrict which emails can be used by Accounts within a particular Directory. You control this by adding domains to either a Domain Whitelist or Blacklist, both of which are attached to your Directory's Account Creation Policies. This means that if an email is used as part of user registration, or a user later tries to update their Account with a new email, that email will be checked against that Whitelist and/or Blacklist.

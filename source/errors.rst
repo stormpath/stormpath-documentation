@@ -1175,7 +1175,7 @@ Error 7301
 
 **Message**
 
-The email body must contain at least one of the following placeholders: ``${url}``, ``${sptoken}``, ``${sptokenNameValuePair}``.
+The email body must contain at least one of the following placeholders: ``$!{url}``, ``$!{sptoken}``, ``$!{sptokenNameValuePair}``.
 
 **User Message**
 

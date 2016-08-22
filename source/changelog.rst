@@ -20,6 +20,12 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-08-22
+  ==========
+
+  - **New:** Added information about :ref:`new Account Schema resource <ref-account-schema>`. Also added :ref:`a new section of the Account Management chapter <account-schema>` to explain how to retrieve and modify the Schema.
+  - **Modified:** Modified all examples of :ref:`email templates <using-email-macros>` to show quiet references (e.g. ``$!{account}``) by default.
+
   2016-08-02
   ==========
 
