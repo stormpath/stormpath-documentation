@@ -2677,9 +2677,11 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 3.6.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
 
-The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
+The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter. By default, it looks like this:
 
-  http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
+  https://api.stormpath.com/emailVerificationTokens?sptoken=$VERIFICATION_TOKEN
+
+If you were to click this URL now, it would simply open up a page telling us that the Account had been verified. However, we can use this URL in order to verify the Account and also retrieve the Account information.
 
 .. only:: rest
 

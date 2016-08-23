@@ -2428,7 +2428,11 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
   :local:
   :depth: 2
 
-This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`.
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`. The instructions in this section apply to all LDAP user directories, including Active Directory, with two exceptions:
+
+- If you are using an LDAP user directory in conjunction with **Active Directory Federation Services**, you will want to read the :ref:`adfs` section below.
+
+- If you are using Azure Active Directory, then you will want to read the :ref:`azure` section.
 
 Mirror Directories and LDAP
 ---------------------------
@@ -2608,7 +2612,7 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
 
 .. note::
 
-  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and it also handles authentication attempts and relays back the outcome to Stormpath.
+  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and also handles authentication attempts and relays the outcome back to Stormpath.
 
 .. _saml-authn:
 
@@ -3712,7 +3716,7 @@ Now we will enter the information from the Stormpath Directory that we just crea
 
 #. In the "Monitoring" tab, uncheck "Automatically update relying party" and click **Apply**.
 
-#. Switch to the "Identifiers" tab, and copy your Stormpath Directory's HREF into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
+#. Switch to the "Identifiers" tab, and copy your Stormpath Directory's href into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
 
 #. Finally, go to Windows and open a Powershell window. In Powershell, enter the following command: "Set-AdfsRelyingPartyTrust -TargetName api.stormpath.com -SigningCertificateRevocationCheck None".
 
