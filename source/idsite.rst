@@ -642,6 +642,7 @@ In this situation, after the user has been authenticated via ID Site, a develope
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=stormpath_token&token={$JWT_FROM_ID_SITE}
