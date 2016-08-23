@@ -2011,7 +2011,7 @@ Once the User Access Token is gathered, you send this request:
   .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token.py
     :language: python
 
-Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account.
+Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
@@ -2168,7 +2168,7 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
   .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token.py
     :language: python
 
-Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account.
+Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
@@ -2379,7 +2379,7 @@ If you have already exchanged the code for an Access Token, you can send that in
   .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token.py
     :language: python
 
-Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account.
+Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
