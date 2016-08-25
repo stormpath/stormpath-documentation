@@ -1517,7 +1517,7 @@
 
       * - ``authorizedCallbackUris``
         - Array
-        - N/A
+        - Max 4000 characters
         - An array of Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
 
       * - ``samlPolicy``
