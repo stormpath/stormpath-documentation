@@ -85,10 +85,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
     .. literalinclude:: code/csharp/quickstart/using.cs
       :language: csharp
 
-    .. only:: vbnet
+  .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/quickstart/using.vb
-        :language: vbnet
+    .. literalinclude:: code/vbnet/quickstart/using.vb
+      :language: vbnet
 
   Asynchronous and Synchronous Support
   ------------------------------------
