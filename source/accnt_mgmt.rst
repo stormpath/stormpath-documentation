@@ -215,7 +215,7 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, you recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
 
 1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
 
