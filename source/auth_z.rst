@@ -253,6 +253,8 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
     GET /v1/accounts/3apenYvL0Z9v9spExAMpLe?expand=customData HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
 .. only:: csharp or vbnet
 
@@ -347,6 +349,8 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
     GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
 .. only:: csharp or vbnet
 
@@ -437,6 +441,8 @@ This would work in much the same way as checking the permissions for a user's Ac
 
     GET /v1/accounts/3apenYvL0Z9v9spExAMpLe/groups HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
   From here, you can retrieve the Group's customData in the same way as you did with users. That is by sending a GET with either a ``?expand=customData`` or to the ``/customData`` endpoint.
 

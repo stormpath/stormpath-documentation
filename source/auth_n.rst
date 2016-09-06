@@ -36,6 +36,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
     POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -56,6 +57,7 @@ After an Account resource has been created, you can authenticate it given an inp
 
       POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
       Host: api.stormpath.com
+      Authorization: Basic MlpG...
       Content-Type: application/json
 
       {
@@ -413,6 +415,7 @@ We would now like to map a new Account Store that will have the following charac
 
     POST v1/accountStoreMappings HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -490,6 +493,7 @@ For example, if you want to update an existing Account Store to now have highest
 
     POST /v1/accountStoreMappings/1NUhrCPT0q66bjyexample HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -540,6 +544,7 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
     POST /v1/accountStoreMappings/1NUhrCPT0q66bjyexample HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -712,6 +717,7 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 
     POST /v1/oAuthPolicies/1gk4Dxzi6o4PbdleXaMPLE HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -858,7 +864,7 @@ So you would send the following request:
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
-    Authorization: Basic MlpGTVY0V1ZWQ1Z...
+    Authorization: Basic MlpG...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=password&username=tom%40stormpath.com&password=Secret1
@@ -1326,6 +1332,7 @@ In the event that the Access Token expires, the user can generate a new one usin
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=refresh_token&refresh_token=eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2IiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxNzIzNTk2fQ.xUjcxTZhWx74aa6adnUXjuvUgqjC8TvvrB7cBEmNF_g
@@ -1512,6 +1519,7 @@ Revoking Access and Refresh Tokens
 
       DELETE /v1/accessTokens/6NrWIs5ikmIPVJCexample HTTP/1.1
       Host: api.stormpath.com
+      Authorization: Basic MlpG...
 
     You will get back a ``204 No Content`` response back from Stormpath when the call succeeds.
 
@@ -1693,6 +1701,7 @@ Creating this Directory for Google requires that you provide information from Go
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1766,6 +1775,7 @@ Once the Authorization Code is gathered, you send this request:
 
     POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1815,6 +1825,7 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
     POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1904,6 +1915,7 @@ Creating this Directory requires that you provide information from Facebook as a
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1970,6 +1982,7 @@ Once the User Access Token is gathered, you send this request:
 
     POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2011,7 +2024,7 @@ Once the User Access Token is gathered, you send this request:
   .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token.py
     :language: python
 
-Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account.
+Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
@@ -2059,6 +2072,7 @@ Creating this Directory requires that you provide information from GitHub as a P
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2127,6 +2141,7 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
 
     POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2168,7 +2183,7 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
   .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token.py
     :language: python
 
-Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account.
+Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
@@ -2216,6 +2231,7 @@ Creating this Directory requires that you provide information from LinkedIn as a
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2284,6 +2300,7 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
 
     POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2338,6 +2355,7 @@ If you have already exchanged the code for an Access Token, you can send that in
 
     POST /v1/applications/$APPLICATION_ID/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2379,7 +2397,7 @@ If you have already exchanged the code for an Access Token, you can send that in
   .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token.py
     :language: python
 
-Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account.
+Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
 .. only:: rest
 
@@ -2410,7 +2428,11 @@ Stormpath will use the ``code`` or ``accessToken`` provided to retrieve informat
   :local:
   :depth: 2
 
-This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`.
+This section assumes that you are already familiar both with :ref:`how-login-works` and the concept of Stormpath :ref:`LDAP Directories <about-ldap-dir>`. The instructions in this section apply to all LDAP user directories, including Active Directory, with two exceptions:
+
+- If you are using an LDAP user directory in conjunction with **Active Directory Federation Services**, you will want to read the :ref:`adfs` section below.
+
+- If you are using Azure Active Directory, then you will want to read the :ref:`azure` section.
 
 Mirror Directories and LDAP
 ---------------------------
@@ -2486,6 +2508,7 @@ Step 1: Create an LDAP Directory
 
       POST /v1/directories HTTP/1.1
       Host: api.stormpath.com
+      Authorization: Basic MlpG...
       Content-Type: application/json;charset=UTF-8
 
       {
@@ -2589,7 +2612,7 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
 
 .. note::
 
-  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and it also handles authentication attempts and relays back the outcome to Stormpath.
+  In the case of Active Directory, the login process does not proceed as normal, and instead involves something called "delegated authentication". The user accounts pulled-in from an Active Directory do not include the passwords. Consequently, the LDAP Agent does double duty in the case of Active Directory: it synchronizes accounts, and also handles authentication attempts and relays the outcome back to Stormpath.
 
 .. _saml-authn:
 
@@ -3693,7 +3716,7 @@ Now we will enter the information from the Stormpath Directory that we just crea
 
 #. In the "Monitoring" tab, uncheck "Automatically update relying party" and click **Apply**.
 
-#. Switch to the "Identifiers" tab, and copy your Stormpath Directory's HREF into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
+#. Switch to the "Identifiers" tab, and copy your Stormpath Directory's href into the "Relying party identifier" text box, then click **Add**. Next click **OK**.
 
 #. Finally, go to Windows and open a Powershell window. In Powershell, enter the following command: "Set-AdfsRelyingPartyTrust -TargetName api.stormpath.com -SigningCertificateRevocationCheck None".
 
@@ -3922,6 +3945,7 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -3995,7 +4019,8 @@ In order to retrieve the required values, start by sending this request:
 
     GET /v1/directories/$DIRECTORY_ID/provider HTTP/1.1
     Host: api.stormpath.com
-    Content-Type: application/xml
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
   This will return the Provider:
 
@@ -4088,6 +4113,7 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
     GET /v1/samlServiceProviderMetadatas/$METADATA_ID HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/xml
 
   .. note::
@@ -4216,6 +4242,7 @@ You should create any URIs here that you would like included as authorized callb
 
     POST /v1/applications/$APPLICATION_ID HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -4341,6 +4368,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
     POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
 
   This request will return a response containing a JWT like this:
 
@@ -4428,6 +4456,7 @@ A request including these optional properties looks like this:
 
     POST /v1/samlServiceProviders/6voAya1BvrNeFOAeXamPle/defaultRelayStates HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
 
     {
         "callbackUri": "https://org1.myapp.com",
@@ -4625,6 +4654,7 @@ In order to create the mapping rules, you send the following request:
 
     POST /v1/attributeStatementMappingRules/$MAPPING_RULES_ID", HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -5121,7 +5151,7 @@ At this point your user is authenticated and able to use your app.
 
     GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
     Host: api.stormpath.com
-    Authorization: Basic MlpGTVY0V1ZWQ1ZHMzVYQVRJSTlUOTZKNzpYRVBKb2xobk1ZRUR3MmJTQ2ZSbkQrbnlxSyt...
+    Authorization: Basic MlpG...
 
   .. warning::
 
