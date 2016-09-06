@@ -65,7 +65,9 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
   This step is not relevant to the REST Product Guide, but would be required if you were using one of these SDKs:
 
   - `C# <https://docs.stormpath.com/csharp/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Java <https://docs.stormpath.com/java/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `PHP <https://docs.stormpath.com/php/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Python <https://docs.stormpath.com/python/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `VB.net <https://docs.stormpath.com/vbnet/product-guide/latest/quickstart.html#installing-the-sdk>`__
 
 .. only:: csharp or vbnet
