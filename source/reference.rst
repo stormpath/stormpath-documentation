@@ -369,7 +369,7 @@
     * - ``href``
       - String
       - N/A
-      - The collections's fully qualified location URL.
+      - The collection's fully qualified location URL.
 
     * - ``createdAt``
       - String
