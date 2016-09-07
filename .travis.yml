@@ -28,13 +28,18 @@ after_success:
 - test -z "$DEPLOY_DOCS" || rm -rf source/vbnet/product-guide/latest && mkdir -p source/vbnet/product-guide && cp -r ../build/html/vbnet source/vbnet/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && mkdir -p source/python/product-guide && cp -r ../build/html/python source/python/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest
-- test -z "$DEPLOY_DOCS" || rm source/rest/product-guide/latest/configuration.html && rm source/rest/product-guide/latest/configuration.txt
+- test -z "$DEPLOY_DOCS" || rm source/rest/product-guide/latest/configuration.html
 - test -z "$DEPLOY_DOCS" || cp source/rest/product-guide/latest/errorpage.html source/rest/product-guide/latest/configuration.html && rm -f source/rest/product-guide/latest/errorpage.html
-- test -z "$DEPLOY_DOCS" || rm source/csharp/product-guide/latest/reference.html && rm source/csharp/product-guide/latest/configuration.txt
-- test -z "$DEPLOY_DOCS" || rm source/java/product-guide/latest/reference.html && rm source/java/product-guide/latest/configuration.txt
-- test -z "$DEPLOY_DOCS" || rm source/php/product-guide/latest/reference.html && rm source/php/product-guide/latest/configuration.txt
-- test -z "$DEPLOY_DOCS" || rm source/python/product-guide/latest/reference.html && rm source/python/product-guide/latest/configuration.txt
-- test -z "$DEPLOY_DOCS" || rm source/vbnet/product-guide/latest/reference.html && rm source/vbnet/product-guide/latest/configuration.txt
+- test -z "$DEPLOY_DOCS" || rm source/csharp/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/csharp/product-guide/latest/errorpage.html source/csharp/product-guide/latest/reference.html && rm -f source/csharp/product-guide/latest/errorpage.html
+- test -z "$DEPLOY_DOCS" || rm source/java/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/java/product-guide/latest/errorpage.html source/java/product-guide/latest/reference.html && rm -f source/java/product-guide/latest/errorpage.html
+- test -z "$DEPLOY_DOCS" || rm source/php/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/php/product-guide/latest/errorpage.html source/php/product-guide/latest/reference.html && rm -f source/php/product-guide/latest/errorpage.html
+- test -z "$DEPLOY_DOCS" || rm source/python/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/python/product-guide/latest/errorpage.html source/python/product-guide/latest/reference.html && rm -f source/python/product-guide/latest/errorpage.html
+- test -z "$DEPLOY_DOCS" || rm source/vbnet/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/vbnet/product-guide/latest/errorpage.html source/vbnet/product-guide/latest/reference.html && rm -f source/vbnet/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || git add --all
 - test -z "$DEPLOY_DOCS" || git commit -m "stormpath-documentation release $RELEASE_VERSION"
 - test -z "$DEPLOY_DOCS" || git push origin source
