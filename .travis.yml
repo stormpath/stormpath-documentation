@@ -29,6 +29,7 @@ after_success:
 - test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && mkdir -p source/python/product-guide && cp -r ../build/html/python source/python/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm source/rest/product-guide/latest/configuration.html && rm source/rest/product-guide/latest/configuration.txt
+- test -z "$DEPLOY_DOCS" || cp source/rest/product-guide/latest/errorpage.html source/rest/product-guide/latest/configuration.html && rm -f source/rest/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || rm source/csharp/product-guide/latest/reference.html && rm source/csharp/product-guide/latest/configuration.txt
 - test -z "$DEPLOY_DOCS" || rm source/java/product-guide/latest/reference.html && rm source/java/product-guide/latest/configuration.txt
 - test -z "$DEPLOY_DOCS" || rm source/php/product-guide/latest/reference.html && rm source/php/product-guide/latest/configuration.txt
