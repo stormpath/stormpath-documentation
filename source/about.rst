@@ -18,7 +18,7 @@ By offloading user management and authentication to Stormpath, developers can br
 1.1.1. What you can do with Stormpath
 -------------------------------------
 
-Stormpath is used as a simple REST API, over HTTP. This means you can use Stormpath from any software environment. For instance, if you wanted to create a new user account with a given an email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
+Stormpath is used as a simple REST API, over HTTP. This means you can use Stormpath from any software environment. For instance, if you wanted to create a new user account with a given email address and password, you could send Stormpath an HTTP POST request and Stormpath would create a new user account for you, and store it securely on Stormpath’s cloud service.
 
 In addition to user registration and login, Stormpath can do a lot more!
 

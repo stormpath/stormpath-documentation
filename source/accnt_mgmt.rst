@@ -86,6 +86,7 @@ How to Make a Cloud Directory
 
     POST /v1/directories HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -214,7 +215,7 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, you recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
 
 1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
 
@@ -252,7 +253,7 @@ Modeling LDAP Directories
 
 As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with.
 
-The Stormpath Agent is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, you recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
+The Stormpath Agent is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`ldap-dir-authn`.
 
@@ -455,6 +456,7 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
     GET /v1/directories/$DIRECTORY_ID/groups?description=*/US* HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
 .. only:: csharp or vbnet
@@ -497,6 +499,7 @@ Or, to find all Groups in the US East region only, you would send this request:
 
     GET /v1/directories/$DIRECTORY_ID/groups?description=*/US%20East* HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
   .. note::
@@ -556,6 +559,7 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
     POST /v1/directories/2SKhstu8PlaekcaEXampLE/groups HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -740,6 +744,7 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
 
     POST /v1/directories/2SKhstu8PlaekcaEXampLE/accounts HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -864,6 +869,7 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
 
     POST /v1/groupMemberships HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1205,6 +1211,7 @@ For example, you could add information about this user's current location, like 
 
     POST /v1/accounts/3apenYvL0Z9v9spExAMpLe/customData HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1385,6 +1392,7 @@ A Filter search will locate the specified string in any searchable attribute of 
 
     GET /v1/applications/1gk4Dxzi6o4Pbdlexample/accounts?q=luc HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
   .. note::
@@ -1504,6 +1512,7 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
 
     GET /v1/directories/accounts?status=DISABLED HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
   **Response**
@@ -1595,6 +1604,7 @@ Datetime Search is used when you want to search for Accounts that have a certain
 
     GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?modifiedAt=2015-12-01 HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
   .. note::
@@ -1786,6 +1796,7 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
 
     GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?customData.startDate=[2012,2015]&limit=5&offset=0 HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
 This query will match Accounts with a ``startDate`` value between ``2012-01-01`` and ``2015-12-31``. Additionally, only the top five Accounts will be returned from the result set, with an ``offset`` of ``0``.
@@ -1824,6 +1835,7 @@ Changing the Password Strength resource for a Directory modifies the requirement
 
     POST v1/passwordPolicies/$DIRECTORY_ID/strength HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -1922,6 +1934,7 @@ At no point is the user shown, or does Stormpath have access to, the original pa
 
     POST /v1/accounts/3apenYvL0Z9v9spexAmple HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -2002,6 +2015,7 @@ There are three steps to the password reset flow:
 
     POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -2016,6 +2030,7 @@ There are three steps to the password reset flow:
 
       POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens HTTP/1.1
       Host: api.stormpath.com
+      Authorization: Basic MlpG...
       Content-Type: application/json
 
       {
@@ -2171,6 +2186,7 @@ Once the user clicks this link, your controller should retrieve the token from t
 
     GET /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
   This would result in the exact same ``HTTP 200`` success response as when the token was first generated above.
@@ -2227,6 +2243,7 @@ After verifying that the token from the query string is valid, you can direct th
 
     POST /v1/applications/1gk4Dxzi6o4Pbdlexample/passwordResetTokens/eyJraWQiOiIxZ0JUbmNXc[...] HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2293,6 +2310,7 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
     POST /v1/passwordPolicies/$DIRECTORY_ID HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -2387,8 +2405,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
 
     GET /v1/directories/2SKhstu8PlaekcaEXampLE/accounts?passwordModifiedAt=[,2016) HTTP/1.1
     Host: api.stormpath.com
-
-.. only:: csharp
+    Authorization: Basic MlpG...
+    Content-Type: application/json.. only:: csharp
 
   .. literalinclude:: code/csharp/account_management/search_password_modified.cs
     :language: csharp
@@ -2466,6 +2484,8 @@ Stormpath can store historical password information in order to allow for restri
 
     POST /v1/passwordPolicies/2SKhstu8PlaekcaEXampLE/strength HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
     {
         "preventReuse": "10"
@@ -2657,9 +2677,11 @@ In order to verify an Account’s email address, an ``emailVerificationToken`` m
 3.6.4. Verifying the Email Address (Consuming The Token)
 --------------------------------------------------------
 
-The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter::
+The email that is sent upon Account creation contains a link to the base URL that you've configured, along with the ``sptoken`` query string parameter. By default, it looks like this:
 
-  http://www.yourapplicationurl.com/path/to/validator/?sptoken=$VERIFICATION_TOKEN
+  https://api.stormpath.com/emailVerificationTokens?sptoken=$VERIFICATION_TOKEN
+
+If you were to click this URL now, it would simply open up a page telling us that the Account had been verified. However, we can use this URL in order to verify the Account and also retrieve the Account information.
 
 .. only:: rest
 
@@ -2673,6 +2695,7 @@ The email that is sent upon Account creation contains a link to the base URL tha
 
     POST /v1/accounts/emailVerificationTokens/6YJv9XBH1dZGP5A8rq7Zyl HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
   .. code-block:: http
@@ -2770,6 +2793,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
     POST /v1/applications/1gk4Dxzi6o4Pbdlexample/verificationEmails HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json;charset=UTF-8
 
     {
@@ -3046,6 +3070,7 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
     POST /v1/emailTemplates/2jwPxFsnjqxYrojexample HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -3261,6 +3286,7 @@ In addition to the location and port of the server, you must also pass valid cre
 
     POST /v1/smtpServers HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -3516,6 +3542,7 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
 
     POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {
@@ -3616,6 +3643,7 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
     POST /v1/accountCreationPolicies/2SKhstu8PlaekcaEXampLE HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/json
 
     {

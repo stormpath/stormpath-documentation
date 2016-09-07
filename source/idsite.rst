@@ -25,6 +25,17 @@ Building, securing, and maintaining identity screens for your users is time cons
 
 Stormpath ID Site fully decouples your identity screens from your applications, making it incredibly easy to provide the same login / registration pages for multiple applications — achieving centralized user management and authentication with a clean and easy user experience.
 
+Browser Support
+---------------
+
+ID Site will work in the following web browser environments:
+
+- Chrome (all versions)
+- Internet Explorer 10+
+- Firefox 23+
+- Safari 8+
+- Android Browser, if Android version is 4.1 (Jellybean) or greater
+
 7.2. How does ID Site Work?
 ===========================
 
@@ -642,6 +653,7 @@ In this situation, after the user has been authenticated via ID Site, a develope
 
     POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
     Host: api.stormpath.com
+    Authorization: Basic MlpG...
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=stormpath_token&token={$JWT_FROM_ID_SITE}
