@@ -2676,10 +2676,6 @@ For a more detailed step-by-step account of SAML login, see :ref:`below <saml-fl
 4.5.2. Configuring SAML
 -----------------------
 
-.. todo::
-
-  Update with IdP-initiated flow information once available.
-
 This section will show you how to set-up Stormpath to allow your users to log in with a SAML-enabled Identity Provider (IdP). It assumes that you have two things:
 
 - A Stormpath account with at least an Advanced plan
