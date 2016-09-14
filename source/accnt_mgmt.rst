@@ -215,7 +215,7 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, you recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
 
 1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
 
@@ -253,7 +253,7 @@ Modeling LDAP Directories
 
 As Mirror Directories, LDAP Directories must have the same structure as the external LDAP directories that they are synchronizing with.
 
-The Stormpath Agent is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, you recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
+The Stormpath Agent is regularly updating its LDAP Directory and sometimes adding new user Accounts and/or Groups. Because this data can be quite fluid, we recommend initiating all provisioning, linking, and synchronization on a successful login attempt of the Account in the LDAP Directory. This means that the master Directory would start off empty, and would then gradually become populated every time a user logged in.
 
 For more information on how to this works, please see :ref:`ldap-dir-authn`.
 

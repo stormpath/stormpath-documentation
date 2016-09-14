@@ -19,30 +19,22 @@
 </noscript>
 <!-- End Facebook Pixel Code -->
 
-<!-- Algolia Search Header Code -->
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
-
-<!-- End Algolia Search Header Code -->
-
 {% endblock %}
 
-{# block body}
+{% block footer %}
 
-<!-- Algolia Search Body Code -->
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NQZZFW"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
-
-<script type="text/javascript"> docsearch({
-  apiKey: 'fe00029900e0fafe2046298d041c7586',
-  indexName: 'stormpath',
-  inputSelector: '### REPLACE ME ####',
-  debug: false // Set debug to true if you want to inspect the dropdown
-});
-
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NQZZFW');
 </script>
-
-<!-- End Algolia Search Body Code -->
+<!-- End Google Tag Manager -->
 
 {% endblock %}
 
