@@ -4703,7 +4703,7 @@
 
     **Note 2**
 
-    The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`.
+    The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`.
 
   Retrieve an Account
   ^^^^^^^^^^^^^^^^^^^
@@ -4778,7 +4778,7 @@
              "status" : "ENABLED",
     }'
 
-  This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <http://docs.stormpath.com/console/product-guide/#directory-workflows>`__.
+  This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__.
 
   **Example Description**
 
