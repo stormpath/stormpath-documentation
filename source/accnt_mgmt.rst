@@ -305,7 +305,7 @@ How to Make an LDAP Directory
 
 .. only:: python
 
-  LDAP Directories can be made using the Stormpath Admin Console, or using the Python SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+  LDAP Directories can be made using the Stormpath Admin Console, or using the Python SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
 
   Here's how you can create an LDAP Directory:
 
@@ -314,7 +314,7 @@ How to Make an LDAP Directory
 
 .. only:: rest or csharp or vbnet or php
 
-  LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+  LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
 
   For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
@@ -337,11 +337,11 @@ How to Make a Social Directory
 
 .. only:: rest
 
-  Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+  Social Directories can be made using the Stormpath Admin Console, or using the REST API. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
 
 .. only:: not rest
 
-  Social Directories can be made using the Stormpath Admin Console, or using the |language| SDK. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#create-a-directory>`_.
+  Social Directories can be made using the Stormpath Admin Console, or using the |language| SDK. For more information about creating them with the Admin Console please see the `Directories section of the Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
 
 .. only:: rest
 
@@ -1823,7 +1823,7 @@ In Stormpath, password policies are defined on a Directory level. Specifically, 
 
 .. note::
 
-  This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
+  This section assumes a basic familiarity with Stormpath Workflows. For more information about Workflows, please see `the Directory Workflows section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`_.
 
 Changing the Password Strength resource for a Directory modifies the requirement for new Accounts and password changes on existing Accounts in that Directory.
 
@@ -1990,7 +1990,7 @@ For more information about resetting the password, read on.
 3.4.3. Password Reset
 ---------------------
 
-Password Reset in Stormpath is a self-service flow, where the user is sent an email with a secure link. The user can then click that link and be shown a password reset form. The password reset workflow involves changes to an account at an application level, and as such, this workflow relies on the application resource as a starting point. While this workflow is disabled by default, you can enable it easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console product guide <http://docs.stormpath.com/console/product-guide/#password-reset>`__ for complete instructions.
+Password Reset in Stormpath is a self-service flow, where the user is sent an email with a secure link. The user can then click that link and be shown a password reset form. The password reset workflow involves changes to an account at an application level, and as such, this workflow relies on the application resource as a starting point. While this workflow is disabled by default, you can enable it easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console product guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#password-reset>`__ for complete instructions.
 
 How to Reset a Password
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -2638,7 +2638,7 @@ If you now tried to create another Account by passing only an ``email`` and ``pa
 3.6. How to Verify an Account's Email
 =====================================
 
-If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_.
+If you want to verify that an Account’s email address is valid and that the Account belongs to a real person, Stormpath can help automate this for you using `Workflows <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`_.
 
 3.6.1. The Email Verification Workflow
 --------------------------------------
@@ -2667,7 +2667,7 @@ It is also expected that the workflow’s **Account Verification Base URL** has 
 3.6.2. Configuring the Verification Workflow
 ---------------------------------------------
 
-This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/#directory-workflows>`_ for complete instructions.
+This workflow is disabled by default on Directories, but you can enable it, and set up the account verification base URL, easily in the Stormpath Admin Console UI. Refer to the `Stormpath Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`_ for complete instructions.
 
 3.6.3. Triggering the Verification Email (Creating A Token)
 -----------------------------------------------------------

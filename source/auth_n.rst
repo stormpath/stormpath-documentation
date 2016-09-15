@@ -4190,7 +4190,7 @@ Your Stormpath Application Resource has two parts that are relevant to SAML:
 
 1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself.
 
-You should create any URIs here that you would like included as authorized callback URIs.
+You should create any URIs here that you would like included as authorized callback URIs, to a maximum of 4000 characters in total length.
 
 .. only:: csharp or vbnet
 
