@@ -20,6 +20,13 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-09-15
+  ==========
+
+  - **Modified:** ID Site Self-Hosting instructions moved to `Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/idsite.html#hosting-id-site-yourself>`__.
+  - **Modified:** All IdP-specific SAML configuration instructions moved to `Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#azure-active-directory>`__.
+
+
   2016-08-22
   ==========
 
@@ -120,7 +127,7 @@
   ==========
 
   - **New:** Added new SAML Authentication :ref:`configuration instructions for Ping Identity <ping>`.
-  - **New:** Added information about :ref:`Mapping SAML Attributes for Okta <okta-attribute-mapping>`.
+  - **New:** Added information about Mapping SAML Attributes for Okta.
 
   2016-04-21
   ==========

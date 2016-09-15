@@ -183,7 +183,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: rest
 
-  These instructions assume that you have `cURL <http://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps above, and now have:
+  These instructions assume that you have `cURL <https://curl.haxx.se/download.html>`_ installed on your system and that you have already completed the steps above, and now have:
 
 .. only:: csharp or vbnet
 
@@ -567,7 +567,7 @@ Now we have a user Account that can use your Application. But how do you authent
     byte[] bytes = concatenated.to_byte_array();
     String value = base64_encode( bytes );
 
-  For example, if you used the ``tk421`` username and ``Changeme1`` password from above when creating your first account, you might compute the ``value`` using `OpenSSL <http://www.openssl.org/>`__ this way:
+  For example, if you used the ``tk421`` username and ``Changeme1`` password from above when creating your first account, you might compute the ``value`` using `OpenSSL <https://www.openssl.org/>`__ this way:
 
   .. code-block:: bash
 
