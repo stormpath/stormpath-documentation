@@ -1035,9 +1035,6 @@ In this example we will demonstrate the Password Grant Type:
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
 
-  .. todo::
-    (node.todo)
-
 .. only:: php
 
   Which would result in this response:
