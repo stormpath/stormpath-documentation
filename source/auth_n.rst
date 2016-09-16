@@ -2965,7 +2965,7 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: nodejs
 
-  This will return the Provider:
+  This will print the provider metadata in your terminal:
 
   .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp.js
       :language: javascript
@@ -2977,7 +2977,9 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
-Now you will need to retrieve your Directory Provider's Service Provider Metadata:
+.. only:: not nodejs
+
+  Now you will need to retrieve your Directory Provider's Service Provider Metadata:
 
 .. only:: csharp or vbnet
 
@@ -3003,11 +3005,6 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
   .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_req.java
       :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/get_serviceprovider_metadata_req.js
-      :language: javascript
 
 .. only:: php
 
@@ -3086,7 +3083,7 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
 From this metadata, you will need two values:
 
-- **Assertion Consumer Service URL**: This is the location the IdP will send its response to.
+- **Assertion Consumer Service Endpoint**: This is the location the IdP will send its response to.
 - **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it.
 
 You will also need two other values, which will always be the same:
@@ -3204,6 +3201,11 @@ You should create any URIs here that you would like included as authorized callb
   .. literalinclude:: code/nodejs/authentication/saml_policy_example.js
       :language: javascript
 
+  This will print the saml policy resource in your terminal:
+
+  .. literalinclude:: code/nodejs/authentication/saml_policy_example_res.js
+      :language: javascript
+
 .. only:: php
 
   .. literalinclude:: code/php/authentication/saml_policy_example.php
@@ -3218,8 +3220,9 @@ You should create any URIs here that you would like included as authorized callb
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+.. only:: not nodejs
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
+  To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
 .. only:: php
 
@@ -3266,6 +3269,10 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: nodejs
 
+  To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` from
+  our REST API.  This is done by making a POST request against the ``serviceProvider`` resource, as found in
+  the application's ``samlPolicy``.  As such, we can make the request like this:
+
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_req.js
       :language: javascript
 
@@ -3301,7 +3308,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: nodejs
 
-  This request will return a response containing a JWT like this:
+  This will print the new `defaultRelayState` value in your terminal:
 
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
@@ -3468,16 +3475,10 @@ The rules have three different components:
 
 .. only:: nodejs
 
-    The ability to modify attribute mappings is not yet available in the Node.js SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+  Attribute mapping rule are simple objects, that can be defined like this:
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
-
-  .. todo:
-
-    The rule expressed here is as follows:
-
-    (node.todo)
 
 .. only:: php
 
@@ -3518,7 +3519,9 @@ The rules have three different components:
 
     It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-In order to create the mapping rules, you send the following request:
+.. only:: not nodejs
+
+  In order to create the mapping rules, you send the following request:
 
 .. only:: csharp or vbnet
 
@@ -3546,6 +3549,10 @@ In order to create the mapping rules, you send the following request:
       :language: java
 
 .. only:: nodejs
+
+  To add this mapping rule to the directory, first fetch the ``provider`` while
+  expanding ``attributeStatementMappingRules``, then push the new rule onto this
+  collection, and save the provider:
 
   .. literalinclude:: code/nodejs/authentication/create_mapping_rule.js
       :language: javascript
