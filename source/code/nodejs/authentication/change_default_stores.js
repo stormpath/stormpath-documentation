@@ -1,17 +1,16 @@
-var accountStore = {
-  href: '1NUhrCPT0q66bjyexample'
-};
-
-application.setDefaultAccountStore(accountStore, function (err) {
+application.getAccountStoreMappings(function (err, mappingsCollection) {
   if (err) {
     return console.error(err);
   }
 
-  application.setDefaultGroupStore(accountStore, function (err) {
+  var secondMapping = mappingsCollection.items[1].accountStore;
+
+  application.setDefaultAccountStore(secondMapping, function (err) {
     if (err) {
       return console.error(err);
     }
 
-    console.log('Account and group store mappings set.');
+    console.log('Default account store was changed.');
   });
+
 });

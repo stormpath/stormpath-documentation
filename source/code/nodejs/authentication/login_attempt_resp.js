@@ -1,1 +1,0 @@
-Authenticated as account (account href)

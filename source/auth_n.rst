@@ -145,18 +145,22 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below.
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below:
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
 
-  .. note::
+  This works as expected because the "Captains" directory is mapped to the application.
+  If there are multiple directories or organizations mapped to the application, they
+  will be searched in order (more on that :ref:`below <how-login-works>`).  You
+  can skip the searching and target a specific account store by ``href``:
 
-    When authenticating the account is always automatically expanded.
+  .. literalinclude:: code/nodejs/authentication/login_attempt_ash.js
+      :language: javascript
 
-  If authentication succeeded, you would receive back ... (todo)
+  Or by the ``nameKey`` of an Organization:
 
-  .. literalinclude:: code/nodejs/authentication/login_attempt_resp.js
+  .. literalinclude:: code/nodejs/authentication/login_attempt_onk.js
       :language: javascript
 
 .. only:: php
@@ -350,7 +354,8 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` collection:
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` method
+  of an Application instance:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
@@ -384,7 +389,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  This will return the Account Store Mapping:
+  This will print the list of account store mappings in your console:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_resp.js
       :language: javascript
@@ -571,7 +576,16 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
 .. only:: nodejs
 
+  You can use the ``setDefaultAccountStore()`` method of an Application instance
+  to take an existing account store instance, and set the flag on it:
+
   .. literalinclude:: code/nodejs/authentication/change_default_stores.js
+      :language: javascript
+
+  If you know the ``href`` of the account store, but don't already have an instance
+  of it, you can also pass an object literal with the ``href`` value:
+
+  .. literalinclude:: code/nodejs/authentication/change_default_stores_literal.js
       :language: javascript
 
 .. only:: php
