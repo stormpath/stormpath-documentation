@@ -788,11 +788,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp.js
-      :language: javascript
-
 .. only:: php
 
   And you would get the following response:
@@ -870,7 +865,9 @@ In this example we will demonstrate the Password Grant Type:
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
 - When Stormpath returns with the Access Token Response, you can then return the Access Token and/or the Refresh Token to the client.
 
-So you would send the following request:
+.. only:: not nodejs
+
+  So you would send the following request:
 
 .. only:: rest
 
@@ -917,6 +914,16 @@ So you would send the following request:
     Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``setAccountStore(AccountStore accountStore)`` method when you are building the request.
 
 .. only:: nodejs
+
+  The first step is to create a re-usable password grant authenticator, which is
+  bound to an application, so you must pass an application instance to it:
+
+  .. literalinclude:: code/nodejs/authentication/create_password_grant_authenticator.js
+      :language: javascript
+
+  Once you have an authenticator, you can pass authentication attempts to it.
+  If the users credentials are correct, you will receive an authentication result,
+  which contains the access token:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
       :language: javascript
@@ -1023,7 +1030,7 @@ So you would send the following request:
 
 .. only:: nodejs
 
-  Which would result in this response:
+  Which would print the access token in the terminal:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
@@ -1233,13 +1240,19 @@ Using Stormpath to Validate Tokens
     2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
     The user now attempts to access a secured resource:
+    We need to create a new authenticator, but this time it will be a JWT authenticator
+    that can authenticate tokens that have already been generated.  This authenticator
+    is also bound to an application (the same one that you used to generate the token),
+    and is created like this:
 
-    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
+    .. literalinclude:: code/nodejs/authentication/create_jwt_authenticator.js
       :language: javascript
 
-    If the access token can be validated, Stormpath will return this:
+    Now we can pass access tokens to this authenticator.  If they are valid we
+    can use the authentication result to fetch the account that has authenticated
+    with the token:
 
-    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
+    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
       :language: javascript
 
   .. only:: php
@@ -1313,6 +1326,8 @@ Validating the Token Locally
 
   .. only:: nodejs
 
+    To use local validation, enable local validation when creating a JWT authenticator:
+
     .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local.js
         :language: javascript
 
@@ -1372,6 +1387,14 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: nodejs
 
+  Again, we will create an authenticator. This time we will create a refresh token
+  authenticator:
+
+  .. literalinclude:: code/nodejs/authentication/create_refresh_token_authenticator.js
+    :language: javascript
+
+  And we will use the authenticator to get a new access token, by passing the refresh token to it:
+
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_req.js
     :language: javascript
 
@@ -1415,7 +1438,7 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: nodejs
 
-  This would be the response:
+  The new access token will be printed in the terminal:
 
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp.js
     :language: javascript
@@ -1560,14 +1583,36 @@ Revoking Access and Refresh Tokens
 
   .. only:: nodejs
 
-    To revoke the token, send the following request:
+    To revoke a token you need to delete it from the REST API, which means you need to
+    obtain the ``href`` of the token. Access Tokens and Refresh Tokens are like all other resources
+    in the Stormpath REST API, and they have an ``href`` value.  The format of the
+    ``href`` will be one of:
+
+    .. code-block:: javascript
+
+      'https://api.stormpath.com/v1/accessTokens/:jti'
+      'https://api.stormpath.com/v1/refreshTokens/:jti'
+
+    Where the ``jti`` is in the claims body of the token (you must unpack the JWT
+    to look inside the claims body).  If you already know the ``href`` of the token
+    resource, you can quickly fetch it and then delete it:
+
+    .. literalinclude:: code/nodejs/authentication/delete-access-token.js
+      :language: javascript
+
+    The same can be done for refresh tokens, using ``client.getRefreshToken()`` instead.
+
+    If you want to delete all the access tokens for and account, you would
+    iterate over all the account's access tokens and delete each one:
+
 
     .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
       :language: javascript
 
-    If successful, ``err`` will be ``null`` and the following will be written to console:
+    If you have the actual token, as a JWT  string, you can determine the ``href``
+    by unpacking the token, and building the ``href`` from the ``jti`` claim that is in the token:
 
-    .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
+    .. literalinclude:: code/nodejs/authentication/get-token-jti.js
       :language: javascript
 
   .. only:: php

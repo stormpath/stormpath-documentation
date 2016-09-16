@@ -1,1 +1,0 @@
-Got authentication result! (JwtAuthenticationResult)

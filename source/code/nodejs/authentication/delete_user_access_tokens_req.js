@@ -1,13 +1,16 @@
-accessTokenToDelete.delete(function (err) {
+account.getAccessTokens(function (er, accessTokenCollection) {
+
   if (err) {
     return console.error(err);
   }
 
-  refreshTokenToDelete.delete(function (err) {
+  accessTokenCollection.each(function(accessToken, next){
+    accessToken.delete(next);
+  }, function done(err) {
     if (err) {
       return console.error(err);
     }
 
-    console.log('Access and refresh tokens deleted!');
+    console.log('All access tokens have been deleted');
   });
 });
