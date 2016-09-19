@@ -1,12 +1,9 @@
-var authRequest = {
-    username: 'han@newrepublic.gov',
-    password: 'first2shoot!'
+var authenticationRequest = {
+  username: 'foo@example.com',
+  password: 'p@ssword!1'
 };
 
-application.authenticateAccount(authRequest, function (err, authResult) {
-  if (err) {
-    return console.error(err);
-  }
-
-  return console.log('Authenticated with access token', authResult.getAccessToken());
+authenticator.authenticate(authenticationRequest, function(err, oAuthPasswordGrantAuthenticationResult) {
+  var accessToken = oAuthPasswordGrantAuthenticationResult.accessTokenResponse.access_token;
+  console.log(accessToken);
 });

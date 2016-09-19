@@ -145,18 +145,22 @@ After an Account resource has been created, you can authenticate it given an inp
 
 .. only:: nodejs
 
-  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below.
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``application.authenticateAccount(authRequest, callback)`` method as shown below:
 
   .. literalinclude:: code/nodejs/authentication/login_attempt_req.js
       :language: javascript
 
-  .. note::
+  This works as expected because the "Captains" directory is mapped to the application.
+  If there are multiple directories or organizations mapped to the application, they
+  will be searched in order (more on that :ref:`below <how-login-works>`).  You
+  can skip the searching and target a specific account store by ``href``:
 
-    When authenticating the account is always automatically expanded.
+  .. literalinclude:: code/nodejs/authentication/login_attempt_ash.js
+      :language: javascript
 
-  If authentication succeeded, you would receive back ... (todo)
+  Or by the ``nameKey`` of an Organization:
 
-  .. literalinclude:: code/nodejs/authentication/login_attempt_resp.js
+  .. literalinclude:: code/nodejs/authentication/login_attempt_onk.js
       :language: javascript
 
 .. only:: php
@@ -350,7 +354,8 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` collection:
+  You can find all the Account Store Mappings for an Application by using the ``getAccountStoreMappings()`` method
+  of an Application instance:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_req.js
       :language: javascript
@@ -384,7 +389,7 @@ The reason why your user "Han Solo" was able to log in to your application is be
 
 .. only:: nodejs
 
-  This will return the Account Store Mapping:
+  This will print the list of account store mappings in your console:
 
   .. literalinclude:: code/nodejs/authentication/get_asm_resp.js
       :language: javascript
@@ -571,7 +576,16 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
 .. only:: nodejs
 
+  You can use the ``setDefaultAccountStore()`` method of an Application instance
+  to take an existing account store instance, and set the flag on it:
+
   .. literalinclude:: code/nodejs/authentication/change_default_stores.js
+      :language: javascript
+
+  If you know the ``href`` of the account store, but don't already have an instance
+  of it, you can also pass an object literal with the ``href`` value:
+
+  .. literalinclude:: code/nodejs/authentication/change_default_stores_literal.js
       :language: javascript
 
 .. only:: php
@@ -774,11 +788,6 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
       "comment":" // This JSON has been truncated for readability"
     }
 
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/update_oauth_ttl_resp.js
-      :language: javascript
-
 .. only:: php
 
   And you would get the following response:
@@ -856,7 +865,9 @@ In this example we will demonstrate the Password Grant Type:
 - Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
 - When Stormpath returns with the Access Token Response, you can then return the Access Token and/or the Refresh Token to the client.
 
-So you would send the following request:
+.. only:: not nodejs
+
+  So you would send the following request:
 
 .. only:: rest
 
@@ -903,6 +914,16 @@ So you would send the following request:
     Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``setAccountStore(AccountStore accountStore)`` method when you are building the request.
 
 .. only:: nodejs
+
+  The first step is to create a re-usable password grant authenticator, which is
+  bound to an application, so you must pass an application instance to it:
+
+  .. literalinclude:: code/nodejs/authentication/create_password_grant_authenticator.js
+      :language: javascript
+
+  Once you have an authenticator, you can pass authentication attempts to it.
+  If the users credentials are correct, you will receive an authentication result,
+  which contains the access token:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
       :language: javascript
@@ -1009,13 +1030,10 @@ So you would send the following request:
 
 .. only:: nodejs
 
-  Which would result in this response:
+  Which would print the access token in the terminal:
 
   .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
       :language: javascript
-
-  .. todo::
-    (node.todo)
 
 .. only:: php
 
@@ -1219,13 +1237,19 @@ Using Stormpath to Validate Tokens
     2. Received back an **Access Token Response**, which contained - among other things - an **Access Token** in JWT format.
 
     The user now attempts to access a secured resource:
+    We need to create a new authenticator, but this time it will be a JWT authenticator
+    that can authenticate tokens that have already been generated.  This authenticator
+    is also bound to an application (the same one that you used to generate the token),
+    and is created like this:
 
-    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
+    .. literalinclude:: code/nodejs/authentication/create_jwt_authenticator.js
       :language: javascript
 
-    If the access token can be validated, Stormpath will return this:
+    Now we can pass access tokens to this authenticator.  If they are valid we
+    can use the authentication result to fetch the account that has authenticated
+    with the token:
 
-    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_resp.js
+    .. literalinclude:: code/nodejs/authentication/validate_oauth_token_sp_req.js
       :language: javascript
 
   .. only:: php
@@ -1299,6 +1323,8 @@ Validating the Token Locally
 
   .. only:: nodejs
 
+    To use local validation, enable local validation when creating a JWT authenticator:
+
     .. literalinclude:: code/nodejs/authentication/validate_oauth_token_local.js
         :language: javascript
 
@@ -1358,6 +1384,14 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: nodejs
 
+  Again, we will create an authenticator. This time we will create a refresh token
+  authenticator:
+
+  .. literalinclude:: code/nodejs/authentication/create_refresh_token_authenticator.js
+    :language: javascript
+
+  And we will use the authenticator to get a new access token, by passing the refresh token to it:
+
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_req.js
     :language: javascript
 
@@ -1401,7 +1435,7 @@ In the event that the Access Token expires, the user can generate a new one usin
 
 .. only:: nodejs
 
-  This would be the response:
+  The new access token will be printed in the terminal:
 
   .. literalinclude:: code/nodejs/authentication/refresh_access_token_resp.js
     :language: javascript
@@ -1546,14 +1580,36 @@ Revoking Access and Refresh Tokens
 
   .. only:: nodejs
 
-    To revoke the token, send the following request:
+    To revoke a token you need to delete it from the REST API, which means you need to
+    obtain the ``href`` of the token. Access Tokens and Refresh Tokens are like all other resources
+    in the Stormpath REST API, and they have an ``href`` value.  The format of the
+    ``href`` will be one of:
+
+    .. code-block:: javascript
+
+      'https://api.stormpath.com/v1/accessTokens/:jti'
+      'https://api.stormpath.com/v1/refreshTokens/:jti'
+
+    Where the ``jti`` is in the claims body of the token (you must unpack the JWT
+    to look inside the claims body).  If you already know the ``href`` of the token
+    resource, you can quickly fetch it and then delete it:
+
+    .. literalinclude:: code/nodejs/authentication/delete-access-token.js
+      :language: javascript
+
+    The same can be done for refresh tokens, using ``client.getRefreshToken()`` instead.
+
+    If you want to delete all the access tokens for and account, you would
+    iterate over all the account's access tokens and delete each one:
+
 
     .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_req.js
       :language: javascript
 
-    If successful, ``err`` will be ``null`` and the following will be written to console:
+    If you have the actual token, as a JWT  string, you can determine the ``href``
+    by unpacking the token, and building the ``href`` from the ``jti`` claim that is in the token:
 
-    .. literalinclude:: code/nodejs/authentication/delete_user_access_tokens_resp.js
+    .. literalinclude:: code/nodejs/authentication/get-token-jti.js
       :language: javascript
 
   .. only:: php
@@ -2906,7 +2962,7 @@ In order to retrieve the required values, start by sending this request:
 
 .. only:: nodejs
 
-  This will return the Provider:
+  This will print the provider metadata in your terminal:
 
   .. literalinclude:: code/nodejs/authentication/get_directory_provider_resp.js
       :language: javascript
@@ -2918,7 +2974,9 @@ In order to retrieve the required values, start by sending this request:
   .. literalinclude:: code/php/authentication/get_directory_provider_resp.php
     :language: php
 
-Now you will need to retrieve your Directory Provider's Service Provider Metadata:
+.. only:: not nodejs
+
+  Now you will need to retrieve your Directory Provider's Service Provider Metadata:
 
 .. only:: csharp or vbnet
 
@@ -2944,11 +3002,6 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
   .. literalinclude:: code/java/authentication/get_serviceprovider_metadata_req.java
       :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/get_serviceprovider_metadata_req.js
-      :language: javascript
 
 .. only:: php
 
@@ -3027,7 +3080,7 @@ Now you will need to retrieve your Directory Provider's Service Provider Metadat
 
 From this metadata, you will need two values:
 
-- **Assertion Consumer Service URL**: This is the location the IdP will send its response to.
+- **Assertion Consumer Service Endpoint**: This is the location the IdP will send its response to.
 - **X509 Signing Certificate**: The certificate that is used to sign the requests sent to the IdP. If you retrieve XML, the certificate will be embedded. If you retrieve JSON, you'll have to follow a further ``/x509certificates`` link to retrieve it.
 
 You will also need two other values, which will always be the same:
@@ -3145,6 +3198,11 @@ You should create any URIs here that you would like included as authorized callb
   .. literalinclude:: code/nodejs/authentication/saml_policy_example.js
       :language: javascript
 
+  This will print the saml policy resource in your terminal:
+
+  .. literalinclude:: code/nodejs/authentication/saml_policy_example_res.js
+      :language: javascript
+
 .. only:: php
 
   .. literalinclude:: code/php/authentication/saml_policy_example.php
@@ -3159,8 +3217,9 @@ You should create any URIs here that you would like included as authorized callb
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+.. only:: not nodejs
 
-To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
+  To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
 
 .. only:: php
 
@@ -3207,6 +3266,10 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: nodejs
 
+  To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` from
+  our REST API.  This is done by making a POST request against the ``serviceProvider`` resource, as found in
+  the application's ``samlPolicy``.  As such, we can make the request like this:
+
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_req.js
       :language: javascript
 
@@ -3242,7 +3305,7 @@ To configure your IdP for IdP-initiated authentication, you will need to get a `
 
 .. only:: nodejs
 
-  This request will return a response containing a JWT like this:
+  This will print the new `defaultRelayState` value in your terminal:
 
   .. literalinclude:: code/nodejs/authentication/get_default_relay_state_resp.js
       :language: javascript
@@ -3409,16 +3472,10 @@ The rules have three different components:
 
 .. only:: nodejs
 
-    The ability to modify attribute mappings is not yet available in the Node.js SDK. Please use the Stormpath Admin Console, or see the REST API instructions below.
+  Attribute mapping rule are simple objects, that can be defined like this:
 
   .. literalinclude:: code/nodejs/authentication/example_saml_rule.js
       :language: javascript
-
-  .. todo:
-
-    The rule expressed here is as follows:
-
-    (node.todo)
 
 .. only:: php
 
@@ -3459,7 +3516,9 @@ The rules have three different components:
 
     It is possible to specify only a ``name`` or ``nameFormat`` in your rule, instead of both.
 
-In order to create the mapping rules, you send the following request:
+.. only:: not nodejs
+
+  In order to create the mapping rules, you send the following request:
 
 .. only:: csharp or vbnet
 
@@ -3487,6 +3546,10 @@ In order to create the mapping rules, you send the following request:
       :language: java
 
 .. only:: nodejs
+
+  To add this mapping rule to the directory, first fetch the ``provider`` while
+  expanding ``attributeStatementMappingRules``, then push the new rule onto this
+  collection, and save the provider:
 
   .. literalinclude:: code/nodejs/authentication/create_mapping_rule.js
       :language: javascript
