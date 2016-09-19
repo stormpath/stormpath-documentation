@@ -2490,6 +2490,25 @@ This section assumes that you are already familiar both with :ref:`how-login-wor
 
 - If you are using Azure Active Directory, then you will want to read the :ref:`azure` section.
 
+The LDAP Authentication Flow
+----------------------------
+
+There are two different authentication flows for LDAP directories: one for Active Directory, and another for all other directories that use the LDAP protocol.
+
+**LDAP**
+
+.. figure:: images/auth_n/ldap_vanilla_seq.png
+  :align: center
+  :scale: 100%
+  :alt: Non-AD LDAP Auth Sequence
+
+**Active Directory Authentication**
+
+.. figure:: images/auth_n/ldap_ad_seq.png
+  :align: center
+  :scale: 100%
+  :alt: AD LDAP Auth Sequence
+
 Mirror Directories and LDAP
 ---------------------------
 
