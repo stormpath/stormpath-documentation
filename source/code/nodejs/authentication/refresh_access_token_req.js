@@ -1,21 +1,11 @@
-var refreshGrantRequest = OauthRequests.NewRefreshGrantRequest()
-    .SetRefreshToken(refresh_token)
-    .Build();
-
-var grantResponse = await app.NewRefreshGrantAuthenticator()
-    .AuthenticateAsync(refreshGrantRequest);
-
-
-var authRequest = {
-  refresh_token: refresh_token
+var tokenRequest = {
+  refresh_token: 'eyJraWQiOiI2NldURFJVM1paSkNZVFJVVlZTUUw3WEJOIiwic3R0IjoicmVmcmVzaCIsImFsZyI6IkhTMjU2In0.eyJqdGkiOiI1UDNSMTh6RUVveXlUTkszZTQ1YVVlIiwiaWF0IjoxNDcwMjY4MDcyLCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8yNGs3SG5ET3o0dFE5QVJzQnRQVU42Iiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8yRWRHb3htbGpuODBlRHZjM0JzS05EIiwiZXhwIjoxNDcwMzU0NDcyfQ.P0nswcR4FgHxYILZZP8uqwGGzI3Jym5Co8YkntYjoTI'
 };
 
-var authenticator = new stormpath.OAuthRefreshTokenGrantRequestAuthenticator(application);
-
-authenticator.authenticate(authRequest, function (err, authResult) {
+refreshTokenAuthenticator.authenticate(tokenRequest, function (err, oAuthRefreshTokenGrantAuthenticationResult) {
   if (err) {
     return console.error(err);
   }
 
-  console.log('Got access token!', authResult.accessToken.compact());
+  console.log(oAuthRefreshTokenGrantAuthenticationResult.accessTokenResponse.access_token);
 });

@@ -1,9 +1,17 @@
-existingMapping.listIndex = 0;
-
-existingMapping.save(function (err) {
+application.getAccountStoreMappings(function (err, mappingsCollection) {
   if (err) {
     return console.error(err);
   }
 
-  console.log('Priority of mapping changed').
+  var secondMapping = mappingsCollection.items[1];
+
+  secondMapping.listIndex = 0;
+
+  secondMapping.save(function () {
+    if (err) {
+      return console.error(err);
+    }
+    console.log('Mapping was updated');
+  });
+
 });

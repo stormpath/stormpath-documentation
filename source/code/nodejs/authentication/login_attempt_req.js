@@ -20,7 +20,7 @@ client.getApplication(applicationHref, function (err, application) {
         return console.error(err);
       }
 
-      console.log('Authenticated as account', account.href);
+      console.log('Account has authenticated: ', account);
     });
   });
 });
