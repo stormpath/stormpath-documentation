@@ -521,7 +521,7 @@ An Organization can be mapped to an Application so that users in the Organizatio
 
 .. only:: nodejs
 
-  In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we'ved marked this Account Store as our default for both Accounts and Groups by passing the ``isDefaultAccountStore`` and ``isDefaultGroupStore`` options.
+  In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we've marked this Account Store as our default for both Accounts and Groups by passing the ``isDefaultAccountStore`` and ``isDefaultGroupStore`` options.
 
 .. only:: rest
 

@@ -1364,7 +1364,7 @@ The Account resource's **searchable attributes** are:
 
 .. only:: nodejs
 
-  With the Stormpath Node SDK, you can perform searches on any object that provides a `getAccounts()` method (such as Applications, Directories, Groups, and Organizations).
+  With the Stormpath Node SDK, you can perform searches on any object that provides a ``getAccounts()`` method (such as Applications, Directories, Groups, and Organizations).
 
 .. only:: php
 
@@ -2374,10 +2374,9 @@ The contents of the password reset and the password reset success emails are bot
 
 .. only:: nodejs
 
-  Using the Stormpath Node SDK, you can fetch the Account Creation Policy of the
-  Directory, and expand the Verification Email Templates Collectio at the same time.
-  Once you have a reference to the template, you can update it, calling the ``save()``
-  method on the parent policy to persist the changes:
+  Using the Stormpath Node SDK, you can fetch the Account Creation Policy of the Directory, and expand the Verification Email Templates Collectio at the same time.
+
+  Once you have a reference to the template, you can update it, calling the ``save()`` method on the parent policy to persist the changes:
 
   .. literalinclude:: code/nodejs/account_management/pwd_reset_email_template.js
 
@@ -2503,6 +2502,12 @@ This would prevent a user from choosing a password that is the same as any of th
 ===================================================
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
+
+.. only:: not rest
+
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
 
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------

@@ -555,7 +555,7 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
       console.log('Authenticated as account', idSiteResult.account);
     });
 
-  This will result in a object instance (`idSiteResult`) being returned with four properties:
+  This will result in an object instance (`idSiteResult`) being returned with four properties:
 
   .. list-table::
     :widths: 15 60
@@ -878,7 +878,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
 .. only:: nodejs
 
-  In the ``options`` array that can be passed in the ``createIdSiteUri()``, there are a couple properties that can be used in this array to allow for multi-tenancy.
+  In the ``options`` array that can be passed in the ``createIdSiteUri()``, there are a couple properties that can be used to allow for multi-tenancy.
 
 .. only:: php
 

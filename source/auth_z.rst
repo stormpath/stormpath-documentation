@@ -414,7 +414,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
 
 .. only:: nodejs
 
-  In either case, you can now see the custom data object of the account:
+  In either case, you can now see the Account's Custom Data object:
 
   .. literalinclude:: code/nodejs/authorization/account_customdata_only_resp.js
       :language: javascript
