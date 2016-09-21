@@ -11,8 +11,12 @@ var mySmtpServer = {
 
 client.createResource('/smtpServers', mySmtpServer, function(err, resource){
 
-  // The href if our new SMTP server resource, save this as you
-  // will need this HREF if you need to delete this server:
+  if (err) {
+    return console.error(err);
+  }
 
-  console.log(err,resource.href);
+  // Log and save the href of the new resource, you will need this
+  // HREF if you need to delete this server in the future:
+
+  console.log(resource.href);
 });
