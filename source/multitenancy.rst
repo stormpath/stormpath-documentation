@@ -515,7 +515,13 @@ An Organization can be mapped to an Application so that users in the Organizatio
 
   - ``is_default_account_store``: A ``True`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
 
-In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
+.. only:: not nodejs
+
+  In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we should also make sure that we mark this Account Store as our default for both Accounts and Groups:
+
+.. only:: nodejs
+
+  In order to be able to add Groups and Accounts to the Organization in the way mentioned above, we've marked this Account Store as our default for both Accounts and Groups by passing the ``isDefaultAccountStore`` and ``isDefaultGroupStore`` options.
 
 .. only:: rest
 
@@ -553,11 +559,6 @@ In order to be able to add Groups and Accounts to the Organization in the way me
   .. literalinclude:: code/java/multitenancy/asm_to_org_with_default_req.java
       :language: java
 
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_req.js
-      :language: javascript
-
 .. only:: php
 
   .. literalinclude:: code/php/multitenancy/asm_to_org_with_default_req.php
@@ -590,13 +591,6 @@ In order to be able to add Groups and Accounts to the Organization in the way me
         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
       }
     }
-
-.. only:: nodejs
-
-  Which would result in the following response:
-
-  .. literalinclude:: code/nodejs/multitenancy/asm_to_org_with_default_resp.js
-      :language: javascript
 
 .. only:: php
 
@@ -697,7 +691,7 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/multitenancy/add_account_to_org.js
-      :language: javascript
+    :language: javascript
 
 .. only:: php
 

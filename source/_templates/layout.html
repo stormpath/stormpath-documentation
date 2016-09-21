@@ -71,6 +71,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="{{ 'current' if language_slug == 'java' }}">
         <a href="/java/product-guide/latest/{{ pagename }}{{ file_suffix}}">Java</a>
       </div>
+      <div class="{{ 'current' if language_slug == 'nodejs' }}">
+        <a href="/nodejs/product-guide/latest/{{ pagename }}{{ file_suffix}}">Node.js</a>
+      </div>
       <div class="{{ 'current' if language_slug == 'php' }}">
         <a href="/php/product-guide/latest/{{ pagename }}{{ file_suffix}}">PHP</a>
       </div>
@@ -83,11 +86,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="{{ 'current' if language_slug == 'vbnet' }}">
         <a href="/vbnet/product-guide/latest/{{ pagename }}{{ file_suffix}}">Visual Basic</a>
       </div>
-      <!--
-      <div class="{{ 'current' if language_slug == 'nodejs' }}">
-        <a href="/nodejs/product-guide/latest/{{ pagename }}{{ file_suffix}}">Node.js</a>
-      </div>
-      -->
     </div>
   </div>
 {% endblock %}
