@@ -3178,10 +3178,6 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
     (java.todo)
 
-.. only:: nodejs
-
-  (node.todo)
-
 .. only:: php
 
   .. warning::
@@ -3221,7 +3217,9 @@ In the event that sending an email using the custom SMTP server fails repeatedly
 Adding a new Custom Server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Adding a custom SMTP server via the REST API is done in the same way as creating any other Stormpath resource.
+.. only:: rest
+
+  Adding a custom SMTP server via the REST API is done in the same way as creating any other Stormpath resource.
 
 In addition to the location and port of the server, you must also pass valid credentials. Before creating the resource, Stormpath will confirm that the information given is valid and that a connection can be established. If the ``host``, ``port``, ``username`` or ``password`` are incorrect, you will receive back :ref:`an error <errors-130xx>`. If a custom server already exists for your Stormpath Tenant, then you will also receive :ref:`an error <errors-130xx>`.
 
@@ -3254,9 +3252,10 @@ In addition to the location and port of the server, you must also pass valid cre
   .. warning::
 
     This feature does not yet have a proper interface in the Node SDK, but you can
-    still create the necessary resources by using the client directly:
+    still create this resource by using the generic ``client.createResource()`` method:
 
   .. literalinclude:: code/nodejs/account_management/create_smtp_server.js
+    :language: javascript
 
 .. only:: php
 
@@ -3327,7 +3326,9 @@ Deleting a Custom Server
 
 If you would like to stop using the custom server, you can disable it by setting its ``status`` to ``DISABLED``. A more permanent solution is to delete the SMTP Server resource entirely. This is also required if you would like to use a different server, since your Tenant can only have one of these resources at any given time.
 
-To delete an SMTP Server, send the following:
+.. only:: rest
+
+  To delete an SMTP Server, send the following:
 
 .. only:: csharp or vbnet
 
@@ -3354,9 +3355,10 @@ To delete an SMTP Server, send the following:
   .. warning::
 
     This feature does not yet have a proper interface in the Node SDK, but you can
-    still create the necessary resources by using the client directly:
+    still delete the resource by using the generic ``client.deleteResource()`` method directly:
 
   .. literalinclude:: code/nodejs/account_management/delete_smtp_server.js
+    :language: javascript
 
 .. only:: php
 
