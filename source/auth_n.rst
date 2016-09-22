@@ -4259,20 +4259,20 @@ You will then get back the response:
 .. code-block:: json
 
   {
-    "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+    "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
     "type": "SMS",
     "createdAt": "2016-09-22T21:34:00.881Z",
     "modifiedAt": "2016-09-22T21:34:00.881Z",
     "status": "ENABLED",
     "verificationStatus": "UNVERIFIED",
     "account": {
-        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
     },
     "challenges": {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+        "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
     },
     "phone": {
-        "href": "https://staging-api-b.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+        "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
     },
     "mostRecentChallenge": null
   }
@@ -4301,7 +4301,7 @@ You will then get back the response:
 .. code-block:: json
 
   {
-    "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+    "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
     "type": "google-authenticator",
     "createdAt": "2016-09-22T21:42:57.636Z",
     "modifiedAt": "2016-09-22T21:42:57.636Z",
@@ -4313,11 +4313,11 @@ You will then get back the response:
     "base64QRImage": "iVBOR[...]SuQmCC",
     "verificationStatus": "UNVERIFIED",
     "account": {
-        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
     },
     "mostRecentChallenge": null,
     "challenges": {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
+        "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
     }
   }
 
@@ -4333,31 +4333,31 @@ If you were to send a GET to the Account's ``/factors`` endpoint, you will see t
 .. code-block:: json
 
   {
-    "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
     "offset": 0,
     "limit": 25,
     "size": 2,
     "items": [
       {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+        "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
         "type": "SMS",
         "createdAt": "2016-09-22T21:34:00.881Z",
         "modifiedAt": "2016-09-22T21:34:00.881Z",
         "status": "ENABLED",
         "verificationStatus": "UNVERIFIED",
         "account": {
-            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
         },
         "challenges": {
-            "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+            "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
         },
         "phone": {
-            "href": "https://staging-api-b.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+            "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
         },
         "mostRecentChallenge": null
       },
       {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+        "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
         "type": "google-authenticator",
         "createdAt": "2016-09-22T21:42:57.636Z",
         "modifiedAt": "2016-09-22T21:42:57.636Z",
@@ -4369,11 +4369,11 @@ If you were to send a GET to the Account's ``/factors`` endpoint, you will see t
         "base64QRImage": "iVBOR[...]SuQmCC",
         "verificationStatus": "UNVERIFIED",
         "account": {
-            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
         },
         "mostRecentChallenge": null,
         "challenges": {
-            "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
+            "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
       }
     ]
   }
@@ -4387,22 +4387,136 @@ Challenging After Factor Creation
 
 This example covers challenging Factors that have already been created. To see an example of how to challenge a Factor at the same time as you are creating it, please see :ref:`below <mfa-challenge-after>`.
 
+.. _mfa-challenge-after-sms:
+
+Challenging an SMS Factor
+"""""""""""""""""""""""""
+
+To challenge an SMS Factor, you send a ``POST`` to it, with or without specifying a message.
+
+.. code-block:: http
+
+  POST /v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+  {
+    "message":"For the sake of example, your code is ${code}."
+  }
+
+If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
+
+In response to this POST you would get back a Challenge:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnQ9zulsS",
+    "createdAt": "2016-09-22T22:35:44.799Z",
+    "modifiedAt": "2016-09-22T22:35:44.800Z",
+    "status": "CREATED",
+    "message": "For the sake of example, your code is ${code}.",
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+    },
+    "factor": {
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
+    }
+  }
+
+The resulting SMS would look like this:
+
+.. figure:: /images/auth_n/challenge_message.png
+    :align: center
+    :scale: 50%
+    :alt: SMS Challenge Message
+
+Next, you take this code and send it to the same Challenge you created above:
+
+.. code-block:: http
+
+  POST /v1/challenges/70xfDsguePApNdnQ9zulsS HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "code":"633559"
+  }
+
+And then you would get back the response:
+
+.. code-block:: json
+
+  {
+    "createdAt": "2016-09-22T22:35:44.799Z",
+    "modifiedAt": "2016-09-22T22:39:06.822Z",
+    "href": "https://staging-api-b.stormpath.com/v1/challenges/70xfDsguePApNdnQ9zulsS",
+    "message": "For the sake of example, your code is ${code}.",
+    "factor": {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
+    },
+    "account": {
+        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+    },
+    "status": "SUCCESS"
+  }
+
+If you had sent the wrong code, the ``status`` would instead be ``FAILED``. For a full list of Challenge statuses, please see the Reference chapter.
+
+.. todo::
+
+  Add a link.
+
 .. _mfa-challenge-after-google:
 
 Challenging a Google Authenticator Factor
 """""""""""""""""""""""""""""""""""""""""
 
-Challenging an SMS Factor
-"""""""""""""""""""""""""
+Google Authenticator does not require you to create a challenge. Instead, the challenge is created and verified in one step.
+
+All you do is send a POST to the Account's ``/challenges`` endpoint with a code generated by your Google Authenticator app:
+
+.. code-block:: http
+
+  POST /v1/factors/4KOeu7ypRQI8Bpk2org7tk/challenges HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "code":"786393"
+  }
+
+Stormpath will now simultaneously create the Challenge and set its status to ``SUCCESS``, then return it back to you:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
+    "createdAt": "2016-09-22T22:50:59.241Z",
+    "modifiedAt": "2016-09-22T22:50:59.241Z",
+    "status": "SUCCESS",
+    "account": {
+        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+    },
+    "factor": {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
+    }
+  }
 
 .. _mfa-challenge-during:
 
 Challenging During Factor Creation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+.. note::
 
-For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`mfa-challenge-after-google`.
+  For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`mfa-challenge-after-google`.
+
+To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
 .. code-block:: http
 
@@ -4423,12 +4537,9 @@ For this example, we will use an SMS challenge. For an example of a Google Authe
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
-The resulting SMS would look like this:
+.. note::
 
-.. figure:: /images/auth_n/challenge_message.png
-    :align: center
-    :scale: 50%
-    :alt: SMS Challenge Message
+  If you wanted Stormpath to send the default message, then you could just not specify
 
-Challenging During Login
-^^^^^^^^^^^^^^^^^^^^^^^^
+Challenging a Factor During Login
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
