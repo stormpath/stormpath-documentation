@@ -4229,7 +4229,10 @@ First, you create the Account:
       "password":"Changeme1"
   }
 
-To add an additional phone Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
+Adding an SMS Factor
+^^^^^^^^^^^^^^^^^^^^
+
+To add an additional SMS Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
 
 .. code-block:: http
 
@@ -4268,14 +4271,63 @@ You will then get back the response:
     "mostRecentChallenge": null
   }
 
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is null. If you were to successfully challenge this Factor, the ``verificationStatus`` would change to ``VERIFIED`` and the ``mostRecentChallenge`` link would be populated.
+
+Adding a Google Authenticator Factor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To add an additional Google Authenticator Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
+
+.. code-block:: http
+
+  POST /v1/accounts/5IvkjoqcYNe3TYMYExample/factors HTTP/1.1
+  Host: staging-api-b.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic MlpG...
+
+  {
+    "type":"google-authenticator",
+    "accountName": "jakub@stormpath.com"
+  }
+
+You will then get back the response:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+    "type": "google-authenticator",
+    "createdAt": "2016-09-22T21:42:57.636Z",
+    "modifiedAt": "2016-09-22T21:42:57.636Z",
+    "status": "ENABLED",
+    "accountName": "jakub@stormpath.com",
+    "issuer": null,
+    "secret": "OP7JZ[...]LAV",
+    "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
+    "base64QRImage": "iVBOR[...]SuQmCC",
+    "verificationStatus": "UNVERIFIED",
+    "account": {
+        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+    },
+    "mostRecentChallenge": null,
+    "challenges": {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
+    }
+  }
+
+At this point, either the ``secret`` can be inputted directly into Google Authenticator, or the ``base64QRImage`` string can be used to generate a QR code that can then be scanned using the Google Authenticator app.
 
 4.6.2. Challenging a Factor
 ---------------------------
 
+.. _mfa-challenge-during:
+
 Challenging During Factor Creation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To send an SMS challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+
+For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`below <mfa-challenge-after>`
 
 .. code-block:: http
 
@@ -4303,6 +4355,16 @@ The resulting SMS would look like this:
     :scale: 50%
     :alt: SMS Challenge Message
 
+.. _mfa-challenge-after:
+
 Challenging After Factor Creation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+Challenging a Google Authenticator Factor
+"""""""""""""""""""""""""""""""""""""""""
+
+Challenging an SMS Factor
+"""""""""""""""""""""""""
 
