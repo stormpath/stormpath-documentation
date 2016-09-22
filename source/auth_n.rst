@@ -4202,6 +4202,12 @@ The multi-factor authentication process works as follows with text messages:
 #. The message is sent to the phone number found in the Factor with a one-time numerical **code**.
 #. If that **code** is then passed back to the appropriate Challenge within a sufficient time window, then the Challenge's status changes to ``VERIFIED``.
 
+With Google Authenticator, the flow is only slightly different:
+
+#. An additional **Factor** of type ``google-authenticator`` is added to an Account.
+#. The new **Factor** has a **secret** and a Base64-encoded **QR code**, both of which can be used to add it to the Google Authenticator app.
+#. At any time, you can send the **code** from the Authenticator app to the appropriate Challenge, at which point you will get back a ``VERIFIED`` challenge.
+
 .. note::
 
   Multi-Factor Authentication is only available with paid Stormpath plans. For more information please see `Stormpath's Pricing Page <https://stormpath.com/pricing>`__.
@@ -4271,7 +4277,7 @@ You will then get back the response:
     "mostRecentChallenge": null
   }
 
-For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is null. If you were to successfully challenge this Factor, the ``verificationStatus`` would change to ``VERIFIED`` and the ``mostRecentChallenge`` link would be populated.
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is null. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 Adding a Google Authenticator Factor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4320,6 +4326,75 @@ At this point, either the ``secret`` can be inputted directly into Google Authen
 4.6.2. Challenging a Factor
 ---------------------------
 
+At this point in the example you have a brand new Account with two additional factors.
+
+If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "offset": 0,
+    "limit": 25,
+    "size": 2,
+    "items": [
+      {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+        "type": "SMS",
+        "createdAt": "2016-09-22T21:34:00.881Z",
+        "modifiedAt": "2016-09-22T21:34:00.881Z",
+        "status": "ENABLED",
+        "verificationStatus": "UNVERIFIED",
+        "account": {
+            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+        },
+        "challenges": {
+            "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+        },
+        "phone": {
+            "href": "https://staging-api-b.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+        },
+        "mostRecentChallenge": null
+      },
+      {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+        "type": "google-authenticator",
+        "createdAt": "2016-09-22T21:42:57.636Z",
+        "modifiedAt": "2016-09-22T21:42:57.636Z",
+        "status": "ENABLED",
+        "accountName": "jakub@stormpath.com",
+        "issuer": null,
+        "secret": "OP7JZ[...]LAV",
+        "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
+        "base64QRImage": "iVBOR[...]SuQmCC",
+        "verificationStatus": "UNVERIFIED",
+        "account": {
+            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+        },
+        "mostRecentChallenge": null,
+        "challenges": {
+            "href": "https://staging-api-b.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
+      }
+    ]
+  }
+
+You will now challenge each of these factors.
+
+.. _mfa-challenge-after:
+
+Challenging After Factor Creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This example covers challenging Factors that have already been created. To see an example of how to challenge a Factor at the same time as you are creating it, please see :ref:`below <mfa-challenge-after>`.
+
+.. _mfa-challenge-after-google:
+
+Challenging a Google Authenticator Factor
+"""""""""""""""""""""""""""""""""""""""""
+
+Challenging an SMS Factor
+"""""""""""""""""""""""""
+
 .. _mfa-challenge-during:
 
 Challenging During Factor Creation
@@ -4327,7 +4402,7 @@ Challenging During Factor Creation
 
 To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
-For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`below <mfa-challenge-after>`
+For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`mfa-challenge-after-google`.
 
 .. code-block:: http
 
@@ -4346,7 +4421,7 @@ For this example, we will use an SMS challenge. For an example of a Google Authe
     }
   }
 
-In this example, you are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
+You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
 The resulting SMS would look like this:
 
@@ -4355,16 +4430,5 @@ The resulting SMS would look like this:
     :scale: 50%
     :alt: SMS Challenge Message
 
-.. _mfa-challenge-after:
-
-Challenging After Factor Creation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-
-Challenging a Google Authenticator Factor
-"""""""""""""""""""""""""""""""""""""""""
-
-Challenging an SMS Factor
-"""""""""""""""""""""""""
-
+Challenging During Login
+^^^^^^^^^^^^^^^^^^^^^^^^
