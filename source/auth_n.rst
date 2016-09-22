@@ -4186,3 +4186,123 @@ At this point your user is authenticated and able to use your app.
 
     .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
       :language: python
+
+4.6. Using Multi-Factor Authentication
+======================================
+
+At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
+
+- SMS message to a phone
+- Google Authenticator
+
+The multi-factor authentication process works as follows with text messages:
+
+#. An additional **Factor** of type ``SMS`` is added to an Account.
+#. A **Challenge** is created which includes a message.
+#. The message is sent to the phone number found in the Factor with a one-time numerical **code**.
+#. If that **code** is then passed back to the appropriate Challenge within a sufficient time window, then the Challenge's status changes to ``VERIFIED``.
+
+.. note::
+
+  Multi-Factor Authentication is only available with paid Stormpath plans. For more information please see `Stormpath's Pricing Page <https://stormpath.com/pricing>`__.
+
+4.6.1. Enrolling an Additional Factor
+-------------------------------------
+
+Enrolling an additional factor always happens separate from Account creation, so the process is the same regardless of whether you are creating a factor for an existing Account or one that was just created. For this example, we will create a new Account in Stormpath, then add an additional factor to it.
+
+First, you create the Account:
+
+.. code-block:: http
+
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+  {
+      "givenName": "Joe",
+      "surname": "Factorman",
+      "username": "factorman",
+      "email": "joe.factorman@stormpath.com",
+      "password":"Changeme1"
+  }
+
+To add an additional phone Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
+
+.. code-block:: http
+
+  POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "type":"SMS",
+    "phone": {
+      "number": "2675555555"
+    }
+  }
+
+You will then get back the response:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+    "type": "SMS",
+    "createdAt": "2016-09-22T21:34:00.881Z",
+    "modifiedAt": "2016-09-22T21:34:00.881Z",
+    "status": "ENABLED",
+    "verificationStatus": "UNVERIFIED",
+    "account": {
+        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+    },
+    "challenges": {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+    },
+    "phone": {
+        "href": "https://staging-api-b.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+    },
+    "mostRecentChallenge": null
+  }
+
+
+4.6.2. Challenging a Factor
+---------------------------
+
+Challenging During Factor Creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To send an SMS challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+
+.. code-block:: http
+
+  POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors?challenge=true HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "type":"sms",
+    "phone": {
+      "number": "2675555555"
+    },
+    "challenge": {
+      "message": "Welcome to the Example! Your authorization code is ${code}"
+    }
+  }
+
+In this example, you are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
+
+The resulting SMS would look like this:
+
+.. figure:: /images/auth_n/challenge_message.png
+    :align: center
+    :scale: 50%
+    :alt: SMS Challenge Message
+
+Challenging After Factor Creation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
