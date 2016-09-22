@@ -4374,6 +4374,7 @@ If you were to send a GET to the Account's ``/factors`` endpoint, you will see t
         "mostRecentChallenge": null,
         "challenges": {
             "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
+        }
       }
     ]
   }
