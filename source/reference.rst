@@ -5243,6 +5243,229 @@
         - ``application.href``
         - Retrieves the specified Account's Refresh Tokens.
 
+  .. _ref-account-factor:
+
+  Factor
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a Factor that has been added for purposes of Multi-Factor Authentication.
+
+  **Factor URL**
+
+  ``/v1/factors/$FACTOR_ID``
+
+  **Factor Attributes**
+
+  .. list-table::
+      :widths: 15 10 20 60
+      :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``type``
+      - String (enum)
+      - ``sms``, ``google-authenticator``
+      - The type of Factor.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED``, ``DISABLED``
+      - Indicates whether this Factor is enabled or not.
+
+    * - ``accountName``
+      - String
+      - Valid email
+      - (Google Authenticator only) The Google email address used by Google Authenticator.
+
+    * - ``issuer``
+      - String
+      - N/A
+      - (Google Authenticator only; Optional) The issuer of the Google Authenticator Factor.
+
+    * - ``secret``
+      - String
+      - Base32
+      - (Google Authenticator only)
+
+    * - ``keyUri``
+      - String
+      - `otpauth <https://github.com/google/google-authenticator/wiki/Key-Uri-Format>`__
+      - (Google Authenticator only) The Google Authenticator secret key encoded as a URI.
+
+    * - ``base64QRImage``
+      - String
+      - Base64
+      - (Google Authenticator only) The above ``keyUri`` encoded as a Base64 QR image.
+
+    * - ``verificationStatus``
+      - String
+      - ``VERIFIED``, ``UNVERIFIED``
+      - Indicates whether this factor has been verified or not.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Factor.
+
+    * - ``challenges``
+      - Link
+      - N/A
+      - A link to a collection of Challenges associated with this Factor.
+
+    * - ``phone``
+      - Link
+      - N/A
+      - (SMS Only) A link to the ``phone`` resource associated with this Factor.
+
+    * - ``mostRecentChallenge``
+      - Link
+      - N/A
+      - A link to the most recent ``challenge`` issued for this Factor.
+
+  **Factor Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/factors/wzU29J38OcAyY1z8TeX1x",
+      "type": "SMS",
+      "createdAt": "2016-09-22T17:58:09.645Z",
+      "modifiedAt": "2016-09-22T17:58:09.646Z",
+      "status": "ENABLED",
+      "verificationStatus": "UNVERIFIED",
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample"
+      },
+      "challenges": {
+        "href": "https://api.stormpath.com/v1/factors/wzU29J38OcAyY1z8TeX1x/challenges"
+      },
+      "phone": {
+        "href": "https://api.stormpath.com/v1/phones/wzH415XWxM2MOJVciAfBF"
+      },
+      "mostRecentChallenge": {
+        "href": "https://api.stormpath.com/v1/challenges/wzYMCbEUJ5Nx4S7VRSMkX"
+      }
+    }
+
+  .. _ref-factor-operations:
+
+  Factor Operations
+  """"""""""""""""""""""""""
+
+  An Account's Factors have a full set of CRUD operations available via REST.
+
+  Creating a Factor
+  +++++++++++++++++++
+
+  **Creating an SMS Factor**
+
+  .. list-table::
+      :widths: 40 20 20 20
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Optional Parameters
+        - Description
+
+      * - POST /v1/accounts/$ACCOUNT_ID/factors
+        - Required: ``"type":"SMS"``, :ref:`Phone object <ref-phone>`; Optional: :ref:`Challenge object <ref-challenge>`
+        - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge.
+
+  **Creating a Google Authenticator Factor**
+
+  .. list-table::
+      :widths: 40 20 20 20
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Optional Parameters
+        - Description
+
+      * - POST /v1/accounts/$ACCOUNT_ID/factors
+        - Required: ``"type":"google-authenticator"``, ``accountName``
+        - Generates a new Google Authenticator Factor.
+
+  Retrieving a Factor
+  +++++++++++++++++++++
+
+  .. list-table::
+      :widths: 30 30 40
+      :header-rows: 1
+
+      * - Operation
+        - Optional Query Parameters
+        - Description
+
+      * - GET /v1/factors/$FACTOR_ID
+        - ``expand``
+        - Retrieves the specified Factor.
+
+  Updating a Factor
+  +++++++++++++++++++
+
+  **Updating an SMS Factor**
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/factors/$FACTOR_ID
+        - ``status``
+        - Can be used to update the Factor.
+
+  **Updating a Google Authenticator Factor**
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/factors/$FACTOR_ID
+        - ``status``, ``issuer``, ``accountName``
+        - Can be used to update the Factor. If you update the ``issuer`` and/or ``accountName`` the Factor's ``base64QRImage`` will change.
+
+  Deleting a Factor
+  +++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - DELETE /v1/factors/$FACTOR_ID
+        - N/A
+        - Deletes the specified Factor resource.
+
   .. _ref-account-phone:
 
   Phone
