@@ -5346,7 +5346,7 @@
         - Description
 
       * - POST /v1/phones/$PHONE_ID
-        - Required: ``number``; Optional: ``name``, ``description``, ``status`
+        - Required: ``number``; Optional: ``name``, ``description``, ``status``
         - Creates a new Phone.
 
   Retrieving a Phone
