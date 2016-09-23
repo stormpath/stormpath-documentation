@@ -5257,8 +5257,8 @@
   **Factor Attributes**
 
   .. list-table::
-      :widths: 15 10 20 60
-      :header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
     * - Attribute
       - Type
@@ -5303,7 +5303,7 @@
     * - ``secret``
       - String
       - Base32
-      - (Google Authenticator only)
+      - (Google Authenticator only) The Google Authenticator secret key.
 
     * - ``keyUri``
       - String
@@ -5375,6 +5375,8 @@
   Creating a Factor
   +++++++++++++++++++
 
+  There are currently two different kinds of available Factors: SMS and Google Authenticator.
+
   **Creating an SMS Factor**
 
   .. list-table::
@@ -5394,7 +5396,7 @@
   **Creating a Google Authenticator Factor**
 
   .. list-table::
-      :widths: 40 40 20
+      :widths: 40 25 35
       :header-rows: 1
 
       * - Operation
@@ -5480,8 +5482,8 @@
   **Challenge Attributes**
 
   .. list-table::
-        :widths: 15 10 20 60
-        :header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
     * - Attribute
       - Type
@@ -5528,8 +5530,8 @@
   **Challenge Status Values:**
 
   .. list-table::
-        :widths: 20 80
-        :header-rows: 1
+    :widths: 20 80
+    :header-rows: 1
 
     * - CREATED
       - The challenge was created.
@@ -5636,8 +5638,8 @@
   **Phone Attributes**
 
   .. list-table::
-      :widths: 15 10 20 60
-      :header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
     * - Attribute
       - Type
@@ -5732,46 +5734,46 @@
   +++++++++++++++++++++
 
   .. list-table::
-      :widths: 30 30 40
-      :header-rows: 1
+    :widths: 30 30 40
+    :header-rows: 1
 
-      * - Operation
-        - Optional Query Parameters
-        - Description
+    * - Operation
+      - Optional Query Parameters
+      - Description
 
-      * - GET /v1/phones/$PHONE_ID
-        - N/A
-        - Retrieves the specified phone.
+    * - GET /v1/phones/$PHONE_ID
+      - N/A
+      - Retrieves the specified phone.
 
   Updating a Phone
   +++++++++++++++++++
 
   .. list-table::
-      :widths: 40 20 40
-      :header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Description
+    * - Operation
+      - Attributes
+      - Description
 
-      * - POST /v1/phones/$PHONE_ID
-        - ``name``, ``description``, ``status``
-        - Can be used to update the the Phone.
+    * - POST /v1/phones/$PHONE_ID
+      - ``name``, ``description``, ``status``
+      - Can be used to update the the Phone.
 
   Deleting a Phone
   +++++++++++++++++++
 
   .. list-table::
-      :widths: 40 20 40
-      :header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Description
+    * - Operation
+      - Attributes
+      - Description
 
-      * - DELETE /v1/phones/$PHONE_ID
-        - N/A
-        - Deletes the specified Phone resource.
+    * - DELETE /v1/phones/$PHONE_ID
+      - N/A
+      - Deletes the specified Phone resource.
 
   .. _ref-provider-data:
 
