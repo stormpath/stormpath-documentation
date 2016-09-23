@@ -4542,7 +4542,7 @@ Challenging During Factor Creation
 
 .. note::
 
-  For this example, we will use an SMS challenge. For an example of a Google Authenticator challenge, see :ref:`mfa-challenge-after-google`.
+  For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
 To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 

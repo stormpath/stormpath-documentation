@@ -5243,7 +5243,7 @@
         - ``application.href``
         - Retrieves the specified Account's Refresh Tokens.
 
-  .. _ref-account-factor:
+  .. _ref-factor:
 
   Factor
   ^^^^^^^^^^^^^^^^
@@ -5388,17 +5388,17 @@
 
       * - POST /v1/accounts/$ACCOUNT_ID/factors
         - Required: ``"type":"SMS"``, :ref:`Phone object <ref-phone>`; Optional: :ref:`Challenge object <ref-challenge>`
+        - ``challenge=true``
         - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge.
 
   **Creating a Google Authenticator Factor**
 
   .. list-table::
-      :widths: 40 20 20 20
+      :widths: 40 40 20
       :header-rows: 1
 
       * - Operation
         - Attributes
-        - Optional Parameters
         - Description
 
       * - POST /v1/accounts/$ACCOUNT_ID/factors
@@ -5466,7 +5466,163 @@
         - N/A
         - Deletes the specified Factor resource.
 
-  .. _ref-account-phone:
+  .. _ref-challenge:
+
+  Challenge
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a Challenge that has been created for purposes of Multi-Factor Authentication.
+
+  **Challenge URL**
+
+  ``/v1/challenges/$CHALLENGE_ID``
+
+  **Challenge Attributes**
+
+  .. list-table::
+        :widths: 15 10 20 60
+        :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``status``
+      - String (enum)
+      - (See :ref:`below <status-values>`)
+      - The status of the Challenge.
+
+    * - ``message``
+      - String
+      - N/A
+      - The content of the challenge message that was sent.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Challenge.
+
+    * - ``factor``
+      - Link
+      - N/A
+      - A link to the Factor that this Challenge was sent to.
+
+  .. _status-values:
+
+  **Challenge Status Values:**
+
+  .. list-table::
+        :widths: 20 80
+        :header-rows: 1
+
+    * - CREATED
+      - The challenge was created.
+
+    * - WAITING
+      - The challenge has been issued to the user, and we are awaiting a response.
+
+    * - SUCCESS
+      - The challenge was successfully verified.
+
+    * - FAILED
+      - An attempt was made to verify the challenge, but it failed, for example by specifying an incorrect code.
+
+    * - DENIED
+      - The challenge was explicitly denied by the user.
+
+    * - CANCELLED
+      - The user chose not to reply to the challenge.
+
+    * - EXPIRED
+      - The challenge was not verified within the allowed time window.
+
+    * - ERROR
+      - Unexpected internal server error.
+
+    * - UNDELIVERED
+      - SMS provider sent the message but did not get a successful delivery notification.
+
+  **Challenge Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
+      "createdAt": "2016-09-22T22:50:59.241Z",
+      "modifiedAt": "2016-09-22T22:50:59.241Z",
+      "status": "SUCCESS",
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+      },
+      "factor": {
+        "href": "https://api.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
+      }
+    }
+
+  .. _ref-challenge-operations:
+
+  Challenge Operations
+  """"""""""""""""""""""""""
+
+  An Account's Challenges can only be created via a POST. The Challenge resource does not support any other operations. To attempt verification of a challenge, sending a ``POST`` to to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+
+  Creating a Challenge
+  +++++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/accounts/$ACCOUNT_ID/challenges
+        - N/A
+        - Generates a new Challenge.
+
+  Retrieving a Challenge
+  ++++++++++++++++++++++++
+
+  .. list-table::
+      :widths: 30 30 40
+      :header-rows: 1
+
+      * - Operation
+        - Optional Query Parameters
+        - Description
+
+      * - GET /v1/accounts/$ACCOUNT_ID/challenges
+        - ``expand``
+        - Retrieves a collection of Challenges for the specified Account.
+
+  Updating a Challenge
+  ++++++++++++++++++++++
+
+  While Challenges cannot be updated, they are verified by sending a ``POST`` to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+
+  Deleting a Challenge
+  ++++++++++++++++++++++
+
+  Challenges cannot be deleted.
+
+  .. _ref-phone:
 
   Phone
   ^^^^^^^^^^^^^^^^
