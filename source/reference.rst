@@ -4680,16 +4680,16 @@
         "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/refreshTokens"
       }
       "linkedAccounts": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/linkedAccounts"
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/linkedAccounts"
       },
       "accountLinks": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accountLinks"
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/accountLinks"
       },
       "phones": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/phones"
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/phones"
       },
       "factors": {
-        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/factors"
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/factors"
       }
     }
 
@@ -5245,7 +5245,7 @@
 
   .. _ref-account-phone:
 
-  Account Phone
+  Phone
   ^^^^^^^^^^^^^^^^
 
   This resource contains information about a Phone that has been added as a Factor for purposes of Multi-Factor Authentication.
@@ -5318,13 +5318,13 @@
       "href": "https://api.stormpath.com/v1/phones/7lHGSpTvuxNnvnCkpOwUiR",
       "createdAt": "2016-09-22T16:52:50.136Z",
       "modifiedAt": "2016-09-22T16:52:50.136Z",
-      "number": "+12674326831",
+      "number": "+12674325555",
       "description": null,
       "name": null,
       "verificationStatus": "UNVERIFIED",
       "status": "ENABLED",
       "account": {
-          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
       }
     }
 
@@ -5645,7 +5645,7 @@
   .. code-block:: json
 
     {
-      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/customData",
       "createdAt":"2015-08-25T19:57:05.976Z",
       "modifiedAt":"2016-07-18T20:05:02.283Z",
       "birthDate":"2305-07-13",
