@@ -4572,6 +4572,90 @@ You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` al
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To challenge a factor after login
+The first step will be getting the user authenticated.
 
-POST to loginAttempts -> Get the Account's ``/factors`` -> then post to one of those ``/challenges``
+In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
+
+.. code-block:: http
+
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts?expand=account HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+
+  {
+    "type": "basic",
+    "value": "amFrdWIrbWZhdGVzdExamplebXBhdGguY29tOkNoYW5nZW1lMQ=="
+  }
+
+
+If authentication is successful, you will get back the Account:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample",
+    "username": "factorman",
+    "email": "jakub+factorman@stormpath.com",
+    "givenName": "Joe",
+    "middleName": null,
+    "surname": "Factorman",
+    "fullName": "Joe Factorman",
+    "status": "ENABLED",
+    "...": "...",
+    "factors": {
+        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample/factors"
+    }
+  }
+
+Next, you will need to retrieve the Account's ``factors`` collection:
+
+.. code-block:: http
+
+  GET /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+Which will return:
+
+.. code-block:: json
+
+  {
+    "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "offset": 0,
+    "limit": 25,
+    "size": 1,
+    "items": [
+      {
+        "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo",
+        "type": "SMS",
+        "createdAt": "2016-09-22T22:11:03.768Z",
+        "modifiedAt": "2016-09-22T22:42:39.822Z",
+        "status": "ENABLED",
+        "verificationStatus": "VERIFIED",
+        "account": {
+            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+        },
+        "challenges": {
+            "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges"
+        },
+        "phone": {
+            "href": "https://staging-api-b.stormpath.com/v1/phones/3WManCalQOcizNsHjeeiHk"
+        },
+        "mostRecentChallenge": {
+            "href": "https://staging-api-b.stormpath.com/v1/challenges/6kgEJR5Cr3pNh131i7b6wm"
+        }
+      }
+    ]
+  }
+
+You would then send a POST to the ``challenges`` collection:
+
+.. code-block:: http
+
+  POST /v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges HTTP/1.1
+  Host: staging-api-b.stormpath.com
+  Authorization: Basic MlpG...
+  Cache-Control: no-cache
+
+This would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
