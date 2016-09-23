@@ -5505,7 +5505,7 @@
 
     * - ``status``
       - String (enum)
-      - (See :ref:`below <status-values>`)
+      - (See :ref:`below <challenge-status-values>`)
       - The status of the Challenge.
 
     * - ``message``
@@ -5523,7 +5523,7 @@
       - N/A
       - A link to the Factor that this Challenge was sent to.
 
-  .. _status-values:
+  .. _challenge-status-values:
 
   **Challenge Status Values:**
 
