@@ -4613,6 +4613,26 @@
       - N/A
       - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. For more information, see :ref:`token-authn`.
 
+    * - ``linkedAccounts``
+      - Link
+      - N/A
+      - A link to a collection of Accounts that are linked to this one.
+
+    * - ``accountLinks``
+      - Link
+      - N/A
+      - A link to a collection of Account Link objects that link this Account to others.
+
+    * - ``phones``
+      - Link
+      - N/A
+      - A link to a collection of Phone resources associated with this Account's Factors.
+
+    * - ``factors``
+      - Link
+      - N/A
+      - A link to a collection of Factors associated with this Account.
+
   **Account Example**
 
   .. code-block:: json
@@ -4658,6 +4678,18 @@
       },
       "refreshTokens":{
         "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/refreshTokens"
+      }
+      "linkedAccounts": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/linkedAccounts"
+      },
+      "accountLinks": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/accountLinks"
+      },
+      "phones": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/phones"
+      },
+      "factors": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/factors"
       }
     }
 
@@ -5210,6 +5242,157 @@
       * - GET /v1/accounts/$ACCOUNT_ID/refreshTokens
         - ``application.href``
         - Retrieves the specified Account's Refresh Tokens.
+
+  .. _ref-account-phone:
+
+  Account Phone
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a Phone that has been added as a Factor for purposes of Multi-Factor Authentication.
+
+  **phone URL**
+
+  ``/v1/phones/$PHONE_ID``
+
+  **Phone Attributes**
+
+  .. list-table::
+      :widths: 15 10 20 60
+      :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``number``
+      - String
+      - `E.164 format <https://en.wikipedia.org/wiki/E.164>`__.
+      - The phone number.
+
+    * - ``description``
+      - String
+      - N/A
+      - An optional description for this Phone resource.
+
+    * - ``name``
+      - String
+      - N/A
+      - An optional name for this Phone resource.
+
+    * - ``verificationStatus``
+      - String (enum)
+      - ``VERIFIED``, ``UNVERIFIED``
+      - Indicates whether this Phone's number has been verified.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED`` , ``DISABLED``
+      - Indicates whether this Phone resource is enabled or not.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Phone resource.
+
+  **phone Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/phones/7lHGSpTvuxNnvnCkpOwUiR",
+      "createdAt": "2016-09-22T16:52:50.136Z",
+      "modifiedAt": "2016-09-22T16:52:50.136Z",
+      "number": "+12674326831",
+      "description": null,
+      "name": null,
+      "verificationStatus": "UNVERIFIED",
+      "status": "ENABLED",
+      "account": {
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey"
+      }
+    }
+
+  .. _ref-phone-operations:
+
+  Phone Operations
+  """"""""""""""""""""""""""
+  An Account's Phones have a full set of CRUD operations available via REST.
+
+  Creating a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/phones/$PHONE_ID
+        - N/A
+        - Creates a new Phone.
+
+  Retrieving a Phone
+  +++++++++++++++++++++
+
+  .. list-table::
+      :widths: 30 30 40
+      :header-rows: 1
+
+      * - Operation
+        - Optional Query Parameters
+        - Description
+
+      * - GET /v1/phones/$PHONE_ID
+        - ``expand``, ``encryptSecret=true`` (see below)
+        - Retrieves a collection of Phones for the specified Account. ``account`` and ``tenant`` can be expanded.
+
+  Updating a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/phones/$PHONE_ID
+        - ``status``, ``name``, ``description``
+        - Can be used to update the the Phone.
+
+  Deleting a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - DELETE /v1/phones/$PHONE_ID
+        - N/A
+        - Deletes the specified Phone resource.
 
   .. _ref-provider-data:
 

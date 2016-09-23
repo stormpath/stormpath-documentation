@@ -4540,7 +4540,9 @@ You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` al
 
 .. note::
 
-  If you wanted Stormpath to send the default message, then you could just not specify
+  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
 Challenging a Factor During Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+POST to loginAttempts -> Get the Account's ``/factors`` -> then post to one of those ``/challenges``
