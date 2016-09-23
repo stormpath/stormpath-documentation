@@ -5346,7 +5346,7 @@
         - Description
 
       * - POST /v1/phones/$PHONE_ID
-        - N/A
+        - Required: ``number``; Optional: ``name``, ``description``, ``status`
         - Creates a new Phone.
 
   Retrieving a Phone
@@ -5361,8 +5361,8 @@
         - Description
 
       * - GET /v1/phones/$PHONE_ID
-        - ``expand``, ``encryptSecret=true`` (see below)
-        - Retrieves a collection of Phones for the specified Account. ``account`` and ``tenant`` can be expanded.
+        - N/A
+        - Retrieves the specified phone.
 
   Updating a Phone
   +++++++++++++++++++
@@ -5376,7 +5376,7 @@
         - Description
 
       * - POST /v1/phones/$PHONE_ID
-        - ``status``, ``name``, ``description``
+        - ``name``, ``description``, ``status``
         - Can be used to update the the Phone.
 
   Deleting a Phone

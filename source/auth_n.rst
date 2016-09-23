@@ -4414,7 +4414,7 @@ In response to this POST you would get back a Challenge:
 .. code-block:: json
 
   {
-    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnQ9zulsS",
+    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
     "createdAt": "2016-09-22T22:35:44.799Z",
     "modifiedAt": "2016-09-22T22:35:44.800Z",
     "status": "CREATED",
@@ -4434,11 +4434,13 @@ The resulting SMS would look like this:
     :scale: 50%
     :alt: SMS Challenge Message
 
-Next, you take this code and send it to the same Challenge you created above:
+This code will remain valid for 300 seconds (5 minutes).
+
+Next, you must collect this code from the user. Once you have the code, you send it to the same Challenge you created above:
 
 .. code-block:: http
 
-  POST /v1/challenges/70xfDsguePApNdnQ9zulsS HTTP/1.1
+  POST /v1/challenges/70xfDsguePApNdnExample HTTP/1.1
   Host: api.stormpath.com
   Authorization: Basic MlpG...
   Content-Type: application/json
@@ -4454,7 +4456,7 @@ And then you would get back the response:
   {
     "createdAt": "2016-09-22T22:35:44.799Z",
     "modifiedAt": "2016-09-22T22:39:06.822Z",
-    "href": "https://staging-api-b.stormpath.com/v1/challenges/70xfDsguePApNdnQ9zulsS",
+    "href": "https://staging-api-b.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
     "message": "For the sake of example, your code is ${code}.",
     "factor": {
         "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
@@ -4469,7 +4471,7 @@ If you had sent the wrong code, the ``status`` would instead be ``FAILED``. For 
 
 .. todo::
 
-  Add a link.
+  (jakubtodo) Add a link.
 
 .. _mfa-challenge-after-google:
 
