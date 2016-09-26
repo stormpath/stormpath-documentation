@@ -4027,7 +4027,7 @@ You will then get back the response:
     "mostRecentChallenge": null
   }
 
-For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is null. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4207,7 +4207,7 @@ Next, you must collect this code from the user.
 
 .. note::
 
-  The code has to be sent to the correct Challenge href. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
+  The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
 
 Once you have the code, you send it to the same Challenge you created above:
 

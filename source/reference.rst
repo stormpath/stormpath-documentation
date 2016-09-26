@@ -4626,12 +4626,12 @@
     * - ``phones``
       - Link
       - N/A
-      - A link to a collection of Phone resources associated with this Account's Factors.
+      - A link to a collection of :ref:`Phone <ref-phone>` resources associated with this Account's Factors.
 
     * - ``factors``
       - Link
       - N/A
-      - A link to a collection of Factors associated with this Account.
+      - A link to a collection of :ref:`Factor resources <ref-factor>` associated with this Account.
 
   **Account Example**
 
