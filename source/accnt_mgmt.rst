@@ -3691,3 +3691,6 @@ If you changed our mind and wanted to only allow users to register with ``stormp
     }
 
 Working with the Blacklist is exactly the same, except you add entries to the ``emailDomainBlacklist`` array instead.
+
+3.8. Account Linking
+====================
