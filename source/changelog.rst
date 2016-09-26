@@ -20,6 +20,12 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-09-26
+  ==========
+
+  - **New:** Section :ref:`mfa` added to Authentication chapter.
+  - **New:** New MFA-related resources added to Reference chapter: :ref:`ref-factor`, :ref:`ref-challenge`, :ref:`ref-phone`.
+
   2016-09-15
   ==========
 

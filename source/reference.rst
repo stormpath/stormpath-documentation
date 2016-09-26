@@ -1093,7 +1093,7 @@
           "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/idSites"
         }
         "smtpServers": {
-          "href": "https://staging-api-b.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/smtpServers"
+          "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/smtpServers"
         }
       }
 
@@ -4613,6 +4613,26 @@
       - N/A
       - A collection of valid JSON Web Tokens associated with this Account, used to generate additional ``accessTokens`` for token-based authentication. For more information, see :ref:`token-authn`.
 
+    * - ``linkedAccounts``
+      - Link
+      - N/A
+      - A link to a collection of Accounts that are linked to this one.
+
+    * - ``accountLinks``
+      - Link
+      - N/A
+      - A link to a collection of Account Link objects that link this Account to others.
+
+    * - ``phones``
+      - Link
+      - N/A
+      - A link to a collection of :ref:`Phone <ref-phone>` resources associated with this Account's Factors.
+
+    * - ``factors``
+      - Link
+      - N/A
+      - A link to a collection of :ref:`Factor resources <ref-factor>` associated with this Account.
+
   **Account Example**
 
   .. code-block:: json
@@ -4658,6 +4678,18 @@
       },
       "refreshTokens":{
         "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/refreshTokens"
+      }
+      "linkedAccounts": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/linkedAccounts"
+      },
+      "accountLinks": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/accountLinks"
+      },
+      "phones": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/phones"
+      },
+      "factors": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/factors"
       }
     }
 
@@ -5074,6 +5106,8 @@
   Access Token Operations
   """""""""""""""""""""""
 
+  Access Tokens can only be generated and then retrieved.
+
   Creating Access Tokens
   ++++++++++++++++++++++
 
@@ -5189,6 +5223,8 @@
   Refresh Token Operations
   """"""""""""""""""""""""
 
+  Just like Access Tokens, Refresh Tokens can be created and retrieved.
+
   Creating Refresh Tokens
   +++++++++++++++++++++++
 
@@ -5210,6 +5246,552 @@
       * - GET /v1/accounts/$ACCOUNT_ID/refreshTokens
         - ``application.href``
         - Retrieves the specified Account's Refresh Tokens.
+
+  .. _ref-factor:
+
+  Factor
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a Factor that has been added for purposes of Multi-Factor Authentication.
+
+  **Factor URL**
+
+  ``/v1/factors/$FACTOR_ID``
+
+  **Factor Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``type``
+      - String (enum)
+      - ``sms``, ``google-authenticator``
+      - The type of Factor.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED``, ``DISABLED``
+      - Indicates whether this Factor is enabled or not.
+
+    * - ``accountName``
+      - String
+      - Valid email
+      - (Google Authenticator only) The display name for Google Authenticator to use.
+
+    * - ``issuer``
+      - String
+      - N/A
+      - (Google Authenticator only; Optional) The issuer of the Google Authenticator Factor.
+
+    * - ``secret``
+      - String
+      - Base32
+      - (Google Authenticator only) The Google Authenticator secret key.
+
+    * - ``keyUri``
+      - String
+      - `otpauth <https://github.com/google/google-authenticator/wiki/Key-Uri-Format>`__
+      - (Google Authenticator only) The Google Authenticator secret key encoded as a URI.
+
+    * - ``base64QRImage``
+      - String
+      - Base64
+      - (Google Authenticator only) The above ``keyUri`` encoded as a Base64 QR image.
+
+    * - ``verificationStatus``
+      - String
+      - ``VERIFIED``, ``UNVERIFIED``
+      - Indicates whether this factor has been verified or not.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Factor.
+
+    * - ``challenges``
+      - Link
+      - N/A
+      - A link to a collection of :ref:`Challenges <ref-challenge>` associated with this Factor.
+
+    * - ``phone``
+      - Link
+      - N/A
+      - (SMS Only) A link to the :ref:`Phone resource <ref-phone>` associated with this Factor. Deleting this Factor will not affect its Phone resource, but deleting the Phone resource will also delete this Factor.
+
+    * - ``mostRecentChallenge``
+      - Link
+      - N/A
+      - A link to the most recent :ref:`challenge <ref-challenge>` issued for this Factor.
+
+  **Factor Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/factors/wzU29J38OcAyY1z8TeX1x",
+      "type": "SMS",
+      "createdAt": "2016-09-22T17:58:09.645Z",
+      "modifiedAt": "2016-09-22T17:58:09.646Z",
+      "status": "ENABLED",
+      "verificationStatus": "UNVERIFIED",
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample"
+      },
+      "challenges": {
+        "href": "https://api.stormpath.com/v1/factors/wzU29J38OcAyY1z8TeX1x/challenges"
+      },
+      "phone": {
+        "href": "https://api.stormpath.com/v1/phones/wzH415XWxM2MOJVciAfBF"
+      },
+      "mostRecentChallenge": {
+        "href": "https://api.stormpath.com/v1/challenges/wzYMCbEUJ5Nx4S7VRSMkX"
+      }
+    }
+
+  .. _ref-factor-operations:
+
+  Factor Operations
+  """"""""""""""""""""""""""
+
+  An Account's Factors have a full set of CRUD operations available via REST.
+
+  Creating a Factor
+  +++++++++++++++++++
+
+  There are currently two different kinds of available Factors: SMS and Google Authenticator. The resource is the same, but the ``type`` will vary, as well as the available attributes.
+
+  **Creating an SMS Factor**
+
+  .. list-table::
+    :widths: 40 20 20 20
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Optional Parameters
+      - Description
+
+    * - POST /v1/accounts/$ACCOUNT_ID/factors
+      - Required: ``"type":"SMS"``, :ref:`Phone object <ref-phone>`; Optional: :ref:`Challenge object <ref-challenge>`
+      - ``challenge=true``
+      - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge. Instead, you can just add in the ``challenge=true`` URL parameter, which will generate a challenge with the default message.
+
+  For an example of how to an add an SMS Factor, see :ref:`mfa-adding-factor-sms`. For an example of how to simultaneously add and challenge an SMS Factor, see :ref:`mfa-challenge-during`.
+
+  **Creating a Google Authenticator Factor**
+
+  .. list-table::
+    :widths: 40 25 35
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/accounts/$ACCOUNT_ID/factors
+      - Required: ``"type":"google-authenticator"``, ``accountName``
+      - Generates a new Google Authenticator Factor.
+
+  For an example, see :ref:`mfa-adding-factor-google`.
+
+  Retrieving a Factor
+  +++++++++++++++++++++
+
+  .. list-table::
+      :widths: 30 30 40
+      :header-rows: 1
+
+      * - Operation
+        - Optional Query Parameters
+        - Description
+
+      * - GET /v1/factors/$FACTOR_ID
+        - ``expand``
+        - Retrieves the specified Factor.
+
+  Updating a Factor
+  +++++++++++++++++++
+
+  **Updating an SMS Factor**
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/factors/$FACTOR_ID
+        - ``status``
+        - Can be used to update the Factor.
+
+  **Updating a Google Authenticator Factor**
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - POST /v1/factors/$FACTOR_ID
+        - ``status``, ``issuer``, ``accountName``
+        - Can be used to update the Factor. If you update the ``issuer`` and/or ``accountName`` the Factor's ``base64QRImage`` will change.
+
+  Deleting a Factor
+  +++++++++++++++++++
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - DELETE /v1/factors/$FACTOR_ID
+        - N/A
+        - Deletes the specified Factor resource.
+
+  .. _ref-challenge:
+
+  Challenge
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a Challenge that has been created for purposes of Multi-Factor Authentication.
+
+  **Challenge URL**
+
+  ``/v1/challenges/$CHALLENGE_ID``
+
+  **Challenge Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``status``
+      - String (enum)
+      - (See :ref:`below <challenge-status-values>`)
+      - The status of the Challenge.
+
+    * - ``message``
+      - String
+      - N/A
+      - (SMS Only) The content of the challenge message that was sent.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Challenge.
+
+    * - ``factor``
+      - Link
+      - N/A
+      - A link to the :ref:`Factor <ref-factor>` that this Challenge was sent to.
+
+  .. _challenge-status-values:
+
+  **Challenge Status Values:**
+
+  .. list-table::
+    :widths: 20 80
+    :header-rows: 1
+
+    * - CREATED
+      - The challenge was created.
+
+    * - WAITING FOR PROVIDER
+      - The challenge has been sent to the SMS service, and we are waiting for confirm that it has been delivered.
+
+    * - WAITING FOR VALIDATION
+      - The challenge has been issued to the user, and we are awaiting a response.
+
+    * - SUCCESS
+      - The challenge was successfully verified.
+
+    * - FAILED
+      - An attempt was made to verify the challenge, but it failed, for example by specifying an incorrect code.
+
+    * - EXPIRED
+      - The challenge was not verified within the allowed time window.
+
+    * - ERROR
+      - Unexpected internal server error.
+
+    * - UNDELIVERED
+      - SMS provider sent the message but did not get a successful delivery notification.
+
+
+  .. todo::
+
+    Possible values for future use:
+
+      * - DENIED
+        - The challenge was explicitly denied by the user.
+
+      * - CANCELLED
+        - The user chose not to reply to the challenge.
+
+  **Challenge Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
+      "createdAt": "2016-09-22T22:50:59.241Z",
+      "modifiedAt": "2016-09-22T22:50:59.241Z",
+      "status": "SUCCESS",
+      "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+      },
+      "factor": {
+        "href": "https://api.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
+      }
+    }
+
+  .. _ref-challenge-operations:
+
+  Challenge Operations
+  """"""""""""""""""""""""""
+
+  An Account's Challenges can only be created via a POST. The Challenge resource does not support any other operations. To attempt verification of a challenge, sending a ``POST`` to to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+
+  Creating a Challenge
+  +++++++++++++++++++++
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/accounts/$ACCOUNT_ID/challenges
+      - N/A
+      - Generates a new Challenge.
+
+  Retrieving a Challenge
+  ++++++++++++++++++++++++
+
+  .. list-table::
+    :widths: 30 30 40
+    :header-rows: 1
+
+    * - Operation
+      - Optional Query Parameters
+      - Description
+
+    * - GET /v1/accounts/$ACCOUNT_ID/challenges
+      - ``expand``
+      - Retrieves a collection of Challenges for the specified Account.
+
+  Updating a Challenge
+  ++++++++++++++++++++++
+
+  While Challenges cannot be updated, they are verified by sending a ``POST`` to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+
+  For examples, please see :ref:`mfa-challenge-after-sms` and :ref:`mfa-challenge-after-google`.
+
+  Deleting a Challenge
+  ++++++++++++++++++++++
+
+  Challenges cannot be deleted.
+
+  .. _ref-phone:
+
+  Phone
+  ^^^^^^^^^^^^^^^^
+
+  This resource contains information about a phone that has been to a Factor for purposes of Multi-Factor Authentication.
+
+  **phone URL**
+
+  ``/v1/phones/$PHONE_ID``
+
+  **Phone Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``number``
+      - String
+      - `E.164 format <https://en.wikipedia.org/wiki/E.164>`__.
+      - The phone number.
+
+    * - ``description``
+      - String
+      - N/A
+      - An optional description for this Phone resource.
+
+    * - ``name``
+      - String
+      - N/A
+      - An optional name for this Phone resource.
+
+    * - ``verificationStatus``
+      - String (enum)
+      - ``VERIFIED``, ``UNVERIFIED``
+      - Indicates whether this Phone's number has been verified. Will chance to ``VERIFIED`` upon the first successful SMS challenge. Can be changed manually with a ``POST``.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED`` , ``DISABLED``
+      - Indicates whether this Phone resource is enabled or not.
+
+    * - ``account``
+      - Link
+      - N/A
+      - A link to the Account that owns this Phone resource.
+
+  **phone Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/phones/7lHGSpTvuxNnvnCkpOwUiR",
+      "createdAt": "2016-09-22T16:52:50.136Z",
+      "modifiedAt": "2016-09-22T16:52:50.136Z",
+      "number": "+12675555555",
+      "description": null,
+      "name": null,
+      "verificationStatus": "UNVERIFIED",
+      "status": "ENABLED",
+      "account": {
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple"
+      }
+    }
+
+  .. _ref-phone-operations:
+
+  Phone Operations
+  """"""""""""""""""""""""""
+  An Account's Phones have a full set of CRUD operations available via REST.
+
+  Creating a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/phones/$PHONE_ID
+      - Required: ``number``; Optional: ``name``, ``description``, ``status``
+      - Creates a new Phone.
+
+  Retrieving a Phone
+  +++++++++++++++++++++
+
+  .. list-table::
+    :widths: 30 30 40
+    :header-rows: 1
+
+    * - Operation
+      - Optional Query Parameters
+      - Description
+
+    * - GET /v1/phones/$PHONE_ID
+      - N/A
+      - Retrieves the specified phone.
+
+  Updating a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/phones/$PHONE_ID
+      - ``name``, ``description``, ``status``, ``verificationStatus``
+      - Can be used to update the the Phone.
+
+  Deleting a Phone
+  +++++++++++++++++++
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - DELETE /v1/phones/$PHONE_ID
+      - N/A
+      - Deletes the specified Phone resource. If the Phone is associated with a Factor, then the Factor will also be deleted. However deleting a Factor will not delete its associated Phone.
 
   .. _ref-provider-data:
 
@@ -5462,7 +6044,7 @@
   .. code-block:: json
 
     {
-      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdzpFfey/customData",
+      "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexaMple/customData",
       "createdAt":"2015-08-25T19:57:05.976Z",
       "modifiedAt":"2016-07-18T20:05:02.283Z",
       "birthDate":"2305-07-13",
