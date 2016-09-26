@@ -632,7 +632,7 @@ Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath c
 - **Client Credentials Grant Type**: Provides the ability to exchange an API Key for an Access Token.
 - **Social Grant Type:** Allows you to exchange a user's social Access Token or Authorization Code
 - **Refresh Grant Type:** Provides the ability to generate another Access Token based on a special Refresh Token.
-- **Stormpath Factor Challenge Grant Type:** Provides the ability to generate an Access Token with (jakubtodo)
+- **Stormpath Factor Challenge Grant Type:** Provides the ability to generate an Access Token with a Multi-Factor Authentication challenge code
 
 To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available. To see how to generate an OAuth token, see :ref:`below <generate-oauth-token>`.
 
@@ -817,7 +817,7 @@ Stormpath can generate a brand new Access Token using the above-mentioned OAuth 
 - **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
 - **Social Grant Type:** a user's social login Access Token or Authorization Code
 - **Password Grant Type:** a user's credentials (e.g. username and password)
-- **Stormpath Factor Challenge Type:** (jakubtodo)
+- **Stormpath Factor Challenge Type:** a Stormpath Challenge ``href`` and ``code``
 - **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
@@ -828,7 +828,7 @@ Stormpath can generate a brand new Access Token using the above-mentioned OAuth 
 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
-The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. The Stormpath Factor Challenge Type requires a Challenge ``href`` and ``code`` that you get as part of the :ref:`Multi-Factor Authentication process <mfa>`. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
 
 .. todo::
 
@@ -864,7 +864,14 @@ Finally, for the **Password Grant Type**, you pass the user's **username** and *
 Stormpath Factor Challenge
 """"""""""""""""""""""""""
 
-(jakubtodo)
+For this grant type, you will need:
+
+- The **URL of a Stormpath Challenge Resource**. Currently, this can only be a Challenge related to an SMS Factor.
+- And the challenge code that the user received on their phone.
+
+``grant_type=stormpath_factor_challenge&challenge=https://api.stormpath.com/v1/challenges/$CHALLENGE_ID&code=123456``
+
+For more information about these resources and how to obtain them, please see :ref:`mfa`.
 
 Token Generation Example
 """""""""""""""""""""""""
@@ -3924,284 +3931,10 @@ For more information about what is contained in this token, please see :ref:`abo
 
 At this point your user is authenticated and able to use your app.
 
-.. only:: not rest
-
-  4.6. How API Key Authentication Works in Stormpath
-  =====================================================
-
-  In this section, we discuss how to set up Stormpath to manage and authenticate API Keys and Tokens for developers that are using your API services. Stormpath provides not only the user management piece around API Keys, but also allows you to associate permissions and custom data with the Accounts for advanced use-cases.
-
-  Stormpath offers a complete solution that securely and easily helps you manage developer accounts, create and manage API Keys, and generate OAuth 2.0 bearer tokens to support Access Token authentication.
-
-  4.6.1. How to use API Key and Secret Authentication
-  -----------------------------------------------------------------
-
-  First, you will need an Account for a developer. For information about how to create an Account, see :ref:`the Account Management chapter <add-new-account>`.
-
-  Create an API Key for an Account
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  Once you have an Account, creating an API Key is a simple call:
-
-  .. only:: csharp or vbnet
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/create_apikey_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/create_apikey_req.vb
-          :language: vbnet
-
-  .. only:: java
-
-    .. literalinclude:: code/java/authentication/create_apikey_req.java
-        :language: java
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/authentication/create_apikey_req.js
-        :language: javascript
-
-  .. only:: php
-
-    .. literalinclude:: code/php/authentication/create_apikey_req.php
-      :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/authentication/create_apikey_req.py
-      :language: python
-
-  .. only:: csharp or vbnet
-
-    The returned ``IApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
-
-  .. only:: java
-
-    The returned ``ApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
-
-  .. only:: nodejs
-
-    You will then get back the newly-created API Key:
-
-    .. literalinclude:: code/nodejs/authentication/create_apikey_resp.js
-        :language: javascript
-
-  .. only:: php
-
-    You will then get back the newly-created API Key:
-
-    .. literalinclude:: code/php/authentication/create_apikey_resp.php
-      :language: php
-
-  Managing API Keys
-  ^^^^^^^^^^^^^^^^^
-
-  In some cases, you may need to delete or disable an API Key. This is important for management of API Keys. For example, a developer may delete an API Key because it has been compromised, or the administrator may disable all API Keys for a developer that is past due on payments for the service. API Keys can be retrieved from either the Application or Account. Once a key is retrieved, it can be deleted or disabled.
-
-  **Delete an API Key**
-
-  .. only:: csharp or vbnet
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/delete_apikey.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/delete_apikey.vb
-          :language: vbnet
-
-  .. only:: java
-
-    .. literalinclude:: code/java/authentication/delete_apikey.java
-        :language: java
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/authentication/delete_apikey.js
-        :language: javascript
-
-  .. only:: php
-
-    .. literalinclude:: code/php/authentication/delete_apikey.php
-      :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/authentication/delete_apikey.py
-      :language: python
-
-  **Disable an API Key**
-
-  .. only:: csharp or vbnet
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/disable_apikey.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/disable_apikey.vb
-          :language: vbnet
-
-  .. only:: java
-
-    .. literalinclude:: code/java/authentication/disable_apikey.java
-        :language: java
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/authentication/disable_apikey.js
-        :language: javascript
-
-  .. only:: php
-
-    .. literalinclude:: code/php/authentication/disable_apikey.php
-      :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/authentication/disable_apikey.py
-      :language: python
-
-  .. _api-basic-auth:
-
-  4.6.2. How to authenticate using HTTP Basic
-  -----------------------------------------------------------------
-
-  Now that your developer has an API Key, there are two methods that they can use to authenticate their API calls: HTTP Basic and HTTP Bearer. In this section we'll cover Basic Authentication, then we'll discuss :ref:`how to exchange an API Key for an OAuth token <api-key-for-token>`, and finally how to authenticate an API call with that token using :ref:`HTTP Bearer Authentication <api-bearer-auth>`.
-
-  The simplest way to authenticate a call is to Base64 encode the API Key and Secret and then pass this encoded string in the authorization header:
-
-  .. code-block:: http
-
-    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-
-  .. warning::
-
-    Basic Authentication does not encrypt or hash the credentials in any way. By itself, it is not secure and Stormpath strongly recommends that when a developer calls your API, it is transmitted over HTTPS to provide adequate security.
-
-  Upon receiving this request, the Stormpath SDK will authenticate the request as follows:
-
-  .. only:: csharp or vbnet
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/authenticate_basic_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/authenticate_basic_req.vb
-          :language: vbnet
-
-  .. only:: java
-
-    .. literalinclude:: code/java/authentication/authenticate_basic_req.java
-        :language: java
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/authentication/authenticate_basic_req.js
-        :language: javascript
-
-  .. only:: php
-
-    .. literalinclude:: code/php/authentication/authenticate_basic_req.php
-      :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/authentication/authenticate_basic_req.py
-      :language: python
-
-  The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
-
-  The SDK provides a caching layer to ensure fast response times in your API by reducing network traffic to the Stormpath service. The caching layer will cache the API Key securely with the Secret encrypted. Stormpath will use the cached entry for API Key and Secret authentication when possible.
-
-  .. _api-key-for-token:
-
-  4.6.3. How to exchange an API Key for an Access Token
-  -----------------------------------------------------------------
-
-  Instead of passing base64 encoded API keys over the wire, you can exchange an API Key Id and Secret for an Access Token, and use the Access Token as a Bearer Token to authentication for a protected API or resource. Exchanging an API Key for a token is essentially a two step process:
-
-  1. The client authenticates with Stormpath and requests an access token from the token endpoint
-  2. Stormpath authenticates the client and issues an access token
-
-  For more details, see earlier in this chapter: :ref:`generate-oauth-token`.
-
-  .. _api-bearer-auth:
-
-  4.6.4. How to authenticate using HTTP Bearer Access Tokens
-  -----------------------------------------------------------------
-
-  After you return an OAuth Access Token to a developer using your API service, they can start using the OAuth Access Token to validate authentication to your service.
-
-  Stormpath requires that the developer send the Access Token in the Authorization header of the request.
-
-  Again, the Stormtrooper Equipment API example. We will require that a developer exchange their API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
-
-  The developer request would look something like this:
-
-  .. code-block:: http
-
-    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Bearer 7FRhtCNRapj9zs.YI8MqPiS8hzx3wJH4.qT29JUOpU...
-
-  The Stormpath SDK would then authenticate the request as follows:
-
-  .. only:: csharp or vbnet
-
-    .. warning::
-
-      This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #173 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/173>`_ on Github.
-
-    .. todo::
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
-            :language: vbnet
-
-  .. only:: java
-
-    .. literalinclude:: code/java/authentication/authenticate_bearer_req.java
-        :language: java
-
-  .. only:: nodejs
-
-    .. literalinclude:: code/nodejs/authentication/authenticate_bearer_req.js
-        :language: javascript
-
-  .. only:: php
-
-    .. literalinclude:: code/php/authentication/authenticate_bearer_req.php
-      :language: php
-
-  .. only:: python
-
-    .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
-      :language: python
-
 .. _mfa:
 
 4.6. Using Multi-Factor Authentication
-======================================
+============================================
 
 At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
 
@@ -4213,13 +3946,13 @@ The multi-factor authentication process works as follows with text messages:
 #. An additional **Factor** of type ``SMS`` is added to an Account.
 #. A **Challenge** is created which includes a message.
 #. The message is sent to the phone number found in the Factor with a one-time numerical **code**.
-#. If that **code** is then passed back to the appropriate Challenge within a sufficient time window, then the Challenge's status changes to ``VERIFIED``.
+#. If that **code** is then passed back to the appropriate Challenge within a sufficient time window, you will get back either a ``SUCCESS`` or ``FAILED`` response.
 
 With Google Authenticator, the flow is only slightly different:
 
 #. An additional **Factor** of type ``google-authenticator`` is added to an Account.
 #. The new **Factor** has a **secret** and a Base64-encoded **QR code**, both of which can be used to add it to the Google Authenticator app.
-#. At any time, you can send the **code** from the Authenticator app to Stormpath's ``/challenges`` endpoint, at which point you will get back either a ``SUCCESS`` or ``FAILED`` challenge.
+#. At any time, you can send the **code** from the Authenticator app to Stormpath's ``/challenges`` endpoint, at which point you will get back either a ``SUCCESS`` or ``FAILED`` response.
 
 .. note::
 
@@ -4308,7 +4041,7 @@ To add an additional Google Authenticator Factor to this Account, you send a POS
 .. code-block:: http
 
   POST /v1/accounts/5IvkjoqcYNe3TYMYExample/factors HTTP/1.1
-  Host: staging-api-b.stormpath.com
+  Host: api.stormpath.com
   Content-Type: application/json
   Authorization: Basic MlpG...
 
@@ -4496,18 +4229,22 @@ And then you would get back the response:
   {
     "createdAt": "2016-09-22T22:35:44.799Z",
     "modifiedAt": "2016-09-22T22:39:06.822Z",
-    "href": "https://staging-api-b.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
+    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
     "message": "For the sake of example, your code is ${code}.",
     "factor": {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
     },
     "account": {
-        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
     },
     "status": "SUCCESS"
   }
 
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``. For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
+
+.. note::
+
+  You could also pass the Challenge ``href`` and the ``code`` to Stormpath and get back an OAuth 2.0 Access Token. For more information about this see :ref:`generate-oauth-token`.
 
 .. _mfa-challenge-after-google:
 
@@ -4536,15 +4273,15 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 .. code-block:: json
 
   {
-    "href": "https://staging-api-b.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
+    "href": "https://api.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
     "createdAt": "2016-09-22T22:50:59.241Z",
     "modifiedAt": "2016-09-22T22:50:59.241Z",
     "status": "SUCCESS",
     "account": {
-        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
     },
     "factor": {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
+        "href": "https://api.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
     }
   }
 
@@ -4616,7 +4353,7 @@ If authentication is successful, you will get back the Account:
     "status": "ENABLED",
     "...": "...",
     "factors": {
-        "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample/factors"
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample/factors"
     }
   }
 
@@ -4634,29 +4371,29 @@ Which will return:
 .. code-block:: json
 
   {
-    "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
     "offset": 0,
     "limit": 25,
     "size": 1,
     "items": [
       {
-        "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo",
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo",
         "type": "SMS",
         "createdAt": "2016-09-22T22:11:03.768Z",
         "modifiedAt": "2016-09-22T22:42:39.822Z",
         "status": "ENABLED",
         "verificationStatus": "VERIFIED",
         "account": {
-            "href": "https://staging-api-b.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
         },
         "challenges": {
-            "href": "https://staging-api-b.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges"
+            "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges"
         },
         "phone": {
-            "href": "https://staging-api-b.stormpath.com/v1/phones/3WManCalQOcizNsHjeeiHk"
+            "href": "https://api.stormpath.com/v1/phones/3WManCalQOcizNsHjeeiHk"
         },
         "mostRecentChallenge": {
-            "href": "https://staging-api-b.stormpath.com/v1/challenges/6kgEJR5Cr3pNh131i7b6wm"
+            "href": "https://api.stormpath.com/v1/challenges/6kgEJR5Cr3pNh131i7b6wm"
         }
       }
     ]
@@ -4667,8 +4404,282 @@ You would then send a POST to the ``challenges`` collection:
 .. code-block:: http
 
   POST /v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges HTTP/1.1
-  Host: staging-api-b.stormpath.com
+  Host: api.stormpath.com
   Authorization: Basic MlpG...
   Cache-Control: no-cache
 
 This would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+
+.. only:: not rest
+
+  4.7. How API Key Authentication Works in Stormpath
+  =====================================================
+
+  In this section, we discuss how to set up Stormpath to manage and authenticate API Keys and Tokens for developers that are using your API services. Stormpath provides not only the user management piece around API Keys, but also allows you to associate permissions and custom data with the Accounts for advanced use-cases.
+
+  Stormpath offers a complete solution that securely and easily helps you manage developer accounts, create and manage API Keys, and generate OAuth 2.0 bearer tokens to support Access Token authentication.
+
+  4.7.1. How to use API Key and Secret Authentication
+  -----------------------------------------------------------------
+
+  First, you will need an Account for a developer. For information about how to create an Account, see :ref:`the Account Management chapter <add-new-account>`.
+
+  Create an API Key for an Account
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Once you have an Account, creating an API Key is a simple call:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_apikey_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_apikey_req.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/create_apikey_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/create_apikey_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/create_apikey_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/create_apikey_req.py
+      :language: python
+
+  .. only:: csharp or vbnet
+
+    The returned ``IApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
+
+  .. only:: java
+
+    The returned ``ApiKey`` object contains properties for the ID and secret, as well as the status of the API Key pair.
+
+  .. only:: nodejs
+
+    You will then get back the newly-created API Key:
+
+    .. literalinclude:: code/nodejs/authentication/create_apikey_resp.js
+        :language: javascript
+
+  .. only:: php
+
+    You will then get back the newly-created API Key:
+
+    .. literalinclude:: code/php/authentication/create_apikey_resp.php
+      :language: php
+
+  Managing API Keys
+  ^^^^^^^^^^^^^^^^^
+
+  In some cases, you may need to delete or disable an API Key. This is important for management of API Keys. For example, a developer may delete an API Key because it has been compromised, or the administrator may disable all API Keys for a developer that is past due on payments for the service. API Keys can be retrieved from either the Application or Account. Once a key is retrieved, it can be deleted or disabled.
+
+  **Delete an API Key**
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/delete_apikey.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/delete_apikey.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/delete_apikey.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/delete_apikey.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/delete_apikey.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/delete_apikey.py
+      :language: python
+
+  **Disable an API Key**
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/disable_apikey.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/disable_apikey.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/disable_apikey.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/disable_apikey.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/disable_apikey.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/disable_apikey.py
+      :language: python
+
+  .. _api-basic-auth:
+
+  4.7.2. How to Authenticate Using HTTP Basic
+  -----------------------------------------------------------------
+
+  Now that your developer has an API Key, there are two methods that they can use to authenticate their API calls: HTTP Basic and HTTP Bearer. In this section we'll cover Basic Authentication, then we'll discuss :ref:`how to exchange an API Key for an OAuth token <api-key-for-token>`, and finally how to authenticate an API call with that token using :ref:`HTTP Bearer Authentication <api-bearer-auth>`.
+
+  The simplest way to authenticate a call is to Base64 encode the API Key and Secret and then pass this encoded string in the authorization header:
+
+  .. code-block:: http
+
+    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+
+  .. warning::
+
+    Basic Authentication does not encrypt or hash the credentials in any way. By itself, it is not secure and Stormpath strongly recommends that when a developer calls your API, it is transmitted over HTTPS to provide adequate security.
+
+  Upon receiving this request, the Stormpath SDK will authenticate the request as follows:
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/authenticate_basic_req.cs
+          :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/authenticate_basic_req.vb
+          :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/authenticate_basic_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/authenticate_basic_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/authenticate_basic_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/authenticate_basic_req.py
+      :language: python
+
+  The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
+
+  The SDK provides a caching layer to ensure fast response times in your API by reducing network traffic to the Stormpath service. The caching layer will cache the API Key securely with the Secret encrypted. Stormpath will use the cached entry for API Key and Secret authentication when possible.
+
+  .. _api-key-for-token:
+
+  4.7.3. How to Exchange an API Key for an Access Token
+  -----------------------------------------------------------------
+
+  Instead of passing base64 encoded API keys over the wire, you can exchange an API Key Id and Secret for an Access Token, and use the Access Token as a Bearer Token to authentication for a protected API or resource. Exchanging an API Key for a token is essentially a two step process:
+
+  1. The client authenticates with Stormpath and requests an access token from the token endpoint
+  2. Stormpath authenticates the client and issues an access token
+
+  For more details, see earlier in this chapter: :ref:`generate-oauth-token`.
+
+  .. _api-bearer-auth:
+
+  4.7.4. How to Authenticate Using HTTP Bearer Access Tokens
+  -----------------------------------------------------------------
+
+  After you return an OAuth Access Token to a developer using your API service, they can start using the OAuth Access Token to validate authentication to your service.
+
+  Stormpath requires that the developer send the Access Token in the Authorization header of the request.
+
+  Again, the Stormtrooper Equipment API example. We will require that a developer exchange their API Key and Secret for an Access Token and then pass the Access Token in future requests to gain access to your API.
+
+  The developer request would look something like this:
+
+  .. code-block:: http
+
+    GET /v1/groups/1ORBsz2iCNpV8yJKqFWhDc/accountMemberships HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Bearer 7FRhtCNRapj9zs.YI8MqPiS8hzx3wJH4.qT29JUOpU...
+
+  The Stormpath SDK would then authenticate the request as follows:
+
+  .. only:: csharp or vbnet
+
+    .. warning::
+
+      This feature is not yet available in the .NET SDK. For updates, you can follow `ticket #173 <https://github.com/stormpath/stormpath-sdk-dotnet/issues/173>`_ on Github.
+
+    .. todo::
+
+      .. only:: csharp
+
+        .. literalinclude:: code/csharp/authentication/authenticate_bearer_req.cs
+            :language: csharp
+
+      .. only:: vbnet
+
+        .. literalinclude:: code/vbnet/authentication/authenticate_bearer_req.vb
+            :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/authenticate_bearer_req.java
+        :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/authenticate_bearer_req.js
+        :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/authenticate_bearer_req.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
+      :language: python

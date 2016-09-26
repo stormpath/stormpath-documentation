@@ -1093,7 +1093,7 @@
           "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgeXAMPLE/idSites"
         }
         "smtpServers": {
-          "href": "https://staging-api-b.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/smtpServers"
+          "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R/smtpServers"
         }
       }
 
@@ -5337,7 +5337,7 @@
     * - ``phone``
       - Link
       - N/A
-      - (SMS Only) A link to the :ref:`Phone resource<ref-phone>`associated with this Factor. Deleting this Factor will not affect its Phone resource, but deleting the Phone resource will also delete this Factor.
+      - (SMS Only) A link to the :ref:`Phone resource <ref-phone>` associated with this Factor. Deleting this Factor will not affect its Phone resource, but deleting the Phone resource will also delete this Factor.
 
     * - ``mostRecentChallenge``
       - Link
@@ -5397,7 +5397,7 @@
       - ``challenge=true``
       - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge. Instead, you can just add in the ``challenge=true`` URL parameter, which will generate a challenge with the default message.
 
-  For an example of how to an add an SMS Factor, see :ref:`mfa-adding-factor-sms`. For an example of how to simultaneously add and challenge an SMS Factor, see :ref:`fa-challenge-during`.
+  For an example of how to an add an SMS Factor, see :ref:`mfa-adding-factor-sms`. For an example of how to simultaneously add and challenge an SMS Factor, see :ref:`mfa-challenge-during`.
 
   **Creating a Google Authenticator Factor**
 
