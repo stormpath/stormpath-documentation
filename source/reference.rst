@@ -5647,7 +5647,7 @@
   Phone
   ^^^^^^^^^^^^^^^^
 
-  This resource contains information about a Phone that has been added as a Factor for purposes of Multi-Factor Authentication.
+  This resource contains information about a phone that has been to a Factor for purposes of Multi-Factor Authentication.
 
   **phone URL**
 
