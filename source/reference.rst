@@ -5106,6 +5106,8 @@
   Access Token Operations
   """""""""""""""""""""""
 
+  Access Tokens can only be generated and then retrieved.
+
   Creating Access Tokens
   ++++++++++++++++++++++
 
@@ -5221,6 +5223,8 @@
   Refresh Token Operations
   """"""""""""""""""""""""
 
+  Just like Access Tokens, Refresh Tokens can be created and retrieved.
+
   Creating Refresh Tokens
   +++++++++++++++++++++++
 
@@ -5293,7 +5297,7 @@
     * - ``accountName``
       - String
       - Valid email
-      - (Google Authenticator only) The Google email address used by Google Authenticator.
+      - (Google Authenticator only) The display name for Google Authenticator to use.
 
     * - ``issuer``
       - String
@@ -5328,17 +5332,17 @@
     * - ``challenges``
       - Link
       - N/A
-      - A link to a collection of Challenges associated with this Factor.
+      - A link to a collection of :ref:`Challenges <ref-challenge>` associated with this Factor.
 
     * - ``phone``
       - Link
       - N/A
-      - (SMS Only) A link to the ``phone`` resource associated with this Factor.
+      - (SMS Only) A link to the :ref:`Phone resource<ref-phone>`associated with this Factor. Deleting this Factor will not affect its Phone resource, but deleting the Phone resource will also delete this Factor.
 
     * - ``mostRecentChallenge``
       - Link
       - N/A
-      - A link to the most recent ``challenge`` issued for this Factor.
+      - A link to the most recent :ref:`challenge <ref-challenge>` issued for this Factor.
 
   **Factor Example**
 
@@ -5375,37 +5379,41 @@
   Creating a Factor
   +++++++++++++++++++
 
-  There are currently two different kinds of available Factors: SMS and Google Authenticator.
+  There are currently two different kinds of available Factors: SMS and Google Authenticator. The resource is the same, but the ``type`` will vary, as well as the available attributes.
 
   **Creating an SMS Factor**
 
   .. list-table::
-      :widths: 40 20 20 20
-      :header-rows: 1
+    :widths: 40 20 20 20
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Optional Parameters
-        - Description
+    * - Operation
+      - Attributes
+      - Optional Parameters
+      - Description
 
-      * - POST /v1/accounts/$ACCOUNT_ID/factors
-        - Required: ``"type":"SMS"``, :ref:`Phone object <ref-phone>`; Optional: :ref:`Challenge object <ref-challenge>`
-        - ``challenge=true``
-        - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge.
+    * - POST /v1/accounts/$ACCOUNT_ID/factors
+      - Required: ``"type":"SMS"``, :ref:`Phone object <ref-phone>`; Optional: :ref:`Challenge object <ref-challenge>`
+      - ``challenge=true``
+      - Generates a new SMS Factor. If you include a ``challenge`` with a ``message`` then it will simultaneously create the Factor and send a challenge. Instead, you can just add in the ``challenge=true`` URL parameter, which will generate a challenge with the default message.
+
+  For an example of how to an add an SMS Factor, see :ref:`mfa-adding-factor-sms`. For an example of how to simultaneously add and challenge an SMS Factor, see :ref:`fa-challenge-during`.
 
   **Creating a Google Authenticator Factor**
 
   .. list-table::
-      :widths: 40 25 35
-      :header-rows: 1
+    :widths: 40 25 35
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Description
+    * - Operation
+      - Attributes
+      - Description
 
-      * - POST /v1/accounts/$ACCOUNT_ID/factors
-        - Required: ``"type":"google-authenticator"``, ``accountName``
-        - Generates a new Google Authenticator Factor.
+    * - POST /v1/accounts/$ACCOUNT_ID/factors
+      - Required: ``"type":"google-authenticator"``, ``accountName``
+      - Generates a new Google Authenticator Factor.
+
+  For an example, see :ref:`mfa-adding-factor-google`.
 
   Retrieving a Factor
   +++++++++++++++++++++
@@ -5513,7 +5521,7 @@
     * - ``message``
       - String
       - N/A
-      - The content of the challenge message that was sent.
+      - (SMS Only) The content of the challenge message that was sent.
 
     * - ``account``
       - Link
@@ -5523,7 +5531,7 @@
     * - ``factor``
       - Link
       - N/A
-      - A link to the Factor that this Challenge was sent to.
+      - A link to the :ref:`Factor <ref-factor>` that this Challenge was sent to.
 
   .. _challenge-status-values:
 
@@ -5536,7 +5544,10 @@
     * - CREATED
       - The challenge was created.
 
-    * - WAITING
+    * - WAITING FOR PROVIDER
+      - The challenge has been sent to the SMS service, and we are waiting for confirm that it has been delivered.
+
+    * - WAITING FOR VALIDATION
       - The challenge has been issued to the user, and we are awaiting a response.
 
     * - SUCCESS
@@ -5544,12 +5555,6 @@
 
     * - FAILED
       - An attempt was made to verify the challenge, but it failed, for example by specifying an incorrect code.
-
-    * - DENIED
-      - The challenge was explicitly denied by the user.
-
-    * - CANCELLED
-      - The user chose not to reply to the challenge.
 
     * - EXPIRED
       - The challenge was not verified within the allowed time window.
@@ -5559,6 +5564,17 @@
 
     * - UNDELIVERED
       - SMS provider sent the message but did not get a successful delivery notification.
+
+
+  .. todo::
+
+    Possible values for future use:
+
+      * - DENIED
+        - The challenge was explicitly denied by the user.
+
+      * - CANCELLED
+        - The user chose not to reply to the challenge.
 
   **Challenge Example**
 
@@ -5588,36 +5604,38 @@
   +++++++++++++++++++++
 
   .. list-table::
-      :widths: 40 20 40
-      :header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Description
+    * - Operation
+      - Attributes
+      - Description
 
-      * - POST /v1/accounts/$ACCOUNT_ID/challenges
-        - N/A
-        - Generates a new Challenge.
+    * - POST /v1/accounts/$ACCOUNT_ID/challenges
+      - N/A
+      - Generates a new Challenge.
 
   Retrieving a Challenge
   ++++++++++++++++++++++++
 
   .. list-table::
-      :widths: 30 30 40
-      :header-rows: 1
+    :widths: 30 30 40
+    :header-rows: 1
 
-      * - Operation
-        - Optional Query Parameters
-        - Description
+    * - Operation
+      - Optional Query Parameters
+      - Description
 
-      * - GET /v1/accounts/$ACCOUNT_ID/challenges
-        - ``expand``
-        - Retrieves a collection of Challenges for the specified Account.
+    * - GET /v1/accounts/$ACCOUNT_ID/challenges
+      - ``expand``
+      - Retrieves a collection of Challenges for the specified Account.
 
   Updating a Challenge
   ++++++++++++++++++++++
 
   While Challenges cannot be updated, they are verified by sending a ``POST`` to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+
+  For examples, please see :ref:`mfa-challenge-after-sms` and :ref:`mfa-challenge-after-google`.
 
   Deleting a Challenge
   ++++++++++++++++++++++
@@ -5679,7 +5697,7 @@
     * - ``verificationStatus``
       - String (enum)
       - ``VERIFIED``, ``UNVERIFIED``
-      - Indicates whether this Phone's number has been verified.
+      - Indicates whether this Phone's number has been verified. Will chance to ``VERIFIED`` upon the first successful SMS challenge. Can be changed manually with a ``POST``.
 
     * - ``status``
       - String (enum)
@@ -5699,7 +5717,7 @@
       "href": "https://api.stormpath.com/v1/phones/7lHGSpTvuxNnvnCkpOwUiR",
       "createdAt": "2016-09-22T16:52:50.136Z",
       "modifiedAt": "2016-09-22T16:52:50.136Z",
-      "number": "+12674325555",
+      "number": "+12675555555",
       "description": null,
       "name": null,
       "verificationStatus": "UNVERIFIED",
@@ -5719,16 +5737,16 @@
   +++++++++++++++++++
 
   .. list-table::
-      :widths: 40 20 40
-      :header-rows: 1
+    :widths: 40 20 40
+    :header-rows: 1
 
-      * - Operation
-        - Attributes
-        - Description
+    * - Operation
+      - Attributes
+      - Description
 
-      * - POST /v1/phones/$PHONE_ID
-        - Required: ``number``; Optional: ``name``, ``description``, ``status``
-        - Creates a new Phone.
+    * - POST /v1/phones/$PHONE_ID
+      - Required: ``number``; Optional: ``name``, ``description``, ``status``
+      - Creates a new Phone.
 
   Retrieving a Phone
   +++++++++++++++++++++
@@ -5757,7 +5775,7 @@
       - Description
 
     * - POST /v1/phones/$PHONE_ID
-      - ``name``, ``description``, ``status``
+      - ``name``, ``description``, ``status``, ``verificationStatus``
       - Can be used to update the the Phone.
 
   Deleting a Phone
@@ -5773,7 +5791,7 @@
 
     * - DELETE /v1/phones/$PHONE_ID
       - N/A
-      - Deletes the specified Phone resource.
+      - Deletes the specified Phone resource. If the Phone is associated with a Factor, then the Factor will also be deleted. However deleting a Factor will not delete its associated Phone.
 
   .. _ref-provider-data:
 

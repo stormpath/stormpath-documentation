@@ -632,6 +632,7 @@ Even though OAuth 2.0 has many authorization modes or "grant types", Stormpath c
 - **Client Credentials Grant Type**: Provides the ability to exchange an API Key for an Access Token.
 - **Social Grant Type:** Allows you to exchange a user's social Access Token or Authorization Code
 - **Refresh Grant Type:** Provides the ability to generate another Access Token based on a special Refresh Token.
+- **Stormpath Factor Challenge Grant Type:** Provides the ability to generate an Access Token with (jakubtodo)
 
 To understand how to use Token-based Authentication, you need to talk about the different types of tokens that are available. To see how to generate an OAuth token, see :ref:`below <generate-oauth-token>`.
 
@@ -814,8 +815,9 @@ Generating an OAuth 2.0 Access Token
 Stormpath can generate a brand new Access Token using the above-mentioned OAuth 2.0 grant types. This means that you can generate a new Access Token with:
 
 - **Client Credentials Grant Type:** a client's credentials (e.g. Client ID and Secret)
-- **Password Grant Type:** a user's credentials (e.g. username and password)
 - **Social Grant Type:** a user's social login Access Token or Authorization Code
+- **Password Grant Type:** a user's credentials (e.g. username and password)
+- **Stormpath Factor Challenge Type:** (jakubtodo)
 - **Refresh Grant Type:** For information about using the an OAuth Refresh token :ref:`see below <refresh-oauth-token>`
 
 .. only:: rest
@@ -827,6 +829,10 @@ Stormpath can generate a brand new Access Token using the above-mentioned OAuth 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
 The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+
+.. todo::
+
+  Need examples for the other languages!
 
 Client Credentials
 """"""""""""""""""
@@ -854,6 +860,11 @@ Password
 Finally, for the **Password Grant Type**, you pass the user's **username** and **password**:
 
 ``grant_type=password&username=tom%40stormpath.com&password=Secret1``
+
+Stormpath Factor Challenge
+""""""""""""""""""""""""""
+
+(jakubtodo)
 
 Token Generation Example
 """""""""""""""""""""""""
@@ -4208,7 +4219,7 @@ With Google Authenticator, the flow is only slightly different:
 
 #. An additional **Factor** of type ``google-authenticator`` is added to an Account.
 #. The new **Factor** has a **secret** and a Base64-encoded **QR code**, both of which can be used to add it to the Google Authenticator app.
-#. At any time, you can send the **code** from the Authenticator app to the appropriate Challenge, at which point you will get back a ``VERIFIED`` challenge.
+#. At any time, you can send the **code** from the Authenticator app to Stormpath's ``/challenges`` endpoint, at which point you will get back either a ``SUCCESS`` or ``FAILED`` challenge.
 
 .. note::
 
