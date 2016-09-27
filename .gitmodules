@@ -1,0 +1,3 @@
+[submodule "source/_themes/stormpath"]
+	path = source/_themes/stormpath
+	url = https://github.com/stormpath/stormpath-sphinx-theme.git
