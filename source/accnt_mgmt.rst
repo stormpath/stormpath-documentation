@@ -3735,7 +3735,7 @@ Manual Account Linking involves you manually creating an Account Link resource, 
 .. _account-linking-login:
 
 How Login Works with Linked Accounts
-====================================
+------------------------------------
 
 There are a number of different scenarios which can occur during login. For the sake of our examples below, we will assume that there are just two Accounts, one in a Cloud Directory, and one in a Facebook Directory. Further, the Cloud Directory is the default Account Store.
 
@@ -3769,7 +3769,7 @@ The details of Automatic Account Linking are more fully explained below. (jakubt
 .. _account-linking-manual:
 
 How to Link Accounts Manually
-=============================
+------------------------------------
 
 Lets say that you have two Directories: Federation, and Borg. Both the The Federation and Borg Directories are mapped to the Enterprise Application, but Enterprise is the default Account Store.
 
@@ -3848,7 +3848,7 @@ This means that:
 
   Account Links can be created and deleted, but they cannot be updated.
 
-There is one more aspect to Account Linking, which regards login behavior. The Enterprise Application has an Account Linking Policy, which is enabled:
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Enterprise Application has an Account Linking Policy, which is enabled:
 
 .. code-block:: json
 
@@ -3873,3 +3873,113 @@ Because the Policy is enabled, and because the Federation Directory is the defau
 This is because Stormpath traverses the Account Links for the Account that is logging-in to see if a linked Account exists in the Application's default Account Store. Because Picard is in the default Account Store, Stormpath still just returns the Picard Account. However, the Locutus Account is not in the default Account Store, but is linked to the Picard Account which is in the default Account Store, so the Picard Account is returned.
 
 This behavior exists only because the Account Linking Policy is set as ``enabled``. If it were ``disabled`` then Stormpath would not follow Account Links. This means that you would still be able to link the two Accounts, but upon login you would receive back whichever Account was used to log-in.
+
+.. _account-linking-automatic:
+
+How to Link Accounts Automatically
+------------------------------------
+
+It is also possible to link Accounts automatically according to an Account Linking Policy.
+
+.. _about-alp:
+
+What's in the Account Linking Policy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Every Application and Organization has an Account Linking Policy resource. In both cases the path is the same:
+
+``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
+
+The Account Linking Policy has three attributes that control aspects of Account Linking behavior:
+
+**Status:**
+
+This attribute controls whether this Policy is in effect or not. If you would not like this policy to be in effect, set this to ``DISABLED``.
+
+If Account Linking is enabled then Stormpath will check linked Accounts on login and behave as described in :ref:`account-linking-login`. If it is disabled, you are still able to link Accounts manually, but Stormpath takes no actions based upon these links.
+
+**Automatic Provisioning:**
+
+This attribute tells Stormpath whether you would like new Accounts to be automatically created in the default Account Store.
+
+For example: if a user Account is created in a Social Directory (e.g. Google), and they do not already have an Account in the default Account Store, Automatic Provisioning would then  create an Account with the same information inside the default Account Store. That Account would then be automatically linked to the Account in the Social Directory.
+
+**Matching Property**
+
+This defines what Account attribute should be used by Automatic Provisioning to find matching Accounts. The current possible values are:
+
+- ``null``: which means that you would not like any matching to occur
+- ``email``: which will match Accounts based on their ``email`` attribute.
+
+**Policy Values and Outcomes**
+
+Because logging in via a Mirror Directory (Social, SAML, etc) will create an Account if it doesn't already exist, Automatic Provisioning and the Matching Property are intended for use with Mirror Directory login. So what happens if a user logs in via a Mirror Directory? First of all, if the external credentials are valid, Stormpath creates an Account for them in that Mirror Directory. What happens next depends on the configuration of your Account Linking Policy.
+
+Default behavior, without Account Linking, is that the newly-created Account from the Mirror Directory will be returned.
+
+This table shows the possible combinations of Account Linking Policy values. It also indicates whether a matching Account exists in the default Account Store (which must be a Cloud Account), and then the result to expect when logging in with a new Mirror Directory.
+
+.. list-table::
+  :widths: 10 10 15 30 35
+  :header-rows: 1
+
+  * - Automatic Provisioning
+    - Matching Property
+    - Matching Account Exists?
+    - Result
+    - Explanation
+
+  * - Disabled
+    - Null
+    - Yes
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Null
+    - Yes
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Email
+    - No
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Email
+    - Yes
+    - Cloud Account is returned.
+    - Stormpath links new Account to existing Account and returns existing Account.
+
+  * - Enabled
+    - Null
+    - No
+    - Cloud Account is returned.
+    - Account created in Cloud Directory and both Accounts are linked.
+
+  * - Enabled
+    - Null
+    - Yes
+    - Return Account that was logged in.
+    - Stormpath attempts to create Account in Cloud Directory but cannot because of email uniqueness constraint.
+
+  * - Enabled
+    - Email
+    - No
+    - Cloud Account is returned.
+    - New Account created, then Cloud Account created, then both Accounts linked.
+
+  * - Enabled
+    - Email
+    - Yes
+    - Cloud Account is returned.
+    - New Account created, then linked to existing Cloud Account.
+
+Example Scenario 1
+^^^^^^^^^^^^^^^^^^
+
+
+Example Scenario 2
+^^^^^^^^^^^^^^^^^^
