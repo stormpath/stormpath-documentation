@@ -3692,6 +3692,8 @@ If you changed our mind and wanted to only allow users to register with ``stormp
 
 Working with the Blacklist is exactly the same, except you add entries to the ``emailDomainBlacklist`` array instead.
 
+.. _account-linking:
+
 3.8. Account Linking
 ====================
 
@@ -3710,6 +3712,8 @@ The issue then is what happens if a user chooses to register directly with your 
 
 In order to unify all of these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the default Account Store. So the above example user could create three separate Accounts in three separate Directories, but if all of those Directories were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with all of the other Accounts via Account Links.
 
+.. _account-linking-benefits:
+
 **What if I only want to support Social/SAML/etc?**
 
 Even if you wanted to only offer Social Login options, or only SAML-based login, we still recommend that you maintain a separate Cloud Directory. For example, if you wanted to only allow Login via Facebook, it still makes sense to have a Cloud Directory separate from your Facebook Directory.
@@ -3727,6 +3731,8 @@ Even if you wanted to only offer Social Login options, or only SAML-based login,
 All Account Links are separate resources that link together two Accounts found in separate Directories. The Account Linking process itself comes in two varieties: manual, and automatic.
 
 Manual Account Linking involves you manually creating an Account Link resource, that links two Account resources. Automatic Account Linking creates these Account Links automatically based upon behavior configured inside an Account Link Policy resource. These Policy resources can be attached to either an Application or an Organization.
+
+.. _account-linking-login:
 
 How Login Works with Linked Accounts
 ====================================
@@ -3759,6 +3765,8 @@ Stormpath still checks the current Account's links to see what other Accounts ar
 Example: The user logs in with Facebook for the first time and an Account is created in the Facebook Directory. The Application has an Account Link Policy that has automatic provisioning enabled based on the Account's email. Stormpath finds no Account in the default Cloud Directory with this email. An Account is created in the Cloud Directory and linked to the Account in the Facebook Directory. Stormpath returns the newly-created Account from the Cloud Directory, instead of the Account from the Facebook Directory.
 
 The details of Automatic Account Linking are more fully explained below. (jakubtodo)
+
+.. _account-linking-manual:
 
 How to Link Accounts Manually
 =============================
@@ -3855,6 +3863,10 @@ There is one more aspect to Account Linking, which regards login behavior. The E
         "href": "https://stormpath-admin.herokuapp.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
     }
   }
+
+.. note::
+
+  Account Linking Policies can be associated with either an Application or Organization.
 
 Because the Policy is enabled, and because the Federation Directory is the default Account Store, if you send a Login Attempt with either of these Accounts (for example with a POST to ``/loginAttempts``), then the Account that you get back will the Picard Account. In other words: If you log in with the Picard Account credentials, Stormpath will return the Picard Account, and if you log in with the Locutus Account credentials, Stormpath will still return the Picard Account.
 
