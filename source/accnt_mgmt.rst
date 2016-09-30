@@ -3879,7 +3879,7 @@ This behavior exists only because the Account Linking Policy is set as ``enabled
 How to Link Accounts Automatically
 ------------------------------------
 
-It is also possible to link Accounts automatically according to an Account Linking Policy.
+So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy.
 
 .. _about-alp:
 
