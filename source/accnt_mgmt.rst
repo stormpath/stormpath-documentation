@@ -3751,7 +3751,7 @@ First and foremost, both Application's and Organizations have Account Linking Po
     "type": "basic",
     "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
     "accountStore": {
-      "nameKey":"anOrgNameKey"
+      "nameKey":"tenantOneTwoThree"
     }
   }
 
@@ -3893,7 +3893,7 @@ There is one more aspect to Account Linking, which regards login behavior (as al
     "automaticProvisioning": "DISABLED",
     "matchingProperty": null,
     "tenant": {
-        "href": "https://stormpath-admin.herokuapp.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
     }
   }
 
@@ -3939,10 +3939,14 @@ For example: if a user Account is created in a Social Directory (e.g. Google), a
 
 **Matching Property**
 
-This defines what Account attribute should be used by Automatic Provisioning to find matching Accounts. The current possible values are:
+This defines what Account attribute should be used by Automatic Provisioning as a basis for account linking. The current possible values are:
 
 - ``null``: which means that you would not like any matching to occur
 - ``email``: which will match Accounts based on their ``email`` attribute.
+
+.. note::
+
+  The ``email`` matchingProperty will only match verified Accounts.
 
 **Policy Values and Outcomes**
 
@@ -4010,9 +4014,74 @@ This table shows the possible combinations of Account Linking Policy values. It 
     - Cloud Account is returned.
     - New Account created, then linked to existing Cloud Account.
 
+.. _account-linking-automatic-ex1:
+
 Example Scenario 1
 ^^^^^^^^^^^^^^^^^^
 
+This is probably the most common scenario, where you want to allow your users Social Login, but also want to maintain a separate canonical user Directory. In this example you have:
+
+- A Cloud Directory (the default Account Store)
+- A Google Directory
+- A Facebook Directory
+
+Your Application's Account Linking Policy has:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+    "createdAt": "2016-07-21T01:03:49.813Z",
+    "modifiedAt": "2016-09-28T18:19:09.572Z",
+    "status": "ENABLED",
+    "automaticProvisioning": "ENABLED",
+    "matchingProperty": "email",
+    "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+    }
+  }
+
+So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
+
+.. code-block:: http
+
+  POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic NjUxW...
+  Cache-Control: no-cache
+
+  {
+    "providerData": {
+      "providerId": "facebook",
+      "accessToken": "EAAT68k[...]T8TAZDZD"
+    }
+  }
+
+After the credentials are validated, Stormpath will do a few things:
+
+1. Create an Account in the Facebook Directory.
+2. Because the Matching Property is "email" Stormpath will next check if there are any Accounts to link this Account with. This user has never used your app before, so there are no other Accounts using this email.
+3. Create an Account in the Cloud Directory with the same information as the one in the Facebook Directory.
+4. Link the Accounts in the Facebook and Cloud Directories to each other.
+
+Your user Janelle now has an Account in the Facebook Directory, an Account in the Cloud Directory, and both of these Accounts are linked via accountLink resources.
+
+Stormpath will now return the Account from the Cloud Directory:
+
+{
+    "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
+    "username": "jkallday@email.com",
+    "email": "jkallday@email.com",
+    "givenName": "Janelle",
+    "middleName": null,
+    "surname": "Journelle",
+    [...]
+}
+
+If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
+
+.. _account-linking-automatic-ex2:
 
 Example Scenario 2
 ^^^^^^^^^^^^^^^^^^
