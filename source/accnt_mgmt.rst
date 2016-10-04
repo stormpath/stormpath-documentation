@@ -3755,7 +3755,7 @@ First and foremost, both Application's and Organizations have Account Linking Po
     }
   }
 
-For an example of how this works, please see below (todo).
+For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
 
 Example Login Behaviors
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -3770,11 +3770,7 @@ Example: A user logs in with Facebook, and Stormpath returns the Account in the 
 
 **With Existing, Linked Accounts, and no Automatic Account Linking**
 
-On login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If:
-
-- the current Account is not in the default Account Store, and
-- it finds a linked Account that is in the default Account Store, then:
-- Stormpath will return that linked Account.
+On login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If (1) the current Account is not in the default Account Store and (2) it finds a linked Account that is in the default Account Store, then Stormpath will return that linked Account.
 
 Example: A user logs in with Facebook, and their existing Account in the Stormpath Facebook Directory is linked with an Account found in the application's default Cloud Directory. Stormpath returns the Account from the Cloud Directory, instead of the Account from the Facebook Directory.
 
@@ -4069,15 +4065,15 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-{
+.. code-block:: json
+
+  {
     "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
     "username": "jkallday@email.com",
     "email": "jkallday@email.com",
     "givenName": "Janelle",
-    "middleName": null,
-    "surname": "Journelle",
-    [...]
-}
+    "...":"..."
+  }
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -4085,3 +4081,7 @@ If at a later date she were to choose to login via Google, then (assuming her Fa
 
 Example Scenario 2
 ^^^^^^^^^^^^^^^^^^
+
+In this example we will show a multi-tenant application that wants to let each of its tenants decide on their own Account Linking behavior. In order to accomplish this, there are two things that have been configured:
+
+- The Application's Account Linking Policy has ``enabled`` set to ``true``, but
