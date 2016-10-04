@@ -3704,13 +3704,15 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
   - :ref:`How Login Works <how-login-works>`
   - :ref:`How Social Authentication Works <social-authn>`
 
-To quickly recap: Every source of users requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will have to go into a Facebook Directory, and so on.
+To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will have to go into a Facebook Directory, and so on.
 
 When a user chooses to log in with a non-Cloud Directory (e.g. Facebook, SAML, etc), Stormpath creates an Account resource to represent them in the appropriate Directory and then returns it upon successful login.
 
-The issue then is what happens if a user chooses to register directly with your application one day, log-in with Facebook the next day, and then at some point in the future decides to log-in with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
+What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
 
-In order to unify all of these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the default Account Store. So the above example user could create three separate Accounts in three separate Directories, but if all of those Directories were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with all of the other Accounts via Account Links.
+In order to unify all of these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
+
+So in the above example, the user could create three separate Accounts in three separate Directories, but if all of those Accounts were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with all of the other Accounts via Account Links.
 
 .. _account-linking-benefits:
 
@@ -3726,18 +3728,39 @@ Even if you wanted to only offer Social Login options, or only SAML-based login,
 
 - If you wanted to offer new kinds of login in the future, it would be as simple as creating a new kind of Mirror Directory and then ensuring that the new Accounts in that Directory are linked to the ones that already exist.
 
-**Manual vs Automatic Account Linking**
-
-All Account Links are separate resources that link together two Accounts found in separate Directories. The Account Linking process itself comes in two varieties: manual, and automatic.
-
-Manual Account Linking involves you manually creating an Account Link resource, that links two Account resources. Automatic Account Linking creates these Account Links automatically based upon behavior configured inside an Account Link Policy resource. These Policy resources can be attached to either an Application or an Organization.
-
 .. _account-linking-login:
 
 How Login Works with Linked Accounts
 ------------------------------------
 
-There are a number of different scenarios which can occur during login. For the sake of our examples below, we will assume that there are just two Accounts, one in a Cloud Directory, and one in a Facebook Directory. Further, the Cloud Directory is the default Account Store.
+There are a number of different scenarios which can occur during login.
+
+Application vs Organization Account Linking Policies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First and foremost, both Application's and Organizations have Account Linking Policies, but Stormpath will always default to the Application's Policy. This means that if you specify that you would like to log in to an Organization then that Organization's Account Linking Policy will take precedence over the one for your Application.
+
+.. code-block:: http
+
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "type": "basic",
+    "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+    "accountStore": {
+      "nameKey":"anOrgNameKey"
+    }
+  }
+
+For an example of how this works, please see below (todo).
+
+Example Login Behaviors
+^^^^^^^^^^^^^^^^^^^^^^^
+
+For the sake of our examples below, we will assume that there are just two Accounts, one in a Cloud Directory, and one in a Facebook Directory. Further, the Cloud Directory is the default Account Store.
 
 **With Existing Accounts, but no Account Linking**
 
@@ -3764,16 +3787,26 @@ Stormpath still checks the current Account's links to see what other Accounts ar
 
 Example: The user logs in with Facebook for the first time and an Account is created in the Facebook Directory. The Application has an Account Link Policy that has automatic provisioning enabled based on the Account's email. Stormpath finds no Account in the default Cloud Directory with this email. An Account is created in the Cloud Directory and linked to the Account in the Facebook Directory. Stormpath returns the newly-created Account from the Cloud Directory, instead of the Account from the Facebook Directory.
 
-The details of Automatic Account Linking are more fully explained below. (jakubtodo)
+The details of Automatic Account Linking are more fully explained :ref:`below <account-linking-automatic>`.
+
+**Manual vs Automatic Account Linking**
+
+All Account Links are separate resources that link together two Accounts found in separate Directories. The Account Linking process itself comes in two varieties: manual, and automatic.
+
+Manual Account Linking involves you manually creating an Account Link resource, that links two Account resources. Automatic Account Linking creates these Account Links automatically based upon behavior configured inside an Account Link Policy resource. These Policy resources can be attached to either an Application or an Organization.
 
 .. _account-linking-manual:
 
 How to Link Accounts Manually
 ------------------------------------
 
-Lets say that you have two Directories: Federation, and Borg. Both the The Federation and Borg Directories are mapped to the Enterprise Application, but Enterprise is the default Account Store.
+.. note::
 
-In each of those Directories, there is an Account. One in our Federation Directory, for user Picard:
+  If you are not interested in manual account linking, you can skip ahead and read about :ref:`account-linking-automatic`.
+
+Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. Both the The Cloud and Facebook Directories are mapped to the same Application, but the Cloud Directory is the default Account Store.
+
+In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
 
 .. code-block:: json
 
@@ -3789,7 +3822,7 @@ In each of those Directories, there is an Account. One in our Federation Directo
     "...": "..."
   }
 
-And one in the Borg Directory for user Locutus:
+And one in the Facebook Directory for user Locutus:
 
 .. code-block:: json
 
@@ -3848,7 +3881,7 @@ This means that:
 
   Account Links can be created and deleted, but they cannot be updated.
 
-There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Enterprise Application has an Account Linking Policy, which is enabled:
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The  Application has an Account Linking Policy, which is enabled:
 
 .. code-block:: json
 
@@ -3868,7 +3901,7 @@ There is one more aspect to Account Linking, which regards login behavior (as al
 
   Account Linking Policies can be associated with either an Application or Organization.
 
-Because the Policy is enabled, and because the Federation Directory is the default Account Store, if you send a Login Attempt with either of these Accounts (for example with a POST to ``/loginAttempts``), then the Account that you get back will the Picard Account. In other words: If you log in with the Picard Account credentials, Stormpath will return the Picard Account, and if you log in with the Locutus Account credentials, Stormpath will still return the Picard Account.
+Because the Account Linking Policy is enabled, and because the Cloud Directory is the default Account Store, if you send a Login Attempt with either of these Accounts, then the Account that you get back will the default Account Store's Picard Account. In other words: If you log in with the Picard Account credentials, Stormpath will return the Picard Account, and if you log in with the Locutus Account credentials, Stormpath will still return the Picard Account.
 
 This is because Stormpath traverses the Account Links for the Account that is logging-in to see if a linked Account exists in the Application's default Account Store. Because Picard is in the default Account Store, Stormpath still just returns the Picard Account. However, the Locutus Account is not in the default Account Store, but is linked to the Picard Account which is in the default Account Store, so the Picard Account is returned.
 
@@ -3902,7 +3935,7 @@ If Account Linking is enabled then Stormpath will check linked Accounts on login
 
 This attribute tells Stormpath whether you would like new Accounts to be automatically created in the default Account Store.
 
-For example: if a user Account is created in a Social Directory (e.g. Google), and they do not already have an Account in the default Account Store, Automatic Provisioning would then  create an Account with the same information inside the default Account Store. That Account would then be automatically linked to the Account in the Social Directory.
+For example: if a user Account is created in a Social Directory (e.g. Google), and they do not already have an Account in the default Account Store, Automatic Provisioning would then create an Account with the same information inside the default Account Store. That Account would then be automatically linked to the Account in the Social Directory.
 
 **Matching Property**
 
