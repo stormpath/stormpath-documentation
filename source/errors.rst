@@ -1524,3 +1524,149 @@ You cannot create a new email server because one already exists for your Tenant.
 **User Message**
 
 *(Same as above)*
+
+13XXX: Multi-Factor Authentication
+==================================
+
+Error 13100
+-----------
+
+**Message**
+
+Verified phone numbers cannot be modified.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13101
+-----------
+
+**Message**
+
+  The provided phone number is invalid.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13102
+-----------
+
+**Message**
+
+An existing phone with that number already exists for this Account.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13103
+-----------
+
+**Message**
+
+The challenge message must include '${code}'.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13104
+-----------
+
+**Message**
+
+The code submitted is not valid.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13105
+-----------
+
+**Message**
+
+An existing phone with that number is already associated with a factor for that Account.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13106
+-----------
+
+**Message**
+
+An unexpected error occurred generating a Multi-Factor Authentication code. Please contact support.
+
+**User Message**
+
+Oops! We encountered an unexpected error. Please contact support and explain what you were doing at the time this error occurred.
+
+Error 13107
+-----------
+
+**Message**
+
+An unexpected error occurred validating the Multi-Factor Authentication code. Please contact support.
+
+**User Message**
+
+Oops! We encountered an unexpected error. Please contact support and explain what you were doing at the time this error occurred.
+
+Error 13108
+-----------
+
+**Message**
+
+The submitted code is no longer valid. Please issue a new code.
+
+**User Message**
+
+The submitted code is no longer valid.
+
+Error 13109
+-----------
+
+**Message**
+
+Factor is disabled. It needs to be enabled prior to issuing a challenge.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13110
+-----------
+
+**Message**
+
+Phone is disabled. It needs to be enabled prior to issuing a challenge.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13111
+-----------
+
+**Message**
+
+The provided phone number does not match the number associated with the Phone reference.
+
+**User Message**
+
+*(Same as above)*
+
+Error 13112
+-----------
+
+**Message**
+
+  The specified challenge can no longer be used for validation.
+
+**User Message**
+
+*(Same as above)*
