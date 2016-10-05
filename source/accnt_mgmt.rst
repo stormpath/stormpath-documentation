@@ -324,7 +324,7 @@ Stormpath also simplifies the authorization process by doing things like automat
 Modeling Social Directories
 ++++++++++++++++++++++++++++
 
-Modeling your users who authorize via Social Login is by necessity very simple, since social login providers do not include the concept of "groups" of users in the same way that LDAP directories do. The only thing that you really have to do as an app developer is create a Directory resource for each social provider that you want to support. As mentioned :ref:`above <supporting-multiple-dirs>`, if you want to support multiple Directories then you may also want to create a master Directory for your application. For more about how Social Directories are provisioned, please see :ref:`mirror-login`.
+Modeling your users who authorize via Social Login is by necessity very simple, since social login providers do not include the concept of "groups" of users in the same way that LDAP directories do. The only thing that you really have to do as an app developer is create a Directory resource for each social provider that you want to support. As mentioned :ref:`above <supporting-multiple-dirs>`, if you want to support multiple Directories then you may also want to create a master Directory for your application. For more about how Social Directories are provisioned, please see :ref:`account-linking`.
 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
@@ -1016,7 +1016,7 @@ Stormpath also makes it very easy to transfer your existing users into a Stormpa
 
 .. note::
 
-  To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
+  To import user accounts from an LDAP or Social Directory, please see :ref:`account-linking`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script can use our API to upload the users to Stormpath.
 
@@ -4085,7 +4085,7 @@ In this example we will show a :ref:`multi-tenant application <multitenancy>` th
 
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
-.. code-block::
+.. code-block:: none
 
   .. code-block:: http
 
