@@ -215,15 +215,9 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory.
 
-1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
-
-2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory.
-
-3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
-
-For information about how login works with master Directories, please see :ref:`How Login Works with Master Directories <mirror-login>`.
+For information about how login works with master Directories, please see :ref:`account-linking`.
 
 .. _about-ldap-dir:
 
@@ -3895,7 +3889,7 @@ There is one more aspect to Account Linking, which regards login behavior (as al
 
 .. note::
 
-  Account Linking Policies can be associated with either an Application or Organization.
+  Account Linking Policies can be associated with either an Application or Organization. If you would like to use an Organization's Account Linking Policy then you must specify it in your login attempt.
 
 Because the Account Linking Policy is enabled, and because the Cloud Directory is the default Account Store, if you send a Login Attempt with either of these Accounts, then the Account that you get back will the default Account Store's Picard Account. In other words: If you log in with the Picard Account credentials, Stormpath will return the Picard Account, and if you log in with the Locutus Account credentials, Stormpath will still return the Picard Account.
 
@@ -4082,6 +4076,33 @@ If at a later date she were to choose to login via Google, then (assuming her Fa
 Example Scenario 2
 ^^^^^^^^^^^^^^^^^^
 
-In this example we will show a multi-tenant application that wants to let each of its tenants decide on their own Account Linking behavior. In order to accomplish this, there are two things that have been configured:
+In this example we will show a :ref:`multi-tenant application <multitenancy>` that wants to let each of its tenants decide on their own Account Linking behavior. In order to accomplish this, there a few things that need to happen:
 
-- The Application's Account Linking Policy has ``enabled`` set to ``true``, but
+- the Application's Account Linking Policy is left disabled (as it is by default)
+- the Organization Account Linking Policies are used to control Account Linking behavior
+- Every Organization has its own Directories, both Mirror and Cloud
+- The login page for this application must pass the user's Organization ``href`` or ``nameKey`` with every login attempt.
+
+So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
+
+.. code-block::
+
+  .. code-block:: http
+
+  POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic NjUxW...
+  Cache-Control: no-cache
+
+  {
+    "providerData": {
+      "providerId": "facebook",
+      "accessToken": "EAAT68k[...]T8TAZDZD"
+      "accountStore": {
+        "nameKey": "OrganizationA"
+      }
+    }
+  }
+
+This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.f
