@@ -1521,9 +1521,14 @@
         - An array of Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
 
       * - ``samlPolicy``
-        - Object
+        - Link
         - N/A
-        - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`below <ref-samlpolicy>`.
+        - An link to this Directory's SAML Policy (if any). For more information, see :ref:`below <ref-samlpolicy>`.
+
+      * - ``accountLinkingPolicy``
+        - Link
+        - N/A
+        - A link to this Directory's :ref:`ref-account-linking-policy`.
 
   .. _application-accounts-note:
 
@@ -1586,6 +1591,9 @@
       },
       "samlPolicy" : {
         "href" : "https://api.stormpath.com/v1/samlPolicies/1gk4Dxzi6o4PbdlexaMple"
+      },
+      "accountLinkingPolicy": {
+        "href": "https://api.stormpath.com/v1/accountLinkingPolicies/7fQOPS4u0mQ9iexaMple"
       }
     }
 
@@ -2242,8 +2250,7 @@
 
   **Description**
 
-  This resource is the Account Linking Policy associated with either an :ref:`Application <ref-application>` or :ref:`Organization <ref-organization>`. For more information about this resource and how its used, please see :ref:`account-linking`.
-
+  This resource is the Account Linking Policy associated with either an :ref:`Application <ref-application>` or :ref:`Organization <ref-organization>`. For more information about this resource and how its used, please see :ref:`about-alp`.
 
   **accountLinkingPolicy URL**
 
@@ -4235,6 +4242,11 @@
       - N/A
       - A link to the Stormpath Tenant that owns this Organization.
 
+    * - ``accountLinkingPolicy``
+      - Link
+      - N/A
+      - A link to this Organization's :ref:`ref-account-linking-policy`.
+
   **Organization Example**
 
   .. code-block:: json
@@ -4263,6 +4275,9 @@
       },
       "tenant":{
         "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+      },
+      "accountLinkingPolicy": {
+        "href": "https://api.stormpath.com/v1/accountLinkingPolicies/79BwBdw0wDDI1wexample"
       }
     }
 
@@ -6207,7 +6222,7 @@
 
     * - GET /v1/accountLinks/$ACCOUNT_LINK_ID
       - ``expand``
-      - Retrieves the specified Account Link.
+      - Retrieves the specified Account Link. ``leftAccount`` and ``rightAccount`` can be expanded.
 
   Update an Account Link
   ^^^^^^^^^^^^^^^^^^^^^^

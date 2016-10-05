@@ -24,7 +24,7 @@
   ==========
 
   - **New:** Section :ref:`account-linking` added to Account Management chapter.
-  - **New:** New Account Linking-related resources added to Reference chapter.
+  - **New:** New Account Linking-related resources added to Reference chapter: :ref:`ref-account-linking-policy`, :ref:`ref-accountlink`.
 
   2016-09-26
   ==========

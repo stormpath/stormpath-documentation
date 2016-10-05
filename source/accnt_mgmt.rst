@@ -3869,9 +3869,9 @@ This means that:
 
 .. note::
 
-  Account Links can be created and deleted, but they cannot be updated.
+  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`
 
-There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The  Application has an Account Linking Policy, which is enabled:
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
 
 .. code-block:: json
 
