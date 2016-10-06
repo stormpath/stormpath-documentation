@@ -3704,9 +3704,9 @@ When a user chooses to log in with a non-Cloud Directory (e.g. Facebook, SAML, e
 
 What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
 
-In order to unify all of these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
+To unify these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
 
-So in the above example, the user could create three separate Accounts in three separate Directories, but if all of those Accounts were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with all of the other Accounts via Account Links.
+So in the above example, the user could create three separate Accounts in three separate Directories, but if all of those Accounts were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with the Account in the default Directory via Account Links.
 
 .. _account-linking-benefits:
 
@@ -3732,7 +3732,7 @@ There are a number of different scenarios which can occur during login.
 Application vs Organization Account Linking Policies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First and foremost, both Application's and Organizations have Account Linking Policies, but Stormpath will always default to the Application's Policy. This means that if you specify that you would like to log in to an Organization then that Organization's Account Linking Policy will take precedence over the one for your Application.
+First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login.
 
 .. code-block:: http
 
@@ -3756,17 +3756,27 @@ Example Login Behaviors
 
 For the sake of our examples below, we will assume that there are just two Accounts, one in a Cloud Directory, and one in a Facebook Directory. Further, the Cloud Directory is the default Account Store.
 
-**With Existing Accounts, but no Account Linking**
+**With Account Linking Disabled**
 
-On login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If no linked Accounts exist at all, Stormpath will return whatever Account was used to log in.
+If the Account Linking Policy is completely disabled then Stormpath ignores Account Links and does not perform any Account Linking behavior.
 
 Example: A user logs in with Facebook, and Stormpath returns the Account in the Facebook Directory.
 
-**With Existing, Linked Accounts, and no Automatic Account Linking**
+**With Account Linking Enabled, and Existing, Unlinked Accounts**
+
+If the Account Linking Policy is at least enabled, then on login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If no linked Accounts exist at all, Stormpath will return whatever Account was used to log in.
+
+Example: A user logs in with Facebook, and Stormpath returns the Account in the Facebook Directory.
+
+**With Existing, Linked Accounts**
 
 On login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If (1) the current Account is not in the default Account Store and (2) it finds a linked Account that is in the default Account Store, then Stormpath will return that linked Account.
 
-Example: A user logs in with Facebook, and their existing Account in the Stormpath Facebook Directory is linked with an Account found in the application's default Cloud Directory. Stormpath returns the Account from the Cloud Directory, instead of the Account from the Facebook Directory.
+Example: A user logs in with Facebook, and their existing Account in the Stormpath Facebook Directory is linked with an Account found in the Application's default Cloud Directory. Stormpath returns the Account from the Cloud Directory, instead of the Account from the Facebook Directory.
+
+.. note::
+
+  If the Accounts are already linked, then the status of Automatic Account Linking is irrelevant.
 
 **With Automatic Account Linking**
 
@@ -3864,7 +3874,7 @@ Which on success will return an Account Link:
 
 This means that:
 
-- this Account Link will appear in both of these Accounts' ``linkedAccounts`` collections, and
+- this Account Link will appear in both of these Accounts' ``accountLinks`` collections, and
 - each Account will appear in the others ``linkedAccounts`` collection.
 
 .. note::
@@ -3929,7 +3939,7 @@ For example: if a user Account is created in a Social Directory (e.g. Google), a
 
 **Matching Property**
 
-This defines what Account attribute should be used by Automatic Provisioning as a basis for account linking. The current possible values are:
+This defines what Account attribute should be used as a basis for automatically creating account links. The current possible values are:
 
 - ``null``: which means that you would not like any matching to occur
 - ``email``: which will match Accounts based on their ``email`` attribute.
@@ -3958,7 +3968,7 @@ This table shows the possible combinations of Account Linking Policy values. It 
 
   * - Disabled
     - Null
-    - Yes
+    - No
     - Return Account that was logged in.
     - No action taken by Stormpath.
 
@@ -4003,6 +4013,10 @@ This table shows the possible combinations of Account Linking Policy values. It 
     - Yes
     - Cloud Account is returned.
     - New Account created, then linked to existing Cloud Account.
+
+.. note::
+
+  The above table assumes that you are either sending a :ref:`Login Attempt <how-login-works>` or a Social Login POST to the :ref:`Application's Accounts endpoint <social-authn>`. In the case of the :ref:`OAuth flow <generate-oauth-token>`, instead of getting back an Account, you would receive back OAuth Tokens associated with that Account.
 
 .. _account-linking-automatic-ex1:
 
@@ -4078,10 +4092,14 @@ Example Scenario 2
 
 In this example we will show a :ref:`multi-tenant application <multitenancy>` that wants to let each of its tenants decide on their own Account Linking behavior. In order to accomplish this, there a few things that need to happen:
 
-- the Application's Account Linking Policy is left disabled (as it is by default)
+- the Application's Account Linking Policy is irrelevant, since it will be skipped if we specify an Organization in the login attempt
 - the Organization Account Linking Policies are used to control Account Linking behavior
-- Every Organization has its own Directories, both Mirror and Cloud
+- Every Organization has its own Cloud Directory that serves as its default Account Store. Mirror Directories can be shared between Organizations.
 - The login page for this application must pass the user's Organization ``href`` or ``nameKey`` with every login attempt.
+
+.. note::
+
+  Whether the Application's Account Linking Policy
 
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
@@ -4105,4 +4123,8 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
     }
   }
 
-This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.f
+This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
+
+.. note::
+
+  The behavior described above would be the same if we made a POST to the ``/loginAttempts`` endpoint, or used the OAuth flow.
