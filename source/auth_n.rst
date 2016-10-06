@@ -3936,6 +3936,12 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
+.. only:: not rest
+
+ .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
+
 At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
 
 - SMS message to a phone
