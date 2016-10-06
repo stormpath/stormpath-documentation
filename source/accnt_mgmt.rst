@@ -3726,7 +3726,7 @@ Even if you wanted to only offer Social Login options, or only SAML-based login,
 
 - Keep a user’s identity alive even after they’ve left your customer’s organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
 
-- If you wanted to offer new kinds of login in the future, it would be as simple as creating a new kind of Mirror Directory and then ensuring that the new Accounts in that Directory are linked to the ones that already exist.
+- If you wanted to offer new kinds of login in the future, it would be as simple as creating a new kind of Mirror Directory and then ensuring that the new Accounts in that Directory are linked to the one that already exists in the default Directory.
 
 .. _account-linking-login:
 
