@@ -3691,6 +3691,12 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
 3.8. Account Linking
 ====================
 
+.. only:: not rest
+
+ .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
+
 .. note::
 
   Before you read this section, we recommend that you familiarize yourself with:
