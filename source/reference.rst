@@ -2479,7 +2479,7 @@
 
       * - DELETE /v1/directories/$DIRECTORY_ID
         - N/A
-        - Deletes the specified
+        - Deletes the specified Directory.
 
   .. note::
 
