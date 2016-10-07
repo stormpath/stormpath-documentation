@@ -4,15 +4,17 @@
 
 ### Install
 
-`pip install Sphinx sphinx_rtd_theme`
+`pip install Sphinx`
 
 Other options [here](http://www.sphinx-doc.org/en/stable/install.html).
 
 If you already have Sphinx, then just upgrade:
 
-`pip install -U Sphinx sphinx_rtd_theme`
+`pip install -U Sphinx`
 
 Then clone this repo.
+
+`git clone --recursive ...`
 
 ### Structure
 
