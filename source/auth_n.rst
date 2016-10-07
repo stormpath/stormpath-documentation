@@ -3999,12 +3999,12 @@ First, you create the Account:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
           :language: vbnet
 
 .. only:: java
@@ -4013,7 +4013,7 @@ First, you create the Account:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_create_account.java
         :language: java
 
 .. only:: nodejs
@@ -4022,7 +4022,7 @@ First, you create the Account:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
         :language: javascript
 
 .. only:: php
@@ -4031,7 +4031,7 @@ First, you create the Account:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_create_account.php
       :language: php
 
 .. only:: python
@@ -4040,7 +4040,7 @@ First, you create the Account:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_create_account.py
         :language: python
 
 .. _mfa-adding-factor-sms:
@@ -4074,12 +4074,12 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
           :language: vbnet
 
 .. only:: java
@@ -4088,7 +4088,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4097,7 +4097,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
         :language: javascript
 
 .. only:: php
@@ -4106,7 +4106,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
       :language: php
 
 .. only:: python
@@ -4115,7 +4115,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
         :language: python
 
 You will then get back the response:
@@ -4151,12 +4151,12 @@ You will then get back the response:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -4165,7 +4165,7 @@ You will then get back the response:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4174,7 +4174,7 @@ You will then get back the response:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
         :language: javascript
 
 .. only:: php
@@ -4183,7 +4183,7 @@ You will then get back the response:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
       :language: php
 
 .. only:: python
@@ -4192,7 +4192,7 @@ You will then get back the response:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
         :language: python
 
 For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
@@ -4228,12 +4228,12 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
           :language: vbnet
 
 .. only:: java
@@ -4242,7 +4242,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4251,7 +4251,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
         :language: javascript
 
 .. only:: php
@@ -4260,7 +4260,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
       :language: php
 
 .. only:: python
@@ -4269,7 +4269,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
         :language: python
 
 You will then get back the response:
@@ -4309,12 +4309,12 @@ You will then get back the response:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -4323,7 +4323,7 @@ You will then get back the response:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4332,7 +4332,7 @@ You will then get back the response:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
         :language: javascript
 
 .. only:: php
@@ -4341,7 +4341,7 @@ You will then get back the response:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
       :language: php
 
 .. only:: python
@@ -4350,7 +4350,7 @@ You will then get back the response:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
         :language: python
 
 The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
@@ -4434,12 +4434,12 @@ At this point in the example you have a brand new Account with two additional Fa
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -4448,7 +4448,7 @@ At this point in the example you have a brand new Account with two additional Fa
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4457,7 +4457,7 @@ At this point in the example you have a brand new Account with two additional Fa
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
         :language: javascript
 
 .. only:: php
@@ -4466,7 +4466,7 @@ At this point in the example you have a brand new Account with two additional Fa
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
       :language: php
 
 .. only:: python
@@ -4475,7 +4475,7 @@ At this point in the example you have a brand new Account with two additional Fa
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
         :language: python
 
 You will now challenge each of these factors.
@@ -4516,12 +4516,12 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
           :language: vbnet
 
 .. only:: java
@@ -4530,7 +4530,7 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4539,7 +4539,7 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
         :language: javascript
 
 .. only:: php
@@ -4548,7 +4548,7 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
       :language: php
 
 .. only:: python
@@ -4557,7 +4557,7 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
         :language: python
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
@@ -4592,12 +4592,12 @@ In response to this request you would get back a Challenge:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -4606,7 +4606,7 @@ In response to this request you would get back a Challenge:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4615,7 +4615,7 @@ In response to this request you would get back a Challenge:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
         :language: javascript
 
 .. only:: php
@@ -4624,7 +4624,7 @@ In response to this request you would get back a Challenge:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
       :language: php
 
 .. only:: python
@@ -4633,7 +4633,7 @@ In response to this request you would get back a Challenge:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
         :language: python
 
 The resulting SMS would look like this:
@@ -4674,12 +4674,12 @@ Once you have the code, you send it to the same Challenge you created above:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
           :language: vbnet
 
 .. only:: java
@@ -4688,7 +4688,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
         :language: java
 
 .. only:: nodejs
@@ -4697,7 +4697,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
         :language: javascript
 
 .. only:: php
@@ -4706,7 +4706,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
       :language: php
 
 .. only:: python
@@ -4715,7 +4715,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
         :language: python
 
 And then you would get back the response:
@@ -4746,12 +4746,12 @@ And then you would get back the response:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
           :language: vbnet
 
 .. only:: java
@@ -4760,7 +4760,7 @@ And then you would get back the response:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code_success.java
         :language: java
 
 .. only:: nodejs
@@ -4769,7 +4769,7 @@ And then you would get back the response:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
         :language: javascript
 
 .. only:: php
@@ -4778,7 +4778,7 @@ And then you would get back the response:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
       :language: php
 
 .. only:: python
@@ -4787,7 +4787,7 @@ And then you would get back the response:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
         :language: python
 
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
@@ -4836,12 +4836,12 @@ Once you have collected the code from the user, send the code generated by your 
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
           :language: vbnet
 
 .. only:: java
@@ -4850,7 +4850,7 @@ Once you have collected the code from the user, send the code generated by your 
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4859,7 +4859,7 @@ Once you have collected the code from the user, send the code generated by your 
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
         :language: javascript
 
 .. only:: php
@@ -4868,7 +4868,7 @@ Once you have collected the code from the user, send the code generated by your 
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
       :language: php
 
 .. only:: python
@@ -4877,7 +4877,7 @@ Once you have collected the code from the user, send the code generated by your 
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
         :language: python
 
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
@@ -4907,12 +4907,12 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -4921,7 +4921,7 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4930,7 +4930,7 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
         :language: javascript
 
 .. only:: php
@@ -4939,7 +4939,7 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
       :language: php
 
 .. only:: python
@@ -4948,7 +4948,7 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
         :language: python
 
 .. _mfa-challenge-during:
@@ -4989,12 +4989,12 @@ Challenging During Factor Creation
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
           :language: vbnet
 
 .. only:: java
@@ -5003,7 +5003,7 @@ Challenging During Factor Creation
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
         :language: java
 
 .. only:: nodejs
@@ -5012,7 +5012,7 @@ Challenging During Factor Creation
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
         :language: javascript
 
 .. only:: php
@@ -5021,7 +5021,7 @@ Challenging During Factor Creation
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
       :language: php
 
 .. only:: python
@@ -5030,7 +5030,7 @@ Challenging During Factor Creation
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
         :language: python
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
@@ -5067,12 +5067,12 @@ The first step will be getting the user authenticated.
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
           :language: vbnet
 
 .. only:: java
@@ -5081,7 +5081,7 @@ The first step will be getting the user authenticated.
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_auth_account_req.java
         :language: java
 
 .. only:: nodejs
@@ -5090,7 +5090,7 @@ The first step will be getting the user authenticated.
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
         :language: javascript
 
 .. only:: php
@@ -5099,7 +5099,7 @@ The first step will be getting the user authenticated.
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
       :language: php
 
 .. only:: python
@@ -5108,7 +5108,7 @@ The first step will be getting the user authenticated.
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
         :language: python
 
 If authentication is successful, you will get back the Account:
@@ -5140,12 +5140,12 @@ If authentication is successful, you will get back the Account:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -5154,7 +5154,7 @@ If authentication is successful, you will get back the Account:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_auth_account_resp.java
         :language: java
 
 .. only:: nodejs
@@ -5163,7 +5163,7 @@ If authentication is successful, you will get back the Account:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
         :language: javascript
 
 .. only:: php
@@ -5172,7 +5172,7 @@ If authentication is successful, you will get back the Account:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
       :language: php
 
 .. only:: python
@@ -5181,7 +5181,7 @@ If authentication is successful, you will get back the Account:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
 Next, you will need to retrieve the Account's ``factors`` collection:
@@ -5203,12 +5203,12 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
           :language: vbnet
 
 .. only:: java
@@ -5217,7 +5217,7 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
         :language: java
 
 .. only:: nodejs
@@ -5226,7 +5226,7 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
         :language: javascript
 
 .. only:: php
@@ -5235,7 +5235,7 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
       :language: php
 
 .. only:: python
@@ -5244,7 +5244,7 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
         :language: python
 
 Which will return:
@@ -5290,12 +5290,12 @@ Which will return:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/
+      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
           :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/
+      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
           :language: vbnet
 
 .. only:: java
@@ -5304,7 +5304,7 @@ Which will return:
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_resp.java
         :language: java
 
 .. only:: nodejs
@@ -5313,7 +5313,7 @@ Which will return:
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/
+    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
         :language: javascript
 
 .. only:: php
@@ -5322,7 +5322,7 @@ Which will return:
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/
+    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
       :language: php
 
 .. only:: python
@@ -5331,7 +5331,7 @@ Which will return:
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/
+    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
         :language: python
 
 .. only:: rest
