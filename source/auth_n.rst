@@ -4937,7 +4937,7 @@ Challenging During Factor Creation
 
   .. note::
 
-  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
+    If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
 .. only:: csharp or vbnet
 
