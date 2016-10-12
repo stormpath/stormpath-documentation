@@ -1544,7 +1544,7 @@ Error 13101
 
 **Message**
 
-  The provided phone number is invalid.
+The provided phone number is invalid.
 
 **User Message**
 
@@ -1665,8 +1665,19 @@ Error 13112
 
 **Message**
 
-  The specified challenge can no longer be used for validation.
+The specified challenge can no longer be used for validation.
 
 **User Message**
 
 *(Same as above)*
+
+Error 13113
+-----------
+
+**Message**
+
+You have exceeded the maximum number of failed codes for this Challenge.
+
+**User Message**
+
+You have exceeded the maximum number of failed code verifications.
