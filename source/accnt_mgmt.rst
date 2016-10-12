@@ -2648,11 +2648,19 @@ This workflow involves 3 parties: your application's end-user, your application,
 2. The end-user opens their email and clicks the verification link. This link comes with a token.
 3. With the token, your application calls back to the Stormpath API server to complete the process.
 
-If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications.
+If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications. Additionally, the Account's ``emailVerificationStatus`` will change to ``VERIFIED``.
+
+Accounts created in a Cloud Directory that has the Verification workflow enabled will have their ``status`` and ``emailVerificationStatus`` set to ``UNVERIFIED`` by default. When the email link is clicked, the Account's ``status`` will change to ``ENABLED`` and its ``emailVerificationStatus`` will change to ``VERIFIED``.
 
 .. note::
 
-  Accounts created in a Directory that has the Verification workflow enabled will have an ``UNVERIFIED`` status by default. ``UNVERIFIED`` is the same as ``DISABLED``, but additionally indicates why the Account is disabled. When the email link is clicked, the Account's status will change ``ENABLED``.
+  Accounts in Mirror Directories (SAML, Facebook, etc) have their ``emailVerificationStatus`` set to ``VERIFIED`` by default.
+
+.. note::
+
+  Accounts that have their ``status`` as ``ENABLED`` or ``DISABLED`` that were created before the ``emailVerificationStatus`` attribute was added to the Account resource will have their ``emailVerificationStatus`` set to ``UNKNOWN``. Accounts with a ``status`` of ``UNVERIFIED`` will also have an ``emailVerificationStatus`` of ``UNVERIFIED``.
+
+  Accounts can also have their ``emailVerificationStatus`` manually set to ``VERIFIED`` or ``UNVERIFIED`` by updating the Account resource.
 
 The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3952,7 +3960,7 @@ This defines what Account attribute should be used as a basis for automatically 
 
 .. note::
 
-  The ``email`` matchingProperty will only match verified Accounts.
+  The ``email`` matchingProperty will only match verified Accounts. For more on this, see :ref:`account-linking-verification`.
 
 **Policy Values and Outcomes**
 
@@ -4023,6 +4031,19 @@ This table shows the possible combinations of Account Linking Policy values. It 
 .. note::
 
   The above table assumes that you are either sending a :ref:`Login Attempt <how-login-works>` or a Social Login POST to the :ref:`Application's Accounts endpoint <social-authn>`. In the case of the :ref:`OAuth flow <generate-oauth-token>`, instead of getting back an Account, you would receive back OAuth Tokens associated with that Account.
+
+.. _account-linking-verification:
+
+Account Matching and Account Verification
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stormpath will only automatically link to and from Accounts that have had their email verified.
+
+.. only:: rest
+
+  This means that the Account resource must have its ``emailVerificationStatus`` set to ``VERIFIED``.
+
+Accounts in Mirror Directories will have their email verification status verified on creation, as will any Accounts that are automatically provisioned from Accounts that are themselves verified.
 
 .. _account-linking-automatic-ex1:
 

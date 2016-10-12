@@ -25,6 +25,7 @@
 
   - **New:** Section :ref:`account-linking` added to Account Management chapter.
   - **New:** New Account Linking-related resources added to Reference chapter: :ref:`ref-account-linking-policy`, :ref:`ref-accountlink`.
+  - **New:** New ``emailVerificationStatus`` attribute added to Account resource. :ref:`verify-account-email` section has been modified to reflect this.
 
   2016-09-26
   ==========

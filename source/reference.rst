@@ -4693,6 +4693,11 @@
       - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
 
+    * - ``emailVerificationStatus``
+      - String
+      - ``UNKNOWN``, ``VERIFIED``, ``UNVERIFIED`` (default)
+      - Indicates whether the Account's email has been verified or not. For more about verifying email addresses, see :ref:`verify-account-email`.
+
     * - ``emailVerificationToken``
       - Link
       - N/A
@@ -4789,6 +4794,7 @@
       "createdAt":"2015-08-25T19:57:05.976Z",
       "modifiedAt":"2015-08-25T19:57:05.976Z",
       "emailVerificationToken":null,
+      "emailVerificationStatus": "VERIFIED",
       "customData":{
         "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple/customData"
       },
