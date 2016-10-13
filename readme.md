@@ -96,6 +96,6 @@ If you used the `make allhtml` command, then you can find the generated files in
 
 ### Contributing to this Repo
 
-All branches should be made off the [Develop](https://github.com/stormpath/stormpath-documentation/tree/develop) branch.
+All branches should be made off the [Develop](https://github.com/stormpath/stormpath-documentation/tree/develop) branch. After your changes are complete, create a PR back to Develop.
 
 Additionally, if you are working with a task captured in a GitHub issue, please name your branch accordingly. For example: `202_account_linking`.
