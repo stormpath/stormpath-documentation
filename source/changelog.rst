@@ -20,6 +20,13 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2016-10-??
+  ==========
+
+  - **New:** Section :ref:`account-linking` added to Account Management chapter.
+  - **New:** New Account Linking-related resources added to Reference chapter: :ref:`ref-account-linking-policy`, :ref:`ref-accountlink`.
+  - **New:** New ``emailVerificationStatus`` attribute added to Account resource. :ref:`verify-account-email` section has been modified to reflect this.
+
   2016-09-26
   ==========
 
@@ -194,4 +201,4 @@
   - **New:** Added Change Log.
   - **Modified:** Directory type language changed. "Social", "Mirror" and "SAML" Directories are all actually "Mirror Directories", and the language in the :ref:`Account Management <account-mgmt>` and :ref:`Authentication <authn>` chapters has been updated to reflect this.
   - **New:** Created top-level :ref:`Mirror Directories section <about-mirror-dir>` that discusses all Mirror Directories in general and how to support multiple Mirror Directories.
-  - **Modified:** Updated information about :ref:`Master Directories <mirror-login>` and how they function.
+  - **Modified:** Updated information about Master Directories and how they function.
