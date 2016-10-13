@@ -4,15 +4,17 @@
 
 ### Install
 
-`pip install Sphinx sphinx_rtd_theme`
+`pip install Sphinx`
 
 Other options [here](http://www.sphinx-doc.org/en/stable/install.html).
 
 If you already have Sphinx, then just upgrade:
 
-`pip install -U Sphinx sphinx_rtd_theme`
+`pip install -U Sphinx`
 
 Then clone this repo.
+
+`git clone --recursive ...`
 
 ### Structure
 
@@ -92,3 +94,8 @@ If you used the `make allhtml` command, then you can find the generated files in
 
 `build/html/{language}/index.html`
 
+### Contributing to this Repo
+
+All branches should be made off the [Develop](https://github.com/stormpath/stormpath-documentation/tree/develop) branch. After your changes are complete, create a PR back to Develop.
+
+Additionally, if you are working with a task captured in a GitHub issue, please name your branch accordingly. For example: `202_account_linking`.

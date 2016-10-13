@@ -215,15 +215,9 @@ For all Mirror Directories, since the relationship with the outside directory is
 
 It is possible to use different kinds of Directories simultaneously, to allow users to log-in with multiple external systems at the same time. For example, if you wanted to enable logging-in with Facebook, LinkedIn, and Salesforce, this would require a separate Mirror Directory for each one.
 
-If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory. This offers a few benefits:
+If multiple Directories are desired, we recommend that you create a separate "master" Directory that allows for a unified user identity. This master Directory would link all the Accounts in Mirror Directories with a master Account in a master Directory.
 
-1. You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
-
-2. You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory.
-
-3. Keep a user’s identity alive even after they've left your customer's organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
-
-For information about how login works with master Directories, please see :ref:`How Login Works with Master Directories <mirror-login>`.
+For information about how login works with master Directories, please see :ref:`account-linking`.
 
 .. _about-ldap-dir:
 
@@ -330,7 +324,7 @@ Stormpath also simplifies the authorization process by doing things like automat
 Modeling Social Directories
 ++++++++++++++++++++++++++++
 
-Modeling your users who authorize via Social Login is by necessity very simple, since social login providers do not include the concept of "groups" of users in the same way that LDAP directories do. The only thing that you really have to do as an app developer is create a Directory resource for each social provider that you want to support. As mentioned :ref:`above <supporting-multiple-dirs>`, if you want to support multiple Directories then you may also want to create a master Directory for your application. For more about how Social Directories are provisioned, please see :ref:`mirror-login`.
+Modeling your users who authorize via Social Login is by necessity very simple, since social login providers do not include the concept of "groups" of users in the same way that LDAP directories do. The only thing that you really have to do as an app developer is create a Directory resource for each social provider that you want to support. As mentioned :ref:`above <supporting-multiple-dirs>`, if you want to support multiple Directories then you may also want to create a master Directory for your application. For more about how Social Directories are provisioned, please see :ref:`account-linking`.
 
 How to Make a Social Directory
 ++++++++++++++++++++++++++++++
@@ -1022,7 +1016,7 @@ Stormpath also makes it very easy to transfer your existing users into a Stormpa
 
 .. note::
 
-  To import user accounts from an LDAP or Social Directory, please see :ref:`mirror-login`.
+  To import user accounts from an LDAP or Social Directory, please see :ref:`account-linking`.
 
 Due to the sheer number of database types and the variation between individual data models, the actual importing of users is not something that Stormpath handles at this time. What we recommend is that you write a script that is able to iterate through your database and grab the necessary information. Then the script can use our API to upload the users to Stormpath.
 
@@ -2503,7 +2497,7 @@ This would prevent a user from choosing a password that is the same as any of th
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
-.. only:: not rest
+.. only:: not (rest or java)
 
   .. warning::
 
@@ -2512,84 +2506,98 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
 
-You will find a link to the ``accountSchema`` resource in your Directory:
+.. only:: not java
 
-.. code-block:: json
+  You will find a link to the ``accountSchema`` resource in your Directory:
 
-  {
-    "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
-    "name": "Account Schema Test",
-    "description": "A Directory to test Account Schema restrictions",
-    "...": "...",
-    "accountSchema": {
-      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
+      "name": "Account Schema Test",
+      "description": "A Directory to test Account Schema restrictions",
+      "...": "...",
+      "accountSchema": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
+      }
     }
-  }
 
-You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
+  You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
 
-.. code-block:: http
+  .. code-block:: http
 
-  GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
+    GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
-And get back the Account Schema:
+  And get back the Account Schema:
 
-.. code-block:: json
+  .. code-block:: json
 
-  {
-    "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
-    "createdAt": "2016-08-19T19:42:41.961Z",
-    "modifiedAt": "2016-08-19T19:42:41.961Z",
-    "fields": {
-      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
-      "offset": 0,
-      "limit": 25,
-      "size": 2,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
-          "createdAt": "2016-08-19T19:42:41.961Z",
-          "modifiedAt": "2016-08-19T19:42:41.961Z",
-          "name": "givenName",
-          "required": false,
-          "schema": {
-            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+    {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
+      "createdAt": "2016-08-19T19:42:41.961Z",
+      "modifiedAt": "2016-08-19T19:42:41.961Z",
+      "fields": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
+        "offset": 0,
+        "limit": 25,
+        "size": 2,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T19:42:41.961Z",
+            "name": "givenName",
+            "required": false,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+            }
+          },
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T20:03:25.497Z",
+            "name": "surname",
+            "required": false,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+            }
           }
-        },
-        {
-          "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-          "createdAt": "2016-08-19T19:42:41.961Z",
-          "modifiedAt": "2016-08-19T20:03:25.497Z",
-          "name": "surname",
-          "required": false,
-          "schema": {
-            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
-          }
-        }
-      ]
-    },
-    "directory": {
-      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
+        ]
+      },
+      "directory": {
+        "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
+      }
     }
-  }
+
+.. only:: java
+
+  .. literalinclude:: code/java/account_management/get_account_schema.java
+      :language: java
 
 The two Account attributes (or ``fields``) that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. code-block:: http
+.. only:: not java
 
-  POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic Mlp...
+  .. code-block:: http
 
-  {
-    "email":"test123@email.com",
-    "password":"APassword1234"
-  }
+    POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic Mlp...
+
+    {
+      "email":"test123@email.com",
+      "password":"APassword1234"
+    }
+
+.. only:: java
+
+   .. literalinclude:: code/java/account_management/create_account_two_attributes.java
+     :language: java
 
 3.5.2. Modifying your Directory's Account Schema
 -------------------------------------------------
@@ -2598,45 +2606,55 @@ Any attributes that are in the ``fields`` collection can have ``required`` toggl
 
 If you wanted to set ``surname`` as required, you would send the following ``POST``:
 
-.. code-block:: http
+.. only:: not java
 
-  POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic Mlp...
-  Content-Type: application/json
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "required":"true"
-  }
+    POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic Mlp...
+    Content-Type: application/json
+    Cache-Control: no-cache
 
-And get back the following ``200 OK``:
-
-.. code-block:: json
-
-  {
-    "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-    "createdAt": "2016-08-19T19:42:41.961Z",
-    "modifiedAt": "2016-08-19T20:03:25.497Z",
-    "name": "surname",
-    "required": true,
-    "schema": {
-        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+    {
+      "required":"true"
     }
-  }
 
-If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+  And get back the following ``200 OK``:
 
-.. code-block:: json
+  .. code-block:: json
 
-  {
-    "status": 400,
-    "code": 2000,
-    "message": "Account surname is required; it cannot be null, empty, or blank.",
-    "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
-    "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
-    "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
-  }
+    {
+      "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+      "createdAt": "2016-08-19T19:42:41.961Z",
+      "modifiedAt": "2016-08-19T20:03:25.497Z",
+      "name": "surname",
+      "required": true,
+      "schema": {
+          "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+      }
+    }
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+
+  .. code-block:: json
+
+    {
+      "status": 400,
+      "code": 2000,
+      "message": "Account surname is required; it cannot be null, empty, or blank.",
+      "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
+      "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
+      "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
+    }
+
+.. only:: java
+
+  .. literalinclude:: code/java/account_management/modify_account_schema.java
+      :language: java
+
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``ResourceException`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
 .. _verify-account-email:
 
@@ -2654,11 +2672,19 @@ This workflow involves 3 parties: your application's end-user, your application,
 2. The end-user opens their email and clicks the verification link. This link comes with a token.
 3. With the token, your application calls back to the Stormpath API server to complete the process.
 
-If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications.
+If you create a new Account in a Directory with both Account Registration and Verification enabled, Stormpath will automatically send a welcome email that contains a verification link to the Account’s email address on your behalf. If the person reading the email clicks the verification link in the email, the Account will then have an ``ENABLED`` status and be allowed to log in to applications. Additionally, the Account's ``emailVerificationStatus`` will change to ``VERIFIED``.
+
+Accounts created in a Cloud Directory that has the Verification workflow enabled will have their ``status`` and ``emailVerificationStatus`` set to ``UNVERIFIED`` by default. When the email link is clicked, the Account's ``status`` will change to ``ENABLED`` and its ``emailVerificationStatus`` will change to ``VERIFIED``.
 
 .. note::
 
-  Accounts created in a Directory that has the Verification workflow enabled will have an ``UNVERIFIED`` status by default. ``UNVERIFIED`` is the same as ``DISABLED``, but additionally indicates why the Account is disabled. When the email link is clicked, the Account's status will change ``ENABLED``.
+  Accounts in Mirror Directories (SAML, Facebook, etc) have their ``emailVerificationStatus`` set to ``VERIFIED`` by default.
+
+.. note::
+
+  Accounts that have their ``status`` as ``ENABLED`` or ``DISABLED`` that were created before the ``emailVerificationStatus`` attribute was added to the Account resource will have their ``emailVerificationStatus`` set to ``UNKNOWN``. Accounts with a ``status`` of ``UNVERIFIED`` will also have an ``emailVerificationStatus`` of ``UNVERIFIED``.
+
+  Accounts can also have their ``emailVerificationStatus`` manually set to ``VERIFIED`` or ``UNVERIFIED`` by updating the Account resource.
 
 The Account Verification Base URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3691,3 +3717,465 @@ If you changed our mind and wanted to only allow users to register with ``stormp
     }
 
 Working with the Blacklist is exactly the same, except you add entries to the ``emailDomainBlacklist`` array instead.
+
+.. _account-linking:
+
+3.8. Account Linking
+====================
+
+.. only:: not rest
+
+ .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
+
+.. note::
+
+  Before you read this section, we recommend that you familiarize yourself with:
+
+  - :ref:`How Login Works <how-login-works>`
+  - :ref:`How Social Authentication Works <social-authn>`
+
+To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will have to go into a Facebook Directory, and so on.
+
+When a user chooses to log in with a non-Cloud Directory (e.g. Facebook, SAML, etc), Stormpath creates an Account resource to represent them in the appropriate Directory and then returns it upon successful login.
+
+What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
+
+To unify these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
+
+So in the above example, the user could create three separate Accounts in three separate Directories, but if all of those Accounts were linked then each login attempt would always return the same Account resource, regardless of which login method they chose. Moreover, each Account would be associated with the Account in the default Directory via Account Links.
+
+.. _account-linking-benefits:
+
+**What if I only want to support Social/SAML/etc?**
+
+Even if you wanted to only offer Social Login options, or only SAML-based login, we still recommend that you maintain a separate Cloud Directory. For example, if you wanted to only allow Login via Facebook, it still makes sense to have a Cloud Directory separate from your Facebook Directory.
+
+- You can maintain one Directory that has all your user Accounts, retaining globally unique canonical identities across your application
+
+- You are able to leverage your own Groups in the master Directory. Remember, most data in a Mirror Directory is read-only, meaning you cannot create your own Groups in it, only read the Groups (if any) synchronized from the external directory.
+
+- Keep a user’s identity alive even after they’ve left your customer’s organization and been deprovisioned in the external user directory. This is valuable in a SaaS model where the user is loosely coupled to an organization. Contractors and temporary workers are good examples.
+
+- If you wanted to offer new kinds of login in the future, it would be as simple as creating a new kind of Mirror Directory and then ensuring that the new Accounts in that Directory are linked to the one that already exists in the default Directory.
+
+.. _account-linking-login:
+
+How Login Works with Linked Accounts
+------------------------------------
+
+There are a number of different scenarios which can occur during login.
+
+Application vs Organization Account Linking Policies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login.
+
+.. code-block:: http
+
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "type": "basic",
+    "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+    "accountStore": {
+      "nameKey":"tenantOneTwoThree"
+    }
+  }
+
+For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
+
+Example Login Behaviors
+^^^^^^^^^^^^^^^^^^^^^^^
+
+For the sake of our examples below, we will assume that there are just two Accounts, one in a Cloud Directory, and one in a Facebook Directory. Further, the Cloud Directory is the default Account Store.
+
+**With Account Linking Disabled**
+
+If the Account Linking Policy is completely disabled then Stormpath ignores Account Links and does not perform any Account Linking behavior.
+
+Example: A user logs in with Facebook, and Stormpath returns the Account in the Facebook Directory.
+
+**With Account Linking Enabled, and Existing, Unlinked Accounts**
+
+If the Account Linking Policy is at least enabled, then on login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If no linked Accounts exist at all, Stormpath will return whatever Account was used to log in.
+
+Example: A user logs in with Facebook, and Stormpath returns the Account in the Facebook Directory.
+
+**With Existing, Linked Accounts**
+
+On login, Stormpath checks to see if the current Account used for login has any existing Account Links and follows those links. If (1) the current Account is not in the default Account Store and (2) it finds a linked Account that is in the default Account Store, then Stormpath will return that linked Account.
+
+Example: A user logs in with Facebook, and their existing Account in the Stormpath Facebook Directory is linked with an Account found in the Application's default Cloud Directory. Stormpath returns the Account from the Cloud Directory, instead of the Account from the Facebook Directory.
+
+.. note::
+
+  If the Accounts are already linked, then the status of Automatic Account Linking is irrelevant.
+
+**With Automatic Account Linking**
+
+Stormpath still checks the current Account's links to see what other Accounts are linked to it. With Automatic Account Linking, however, Stormpath can also:
+
+- Automatically link any Accounts that it finds that are not linked but should be.
+- Create a new Account in the default Account Store and link that Account to the one that was used to log in.
+
+Example: The user logs in with Facebook for the first time and an Account is created in the Facebook Directory. The Application has an Account Link Policy that has automatic provisioning enabled based on the Account's email. Stormpath finds no Account in the default Cloud Directory with this email. An Account is created in the Cloud Directory and linked to the Account in the Facebook Directory. Stormpath returns the newly-created Account from the Cloud Directory, instead of the Account from the Facebook Directory.
+
+The details of Automatic Account Linking are more fully explained :ref:`below <account-linking-automatic>`.
+
+**Manual vs Automatic Account Linking**
+
+All Account Links are separate resources that link together two Accounts found in separate Directories. The Account Linking process itself comes in two varieties: manual, and automatic.
+
+Manual Account Linking involves you manually creating an Account Link resource, that links two Account resources. Automatic Account Linking creates these Account Links automatically based upon behavior configured inside an Account Link Policy resource. These Policy resources can be attached to either an Application or an Organization.
+
+.. _account-linking-manual:
+
+How to Link Accounts Manually
+------------------------------------
+
+.. note::
+
+  If you are not interested in manual account linking, you can skip ahead and read about :ref:`account-linking-automatic`.
+
+Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. Both the The Cloud and Facebook Directories are mapped to the same Application, but the Cloud Directory is the default Account Store.
+
+In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample",
+    "username": "jlpicard",
+    "email": "capt@enterprise.com",
+    "givenName": "Jean-Luc",
+    "middleName": null,
+    "surname": "Picard",
+    "fullName": "Jean-Luc Picard",
+    "thisExample": "isTruncated",
+    "...": "..."
+  }
+
+And one in the Facebook Directory for user Locutus:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample",
+    "username": "locutus",
+    "email": "locutus@b.org",
+    "givenName": "Locutus",
+    "middleName": "",
+    "surname": "Ofborg",
+    "fullName": "Locutus Ofborg",
+    "thisExample": "isTruncated",
+    "...": "..."
+  }
+
+You can link these two Accounts with a simple POST:
+
+.. code-block:: http
+
+  POST /v1/accountLinks HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+
+  {
+    "leftAccount":{
+      "href":"https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+    },
+    "rightAccount":{
+      "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+    }
+  }
+
+Which on success will return an Account Link:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb42cnj8HH",
+    "createdAt": "2016-09-28T17:32:32.327Z",
+    "modifiedAt": "2016-09-28T17:32:32.327Z",
+    "leftAccount": {
+        "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+    },
+    "rightAccount": {
+        "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+    }
+  }
+
+This means that:
+
+- this Account Link will appear in both of these Accounts' ``accountLinks`` collections, and
+- each Account will appear in the others ``linkedAccounts`` collection.
+
+.. note::
+
+  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`
+
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+    "createdAt": "2016-07-21T01:03:49.813Z",
+    "modifiedAt": "2016-09-28T18:19:09.572Z",
+    "status": "ENABLED",
+    "automaticProvisioning": "DISABLED",
+    "matchingProperty": null,
+    "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+    }
+  }
+
+.. note::
+
+  Account Linking Policies can be associated with either an Application or Organization. If you would like to use an Organization's Account Linking Policy then you must specify it in your login attempt.
+
+Because the Account Linking Policy is enabled, and because the Cloud Directory is the default Account Store, if you send a Login Attempt with either of these Accounts, then the Account that you get back will the default Account Store's Picard Account. In other words: If you log in with the Picard Account credentials, Stormpath will return the Picard Account, and if you log in with the Locutus Account credentials, Stormpath will still return the Picard Account.
+
+This is because Stormpath traverses the Account Links for the Account that is logging-in to see if a linked Account exists in the Application's default Account Store. Because Picard is in the default Account Store, Stormpath still just returns the Picard Account. However, the Locutus Account is not in the default Account Store, but is linked to the Picard Account which is in the default Account Store, so the Picard Account is returned.
+
+This behavior exists only because the Account Linking Policy is set as ``enabled``. If it were ``disabled`` then Stormpath would not follow Account Links. This means that you would still be able to link the two Accounts, but upon login you would receive back whichever Account was used to log-in.
+
+.. _account-linking-automatic:
+
+How to Link Accounts Automatically
+------------------------------------
+
+So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy.
+
+.. _about-alp:
+
+What's in the Account Linking Policy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Every Application and Organization has an Account Linking Policy resource. In both cases the path is the same:
+
+``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
+
+The Account Linking Policy has three attributes that control aspects of Account Linking behavior:
+
+**Status:**
+
+This attribute controls whether this Policy is in effect or not. If you would not like this policy to be in effect, set this to ``DISABLED``.
+
+If Account Linking is enabled then Stormpath will check linked Accounts on login and behave as described in :ref:`account-linking-login`. If it is disabled, you are still able to link Accounts manually, but Stormpath takes no actions based upon these links.
+
+**Automatic Provisioning:**
+
+This attribute tells Stormpath whether you would like new Accounts to be automatically created in the default Account Store.
+
+For example: if a user Account is created in a Social Directory (e.g. Google), and they do not already have an Account in the default Account Store, Automatic Provisioning would then create an Account with the same information inside the default Account Store. That Account would then be automatically linked to the Account in the Social Directory.
+
+**Matching Property**
+
+This defines what Account attribute should be used as a basis for automatically creating account links. The current possible values are:
+
+- ``null``: which means that you would not like any matching to occur
+- ``email``: which will match Accounts based on their ``email`` attribute.
+
+.. note::
+
+  The ``email`` matchingProperty will only match verified Accounts. For more on this, see :ref:`account-linking-verification`.
+
+**Policy Values and Outcomes**
+
+Because logging in via a Mirror Directory (Social, SAML, etc) will create an Account if it doesn't already exist, Automatic Provisioning and the Matching Property are intended for use with Mirror Directory login. So what happens if a user logs in via a Mirror Directory? First of all, if the external credentials are valid, Stormpath creates an Account for them in that Mirror Directory. What happens next depends on the configuration of your Account Linking Policy.
+
+Default behavior, without Account Linking, is that the newly-created Account from the Mirror Directory will be returned.
+
+This table shows the possible combinations of Account Linking Policy values. It also indicates whether a matching Account exists in the default Account Store (which must be a Cloud Account), and then the result to expect when logging in with a new Mirror Directory.
+
+.. list-table::
+  :widths: 10 10 15 30 35
+  :header-rows: 1
+
+  * - Automatic Provisioning
+    - Matching Property
+    - Matching Account Exists?
+    - Result
+    - Explanation
+
+  * - Disabled
+    - Null
+    - No
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Null
+    - Yes
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Email
+    - No
+    - Return Account that was logged in.
+    - No action taken by Stormpath.
+
+  * - Disabled
+    - Email
+    - Yes
+    - Cloud Account is returned.
+    - Stormpath links new Account to existing Account and returns existing Account.
+
+  * - Enabled
+    - Null
+    - No
+    - Cloud Account is returned.
+    - Account created in Cloud Directory and both Accounts are linked.
+
+  * - Enabled
+    - Null
+    - Yes
+    - Return Account that was logged in.
+    - Stormpath attempts to create Account in Cloud Directory but cannot because of email uniqueness constraint.
+
+  * - Enabled
+    - Email
+    - No
+    - Cloud Account is returned.
+    - New Account created, then Cloud Account created, then both Accounts linked.
+
+  * - Enabled
+    - Email
+    - Yes
+    - Cloud Account is returned.
+    - New Account created, then linked to existing Cloud Account.
+
+.. note::
+
+  The above table assumes that you are either sending a :ref:`Login Attempt <how-login-works>` or a Social Login POST to the :ref:`Application's Accounts endpoint <social-authn>`. In the case of the :ref:`OAuth flow <generate-oauth-token>`, instead of getting back an Account, you would receive back OAuth Tokens associated with that Account.
+
+.. _account-linking-verification:
+
+Account Matching and Account Verification
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Stormpath will only automatically link to and from Accounts that have had their email verified.
+
+.. only:: rest
+
+  This means that the Account resource must have its ``emailVerificationStatus`` set to ``VERIFIED``.
+
+Accounts in Mirror Directories will have their email verification status verified on creation, as will any Accounts that are automatically provisioned from Accounts that are themselves verified.
+
+.. _account-linking-automatic-ex1:
+
+Example Scenario 1
+^^^^^^^^^^^^^^^^^^
+
+This is probably the most common scenario, where you want to allow your users Social Login, but also want to maintain a separate canonical user Directory. In this example you have:
+
+- A Cloud Directory (the default Account Store)
+- A Google Directory
+- A Facebook Directory
+
+Your Application's Account Linking Policy has:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+    "createdAt": "2016-07-21T01:03:49.813Z",
+    "modifiedAt": "2016-09-28T18:19:09.572Z",
+    "status": "ENABLED",
+    "automaticProvisioning": "ENABLED",
+    "matchingProperty": "email",
+    "tenant": {
+        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+    }
+  }
+
+So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
+
+.. code-block:: http
+
+  POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic NjUxW...
+  Cache-Control: no-cache
+
+  {
+    "providerData": {
+      "providerId": "facebook",
+      "accessToken": "EAAT68k[...]T8TAZDZD"
+    }
+  }
+
+After the credentials are validated, Stormpath will do a few things:
+
+1. Create an Account in the Facebook Directory.
+2. Because the Matching Property is "email" Stormpath will next check if there are any Accounts to link this Account with. This user has never used your app before, so there are no other Accounts using this email.
+3. Create an Account in the Cloud Directory with the same information as the one in the Facebook Directory.
+4. Link the Accounts in the Facebook and Cloud Directories to each other.
+
+Your user Janelle now has an Account in the Facebook Directory, an Account in the Cloud Directory, and both of these Accounts are linked via accountLink resources.
+
+Stormpath will now return the Account from the Cloud Directory:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
+    "username": "jkallday@email.com",
+    "email": "jkallday@email.com",
+    "givenName": "Janelle",
+    "...":"..."
+  }
+
+If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
+
+.. _account-linking-automatic-ex2:
+
+Example Scenario 2
+^^^^^^^^^^^^^^^^^^
+
+In this example we will show a :ref:`multi-tenant application <multitenancy>` that wants to let each of its tenants decide on their own Account Linking behavior. In order to accomplish this, there a few things that need to happen:
+
+- the Application's Account Linking Policy is irrelevant, since it will be skipped if we specify an Organization in the login attempt
+- the Organization Account Linking Policies are used to control Account Linking behavior
+- Every Organization has its own Cloud Directory that serves as its default Account Store. Mirror Directories can be shared between Organizations.
+- The login page for this application must pass the user's Organization ``href`` or ``nameKey`` with every login attempt.
+
+.. note::
+
+  Whether the Application's Account Linking Policy
+
+So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
+
+.. code-block:: none
+
+  .. code-block:: http
+
+  POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic NjUxW...
+  Cache-Control: no-cache
+
+  {
+    "providerData": {
+      "providerId": "facebook",
+      "accessToken": "EAAT68k[...]T8TAZDZD"
+      "accountStore": {
+        "nameKey": "OrganizationA"
+      }
+    }
+  }
+
+This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
+
+.. note::
+
+  The behavior described above would be the same if we made a POST to the ``/loginAttempts`` endpoint, or used the OAuth flow.
