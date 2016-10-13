@@ -4914,7 +4914,7 @@ Challenging During Factor Creation
 
 .. only:: rest
 
-  To send a challenge at the same time as you create the sms Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+  To send a challenge at the same time as you create the SMS Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
   .. code-block:: http
 
