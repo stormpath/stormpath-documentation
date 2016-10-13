@@ -2892,7 +2892,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
   .. literalinclude:: code/python/account_management/resend_verification_email.py
     :language: python
 
-3.7. Customizing Stormpath Emails via REST
+3.7. Customizing Stormpath Emails
 ==========================================
 
 3.7.1. What Emails Does Stormpath Send?
