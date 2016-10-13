@@ -4009,8 +4009,12 @@ First, you create the Account:
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/mfa_create_account.java
-      :language: java
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_create_account.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4080,7 +4084,11 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4110,10 +4118,9 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
     .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
         :language: python
 
+You will then get back the response:
 
 .. only:: rest
-
-  You will then get back the response:
 
   .. code-block:: json
 
@@ -4135,8 +4142,6 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
       },
       "mostRecentChallenge": null
     }
-
-  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 .. only:: csharp or vbnet
 
@@ -4162,8 +4167,6 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
         :language: java
-
-  For now ``factor.getVerificationStatus()`` returns ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` returns ``null``. If you were to send a challenge this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
 
 .. only:: nodejs
 
@@ -4191,6 +4194,8 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
         :language: python
+
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4233,6 +4238,10 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
 .. only:: java
 
+  .. todo::
+
+    (java.todo)
+
     .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
         :language: java
 
@@ -4263,9 +4272,9 @@ To add an additional Google Authenticator Factor to this Account, you must send 
     .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
         :language: python
 
-.. only:: rest
+You will then get back the response:
 
-  You will then get back the response:
+.. only:: rest
 
   .. code-block:: json
 
@@ -4290,8 +4299,6 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       }
     }
 
-  Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
-
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
 .. only:: csharp or vbnet
@@ -4309,6 +4316,15 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
       .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
           :language: vbnet
+
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_resp.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4341,8 +4357,14 @@ The user now needs to get this information into their Google Authenticator (or `
 
 You can now take this string and turn it into a QR Code image:
 
-- You could use a QR Code Library, such as `QRCode.js <https://davidshimjs.github.io/qrcodejs/>`__
+- You could use the use a QR Code Library, such as `QRCode.js <https://davidshimjs.github.io/qrcodejs/>`__
 - Or you could generate the image yourself, using an ``<img>`` tag or CSS. For examples of both, see `here <https://css-tricks.com/examples/DataURIs/>`__.
+
+.. todo::
+
+  Not sure if this applies for the SDKs?
+
+Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
 
 .. _mfa-challenge:
 
@@ -4422,9 +4444,11 @@ At this point in the example you have a brand new Account with two additional Fa
 
 .. only:: java
 
-  If you were to retrieve the Account's ``factors`` you will get them by:
+  .. todo::
 
-  .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
         :language: java
 
 .. only:: nodejs
@@ -4468,9 +4492,9 @@ This example covers challenging Factors that have already been created. To see a
 Challenging an SMS Factor
 """""""""""""""""""""""""
 
-.. only:: rest
+To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
-  To challenge an SMS Factor, you send a request like this, with or without specifying a message.
+.. only:: rest
 
   .. code-block:: http
 
@@ -4502,9 +4526,11 @@ Challenging an SMS Factor
 
 .. only:: java
 
-  To challenge an SMS Factor, call ``factor.createChallenge(challenge)`` with or without setting a message.
+  .. todo::
 
-  .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
         :language: java
 
 .. only:: nodejs
@@ -4536,9 +4562,9 @@ Challenging an SMS Factor
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
-.. only:: rest
+In response to this request you would get back a Challenge:
 
-  In response to this request you would get back a Challenge:
+.. only:: rest
 
   .. code-block:: json
 
@@ -4573,6 +4599,15 @@ If you do not specify a message, then Stormpath will just send the default messa
 
       .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
           :language: vbnet
+
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_resp.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4612,13 +4647,13 @@ This code will remain valid for 300 seconds (5 minutes).
 
 Next, you must collect this code from the user.
 
+.. note::
+
+  The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
+
 Once you have the code, you send it to the same Challenge you created above:
 
 .. only:: rest
-
-  .. note::
-
-    The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
 
   .. code-block:: http
 
@@ -4649,7 +4684,11 @@ Once you have the code, you send it to the same Challenge you created above:
 
 .. only:: java
 
-  .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
         :language: java
 
 .. only:: nodejs
@@ -4679,9 +4718,9 @@ Once you have the code, you send it to the same Challenge you created above:
     .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
         :language: python
 
-.. only:: rest
+And then you would get back the response:
 
-  And then you would get back the response:
+.. only:: rest
 
   .. code-block:: json
 
@@ -4714,6 +4753,15 @@ Once you have the code, you send it to the same Challenge you created above:
 
       .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
           :language: vbnet
+
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code_success.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4914,7 +4962,7 @@ Challenging During Factor Creation
 
 .. only:: rest
 
-  To send a challenge at the same time as you create the sms Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+  To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
   .. code-block:: http
 
@@ -4932,12 +4980,6 @@ Challenging During Factor Creation
         "message": "Welcome to the Example! Your authorization code is ${code}"
       }
     }
-
-  You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
-
-  .. note::
-
-  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
 .. only:: csharp or vbnet
 
@@ -4957,12 +4999,12 @@ Challenging During Factor Creation
 
 .. only:: java
 
-  To create a challenge at the same time as you create the sms Factor, you need call ``account.createFactor((Factors.SMS.newCreateRequestFor(factor).createChallenge()).build())``.
+  .. todo::
 
-  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
-    :language: java
+    (java.todo)
 
-  You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Your verification code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
+    .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
+        :language: java
 
 .. only:: nodejs
 
@@ -4991,17 +5033,20 @@ Challenging During Factor Creation
     .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
         :language: python
 
+You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
+.. note::
 
+  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+The first step will be getting the user authenticated.
+
 .. only:: rest
 
-  The first step will be getting the user authenticated.
-
-  This means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
+  In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
   .. code-block:: http
 
@@ -5030,6 +5075,15 @@ Challenging a Factor After Login
       .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
           :language: vbnet
 
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_auth_account_req.java
+        :language: java
+
 .. only:: nodejs
 
   .. todo::
@@ -5057,9 +5111,9 @@ Challenging a Factor After Login
     .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
         :language: python
 
-.. only:: rest
+If authentication is successful, you will get back the Account:
 
- If authentication is successful, you will get back the Account:
+.. only:: rest
 
   .. code-block:: json
 
@@ -5094,6 +5148,15 @@ Challenging a Factor After Login
       .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
           :language: vbnet
 
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_auth_account_resp.java
+        :language: java
+
 .. only:: nodejs
 
   .. todo::
@@ -5121,9 +5184,9 @@ Challenging a Factor After Login
     .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
-.. only:: rest
+Next, you will need to retrieve the Account's ``factors`` collection:
 
-  Next, you will need to retrieve the Account's ``factors`` collection:
+.. only:: rest
 
   .. code-block:: http
 
@@ -5150,10 +5213,12 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You will need to retrieve the Account's ``factors`` collection:
+  .. todo::
 
-  .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
-    :language: java
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
+        :language: java
 
 .. only:: nodejs
 
@@ -5182,9 +5247,9 @@ Challenging a Factor After Login
     .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
         :language: python
 
-.. only:: rest
+Which will return:
 
-  Which will return:
+.. only:: rest
 
   .. code-block:: json
 
@@ -5233,6 +5298,15 @@ Challenging a Factor After Login
       .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
           :language: vbnet
 
+.. only:: java
+
+  .. todo::
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_resp.java
+        :language: java
+
 .. only:: nodejs
 
   .. todo::
@@ -5272,11 +5346,9 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+  .. todo::
 
-  .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
-    :language: java
-
+    (java.todo)
 
 .. only:: nodejs
 
