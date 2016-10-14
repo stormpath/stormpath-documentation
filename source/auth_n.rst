@@ -4113,7 +4113,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
 .. only:: rest
 
-  You will then get back the response:
+You will then get back the response:
 
   .. code-block:: json
 
@@ -4136,7 +4136,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
       "mostRecentChallenge": null
     }
 
-  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 .. only:: csharp or vbnet
 
@@ -4163,7 +4163,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
     .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
         :language: java
 
-  For now ``factor.getVerificationStatus()`` returns ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` returns ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
+For now ``factor.getVerificationStatus()`` returns ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` returns ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
 
 .. only:: nodejs
 
@@ -4265,7 +4265,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
 .. only:: rest
 
-  You will then get back the response:
+You will then get back the response:
 
   .. code-block:: json
 
@@ -4290,7 +4290,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       }
     }
 
-  Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
+Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4422,7 +4422,7 @@ At this point in the example you have a brand new Account with two additional Fa
 
 .. only:: java
 
-  If you were to retrieve the Account's ``factors`` you will get them by:
+If you were to retrieve the Account's ``factors`` you will get them by:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
         :language: java
@@ -4470,7 +4470,7 @@ Challenging an SMS Factor
 
 .. only:: rest
 
-  To challenge an SMS Factor, you send a request like this, with or without specifying a message.
+To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
   .. code-block:: http
 
@@ -4502,7 +4502,9 @@ Challenging an SMS Factor
 
 .. only:: java
 
-  To challenge an SMS Factor, call ``factor.createChallenge(challenge)`` with or without setting a message.
+To challenge an SMS Factor, call ``factor.createChallenge(challenge);`` with or without setting a message.
+
+This operation will automatically cause the factor to be challenged, meaning that the user will receive a a code as soon as this operation is executed.
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
         :language: java
@@ -4538,7 +4540,7 @@ If you do not specify a message, then Stormpath will just send the default messa
 
 .. only:: rest
 
-  In response to this request you would get back a Challenge:
+In response to this request you would get back a Challenge:
 
   .. code-block:: json
 
@@ -4681,7 +4683,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
 .. only:: rest
 
-  And then you would get back the response:
+And then you would get back the response:
 
   .. code-block:: json
 
@@ -4999,9 +5001,9 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  The first step will be getting the user authenticated.
+The first step will be getting the user authenticated.
 
-  This means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
+This means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
   .. code-block:: http
 
@@ -5059,7 +5061,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
- If authentication is successful, you will get back the Account:
+If authentication is successful, you will get back the Account:
 
   .. code-block:: json
 
@@ -5123,7 +5125,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  Next, you will need to retrieve the Account's ``factors`` collection:
+Next, you will need to retrieve the Account's ``factors`` collection:
 
   .. code-block:: http
 
@@ -5150,7 +5152,7 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You will need to retrieve the Account's ``factors`` collection:
+You will need to retrieve the Account's ``factors`` collection:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
     :language: java
@@ -5184,7 +5186,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  Which will return:
+Which will return:
 
   .. code-block:: json
 
@@ -5272,7 +5274,7 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
   .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
     :language: java
