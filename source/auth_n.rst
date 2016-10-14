@@ -4378,7 +4378,7 @@ At this point in the example you have a brand new Account with two additional Fa
 If you were to retrieve the Account's ``factors`` you will get them by:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
-        :language: java
+      :language: java
 
 .. only:: nodejs
 
