@@ -4457,7 +4457,7 @@ To challenge an SMS Factor, you send a request like this, with or without specif
 
 To challenge an SMS Factor, call ``factor.createChallenge(challenge);`` with or without setting a message.
 
-This operation will automatically cause the factor to be challenged, meaning that the user will receive a a code as soon as this operation is executed.
+This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
         :language: java
