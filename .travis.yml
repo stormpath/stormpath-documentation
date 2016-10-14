@@ -28,6 +28,7 @@ after_success:
 - test -z "$DEPLOY_DOCS" || rm -rf source/vbnet/product-guide/latest && mkdir -p source/vbnet/product-guide && cp -r ../build/html/vbnet source/vbnet/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/python/product-guide/latest && mkdir -p source/python/product-guide && cp -r ../build/html/python source/python/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm -rf source/nodejs/product-guide/latest && mkdir -p source/nodejs/product-guide && cp -r ../build/html/nodejs source/nodejs/product-guide/latest
+- test -z "$DEPLOY_DOCS" || rm -rf source/ruby/product-guide/latest && mkdir -p source/ruby/product-guide && cp -r ../build/html/ruby source/ruby/product-guide/latest
 - test -z "$DEPLOY_DOCS" || rm source/rest/product-guide/latest/configuration.html
 - test -z "$DEPLOY_DOCS" || cp source/rest/product-guide/latest/errorpage.html source/rest/product-guide/latest/configuration.html && rm -f source/rest/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || rm source/csharp/product-guide/latest/reference.html
@@ -36,6 +37,8 @@ after_success:
 - test -z "$DEPLOY_DOCS" || cp source/java/product-guide/latest/errorpage.html source/java/product-guide/latest/reference.html && rm -f source/java/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || rm source/nodejs/product-guide/latest/reference.html
 - test -z "$DEPLOY_DOCS" || cp source/nodejs/product-guide/latest/errorpage.html source/nodejs/product-guide/latest/reference.html && rm -f source/nodejs/product-guide/latest/errorpage.html
+- test -z "$DEPLOY_DOCS" || rm source/ruby/product-guide/latest/reference.html
+- test -z "$DEPLOY_DOCS" || cp source/ruby/product-guide/latest/errorpage.html source/ruby/product-guide/latest/reference.html && rm -f source/ruby/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || rm source/php/product-guide/latest/reference.html
 - test -z "$DEPLOY_DOCS" || cp source/php/product-guide/latest/errorpage.html source/php/product-guide/latest/reference.html && rm -f source/php/product-guide/latest/errorpage.html
 - test -z "$DEPLOY_DOCS" || rm source/python/product-guide/latest/reference.html

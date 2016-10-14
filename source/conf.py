@@ -82,6 +82,10 @@ elif tags.has('nodejs'):
     language_name = u'Node.js'
     language_slug = u'nodejs'
 
+elif tags.has('ruby'):
+    language_name = u'Ruby'
+    language_slug = u'ruby'
+
 else:
     raise ValueError('Unknown LANGUAGE tag.')
 
