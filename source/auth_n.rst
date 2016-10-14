@@ -4749,9 +4749,11 @@ If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
 For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
 
-.. only:: not rest
+.. todo::
 
-  For a full list of Challenge statuses, please see :ref:`the Reference chapter of the REST API Guide <challenge-status-values>`.
+  .. only:: not rest
+
+    For a full list of Challenge statuses, please see :ref:`the Reference chapter of the REST API Guide <challenge-status-values>`.
 
 .. note::
 

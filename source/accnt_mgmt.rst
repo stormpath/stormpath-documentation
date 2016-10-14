@@ -4148,15 +4148,9 @@ In this example we will show a :ref:`multi-tenant application <multitenancy>` th
 - Every Organization has its own Cloud Directory that serves as its default Account Store. Mirror Directories can be shared between Organizations.
 - The login page for this application must pass the user's Organization ``href`` or ``nameKey`` with every login attempt.
 
-.. note::
-
-  Whether the Application's Account Linking Policy
-
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
-.. code-block:: none
-
-  .. code-block:: http
+.. code-block:: http
 
   POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
   Host: api.stormpath.com
