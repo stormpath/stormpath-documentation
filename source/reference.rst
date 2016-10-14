@@ -1521,9 +1521,14 @@
         - An array of Authorized callback URIs for the purposes of :ref:`SAML authentication flows <saml-authn>`.
 
       * - ``samlPolicy``
-        - Object
+        - Link
         - N/A
-        - An embedded object that contains information about the Directory's SAML Policy (if any). For more information, see :ref:`below <ref-samlpolicy>`.
+        - An link to this Directory's SAML Policy (if any). For more information, see :ref:`below <ref-samlpolicy>`.
+
+      * - ``accountLinkingPolicy``
+        - Link
+        - N/A
+        - A link to this Directory's :ref:`ref-account-linking-policy`.
 
   .. _application-accounts-note:
 
@@ -1586,6 +1591,9 @@
       },
       "samlPolicy" : {
         "href" : "https://api.stormpath.com/v1/samlPolicies/1gk4Dxzi6o4PbdlexaMple"
+      },
+      "accountLinkingPolicy": {
+        "href": "https://api.stormpath.com/v1/accountLinkingPolicies/7fQOPS4u0mQ9iexaMple"
       }
     }
 
@@ -2230,6 +2238,130 @@
       }'
 
   This query would update an Account Store Mapping to give it the highest position in the :ref:`login priority index <how-login-works>`.
+
+  .. _ref-account-linking-policy:
+
+  Account Linking Policy
+  ======================
+
+  .. contents::
+    :local:
+    :depth: 2
+
+  **Description**
+
+  This resource is the Account Linking Policy associated with either an :ref:`Application <ref-application>` or :ref:`Organization <ref-organization>`. For more information about this resource and how its used, please see :ref:`about-alp`.
+
+  **accountLinkingPolicy URL**
+
+  ``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``status``
+      - String (enum)
+      - ``ENABLED``, ``DISABLED``
+      - Indicates whether this Policy is enabled or not.
+
+    * - ``automaticProvisioning``
+      - String (enum)
+      - ``ENABLED``, ``DISABLED``
+      - Indicates whether Automatic Provisioning is enabled or not. For more information see :ref:`account-linking`.
+
+    * - ``matchingProperty``
+      - String (enum)
+      - ``email`` or ``null``
+      - This is the Account attribute that is used to find Accounts to link. For more information see :ref:`account-linking`.
+
+    * - ``tenant``
+      - Link
+      - N/A
+      - A link to the Tenant that this Policy is found in.
+
+  **accountLinkingPolicy Example**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinkingPolicies/7fQOPS4u0mQ9i2Qexample",
+      "createdAt": "2016-07-21T01:03:49.813Z",
+      "modifiedAt": "2016-09-28T18:19:09.572Z",
+      "status": "ENABLED",
+      "automaticProvisioning": "DISABLED",
+      "matchingProperty": null,
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDexample"
+      }
+    }
+
+  Account Linking Policy Operations
+  ---------------------------------
+
+  .. contents::
+      :local:
+      :depth: 1
+
+  Create an Account Linking Policy
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Account Linking Policies cannot be created. They exist by default for all Application and Organizations.
+
+  Retrieve an Account Linking Policy
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Optional Query Parameters
+      - Description
+
+    * - GET /v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID
+      - ``expand``
+      - Retrieves the specified Account Linking Policy. ``tenant`` can be expanded.
+
+  Update an Account Linking Policy
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/directories/$DIRECTORY_ID
+      - ``status``, ``automaticProvisioning``, ``matchingProperty``
+      - Updates the specified attributes with the values provided.
+
+  Delete an Account Linking Policy
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  Account Linking Policies cannot be deleted.
 
   .. _ref-directory:
 
@@ -4110,6 +4242,11 @@
       - N/A
       - A link to the Stormpath Tenant that owns this Organization.
 
+    * - ``accountLinkingPolicy``
+      - Link
+      - N/A
+      - A link to this Organization's :ref:`ref-account-linking-policy`.
+
   **Organization Example**
 
   .. code-block:: json
@@ -4138,6 +4275,9 @@
       },
       "tenant":{
         "href":"https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgExaMPLe"
+      },
+      "accountLinkingPolicy": {
+        "href": "https://api.stormpath.com/v1/accountLinkingPolicies/79BwBdw0wDDI1wexample"
       }
     }
 
@@ -4553,6 +4693,11 @@
       - ISO-8601 Datetime
       - Indicates when this resource’s attributes were last modified.
 
+    * - ``emailVerificationStatus``
+      - String
+      - ``UNKNOWN``, ``VERIFIED``, ``UNVERIFIED`` (default)
+      - Indicates whether the Account's email has been verified or not. For more about verifying email addresses, see :ref:`verify-account-email`.
+
     * - ``emailVerificationToken``
       - Link
       - N/A
@@ -4649,6 +4794,7 @@
       "createdAt":"2015-08-25T19:57:05.976Z",
       "modifiedAt":"2015-08-25T19:57:05.976Z",
       "emailVerificationToken":null,
+      "emailVerificationStatus": "VERIFIED",
       "customData":{
         "href":"https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spdexaMple/customData"
       },
@@ -5976,6 +6122,134 @@
       "signature": "jwb8UYfmGeqGT42wUjB1ymZp6c4ofJexampleM6ZHRG_tk"
     }
 
+  .. _ref-accountlink:
+
+  Account Link
+  ============
+
+  .. contents::
+    :local:
+    :depth: 2
+
+  **Description**
+
+  The Account Link resource is used to link two Account resources found in different Directories. The two Accounts have no hierarchy or priority with regards to each other, and the "left" and "right" designations are purely arbitrary.
+
+  **accountLink URL**
+
+  /v1/accountLinks/$ACCOUNT_LINK_ID
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - Link
+      - N/A
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``leftAccount``
+      - Link
+      - N/A
+      - A link to one of the :ref:`Accounts <ref-account>` that are linked.
+
+    * - ``rightAccount``
+      - Link
+      - N/A
+      - A link to one of the :ref:`Accounts <ref-account>` that are linked.
+
+  **Example Account Link**
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb4example",
+      "createdAt": "2016-09-28T17:32:32.327Z",
+      "modifiedAt": "2016-09-28T17:32:32.327Z",
+      "leftAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/7ht4Qxwt513D7IZexample"
+      },
+      "rightAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/3apenYvL0Z9v9spexample"
+      }
+    }
+
+  Account Link Operations
+  --------------------------------
+
+  .. contents::
+    :local:
+    :depth: 1
+
+  Create an Account Link
+  ^^^^^^^^^^^^^^^^^^^^^^
+
+  .. note::
+
+    It is also possible to have Account Links created automatically. For more information see the :ref:`Account Management chapter <account-linking-automatic>`.
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Attributes
+      - Description
+
+    * - POST /v1/accountLinks
+      - ``leftAccount``, ``rightAccount``
+      - Creates an Account Link between the specified Accounts.
+
+  Retrieve an Account Link
+  ^^^^^^^^^^^^^^^^^^^^^^^^
+
+  .. list-table::
+    :widths: 40 20 40
+    :header-rows: 1
+
+    * - Operation
+      - Optional Query Parameters
+      - Description
+
+    * - GET /v1/accountLinks/$ACCOUNT_LINK_ID
+      - ``expand``
+      - Retrieves the specified Account Link. ``leftAccount`` and ``rightAccount`` can be expanded.
+
+  Update an Account Link
+  ^^^^^^^^^^^^^^^^^^^^^^
+
+  Account links cannot be updated.
+
+  Delete an Account Link
+  ^^^^^^^^^^^^^^^^^^^^^^
+
+  .. list-table::
+      :widths: 40 20 40
+      :header-rows: 1
+
+      * - Operation
+        - Attributes
+        - Description
+
+      * - DELETE /v1/accountLinks/$ACCOUNT_LINK_ID
+        - N/A
+        - Deletes the specified Account Link.
+
   .. _ref-customdata:
 
   Custom Data
@@ -6007,28 +6281,28 @@
   The customData resource has three reserved read-only fields:
 
   .. list-table::
-      :widths: 15 10 20 60
-      :header-rows: 1
+    :widths: 15 10 20 60
+    :header-rows: 1
 
-      * - Attribute
-        - Type
-        - Valid Value(s)
-        - Description
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
 
-      * - ``href``
-        - String
-        - N/A
-        - The resource's fully qualified location URL.
+    * - ``href``
+      - String
+      - N/A
+      - The resource's fully qualified location URL.
 
-      * - ``createdAt``
-        - String
-        - ISO-8601 Datetime
-        - Indicates when this resource was created.
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
 
-      * - ``modifiedAt``
-        - String
-        - ISO-8601 Datetime
-        - Indicates when this resource’s attributes were last modified.
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
 
   You can store an unlimited number of additional key/value pairs or entire JSON objects in the customData resource, with the following restrictions:
 

@@ -43,15 +43,15 @@ After an Account resource has been created, you can authenticate it given an inp
       "type": "basic",
       "value": "Zmlyc3Qyc2hvb3Q6Q2hhbmdlK21lMQ==",
       "accountStore": {
-         "href": "https://api.stormpath.com/v1/groups/2SKhstu8Plaekcaexample"
+         "href": "https://api.stormpath.com/v1/directories/2SKhstu8PlaekcaEXampLE"
        }
     }
 
-  You are using the Base64 encoded ``value`` from above, and specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
+  You are using the Base64 encoded ``value`` from above, and (optionally) specifying that the Account can be found in the "Captains" Directory from :ref:`earlier <about-cloud-dir>`.
 
   .. note::
 
-    It is also possible to specify an Organization's ``nameKey`` instead of an Account Store's ``href``:
+    It is also possible to specify a Group or Organization's ``href`` or an Organization's ``nameKey`` instead of an Directory's. Passing a ``nameKey`` would look like this:
 
     .. code-block:: http
 
@@ -225,64 +225,6 @@ The following flow chart shows what happens when an Account attempts to log in t
 As you can see, Stormpath tries to find the Account in the "Customers" Directory first because it has a higher priority than the "Employees" directory. If not found, the "Employees" Directory is tried next as it has a lower priority.
 
 You can map multiple Account Stores to an Application, but only one is required to enable login for an Application. Mapping multiple Account Stores to an Application, as well as configuring their priority, allows you precise control over the Account populations that may log in to your Application.
-
-.. _mirror-login:
-
-How Login Works with Master Directories
-"""""""""""""""""""""""""""""""""""""""
-
-If you require a number of Mirror Directories, then it is recommended that you have a master Directory alongside them. Any login attempts should be directed to the Mirror Directory. If the attempt succeeds, your application should then perform a :ref:`search <about-search>` of the master Directory to see if there is an Account already there that links to this Account in the Mirror Directory.
-
-If such an Account is already in the master Directory, no action is taken. If such an Account is not found, your application should create a new one in the master Directory, and populate it with the information pulled from the Account in the Mirror Directory. The customData resource for that master Account should then be used to store a link to the Account in the Mirror Directory, for example:
-
-.. only:: rest
-
-  .. code-block:: json
-
-    {
-      "customData": {
-        "accountLink": "https://api.stormpath.com/v1/accounts/3fLduLKlEx"
-      }
-    }
-
-.. only:: csharp or vbnet
-
-  .. only:: csharp
-
-    .. literalinclude:: code/csharp/authentication/customdata_accountlink.cs
-        :language: csharp
-
-  .. only:: vbnet
-
-    .. literalinclude:: code/vbnet/authentication/customdata_accountlink.vb
-        :language: vbnet
-
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/customdata_accountlink.java
-      :language: java
-
-.. only:: nodejs
-
-  .. literalinclude:: code/nodejs/authentication/customdata_accountlink.js
-      :language: javascript
-
-.. only:: php
-
-    .. literalinclude:: code/php/authentication/customdata_accountlink.php
-      :language: php
-
-.. only:: python
-
-  .. literalinclude:: code/python/authentication/customdata_accountlink.py
-      :language: python
-
-If the user then chooses at some point to, for example, "Sign in with Facebook", then a similar process will occur, but this time with a link created to the user Account in the Facebook Directory.
-
-This mirror-master approach has two major benefits:
-
-1. It allows for a user to have one unified identity in your Application, regardless of how many external identities they choose to log in with.
-2. This identity can also be the central point that all authorization permissions (whether they be implicit or explicit) are then applied to.
 
 .. _managing-login:
 
@@ -829,6 +771,17 @@ Stormpath can generate a brand new Access Token using the above-mentioned OAuth 
   This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
 
 The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. The Stormpath Factor Challenge Type requires a Challenge ``href`` and ``code`` that you get as part of the :ref:`Multi-Factor Authentication process <mfa>`. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+
+**Targeting a Specific Account Store**
+
+It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``nameKey``.
+
+``grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/1bcd23ec1d0a8wa6``
+
+``grant_type=password&username=tom@stormpath.com&password=Secret1&nameKey=anOrganization``
+
+This allows you to bypass the usual default Account Store and login priority and instead send the token generation to a particular Account Store.
+
 
 .. todo::
 
@@ -2518,7 +2471,7 @@ There are two different authentication flows for LDAP directories: one for Activ
 Mirror Directories and LDAP
 ---------------------------
 
-To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory. If this fulfills your requirements, then the story ends here. However, if you need to support other kinds of login (and therefore other kinds of Directories) it is recommended that you maintain a "master" Directory alongside your Mirror Directory. For more about this, see :ref:`mirror-login` above.
+To recap: With LDAP integration, Stormpath is simply mirroring the canonical LDAP user directory. If this fulfills your requirements, then the story ends here. However, if you need to support other kinds of login (and therefore other kinds of Directories) it is recommended that you maintain a "master" Directory alongside your Mirror Directory. For more about this, see :ref:`account-linking`.
 
 Setting Up Login With LDAP
 --------------------------
@@ -4113,7 +4066,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
 .. only:: rest
 
-  You will then get back the response:
+You will then get back the response:
 
   .. code-block:: json
 
@@ -4136,7 +4089,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
       "mostRecentChallenge": null
     }
 
-  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
+For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 .. only:: csharp or vbnet
 
@@ -4163,7 +4116,7 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
     .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
         :language: java
 
-  For now ``factor.getVerificationStatus()`` returns ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` returns ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
+For now ``factor.getVerificationStatus()`` returns ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` returns ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
 
 .. only:: nodejs
 
@@ -4265,7 +4218,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
 .. only:: rest
 
-  You will then get back the response:
+You will then get back the response:
 
   .. code-block:: json
 
@@ -4290,7 +4243,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       }
     }
 
-  Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
+Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4422,10 +4375,10 @@ At this point in the example you have a brand new Account with two additional Fa
 
 .. only:: java
 
-  If you were to retrieve the Account's ``factors`` you will get them by:
+If you were to retrieve the Account's ``factors`` you will get them by:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
-        :language: java
+      :language: java
 
 .. only:: nodejs
 
@@ -4470,7 +4423,7 @@ Challenging an SMS Factor
 
 .. only:: rest
 
-  To challenge an SMS Factor, you send a request like this, with or without specifying a message.
+To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
   .. code-block:: http
 
@@ -4502,7 +4455,9 @@ Challenging an SMS Factor
 
 .. only:: java
 
-  To challenge an SMS Factor, call ``factor.createChallenge(challenge)`` with or without setting a message.
+To challenge an SMS Factor, call ``factor.createChallenge(challenge);`` with or without setting a message.
+
+This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
         :language: java
@@ -4538,7 +4493,7 @@ If you do not specify a message, then Stormpath will just send the default messa
 
 .. only:: rest
 
-  In response to this request you would get back a Challenge:
+In response to this request you would get back a Challenge:
 
   .. code-block:: json
 
@@ -4681,7 +4636,7 @@ Once you have the code, you send it to the same Challenge you created above:
 
 .. only:: rest
 
-  And then you would get back the response:
+And then you would get back the response:
 
   .. code-block:: json
 
@@ -4999,9 +4954,9 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  The first step will be getting the user authenticated.
+The first step will be getting the user authenticated.
 
-  This means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
+This means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
   .. code-block:: http
 
@@ -5059,7 +5014,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
- If authentication is successful, you will get back the Account:
+If authentication is successful, you will get back the Account:
 
   .. code-block:: json
 
@@ -5123,7 +5078,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  Next, you will need to retrieve the Account's ``factors`` collection:
+Next, you will need to retrieve the Account's ``factors`` collection:
 
   .. code-block:: http
 
@@ -5150,7 +5105,7 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You will need to retrieve the Account's ``factors`` collection:
+You will need to retrieve the Account's ``factors`` collection:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
     :language: java
@@ -5184,7 +5139,7 @@ Challenging a Factor After Login
 
 .. only:: rest
 
-  Which will return:
+Which will return:
 
   .. code-block:: json
 
@@ -5272,7 +5227,7 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
   .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
     :language: java

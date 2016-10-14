@@ -1181,6 +1181,72 @@ The email body must contain at least one of the following placeholders: ``$!{url
 
 *(Same as above)*
 
+Error 7500
+-------------
+
+**Message**
+
+These Accounts are already linked. The location of the existing Account Link can be found in both this response body and in the "Location" header.
+
+**User Message**
+
+These Accounts are already linked.
+
+Error 7501
+-------------
+
+**Message**
+
+An Account Link can only be created between 2 different Accounts. The leftAccount href cannot be the same as the rightAccount href.
+
+**User Message**
+
+An Account Link can only be created between 2 different Accounts.
+
+Error 7502
+-------------
+
+**Message**
+
+Bad Request. The Request Body is Malformed. Please refer to the documentation for a sample request.
+
+**User Message**
+
+Bad Request. The Request Body is Malformed.
+
+Error 7503
+-------------
+
+**Message**
+
+Only *x* Account Links allowed per Account. This Account already has the maximum allowed number of Account Links.
+
+**User Message**
+
+This Account already has the maximum allowed number of Account Links.
+
+Error 7504
+-------------
+
+**Message**
+
+Cannot link Account ____ and Account ____ because they are in the same Directory.
+
+**User Message**
+
+You cannot link two Accounts that are in the same Directory.
+
+Error 7505
+-------------
+
+**Message**
+
+Account ____ is already linked to an Account in Directory ____.
+
+**User Message**
+
+You cannot link one Account to two other Accounts that are in the same Directory.
+
 9XXX: Agent
 ===========
 
@@ -1544,7 +1610,7 @@ Error 13101
 
 **Message**
 
-  The provided phone number is invalid.
+The provided phone number is invalid.
 
 **User Message**
 
@@ -1665,8 +1731,19 @@ Error 13112
 
 **Message**
 
-  The specified challenge can no longer be used for validation.
+The specified challenge can no longer be used for validation.
 
 **User Message**
 
 *(Same as above)*
+
+Error 13113
+-----------
+
+**Message**
+
+You have exceeded the maximum number of failed codes for this Challenge.
+
+**User Message**
+
+You have exceeded the maximum number of failed code verifications.

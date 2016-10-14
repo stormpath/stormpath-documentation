@@ -1,17 +1,17 @@
 // In order to get all Factors
 FactorList factors = account.getFactors();
 
-Map<String,String> parameters = new HashMap<>(1);
-
-// In order to get SmsFactor
+// Factors can be filtered by type. To retrieve only the Sms Factors you can do:
+Map<String,Object> parameters = new HashMap<>(1);
 parameters.put("type", "sms");
-FactorList factors = account.getFactors(parameters);
+factors = account.getFactors(parameters);
+
 // or
-FactorList factors = account.getFactors(Factors.SMS.criteria());
+factors = account.getFactors(Factors.SMS.criteria());
 
-
-// In order to get GoogleAuthenticatorFactor
+// To retrieve only the Google Authenticator Factors you can do:
 parameters.put("type", "google-authenticator");
-FactorList factors = account.getFactors(parameters);
+factors = account.getFactors(parameters);
+
 // or
-FactorList factors = account.getFactors(Factors.GOOGLE_AUTHENTICATOR.criteria());
+factors = account.getFactors(Factors.GOOGLE_AUTHENTICATOR.criteria());
