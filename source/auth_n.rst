@@ -3926,75 +3926,77 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest
 
-  .. code-block:: http
 
-    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accounts HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
-    Cache-Control: no-cache
+.. code-block:: http
 
-    {
-        "givenName": "Joe",
-        "surname": "Factorman",
-        "username": "factorman",
-        "email": "joe.factorman@stormpath.com",
-        "password":"Changeme1"
-    }
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+  Cache-Control: no-cache
 
-.. only:: csharp or vbnet
+  {
+      "givenName": "Joe",
+      "surname": "Factorman",
+      "username": "factorman",
+      "email": "joe.factorman@stormpath.com",
+      "password":"Changeme1"
+  }
 
-  .. todo::
+.. todo::
 
-    (dotnet.todo)
+  .. only:: csharp or vbnet
 
-    .. only:: csharp
+    .. todo::
 
-      .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
-          :language: csharp
+      (dotnet.todo)
 
-    .. only:: vbnet
+      .. only:: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
-          :language: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
+            :language: csharp
 
-.. only:: java
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
+            :language: vbnet
 
-    (java.todo)
+  .. only:: java
 
-    .. literalinclude:: code/java/authentication/mfa_create_account.java
-        :language: java
+    .. todo::
 
-.. only:: nodejs
+      (java.todo)
 
-  .. todo::
+      .. literalinclude:: code/java/authentication/mfa_create_account.java
+          :language: java
 
-    (node.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
-        :language: javascript
+    .. todo::
 
-.. only:: php
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
+          :language: javascript
 
-    (php.todo)
+  .. only:: php
 
-    .. literalinclude:: code/php/authentication/mfa_create_account.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (php.todo)
 
-  .. todo::
+      .. literalinclude:: code/php/authentication/mfa_create_account.php
+        :language: php
 
-    (python.todo)
+  .. only:: python
 
-    .. literalinclude:: code/python/authentication/mfa_create_account.py
-        :language: python
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_create_account.py
+          :language: python
 
 .. _mfa-adding-factor-sms:
 
@@ -4003,150 +4005,150 @@ Adding an SMS Factor
 
 To add an additional SMS Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
 
-.. only:: rest
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
 
-    POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
-
-    {
-      "type":"SMS",
-      "phone": {
-        "number": "2675555555"
-      }
+  {
+    "type":"SMS",
+    "phone": {
+      "number": "2675555555"
     }
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
+          :language: python
 
 You will then get back the response:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
+  {
+    "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+    "type": "SMS",
+    "createdAt": "2016-09-22T21:34:00.881Z",
+    "modifiedAt": "2016-09-22T21:34:00.881Z",
+    "status": "ENABLED",
+    "verificationStatus": "UNVERIFIED",
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+    },
+    "challenges": {
+        "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+    },
+    "phone": {
+        "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+    },
+    "mostRecentChallenge": null
+  }
 
-    {
-      "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
-      "type": "SMS",
-      "createdAt": "2016-09-22T21:34:00.881Z",
-      "modifiedAt": "2016-09-22T21:34:00.881Z",
-      "status": "ENABLED",
-      "verificationStatus": "UNVERIFIED",
-      "account": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
-      },
-      "challenges": {
-          "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
-      },
-      "phone": {
-          "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
-      },
-      "mostRecentChallenge": null
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
+          :language: python
 
 For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
@@ -4159,152 +4161,152 @@ Adding a Google Authenticator Factor
 
 To add an additional Google Authenticator Factor to this Account, you must send the following request:
 
-.. only:: rest
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/accounts/5IvkjoqcYNe3TYMYExample/factors HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic MlpG...
 
-    POST /v1/accounts/5IvkjoqcYNe3TYMYExample/factors HTTP/1.1
-    Host: api.stormpath.com
-    Content-Type: application/json
-    Authorization: Basic MlpG...
+  {
+    "type":"google-authenticator",
+    "accountName": "jakub@stormpath.com"
+  }
 
-    {
-      "type":"google-authenticator",
-      "accountName": "jakub@stormpath.com"
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
+          :language: python
 
 You will then get back the response:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
-      "type": "google-authenticator",
-      "createdAt": "2016-09-22T21:42:57.636Z",
-      "modifiedAt": "2016-09-22T21:42:57.636Z",
-      "status": "ENABLED",
-      "accountName": "jakub@stormpath.com",
-      "issuer": null,
-      "secret": "OP7JZ[...]LAV",
-      "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
-      "base64QRImage": "iVBOR[...]SuQmCC",
-      "verificationStatus": "UNVERIFIED",
-      "account": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
-      },
-      "mostRecentChallenge": null,
-      "challenges": {
-          "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
-      }
+  {
+    "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+    "type": "google-authenticator",
+    "createdAt": "2016-09-22T21:42:57.636Z",
+    "modifiedAt": "2016-09-22T21:42:57.636Z",
+    "status": "ENABLED",
+    "accountName": "jakub@stormpath.com",
+    "issuer": null,
+    "secret": "OP7JZ[...]LAV",
+    "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
+    "base64QRImage": "iVBOR[...]SuQmCC",
+    "verificationStatus": "UNVERIFIED",
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+    },
+    "mostRecentChallenge": null,
+    "challenges": {
+        "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
     }
+  }
 
-  For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
+For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_resp.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_add_ga_factor_resp.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
+          :language: python
 
 The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
 
@@ -4326,110 +4328,110 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 At this point in the example you have a brand new Account with two additional Factors.
 
-.. only:: rest
+If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
 
-  If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
-      "offset": 0,
-      "limit": 25,
-      "size": 2,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
-          "type": "SMS",
-          "createdAt": "2016-09-22T21:34:00.881Z",
-          "modifiedAt": "2016-09-22T21:34:00.881Z",
-          "status": "ENABLED",
-          "verificationStatus": "UNVERIFIED",
-          "account": {
-              "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
-          },
-          "challenges": {
-              "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
-          },
-          "phone": {
-              "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
-          },
-          "mostRecentChallenge": null
+  {
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "offset": 0,
+    "limit": 25,
+    "size": 2,
+    "items": [
+      {
+        "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample",
+        "type": "SMS",
+        "createdAt": "2016-09-22T21:34:00.881Z",
+        "modifiedAt": "2016-09-22T21:34:00.881Z",
+        "status": "ENABLED",
+        "verificationStatus": "UNVERIFIED",
+        "account": {
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
         },
-        {
-          "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
-          "type": "google-authenticator",
-          "createdAt": "2016-09-22T21:42:57.636Z",
-          "modifiedAt": "2016-09-22T21:42:57.636Z",
-          "status": "ENABLED",
-          "accountName": "jakub@stormpath.com",
-          "issuer": null,
-          "secret": "OP7JZ[...]LAV",
-          "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
-          "base64QRImage": "iVBOR[...]SuQmCC",
-          "verificationStatus": "UNVERIFIED",
-          "account": {
-              "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
-          },
-          "mostRecentChallenge": null,
-          "challenges": {
-              "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
-          }
+        "challenges": {
+            "href": "https://api.stormpath.com/v1/factors/29b9PiAaWqr9Hanexample/challenges"
+        },
+        "phone": {
+            "href": "https://api.stormpath.com/v1/phones/29b9PeqVcGYAelhExample"
+        },
+        "mostRecentChallenge": null
+      },
+      {
+        "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample",
+        "type": "google-authenticator",
+        "createdAt": "2016-09-22T21:42:57.636Z",
+        "modifiedAt": "2016-09-22T21:42:57.636Z",
+        "status": "ENABLED",
+        "accountName": "jakub@stormpath.com",
+        "issuer": null,
+        "secret": "OP7JZ[...]LAV",
+        "keyUri": "otpauth://totp/jakub%40stormpath.com?secret=OP7JZ[...]LAV",
+        "base64QRImage": "iVBOR[...]SuQmCC",
+        "verificationStatus": "UNVERIFIED",
+        "account": {
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+        },
+        "mostRecentChallenge": null,
+        "challenges": {
+            "href": "https://api.stormpath.com/v1/factors/46EZpOuefEEooFlexample/challenges"
         }
-      ]
-    }
+      }
+    ]
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
+          :language: python
 
 You will now challenge each of these factors.
 
@@ -4447,147 +4449,147 @@ Challenging an SMS Factor
 
 To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
-.. only:: rest
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
+  Cache-Control: no-cache
 
-    POST /v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
-    Cache-Control: no-cache
+  {
+    "message":"For the sake of example, your code is ${code}."
+  }
 
-    {
-      "message":"For the sake of example, your code is ${code}."
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
+          :language: python
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
 In response to this request you would get back a Challenge:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
-      "createdAt": "2016-09-22T22:35:44.799Z",
-      "modifiedAt": "2016-09-22T22:35:44.800Z",
-      "status": "CREATED",
-      "message": "For the sake of example, your code is ${code}.",
-      "account": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
-      },
-      "factor": {
-          "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
-      }
+  {
+    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
+    "createdAt": "2016-09-22T22:35:44.799Z",
+    "modifiedAt": "2016-09-22T22:35:44.800Z",
+    "status": "CREATED",
+    "message": "For the sake of example, your code is ${code}.",
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample"
+    },
+    "factor": {
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
     }
+  }
 
-  For more information about this Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
+For more information about this Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_resp.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_resp.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
+          :language: python
 
 The resulting SMS would look like this:
 
@@ -4606,148 +4608,146 @@ Next, you must collect this code from the user.
 
 Once you have the code, you send it to the same Challenge you created above:
 
-.. only:: rest
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/challenges/70xfDsguePApNdnExample HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
 
-    POST /v1/challenges/70xfDsguePApNdnExample HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
+  {
+    "code":"633559"
+  }
 
-    {
-      "code":"633559"
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
+          :language: python
 
 And then you would get back the response:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
+  {
+    "createdAt": "2016-09-22T22:35:44.799Z",
+    "modifiedAt": "2016-09-22T22:39:06.822Z",
+    "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
+    "message": "For the sake of example, your code is ${code}.",
+    "factor": {
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
+    },
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+    },
+    "status": "SUCCESS"
+  }
 
-    {
-      "createdAt": "2016-09-22T22:35:44.799Z",
-      "modifiedAt": "2016-09-22T22:39:06.822Z",
-      "href": "https://api.stormpath.com/v1/challenges/70xfDsguePApNdnExample",
-      "message": "For the sake of example, your code is ${code}.",
-      "factor": {
-          "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo"
-      },
-      "account": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
-      },
-      "status": "SUCCESS"
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code_success.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_challenge_sms_code_success.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
+          :language: python
 
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
-.. only:: rest
-
-  For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
+For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
 
 .. only:: not rest
 
@@ -4768,9 +4768,7 @@ Unlike the SMS challenge process, the Google Authenticator challenge process doe
 
 Once you have collected the code from the user, send the code generated by your Google Authenticator app:
 
-.. only:: rest
-
-  .. code-block:: http
+.. code-block:: http
 
     POST /v1/factors/4KOeu7ypRQI8Bpk2org7tk/challenges HTTP/1.1
     Host: api.stormpath.com
@@ -4781,128 +4779,130 @@ Once you have collected the code from the user, send the code generated by your 
       "code":"786393"
     }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
+          :language: python
 
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
-      "createdAt": "2016-09-22T22:50:59.241Z",
-      "modifiedAt": "2016-09-22T22:50:59.241Z",
-      "status": "SUCCESS",
-      "account": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
-      },
-      "factor": {
-          "href": "https://api.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
-      }
+  {
+    "href": "https://api.stormpath.com/v1/challenges/EGDIpcgffklwo6HywNzTw",
+    "createdAt": "2016-09-22T22:50:59.241Z",
+    "modifiedAt": "2016-09-22T22:50:59.241Z",
+    "status": "SUCCESS",
+    "account": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYExample"
+    },
+    "factor": {
+        "href": "https://api.stormpath.com/v1/factors/4KOeu7ypRQI8Bpk2org7tk"
     }
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
+          :language: python
 
 .. _mfa-challenge-during:
 
@@ -4913,78 +4913,78 @@ Challenging During Factor Creation
 
   For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
-.. only:: rest
+To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
-  To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors?challenge=true HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
 
-    POST /v1/accounts/5IvkjoqcYNe3TYMExample/factors?challenge=true HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
-
-    {
-      "type":"sms",
-      "phone": {
-        "number": "2675555555"
-      },
-      "challenge": {
-        "message": "Welcome to the Example! Your authorization code is ${code}"
-      }
+  {
+    "type":"sms",
+    "phone": {
+      "number": "2675555555"
+    },
+    "challenge": {
+      "message": "Welcome to the Example! Your authorization code is ${code}"
     }
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
+          :language: python
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
@@ -4997,329 +4997,329 @@ Challenging a Factor After Login
 
 The first step will be getting the user authenticated.
 
-.. only:: rest
+In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
-  In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts?expand=account HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
 
-    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts?expand=account HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
+  {
+    "type": "basic",
+    "value": "amFrdWIrbWZhdGVzdExamplebXBhdGguY29tOkNoYW5nZW1lMQ=="
+  }
 
-    {
-      "type": "basic",
-      "value": "amFrdWIrbWZhdGVzdExamplebXBhdGguY29tOkNoYW5nZW1lMQ=="
-    }
+.. todo::
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (dotnet.todo)
+      (dotnet.todo)
 
-    .. only:: csharp
+      .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
-          :language: csharp
+        .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
+            :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
-          :language: vbnet
+        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
+            :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_auth_account_req.java
-        :language: java
+      .. literalinclude:: code/java/authentication/mfa_auth_account_req.java
+          :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
-        :language: javascript
+      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
+          :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
-        :language: python
+      .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
+          :language: python
 
 If authentication is successful, you will get back the Account:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample",
-      "username": "factorman",
-      "email": "jakub+factorman@stormpath.com",
-      "givenName": "Joe",
-      "middleName": null,
-      "surname": "Factorman",
-      "fullName": "Joe Factorman",
-      "status": "ENABLED",
-      "...": "...",
-      "factors": {
-          "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample/factors"
-      }
+  {
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample",
+    "username": "factorman",
+    "email": "jakub+factorman@stormpath.com",
+    "givenName": "Joe",
+    "middleName": null,
+    "surname": "Factorman",
+    "fullName": "Joe Factorman",
+    "status": "ENABLED",
+    "...": "...",
+    "factors": {
+        "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMExample/factors"
     }
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
+      .. only:: csharp
+
+        .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
           :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
+        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
           :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (java.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_auth_account_resp.java
+      .. literalinclude:: code/java/authentication/mfa_auth_account_resp.java
         :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
+      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
         :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
+      .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
 Next, you will need to retrieve the Account's ``factors`` collection:
 
-.. only:: rest
-
-  .. code-block:: http
+.. code-block:: http
 
     GET /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
     Host: api.stormpath.com
     Authorization: Basic MlpG...
     Content-Type: application/json
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
-        :language: python
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
+          :language: python
 
 Which will return:
 
-.. only:: rest
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
-      "offset": 0,
-      "limit": 25,
-      "size": 1,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo",
-          "type": "SMS",
-          "createdAt": "2016-09-22T22:11:03.768Z",
-          "modifiedAt": "2016-09-22T22:42:39.822Z",
-          "status": "ENABLED",
-          "verificationStatus": "VERIFIED",
-          "account": {
-              "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
-          },
-          "challenges": {
-              "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges"
-          },
-          "phone": {
-              "href": "https://api.stormpath.com/v1/phones/3WManCalQOcizNsHjeeiHk"
-          },
-          "mostRecentChallenge": {
-              "href": "https://api.stormpath.com/v1/challenges/6kgEJR5Cr3pNh131i7b6wm"
-          }
+  {
+    "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc/factors",
+    "offset": 0,
+    "limit": 25,
+    "size": 1,
+    "items": [
+      {
+        "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo",
+        "type": "SMS",
+        "createdAt": "2016-09-22T22:11:03.768Z",
+        "modifiedAt": "2016-09-22T22:42:39.822Z",
+        "status": "ENABLED",
+        "verificationStatus": "VERIFIED",
+        "account": {
+            "href": "https://api.stormpath.com/v1/accounts/5IvkjoqcYNe3TYMYiX98vc"
+        },
+        "challenges": {
+            "href": "https://api.stormpath.com/v1/factors/3WPF5Djir0Wg5FtPoJCPbo/challenges"
+        },
+        "phone": {
+            "href": "https://api.stormpath.com/v1/phones/3WManCalQOcizNsHjeeiHk"
+        },
+        "mostRecentChallenge": {
+            "href": "https://api.stormpath.com/v1/challenges/6kgEJR5Cr3pNh131i7b6wm"
         }
-      ]
-    }
+      }
+    ]
+  }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_resp.java
-        :language: java
+      (java.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/java/authentication/mfa_get_account_factors2_resp.java
+          :language: java
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
-        :language: javascript
+      (node.todo)
 
-.. only:: php
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
-      :language: php
+      (php.todo)
 
-.. only:: python
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
-        :language: python
+      (python.todo)
 
-.. only:: rest
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
+          :language: python
 
-  You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-.. only:: java
+      (dotnet.todo)
 
-  .. todo::
+  .. only:: java
 
-    (java.todo)
+    .. todo::
 
-.. only:: nodejs
+      (java.todo)
 
-  .. todo::
+  .. only:: nodejs
 
-    (node.todo)
+    .. todo::
 
-.. only:: php
+      (node.todo)
 
-  .. todo::
+  .. only:: php
 
-    (php.todo)
+    .. todo::
 
-.. only:: python
+      (php.todo)
 
-  .. todo::
+  .. only:: python
 
-    (python.todo)
+    .. todo::
+
+      (python.todo)
 
 .. only:: not rest
 

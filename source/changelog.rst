@@ -20,7 +20,7 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
-  2016-10-??
+  2016-10-13
   ==========
 
   - **New:** Section :ref:`account-linking` added to Account Management chapter.
