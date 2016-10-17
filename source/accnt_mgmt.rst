@@ -50,6 +50,11 @@ The **Directory** resource is a top-level container for Account and Group resour
   .. todo::
     Add a link to the API docs.
 
+.. only:: python
+
+  .. todo::
+    Add a link to the API docs.
+
 Types of Directories
 ^^^^^^^^^^^^^^^^^^^^
 Stormpath supports two types of Directories:
@@ -125,6 +130,11 @@ How to Make a Cloud Directory
 
   .. literalinclude:: code/python/account_management/create_cloud_dir_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/create_cloud_dir_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -306,6 +316,17 @@ How to Make an LDAP Directory
   .. literalinclude:: code/python/account_management/create_ldap_dir_req.py
     :language: python
 
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
+    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+
+  .. todo::
+
+    Add LDAP directory creation Ruby example
+
 .. only:: rest or csharp or vbnet or php
 
   LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
@@ -393,7 +414,7 @@ How to Make a SAML Directory
   .. literalinclude:: code/java/account_management/create_saml_dir_req.java
       :language: java
 
-.. only:: (python or php or nodejs)
+.. only:: (python or php or nodejs or ruby)
 
   For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
 
@@ -430,6 +451,13 @@ The other type of Account Store is the Group resource, which can either be imagi
 
   .. literalinclude:: code/python/account_management/create_group_req.py
     :language: python
+
+.. only:: ruby
+
+  Here's how you can create a Group:
+
+  .. literalinclude:: code/ruby/account_management/create_group_req.rb
+    :language: ruby
 
 .. todo::
 
@@ -485,6 +513,16 @@ A geographical region can, for example, be represented as ``"North America/US/US
   .. literalinclude:: code/python/account_management/search_directory_group_description1.py
     :language: python
 
+.. only:: ruby
+
+  .. warning::
+
+    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
+
+  .. todo::
+
+    Add code for searching groups by description field
+
 Or, to find all Groups in the US East region only, you would send this request:
 
 .. only:: rest
@@ -531,6 +569,17 @@ Or, to find all Groups in the US East region only, you would send this request:
 
   .. literalinclude:: code/python/account_management/search_directory_group_description2.py
     :language: python
+
+.. only:: ruby
+
+  .. warning::
+
+    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
+
+  .. todo::
+
+    Add code for searching groups by description field
+
 
 It can also be included in the customData resource, as a series of key-value relations.
 
@@ -599,6 +648,13 @@ So let's say you want to add a new Group resource with the name "Starfleet Offic
 
   .. literalinclude:: code/python/account_management/create_group_req.py
     :language: python
+
+.. only:: ruby
+
+  You would do this by issuing the following request:
+
+  .. literalinclude:: code/ruby/account_management/create_group_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -791,6 +847,13 @@ Because Accounts are "owned" by Directories, you create new Accounts by adding t
   .. literalinclude:: code/python/account_management/create_account_in_dir_req.py
     :language: python
 
+.. only:: ruby
+
+  Let's say you want to add a new Account for user "Jean-Luc Picard" to the "Captains" Directory that you created earlier. You can do this like so:
+
+  .. literalinclude:: code/ruby/account_management/create_account_in_dir_req.rb
+    :language: ruby
+
 .. note::
 
   The password in the request is being sent to Stormpath as plain text. This is one of the reasons why Stormpath only allows requests via HTTPS. Stormpath implements the latest password hashing and cryptographic best-practices that are automatically upgraded over time so the developer does not have to worry about this. Stormpath can only do this for the developer if you receive the password as plaintext, and only hash it using these techniques.
@@ -918,6 +981,13 @@ So let's say you want to add "Jean-Luc Picard" to the "Starfleet Officers" Group
   .. literalinclude:: code/python/account_management/add_account_to_group_req.py
     :language: python
 
+.. only:: ruby
+
+  This time, use the existing Account instance you created before, like so:
+
+  .. literalinclude:: code/ruby/account_management/add_account_to_group_req.rb
+    :language: ruby
+
 .. only:: rest
 
   And get the following response:
@@ -959,7 +1029,7 @@ This our completed resource set, with an Account that is a member of a Group ins
 Adding a new Account or Group to an Application or Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest or csharp or vbnet or php or python
+.. only:: rest or csharp or vbnet or php or python or ruby
 
   Instead of adding an Account via the Directory's ``/accounts`` endpoint, it is also possible to use an Application's ``/accounts`` endpoint::
 
@@ -1073,6 +1143,15 @@ In this case, it is recommended that you suppress Account Verification emails.
   .. literalinclude:: code/python/account_management/create_account_disable_reg_workflow.py
     :language: python
 
+.. only:: ruby
+
+  This can be done by setting the ``registration_workflow_enabled`` flag when creating the Account:
+
+  .. literalinclude:: code/ruby/account_management/create_account_disable_reg_workflow.rb
+    :language: ruby
+
+  You can also ommit the ``registration_workflow_enabled`` parameter since it's `false` by default.
+
 .. _importing-mcf:
 
 Importing Accounts with Supported Password Hashes
@@ -1132,6 +1211,13 @@ In both cases, once you have an MCF-compatible string that represents the passwo
 
   .. literalinclude:: code/python/account_management/create_account_mcf_hash.py
     :language: python
+
+.. only:: ruby
+
+  This can be done by setting the ``password_format`` option when creating the Account:
+
+  .. literalinclude:: code/ruby/account_management/create_account_mcf_hash.rb
+    :language: ruby
 
 Once the Account is created, Stormpath will use the password hash to authenticate the Account’s **first** login attempt. If the first login attempt is successful, Stormpath will recreate the password hash using a secure HMAC algorithm.
 
@@ -1283,6 +1369,17 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``save()`` on the Account resource to send the updates to the Stormpath API.
 
+.. only:: ruby
+
+  The ``jean_luc`` Account you created earlier has a ``custom_data`` property that allows you to write to the resource's Custom Data:
+
+  .. literalinclude:: code/ruby/account_management/add_cd_to_account_req.rb
+    :language: ruby
+
+  .. warning::
+
+    Any Custom Data changes you make are not preserved until you call ``save`` on the Account resource to send the updates to the Stormpath API.
+
 .. only:: rest
 
   Which returns the following:
@@ -1364,7 +1461,7 @@ The Account resource's **searchable attributes** are:
 
   Any resource type that exposes a ``getAccounts()`` method (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
-.. only:: python
+.. only:: python or ruby
 
   Any resource type that exposes an ``accounts`` collection (such as Applications, Directories, Groups, and Organizations) can be searched for Accounts.
 
@@ -1491,6 +1588,20 @@ A Filter search will locate the specified string in any searchable attribute of 
 
     Matching is case-insensitive, so ``.search('luc')`` and ``.search('Luc')`` will return the same results.
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/search_app_accounts_for_word_req.rb
+    :language: ruby
+
+  You can also specify a column if you just want to limit searching the query in that attribute:
+
+  .. literalinclude:: code/ruby/account_management/search_app_accounts_by_column.rb
+    :language: ruby
+
+  .. note::
+
+    Matching is case-insensitive, so ``.search('luc')`` and ``.search('Luc')`` will return the same results.
+
 Find All the Disabled Accounts in a Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1580,6 +1691,11 @@ For example, this could be used to find all the Accounts that are disabled (i.e.
 
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_disabled_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/search_dir_accounts_for_disabled_req.rb
+    :language: ruby
 
 Find All Accounts in a Directory That Were Modified on a Particular Day
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1730,6 +1846,11 @@ Datetime Search is used when you want to search for Accounts that have a certain
   .. literalinclude:: code/python/account_management/search_dir_accounts_for_create_date_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/search_dir_accounts_for_create_date_req.rb
+    :language: ruby
+
 .. _howto-search-account-customdata:
 
 3.3.2. Searching for Accounts with Custom Data
@@ -1771,6 +1892,15 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
 
   .. literalinclude:: code/python/account_management/cd_search.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/cd_search.rb
+    :language: ruby
+
+  .. warning::
+
+    This functionality is currently not working properly. For updates, please follow `ticket #163 <https://github.com/stormpath/stormpath-sdk-ruby/issues/163>`_ on Github.
 
 .. only:: nodejs
 
@@ -1878,6 +2008,11 @@ Changing the Password Strength resource for a Directory modifies the requirement
   .. literalinclude:: code/python/account_management/update_dir_pwd_strength_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/update_dir_pwd_strength_req.rb
+    :language: ruby
+
 .. only:: rest
 
   Which results in the following response:
@@ -1976,6 +2111,13 @@ At no point is the user shown, or does Stormpath have access to, the original pa
 
   .. literalinclude:: code/python/account_management/update_account_pwd.py
     :language: python
+
+.. only:: ruby
+
+  To update the password, you send the updated password to the Account resource:
+
+  .. literalinclude:: code/ruby/account_management/update_account_pwd.rb
+    :language: ruby
 
 For more information about resetting the password, read on.
 
@@ -2116,6 +2258,26 @@ There are three steps to the password reset flow:
     .. literalinclude:: code/python/account_management/reset1_trigger_req_accountstore.py
       :language: python
 
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/reset1_trigger_req.rb
+    :language: ruby
+
+  .. note::
+
+    It is also possible to specify the Account Store in your Password Reset request:
+
+  .. literalinclude:: code/ruby/account_management/reset1_trigger_req_accountstore.rb
+    :language: ruby
+
+  .. note::
+
+    Another possible way is to just create a password reset token without sending the email to the account:
+
+  .. literalinclude:: code/ruby/account_management/reset_trigger_req_without_email.rb
+    :language: ruby
+
 If this is a valid email in an Account associated with this Application, the request will succeed.
 
 .. only:: rest
@@ -2225,6 +2387,11 @@ Once the user clicks this link, your controller should retrieve the token from t
   .. literalinclude:: code/python/account_management/reset2_verify_token.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/reset2_verify_token.rb
+    :language: ruby
+
 **Update the password**
 
 After verifying that the token from the query string is valid, you can direct the user to a page where they can update their password.
@@ -2281,6 +2448,11 @@ After verifying that the token from the query string is valid, you can direct th
 
   .. literalinclude:: code/python/account_management/reset3_update.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/reset3_update.rb
+    :language: ruby
 
 On success, the response will include a link to the Account that the password was reset for. It will also send the password change confirmation email that was configured in the Administrator Console to the email account associated with the Account.
 
@@ -2342,6 +2514,11 @@ To control whether any email is sent or not is simply a matter of setting the ap
 
   .. literalinclude:: code/python/account_management/enable_pwd_reset_email.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/enable_pwd_reset_email.rb
+    :language: ruby
 
 .. _password-reset-email-templates:
 
@@ -2427,6 +2604,11 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
   .. literalinclude:: code/python/account_management/search_password_modified.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/search_password_modified.rb
+    :language: ruby
+
 This would then return all Accounts in the specified Directory that had their passwords modified at any time between the beginning of time and the end of 2015.
 
 .. _password-reuse:
@@ -2462,6 +2644,11 @@ Stormpath can store historical password information in order to allow for restri
     This feature is not yet available in the |language| SDK. For updates, you can follow `ticket #278 <https://github.com/stormpath/stormpath-sdk-python/issues/278>`_ on Github.
 
     In the meantime, please use the Stormpath Admin Console UI, or consult the REST API documentation below.
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/update_prevent_reuse.rb
+    :language: ruby
 
 .. only:: java
 
@@ -2805,6 +2992,13 @@ If you were to click this URL now, it would simply open up a page telling us tha
   .. literalinclude:: code/python/account_management/verify_email_req.py
     :language: python
 
+.. only:: ruby
+
+  You can use the ``verify_email_token`` method on the Client's ``accounts`` collection, plus the token you capture from the query string, to verify the Account:
+
+  .. literalinclude:: code/ruby/account_management/verify_email_req.rb
+    :language: ruby
+
 .. note::
 
   For more about Account Authentication you can read :ref:`the next chapter <authn>`.
@@ -2892,6 +3086,16 @@ If a user accidentally deletes their verification email, or it was undeliverable
   .. literalinclude:: code/python/account_management/resend_verification_email.py
     :language: python
 
+.. only:: ruby
+
+  .. warning::
+
+    This feature is currently not supported by the Ruby SDK. For updates, please follow `ticket #164 <https://github.com/stormpath/stormpath-sdk-ruby/issues/164>`_ on Github.
+
+  .. todo::
+
+    Add Ruby code once implemented
+
 3.7. Customizing Stormpath Emails
 ==========================================
 
@@ -2963,6 +3167,11 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
   .. literalinclude:: code/python/account_management/list_account_creation_templates.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/list_account_creation_templates.rb
+    :language: ruby
+
 **Password Reset**, and **Reset Success** Email Templates can be found under the Directory’s **Password Policies**:
 
 .. only:: rest
@@ -2997,6 +3206,11 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
   .. literalinclude:: code/python/account_management/list_password_policy_templates.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/list_password_policy_templates.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -3068,11 +3282,11 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
 
   The ``mimeType`` designates whether the email is sent as plain text (``MimeType.PLAIN_TEXT``), HTML (``MimeType.HTML``). This in turns tells Stormpath whether to use the ``textBody`` or ``htmlBody`` text in the email, or to let the email client decide.
 
-.. only:: python
+.. only:: python or ruby
 
   To modify any of these emails via the |language| SDK, it is just a matter of updating the appropriate Template resource.
 
-.. only:: rest or python
+.. only:: rest or python or ruby
 
   As an example, let’s look at a default Verification Email template that comes with the Stormpath Administrator Directory’s Account Creation Policies:
 
@@ -3115,7 +3329,12 @@ The emails that Stormpath sends to users be customized by modifying the `Email T
   .. literalinclude:: code/python/account_management/update_from_email_address_attr.py
     :language: python
 
-.. only:: rest or python or nodejs or csharp or vbnet
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/update_from_email_address_attr.rb
+    :language: ruby
+
+.. only:: rest or python or nodejs or csharp or vbnet or ruby
 
   For more information about Stormpath's email templates, keep reading!
 
@@ -3229,7 +3448,17 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php or python or java
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This
+
+.. only:: rest or csharp or vbnet or php or python or java or ruby
 
   Your Tenant is allowed to specify one server, and that server's information is stored in an SMTP server resource accessible either directly:
 
@@ -3307,6 +3536,16 @@ In addition to the location and port of the server, you must also pass valid cre
   .. todo::
 
     (python.todo)
+
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This
 
 .. only:: rest or csharp or vbnet or php or python or java
 
@@ -3407,7 +3646,17 @@ If you would like to stop using the custom server, you can disable it by setting
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php or python or java
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the |language| SDK. In the meantime, please consult the REST API documentation below.
+
+  .. todo::
+
+    This
+
+.. only:: rest or csharp or vbnet or php or python or java or ruby
 
   .. code-block:: http
 
@@ -3499,6 +3748,11 @@ Working with the Whitelist and Blacklist is done through the Account Creation Po
 
     (python.todo)
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/email_domain_restriction.rb
+    :language: ruby
+
 .. only:: rest or csharp or vbnet or python or java
 
   In both cases, you send an array in this format:
@@ -3568,6 +3822,15 @@ If you wanted to allow only users using emails from ``site.com`` and ``stormpath
   .. todo::
 
     (python.todo)
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/email_domain_restriction2.rb
+    :language: ruby
+
+  .. note::
+
+    Be careful when updating the whitelisted/blacklisted domains. The SDK currently doesn't support adding to the existing array, just overwriting it.
 
 .. only:: rest or csharp or vbnet or python or java
 
@@ -3669,6 +3932,11 @@ If you changed our mind and wanted to only allow users to register with ``stormp
   .. todo::
 
     (python.todo)
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/email_domain_restriction3.rb
+    :language: ruby
 
 .. only:: rest or csharp or vbnet or php or java
 
