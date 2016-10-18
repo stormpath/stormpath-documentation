@@ -204,6 +204,18 @@ After an Account resource has been created, you can authenticate it given an inp
   .. literalinclude:: code/python/authentication/login_attempt_resp.py
     :language: python
 
+.. only:: ruby
+
+  So, if you had a user Account "Han Solo" in the "Captains" Directory, and you wanted to log him in, you would use the ``authenticate_account`` method:
+
+  .. literalinclude:: code/ruby/authentication/login_attempt_req.rb
+    :language: ruby
+
+  If authentication succeeded, you will get back a ``Stormpath::Authentication::AuthenticationResult`` which contains the ``account`` object:
+
+  .. literalinclude:: code/ruby/authentication/login_attempt_resp.rb
+    :language: ruby
+
 .. _how-login-works:
 
 4.1.2. How Login Attempts Work in Stormpath
@@ -329,6 +341,13 @@ The reason why your user "Han Solo" was able to log in to your application is be
   .. literalinclude:: code/python/authentication/get_asm_req.py
     :language: python
 
+.. only:: ruby
+
+  You can find this mapping by iterating through the ``account_store_mappings`` collection:
+
+  .. literalinclude:: code/ruby/authentication/get_asm_req.rb
+    :language: ruby
+
 .. only:: nodejs
 
   This will print the list of Account Store Mappings in your console:
@@ -419,6 +438,11 @@ We would now like to map a new Account Store that will have the following charac
   .. literalinclude:: code/python/authentication/create_asm.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_asm.rb
+    :language: ruby
+
 If you go back to the example from the :ref:`Account Management chapter<account-mgmt>`, you can see the Account Store Mapping between the Directory and the Application. This now means that the Captain's Account in the Directory will now be able to log in to the Application.
 
 .. figure:: images/auth_n/authn_asm_erd.png
@@ -479,6 +503,11 @@ For example, if you want to update an existing Account Store to now have highest
   .. literalinclude:: code/python/authentication/change_login_priority.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/change_login_priority.rb
+    :language: ruby
+
 The accountStoreMapping resource will be updated and all of the other Account Stores will have their ``listIndex`` incremented up by 1.
 
 **Changing the Default Account or Group Store**
@@ -538,6 +567,11 @@ Setting an Account Store Mapping as the default Account or Group store would aut
 
   .. literalinclude:: code/python/authentication/change_default_stores.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/change_default_stores.rb
+    :language: ruby
 
 .. note::
 
@@ -659,6 +693,11 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
   .. literalinclude:: code/python/authentication/oauth_policy.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/oauth_policy.rb
+    :language: ruby
+
   The values for both properties are stored as `ISO 8601 Durations <https://en.wikipedia.org/wiki/ISO_8601#Durations>`_.
 
 .. only:: rest or php
@@ -712,6 +751,11 @@ If you wanted to change the TTL for the Access Token to 30 minutes and the Refre
 
   .. literalinclude:: code/python/authentication/update_oauth_ttl_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/update_oauth_ttl_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -907,6 +951,11 @@ In this example we will demonstrate the Password Grant Type:
   .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/generate_oauth_token_req.rb
+    :language: ruby
+
 .. only:: rest
 
   Which would result in this response:
@@ -1061,6 +1110,18 @@ In this example we will demonstrate the Password Grant Type:
   - ``result.token_type`` - The type of token.
   - ``result.refresh_token`` - The ``RefreshToken`` object.
   - ``result.account`` - The Stormpath Account object for the authenticated user.
+
+.. only:: ruby
+
+  Which would result in a ``Stormpath::Error`` response (on failure), or an object on
+  success.  If the authentication attempt succeeds, you can access the following
+  properties from the ``Stormpath::Oauth::AccessTokenAuthenticationResult`` object:
+
+  - ``response.access_token`` - The Stormpath access token
+  - ``response.refresh_token`` - The Stormpath refresh token
+  - ``response.token_type`` - The type of token
+  - ``response.expires_in`` - The time in seconds before this token expires
+  - ``response.stormpath_access_token_href`` - The href for the returned access token
 
 Validating an Access Token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1234,6 +1295,22 @@ Using Stormpath to Validate Tokens
     .. literalinclude:: code/php/authentication/validate_oauth_token_sp_resp.php
       :language: php
 
+  .. only:: ruby
+
+    1. Created a ``Stormpath::Oauth::PasswordGrantRequest`` request object with the user's email/username and password.
+    2. Made an authenticate attempt with the ``authenticate_oauth`` method from the ``application`` object and sent the request as a method parameter.
+    3. Received back an ``Stormpath::Oauth::AccessTokenAuthenticationResult`` object which contained - among other things - an **Access Token** in JWT format.
+
+    The user now attempts to access a secured resource:
+
+    .. literalinclude:: code/ruby/authentication/validate_oauth_token_sp_req.rb
+      :language: ruby
+
+    If the Access Token can be validated, Stormpath will return a ``Stormpath::Oauth::VerifyToken`` object that contains this:
+
+    .. literalinclude:: code/ruby/authentication/validate_oauth_token_sp_resp.rb
+      :language: ruby
+
   .. only:: python
 
     (python.todo)
@@ -1308,6 +1385,19 @@ Validating the Token Locally
     .. literalinclude:: code/python/authentication/validate_oauth_token_local.py
         :language: python
 
+  .. only:: ruby
+
+    .. literalinclude:: code/ruby/authentication/validate_oauth_token_local.rb
+      :language: ruby
+
+    .. warning::
+
+      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #165 <https://github.com/stormpath/stormpath-sdk-ruby/issues/165>`_ on Github.
+
+    .. todo::
+
+      This
+
 .. _refresh-oauth-token:
 
 Refreshing Access Tokens
@@ -1368,6 +1458,11 @@ In the event that the Access Token expires, the user can generate a new one usin
 
   .. literalinclude:: code/python/authentication/refresh_access_token_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/refresh_access_token_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -1587,6 +1682,13 @@ Revoking Access and Refresh Tokens
     .. literalinclude:: code/python/authentication/delete_user_access_tokens_req.py
       :language: python
 
+  .. only:: ruby
+
+    Revoking a token is as easy as ABC. You just need to obtain it and delete it. If a user has more access tokens and you need to examine them before revoking, you can iterate through the collection and then delete:
+
+    .. literalinclude:: code/ruby/authentication/delete_user_access_tokens_req.rb
+      :language: ruby
+
 .. _social-authn:
 
 4.3. How Social Authentication Works
@@ -1676,6 +1778,14 @@ In general, the social login process works as follows:
 
  7. At this point, the Account can be used like any other Stormpath Account.
 
+.. only:: ruby
+
+    a. If a matching Account is found, Stormpath will return the existing Account.
+
+    b. If a matching Account is not found, Stormpath will create one and return the new Account.
+
+  7. At this point, the Account can be used like any other Stormpath Account.
+
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
 1. Create a Social Directory for your Provider.
@@ -1762,6 +1872,11 @@ Creating this Directory for Google requires that you provide information from Go
   .. literalinclude:: code/python/authentication/create_directory_google.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_directory_google.rb
+    :language: ruby
+
 .. note::
 
     If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/identity/sign-in/web/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
@@ -1832,6 +1947,11 @@ Once the Authorization Code is gathered, you send this request:
   .. literalinclude:: code/python/authentication/create_account_google_providerdata_code.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_code.rb
+    :language: ruby
+
 If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
 
 .. only:: rest
@@ -1881,6 +2001,11 @@ If you have already exchanged an Authorization Code for an Access Token, this ca
 
   .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_access_token.rb
+    :language: ruby
 
 Either way, Stormpath will use the code or access token provided to retrieve information about your Google Account, then return a Stormpath Account.
 
@@ -1975,6 +2100,11 @@ Creating this Directory requires that you provide information from Facebook as a
   .. literalinclude:: code/python/authentication/create_directory_fb.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_directory_fb.rb
+    :language: ruby
+
 Step 2: Map the Facebook Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2038,6 +2168,11 @@ Once the User Access Token is gathered, you send this request:
 
   .. literalinclude:: code/python/authentication/create_account_fb_providerdata_access_token.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_fb_providerdata_access_token.rb
+    :language: ruby
 
 Stormpath will use the Access Token provided to retrieve information about your Facebook Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
@@ -2132,6 +2267,11 @@ Creating this Directory requires that you provide information from GitHub as a P
   .. literalinclude:: code/python/authentication/create_directory_github.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_directory_github.rb
+    :language: ruby
+
 Step 2: Map the GitHub Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2197,6 +2337,11 @@ Once the Authorization Code is gathered, you need to use the `Github Access Toke
 
   .. literalinclude:: code/python/authentication/create_account_github_providerdata_access_token.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_github_providerdata_access_token.rb
+    :language: ruby
 
 Stormpath will use the Access Token provided to retrieve information about your GitHub Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
@@ -2291,6 +2436,11 @@ Creating this Directory requires that you provide information from LinkedIn as a
   .. literalinclude:: code/python/authentication/create_directory_linkedin.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_directory_linkedin.rb
+    :language: ruby
+
 Step 2: Map the LinkedIn Directory as an Account Store for Your Application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2362,6 +2512,11 @@ Once the Authorization Code is gathered, you can send it to Stormpath:
   .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_auth_code.py
       :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_linkedin_providerdata_auth_code.rb
+    :language: ruby
+
 If you have already exchanged the code for an Access Token, you can send that instead:
 
 .. only:: rest
@@ -2411,6 +2566,11 @@ If you have already exchanged the code for an Access Token, you can send that in
 
   .. literalinclude:: code/python/authentication/create_account_linkedin_providerdata_access_token.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_account_linkedin_providerdata_access_token.rb
+    :language: ruby
 
 Stormpath will use the ``code`` or ``accessToken`` provided to retrieve information about your LinkedIn Account, then return a Stormpath Account. If you would like to get back an OAuth token instead, please see the :ref:`Generating an OAuth 2.0 Access Token above <generate-oauth-token>`.
 
@@ -2518,6 +2678,20 @@ Step 1: Create an LDAP Directory
 
   .. literalinclude:: code/python/authentication/create_directory_ldap.py
     :language: python
+
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
+    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+
+  .. todo::
+
+    Add LDAP directory creation Ruby example
+
+  .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
+    :language: ruby
 
 .. only:: rest or vbnet or csharp or php
 
@@ -2826,6 +3000,11 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
   .. literalinclude:: code/python/authentication/create_directory_saml.py
       :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_directory_saml.rb
+    :language: ruby
+
 .. only:: rest or csharp or vbnet
 
   .. code-block:: http
@@ -2899,6 +3078,11 @@ In order to retrieve the required values, start by sending this request:
 
   .. literalinclude:: code/python/authentication/get_directory_provider_req.py
       :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/get_directory_provider_req.rb
+      :language: ruby
 
 .. only:: rest or csharp or vbnet
 
@@ -2990,6 +3174,11 @@ In order to retrieve the required values, start by sending this request:
 
   .. literalinclude:: code/python/authentication/get_serviceprovider_metadata_req.py
       :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/get_serviceprovider_metadata_req.rb
+      :language: ruby
 
 .. only:: rest or csharp or vbnet
 
@@ -3120,6 +3309,11 @@ You should create any URIs here that you would like included as authorized callb
   .. literalinclude:: code/python/authentication/create_callback_uris.py
       :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_callback_uris.rb
+      :language: ruby
+
 .. only:: rest or csharp or vbnet
 
   .. code-block:: http
@@ -3191,6 +3385,11 @@ You should create any URIs here that you would like included as authorized callb
   .. literalinclude:: code/python/authentication/saml_policy_example.py
       :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/saml_policy_example.rb
+      :language: ruby
+
 .. _saml-restconfig-5a:
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
@@ -3255,6 +3454,12 @@ Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
 
   .. literalinclude:: code/python/authentication/get_default_relay_state_req.py
       :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/get_default_relay_state_req.rb
+      :language: ruby
+
 
 .. only:: rest or csharp or vbnet or php or java
 
@@ -3370,6 +3575,11 @@ A request including these optional properties looks like this:
   .. literalinclude:: code/python/authentication/get_default_relay_state_with_extras.py
       :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/get_default_relay_state_with_extras.rb
+      :language: ruby
+
 Step 6: Add the SAML Directory as an Account Store
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3472,7 +3682,12 @@ The rules have three different components:
 
     (python.todo)
 
-.. only:: rest or csharp or vbnet or php
+.. only:: ruby
+
+  .. literalinclude:: code/python/authentication/example_saml_rule.rb
+    :language: ruby
+
+.. only:: rest or csharp or vbnet or php or ruby
 
   .. code-block:: json
 
@@ -3539,6 +3754,11 @@ The rules have three different components:
 
   .. literalinclude:: code/python/authentication/create_mapping_rule.py
       :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/create_mapping_rule.rb
+      :language: ruby
 
 .. only:: rest or csharp or vbnet
 
@@ -3996,6 +4216,15 @@ First, you create the Account:
     .. literalinclude:: code/python/authentication/mfa_create_account.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    Ruby SDK MFA
+
+    .. literalinclude:: code/ruby/authentication/mfa_create_account.rb
+      :language: ruby
+
 .. _mfa-adding-factor-sms:
 
 Adding an SMS Factor
@@ -4070,6 +4299,15 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
 
     .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    Ruby SDK MFA
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
+      :language: ruby
 
 You will then get back the response:
 
@@ -4148,6 +4386,15 @@ You will then get back the response:
     .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
+      :language: ruby
+
 For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
 For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
@@ -4224,6 +4471,15 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
+      :language: ruby
 
 You will then get back the response:
 
@@ -4305,6 +4561,15 @@ You will then get back the response:
 
     .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
+      :language: ruby
 
 The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
 
@@ -4431,6 +4696,15 @@ At this point in the example you have a brand new Account with two additional Fa
     .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors1_resp.rb
+      :language: ruby
+
 You will now challenge each of these factors.
 
 .. _mfa-challenge-after:
@@ -4513,6 +4787,16 @@ To challenge an SMS Factor, you send a request like this, with or without specif
     .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
+      :language: ruby
+
+
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
 In response to this request you would get back a Challenge:
@@ -4588,6 +4872,15 @@ In response to this request you would get back a Challenge:
 
     .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_resp.rb
+      :language: ruby
 
 The resulting SMS would look like this:
 
@@ -4671,6 +4964,15 @@ Once you have the code, you send it to the same Challenge you created above:
     .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
+      :language: ruby
+
 And then you would get back the response:
 
 .. only:: rest
@@ -4742,6 +5044,15 @@ And then you would get back the response:
 
     .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
+      :language: ruby
 
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
@@ -4833,6 +5144,15 @@ Once you have collected the code from the user, send the code generated by your 
     .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
+      :language: ruby
+
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
 
 .. only:: rest
@@ -4903,6 +5223,15 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
     .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
+      :language: ruby
 
 .. _mfa-challenge-during:
 
@@ -4986,6 +5315,15 @@ Challenging During Factor Creation
     .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
+      :language: ruby
+
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
 .. note::
@@ -5064,6 +5402,15 @@ The first step will be getting the user authenticated.
     .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_auth_account_req.rb
+      :language: ruby
+
 If authentication is successful, you will get back the Account:
 
 .. only:: rest
@@ -5137,6 +5484,15 @@ If authentication is successful, you will get back the Account:
     .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_auth_account_resp.rb
+      :language: ruby
+
 Next, you will need to retrieve the Account's ``factors`` collection:
 
 .. only:: rest
@@ -5199,6 +5555,15 @@ Next, you will need to retrieve the Account's ``factors`` collection:
 
     .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
         :language: python
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_req.rb
+      :language: ruby
 
 Which will return:
 
@@ -5287,6 +5652,15 @@ Which will return:
     .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
         :language: python
 
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_resp.rb
+      :language: ruby
+
 .. only:: rest
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
@@ -5320,6 +5694,12 @@ Which will return:
   .. todo::
 
     (python.todo)
+
+.. only:: ruby
+
+  .. todo::
+
+    (ruby.todo)
 
 .. only:: not rest
 
@@ -5371,6 +5751,11 @@ Which will return:
 
     .. literalinclude:: code/python/authentication/create_apikey_req.py
       :language: python
+
+  .. only:: ruby
+
+    .. literalinclude:: code/ruby/authentication/create_apikey_req.rb
+      :language: ruby
 
   .. only:: csharp or vbnet
 
@@ -5433,6 +5818,11 @@ Which will return:
     .. literalinclude:: code/python/authentication/delete_apikey.py
       :language: python
 
+  .. only:: ruby
+
+    .. literalinclude:: code/ruby/authentication/delete_apikey.rb
+      :language: ruby
+
   **Disable an API Key**
 
   .. only:: csharp or vbnet
@@ -5466,6 +5856,11 @@ Which will return:
 
     .. literalinclude:: code/python/authentication/disable_apikey.py
       :language: python
+
+  .. only:: ruby
+
+    .. literalinclude:: code/ruby/authentication/disable_apikey.rb
+      :language: ruby
 
   .. _api-basic-auth:
 
@@ -5519,6 +5914,15 @@ Which will return:
 
     .. literalinclude:: code/python/authentication/authenticate_basic_req.py
       :language: python
+
+  .. only:: ruby
+
+    .. warning::
+
+      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #166 <https://github.com/stormpath/stormpath-sdk-ruby/issues/166>`_ on Github.
+
+    .. literalinclude:: code/ruby/authentication/authenticate_basic_req.rb
+      :language: ruby
 
   The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
 
@@ -5594,3 +5998,12 @@ Which will return:
 
     .. literalinclude:: code/python/authentication/authenticate_bearer_req.py
       :language: python
+
+  .. only:: ruby
+
+    .. warning::
+
+      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #166 <https://github.com/stormpath/stormpath-sdk-ruby/issues/166>`_ on Github.
+
+    .. literalinclude:: code/ruby/authentication/authenticate_bearer_req.rb
+      :language: ruby
