@@ -4022,6 +4022,8 @@ To add an additional SMS Factor to this Account, you send the following request:
     .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
         :language: java
 
+  For now ``factor.getVerificationStatus()`` will return ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` will be ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4137,9 +4139,9 @@ To add an additional SMS Factor to this Account, you send the following request:
       .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
           :language: python
 
-For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
-
 .. only:: rest or csharp or nodejs or php or python or vbnet
+
+  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4948,9 +4950,20 @@ Challenging During Factor Creation
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
-.. note::
+.. only:: rest
 
-  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
+  .. note::
+
+    If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
+
+.. only:: java
+
+  .. note::
+
+    If you wanted Stormpath to send the default message, then you could create a challenge either by just calling the ``challenge()`` method on the factor or implicitly upon creating the factor.
+
+  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req2.java
+    :language: java
 
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
