@@ -1,0 +1,1 @@
+GoogleAuthenticatorChallengeStatus status = challenge.getStatus(); //The value should be SUCCESS
