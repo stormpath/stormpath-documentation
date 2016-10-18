@@ -3684,7 +3684,7 @@ The rules have three different components:
 
 .. only:: ruby
 
-  .. literalinclude:: code/python/authentication/example_saml_rule.rb
+  .. literalinclude:: code/ruby/authentication/example_saml_rule.rb
     :language: ruby
 
 .. only:: rest or csharp or vbnet or php or ruby
