@@ -3889,11 +3889,11 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: not (rest or java)
 
  .. warning::
 
-    This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
+  This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
 
 At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
 
@@ -4898,9 +4898,16 @@ Challenging During Factor Creation
 
 .. only:: java
 
-  To create a challenge at the same time as you create the SMS Factor, you need to call ``account.createFactor((Factors.SMS.newCreateRequestFor(factor).createChallenge()).build())``:
+  To create a Challenge at the same time as you create the SMS Factor, you can use this builder:
 
-  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
+  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_default.java
+      :language: java
+
+  This would create a Factor and a challenge with the default message.
+
+  If you wanted to specify a custom message instead, you would need :
+
+  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_message.java
     :language: java
 
 .. todo::
@@ -4955,15 +4962,6 @@ You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` al
   .. note::
 
     If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
-
-.. only:: java
-
-  .. note::
-
-    If you wanted Stormpath to send the default message, then you could create a challenge either by just calling the ``challenge()`` method on the factor or implicitly upon creating the factor.
-
-  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req2.java
-    :language: java
 
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -5109,8 +5107,6 @@ Challenging a Factor After Login
 
 .. only:: java
 
-  (java.todo) The Java guide should describe the same process as the REST Guide does...unless there's a reason why not?
-
   You will need to retrieve the Account's ``factors`` collection:
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
@@ -5249,8 +5245,8 @@ Challenging a Factor After Login
 
   You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
-   .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
-      :language: java
+  .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
+    :language: java
 
 .. todo::
 
