@@ -5148,7 +5148,7 @@ Challenging a Factor After Login
       .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
           :language: python
 
-Which will return:
+  Which will return:
 
 .. only:: rest or csharp or nodejs or php or python or vbnet
 
