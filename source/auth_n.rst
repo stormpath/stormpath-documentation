@@ -3999,7 +3999,7 @@ First, you create the Account:
 Adding an SMS Factor
 ^^^^^^^^^^^^^^^^^^^^
 
-To add an additional SMS Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
+To add an additional SMS Factor to this Account, you send the following request:
 
 .. only:: rest or csharp or nodejs or php or python or vbnet
 
@@ -4092,11 +4092,6 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
       "mostRecentChallenge": null
     }
 
-.. only:: java
-
-  .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
-    :language: java
-
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4146,7 +4141,7 @@ For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostR
 
 .. only:: rest or csharp or nodejs or php or python or vbnet
 
-For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
+  For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
 .. _mfa-adding-factor-google:
 
