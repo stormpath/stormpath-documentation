@@ -322,42 +322,15 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   - with the location of API key properties file:
 
-  .. literalinclude:: code/ruby/quickstart/initialize_client/api_key_location.rb
-    :language: ruby
-
-  - with altered variables in the API key properties file:
-
-  You can even identify the names of the properties to use as the API key id and secret. For example, suppose your properties was:
-
-  .. code:: console
-
-    foo=APIKEYID
-    bar=APIKEYSECRET
-
-  You could load it with the following:
-
-  .. literalinclude:: code/ruby/quickstart/initialize_client/altered_api_key.rb
-    :language: ruby
-
-  - by passing in a ``Stormpath::APIKey`` instance:
-
-  .. literalinclude:: code/ruby/quickstart/initialize_client/api_key_instance.rb
+  .. literalinclude:: code/ruby/configuration/initialize_client/api_key_location.rb
     :language: ruby
 
   - by explicitly setting the API key id and secret:
 
-  .. literalinclude:: code/ruby/quickstart/initialize_client/api_key_and_secret.rb
+  .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
     :language: ruby
 
-  - by passing a composite application url to ``Application.load``:
-
-  .. literalinclude:: code/ruby/quickstart/initialize_client/application_url.rb
-    :language: ruby
-
-  You can also change the base url for your enterprise product if needed:
-
-  .. literalinclude:: code/ruby/quickstart/initialize_client/base_url.rb
-    :language: ruby
+  For additional approaches, please head over to :ref:`Inline Code Configuration <inline_code_configuration>`
 
   Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
 
