@@ -1887,10 +1887,6 @@ For example, if some or all of your Accounts in a particular Directory have a Cu
   .. literalinclude:: code/ruby/account_management/cd_search.rb
     :language: ruby
 
-  .. warning::
-
-    This functionality is currently not working properly. For updates, please follow `ticket #163 <https://github.com/stormpath/stormpath-sdk-ruby/issues/163>`_ on Github.
-
 .. only:: nodejs
 
   .. literalinclude:: code/nodejs/account_management/cd_search.js
