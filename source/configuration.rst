@@ -693,12 +693,12 @@
     .. literalinclude:: code/python/configuration/api_credentials.py
       :language: python
 
-      .. only:: ruby
+  .. only:: ruby
 
-        You can inline the settings for API Credentials with the following:
+    You can inline the settings for API Credentials with the following:
 
-        .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
-          :language: ruby
+    .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
+      :language: ruby
 
   .. _base_url:
 
