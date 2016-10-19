@@ -273,14 +273,6 @@ This has two benefits:
 
 .. only:: ruby
 
-  .. warning::
-
-    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
-
-  .. todo::
-
-    Add code for searching groups by name field
-
   .. literalinclude:: code/ruby/multitenancy/search_groups_by_name_ex1.rb
     :language: ruby
 
@@ -323,14 +315,6 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
     :language: python
 
 .. only:: ruby
-
-  .. warning::
-
-    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
-
-  .. todo::
-
-    Add code for searching groups by name field
 
   .. literalinclude:: code/ruby/multitenancy/search_groups_by_name_ex2.rb
     :language: ruby

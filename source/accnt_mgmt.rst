@@ -515,13 +515,8 @@ A geographical region can, for example, be represented as ``"North America/US/US
 
 .. only:: ruby
 
-  .. warning::
-
-    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
-
-  .. todo::
-
-    Add code for searching groups by description field
+  .. literalinclude:: code/ruby/account_management/search_directory_group_description1.rb
+    :language: ruby
 
 Or, to find all Groups in the US East region only, you would send this request:
 
@@ -572,14 +567,8 @@ Or, to find all Groups in the US East region only, you would send this request:
 
 .. only:: ruby
 
-  .. warning::
-
-    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #162 <https://github.com/stormpath/stormpath-sdk-ruby/issues/162>`_ on Github.
-
-  .. todo::
-
-    Add code for searching groups by description field
-
+  .. literalinclude:: code/ruby/account_management/search_directory_group_description2.rb
+    :language: ruby
 
 It can also be included in the customData resource, as a series of key-value relations.
 
