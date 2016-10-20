@@ -3073,13 +3073,10 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: ruby
 
-  .. warning::
+  To resend the email, use the ``resend`` method on the ``verification_emails`` collection:
 
-    This feature is currently not supported by the Ruby SDK. For updates, please follow `ticket #164 <https://github.com/stormpath/stormpath-sdk-ruby/issues/164>`_ on Github.
-
-  .. todo::
-
-    Add Ruby code once implemented
+  .. literalinclude:: code/ruby/account_management/resend_verification_email.rb
+    :language: ruby
 
 3.7. Customizing Stormpath Emails
 ==========================================
