@@ -737,16 +737,10 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 
 .. only:: ruby
 
-  .. warning::
-
-    This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #167 <https://github.com/stormpath/stormpath-sdk-ruby/issues/167>`_ on Github.
-
-  .. todo::
-
-    (ruby.todo)
-
   .. literalinclude:: code/ruby/multitenancy/add_account_to_org.rb
     :language: ruby
+
+  Just make sure the account store is set to be the default account store before you start adding users to the organization.
 
 .. _multitenancy-auth-to-org:
 
