@@ -3073,7 +3073,7 @@ If a user accidentally deletes their verification email, or it was undeliverable
 
 .. only:: ruby
 
-  To resend the email, use the ``resend`` method on the ``verification_emails`` collection:
+  To resend the email, use the ``create`` method on the ``verification_emails`` collection:
 
   .. literalinclude:: code/ruby/account_management/resend_verification_email.rb
     :language: ruby
