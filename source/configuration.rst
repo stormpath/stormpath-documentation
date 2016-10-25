@@ -189,14 +189,6 @@
 
   .. only:: ruby
 
-    .. warning::
-
-      This functionality is not yet available in the Ruby SDK. For updates, please follow `ticket #168 <https://github.com/stormpath/stormpath-sdk-ruby/issues/168>`_ on Github.
-
-    .. todo::
-
-      Add memcached store option (ruby.todo)
-
     .. literalinclude:: code/ruby/configuration/memcached_cache.rb
       :language: ruby
 
