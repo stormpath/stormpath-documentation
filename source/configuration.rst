@@ -195,7 +195,7 @@
 
     .. todo::
 
-      Add memcached store option
+      Add memcached store option (ruby.todo)
 
     .. literalinclude:: code/ruby/configuration/memcached_cache.rb
       :language: ruby

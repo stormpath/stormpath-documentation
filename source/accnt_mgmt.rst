@@ -325,7 +325,7 @@ How to Make an LDAP Directory
 
   .. todo::
 
-    Add LDAP directory creation Ruby example
+    Add LDAP directory creation Ruby example (ruby.todo)
 
 .. only:: rest or csharp or vbnet or php
 
