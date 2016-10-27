@@ -1306,7 +1306,7 @@ Using Stormpath to Validate Tokens
     .. literalinclude:: code/ruby/authentication/validate_oauth_token_sp_req.rb
       :language: ruby
 
-    If the Access Token can be validated, Stormpath will return a ``Stormpath::Oauth::VerifyToken`` object that contains this:
+    If the Access Token can be validated, Stormpath will return a ``Stormpath::Oauth::VerifyTokenResult`` object that contains this:
 
     .. literalinclude:: code/ruby/authentication/validate_oauth_token_sp_resp.rb
       :language: ruby
@@ -1389,14 +1389,6 @@ Validating the Token Locally
 
     .. literalinclude:: code/ruby/authentication/validate_oauth_token_local.rb
       :language: ruby
-
-    .. warning::
-
-      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #165 <https://github.com/stormpath/stormpath-sdk-ruby/issues/165>`_ on Github.
-
-    .. todo::
-
-      Validate oauth token locally (ruby.todo)
 
 .. _refresh-oauth-token:
 
@@ -5917,16 +5909,8 @@ Which will return:
 
   .. only:: ruby
 
-    .. warning::
-
-      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #166 <https://github.com/stormpath/stormpath-sdk-ruby/issues/166>`_ on Github.
-
     .. literalinclude:: code/ruby/authentication/authenticate_basic_req.rb
       :language: ruby
-
-    .. todo::
-
-      Authenticate with http basic (ruby.todo)
 
   The returned Authentication Result will provide properties and methods for retrieving the authenticated Account and ApiKey for a successful authentication request. Your application will use this information to provide context associated with who is calling your API. This becomes important when your API has generic endpoints that return different information based on the caller.
 
@@ -6005,13 +5989,5 @@ Which will return:
 
   .. only:: ruby
 
-    .. warning::
-
-      This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #166 <https://github.com/stormpath/stormpath-sdk-ruby/issues/166>`_ on Github.
-
     .. literalinclude:: code/ruby/authentication/authenticate_bearer_req.rb
       :language: ruby
-
-    .. todo::
-
-      Authenticate bearer access token (ruby.todo)

@@ -1,4 +1,4 @@
-# Stormpath::Oauth::VerifyToken
+# Stormpath::Oauth::VerifyTokenResult
 
 {
   href: 'https://api.stormpath.com/v1/accessTokens/54YsnCz2f9dXBrUgY3G7da',
