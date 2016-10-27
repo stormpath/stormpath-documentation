@@ -271,6 +271,11 @@ This has two benefits:
   .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex1.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/search_groups_by_name_ex1.rb
+    :language: ruby
+
 Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make the query a little less restrictive by removing the "role":
 
 .. only:: rest
@@ -308,6 +313,11 @@ Or, if you wanted to retrieve the tenant Group and all of its sub-Groups, make t
 
   .. literalinclude:: code/python/multitenancy/search_groups_by_name_ex2.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/search_groups_by_name_ex2.rb
+    :language: ruby
 
 2. It ensures that no tenant sub-Groups have name collisions between tenants.
 
@@ -378,6 +388,11 @@ You can create an Organization in Stormpath by sending the following request:
   .. literalinclude:: code/python/multitenancy/create_org_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/create_org_req.rb
+    :language: ruby
+
 .. only:: rest
 
   Which would return the following:
@@ -433,7 +448,7 @@ You can create an Organization in Stormpath by sending the following request:
 
   Notice here that both the Default Account Store and Group Store are ``NULL`` which means that Groups and Accounts added to the Organization would fail until a default Account Store is added.
 
-.. only:: python
+.. only:: python and ruby
 
   Which would return a new Organization object.
 
@@ -511,9 +526,20 @@ An Organization can be mapped to an Application so that users in the Organizatio
 
   These two attributes, ``organization`` and ``account_store`` are required, though you may add some optional attributes as well:
 
-  - ``listIndex``: Represents the priority in which this account_store will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+  - ``listIndex``: Represents the priority in which this ``account_store`` will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
 
   - ``is_default_account_store``: A ``True`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/asm_to_org.rb
+    :language: ruby
+
+  These two attributes, ``organization`` and ``account_store`` are required, though you may add some optional attributes as well:
+
+  - ``listIndex``: Represents the priority in which this ``account_store`` will be consulted by the Organization during an authentication attempt. This is a zero-based index, meaning that an Account Store at ``listIndex`` of 0 will be consulted first, followed by the Account Store at listIndex 1, etc. Setting a negative value will default the value to 0, placing it first in the list. A listIndex of larger than the current list size will place the mapping at the end of the list and then default the value to (list size – 1).
+
+  - ``is_default_account_store``: A ``true`` value indicates that new Accounts created by the Organization’s ``/accounts`` endpoint will be automatically saved to this mapping’s Directory or Group.
 
 .. only:: not nodejs
 
@@ -568,6 +594,11 @@ An Organization can be mapped to an Application so that users in the Organizatio
 
   .. literalinclude:: code/python/multitenancy/asm_to_org_with_default_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/asm_to_org_with_default_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -703,6 +734,13 @@ Adding a new Account to an Organization is exactly the same as adding them to a 
 
   .. literalinclude:: code/python/multitenancy/add_account_to_org.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/multitenancy/add_account_to_org.rb
+    :language: ruby
+
+  Just make sure the Account Store is set to be the default before you start adding Accounts to the Organization.
 
 .. _multitenancy-auth-to-org:
 

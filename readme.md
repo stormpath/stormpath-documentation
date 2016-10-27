@@ -28,6 +28,7 @@ Then clone this repo.
     │   ├── nodejs
     │   ├── php
     │   ├── python
+    │   ├── ruby
     │   ├── template
     │   └── vbnet
     ├── images
@@ -61,6 +62,7 @@ The possible values for `{name}` are:
 - `vbnet`
 - `python`
 - `nodejs`
+- `ruby`
 
 If you would like to generate all of the Product Guides in one go, you can use the same command that Travis uses:
 

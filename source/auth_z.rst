@@ -143,6 +143,11 @@ Stormpath also gives you an enormous amount of flexibility with what these permi
   .. literalinclude:: code/python/authorization/example_perm_simple.py
     :language: json
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authorization/example_perm_simple.rb
+    :language: json
+
 Or as complex as:
 
 .. only:: rest
@@ -187,6 +192,11 @@ Or as complex as:
 .. only:: python
 
   .. literalinclude:: code/python/authorization/example_perm_complex.py
+    :language: json
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authorization/example_perm_complex.rb
     :language: json
 
 How is this flexibility possible? Custom Data.
@@ -237,6 +247,10 @@ Checking User and Role Permissions
 .. only:: python
 
   Since authorization enforcement is handled by `one of Stormpath's Python integrations <https://docs.stormpath.com/python/>`_, the primary usefulness of the Python SDK is in retrieving a user's permissions.
+
+.. only:: ruby
+
+  Since authorization enforcement is handled by `one of Stormpath's Ruby integrations <https://docs.stormpath.com/ruby/>`_, the primary usefulness of the Ruby SDK is in retrieving a user's permissions.
 
 These permissions can either be found in the custom_data tied a the user (i.e. the Account resource) or to their role (i.e. a Group resource associated to the Account).
 
@@ -290,6 +304,16 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
   .. literalinclude:: code/python/authorization/account_with_customdata_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authorization/account_with_customdata_req.rb
+    :language: ruby
+
+  Alternatively, you could instantiate the expansion object in the constructor:
+
+  .. literalinclude:: code/ruby/authorization/account_with_customdata_req2.rb
+    :language: ruby
+
 .. only:: rest
 
   This will return the Account resource along with the customData:
@@ -331,7 +355,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
   .. literalinclude:: code/php/authorization/account_with_customdata_resp.php
     :language: php
 
-.. only:: python
+.. only:: python and ruby
 
   This will return the Account resource along with the customData.
 
@@ -384,6 +408,11 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
   .. literalinclude:: code/python/authorization/account_customdata_only_req.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authorization/account_customdata_only_req.rb
+    :language: ruby
+
 .. only:: rest
 
   Which would return only this:
@@ -426,7 +455,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
   .. literalinclude:: code/php/authorization/account_customdata_only_resp.php
     :language: php
 
-.. only:: python
+.. only:: python and ruby
 
   Which would return only the CustomData object.
 
@@ -497,3 +526,10 @@ This would work in much the same way as checking the permissions for a user's Ac
     :language: python
 
   From here you can retrieve the Group’s CustomData in the same way as you did with users.
+
+.. only:: ruby
+
+  From here, you can retrieve the Group's customData in the same way as you did with Accounts.
+
+  .. literalinclude:: code/ruby/authorization/account_groups_req.rb
+    :language: ruby
