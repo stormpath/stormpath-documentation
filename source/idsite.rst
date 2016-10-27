@@ -662,13 +662,13 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
       - The Account resource that contains all information about the user who was just returned from ID Site.
 
     * - ``state``
-      - The state of your application, if you have chosen to have this passed back.
+      - The state of your Application, if you have chosen to have this passed back.
 
     * - ``status``
       - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
 
     * - ``is_new_account``
-      - If the Account is new Account to the Application.
+      - If the Account is a new Account to the Application.
 
 .. only:: rest
 

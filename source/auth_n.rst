@@ -1134,7 +1134,7 @@ For example, if you have a route ``https://yourapplication.com/secure-resource``
 
     GET /secure-resource HTTP/1.1
     Host: https://yourapplication.com
-    Authorization: Bearer eyJraWQiOiIyWkZNVjRXVlZDVkczNVhBVElJOVQ5Nko3IiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiIxdkhJMGpCWERybW12UHFBRmYyWHNWIiwiaWF0IjoxNDQxMTE4Nzk2LCJpc3MiOiJodHRwczovL2FwaS5zdG9ybXBhdGguY29tL3YxL2FwcGxpY2F0aW9ucy8xZ2s0RHh6aTZvNFBiZGxCVmE2dGZSIiwic3ViIjoiaHR0cHM6Ly9hcGkuc3Rvcm1wYXRoLmNvbS92MS9hY2NvdW50cy8zYXBlbll2TDBaOXY5c3BkenBGZmV5IiwiZXhwIjoxNDQxMTIwNTk2LCJydGkiOiIxdkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
+    Authorization: Bearer eyJraWQiOiIyWkZNV[...]dkhEZ2Z0THJ4Slp3dFExc2hFaTl2In0.xlCXL7UUVnMoBKj0p0bXM_cnraWo5Io-TvUt2WBOl3k
 
 Once your application receives the request, the first thing to do is to validate the token, either using Stormpath, or using local application-side logic. The benefit of using Stormpath to validate the token through the REST API (or an SDK that is using the REST API) is that Stormpath can validate the token against the state of your Application and Account resources. To illustrate the difference:
 
@@ -1676,7 +1676,7 @@ Revoking Access and Refresh Tokens
 
   .. only:: ruby
 
-    Revoking a token is as easy as ABC. You just need to obtain it and delete it. If a user has more access tokens and you need to examine them before revoking, you can iterate through the collection and then delete:
+    Revoking a token is simple. You just need to obtain it and delete it. If a user has more access tokens and you need to examine them before revoking, you can iterate through the collection and then delete:
 
     .. literalinclude:: code/ruby/authentication/delete_user_access_tokens_req.rb
       :language: ruby
@@ -1731,52 +1731,13 @@ In general, the social login process works as follows:
 
   7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
 
-.. only:: csharp or vbnet
+.. only:: not (rest or php)
 
      a. If a matching Account is found, Stormpath will return the existing Account.
 
      b. If a matching Account is not found, Stormpath will create one and return it.
 
   7. The Account can now be used like any other Account in Stormpath.
-
-.. only:: java
-
-     a. If a matching Account is found, Stormpath will return the existing Account.
-
-     b. If a matching Account is not found, Stormpath will create one and return it.
-
- 7. At this point, the Account can now be used like any other Account in Stormpath.
-
-.. only:: nodejs
-
-    a. If a matching Account is found, Stormpath will return the existing Account.
-
-    b. If a matching Account is not found, Stormpath will create one and return it.
-
-  7. The Account can now be used like any other Account in Stormpath.
-
-.. only:: php
-
-    a. If a matching Account is found, Stormpath will return the existing Account's ``href``.
-
-    b. If a matching Account is not found, Stormpath will create one and return the new Account's ``href``.
-
-
-.. only:: python
-
-    a. If a matching Account is found, Stormpath will return the existing Account.
-
-    b. If a matching Account is not found, Stormpath will create one and return the new Account.
-
- 7. At this point, the Account can be used like any other Stormpath Account.
-
-.. only:: ruby
-
-    a. If a matching Account is found, Stormpath will return the existing Account.
-
-    b. If a matching Account is not found, Stormpath will create one and return the new Account.
-
-  7. At this point, the Account can be used like any other Stormpath Account.
 
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
@@ -2645,7 +2606,7 @@ Step 1: Create an LDAP Directory
 
 .. only:: java
 
-.. warning::
+  .. warning::
 
   The ability to create an LDAP directory is not yet available in the Java SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
 
@@ -2676,13 +2637,14 @@ Step 1: Create an LDAP Directory
   .. warning::
 
     This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
-    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+
+    In the meantime, please use the Stormpath Admin Console. Please see `the Agents section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/agents.html#creating-an-ldap-directory>`_.
 
   .. todo::
 
     Add LDAP directory creation Ruby example (ruby.todo)
 
-  .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
+    .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
     :language: ruby
 
 .. only:: rest or vbnet or csharp or php
@@ -4210,7 +4172,7 @@ First, you create the Account:
 
   .. todo::
 
-    Ruby SDK MFA
+    Ruby SDK MFA (ruby.todo)
 
     .. literalinclude:: code/ruby/authentication/mfa_create_account.rb
       :language: ruby

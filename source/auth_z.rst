@@ -309,7 +309,7 @@ To check a user's unique permissions, you must retrieve their Account's Custom D
   .. literalinclude:: code/ruby/authorization/account_with_customdata_req.rb
     :language: ruby
 
-  or you could instantiate the expansion object in the constructor:
+  Alternatively, you could instantiate the expansion object in the constructor:
 
   .. literalinclude:: code/ruby/authorization/account_with_customdata_req2.rb
     :language: ruby
@@ -529,7 +529,7 @@ This would work in much the same way as checking the permissions for a user's Ac
 
 .. only:: ruby
 
-  From here, you can retrieve the Group's customData in the same way as you did with accounts.
+  From here, you can retrieve the Group's customData in the same way as you did with Accounts.
 
   .. literalinclude:: code/ruby/authorization/account_groups_req.rb
     :language: ruby

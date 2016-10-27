@@ -440,7 +440,7 @@
 
     .. warning::
 
-      Currently the Ruby SDK doesn't provide using YAML or JSON files for storing configuration variables.
+      Currently the Ruby SDK doesn't support using YAML or JSON files for storing configuration variables.
 
       Please use environment variables or instantiate your own ``client`` instance with :ref:`Inline Code Configuration <inline_code_configuration>`
 
@@ -474,7 +474,7 @@
 
   .. only:: ruby
 
-    Currently, this functionality isn't supported by the Ruby SDK. Please use the :ref:`Inline Code Configuration <inline_code_configuration>`
+    Currently, this functionality isn't supported by the Ruby SDK. Please use the :ref:`Inline Code Configuration <inline_code_configuration>` instead.
 
   .. _inline_code_configuration:
 
@@ -535,19 +535,19 @@
 
     Initializing a client instance can be done in a number of ways:
 
-    - with the location of API key properties file:
+    - with the location of the API key properties file:
 
     .. literalinclude:: code/ruby/configuration/initialize_client/api_key_location.rb
       :language: ruby
 
-    - by explicitly setting the API key id and secret:
+    - by explicitly setting the API key ID and secret:
 
     .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
       :language: ruby
 
-    - with altered variables in the API key properties file:
+    - or with altered variables in the API key properties file.
 
-    You can even identify the names of the properties to use as the API key id and secret. For example, suppose your properties was:
+    You can even identify the names of the properties to use as the API key ID and secret. For example, suppose your properties were:
 
     .. code:: console
 
@@ -564,7 +564,7 @@
     .. literalinclude:: code/ruby/configuration/initialize_client/api_key_instance.rb
       :language: ruby
 
-    - by passing a composite application url to ``Application.load``:
+    - by passing a composite application URL to ``Application.load``:
 
     .. literalinclude:: code/ruby/configuration/initialize_client/application_url.rb
       :language: ruby
@@ -790,7 +790,7 @@
 
   .. only:: ruby
 
-    You can also change the base url for your enterprise product if needed:
+    You can also change the base URL for your enterprise product if needed:
 
     .. literalinclude:: code/ruby/configuration/initialize_client/base_url.rb
       :language: ruby
