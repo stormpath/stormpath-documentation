@@ -25,7 +25,7 @@ If you have already signed-up for Stormpath and downloaded an API Key, you can j
 
 .. note::
 
-  Note your tenant name! You will need this in the future in order to log-in to your Stormpath Admin Console.
+  Note your Tenant name! You will need this in the future in order to log-in to your Stormpath Admin Console.
 
 4. On this screen, re-enter your password and click "Log In" to enter the Admin Console. From here you will be able to perform all of the administrative functions required for your Stormpath Account. You should start by creating an API key.
 
@@ -66,8 +66,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
   - `C# <https://docs.stormpath.com/csharp/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Java <https://docs.stormpath.com/java/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Node.js <https://docs.stormpath.com/nodejs/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `PHP <https://docs.stormpath.com/php/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Python <https://docs.stormpath.com/python/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Ruby <https://docs.stormpath.com/ruby/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `VB.net <https://docs.stormpath.com/vbnet/product-guide/latest/quickstart.html#installing-the-sdk>`__
 
 .. only:: csharp or vbnet
@@ -140,6 +142,14 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
     pip install --upgrade stormpath
 
+.. only:: ruby
+
+  Make sure you first install the gem and require it:
+
+  .. code:: console
+
+    require 'stormpath-sdk'
+
 .. only:: java
 
   To set up your environment for this quickstart, follow these steps:
@@ -198,6 +208,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
   These instructions assume that you have
   `pip <http://pip.readthedocs.org/en/stable/>`_ installed on your system and
   that you have already completed the steps above, and now have:
+
+.. only:: ruby
+
+  After you have successfully installed the gem in your app, you now have:
 
 .. only:: java
 
@@ -303,6 +317,24 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
     :language: python
 
   Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
+
+.. only:: ruby
+
+  All Stormpath features are accessed through a ``Stormpath::Client`` instance, or a resource created from one. A client needs an API key (made up of an ID and a secret) from your Stormpath developer account to manage resources on that account. Initializing a client instance can be done in a number of ways:
+
+  - with the location of the API key properties file:
+
+  .. literalinclude:: code/ruby/configuration/initialize_client/api_key_location.rb
+    :language: ruby
+
+  - by explicitly setting the API key ID and secret:
+
+  .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
+    :language: ruby
+
+  For additional approaches, please head over to :ref:`Inline Code Configuration <inline_code_configuration>`.
+
+  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: not rest
 
@@ -439,6 +471,15 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
   Application resource as a Python class.  We'll use this object to create a
   new user Account and then authenticate it.
 
+.. only:: ruby
+
+  Most of the work you do with Stormpath is done through the applications and directories you have registered. You use the client to access them with their REST URL:
+
+  .. literalinclude:: code/ruby/quickstart/retrieve_your_application.rb
+    :language: ruby
+
+  The application and directory property on a client instance are also ``Enumerable`` allowing you to iterate and scan for resources via that interface.
+
 .. _quickstart-create-account:
 
 2.5. Create a User Account
@@ -532,6 +573,18 @@ Now that we've created an Application, let's create a user Account so someone ca
     :language: python
 
   The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application``, ``Account`` is the Python class that represents a Stormpath Account resource.
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/quickstart/create_account/with_application.rb
+    :language: ruby
+
+  You can also create an Account with the ``directory`` instance, storing it immediately in that Stormpath Directory.
+
+  .. literalinclude:: code/ruby/quickstart/create_account/with_directory.rb
+    :language: ruby
+
+  The ``create`` method sends a request to Stormpath and returns an ``Account``. Like ``Application`` and ``Directory``, ``Account`` is another Ruby class that represents a Stormpath Account resource.
 
 .. _quickstart-auth-user:
 
@@ -646,6 +699,15 @@ Now we have a user Account that can use your Application. But how do you authent
   If the authentication attempt is successful, you'll get an ``AuthenticationResult``, which contains a link to the Account details.
 
   If the authentication attempt fails, an ``Error`` will be thrown. The ``user_message`` and ``developer_message`` properties of the exception will contain details about the authentication failure.
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/quickstart/authentication_attempt.rb
+    :language: ruby
+
+  If the authentication is successful a ``Stormpath::Authentication::AuthenticationResult`` will be returned, which contains the ``Account`` details.
+
+  If the authentication attempt fails, a ``Stormpath::Error`` will be raised which contains the ``message``, ``developer_message``, ``status``, ``code`` and ``request_id`` properties that give details about the failed authentication.
 
 .. only:: nodejs
 
