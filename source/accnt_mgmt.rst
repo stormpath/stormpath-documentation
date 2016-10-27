@@ -2669,7 +2669,7 @@ This would prevent a user from choosing a password that is the same as any of th
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
-.. only:: not (rest or java)
+.. only:: not rest
 
   .. warning::
 
@@ -2678,98 +2678,84 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
 
-.. only:: not java
+You will find a link to the ``accountSchema`` resource in your Directory:
 
-  You will find a link to the ``accountSchema`` resource in your Directory:
+.. code-block:: json
 
-  .. code-block:: json
-
-    {
-      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
-      "name": "Account Schema Test",
-      "description": "A Directory to test Account Schema restrictions",
-      "...": "...",
-      "accountSchema": {
-        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
-      }
+  {
+    "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
+    "name": "Account Schema Test",
+    "description": "A Directory to test Account Schema restrictions",
+    "...": "...",
+    "accountSchema": {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
     }
+  }
 
-  You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
+You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
 
-  .. code-block:: http
+.. code-block:: http
 
-    GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
+  GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/json
 
-  And get back the Account Schema:
+And get back the Account Schema:
 
-  .. code-block:: json
+.. code-block:: json
 
-    {
-      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
-      "createdAt": "2016-08-19T19:42:41.961Z",
-      "modifiedAt": "2016-08-19T19:42:41.961Z",
-      "fields": {
-        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
-        "offset": 0,
-        "limit": 25,
-        "size": 2,
-        "items": [
-          {
-            "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
-            "createdAt": "2016-08-19T19:42:41.961Z",
-            "modifiedAt": "2016-08-19T19:42:41.961Z",
-            "name": "givenName",
-            "required": false,
-            "schema": {
-              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
-            }
-          },
-          {
-            "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-            "createdAt": "2016-08-19T19:42:41.961Z",
-            "modifiedAt": "2016-08-19T20:03:25.497Z",
-            "name": "surname",
-            "required": false,
-            "schema": {
-              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
-            }
+  {
+    "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
+    "createdAt": "2016-08-19T19:42:41.961Z",
+    "modifiedAt": "2016-08-19T19:42:41.961Z",
+    "fields": {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
+      "offset": 0,
+      "limit": 25,
+      "size": 2,
+      "items": [
+        {
+          "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
+          "createdAt": "2016-08-19T19:42:41.961Z",
+          "modifiedAt": "2016-08-19T19:42:41.961Z",
+          "name": "givenName",
+          "required": false,
+          "schema": {
+            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
           }
-        ]
-      },
-      "directory": {
-        "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
-      }
+        },
+        {
+          "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+          "createdAt": "2016-08-19T19:42:41.961Z",
+          "modifiedAt": "2016-08-19T20:03:25.497Z",
+          "name": "surname",
+          "required": false,
+          "schema": {
+            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+          }
+        }
+      ]
+    },
+    "directory": {
+      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
     }
-
-.. only:: java
-
-  .. literalinclude:: code/java/account_management/get_account_schema.java
-      :language: java
+  }
 
 The two Account attributes (or ``fields``) that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. only:: not java
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic Mlp...
 
-    POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic Mlp...
-
-    {
-      "email":"test123@email.com",
-      "password":"APassword1234"
-    }
-
-.. only:: java
-
-   .. literalinclude:: code/java/account_management/create_account_two_attributes.java
-     :language: java
+  {
+    "email":"test123@email.com",
+    "password":"APassword1234"
+  }
 
 3.5.2. Modifying your Directory's Account Schema
 -------------------------------------------------
@@ -2778,55 +2764,45 @@ Any attributes that are in the ``fields`` collection can have ``required`` toggl
 
 If you wanted to set ``surname`` as required, you would send the following ``POST``:
 
-.. only:: not java
+.. code-block:: http
 
-  .. code-block:: http
+  POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic Mlp...
+  Content-Type: application/json
+  Cache-Control: no-cache
 
-    POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic Mlp...
-    Content-Type: application/json
-    Cache-Control: no-cache
+  {
+    "required":"true"
+  }
 
-    {
-      "required":"true"
+And get back the following ``200 OK``:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+    "createdAt": "2016-08-19T19:42:41.961Z",
+    "modifiedAt": "2016-08-19T20:03:25.497Z",
+    "name": "surname",
+    "required": true,
+    "schema": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
     }
+  }
 
-  And get back the following ``200 OK``:
+If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
-  .. code-block:: json
+.. code-block:: json
 
-    {
-      "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-      "createdAt": "2016-08-19T19:42:41.961Z",
-      "modifiedAt": "2016-08-19T20:03:25.497Z",
-      "name": "surname",
-      "required": true,
-      "schema": {
-          "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
-      }
-    }
-
-  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
-
-  .. code-block:: json
-
-    {
-      "status": 400,
-      "code": 2000,
-      "message": "Account surname is required; it cannot be null, empty, or blank.",
-      "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
-      "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
-      "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
-    }
-
-.. only:: java
-
-  .. literalinclude:: code/java/account_management/modify_account_schema.java
-      :language: java
-
-
-  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``ResourceException`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+  {
+    "status": 400,
+    "code": 2000,
+    "message": "Account surname is required; it cannot be null, empty, or blank.",
+    "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
+    "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
+    "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
+  }
 
 .. _verify-account-email:
 
@@ -4398,15 +4374,9 @@ In this example we will show a :ref:`multi-tenant application <multitenancy>` th
 - Every Organization has its own Cloud Directory that serves as its default Account Store. Mirror Directories can be shared between Organizations.
 - The login page for this application must pass the user's Organization ``href`` or ``nameKey`` with every login attempt.
 
-.. note::
-
-  Whether the Application's Account Linking Policy
-
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
-.. code-block:: none
-
-  .. code-block:: http
+.. code-block:: http
 
   POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
   Host: api.stormpath.com

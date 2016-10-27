@@ -4101,11 +4101,11 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: not rest
+.. only:: not (rest or java)
 
  .. warning::
 
-    This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
+  This feature is not yet available in the |language| SDK. In the meantime you can find the REST documentation below.
 
 At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
 
@@ -4138,7 +4138,7 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: http
 
@@ -4156,57 +4156,55 @@ First, you create the Account:
         "password":"Changeme1"
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_create_account.java
+      :language: java
 
-    (java.todo)
+.. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_create_account.java
-        :language: java
+  .. only:: csharp or vbnet
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (node.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
-        :language: javascript
+        .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
+            :language: csharp
 
-.. only:: php
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
+            :language: vbnet
 
-    (php.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/php/authentication/mfa_create_account.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
+          :language: javascript
 
-    (python.todo)
+  .. only:: php
 
-    .. literalinclude:: code/python/authentication/mfa_create_account.py
-        :language: python
+    .. todo::
+
+      (php.todo)
+
+      .. literalinclude:: code/php/authentication/mfa_create_account.php
+        :language: php
+
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_create_account.py
+          :language: python
 
 .. only:: ruby
 
@@ -4222,9 +4220,9 @@ First, you create the Account:
 Adding an SMS Factor
 ^^^^^^^^^^^^^^^^^^^^
 
-To add an additional SMS Factor to this Account, you send a POST to that Account's ``/factors`` endpoint:
+To add an additional SMS Factor to this Account, you send the following request:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: http
 
@@ -4240,70 +4238,70 @@ To add an additional SMS Factor to this Account, you send a POST to that Account
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
-          :language: vbnet
-
 .. only:: java
-
-  .. todo::
-
-    (java.todo)
 
     .. literalinclude:: code/java/authentication/mfa_add_sms_factor_req.java
         :language: java
 
-.. only:: nodejs
+  For now ``factor.getVerificationStatus()`` will return ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` will be ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
 
-  .. todo::
+.. todo::
 
-    (node.todo)
+  .. only:: csharp or vbnet
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
-        :language: javascript
+    .. todo::
 
-.. only:: php
+      (dotnet.todo)
 
-  .. todo::
+      .. only:: csharp
 
-    (php.todo)
+        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
+            :language: csharp
 
-    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
-      :language: php
+      .. only:: vbnet
 
-.. only:: python
+        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
-        :language: python
+      (node.todo)
 
-.. only:: ruby
+      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    MFA Add sms factor request (ruby.todo)
+    .. todo::
 
-  .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
-    :language: ruby
+      (php.todo)
 
-You will then get back the response:
+      .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
+        :language: php
 
-.. only:: rest
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Add sms factor request (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
+      :language: ruby
+
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+
+  You will then get back the response:
 
   .. code-block:: json
 
@@ -4326,70 +4324,66 @@ You will then get back the response:
       "mostRecentChallenge": null
     }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_add_sms_factor_resp.java
-        :language: java
+      (node.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
-        :language: javascript
+      (php.todo)
 
-.. only:: php
+      .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
-      :language: php
+      (python.todo)
 
-.. only:: python
+      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
+          :language: python
 
-  .. todo::
+  .. only:: ruby
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
-        :language: python
-
-.. only:: ruby
-
-  .. todo::
-
-    MFA Add sms factor response (ruby.todo)
+      MFA Add sms factor response (ruby.todo)
 
     .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
       :language: ruby
 
-For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
-For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+
+  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
+
+  For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
 .. _mfa-adding-factor-google:
 
@@ -4398,7 +4392,7 @@ Adding a Google Authenticator Factor
 
 To add an additional Google Authenticator Factor to this Account, you must send the following request:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: http
 
@@ -4412,70 +4406,68 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       "accountName": "jakub@stormpath.com"
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
+    :language: java
 
-    (java.todo)
+.. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
-        :language: java
+  .. only:: csharp or vbnet
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (node.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
-        :language: javascript
+        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
+            :language: csharp
 
-.. only:: php
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
+            :language: vbnet
 
-    (php.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
+          :language: javascript
 
-    (python.todo)
+  .. only:: php
 
-    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
-        :language: python
+    .. todo::
 
-.. only:: ruby
+      (php.todo)
 
-  .. todo::
+      .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
+        :language: php
 
-    MFA Add ga factor req (ruby.todo)
+  .. only:: python
 
-  .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
-    :language: ruby
+    .. todo::
 
-You will then get back the response:
+      (python.todo)
 
-.. only:: rest
+      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Add ga factor req (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
+      :language: ruby
+
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+
+  You will then get back the response:
 
   .. code-block:: json
 
@@ -4502,77 +4494,70 @@ You will then get back the response:
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_add_ga_factor_resp.java
-        :language: java
+      (node.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
-        :language: javascript
+      (php.todo)
 
-.. only:: php
+      .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
-      :language: php
+      (python.todo)
 
-.. only:: python
+      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
+          :language: python
 
-  .. todo::
+  .. only:: ruby
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
-        :language: python
+      MFA Add ga factor response (ruby.todo)
 
-.. only:: ruby
-
-  .. todo::
-
-    MFA Add ga factor response (ruby.todo)
-
-  .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
-    :language: ruby
+    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
+      :language: ruby
 
 The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
 
 You can now take this string and turn it into a QR Code image:
 
-- You could use the use a QR Code Library, such as `QRCode.js <https://davidshimjs.github.io/qrcodejs/>`__
+- You could use a QR Code Library, such as `QRCode.js <https://davidshimjs.github.io/qrcodejs/>`__
 - Or you could generate the image yourself, using an ``<img>`` tag or CSS. For examples of both, see `here <https://css-tricks.com/examples/DataURIs/>`__.
 
 .. todo::
 
-  Not sure if this applies for the SDKs?
+  Not sure if this text above applies for the SDKs?
 
 Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
 
@@ -4583,7 +4568,7 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 At this point in the example you have a brand new Account with two additional Factors.
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
 
@@ -4636,66 +4621,66 @@ At this point in the example you have a brand new Account with two additional Fa
       ]
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  If you were to retrieve the Account's ``factors`` you will get them:
 
-    (java.todo)
+  .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
+    :language: java
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
-        :language: java
+.. todo::
 
-.. only:: nodejs
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (dotnet.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
-        :language: javascript
+      .. only:: csharp
 
-.. only:: php
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
+            :language: csharp
 
-  .. todo::
+      .. only:: vbnet
 
-    (php.todo)
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
+            :language: vbnet
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
-      :language: php
+  .. only:: nodejs
 
-.. only:: python
+    .. todo::
 
-  .. todo::
+      (node.todo)
 
-    (python.todo)
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
+          :language: javascript
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
-        :language: python
+  .. only:: php
 
-.. only:: ruby
+    .. todo::
 
-  .. todo::
+      (php.todo)
 
-    MFA get account factors response (ruby.todo)
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
+        :language: php
 
-  .. literalinclude:: code/ruby/authentication/mfa_get_account_factors1_resp.rb
-    :language: ruby
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA get account factors response (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors1_resp.rb
+      :language: ruby
 
 You will now challenge each of these factors.
 
@@ -4711,9 +4696,9 @@ This example covers challenging Factors that have already been created. To see a
 Challenging an SMS Factor
 """""""""""""""""""""""""
 
-To challenge an SMS Factor, you send a request like this, with or without specifying a message.
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
-.. only:: rest
+  To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
   .. code-block:: http
 
@@ -4727,73 +4712,75 @@ To challenge an SMS Factor, you send a request like this, with or without specif
       "message":"For the sake of example, your code is ${code}."
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  To challenge an SMS Factor, call ``factor.createChallenge(challenge);`` with or without setting a message.
 
-    (java.todo)
+  This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
-        :language: java
+  .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
+    :language: java
 
-.. only:: nodejs
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
-        :language: javascript
+      (dotnet.todo)
 
-.. only:: php
+      .. only:: csharp
 
-  .. todo::
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
+            :language: csharp
 
-    (php.todo)
+      .. only:: vbnet
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
-      :language: php
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
+            :language: vbnet
 
-.. only:: python
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (node.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
-        :language: python
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
+          :language: javascript
 
-.. only:: ruby
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    MFA Challenge sms factor req (ruby.todo)
+      (php.todo)
 
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
-    :language: ruby
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
+        :language: php
+
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Challenge sms factor req (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
+      :language: ruby
 
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
-In response to this request you would get back a Challenge:
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
-.. only:: rest
+  In response to this request you would get back a Challenge:
 
   .. code-block:: json
 
@@ -4813,66 +4800,59 @@ In response to this request you would get back a Challenge:
 
   For more information about this Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_resp.java
-        :language: java
+      (node.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
-        :language: javascript
+      (php.todo)
 
-.. only:: php
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
-      :language: php
+      (python.todo)
 
-.. only:: python
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
+          :language: python
 
-  .. todo::
+  .. only:: ruby
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
-        :language: python
+      MFA Challenge sms factor response (ruby.todo)
 
-.. only:: ruby
-
-  .. todo::
-
-    MFA Challenge sms factor response (ruby.todo)
-
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_resp.rb
-    :language: ruby
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_resp.rb
+      :language: ruby
 
 The resulting SMS would look like this:
 
@@ -4885,13 +4865,15 @@ This code will remain valid for 300 seconds (5 minutes).
 
 Next, you must collect this code from the user.
 
-.. note::
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
-  The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
+  .. note::
+
+    The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
 
 Once you have the code, you send it to the same Challenge you created above:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: http
 
@@ -4904,70 +4886,68 @@ Once you have the code, you send it to the same Challenge you created above:
       "code":"633559"
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
+    :language: java
 
-    (java.todo)
+.. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
-        :language: java
+  .. only:: csharp or vbnet
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (node.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
-        :language: javascript
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
+            :language: csharp
 
-.. only:: php
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
+            :language: vbnet
 
-    (php.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
+          :language: javascript
 
-    (python.todo)
+  .. only:: php
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
-        :language: python
+    .. todo::
 
-.. only:: ruby
+      (php.todo)
 
-  .. todo::
+      .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
+        :language: php
 
-    MFA Challenge sms code (ruby.todo)
+  .. only:: python
 
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
-    :language: ruby
+    .. todo::
 
-And then you would get back the response:
+      (python.todo)
 
-.. only:: rest
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Challenge sms code (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
+      :language: ruby
+
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+
+  And then you would get back the response:
 
   .. code-block:: json
 
@@ -4985,76 +4965,65 @@ And then you would get back the response:
       "status": "SUCCESS"
     }
 
-.. only:: csharp or vbnet
+  If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
-  .. todo::
+  For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
 
-    (dotnet.todo)
+.. todo::
 
-    .. only:: csharp
+  .. only:: csharp or vbnet
 
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
-          :language: csharp
+    .. todo::
 
-    .. only:: vbnet
+      (dotnet.todo)
 
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
-          :language: vbnet
+      .. only:: csharp
 
-.. only:: java
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
+            :language: csharp
 
-  .. todo::
+      .. only:: vbnet
 
-    (java.todo)
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
+            :language: vbnet
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_sms_code_success.java
-        :language: java
+  .. only:: nodejs
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (node.todo)
 
-    (node.todo)
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
+          :language: javascript
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
-        :language: javascript
+  .. only:: php
 
-.. only:: php
+    .. todo::
 
-  .. todo::
-
-    (php.todo)
+      (php.todo)
 
     .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
       :language: php
 
-.. only:: python
+  .. only:: ruby
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      MFA Challenge sms code success (ruby.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
-        :language: python
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
+      :language: ruby
 
-.. only:: ruby
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    MFA Challenge sms code success (ruby.todo)
+      (python.todo)
 
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
-    :language: ruby
+      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
+          :language: python
 
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
-
-.. only:: rest
-
-  For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
-
-.. only:: not rest
-
-  For a full list of Challenge statuses, please see :ref:`the Reference chapter of the REST API Guide <challenge-status-values>`.
 
 .. note::
 
@@ -5071,83 +5040,81 @@ Unlike the SMS challenge process, the Google Authenticator challenge process doe
 
 Once you have collected the code from the user, send the code generated by your Google Authenticator app:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: http
 
-    POST /v1/factors/4KOeu7ypRQI8Bpk2org7tk/challenges HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
+      POST /v1/factors/4KOeu7ypRQI8Bpk2org7tk/challenges HTTP/1.1
+      Host: api.stormpath.com
+      Authorization: Basic MlpG...
+      Content-Type: application/json
 
-    {
-      "code":"786393"
-    }
-
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
-          :language: vbnet
+      {
+        "code":"786393"
+      }
 
 .. only:: java
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
+    :language: java
 
-    (java.todo)
+.. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
-        :language: java
+  .. only:: csharp or vbnet
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (node.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
-        :language: javascript
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
+            :language: csharp
 
-.. only:: php
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
+            :language: vbnet
 
-    (php.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
+          :language: javascript
 
-    (python.todo)
+  .. only:: php
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
-        :language: python
+    .. todo::
 
-.. only:: ruby
+      (php.todo)
 
-  .. todo::
+      .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
+        :language: php
 
-    MFA Challenge ga factor req (ruby.todo)
+  .. only:: python
 
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
-    :language: ruby
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Challenge ga factor req (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
+      :language: ruby
 
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   .. code-block:: json
 
@@ -5164,66 +5131,64 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
+    :language: java
 
-    (java.todo)
+.. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
-        :language: java
+  .. only:: csharp or vbnet
 
-.. only:: nodejs
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (node.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
-        :language: javascript
+        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
+            :language: csharp
 
-.. only:: php
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
+            :language: vbnet
 
-    (php.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
-      :language: php
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
+          :language: javascript
 
-    (python.todo)
+  .. only:: php
 
-    .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
-        :language: python
+    .. todo::
 
-.. only:: ruby
+      (php.todo)
 
-  .. todo::
+      .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
+        :language: php
 
-    MFA Challenge ga factor response (ruby.todo)
+  .. only:: python
 
-  .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
-    :language: ruby
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Challenge ga factor response (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
+      :language: ruby
 
 .. _mfa-challenge-during:
 
@@ -5234,9 +5199,9 @@ Challenging During Factor Creation
 
   For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
-  To send a challenge at the same time as you create the phone Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
+  To send a challenge at the same time as you create the SMS Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
   .. code-block:: http
 
@@ -5255,79 +5220,88 @@ Challenging During Factor Creation
       }
     }
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
-          :language: vbnet
-
 .. only:: java
 
-  .. todo::
+  To create a Challenge at the same time as you create the SMS Factor, you can use this builder:
 
-    (java.todo)
+  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_default.java
+      :language: java
 
-    .. literalinclude:: code/java/authentication/mfa_create_and_challenge_req.java
-        :language: java
+  This would create a Factor and a challenge with the default message.
 
-.. only:: nodejs
+  If you wanted to specify a custom message instead, you would need :
 
-  .. todo::
+  .. literalinclude:: code/java/authentication/mfa_create_and_challenge_message.java
+    :language: java
 
-    (node.todo)
+.. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
-        :language: javascript
+  .. only:: csharp or vbnet
 
-.. only:: php
+    .. todo::
 
-  .. todo::
+      (dotnet.todo)
 
-    (php.todo)
+      .. only:: csharp
 
-    .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
-      :language: php
+        .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
+            :language: csharp
 
-.. only:: python
+      .. only:: vbnet
 
-  .. todo::
+        .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
+            :language: vbnet
 
-    (python.todo)
+  .. only:: nodejs
 
-    .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
-        :language: python
+    .. todo::
 
-.. only:: ruby
+      (node.todo)
 
-  .. todo::
+      .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
+          :language: javascript
 
-    MFA Create and challenge request (ruby.todo)
+  .. only:: php
 
-  .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
-    :language: ruby
+    .. todo::
+
+      (php.todo)
+
+      .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
+        :language: php
+
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA Create and challenge request (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
+      :language: ruby
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
-.. note::
+.. only:: rest
 
-  If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
+  .. note::
+
+    If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The first step will be getting the user authenticated.
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
-.. only:: rest
+  The first step will be getting the user authenticated.
 
   In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
@@ -5342,70 +5316,63 @@ The first step will be getting the user authenticated.
       "value": "amFrdWIrbWZhdGVzdExamplebXBhdGguY29tOkNoYW5nZW1lMQ=="
     }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_auth_account_req.java
-        :language: java
+      (node.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
-        :language: javascript
+      (php.todo)
 
-.. only:: php
+      .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
-      :language: php
+      (python.todo)
 
-.. only:: python
+      .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
+          :language: python
 
-  .. todo::
+  .. only:: ruby
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
-        :language: python
+      MFA Auth account request (ruby.todo)
 
-.. only:: ruby
+    .. literalinclude:: code/ruby/authentication/mfa_auth_account_req.rb
+      :language: ruby
 
-  .. todo::
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
 
-    MFA Auth account request (ruby.todo)
-
-  .. literalinclude:: code/ruby/authentication/mfa_auth_account_req.rb
-    :language: ruby
-
-If authentication is successful, you will get back the Account:
-
-.. only:: rest
+  If authentication is successful, you will get back the Account:
 
   .. code-block:: json
 
@@ -5424,142 +5391,135 @@ If authentication is successful, you will get back the Account:
       }
     }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
+      .. only:: csharp
+
+        .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
           :language: csharp
 
-    .. only:: vbnet
+      .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
+        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
           :language: vbnet
 
-.. only:: java
+  .. only:: nodejs
 
-  .. todo::
+    .. todo::
 
-    (java.todo)
+      (node.todo)
 
-    .. literalinclude:: code/java/authentication/mfa_auth_account_resp.java
-        :language: java
-
-.. only:: nodejs
-
-  .. todo::
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
+      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
         :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. todo::
+    .. todo::
 
-    (php.todo)
+      (php.todo)
 
-    .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
-      :language: php
+      .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
+        :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. todo::
+    .. todo::
 
-    (python.todo)
+      (python.todo)
 
-    .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
+      .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
-.. only:: ruby
+  .. only:: ruby
 
-  .. todo::
+    .. todo::
 
-    MFA Auth account response (ruby.todo)
+      MFA Auth account response (ruby.todo)
 
-  .. literalinclude:: code/ruby/authentication/mfa_auth_account_resp.rb
-    :language: ruby
+    .. literalinclude:: code/ruby/authentication/mfa_auth_account_resp.rb
+      :language: ruby
 
-Next, you will need to retrieve the Account's ``factors`` collection:
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
 
-.. only:: rest
+  Next, you will need to retrieve the Account's ``factors`` collection:
 
   .. code-block:: http
 
-    GET /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json
-
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
-    .. only:: csharp
-
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
-          :language: csharp
-
-    .. only:: vbnet
-
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
-          :language: vbnet
+      GET /v1/accounts/5IvkjoqcYNe3TYMExample/factors HTTP/1.1
+      Host: api.stormpath.com
+      Authorization: Basic MlpG...
+      Content-Type: application/json
 
 .. only:: java
 
-  .. todo::
+  You will need to retrieve the Account's ``factors`` collection:
 
-    (java.todo)
+  .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
+    :language: java
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
-        :language: java
+.. todo::
 
-.. only:: nodejs
+  .. only:: csharp or vbnet
 
-  .. todo::
+    .. todo::
 
-    (node.todo)
+      (dotnet.todo)
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
-        :language: javascript
+      .. only:: csharp
 
-.. only:: php
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
+            :language: csharp
 
-  .. todo::
+      .. only:: vbnet
 
-    (php.todo)
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
+            :language: vbnet
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
-      :language: php
+  .. only:: nodejs
 
-.. only:: python
+    .. todo::
 
-  .. todo::
+      (node.todo)
 
-    (python.todo)
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
+          :language: javascript
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
-        :language: python
+  .. only:: php
 
-.. only:: ruby
+    .. todo::
 
-  .. todo::
+      (php.todo)
 
-    MFA get account factors request (ruby.todo)
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
+        :language: php
 
-  .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_req.rb
-    :language: ruby
+  .. only:: python
+
+    .. todo::
+
+      (python.todo)
+
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
+          :language: python
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA get account factors request (ruby.todo)
+
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_req.rb
+      :language: ruby
 
 Which will return:
 
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
 
   .. code-block:: json
 
@@ -5592,106 +5552,102 @@ Which will return:
       ]
     }
 
-.. only:: csharp or vbnet
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (dotnet.todo)
+    .. todo::
 
-    .. only:: csharp
+      (dotnet.todo)
 
-      .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
-          :language: csharp
+      .. only:: csharp
 
-    .. only:: vbnet
+        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
+            :language: csharp
 
-      .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
-          :language: vbnet
+      .. only:: vbnet
 
-.. only:: java
+        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
+            :language: vbnet
 
-  .. todo::
+  .. only:: nodejs
 
-    (java.todo)
+    .. todo::
 
-    .. literalinclude:: code/java/authentication/mfa_get_account_factors2_resp.java
-        :language: java
+      (node.todo)
 
-.. only:: nodejs
+      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
+          :language: javascript
 
-  .. todo::
+  .. only:: php
 
-    (node.todo)
+    .. todo::
 
-    .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
-        :language: javascript
+      (php.todo)
 
-.. only:: php
+      .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
+        :language: php
 
-  .. todo::
+  .. only:: python
 
-    (php.todo)
+    .. todo::
 
-    .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
-      :language: php
+      (python.todo)
 
-.. only:: python
+      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
+          :language: python
 
-  .. todo::
+  .. only:: ruby
 
-    (python.todo)
+    .. todo::
 
-    .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
-        :language: python
+      MFA get account factors response (ruby.todo)
 
-.. only:: ruby
+    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_resp.rb
+      :language: ruby
 
-  .. todo::
-
-    MFA get account factors response (ruby.todo)
-
-  .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_resp.rb
-    :language: ruby
-
-.. only:: rest
+.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
-.. only:: csharp or vbnet
-
-  .. todo::
-
-    (dotnet.todo)
-
 .. only:: java
 
-  .. todo::
+  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
-    (java.todo)
+  .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
+    :language: java
 
-.. only:: nodejs
+.. todo::
 
-  .. todo::
+  .. only:: csharp or vbnet
 
-    (node.todo)
+    .. todo::
 
-.. only:: php
+      (dotnet.todo)
 
-  .. todo::
+  .. only:: nodejs
 
-    (php.todo)
+    .. todo::
 
-.. only:: python
+      (node.todo)
 
-  .. todo::
+  .. only:: php
 
-    (python.todo)
+    .. todo::
 
-.. only:: ruby
+      (php.todo)
 
-  .. todo::
+  .. only:: python
 
-    MFA post to factor.challenges (ruby.todo)
+    .. todo::
+
+      (python.todo)
+
+  .. only:: ruby
+
+    .. todo::
+
+      MFA post to factor.challenges (ruby.todo)
 
 .. only:: not rest
 
