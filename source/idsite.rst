@@ -412,6 +412,17 @@ A typical set of steps in your application are as follows:
 
   Once the URL is built, redirect the user in order to send them to ID Site.
 
+.. only:: ruby
+
+  This is typically done by calling the ``create_id_site_url`` method on your ``Application`` object to generate a URL that you will then redirect your user to:
+
+  .. literalinclude:: code/ruby/idsite/build_idsite_url.rb
+    :language: ruby
+
+  The ``callback_uri`` option to the ``create_id_site_url`` method sets the location in your application the user will be returned to when they complete the ID Site flow.
+
+  Once the URL is built, redirect the user in order to send them to ID Site.
+
 Step 2: Handling the Callback to your Application from ID Site
 --------------------------------------------------------------
 
@@ -630,6 +641,35 @@ The ``jwtResponse`` represents a JWT that provides a signed security assertion a
     * - ``status``
       - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
 
+
+.. only:: ruby
+
+  With the full URI that includes the ``jwtResponse`` query parameter, you will need to call the ``handle_id_site_callback`` method on the ``Application`` object:
+
+  .. literalinclude:: code/ruby/idsite/consume_assertion.rb
+    :language: ruby
+
+  This will result in a object instance being returned with four properties:
+
+  .. list-table::
+    :widths: 15 60
+    :header-rows: 1
+
+    * - Property
+      - Description
+
+    * - ``account``
+      - The Account resource that contains all information about the user who was just returned from ID Site.
+
+    * - ``state``
+      - The state of your Application, if you have chosen to have this passed back.
+
+    * - ``status``
+      - The status of the request. Valid values for ID Site are ``AUTHENTICATED``, ``LOGOUT``, or ``REGISTERED``.
+
+    * - ``is_new_account``
+      - If the Account is a new Account to the Application.
+
 .. only:: rest
 
   Once the ID Site assertion is validated, you can read information about the user from it.
@@ -697,6 +737,11 @@ Stormpath will validate the JWT (i.e. ensure that it has not been tampered with,
 
     .. literalinclude:: code/python/idsite/jwt_for_oauth_req.py
       :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/idsite/jwt_for_oauth_req.rb
+    :language: ruby
 
 .. only:: rest
 
@@ -774,6 +819,11 @@ ID Site will keep a configurable session for authenticated users. When a user is
 
   .. literalinclude:: code/python/idsite/logout_from_idsite_req.py
     :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/idsite/logout_from_idsite_req.rb
+    :language: ruby
 
 Once the user is logged out of ID Site, they are automatically redirected to the ``cb_uri`` which was specified in the JWT.
 
@@ -855,6 +905,11 @@ If you are using ID Site for login, then it stands to reason that you would want
   .. literalinclude:: code/python/idsite/idsite_reset_pwd.py
     :language: python
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/idsite/idsite_reset_pwd.rb
+    :language: ruby
+
 .. _idsite-multitenancy:
 
 7.5. Using ID Site for Multi-tenancy
@@ -888,6 +943,10 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
   In the arguments that can be passed in the ``build_id_site_redirect_url()`` method, there are a few that can be used to allow for multi-tenancy.
 
+.. only:: ruby
+
+  In the arguments that can be passed in the ``create_id_site_url`` method, there are a few that can be used to allow multi-tenancy.
+
 **Organization nameKey**
 
 .. only:: rest
@@ -910,7 +969,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
   ``organizationNameKey``: Allows you to specify an Organization's ``namekey``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
-.. only:: python
+.. only:: python and ruby
 
   ``organization_name_key``: Allows you to specify an Organization's ``name_key``. The user is sent to the ID Site for that Organization, and is forced to log in to that Organization.
 
@@ -1016,7 +1075,7 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
     *ID Site with Organization field on and prepopulated*
 
-.. only:: python
+.. only:: python and ruby
 
   ``show_organization_field``: Toggles the "Organization" field on and off on ID Site. Used on its own, it will allow the user to specify the Organization that they would like to log in to.
 
@@ -1071,6 +1130,10 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
   .. todo::
 
     (python.todo)
+
+.. only:: ruby
+
+  ``use_subdomain``: If combined with ``organization_name_key``, will redirect the user to an ID Site with the Organization's ``name_key`` as a sub-domain in its URL.
 
 For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
 
