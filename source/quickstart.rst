@@ -25,7 +25,7 @@ If you have already signed-up for Stormpath and downloaded an API Key, you can j
 
 .. note::
 
-  Note your tenant name! You will need this in the future in order to log-in to your Stormpath Admin Console.
+  Note your Tenant name! You will need this in the future in order to log-in to your Stormpath Admin Console.
 
 4. On this screen, re-enter your password and click "Log In" to enter the Admin Console. From here you will be able to perform all of the administrative functions required for your Stormpath Account. You should start by creating an API key.
 
@@ -66,8 +66,10 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
   - `C# <https://docs.stormpath.com/csharp/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Java <https://docs.stormpath.com/java/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Node.js <https://docs.stormpath.com/nodejs/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `PHP <https://docs.stormpath.com/php/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Python <https://docs.stormpath.com/python/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Ruby <https://docs.stormpath.com/ruby/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `VB.net <https://docs.stormpath.com/vbnet/product-guide/latest/quickstart.html#installing-the-sdk>`__
 
 .. only:: csharp or vbnet
@@ -209,7 +211,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. only:: ruby
 
-  After you successfully installed the gem in your app you have:
+  After you have successfully installed the gem in your app, you now have:
 
 .. only:: java
 
@@ -318,21 +320,21 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
 .. only:: ruby
 
-  All Stormpath features are accessed through a ``Stormpath::Client`` instance, or a resource created from one. A client needs an API key (made up of an id and a secret) from your Stormpath developer account to manage resources on that account. Initializing a client instance can be done in a number of ways:
+  All Stormpath features are accessed through a ``Stormpath::Client`` instance, or a resource created from one. A client needs an API key (made up of an ID and a secret) from your Stormpath developer account to manage resources on that account. Initializing a client instance can be done in a number of ways:
 
-  - with the location of API key properties file:
+  - with the location of the API key properties file:
 
   .. literalinclude:: code/ruby/configuration/initialize_client/api_key_location.rb
     :language: ruby
 
-  - by explicitly setting the API key id and secret:
+  - by explicitly setting the API key ID and secret:
 
   .. literalinclude:: code/ruby/configuration/initialize_client/api_key_and_secret.rb
     :language: ruby
 
-  For additional approaches, please head over to :ref:`Inline Code Configuration <inline_code_configuration>`
+  For additional approaches, please head over to :ref:`Inline Code Configuration <inline_code_configuration>`.
 
-  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application.  It maintains its own cache, so you only want to generate a single Client instance for any application.
+  Once you have a ``Client`` instance, keep it around! You should only create it **once** per application. It maintains its own cache, so you only want to generate a single Client instance for any application.
 
 .. only:: not rest
 
@@ -577,7 +579,7 @@ Now that we've created an Application, let's create a user Account so someone ca
   .. literalinclude:: code/ruby/quickstart/create_account/with_application.rb
     :language: ruby
 
-  You can also create an account with the directory instance, storing it immediately in that Stormpath directory.
+  You can also create an Account with the ``directory`` instance, storing it immediately in that Stormpath Directory.
 
   .. literalinclude:: code/ruby/quickstart/create_account/with_directory.rb
     :language: ruby

@@ -81,9 +81,7 @@ This is the standard, default Directory resource.
 How to Make a Cloud Directory
 """""""""""""""""""""""""""""
 
-.. only:: not python
-
-  The following request:
+This is how you create a Cloud Directory:
 
 .. only:: rest
 
@@ -138,7 +136,7 @@ How to Make a Cloud Directory
 
 .. only:: rest
 
-  Would yield the following response:
+  This POST would yield the following response:
 
   .. code-block:: HTTP
 
@@ -167,7 +165,7 @@ How to Make a Cloud Directory
 
 .. only:: csharp or vbnet
 
-  Would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
+  This would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
 
   .. note::
 
@@ -175,7 +173,7 @@ How to Make a Cloud Directory
 
 .. only:: java
 
-  Would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
+  This would create the "Captains" Directory in Stormpath and update the ``captainsDirectory`` variable. The properties and methods available on ``captainsDirectory`` represent the resource information and the actions that can be performed on the resource.
 
   .. note::
 
@@ -183,14 +181,14 @@ How to Make a Cloud Directory
 
 .. only:: nodejs
 
-  Would yield the following response:
+  This would yield the following response:
 
   .. literalinclude:: code/nodejs/account_management/create_cloud_dir_resp.js
     :language: javascript
 
 .. only:: php
 
-  Would yield the following response:
+  This would yield the following response:
 
   .. literalinclude:: code/php/account_management/create_cloud_dir_resp.php
     :language: php
@@ -321,7 +319,8 @@ How to Make an LDAP Directory
   .. warning::
 
     This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
-    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+
+    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_ for more information.
 
   .. todo::
 
@@ -1582,7 +1581,7 @@ A Filter search will locate the specified string in any searchable attribute of 
   .. literalinclude:: code/ruby/account_management/search_app_accounts_for_word_req.rb
     :language: ruby
 
-  You can also specify a column if you just want to limit searching the query in that attribute:
+  You can also specify a column if you just want to limit the search query to that attribute:
 
   .. literalinclude:: code/ruby/account_management/search_app_accounts_by_column.rb
     :language: ruby
@@ -2258,7 +2257,7 @@ There are three steps to the password reset flow:
 
   .. note::
 
-    Another possible way is to just create a password reset token without sending the email to the account:
+    Another possible way is to just create a password reset token without sending an email:
 
   .. literalinclude:: code/ruby/account_management/reset_trigger_req_without_email.rb
     :language: ruby
@@ -3414,7 +3413,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
   .. todo::
 
-    This
+    This (ruby.todo)
 
 .. only:: rest or csharp or vbnet or php or python or java or ruby
 
