@@ -2608,7 +2608,7 @@ Step 1: Create an LDAP Directory
 
   .. warning::
 
-  The ability to create an LDAP directory is not yet available in the Java SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
+    The ability to create an LDAP directory is not yet available in the Java SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
 
 .. only:: nodejs
 
@@ -2645,7 +2645,7 @@ Step 1: Create an LDAP Directory
     Add LDAP directory creation Ruby example (ruby.todo)
 
     .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
-    :language: ruby
+      :language: ruby
 
 .. only:: rest or vbnet or csharp or php
 
