@@ -4071,7 +4071,7 @@
         - Optional Query Parameters
         - Description
 
-      * - POST /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
+      * - POST /v1/groupMemberships
         - Required: ``account``, ``group``
         - N/A
         - Creates a new groupMembership resource.
