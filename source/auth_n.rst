@@ -4366,7 +4366,12 @@ To add an additional Google Authenticator Factor to this Account, you must send 
     {
       "type":"google-authenticator",
       "accountName": "jakub@stormpath.com"
+      "issuer": "Example App"
     }
+
+.. note::
+
+  Although the ``issuer`` field is not required, it is recommended because it will make a name show up under the code in the Google Authenticator app.
 
 .. only:: java
 
