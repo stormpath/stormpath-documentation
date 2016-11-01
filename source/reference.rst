@@ -4071,7 +4071,7 @@
         - Optional Query Parameters
         - Description
 
-      * - POST /v1/groupMemberships/$GROUP_MEMBERSHIP_ID
+      * - POST /v1/groupMemberships
         - Required: ``account``, ``group``
         - N/A
         - Creates a new groupMembership resource.
@@ -5448,7 +5448,7 @@
     * - ``issuer``
       - String
       - N/A
-      - (Google Authenticator only; Optional) The issuer of the Google Authenticator Factor.
+      - (Google Authenticator only; Optional) The issuer of the Google Authenticator Factor. This name will appear in the Google Authenticator (or Authy, etc) application under the code.
 
     * - ``secret``
       - String
