@@ -4084,7 +4084,7 @@ The multi-factor authentication process works as follows with text messages:
 With Google Authenticator, the flow is only slightly different:
 
 #. An additional **Factor** of type ``google-authenticator`` is added to an Account.
-#. The new **Factor** has a **secret** and a Base64-encoded **QR code**, both of which can be used to add it to the Google Authenticator app.
+#. The new **Factor** has a **secret** and a Base64-encoded **QR code**, both of which can be used to add it to the Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) app.
 #. At any time, you can send the **code** from the Authenticator app to Stormpath's ``/challenges`` endpoint, at which point you will get back either a ``SUCCESS`` or ``FAILED`` response.
 
 .. note::
@@ -4371,7 +4371,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
 .. note::
 
-  Although the ``issuer`` field is not required, it is recommended because it will make a name show up under the code in the Google Authenticator app.
+  Although the ``issuer`` field is not required, it is recommended because it will make a name show up under the code in the Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) app.
 
 .. only:: java
 
@@ -4522,11 +4522,11 @@ You can now take this string and turn it into a QR Code image:
 - You could use a QR Code Library, such as `QRCode.js <https://davidshimjs.github.io/qrcodejs/>`__
 - Or you could generate the image yourself, using an ``<img>`` tag or CSS. For examples of both, see `here <https://css-tricks.com/examples/DataURIs/>`__.
 
-.. todo::
-
-  Not sure if this text above applies for the SDKs?
-
 Once the image is generated, the user will scan it into their Authenticator app. If you ask them for a code, they will go into the app and find the code for your application. For information about what happens with this code, see :ref:`below <mfa-challenge-after-google>`.
+
+.. note::
+
+  Many authenticator apps are compatible with Google Authenticator QR codes. Apps we like include `Authy <https://www.authy.com/app/>`__ and `Duo Mobile <https://duo.com/solutions/features/two-factor-authentication-methods/duo-mobile>`__.
 
 .. _mfa-challenge:
 
