@@ -638,9 +638,9 @@ Configuring Token-Based Authentication
 
 Stormpath is configurable so you can set the time to live (TTL) for both the Access and Refresh tokens. This is important for many applications because it gives the ability to define how the tokens expire. For example, you could decide that your application requires a user to log in daily, but the access should only live for 10 minutes. Or, you could decide that for your application, users should be able to stay logged-in for two months and the access token expires in an hour.
 
-Each Application resource in Stormpath has an associated :ref:`OAuth Policy resource <ref-oauth-policy>` where the TTLs for a particular Application's tokens are stored:
-
 .. only:: rest
+
+  Each Application resource in Stormpath has an associated `OAuth Policy resource <ref-oauth-policy>` where the TTLs for a particular Application's tokens are stored:
 
   .. code-block:: json
 
@@ -650,6 +650,10 @@ Each Application resource in Stormpath has an associated :ref:`OAuth Policy reso
         "refreshTokenTtl": "P60D",
         "comment":" // This JSON has been truncated for readability"
     }
+
+.. only:: not rest
+
+  Each Application resource in Stormpath has an associated OAuth Policy where the TTLs for a particular Application's tokens are stored:
 
 .. only:: csharp or vbnet
 
