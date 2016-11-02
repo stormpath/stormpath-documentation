@@ -192,6 +192,11 @@
     .. literalinclude:: code/ruby/configuration/memcached_cache.rb
       :language: ruby
 
+    If you want to configure your Memcached server with custom options like ``ttl``, ``prefix_key`` or ``credentials``, pass the ``store_opts`` hash with the attributes that Memcached provides:
+
+    .. literalinclude:: code/ruby/configuration/memcached_cache2.rb
+      :language: ruby
+
   Redis
   '''''
 
@@ -282,9 +287,13 @@
     The Stormpath Ruby SDK provides a cache plugin that works with Redis.
 
     To use this plugin in your application, initialize the ``client`` instance and configure your store cache and regions store however you want.
-    Currently, you can use the default cache store ``MemoryStore``, ``Redis`` and ``DisabledCacheStore``
 
     .. literalinclude:: code/ruby/configuration/redis_cache.rb
+      :language: ruby
+
+    If you need deeper caching configuration, pass the ``store_opts`` hash with attributes that Redis supports:
+
+    .. literalinclude:: code/ruby/configuration/redis_cache2.rb
       :language: ruby
 
   Other Caches
