@@ -640,7 +640,7 @@ Stormpath is configurable so you can set the time to live (TTL) for both the Acc
 
 .. only:: rest
 
-  Each Application resource in Stormpath has an associated `OAuth Policy resource <ref-oauth-policy>` where the TTLs for a particular Application's tokens are stored:
+  Each Application resource in Stormpath has an associated `OAuth Policy resource <ref-oauth-policy>`__ where the TTLs for a particular Application's tokens are stored:
 
   .. code-block:: json
 
