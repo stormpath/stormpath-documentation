@@ -38,16 +38,16 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 1. On the right side of the Admin Console, under "Developer Tools", click the "Create API Key" button.
 
-2. A dialog box will come up, with additional information about the key. You will now be able to download your key in the form of a ``apiKey.properties`` file. This file contains your Stormpath API Key information, which can be used to authenticate with the Stormpath API.
+2. A dialog box will come up, with additional information about the key. You will now be able to download your key in the form of a ``apiKey-{API_KEY_ID}.properties`` file. This file contains your Stormpath API Key information, which can be used to authenticate with the Stormpath API.
 
 .. note::
 
-  Your API Key should be stored in a secure location. For example, you could place it in a hidden ``stormpath`` directory:
+  We recommend that you rename the file to remove the Key ID, and then store it in a secure location. For example, you could place it in a hidden ``stormpath`` directory:
 
   .. code-block:: bash
 
     $ mkdir ~/.stormpath
-    $ mv ~/Downloads/apiKey.properties ~/.stormpath/
+    $ mv ~/Downloads/apiKey-{$API_KEY_ID}.properties ~/.stormpath/apiKey.properties
 
   We also recommend that you change the file's permissions to prevent access by other users. You can do this by running:
 
