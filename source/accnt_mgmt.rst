@@ -2567,6 +2567,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
     Authorization: Basic MlpG...
     Content-Type: application/json.. only:: csharp
 
+.. only:: csharp
+
   .. literalinclude:: code/csharp/account_management/search_password_modified.cs
     :language: csharp
 
