@@ -4067,7 +4067,7 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: not (rest or java)
+.. only:: not (rest or java or python)
 
  .. warning::
 
@@ -4104,7 +4104,7 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: http
 
@@ -4126,6 +4126,11 @@ First, you create the Account:
 
   .. literalinclude:: code/java/authentication/mfa_create_account.java
       :language: java
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/mfa_create_account.py
+      :language: python
 
 .. todo::
 
@@ -4163,15 +4168,6 @@ First, you create the Account:
       .. literalinclude:: code/php/authentication/mfa_create_account.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_create_account.py
-          :language: python
-
 .. only:: ruby
 
   .. todo::
@@ -4188,7 +4184,7 @@ Adding an SMS Factor
 
 To add an additional SMS Factor to this Account, you send the following request:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: http
 
@@ -4210,6 +4206,13 @@ To add an additional SMS Factor to this Account, you send the following request:
         :language: java
 
   For now ``factor.getVerificationStatus()`` will return ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` will be ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
+
+.. only:: python
+
+    .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
+        :language: python
+
+  For now ``sms_factor.verification_status`` is ``UNVERIFIED`` and ``sms_factor.most_recent_challenge`` is ``null``. If you were to create a challenge for this Factor, ``sms_factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``sms_factor.verification_status`` would change to ``VERIFIED``.
 
 .. todo::
 
@@ -4247,15 +4250,6 @@ To add an additional SMS Factor to this Account, you send the following request:
       .. literalinclude:: code/php/authentication/mfa_add_sms_factor_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4265,7 +4259,7 @@ To add an additional SMS Factor to this Account, you send the following request:
     .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   You will then get back the response:
 
@@ -4326,15 +4320,6 @@ To add an additional SMS Factor to this Account, you send the following request:
       .. literalinclude:: code/php/authentication/mfa_add_sms_factor_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4345,7 +4330,7 @@ To add an additional SMS Factor to this Account, you send the following request:
       :language: ruby
 
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
@@ -4358,7 +4343,7 @@ Adding a Google Authenticator Factor
 
 To add an additional Google Authenticator Factor to this Account, you must send the following request:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: http
 
@@ -4381,6 +4366,11 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
   .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
     :language: java
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
+    :language: python
 
 .. todo::
 
@@ -4418,15 +4408,6 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       .. literalinclude:: code/php/authentication/mfa_add_ga_factor_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4436,7 +4417,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
     .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   You will then get back the response:
 
@@ -4501,15 +4482,6 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       .. literalinclude:: code/php/authentication/mfa_add_ga_factor_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4539,7 +4511,7 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 At this point in the example you have a brand new Account with two additional Factors.
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
 
@@ -4599,6 +4571,13 @@ At this point in the example you have a brand new Account with two additional Fa
   .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
     :language: java
 
+.. only:: python
+
+  If you were to retrieve the Account's ``factors`` you will get them:
+
+  .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
+    :language: python
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4635,15 +4614,6 @@ At this point in the example you have a brand new Account with two additional Fa
       .. literalinclude:: code/php/authentication/mfa_get_account_factors1_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4667,7 +4637,7 @@ This example covers challenging Factors that have already been created. To see a
 Challenging an SMS Factor
 """""""""""""""""""""""""
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
@@ -4691,6 +4661,15 @@ Challenging an SMS Factor
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
     :language: java
+
+.. only:: python
+
+  To challenge an SMS Factor, call ``sms_factor.challenge_factor()`` with or without setting a message.
+
+  This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
+
+  .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
+    :language: python
 
 .. todo::
 
@@ -4728,15 +4707,6 @@ Challenging an SMS Factor
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4749,7 +4719,7 @@ Challenging an SMS Factor
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   In response to this request you would get back a Challenge:
 
@@ -4807,15 +4777,6 @@ If you do not specify a message, then Stormpath will just send the default messa
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4836,7 +4797,7 @@ This code will remain valid for 300 seconds (5 minutes).
 
 Next, you must collect this code from the user.
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. note::
 
@@ -4844,7 +4805,7 @@ Next, you must collect this code from the user.
 
 Once you have the code, you send it to the same Challenge you created above:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: http
 
@@ -4861,6 +4822,11 @@ Once you have the code, you send it to the same Challenge you created above:
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
     :language: java
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
+    :language: python
 
 .. todo::
 
@@ -4898,15 +4864,6 @@ Once you have the code, you send it to the same Challenge you created above:
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -4916,7 +4873,7 @@ Once you have the code, you send it to the same Challenge you created above:
     .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   And then you would get back the response:
 
@@ -4985,15 +4942,6 @@ Once you have the code, you send it to the same Challenge you created above:
     .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
       :language: ruby
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_sms_code_success.py
-          :language: python
-
 If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
 .. note::
@@ -5011,7 +4959,7 @@ Unlike the SMS challenge process, the Google Authenticator challenge process doe
 
 Once you have collected the code from the user, send the code generated by your Google Authenticator app:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: http
 
@@ -5028,6 +4976,11 @@ Once you have collected the code from the user, send the code generated by your 
 
   .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
     :language: java
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
+    :language: python
 
 .. todo::
 
@@ -5065,15 +5018,6 @@ Once you have collected the code from the user, send the code generated by your 
       .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5085,7 +5029,7 @@ Once you have collected the code from the user, send the code generated by your 
 
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   .. code-block:: json
 
@@ -5106,6 +5050,11 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
   .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
     :language: java
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
+    :language: python
 
 .. todo::
 
@@ -5143,15 +5092,6 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
       .. literalinclude:: code/php/authentication/mfa_challenge_ga_factor_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5170,7 +5110,7 @@ Challenging During Factor Creation
 
   For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   To send a challenge at the same time as you create the SMS Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
@@ -5204,6 +5144,20 @@ Challenging During Factor Creation
 
   .. literalinclude:: code/java/authentication/mfa_create_and_challenge_message.java
     :language: java
+
+.. only:: python
+
+  To create a Challenge at the same time as you create the SMS Factor, you can use this builder:
+
+  .. literalinclude:: code/python/authentication/mfa_create_and_challenge_default.py
+      :language: python
+
+  This would create a Factor and a challenge with the default message.
+
+  If you wanted to specify a custom message instead, you would need :
+
+  .. literalinclude:: code/python/authentication/mfa_create_and_challenge_message.py
+    :language: python
 
 .. todo::
 
@@ -5241,15 +5195,6 @@ Challenging During Factor Creation
       .. literalinclude:: code/php/authentication/mfa_create_and_challenge_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5270,7 +5215,7 @@ You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` al
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest or csharp or nodejs or php or python or vbnet
+.. only:: rest or csharp or nodejs or php or vbnet
 
   The first step will be getting the user authenticated.
 
@@ -5323,15 +5268,6 @@ Challenging a Factor After Login
       .. literalinclude:: code/php/authentication/mfa_auth_account_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5341,7 +5277,15 @@ Challenging a Factor After Login
     .. literalinclude:: code/ruby/authentication/mfa_auth_account_req.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: python
+
+  The first step will be getting the user authenticated.
+
+  .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
+    :language: python
+
+
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   If authentication is successful, you will get back the Account:
 
@@ -5398,15 +5342,6 @@ Challenging a Factor After Login
       .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
-        :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5416,7 +5351,7 @@ Challenging a Factor After Login
     .. literalinclude:: code/ruby/authentication/mfa_auth_account_resp.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   Next, you will need to retrieve the Account's ``factors`` collection:
 
@@ -5433,6 +5368,13 @@ Challenging a Factor After Login
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
     :language: java
+
+.. only:: python
+
+  Next, you will need to retrieve the Account's ``factors`` collection:
+
+  .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
+    :language: py
 
 .. todo::
 
@@ -5470,15 +5412,6 @@ Challenging a Factor After Login
       .. literalinclude:: code/php/authentication/mfa_get_account_factors2_req.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5488,9 +5421,7 @@ Challenging a Factor After Login
     .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_req.rb
       :language: ruby
 
-Which will return:
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   .. code-block:: json
 
@@ -5559,15 +5490,6 @@ Which will return:
       .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
         :language: php
 
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
-
-      .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
-          :language: python
-
   .. only:: ruby
 
     .. todo::
@@ -5577,7 +5499,7 @@ Which will return:
     .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_resp.rb
       :language: ruby
 
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or vbnet or ruby
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
@@ -5587,6 +5509,13 @@ Which will return:
 
   .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
     :language: java
+
+.. only:: python
+
+  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+
+  .. literalinclude:: code/python/authentication/mfa_challenge_existing_factor.py
+    :language: python
 
 .. todo::
 
@@ -5607,12 +5536,6 @@ Which will return:
     .. todo::
 
       (php.todo)
-
-  .. only:: python
-
-    .. todo::
-
-      (python.todo)
 
   .. only:: ruby
 
