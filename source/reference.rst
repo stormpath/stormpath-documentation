@@ -38,6 +38,11 @@
   ---------------
   The Stormpath REST API currently only supports JSON resource representations. If you would like other formats supported, please email us at support@stormpath.com to let us know!
 
+  Character Encoding
+  ------------------
+
+  Stormpath expects and encodes all characters using 8-bit Unicode, or UTF-8.
+
   .. _request-id:
 
   Request Identifiers
@@ -3279,7 +3284,7 @@
 
   **Agent URL**
 
-  ``/v1/agents/$DIRECTORY_ID``
+  ``/v1/agents/$AGENT_ID``
 
   **Agent Attributes**
 

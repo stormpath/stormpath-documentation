@@ -74,6 +74,7 @@ You can add as many Directories of each type as you require.
 
 Cloud Directories
 ^^^^^^^^^^^^^^^^^
+
 This is the standard, default Directory resource.
 
 .. _make-cloud-dir:
@@ -1268,6 +1269,10 @@ Custom Data can store:
 - JSON Objects (with nesting)
 
 One simple use case for Custom Data could be if you wanted to add information to our "Jean-Luc Picard" Account that didn't fit into any of the existing Account attributes.
+
+.. note::
+
+  As with all text in Stormpath, Custom Data must be stored using UTF-8 character encoding.
 
 For example, you could add information about this user's current location, like the ship this Captain is currently assigned to.
 
@@ -2561,6 +2566,8 @@ If you wanted to find all Accounts that hadn't modified their password yet in 20
     Host: api.stormpath.com
     Authorization: Basic MlpG...
     Content-Type: application/json.. only:: csharp
+
+.. only:: csharp
 
   .. literalinclude:: code/csharp/account_management/search_password_modified.cs
     :language: csharp
