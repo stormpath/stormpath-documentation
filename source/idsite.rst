@@ -127,9 +127,9 @@ A typical set of steps in your application are as follows:
       - Required?
       - Valid Value(s)
 
-    * - ``kid``
+    * - ``typ``
       - Yes
-      - The ID of the Stormpath API Key that signed this JWT.
+      - The value must be ``JWT``.
 
     * - ``alg``
       - Yes
@@ -1039,9 +1039,17 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
   ``use_subdomain``: If combined with ``organization_name_key``, will redirect the user to an ID Site with the Organization's ``name_key`` as a sub-domain in its URL.
 
-For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+.. note::
 
-  https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
+  This functionality will only work with a custom domain that you've properly configured in ID Site as documented `here <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__. The claim will not work with the default domain assigned by Stormpath.
+
+For example, if your ID Site configuration is ``id.mydomain.com`` and the Organization’s ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+
+  https://home-depot.id.mydomain.com/?jwt={GENERATED_JWT}
+
+If you are using a custom domain, you must also make sure to put that domain in the list of Authorized Javascript Origin URLs. You can use the ``*`` wildcard for this. In the above example it would be::
+
+  https://*.id.mydomain.com
 
 .. _idsite-sso:
 
