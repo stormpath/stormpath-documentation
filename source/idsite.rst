@@ -1039,15 +1039,11 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
   ``use_subdomain``: If combined with ``organization_name_key``, will redirect the user to an ID Site with the Organization's ``name_key`` as a sub-domain in its URL.
 
-For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
-
-  https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
-
 .. note::
 
   This functionality will only work with a custom domain that you've properly configured in ID Site as documented `here <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__. The claim will not work with the default domain assigned by Stormpath.
 
-For example, if your ID Site configuration is ``id.mydomain.com`` and the Organization’s ``nameKey`` is ``home-depot,`` then the SSO endpoint will resolve the following URL::
+For example, if your ID Site configuration is ``id.mydomain.com`` and the Organization’s ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
 
   https://home-depot.id.mydomain.com/?jwt={GENERATED_JWT}
 
