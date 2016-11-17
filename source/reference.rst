@@ -1220,17 +1220,17 @@
       * - ``domainName``
         - String
         - N/A
-        - The custom domain name (if any) for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+        - The custom domain name (if any) for your ID Site. For more information see `the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__.
 
       * - ``tlsPublicCert``
         - String
         - N/A
-        - The public SSL certificate for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+        - The public SSL certificate for your ID Site. For more information see `the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__.
 
       * - ``tlsPrivateKey``
         - String
         - N/A
-        - The private SSL certificate for your ID Site. For more information see :ref:`idsite-custom-domain-ssl`.
+        - The private SSL certificate for your ID Site. For more information see `the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__.
 
       * - ``gitRepoUrl``
         - String
