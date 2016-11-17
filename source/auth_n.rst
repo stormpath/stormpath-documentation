@@ -4067,7 +4067,7 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: not (rest or java)
+.. only:: not (rest or java or ruby)
 
  .. warning::
 
@@ -4127,6 +4127,12 @@ First, you create the Account:
   .. literalinclude:: code/java/authentication/mfa_create_account.java
       :language: java
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_create_account.rb
+      :language: ruby
+
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4172,14 +4178,6 @@ First, you create the Account:
       .. literalinclude:: code/python/authentication/mfa_create_account.py
           :language: python
 
-.. only:: ruby
-
-  .. todo::
-
-    Ruby SDK MFA (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_create_account.rb
-      :language: ruby
 
 .. _mfa-adding-factor-sms:
 
@@ -4210,6 +4208,14 @@ To add an additional SMS Factor to this Account, you send the following request:
         :language: java
 
   For now ``factor.getVerificationStatus()`` will return ``UNVERIFIED`` and ``factor.getMostRecentChallenge()`` will be ``null``. If you were to create a challenge for this Factor, ``factor.getMostRecentChallenge()`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.getVerificationStatus()`` would change to ``VERIFIED``.
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
+    :language: ruby
+
+  For now ``factor.verification_status`` will return ``UNVERIFIED`` and ``factor.most_recent_challenge`` will be ``nil``. If you were to create a challenge for this Factor, ``factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.verification_status`` would change to ``VERIFIED``.
+
 
 .. todo::
 
@@ -4256,16 +4262,8 @@ To add an additional SMS Factor to this Account, you send the following request:
       .. literalinclude:: code/python/authentication/mfa_add_sms_factor_req.py
           :language: python
 
-  .. only:: ruby
 
-    .. todo::
-
-      MFA Add sms factor request (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_req.rb
-      :language: ruby
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   You will then get back the response:
 
@@ -4289,6 +4287,14 @@ To add an additional SMS Factor to this Account, you send the following request:
       },
       "mostRecentChallenge": null
     }
+
+.. only:: ruby
+
+  You will then get back the ``Stormpath::Resource::Factor`` object with the following properties:
+
+  .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
+      :language: ruby
+
 
 .. todo::
 
@@ -4335,17 +4341,8 @@ To add an additional SMS Factor to this Account, you send the following request:
       .. literalinclude:: code/python/authentication/mfa_add_sms_factor_resp.py
           :language: python
 
-  .. only:: ruby
 
-    .. todo::
-
-      MFA Add sms factor response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
-      :language: ruby
-
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
@@ -4381,6 +4378,14 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
   .. literalinclude:: code/java/authentication/mfa_add_ga_factor_req.java
     :language: java
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
+    :language: ruby
+
+  The ``custom_options`` hash is completely optional. If you just need to create a ``google-authenticator`` factor, the type is all you need. The ``account_name`` property is going to default to the ``username`` of the ``account``.
+
 
 .. todo::
 
@@ -4427,16 +4432,8 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       .. literalinclude:: code/python/authentication/mfa_add_ga_factor_req.py
           :language: python
 
-  .. only:: ruby
 
-    .. todo::
-
-      MFA Add ga factor req (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_req.rb
-      :language: ruby
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   You will then get back the response:
 
@@ -4464,6 +4461,13 @@ To add an additional Google Authenticator Factor to this Account, you must send 
     }
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
+
+.. only:: ruby
+
+  You will then get back the ``Stormpath::Resource::Factor`` object with the following properties:
+
+  .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
+    :language: ruby
 
 .. todo::
 
@@ -4510,14 +4514,6 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       .. literalinclude:: code/python/authentication/mfa_add_ga_factor_resp.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Add ga factor response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
-      :language: ruby
 
 The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
 
@@ -4599,6 +4595,15 @@ At this point in the example you have a brand new Account with two additional Fa
   .. literalinclude:: code/java/authentication/mfa_get_account_factors1_resp.java
     :language: java
 
+.. only:: ruby
+
+  If you were to retrieve the Account's ``factors`` you will get them:
+
+  .. literalinclude:: code/ruby/authentication/mfa_get_account_factors_req.rb
+    :language: ruby
+
+  Note that it's also possible to ``search`` the ``factors`` collection by any attribute you desire.
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4644,14 +4649,6 @@ At this point in the example you have a brand new Account with two additional Fa
       .. literalinclude:: code/python/authentication/mfa_get_account_factors1_resp.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA get account factors response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors1_resp.rb
-      :language: ruby
 
 You will now challenge each of these factors.
 
@@ -4691,6 +4688,11 @@ Challenging an SMS Factor
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
     :language: java
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
+    :language: ruby
 
 .. todo::
 
@@ -4737,15 +4739,6 @@ Challenging an SMS Factor
       .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge sms factor req (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
-      :language: ruby
-
 
 If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
@@ -4770,6 +4763,14 @@ If you do not specify a message, then Stormpath will just send the default messa
     }
 
   For more information about this Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
+
+.. only:: ruby
+
+  In response to this request you would get back a ``Stormpath::Resource::Challenge`` object:
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_resp.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -4816,14 +4817,6 @@ If you do not specify a message, then Stormpath will just send the default messa
       .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_resp.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge sms factor response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_resp.rb
-      :language: ruby
 
 The resulting SMS would look like this:
 
@@ -4861,6 +4854,12 @@ Once you have the code, you send it to the same Challenge you created above:
 
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_code.java
     :language: java
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -4907,16 +4906,7 @@ Once you have the code, you send it to the same Challenge you created above:
       .. literalinclude:: code/python/authentication/mfa_challenge_sms_code.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge sms code (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
-      :language: ruby
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   And then you would get back the response:
 
@@ -4939,6 +4929,13 @@ Once you have the code, you send it to the same Challenge you created above:
   If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
   For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
+
+.. only:: ruby
+
+  And then you would get back the ``Stormpath::Resource::Challenge`` object as the response:
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
+    :language: ruby
 
 .. todo::
 
@@ -4975,15 +4972,6 @@ Once you have the code, you send it to the same Challenge you created above:
 
     .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
       :language: php
-
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge sms code success (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
-      :language: ruby
 
   .. only:: python
 
@@ -5028,6 +5016,12 @@ Once you have collected the code from the user, send the code generated by your 
 
   .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_req.java
     :language: java
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -5074,14 +5068,6 @@ Once you have collected the code from the user, send the code generated by your 
       .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_req.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge ga factor req (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
-      :language: ruby
 
 If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
 
@@ -5106,6 +5092,12 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
   .. literalinclude:: code/java/authentication/mfa_challenge_ga_factor_resp.java
     :language: java
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -5152,14 +5144,6 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
       .. literalinclude:: code/python/authentication/mfa_challenge_ga_factor_resp.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Challenge ga factor response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
-      :language: ruby
 
 .. _mfa-challenge-during:
 
@@ -5204,6 +5188,14 @@ Challenging During Factor Creation
 
   .. literalinclude:: code/java/authentication/mfa_create_and_challenge_message.java
     :language: java
+
+.. only:: ruby
+
+  To create a Challenge at the same time as you create the SMS Factor, you can use the same builder you used so far:
+
+  .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -5250,14 +5242,6 @@ Challenging During Factor Creation
       .. literalinclude:: code/python/authentication/mfa_create_and_challenge_req.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Create and challenge request (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
-      :language: ruby
 
 You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
@@ -5332,14 +5316,6 @@ Challenging a Factor After Login
       .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Auth account request (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_auth_account_req.rb
-      :language: ruby
 
 .. only:: rest or csharp or nodejs or php or python or vbnet or ruby
 
@@ -5407,16 +5383,7 @@ Challenging a Factor After Login
       .. literalinclude:: code/python/authentication/mfa_auth_account_resp.py
         :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA Auth account response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_auth_account_resp.rb
-      :language: ruby
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   Next, you will need to retrieve the Account's ``factors`` collection:
 
@@ -5433,6 +5400,14 @@ Challenging a Factor After Login
 
   .. literalinclude:: code/java/authentication/mfa_get_account_factors2_req.java
     :language: java
+
+.. only:: ruby
+
+  You will need to retrieve the Account's ``factors`` collection:
+
+  .. literalinclude:: code/ruby/authentication/mfa_get_account_factors_req.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -5479,14 +5454,6 @@ Challenging a Factor After Login
       .. literalinclude:: code/python/authentication/mfa_get_account_factors2_req.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA get account factors request (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_req.rb
-      :language: ruby
 
 Which will return:
 
@@ -5568,16 +5535,7 @@ Which will return:
       .. literalinclude:: code/python/authentication/mfa_get_account_factors2_resp.py
           :language: python
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA get account factors response (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/mfa_get_account_factors2_resp.rb
-      :language: ruby
-
-.. only:: rest or csharp or nodejs or php or python or vbnet or ruby
+.. only:: rest or csharp or nodejs or php or python or vbnet
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
@@ -5587,6 +5545,13 @@ Which will return:
 
   .. literalinclude:: code/java/authentication/mfa_challenge_existing_factor.java
     :language: java
+
+.. only:: ruby
+
+  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+
+  .. literalinclude:: code/ruby/authentication/mfa_challenge_existing_factor.rb
+    :language: ruby
 
 .. todo::
 
@@ -5614,11 +5579,6 @@ Which will return:
 
       (python.todo)
 
-  .. only:: ruby
-
-    .. todo::
-
-      MFA post to factor.challenges (ruby.todo)
 
 .. only:: not rest
 
