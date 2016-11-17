@@ -6314,6 +6314,7 @@
   - The total storage size of a single customData resource cannot exceed 10 MB (megabytes). The ``href``, ``createdAt`` and ``modifiedAt`` field names and values do not count against your resource size quota.
 
   - Field names must:
+
     - be 1 or more characters long, but less than or equal to 255 characters long (1 <= N <= 255).
     - contain only alphanumeric characters (0-9 A-Z a-z), underscores or dashes, though they cannot start with a dash.
     - may not equal any of the following reserved names: ``href``, ``createdAt``, ``modifiedAt``, ``meta``, ``spMeta``, ``spmeta``, ``ionmeta``, or ``ionMeta``.
