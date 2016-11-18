@@ -4491,7 +4491,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
     .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
       :language: ruby
 
-The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64QRImage`` field of the Google Authenticator Factor.
+The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64_q_r_image`` field of the Google Authenticator Factor.
 
 You can now take this string and turn it into a QR Code image:
 
@@ -5204,7 +5204,7 @@ Challenging During Factor Creation
     .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
       :language: ruby
 
-You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
+You are telling Stormpath to send an SMS to the phone number ``122-233-34444`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
 .. only:: rest
 
