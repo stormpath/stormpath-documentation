@@ -59,103 +59,7 @@ After the user has logged-in successfully, they will be redirected back to your 
 7.3. ID Site Set Up
 ===================
 
-7.3.1. Setting Up Your ID Site
-------------------------------
-
-Your ID Site uses a default configuration for testing purposes, but can be fully configured to host customized code or to use your own custom domain.
-
-To set up your ID Site, log into the `Administrator Console <https://api.stormpath.com/login>`_ and:
-
-1. Click on the "ID Site" Tab.
-2. Add your application URLs that will be allowed to process the callbacks from the ID Site to the "Authorized Redirect URIs" property. These URLs will be hosted by your application and will use the Stormpath SDK to process the security assertions about the user that ID Site sends back.
-3. Click the "Update" button at the bottom of the page.
-
-Once you configure your ID site, a default subdomain will be created on ``stormpath.io``. The default ID Site URL follows the format of ``tenant-name.id.stormpath.io`` where ``tenant-name`` is the name of your Stormpath Tenant.
-
-.. note::
-
-	Your ID Site URL can only be accessed via a redirect from a Stormpath-enabled application because ID Site expects a cryptographically signed token with specific data in it. Simply visiting your ID Site URL in a browser will give you an error.
-
-For more advanced configurations, there are additional properties in the ID Site configuration that can help:
-
-- Set a Logo to appear at the top of the default ID Site
-- Set a custom domain name (like id.mydomain.com) and SSL certificate to host your ID Site from your domain, securely
-- Set a custom GitHub repo to host your ID Site (to host custom code)
-
-.. _idsite-custom-domain-ssl:
-
-Setting Your Own Custom Domain Name and SSL Certificate
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-By default, the address of your ID Site is ``tenant-name.id.stormpath.io``. However, you can change the address to a subdomain of your own website, such as ``id.mysite.com``. The Stormtrooper equipment application’s main website is ``imperialxchange.com``, so the initial address of the ID Site might be something like ``happy-rebel.id.stormpath.io``. You can change the ID Site’s address to a subdomain of your company website, like ``id.trooperxchange.com``. In our example, ImperialXchange.com is actually part of a family of sites owned by the parent company Galactic Gear. Galactic Gear wants single sign-on across its family of websites, so the ID Site is actually found at ``id.galacticgear.co``.
-
-The workflow for changing the address consists of the following steps:
-
-1. Get a domain name and a subdomain (if you have not already)
-2. Configure the subdomain as an alias of your ID Site
-3. Enable the custom domain in Stormpath’s ID Site configuration
-4. Input SSL information for Stormpath to host
-
-For more information on each of these steps, read on.
-
-1. Get a Domain Name and a Subdomain
-""""""""""""""""""""""""""""""""""""
-
-Purchase and register a domain name with a domain registrar. You can purchase and register a domain name from any domain registrar, including GoDaddy, Yahoo! Domains, 1&1, Netregistry, or Register.com. For instructions, see the Help on the registrar’s website.
-
-Create a subdomain for your domain for your ID Site. See the Help on the registrar’s website for instructions on adding a subdomain. You can call the subdomain “id”, “login” or something similar. Example: "id.galacticgear.com".
-
-2. Make the Subdomain an Alias of your ID Site on Stormpath
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-The next step is to make your subdomain an alias of your ID Site on Stormpath. An alias is simply an alternate address for a website. For example, you can make the addresses “id.galacticgear.com” and “happy-rebel.id.stormpath.io” interchangeable as far as web browsers are concerned.
-
-To make your subdomain an alias of your ID Site website on Stormpath, you must use your domain registrar’s tools and UI. These steps will generally require you to:
-
-- Log in to your domain registrar’s control panel.
-- Look for the option to change DNS records.
-- Locate or create the CNAME records for your domain.
-- Point the CNAME record from your subdomain (ex. “id” or “login”) to your ID Site subdomain (ex. happy-rebel.id.stormpath.io)
-
-.. note::
-
-	It takes time for changes to the DNS system to be implemented. Typically, it can take anywhere from a few hours to a day, depending on your Time To Live (TTL) settings in the registrar’s control panel.
-
-
-3. Enable the Custom Domain in Stormpath's ID Site Configuration
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-After making your subdomain an alias of your ID Site on Stormpath, you must enable a custom domain in the Stormpath Admin Console. If you omit this step, your subdomain will point to a error page rather than your ID Site.
-
-To set up a custom domain on ID Site, log into the Administrator Console and:
-
-- Click on the "ID Site" Tab
-- Click the "Custom" option under "Domain Name".
-- Type in the subdomain for your ID Site (ex: id.galacticgear.com)
-- Click the "Update" button at the bottom of the page
-
-4. Set up SSL on your ID Site
-"""""""""""""""""""""""""""""
-
-Since Stormpath is hosting the ID Site under your custom subdomain, to secure it using SSL you must provide the SSL certificate information to Stormpath. Creating SSL certificates is an involved task which requires working with a certificate authority such as Verisign and includes:
-
-- Generating a certificate request (CSR) with a Distinguished Name (DN) that matches your subdomain (ex. id.galacticgear.com)
-- Provide the CSR file to a certificate authority such as Verisign. The certificate authority generates a SSL certificate and gives it to you so that it can be installed on Stormpath’s servers.
-
-Once the SSL certificate is retrieved from the certificate authority, you can log-in to the Administrator Console and configure SSL:
-
-- Click on the ID Site Tab
-- Open the zip to retrieve your .pem file if needed.
-- Copy the text for the SSL certificate and Private Key to the appropriate text boxes on the ID Site Tab
-- Click the Update button at the bottom of the page
-- When the ID Site is updated, the SSL information is uploaded to Stormpath and will update your ID Site automatically.
-
-.. _idsite-app-set-up:
-
-Setting up your Application to use ID Site
-------------------------------------------
-
-In order to set up your application to use ID Site, you will need to install the Stormpath SDK and register the application in Stormpath. The Stormpath SDK and hosted ID Site will do most of the work for your application, including signing and unpacking secure communication between themselves. For more information, please see the `relevant Stormpath SDK documentation <https://docs.stormpath.com/home/>`__.
+For more information on this topic, please see the `Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/idsite.html#id-site-set-up>`__.
 
 .. _idsite-with-rest:
 
@@ -223,9 +127,9 @@ A typical set of steps in your application are as follows:
       - Required?
       - Valid Value(s)
 
-    * - ``kid``
+    * - ``typ``
       - Yes
-      - The ID of the Stormpath API Key that signed this JWT.
+      - The value must be ``JWT``.
 
     * - ``alg``
       - Yes
@@ -1135,9 +1039,17 @@ From that point, ID Site is able to handle either of the multi-tenant user routi
 
   ``use_subdomain``: If combined with ``organization_name_key``, will redirect the user to an ID Site with the Organization's ``name_key`` as a sub-domain in its URL.
 
-For example, if your ID Site configuration is ``elastic-rebel.id.stormpath.io`` and the Organization's ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+.. note::
 
-  https://home-depot.elastic-rebel.id.stormpath.io/?jwt={GENERATED_JWT}
+  This functionality will only work with a custom domain that you've properly configured in ID Site as documented `here <https://docs.stormpath.com/console/product-guide/latest/idsite.html#setting-your-own-custom-domain-name-and-ssl-certificate>`__. The claim will not work with the default domain assigned by Stormpath.
+
+For example, if your ID Site configuration is ``id.mydomain.com`` and the Organization’s ``nameKey`` is ``home-depot``, then the SSO endpoint will resolve the following URL::
+
+  https://home-depot.id.mydomain.com/?jwt={GENERATED_JWT}
+
+If you are using a custom domain, you must also make sure to put that domain in the list of Authorized Javascript Origin URLs. You can use the ``*`` wildcard for this. In the above example it would be::
+
+  https://*.id.mydomain.com
 
 .. _idsite-sso:
 
