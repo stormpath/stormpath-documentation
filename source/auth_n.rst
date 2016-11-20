@@ -1699,7 +1699,7 @@ Revoking Access and Refresh Tokens
 
 .. contents::
   :local:
-  :depth: 1
+  :depth: 2
 
 Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are:
 
@@ -1756,12 +1756,21 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-3. Include the provider-specific logic that will access the social account (e.g. embed the appropriate link in your site that will send an authentication request to the social provider)
+3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see `the Client API Guide <jakubtodo://>`__.
+
+Attribute Mappings
+------------------
+
+Scopes
+------
+
+Social Login Providers
+-----------------------
 
 .. _authn-google:
 
 4.3.1. Google
---------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
@@ -1780,9 +1789,13 @@ Before you integrate Google Login with Stormpath, you must complete the followin
 For more information, please see the `Google OAuth 2.0 documentation <https://developers.google.com/identity/protocols/OAuth2>`_.
 
 Step 1: Create a Social Directory for Google
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating this Directory for Google requires that you provide information from Google as a Provider resource. This can be accomplished by creating a new Directory:
+
+.. note::
+
+  Instead of specifying the Redirect URI in the Provider resource, you can also just include it as part of your authentication process. For more information, continue reading.
 
 .. only:: rest
 
@@ -1846,157 +1859,155 @@ Creating this Directory for Google requires that you provide information from Go
     If you are using `Google+ Sign-In for server-side apps <https://developers.google.com/identity/sign-in/web/server-side-flow>`_, Google recommends that you leave the "Authorized Redirect URI" field blank in the Google Developer Console. In Stormpath, when creating the Google Directory, you must set the redirect URI to ``postmessage``.
 
 Step 2: Map the Google Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Google Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-To access or create an Account in your new Google Directory, you must gather a Google **Authorization Code** on behalf of the user. This requires leveraging `Google’s OAuth 2.0 protocol <https://developers.google.com/identity/protocols/OAuth2>`_ and the user’s consent for your application’s permissions.
-
-Generally, this will include embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code** or **Access Token**. This is documented in detail here: `Using OAuth 2.0 for Web Server Applications <https://developers.google.com/identity/protocols/OAuth2WebServer>`_.
+To access or create an Account in your new Google Directory,
 
 .. note::
 
-    It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account. For more information about scopes please see `Google's OAuth Login Scopes documentation <https://developers.google.com/+/web/api/rest/oauth#login-scopes>`_.
+  The older, alternate way of handling this login is embedding a link in your site that will send an authentication request to Google. Once the user has authenticated, Google will redirect the response to your application, including the **Authorization Code** or **Access Token**. This is documented in detail here: `Using OAuth 2.0 for Web Server Applications <https://developers.google.com/identity/protocols/OAuth2WebServer>`_. It is required that your Google application requests the ``email`` scope from Google. If the authorization code or access token does not grant ``email`` scope, you will not be able to get an Account. For more information about scopes please see `Google's OAuth Login Scopes documentation <https://developers.google.com/+/web/api/rest/oauth#login-scopes>`_.
 
-Once the Authorization Code is gathered, you send this request:
+  Once the Authorization Code is gathered, you send this request:
 
-.. only:: rest
+  .. only:: rest
 
-  .. code-block:: http
+    .. code-block:: http
 
-    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json;charset=UTF-8
+      POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+      Host: api.stormpath.com
+      Authorization: Basic MlpG...
+      Content-Type: application/json;charset=UTF-8
 
-    {
-        "providerData": {
-          "providerId": "google",
-          "code": "YOUR_GOOGLE_AUTH_CODE"
-        }
-    }
+      {
+          "providerData": {
+            "providerId": "google",
+            "code": "YOUR_GOOGLE_AUTH_CODE"
+          }
+      }
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_code.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_code.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_code.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_code.vb
+        :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_google_providerdata_code.java
-    :language: java
+    .. literalinclude:: code/java/authentication/create_account_google_providerdata_code.java
+      :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_code.js
-    :language: javascript
+    .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_code.js
+      :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_google_providerdata_code.php
-    :language: php
+    .. literalinclude:: code/php/authentication/create_account_google_providerdata_code.php
+      :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_google_providerdata_code.py
-    :language: python
+    .. literalinclude:: code/python/authentication/create_account_google_providerdata_code.py
+      :language: python
 
-.. only:: ruby
+  .. only:: ruby
 
-  .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_code.rb
-    :language: ruby
+    .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_code.rb
+      :language: ruby
 
-If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
+  If you have already exchanged an Authorization Code for an Access Token, this can be passed to Stormpath in a similar fashion:
 
-.. only:: rest
+  .. only:: rest
 
-  .. code-block:: http
+    .. code-block:: http
 
-    POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
-    Host: api.stormpath.com
-    Authorization: Basic MlpG...
-    Content-Type: application/json;charset=UTF-8
+      POST /v1/applications/YOUR_APP_ID/accounts HTTP/1.1
+      Host: api.stormpath.com
+      Authorization: Basic MlpG...
+      Content-Type: application/json;charset=UTF-8
 
-    {
-        "providerData": {
-          "providerId": "google",
-          "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
-        }
-    }
+      {
+          "providerData": {
+            "providerId": "google",
+            "accessToken": "%ACCESS_TOKEN_FROM_GOOGLE%"
+          }
+      }
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  .. only:: csharp
+    .. only:: csharp
 
-    .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_access_token.cs
-      :language: csharp
+      .. literalinclude:: code/csharp/authentication/create_account_google_providerdata_access_token.cs
+        :language: csharp
 
-  .. only:: vbnet
+    .. only:: vbnet
 
-    .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_access_token.vb
-      :language: vbnet
+      .. literalinclude:: code/vbnet/authentication/create_account_google_providerdata_access_token.vb
+        :language: vbnet
 
-.. only:: java
+  .. only:: java
 
-  .. literalinclude:: code/java/authentication/create_account_google_providerdata_access_token.java
-    :language: java
+    .. literalinclude:: code/java/authentication/create_account_google_providerdata_access_token.java
+      :language: java
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_access_token.js
-    :language: javascript
+    .. literalinclude:: code/nodejs/authentication/create_account_google_providerdata_access_token.js
+      :language: javascript
 
-.. only:: php
+  .. only:: php
 
-  .. literalinclude:: code/php/authentication/create_account_google_providerdata_access_token.php
-    :language: php
+    .. literalinclude:: code/php/authentication/create_account_google_providerdata_access_token.php
+      :language: php
 
-.. only:: python
+  .. only:: python
 
-  .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token.py
-    :language: python
+    .. literalinclude:: code/python/authentication/create_account_google_providerdata_access_token.py
+      :language: python
 
-.. only:: ruby
+  .. only:: ruby
 
-  .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_access_token.rb
-    :language: ruby
+    .. literalinclude:: code/ruby/authentication/create_account_google_providerdata_access_token.rb
+      :language: ruby
 
-Either way, Stormpath will use the code or access token provided to retrieve information about your Google Account, then return a Stormpath Account.
+  Either way, Stormpath will use the code or access token provided to retrieve information about your Google Account, then return a Stormpath Account.
 
-.. only:: rest
+  .. only:: rest
 
-  The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
+    The HTTP Status code will tell you if the Account was created (HTTP 201) or if it already existed in Stormpath (HTTP 200).
 
-.. only:: csharp or vbnet
+  .. only:: csharp or vbnet
 
-  The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
+    The ``IProviderAccountResult`` response includes an ``IsNewAccount`` property which indicates whether the Account already existed in your Stormpath Directory or not. You can retrieve the Account details through the ``Account`` property.
 
-.. only:: java
+  .. only:: java
 
-  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
+    In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``isNewAccount()`` method on the ``ProviderAccountResult`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
-.. only:: nodejs
+  .. only:: nodejs
 
-  In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
+    In order to know if the Account was created or if it already existed in Stormpath's Google Directory you can use the ``_isNew`` property on the result ``account`` object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
-.. only:: php
+  .. only:: php
 
-  In order to know if the Account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
+    In order to know if the Account was created or if it already existed in the Stormpath’s Google Directory you can use the ``isNewAccount();`` method on the result object. It will return ``true`` if it is a newly created Account, or ``false`` if it already existed.
 
 .. _authn-facebook:
 
 4.3.2. Facebook
----------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you integrate Facebook Login with Stormpath, you must complete the following steps:
 
@@ -2009,7 +2020,7 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
 Step 1: Create a Social Directory for Facebook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating this Directory requires that you provide information from Facebook as a Provider resource. This can be accomplished by creating a new Directory:
 
@@ -2070,12 +2081,12 @@ Creating this Directory requires that you provide information from Facebook as a
     :language: ruby
 
 Step 2: Map the Facebook Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating an Account Store Mapping between your new Facebook Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with Facebook Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 To access or create an Account in your new Facebook Directory, you need to gather a **User Access Token** from Facebook before submitting it to Stormpath. This is possible either by using a `Facebook SDK Library <https://developers.facebook.com/docs/facebook-login/access-tokens/#usertokens>`_, or `Facebook’s Graph Explorer <https://developers.facebook.com/tools/explorer/>`_ for testing.
 
@@ -2163,7 +2174,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. _authn-github:
 
 4.3.3. Github
--------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you integrate GitHub Login with Stormpath, you must complete the following steps:
 
@@ -2176,7 +2187,7 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 For more information, please see the `GitHub documentation on registering your app <https://developer.github.com/guides/basics-of-authentication/#registering-your-app>`_.
 
 Step 1: Create a Social Directory for GitHub
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating this Directory requires that you provide information from GitHub as a Provider resource. This can be accomplished by creating a new Directory:
 
@@ -2237,12 +2248,12 @@ Creating this Directory requires that you provide information from GitHub as a P
     :language: ruby
 
 Step 2: Map the GitHub Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating an Account Store Mapping between your new GitHub Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with GitHub Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 To access or create an Account in your new Github Directory, you must gather a Github **Authorization Code** on behalf of the user. This requires leveraging `Github's OAuth 2.0 protocol <https://developer.github.com/v3/oauth>`_ and the user’s consent for your application’s permissions.
 
@@ -2332,7 +2343,7 @@ Stormpath will use the Access Token provided to retrieve information about your 
 .. _authn-linkedin:
 
 4.3.4 LinkedIn
---------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you integrate LinkedIn Login with Stormpath, you must complete the following steps:
 
@@ -2345,7 +2356,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 For more information, please see `LinkedIn's OAuth documentation <https://developer.linkedin.com/docs/oauth2>`_.
 
 Step 1: Create a Social Directory for LinkedIn
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating this Directory requires that you provide information from LinkedIn as a Provider resource. This can be accomplished by creating a new Directory:
 
@@ -2406,12 +2417,12 @@ Creating this Directory requires that you provide information from LinkedIn as a
     :language: ruby
 
 Step 2: Map the LinkedIn Directory as an Account Store for Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Creating an Account Store Mapping between your new LinkedIn Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
 
 Step 3: Access an Account with LinkedIn Tokens
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 To access or create an Account in your new LinkedIn Directory, you must gather a LinkedIn **Authorization Code** on behalf of the user. This requires leveraging `LinkedIn's OAuth 2.0 protocol <https://developer.linkedin.com/docs/oauth2>`_ and the user’s consent for your application’s permissions.
 
