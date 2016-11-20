@@ -1756,13 +1756,45 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see `the Client API Guide <jakubtodo://>`__.
+3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see below, or go to `the Client API Guide <jakubtodo://>`__.
 
 Attribute Mappings
 ------------------
 
+Each social provider returns their own specific information about a user.
+
+The returned information is stored inside that Account's Provider Data in a ``userInfo`` object.
+
+This information can also be mapped to Stormpath Account attributes using mapping configured in the Directory Provider's ``userInfoMappingRules``.
+
 Scopes
 ------
+
+The Directory's Provider now has a ``scope`` array where you can define what Scopes are requested from the Social provider. These arrays have default values that are automatically included for each different kind of provider.
+
+.. list-table::
+  :widths: 20 40 40
+  :header-rows: 1
+
+  * - Social Provider
+    - Default Scopes
+    - More Info
+
+  * - Google
+    - ``profile``, ``email``
+    - `Google OAuth Scopes <Google’s OAuth Login Scopes documentation>`__
+
+  * - Facebook
+    - ``public_profile``, ``email``
+    - `Permissions With Facebook Login <https://developers.facebook.com/docs/facebook-login/permissions/>`__
+
+  * - GitHub
+    - ``user:email``
+    - `GitHub OAuth Scopes <https://developer.github.com/v3/oauth/#scopes>`__
+
+  * - LinkedIn
+    - ``r_basicprofile``, ``r_emailaddress``
+    - `LinkedIn Profile Fields <LinkedIn’s “Profile Fields” documentation>`__
 
 Social Login Providers
 -----------------------
