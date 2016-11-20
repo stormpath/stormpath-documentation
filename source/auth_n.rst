@@ -845,15 +845,22 @@ For the **Client Credentials Grant Type**, you pass the **Client ID** and **Secr
 Social
 """"""
 
+.. note::
+
+  The recommended way of generating an OAuth token now is to using the Client API. For more information on this, please see `the Client API Guide's Authentication chapter <jakubtodo://authentication.html#oauth-2-0-login>`__.
+
+  Instructions below explain the older, alternate way of generating an OAuth token using Social credentials.
+
 For the **Social Grant Type** you must pass:
 
 - The **Provider ID** which matches the Provider ID of the :ref:`Social Directory <social-authn>` (e.g. `facebook` or `github`)
+- A ``redirectUri`` as a parameter that specifies the URL that the user will be redirected to after authentication
 - And either the Authorization **Code** or
 - The **Access Token** for that Social Provider
 
 All together, this would look like this:
 
-``grant_type=stormpath_social&providerId=facebook&accessToken=EAA68kW...``
+``grant_type=stormpath_social&providerId=facebook&accessToken=EAA68kW...&redirectUri=https%3A%2F%2...``
 
 Password
 """""""""
