@@ -4002,22 +4002,68 @@ There are a number of different scenarios which can occur during login.
 Application vs Organization Account Linking Policies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login.
+First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login. This is an example of a login attempt that specifies an Organization:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
+  .. code-block:: http
 
-  {
-    "type": "basic",
-    "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
-    "accountStore": {
-      "nameKey":"tenantOneTwoThree"
+    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
+
+    {
+      "type": "basic",
+      "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+      "accountStore": {
+        "nameKey":"tenantOneTwoThree"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/login_attempt_namekey
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/login_attempt_namekey
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/login_attempt_namekey
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/login_attempt_namekey
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/login_attempt_namekey
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/login_attempt_namekey
+      :language: python
 
 For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
 
@@ -4078,69 +4124,253 @@ Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. 
 
 In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample",
-    "username": "jlpicard",
-    "email": "capt@enterprise.com",
-    "givenName": "Jean-Luc",
-    "middleName": null,
-    "surname": "Picard",
-    "fullName": "Jean-Luc Picard",
-    "thisExample": "isTruncated",
-    "...": "..."
-  }
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample",
+      "username": "jlpicard",
+      "email": "capt@enterprise.com",
+      "givenName": "Jean-Luc",
+      "middleName": null,
+      "surname": "Picard",
+      "fullName": "Jean-Luc Picard",
+      "thisExample": "isTruncated",
+      "...": "..."
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/account_picard
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/account_picard
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/account_picard
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/account_picard
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/account_picard
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/account_picard
+      :language: python
 
 And one in the Facebook Directory for user Locutus:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample",
-    "username": "locutus",
-    "email": "locutus@b.org",
-    "givenName": "Locutus",
-    "middleName": "",
-    "surname": "Ofborg",
-    "fullName": "Locutus Ofborg",
-    "thisExample": "isTruncated",
-    "...": "..."
-  }
+  .. code-block:: json
 
-You can link these two Accounts with a simple POST:
-
-.. code-block:: http
-
-  POST /v1/accountLinks HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
-
-  {
-    "leftAccount":{
-      "href":"https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
-    },
-    "rightAccount":{
-      "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+    {
+      "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample",
+      "username": "locutus",
+      "email": "locutus@b.org",
+      "givenName": "Locutus",
+      "middleName": "",
+      "surname": "Ofborg",
+      "fullName": "Locutus Ofborg",
+      "thisExample": "isTruncated",
+      "...": "..."
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/account_locutus
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/account_locutus
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/account_locutus
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/account_locutus
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/account_locutus
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/account_locutus
+      :language: python
+
+You can link these two Accounts manually:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/accountLinks HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
+
+    {
+      "leftAccount":{
+        "href":"https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+      },
+      "rightAccount":{
+        "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+      }
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/manual_link_req
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/manual_link_req
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/manual_link_req
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/manual_link_req
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/manual_link_req
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/manual_link_req
+      :language: python
 
 Which on success will return an Account Link:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb42cnj8HH",
-    "createdAt": "2016-09-28T17:32:32.327Z",
-    "modifiedAt": "2016-09-28T17:32:32.327Z",
-    "leftAccount": {
-        "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
-    },
-    "rightAccount": {
-        "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb42cnj8HH",
+      "createdAt": "2016-09-28T17:32:32.327Z",
+      "modifiedAt": "2016-09-28T17:32:32.327Z",
+      "leftAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+      },
+      "rightAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/manual_link_resp
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/manual_link_resp
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/manual_link_resp
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/manual_link_resp
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/manual_link_resp
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/manual_link_resp
+      :language: python
 
 This means that:
 
@@ -4153,19 +4383,65 @@ This means that:
 
 There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
-    "createdAt": "2016-07-21T01:03:49.813Z",
-    "modifiedAt": "2016-09-28T18:19:09.572Z",
-    "status": "ENABLED",
-    "automaticProvisioning": "DISABLED",
-    "matchingProperty": null,
-    "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+      "createdAt": "2016-07-21T01:03:49.813Z",
+      "modifiedAt": "2016-09-28T18:19:09.572Z",
+      "status": "ENABLED",
+      "automaticProvisioning": "DISABLED",
+      "matchingProperty": null,
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/account_linking_policy
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/account_linking_policy
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/account_linking_policy
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/account_linking_policy
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/account_linking_policy
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/account_linking_policy
+      :language: python
 
 .. note::
 
@@ -4189,9 +4465,11 @@ So far we have covered how to link Accounts manually. However, it is also possib
 What's in the Account Linking Policy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Every Application and Organization has an Account Linking Policy resource. In both cases the path is the same:
+Every Application and Organization has an Account Linking Policy resource.
 
-``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
+.. only:: rest
+
+  In both cases the path is the same: ``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
 
 The Account Linking Policy has three attributes that control aspects of Account Linking behavior:
 
@@ -4314,36 +4592,128 @@ This is probably the most common scenario, where you want to allow your users So
 
 Your Application's Account Linking Policy has:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
-    "createdAt": "2016-07-21T01:03:49.813Z",
-    "modifiedAt": "2016-09-28T18:19:09.572Z",
-    "status": "ENABLED",
-    "automaticProvisioning": "ENABLED",
-    "matchingProperty": "email",
-    "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+      "createdAt": "2016-07-21T01:03:49.813Z",
+      "modifiedAt": "2016-09-28T18:19:09.572Z",
+      "status": "ENABLED",
+      "automaticProvisioning": "ENABLED",
+      "matchingProperty": "email",
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/ex1_account_linking_policy
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/ex1_account_linking_policy
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/ex1_account_linking_policy
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/ex1_account_linking_policy
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/ex1_account_linking_policy
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/ex1_account_linking_policy
+      :language: python
 
 So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
-  Authorization: Basic NjUxW...
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "facebook",
-      "accessToken": "EAAT68k[...]T8TAZDZD"
+    POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+    Authorization: Basic NjUxW...
+    Cache-Control: no-cache
+
+    {
+      "providerData": {
+        "providerId": "facebook",
+        "accessToken": "EAAT68k[...]T8TAZDZD"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/ex1_login_attempt_req
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/ex1_login_attempt_req
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/ex1_login_attempt_req
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/ex1_login_attempt_req
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/ex1_login_attempt_req
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/ex1_login_attempt_req
+      :language: python
 
 After the credentials are validated, Stormpath will do a few things:
 
@@ -4356,15 +4726,61 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-.. code-block:: json
+.. only:: rest
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
-    "username": "jkallday@email.com",
-    "email": "jkallday@email.com",
-    "givenName": "Janelle",
-    "...":"..."
-  }
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
+      "username": "jkallday@email.com",
+      "email": "jkallday@email.com",
+      "givenName": "Janelle",
+      "...":"..."
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/ex1_login_attempt_resp
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/ex1_login_attempt_resp
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/ex1_login_attempt_resp
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/ex1_login_attempt_resp
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/ex1_login_attempt_resp
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/ex1_login_attempt_resp
+      :language: python
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -4382,23 +4798,69 @@ In this example we will show a :ref:`multi-tenant application <multitenancy>` th
 
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
-  Authorization: Basic NjUxW...
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "facebook",
-      "accessToken": "EAAT68k[...]T8TAZDZD"
-      "accountStore": {
-        "nameKey": "OrganizationA"
+    POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+    Authorization: Basic NjUxW...
+    Cache-Control: no-cache
+
+    {
+      "providerData": {
+        "providerId": "facebook",
+        "accessToken": "EAAT68k[...]T8TAZDZD"
+        "accountStore": {
+          "nameKey": "OrganizationA"
+        }
       }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/ex2_login_attempt_req
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/ex2_login_attempt_req
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/authentication/ex2_login_attempt_req
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/authentication/ex2_login_attempt_req
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/authentication/ex2_login_attempt_req
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/authentication/ex2_login_attempt_req
+      :language: python
 
 This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
 
