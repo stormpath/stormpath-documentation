@@ -4029,41 +4029,48 @@ First and foremost, both Applications and Organizations have Account Linking Pol
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/login_attempt_namekey
+      .. literalinclude:: code/csharp/account_management/login_attempt_namekey.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/login_attempt_namekey
+      .. literalinclude:: code/vbnet/account_management/login_attempt_namekey.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/login_attempt_namekey
+    .. literalinclude:: code/java/account_management/login_attempt_namekey.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/login_attempt_namekey
+    .. literalinclude:: code/nodejs/account_management/login_attempt_namekey.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/login_attempt_namekey
+    .. literalinclude:: code/php/account_management/login_attempt_namekey.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/login_attempt_namekey
+    .. literalinclude:: code/python/account_management/login_attempt_namekey.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/login_attempt_namekey.rb
+      :language: ruby
 
 For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
 
@@ -4148,41 +4155,49 @@ In each of those Directories, there is an Account. One in our Cloud Directory, f
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/account_picard
+      .. literalinclude:: code/csharp/account_management/account_picard.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/account_picard
+      .. literalinclude:: code/vbnet/account_management/account_picard.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/account_picard
+    .. literalinclude:: code/java/account_management/account_picard.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/account_picard
+    .. literalinclude:: code/nodejs/account_management/account_picard.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/account_picard
+    .. literalinclude:: code/php/account_management/account_picard.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/account_picard
+    .. literalinclude:: code/python/account_management/account_picard.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/account_picard.rb
+      :language: ruby
+
 
 And one in the Facebook Directory for user Locutus:
 
@@ -4210,41 +4225,49 @@ And one in the Facebook Directory for user Locutus:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/account_locutus
+      .. literalinclude:: code/csharp/account_management/account_locutus.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/account_locutus
+      .. literalinclude:: code/vbnet/account_management/account_locutus.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/account_locutus
+    .. literalinclude:: code/java/account_management/account_locutus.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/account_locutus
+    .. literalinclude:: code/nodejs/account_management/account_locutus.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/account_locutus
+    .. literalinclude:: code/php/account_management/account_locutus.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/account_locutus
+    .. literalinclude:: code/python/account_management/account_locutus.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/account_locutus.rb
+      :language: ruby
+
 
 You can link these two Accounts manually:
 
@@ -4274,41 +4297,48 @@ You can link these two Accounts manually:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/manual_link_req
+      .. literalinclude:: code/csharp/account_management/manual_link_req.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/manual_link_req
+      .. literalinclude:: code/vbnet/account_management/manual_link_req.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/manual_link_req
+    .. literalinclude:: code/java/account_management/manual_link_req.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/manual_link_req
+    .. literalinclude:: code/nodejs/account_management/manual_link_req.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/manual_link_req
+    .. literalinclude:: code/php/account_management/manual_link_req.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/manual_link_req
+    .. literalinclude:: code/python/account_management/manual_link_req.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/manual_link_req.rb
+      :language: ruby
 
 Which on success will return an Account Link:
 
@@ -4336,41 +4366,48 @@ Which on success will return an Account Link:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/manual_link_resp
+      .. literalinclude:: code/csharp/account_management/manual_link_resp.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/manual_link_resp
+      .. literalinclude:: code/vbnet/account_management/manual_link_resp.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/manual_link_resp
+    .. literalinclude:: code/java/account_management/manual_link_resp.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/manual_link_resp
+    .. literalinclude:: code/nodejs/account_management/manual_link_resp.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/manual_link_resp
+    .. literalinclude:: code/php/account_management/manual_link_resp.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/manual_link_resp
+    .. literalinclude:: code/python/account_management/manual_link_resp.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/manual_link_resp.rb
+      :language: ruby
 
 This means that:
 
@@ -4407,41 +4444,48 @@ There is one more aspect to Account Linking, which regards login behavior (as al
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/account_linking_policy
+      .. literalinclude:: code/csharp/account_management/account_linking_policy.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/account_linking_policy
+      .. literalinclude:: code/vbnet/account_management/account_linking_policy.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/account_linking_policy
+    .. literalinclude:: code/java/account_management/account_linking_policy.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/account_linking_policy
+    .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/account_linking_policy
+    .. literalinclude:: code/php/account_management/account_linking_policy.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/account_linking_policy
+    .. literalinclude:: code/python/account_management/account_linking_policy.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
+      :language: ruby
 
 .. note::
 
@@ -4616,41 +4660,48 @@ Your Application's Account Linking Policy has:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/ex1_account_linking_policy
+      .. literalinclude:: code/csharp/account_management/ex1_account_linking_policy.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/ex1_account_linking_policy
+      .. literalinclude:: code/vbnet/account_management/ex1_account_linking_policy.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/ex1_account_linking_policy
+    .. literalinclude:: code/java/account_management/ex1_account_linking_policy.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/ex1_account_linking_policy
+    .. literalinclude:: code/nodejs/account_management/ex1_account_linking_policy.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/ex1_account_linking_policy
+    .. literalinclude:: code/php/account_management/ex1_account_linking_policy.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/ex1_account_linking_policy
+    .. literalinclude:: code/python/account_management/ex1_account_linking_policy.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/ex1_account_linking_policy.rb
+      :language: ruby
 
 So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
 
@@ -4679,41 +4730,48 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/ex1_login_attempt_req
+      .. literalinclude:: code/csharp/account_management/ex1_login_attempt_req.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/ex1_login_attempt_req
+      .. literalinclude:: code/vbnet/account_management/ex1_login_attempt_req.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/ex1_login_attempt_req
+    .. literalinclude:: code/java/account_management/ex1_login_attempt_req.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/ex1_login_attempt_req
+    .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/ex1_login_attempt_req
+    .. literalinclude:: code/php/account_management/ex1_login_attempt_req.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/ex1_login_attempt_req
+    .. literalinclude:: code/python/account_management/ex1_login_attempt_req.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
+      :language: ruby
 
 After the credentials are validated, Stormpath will do a few things:
 
@@ -4746,41 +4804,48 @@ Stormpath will now return the Account from the Cloud Directory:
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/ex1_login_attempt_resp
+      .. literalinclude:: code/csharp/account_management/ex1_login_attempt_resp.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/ex1_login_attempt_resp
+      .. literalinclude:: code/vbnet/account_management/ex1_login_attempt_resp.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/ex1_login_attempt_resp
+    .. literalinclude:: code/java/account_management/ex1_login_attempt_resp.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/ex1_login_attempt_resp
+    .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_resp.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/ex1_login_attempt_resp
+    .. literalinclude:: code/php/account_management/ex1_login_attempt_resp.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/ex1_login_attempt_resp
+    .. literalinclude:: code/python/account_management/ex1_login_attempt_resp.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_resp.rb
+      :language: ruby
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -4826,41 +4891,48 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
 
     .. only:: csharp
 
-      .. literalinclude:: code/csharp/authentication/ex2_login_attempt_req
+      .. literalinclude:: code/csharp/account_management/ex2_login_attempt_req.cs
         :language: csharp
 
     .. only:: vbnet
 
-      .. literalinclude:: code/vbnet/authentication/ex2_login_attempt_req
+      .. literalinclude:: code/vbnet/account_management/ex2_login_attempt_req.vb
         :language: vbnet
 
   .. only:: java
 
     (java.todo)
 
-    .. literalinclude:: code/java/authentication/ex2_login_attempt_req
+    .. literalinclude:: code/java/account_management/ex2_login_attempt_req.java
       :language: java
 
   .. only:: nodejs
 
     (node.todo)
 
-    .. literalinclude:: code/nodejs/authentication/ex2_login_attempt_req
+    .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
       :language: javascript
 
   .. only:: php
 
     (php.todo)
 
-    .. literalinclude:: code/php/authentication/ex2_login_attempt_req
+    .. literalinclude:: code/php/account_management/ex2_login_attempt_req.php
       :language: php
 
   .. only:: python
 
     (python.todo)
 
-    .. literalinclude:: code/python/authentication/ex2_login_attempt_req
+    .. literalinclude:: code/python/account_management/ex2_login_attempt_req.py
       :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
+      :language: ruby
 
 This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
 
