@@ -1,3 +1,6 @@
 # Since we build locally, this directory is not included
 /build
+
+# Because why would you want it?
 .DS_Store
+.DS_Store*
