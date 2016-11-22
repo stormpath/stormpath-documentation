@@ -3955,7 +3955,7 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
 3.8. Account Linking
 ====================
 
-.. only:: not rest
+.. only:: not (rest or ruby)
 
  .. warning::
 
@@ -4021,6 +4021,12 @@ First and foremost, both Applications and Organizations have Account Linking Pol
       }
     }
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/login_attempt_namekey.rb
+    :language: ruby
+
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4064,13 +4070,6 @@ First and foremost, both Applications and Organizations have Account Linking Pol
 
     .. literalinclude:: code/python/account_management/login_attempt_namekey.py
       :language: python
-
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/login_attempt_namekey.rb
-      :language: ruby
 
 For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
 
@@ -4131,7 +4130,7 @@ Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. 
 
 In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
 
-.. only:: rest
+.. only:: rest or ruby
 
   .. code-block:: json
 
@@ -4191,17 +4190,10 @@ In each of those Directories, there is an Account. One in our Cloud Directory, f
     .. literalinclude:: code/python/account_management/account_picard.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_picard.rb
-      :language: ruby
-
 
 And one in the Facebook Directory for user Locutus:
 
-.. only:: rest
+.. only:: rest or ruby
 
   .. code-block:: json
 
@@ -4261,13 +4253,6 @@ And one in the Facebook Directory for user Locutus:
     .. literalinclude:: code/python/account_management/account_locutus.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_locutus.rb
-      :language: ruby
-
 
 You can link these two Accounts manually:
 
@@ -4288,6 +4273,12 @@ You can link these two Accounts manually:
         "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
       }
     }
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/manual_link_req.rb
+    :language: ruby
+
 
 .. todo::
 
@@ -4333,16 +4324,9 @@ You can link these two Accounts manually:
     .. literalinclude:: code/python/account_management/manual_link_req.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/manual_link_req.rb
-      :language: ruby
-
 Which on success will return an Account Link:
 
-.. only:: rest
+.. only:: rest or ruby
 
   .. code-block:: json
 
@@ -4402,13 +4386,6 @@ Which on success will return an Account Link:
     .. literalinclude:: code/python/account_management/manual_link_resp.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/manual_link_resp.rb
-      :language: ruby
-
 This means that:
 
 - this Account Link will appear in both of these Accounts' ``accountLinks`` collections, and
@@ -4420,7 +4397,7 @@ This means that:
 
 There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
 
-.. only:: rest
+.. only:: rest or ruby
 
   .. code-block:: json
 
@@ -4480,13 +4457,6 @@ There is one more aspect to Account Linking, which regards login behavior (as al
     .. literalinclude:: code/python/account_management/account_linking_policy.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
-      :language: ruby
-
 .. note::
 
   Account Linking Policies can be associated with either an Application or Organization. If you would like to use an Organization's Account Linking Policy then you must specify it in your login attempt.
@@ -4503,6 +4473,14 @@ How to Link Accounts Automatically
 ------------------------------------
 
 So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy.
+
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the Ruby SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
+
+    For updates, you can follow `ticket #180 <https://github.com/stormpath/stormpath-sdk-ruby/issues/180>`_ on Github.
 
 .. _about-alp:
 
