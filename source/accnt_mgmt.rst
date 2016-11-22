@@ -2684,131 +2684,396 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
 
-You will find a link to the ``accountSchema`` resource in your Directory:
+.. only:: rest
 
-.. code-block:: json
+  You will find a link to the ``accountSchema`` resource in your Directory:
 
-  {
-    "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
-    "name": "Account Schema Test",
-    "description": "A Directory to test Account Schema restrictions",
-    "...": "...",
-    "accountSchema": {
-      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example",
+      "name": "Account Schema Test",
+      "description": "A Directory to test Account Schema restrictions",
+      "...": "...",
+      "accountSchema": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
+      }
     }
-  }
 
-You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
+  You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
 
-.. code-block:: http
+  .. code-block:: http
 
-  GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
+    GET /v1/schemas/ivVhIkQVLGSLnExample?expand=fields HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
 
-And get back the Account Schema:
+  And get back the Account Schema:
 
-.. code-block:: json
+  .. code-block:: json
 
-  {
-    "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
-    "createdAt": "2016-08-19T19:42:41.961Z",
-    "modifiedAt": "2016-08-19T19:42:41.961Z",
-    "fields": {
-      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
-      "offset": 0,
-      "limit": 25,
-      "size": 2,
-      "items": [
-        {
-          "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
-          "createdAt": "2016-08-19T19:42:41.961Z",
-          "modifiedAt": "2016-08-19T19:42:41.961Z",
-          "name": "givenName",
-          "required": false,
-          "schema": {
-            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+    {
+      "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample",
+      "createdAt": "2016-08-19T19:42:41.961Z",
+      "modifiedAt": "2016-08-19T19:42:41.961Z",
+      "fields": {
+        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample/fields",
+        "offset": 0,
+        "limit": 25,
+        "size": 2,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhM4VPvZQycQexample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T19:42:41.961Z",
+            "name": "givenName",
+            "required": false,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+            }
+          },
+          {
+            "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+            "createdAt": "2016-08-19T19:42:41.961Z",
+            "modifiedAt": "2016-08-19T20:03:25.497Z",
+            "name": "surname",
+            "required": false,
+            "schema": {
+              "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+            }
           }
-        },
-        {
-          "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-          "createdAt": "2016-08-19T19:42:41.961Z",
-          "modifiedAt": "2016-08-19T20:03:25.497Z",
-          "name": "surname",
-          "required": false,
-          "schema": {
-            "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
-          }
-        }
-      ]
-    },
-    "directory": {
-      "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
+        ]
+      },
+      "directory": {
+        "href": "https://api.stormpath.com/v1/directories/iusmp6mK91ZZ5example"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/get_account_schema.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/get_account_schema.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/get_account_schema.java
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/account_management/get_account_schema.js
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/get_account_schema.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/get_account_schema.py
+      :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/get_account_schema.rb
+      :language: ruby
 
 The two Account attributes (or ``fields``) that can be toggled here are ``givenName`` and ``surname``. By default both of these have ``required`` set to ``false`` for any Directories created after August 13, 2016.
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic Mlp...
+  .. code-block:: http
 
-  {
-    "email":"test123@email.com",
-    "password":"APassword1234"
-  }
+    POST /v1/directories/iusmp6mK91ZZ5example/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic Mlp...
+
+    {
+      "email":"test123@email.com",
+      "password":"APassword1234"
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/account_creation_default.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/account_creation_default.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/account_creation_default.java
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/account_management/account_creation_default.js
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/account_creation_default.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/account_creation_default.py
+      :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/account_creation_default.rb
+      :language: ruby
 
 3.5.2. Modifying your Directory's Account Schema
 -------------------------------------------------
 
 Any attributes that are in the ``fields`` collection can have ``required`` toggled to either ``true`` or ``false``.
 
-If you wanted to set ``surname`` as required, you would send the following ``POST``:
+If you wanted to set ``surname`` as required, you would send the following request to that particular field object:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic Mlp...
-  Content-Type: application/json
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "required":"true"
-  }
+    POST /v1/fields/ivVhPOaKVsPbRWrExample HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic Mlp...
+    Content-Type: application/json
+    Cache-Control: no-cache
 
-And get back the following ``200 OK``:
-
-.. code-block:: json
-
-  {
-    "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
-    "createdAt": "2016-08-19T19:42:41.961Z",
-    "modifiedAt": "2016-08-19T20:03:25.497Z",
-    "name": "surname",
-    "required": true,
-    "schema": {
-        "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+    {
+      "required":"true"
     }
-  }
 
-If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+.. todo::
 
-.. code-block:: json
+  .. only:: csharp or vbnet
 
-  {
-    "status": 400,
-    "code": 2000,
-    "message": "Account surname is required; it cannot be null, empty, or blank.",
-    "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
-    "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
-    "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
-  }
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/set_surname_required_req.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/set_surname_required_req.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/set_surname_required_req.java
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/account_management/set_surname_required_req.js
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/set_surname_required_req.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/set_surname_required_req.py
+      :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
+      :language: ruby
+
+.. only:: rest
+
+  And get back the following ``200 OK``:
+
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/fields/ivVhPOaKVsPbRWrExample",
+      "createdAt": "2016-08-19T19:42:41.961Z",
+      "modifiedAt": "2016-08-19T20:03:25.497Z",
+      "name": "surname",
+      "required": true,
+      "schema": {
+          "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnLexample"
+      }
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/set_surname_required_resp.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/set_surname_required_resp.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/set_surname_required_resp.java
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/account_management/set_surname_required_resp.js
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/set_surname_required_resp.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/set_surname_required_resp.py
+      :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
+      :language: ruby
+
+.. only:: rest
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
+
+  .. code-block:: json
+
+    {
+      "status": 400,
+      "code": 2000,
+      "message": "Account surname is required; it cannot be null, empty, or blank.",
+      "developerMessage": "Account surname is required; it cannot be null, empty, or blank.",
+      "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
+      "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/account_creation_error.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/account_creation_error.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/account_creation_error.java
+      :language: java
+
+  .. only:: nodejs
+
+    (node.todo)
+
+    .. literalinclude:: code/nodejs/account_management/account_creation_error.js
+      :language: javascript
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/account_creation_error.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/account_creation_error.py
+      :language: python
+
+  .. only:: ruby
+
+    (ruby.todo)
+
+    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
+      :language: ruby
 
 .. _verify-account-email:
 
