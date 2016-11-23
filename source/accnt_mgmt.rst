@@ -1373,6 +1373,12 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``save`` on the Account resource to send the updates to the Stormpath API.
 
+  .. note::
+
+    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a `href` attribute is present.
+    When trying to access or set another property, the resource will be materialized and all the other attributes will be pulled down from the server (or from the cache).
+
+
 .. only:: rest
 
   Which returns the following:
