@@ -1375,7 +1375,8 @@ For example, you could add information about this user's current location, like 
 
   .. note::
 
-    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a `href` attribute is present.
+    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a ``href`` attribute is present.
+
     When trying to access or set another property, the resource will be materialized and all the other attributes will be pulled down from the server (or from the cache).
 
 
