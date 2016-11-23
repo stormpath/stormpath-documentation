@@ -480,6 +480,12 @@ Before you can create user Accounts, you'll need to retrieve your Stormpath Appl
 
   The application and directory property on a client instance are also ``Enumerable`` allowing you to iterate and scan for resources via that interface.
 
+  .. note::
+
+    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a `href` attribute is present.
+    When trying to access or set another property, the resource will be materialized and all the other attributes will be pulled down from the server (or from the cache).
+
+
 .. _quickstart-create-account:
 
 2.5. Create a User Account
