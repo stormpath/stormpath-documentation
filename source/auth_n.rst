@@ -1760,18 +1760,75 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 2. Map the Directory as an Account Store to an Application resource. When an Account Store (in this case a Directory) is mapped to an Application, the Accounts in the AccountStore are considered the Application’s users and they can log in to it.
 
-3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see below, or go to `the Client API Guide <jakubtodo://>`__.
+3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see below, or go to `the Client API Guide <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__.
 
 Attribute Mappings
 ------------------
 
-jakub.todo
+Each social provider returns their own specific information about a user. The returned information is stored inside that Account's Provider Data in a ``userInfo`` object. This information can also be mapped to Stormpath Account attributes using mapping configured in the Directory Provider's ``userInfoMappingRules``.
 
-Each social provider returns their own specific information about a user.
+For example, if we look at a Google user's ``userInfo``:
 
-The returned information is stored inside that Account's Provider Data in a ``userInfo`` object.
+.. code-block:: json
 
-This information can also be mapped to Stormpath Account attributes using mapping configured in the Directory Provider's ``userInfoMappingRules``.
+  {
+    "href":"https://api.stormpath.com/v1/accounts/1Voi7LQ6NGnTPskjn9eZBA/providerData",
+    "createdAt":"2016-04-29T17:31:23.676Z",
+    "modifiedAt":"2016-11-10T18:22:46.749Z",
+    "accessToken":"ya2[...]Nhs",
+    "providerId":"google",
+    "refreshToken":null,
+    "userInfo":{
+      "id":"123111111111111111234",
+      "email":"jakub@stormpath.com",
+      "name":"Jakub Swiatczak",
+      "firstName":"Jakub",
+      "lastName":"Swiatczak",
+      "link":"https://plus.google.com/1023540111341293534",
+      "profilePictureUrl":"https://lh4.googleusercontent.com/-8HcexamplekMuE/AAAAAAAAAAI/AAAAAAAAACI/VtAVULicGV4/photo.jpg",
+      "gender":"male",
+      "locale":null
+    }
+  }
+
+We can see that Google returns an attribute called "gender". We can map this to a piece of Custom Data attached to the Account by creating a new rule in the Directory Provider's ``userInfoMappingRules``.
+
+.. code-block:: html
+
+  POST /v1/userInfoMappingRules/3HuqEWMWi7wts1CEXAMPLE HTTP/1.1
+  Host: api.stormpath.com
+  Content-Type: application/json
+  Authorization: Basic MlpGT[...]xxdmk0
+
+  {
+    "items":[
+      {
+        "name":"gender",
+        "accountAttributes":[
+          "customData.gender"
+          ]
+      }
+      ]
+  }
+
+The response is a ``200 OK`` along with the User Info Mapping Rules:
+
+.. code-block:: json
+
+  {
+    "href":"https://api.stormpath.com/v1/userInfoMappingRules/3HuqEWMWi7wts1CEXAMPLE",
+    "createdAt":"2016-10-27T16:56:10.429Z",
+    "modifiedAt":"2016-12-02T15:31:38.928Z",
+    "items":[
+      {
+        "name":"gender",
+        "accountAttributes":[
+          "customData.gender"
+        ]
+      }
+    ]
+  }
+
 
 Scopes
 ------
@@ -1801,6 +1858,8 @@ The Directory's Provider now has a ``scope`` array where you can define what Sco
   * - LinkedIn
     - ``r_basicprofile``, ``r_emailaddress``
     - `LinkedIn Profile Fields <LinkedIn’s “Profile Fields” documentation>`__
+
+Additional scopes can be selected by going to the Directory's page in the Stormpath Admin Console and clicking on the **Scopes** tab found under "Provider Configuration".
 
 Social Login Providers
 -----------------------
