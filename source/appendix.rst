@@ -6,6 +6,339 @@ Appendix
 
 This appendix contains documentation for features and workflows that have been deprecated.
 
+.. _generate-oauth-token-old:
+
+Generating an OAuth 2.0 Access Token
+------------------------------------
+
+.. note::
+
+  The recommended way of generating an OAuth 2.0 token is with the Client API's ``/oauth/token`` endpoint. For information about, please see `the Client API Guide <https://docs.stormpath.com/client-api/product-guide/latest/authentication.html#oauth-2-0-login>`__. The information below is about an alternate and older way of generating an OAuth 2.0 token.
+
+.. only:: rest
+
+  Stormpath exposes an endpoint for each Application resource to support the OAuth 2.0 protocol:
+
+  ``https://api.stormpath.com/v1/applications/$YOUR_APPLICATION_ID/oauth/token``
+
+  This endpoint is used to generate an OAuth token for any valid Account or API Key associated with the specified Application. For Account's, it uses the same validation as the ``/loginAttempt`` endpoint, as described in :ref:`how-login-works`.
+
+The first three kinds of OAuth Grant Types differ only in what credentials are passed to Stormpath in order to generate the token. The Stormpath Factor Challenge Type requires a Challenge ``href`` and ``code`` that you get as part of the :ref:`Multi-Factor Authentication process <mfa>`. For more information on those, keep reading. For more information about the Refresh Grant Type, see :ref:`below <refresh-oauth-token>`.
+
+**Targeting a Specific Account Store**
+
+It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``nameKey``.
+
+``grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/1bcd23ec1d0a8wa6``
+
+``grant_type=password&username=tom@stormpath.com&password=Secret1&nameKey=anOrganization``
+
+This allows you to bypass the usual default Account Store and login priority and instead send the token generation to a particular Account Store.
+
+
+.. todo::
+
+  Need examples for the other languages!
+
+Client Credentials
+""""""""""""""""""
+
+For the **Client Credentials Grant Type**, you pass the **Client ID** and **Secret**:
+
+``grant_type=client_credentials&client_id=2ZFMV4WVVexample&client_secret=XEPJolhnMYexample``
+
+Social
+""""""
+
+.. note::
+
+
+
+  Instructions below explain the older, alternate way of generating an OAuth token using Social credentials.
+
+For the **Social Grant Type** you must pass:
+
+- The **Provider ID** which matches the Provider ID of the :ref:`Social Directory <social-authn>` (e.g. `facebook` or `github`)
+- A ``redirectUri`` as a parameter that specifies the URL that the user will be redirected to after authentication
+- And either the Authorization **Code** or
+- The **Access Token** for that Social Provider
+
+All together, this would look like this:
+
+``grant_type=stormpath_social&providerId=facebook&accessToken=EAA68kW...&redirectUri=https%3A%2F%2...``
+
+Password
+"""""""""
+
+Finally, for the **Password Grant Type**, you pass the user's **username** and **password**:
+
+``grant_type=password&username=tom%40stormpath.com&password=Secret1``
+
+Stormpath Factor Challenge
+""""""""""""""""""""""""""
+
+For this grant type, you will need:
+
+- The **URL of a Stormpath Challenge Resource**. Currently, this can only be a Challenge related to an SMS Factor.
+- And the challenge code that the user received on their phone.
+
+``grant_type=stormpath_factor_challenge&challenge=https://api.stormpath.com/v1/challenges/$CHALLENGE_ID&code=123456``
+
+For more information about these resources and how to obtain them, please see :ref:`mfa`.
+
+Token Generation Example
+"""""""""""""""""""""""""
+
+In this example we will demonstrate the Password Grant Type:
+
+- The user inputs their credentials into a form and submits them.
+- Your application in turn takes the credentials and formulates the OAuth 2.0 Access Token request to Stormpath.
+- When Stormpath returns with the Access Token Response, you can then return the Access Token and/or the Refresh Token to the client.
+
+.. only:: not nodejs
+
+  So you would send the following request:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/applications/$YOUR_APPLICATION_ID/oauth/token HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=password&username=tom%40stormpath.com&password=Secret1
+
+  .. note::
+
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store or Organization. To do so, specify the Account Store's ``href`` or Organization's ``nameKey`` as a parameter in the body::
+
+      grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/2SKhstu8Plaekcai8lghrp
+
+      grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=companyA
+
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/generate_oauth_token_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/generate_oauth_token_req.vb
+        :language: vbnet
+
+  .. note::
+
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``SetAccountStore()`` method when you are building the request.
+
+.. only:: java
+
+  .. literalinclude:: code/java/authentication/generate_oauth_token_req.java
+      :language: java
+
+  .. note::
+
+    Just like with logging-in a user, it is possible to generate a token against a particular Application's Account Store resource. To do so, use the ``setAccountStore(AccountStore accountStore)`` method when you are building the request.
+
+.. only:: nodejs
+
+  The first step is to create a re-usable password grant authenticator. This authenticator is bound to an Application, so you must pass an Application instance to it:
+
+  .. literalinclude:: code/nodejs/authentication/create_password_grant_authenticator.js
+      :language: javascript
+
+  Once you have an authenticator, you can pass authentication attempts to it.
+
+  If the users credentials are correct, you will receive an authentication result, which contains the access token:
+
+  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_req.js
+      :language: javascript
+
+.. only:: php
+
+  .. literalinclude:: code/php/authentication/generate_oauth_token_req.php
+    :language: php
+
+.. only:: python
+
+  .. literalinclude:: code/python/authentication/generate_oauth_token_req.py
+    :language: python
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/authentication/generate_oauth_token_req.rb
+    :language: ruby
+
+.. only:: rest
+
+  Which would result in this response:
+
+  .. code-block:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json;charset=UTF-8
+
+    {
+      "access_token": "eyJraWQiOiIyWkZNV...TvUt2WBOl3k",
+      "refresh_token": "eyJraWQiOiIyWkZNV...8TvvrB7cBEmNF_g",
+      "token_type": "Bearer",
+      "expires_in": 1800,
+      "stormpath_access_token_href": "https://api.stormpath.com/v1/accessTokens/1vHI0jBXDrmmvPqEXaMPle"
+    }
+
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
+
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
+
+      * - Attribute
+        - Type
+        - Description
+
+      * - access_token
+        - String (JSON Web Token)
+        - The access token for the response.
+
+      * - refresh_token
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
+
+      * - token_type
+        - String
+        - The type of token returned.
+
+      * - expires_in
+        - Number
+        - The time in seconds before the token expires.
+
+      * - stormpath_access_token_href
+        - String
+        - The href location of the token in Stormpath.
+
+.. only:: (csharp or vbnet)
+
+  The ``IOauthGrantAuthenticationResult`` response contains the following properties and methods:
+
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
+
+      * - Member
+        - Type
+        - Description
+
+      * - AccessTokenString
+        - String (JSON Web Token)
+        - The access token for the response.
+
+      * - AccessTokenHref
+        - String
+        - The href location of the token in Stormpath.
+
+      * - RefreshTokenString
+        - String (JSON Web Token)
+        - The refresh token that can be used to get refreshed Access Tokens. (Only available via the Password Grant Type)
+
+      * - TokenType
+        - String
+        - The type of token returned.
+
+      * - ExpiresIn
+        - Long
+        - The time in seconds before the token expires.
+
+      * - GetAccessTokenAsync()
+        - ``Task<IAccessToken>``
+        - Retrieves the generated access token as an ``IAccessToken`` object.
+
+.. only:: java
+
+  Which would result in this response:
+
+  .. literalinclude:: code/java/authentication/generate_oauth_token_resp.java
+      :language: javascript
+
+.. only:: nodejs
+
+  Which would print the access token in the terminal:
+
+  .. literalinclude:: code/nodejs/authentication/generate_oauth_token_resp.js
+      :language: javascript
+
+.. only:: php
+
+  Which would result in this response:
+
+  .. literalinclude:: code/php/authentication/generate_oauth_token_resp.php
+    :language: php
+
+  This is an **OAuth 2.0 Access Token Response** and includes the following:
+
+  .. list-table::
+      :widths: 15 10 60
+      :header-rows: 1
+
+      * - Attribute
+        - Type
+        - Description
+
+      * - accessToken
+        - Object (Stormpath\Resource\AccessToken)
+        - The Access Token as an object.
+
+      * - accessTokenString
+        - String (JSON Web Token)
+        - The Access Token as a JWT-formatted string.
+
+      * - refreshToken
+        - Object (Stormpath\Resource\RefreshToken)
+        - The Refresh Token as an object. (Only available via the Password Grant Type)
+
+      * - refreshTokenString
+        - String (JSON Web Token)
+        - The Refresh Token as a JWT-formatted string.
+
+      * - accessTokenHref
+        - String
+        - The href location of the token in Stormpath.
+
+      * - tokenType
+        - String
+        - The type of token that was returned (Typically Bearer)
+
+      * - expiresIn
+        - Number
+        - The time in seconds before the token expires.
+
+.. only:: python
+
+  Which would result in a ``None`` response (on failure), or an object on
+  success.  If the authentication attempt succeeds, you can access the following
+  properties from the ``PasswordAuthenticationResult`` object:
+
+  - ``result.app`` - The Stormpath Application.
+  - ``result.stormpath_access_token`` - The Stormpath ``AuthToken`` object.
+  - ``result.expires_in`` - The time in seconds before this token expires.
+  - ``result.token_type`` - The type of token.
+  - ``result.refresh_token`` - The ``RefreshToken`` object.
+  - ``result.account`` - The Stormpath Account object for the authenticated user.
+
+.. only:: ruby
+
+  Which would result in a ``Stormpath::Error`` response (on failure), or an object on
+  success.  If the authentication attempt succeeds, you can access the following
+  properties from the ``Stormpath::Oauth::AccessTokenAuthenticationResult`` object:
+
+  - ``response.access_token`` - The Stormpath access token
+  - ``response.refresh_token`` - The Stormpath refresh token
+  - ``response.token_type`` - The type of token
+  - ``response.expires_in`` - The time in seconds before this token expires
+  - ``response.stormpath_access_token_href`` - The href for the returned access token
+
 .. _social-authn-old:
 
 Social Login (Deprecated)
