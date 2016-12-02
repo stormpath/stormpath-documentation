@@ -50,12 +50,6 @@ For the **Client Credentials Grant Type**, you pass the **Client ID** and **Secr
 Social
 """"""
 
-.. note::
-
-
-
-  Instructions below explain the older, alternate way of generating an OAuth token using Social credentials.
-
 For the **Social Grant Type** you must pass:
 
 - The **Provider ID** which matches the Provider ID of the :ref:`Social Directory <social-authn>` (e.g. `facebook` or `github`)

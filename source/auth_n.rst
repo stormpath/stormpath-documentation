@@ -1396,27 +1396,13 @@ Social Directories are a kind of mirrored Directory, in that they are used to mi
 
 In general, the social login process works as follows:
 
-jakub.todo
-
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
-2. The user will be asked by the Provider to accept the permissions required by your app.
+2. The user authenticates and i asked by the Provider to accept the permissions required by your app.
 
-3. The Provider will return the user to your application with an Access Token or Authorization Code.
+3. Once the user accepts the permissions, the Provider sends back the user's information
 
-4. Stormpath will take this token/code and use it to query the provider for:
-
-   - an email address
-   - a first name
-   - a last name.
-
-.. note::
-
-    If Stormpath is unable to retrieve the user's first and last name, it will populate those attributes with a default value: ``NOT_PROVIDED``.
-
-5. Stormpath will search for a Directory that matches the provider of the token/code. If one is not found, an error will be returned.
-
-6. Once the Directory is located, Stormpath will look for an Account in your application's Directories that matches this information.
+4. Stormpath will look for an Account in your application's Directories that matches this information.
 
 .. only:: rest
 
@@ -1424,7 +1410,7 @@ jakub.todo
 
      b. If a matching Account is not found, Stormpath will create one and return the new Account's ``href``.
 
-  7. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
+  5. At this point, a language/framework-specific integration would use this ``href`` to create a Session for the user.
 
 .. only:: not (rest or php)
 
@@ -1432,7 +1418,7 @@ jakub.todo
 
      b. If a matching Account is not found, Stormpath will create one and return it.
 
-  7. The Account can now be used like any other Account in Stormpath.
+  5. The Account can now be used like any other Account in Stormpath.
 
 As a developer, integrating Social Login into your application with Stormpath only requires three steps:
 
