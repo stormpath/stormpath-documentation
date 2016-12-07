@@ -4076,7 +4076,7 @@ At this point your user is authenticated and able to use your app.
 At a minimum, an Account in Stormpath requires at least one authentication factor, which is the password. However, if you would like to include additional security then Stormpath supports the creation of additional authentication factors on an Account. Currently, the additional factors are:
 
 - SMS message to a phone
-- Google Authenticator (TOTP)
+- Google Authenticator
 
 The multi-factor authentication process works as follows with text messages:
 
@@ -4104,7 +4104,7 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   .. code-block:: http
 
@@ -4225,7 +4225,9 @@ To add an additional SMS Factor to this Account, you send the following request:
     .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
         :language: vbnet
 
-  For now, ``smsFactor.VerificationStatus`` will be ``UNVERIFIED`` and ``GetMostRecentChallengeAsync`` will return ``null``. If you were to create a challenge for this Factor, ``GetMostRecentChallengeAsync`` would return the actual ``IChallenge`` instance. If that challenge was successful, ``smsFactor.VerificationStatus`` would change to ``VERIFIED``.
+  For now, ``smsFactor.VerificationStatus`` will be ``FactorVerificationStatus.Unverified`` and ``GetMostRecentChallengeAsync`` will return ``null``.
+
+  If you were to create a challenge for this Factor, ``GetMostRecentChallengeAsync`` would return the actual Challenge instance. If that challenge was successful, ``smsFactor.VerificationStatus`` would change to ``FactorVerificationStatus.Verified``.
 
 
 .. todo::
@@ -4545,6 +4547,8 @@ At this point in the example you have a brand new Account with two additional Fa
 
 .. only:: csharp or vbnet
 
+  You can verify this by retrieving the Account's Factors collection. It's also possible to search the Factors collection using LINQ.
+
   .. only:: csharp
 
     .. literalinclude:: code/csharp/authentication/mfa_get_account_factors_req.cs
@@ -4554,8 +4558,6 @@ At this point in the example you have a brand new Account with two additional Fa
 
     .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors_req.vb
         :language: vbnet
-
-  It's also possible to search the Factors collection using LINQ.
 
 
 .. todo::
@@ -4839,7 +4841,7 @@ Once you have the code, you submit it to the same Challenge you created above:
 
 .. only:: csharp or vbnet
 
-  If the challenge is successful, the ``Status`` property will equal ``ChallengeStatus.Success``. If you had sent the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
+  If the challenge is successful, the ``Status`` property will equal ``ChallengeStatus.Success``. If you submit the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
 
   You can also use the ``ValidateAsync`` method to submit a code and return a boolean (equivalent to checking for ``ChallengeStatus.Success``).
 
@@ -4976,7 +4978,7 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
 .. only:: csharp or vbnet
 
-  If you had sent the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
+  If you submit the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
 
   You can also use the ``ValidateAsync`` method to submit a code and return a boolean (equivalent to checking for ``ChallengeStatus.Success``).
 
@@ -5113,6 +5115,12 @@ You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` al
   .. note::
 
     If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
+
+.. only:: csharp or vbnet
+
+  .. todo::
+
+    (dotnet.todo)
 
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -5256,7 +5264,7 @@ The first step is to authenticate the user.
 
 .. only:: csharp or vbnet
 
-  Next, you will need to retrieve the Account's Factors collection. This will contain all the factors for the account.
+  Next, you will need to retrieve the Account's Factors collection. This will contain all the factors for the account:
 
   .. only:: csharp
 
@@ -5371,7 +5379,7 @@ The first step is to authenticate the user.
 
 .. only:: csharp or vbnet
 
-  You would then get one of the factors from the returned list and challenge it as described above in `mfa-challenge-after`_.
+  You would then pick one of the factors from the returned list and challenge it as described above in :ref:`mfa-challenge-after`.
 
 
 .. todo::

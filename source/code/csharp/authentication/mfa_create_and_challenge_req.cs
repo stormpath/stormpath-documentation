@@ -1,4 +1,5 @@
-var smsFactor = await account.Factors.AddAsync(new SmsFactorCreationOptions()
+var smsFactor = await account.Factors.AddAsync(
+    new SmsFactorCreationOptions()
 {
     Number = "2675555555",
     Challenge = true
