@@ -822,11 +822,11 @@ The first three kinds of OAuth Grant Types differ only in what credentials are p
 
 **Targeting a Specific Account Store**
 
-It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``nameKey``.
+It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``organizationNameKey``.
 
 ``grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/1bcd23ec1d0a8wa6``
 
-``grant_type=password&username=tom@stormpath.com&password=Secret1&nameKey=anOrganization``
+``grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=anOrganization``
 
 This allows you to bypass the usual default Account Store and login priority and instead send the token generation to a particular Account Store.
 
