@@ -4067,7 +4067,7 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: not (rest or java or python or ruby or csharp or vbnet)
+.. only:: not (rest or java or python or ruby or nodejs or csharp or vbnet)
 
  .. warning::
 
@@ -4104,7 +4104,7 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4137,6 +4137,11 @@ First, you create the Account:
   .. literalinclude:: code/ruby/authentication/mfa_create_account.rb
       :language: ruby
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
+      :language: javascript
+
 .. only:: csharp
 
   .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
@@ -4149,15 +4154,6 @@ First, you create the Account:
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
-          :language: javascript
 
   .. only:: php
 
@@ -4176,7 +4172,7 @@ Adding an SMS Factor
 
 To add an additional SMS Factor to this Account, you send the following request:
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4213,6 +4209,13 @@ To add an additional SMS Factor to this Account, you send the following request:
 
   For now ``factor.verification_status`` will return ``UNVERIFIED`` and ``factor.most_recent_challenge`` will be ``nil``. If you were to create a challenge for this Factor, ``factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.verification_status`` would change to ``VERIFIED``.
 
+.. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
+        :language: javascript
+
+  For now ``factor.verification_status`` will return ``UNVERIFIED`` and ``factor.most_recent_challenge`` will be ``nil``. If you were to create a challenge for this Factor, ``factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.verification_status`` would change to ``VERIFIED``.
+
 .. only:: csharp or vbnet
 
   .. only:: csharp
@@ -4231,15 +4234,6 @@ To add an additional SMS Factor to this Account, you send the following request:
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -4283,16 +4277,6 @@ To add an additional SMS Factor to this Account, you send the following request:
   .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
       :language: ruby
 
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_resp.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -4305,7 +4289,7 @@ To add an additional SMS Factor to this Account, you send the following request:
 
 .. only:: rest or nodejs or php
 
-  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
+  For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge to this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
   For more information about the Factor resource, see :ref:`the Reference chapter <ref-factor>`.
 
@@ -4316,7 +4300,7 @@ Adding a Google Authenticator Factor
 
 To add an additional Google Authenticator Factor to this Account, you must send the following request:
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4330,6 +4314,11 @@ To add an additional Google Authenticator Factor to this Account, you must send 
       "accountName": "jakub@stormpath.com",
       "issuer": "Example App"
     }
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
+      :language: javascript
 
 .. note::
 
@@ -4364,15 +4353,6 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -4420,16 +4400,8 @@ To add an additional Google Authenticator Factor to this Account, you must send 
   .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
     :language: ruby
 
+
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_add_ga_factor_resp.js
-          :language: javascript
 
   .. only:: php
 
@@ -4469,7 +4441,7 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 At this point in the example you have a brand new Account with two additional Factors.
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
 
@@ -4543,7 +4515,12 @@ At this point in the example you have a brand new Account with two additional Fa
   .. literalinclude:: code/ruby/authentication/mfa_get_account_factors_req.rb
     :language: ruby
 
-  Note that it's also possible to ``search`` the ``factors`` collection by any attribute you desire.
+.. only:: nodejs
+
+  If you were to retrieve the Account's ``factors`` you will get them:
+
+  .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
+    :language: javascript
 
 .. only:: csharp or vbnet
 
@@ -4561,15 +4538,6 @@ At this point in the example you have a brand new Account with two additional Fa
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
-          :language: javascript
 
   .. only:: php
 
@@ -4597,7 +4565,7 @@ Challenging After Factor Creation
 Challenging an SMS Factor
 """""""""""""""""""""""""
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
@@ -4632,6 +4600,15 @@ Challenging an SMS Factor
   .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_factor_req.rb
     :language: ruby
 
+.. only:: nodejs
+
+  To challenge an SMS Factor, call ``smsFactor.createChallenge(challenge);`` with or without setting a message.
+
+  This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
+
+  .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
+      :language: javascript
+      
 .. only:: csharp or vbnet
 
   To challenge an SMS Factor, call ``smsFactor.Challenges.AddAsync``, with or without specifying a ``ChallengeCreationOptions`` instance.
@@ -4648,15 +4625,6 @@ Challenging an SMS Factor
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -4705,15 +4673,6 @@ This operation will automatically cause the factor to be challenged, meaning tha
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_resp.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -4743,7 +4702,7 @@ Next, you must collect this code from the user.
 
 Once you have the code, you submit it to the same Challenge you created above:
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4771,6 +4730,11 @@ Once you have the code, you submit it to the same Challenge you created above:
   .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code.rb
     :language: ruby
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
+      :language: javascript
+      
 .. only:: csharp
 
   .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
@@ -4784,15 +4748,6 @@ Once you have the code, you submit it to the same Challenge you created above:
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -4801,6 +4756,7 @@ Once you have the code, you submit it to the same Challenge you created above:
 
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
         :language: php
+
 
 .. only:: rest or nodejs or php
 
@@ -4847,15 +4803,6 @@ Once you have the code, you submit it to the same Challenge you created above:
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code_success.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -4874,7 +4821,7 @@ Once you have the code, you submit it to the same Challenge you created above:
 Challenging a Google Authenticator Factor
 """""""""""""""""""""""""""""""""""""""""
 
-When you created the Google Authenticator Factor, you also generated a QR Code image for your user to scan into their app. Challenging this factor now only requires you to prompt to enter in the code from their Authenticator app.
+When you created the Google Authenticator Factor, you also generated a QR Code image for your user to scan into their app. Challenging this factor now only requires you to prompt the user to enter in the code from their Authenticator app.
 
 .. only:: not (csharp or vbnet)
 
@@ -4882,7 +4829,7 @@ When you created the Google Authenticator Factor, you also generated a QR Code i
 
 Once you have collected the code from the user, submit it:
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4910,6 +4857,11 @@ Once you have collected the code from the user, submit it:
   .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_req.rb
     :language: ruby
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
+    :language: javascript
+    
 .. only:: csharp
 
   .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
@@ -4922,15 +4874,6 @@ Once you have collected the code from the user, submit it:
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -4984,15 +4927,6 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_resp.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -5012,7 +4946,7 @@ Challenging During Factor Creation
 
   For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   To send a challenge at the same time as you create the SMS Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
@@ -5068,6 +5002,13 @@ Challenging During Factor Creation
   .. literalinclude:: code/ruby/authentication/mfa_create_and_challenge_req.rb
     :language: ruby
 
+.. only:: nodejs
+
+  To create a Challenge at the same time as you create the SMS Factor, you can use this:
+
+  .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
+    :language: javascript
+
 .. only:: csharp or vbnet
 
   To create a Challenge at the same time you create the SMS Factor, you can use these options on ``SmsFactorCreationOptions``:
@@ -5088,15 +5029,6 @@ Challenging During Factor Creation
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -5142,6 +5074,11 @@ The first step is to authenticate the user.
       "value": "amFrdWIrbWZhdGVzdExamplebXBhdGguY29tOkNoYW5nZW1lMQ=="
     }
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
+      :language: javascript
+
 .. only:: csharp or vbnet
 
   In the .NET SDK, this means a call to ``AuthenticateAccountAsync``:
@@ -5158,15 +5095,6 @@ The first step is to authenticate the user.
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -5212,15 +5140,6 @@ The first step is to authenticate the user.
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_auth_account_resp.js
-        :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -5230,7 +5149,7 @@ The first step is to authenticate the user.
       .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
         :language: php
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   Next, you will need to retrieve the Account's ``factors`` collection:
 
@@ -5262,6 +5181,13 @@ The first step is to authenticate the user.
   .. literalinclude:: code/ruby/authentication/mfa_get_account_factors_req.rb
     :language: ruby
 
+.. only:: nodejs
+
+  Next, you will need to retrieve the Account's ``factors`` collection:
+
+  .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
+    :language: javascript
+
 .. only:: csharp or vbnet
 
   Next, you will need to retrieve the Account's Factors collection. This will contain all the factors for the account:
@@ -5278,15 +5204,6 @@ The first step is to authenticate the user.
 
 
 .. todo::
-
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
-          :language: javascript
 
   .. only:: php
 
@@ -5334,15 +5251,6 @@ The first step is to authenticate the user.
 
 .. todo::
 
-  .. only:: nodejs
-
-    .. todo::
-
-      (node.todo)
-
-      .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_resp.js
-          :language: javascript
-
   .. only:: php
 
     .. todo::
@@ -5352,7 +5260,7 @@ The first step is to authenticate the user.
       .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
         :language: php
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
@@ -5377,18 +5285,24 @@ The first step is to authenticate the user.
   .. literalinclude:: code/ruby/authentication/mfa_challenge_existing_factor.rb
     :language: ruby
 
+.. only:: nodejs
+
+  You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
+
+  .. literalinclude:: code/nodejs/authentication/mfa_challenge_existing_factor.js
+  :language: javascript
+
 .. only:: csharp or vbnet
 
   You would then pick one of the factors from the returned list and challenge it as described above in :ref:`mfa-challenge-after`.
 
-
 .. todo::
 
-  .. only:: nodejs
+  .. only:: csharp or vbnet
 
     .. todo::
 
-      (node.todo)
+      (dotnet.todo)
 
   .. only:: php
 
