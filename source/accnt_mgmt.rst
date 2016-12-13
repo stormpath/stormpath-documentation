@@ -4445,7 +4445,7 @@ In each of those Directories, there is an Account. One in our Cloud Directory, f
 
 And one in the Facebook Directory for user Locutus:
 
-.. only:: rest or ruby or node
+.. only:: rest or ruby or nodejs
 
   .. code-block:: json
 
