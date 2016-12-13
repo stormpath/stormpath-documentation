@@ -1373,6 +1373,13 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``save`` on the Account resource to send the updates to the Stormpath API.
 
+  .. note::
+
+    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a ``href`` attribute is present.
+
+    When trying to access or set another property, the resource will be materialized and all the other attributes will be pulled down from the server (or from the cache).
+
+
 .. only:: rest
 
   Which returns the following:
@@ -2684,7 +2691,7 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   You will find a link to the ``accountSchema`` resource in your Directory:
 
@@ -2820,7 +2827,7 @@ The two Account attributes (or ``fields``) that can be toggled here are ``givenN
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   .. code-block:: http
 
@@ -2889,7 +2896,7 @@ Any attributes that are in the ``fields`` collection can have ``required`` toggl
 
 If you wanted to set ``surname`` as required, you would send the following request to that particular field object:
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   .. code-block:: http
 
@@ -2952,7 +2959,7 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
       :language: ruby
 
-.. only:: rest or nodejs
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   And get back the following ``200 OK``:
 
@@ -3013,7 +3020,7 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
       :language: ruby
 
-.. only:: rest or nodejs
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 

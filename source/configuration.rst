@@ -220,7 +220,7 @@
 
     .. note::
 
-      The Java SDK does not currently have a plugin that supports Memcached. If you need this functionality please, reach out to us at support@stormpath.com.
+      The Java SDK does not currently have a plugin that supports Redis. If you need this functionality please, reach out to us at support@stormpath.com.
 
   .. only:: nodejs
 

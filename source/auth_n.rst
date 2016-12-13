@@ -822,11 +822,11 @@ The first three kinds of OAuth Grant Types differ only in what credentials are p
 
 **Targeting a Specific Account Store**
 
-It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``nameKey``.
+It is possible to target token generation against a particular Directory, Group, or Organization. You do this either by passing the Account Store's ``href``, or the Organization's ``organizationNameKey``.
 
 ``grant_type=password&username=tom@stormpath.com&password=Secret1&accountStore=https://api.stormpath.com/v1/directories/1bcd23ec1d0a8wa6``
 
-``grant_type=password&username=tom@stormpath.com&password=Secret1&nameKey=anOrganization``
+``grant_type=password&username=tom@stormpath.com&password=Secret1&organizationNameKey=anOrganization``
 
 This allows you to bypass the usual default Account Store and login priority and instead send the token generation to a particular Account Store.
 
@@ -4067,7 +4067,7 @@ At this point your user is authenticated and able to use your app.
 4.6. Using Multi-Factor Authentication
 ============================================
 
-.. only:: not (rest or java or python or ruby or nodejs)
+.. only:: not (rest or java or python or ruby or nodejs or csharp or vbnet)
 
  .. warning::
 
@@ -4104,7 +4104,7 @@ Enrolling an additional authentication factor always happens separate from Accou
 
 First, you create the Account:
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4142,23 +4142,18 @@ First, you create the Account:
   .. literalinclude:: code/nodejs/authentication/mfa_create_account.js
       :language: javascript
 
+.. only:: csharp
+
+  .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
+      :language: csharp
+
+.. only:: vbnet
+
+  .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
+      :language: vbnet
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_create_account.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_create_account.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4177,7 +4172,7 @@ Adding an SMS Factor
 
 To add an additional SMS Factor to this Account, you send the following request:
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4221,23 +4216,24 @@ To add an additional SMS Factor to this Account, you send the following request:
 
   For now ``factor.verification_status`` will return ``UNVERIFIED`` and ``factor.most_recent_challenge`` will be ``nil``. If you were to create a challenge for this Factor, ``factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.verification_status`` would change to ``VERIFIED``.
 
+.. only:: csharp or vbnet
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
+        :language: vbnet
+
+  For now, ``smsFactor.VerificationStatus`` will be ``FactorVerificationStatus.Unverified`` and ``GetMostRecentChallengeAsync`` will return ``null``.
+
+  If you were to create a challenge for this Factor, ``GetMostRecentChallengeAsync`` would return the actual Challenge instance. If that challenge was successful, ``smsFactor.VerificationStatus`` would change to ``FactorVerificationStatus.Verified``.
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4249,7 +4245,7 @@ To add an additional SMS Factor to this Account, you send the following request:
         :language: php
 
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   You will then get back the response:
 
@@ -4281,25 +4277,6 @@ To add an additional SMS Factor to this Account, you send the following request:
   .. literalinclude:: code/ruby/authentication/mfa_add_sms_factor_resp.rb
       :language: ruby
 
-
-.. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_add_sms_factor_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_add_sms_factor_resp.vb
-            :language: vbnet
-
   .. only:: php
 
     .. todo::
@@ -4310,7 +4287,7 @@ To add an additional SMS Factor to this Account, you send the following request:
         :language: php
 
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   For now the ``verificationStatus`` is ``UNVERIFIED`` and the link to the ``mostRecentChallenge`` is ``null``. If you were to send a challenge to this Factor, the ``mostRecentChallenge`` link would be populated. If that challenge was successful, the ``verificationStatus`` would change to ``VERIFIED``.
 
@@ -4323,7 +4300,7 @@ Adding a Google Authenticator Factor
 
 To add an additional Google Authenticator Factor to this Account, you must send the following request:
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4334,7 +4311,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
     {
       "type":"google-authenticator",
-      "accountName": "jakub@stormpath.com"
+      "accountName": "jakub@stormpath.com",
       "issuer": "Example App"
     }
 
@@ -4364,24 +4341,18 @@ To add an additional Google Authenticator Factor to this Account, you must send 
 
   The ``custom_options`` hash is completely optional. If you just need to create a ``google-authenticator`` factor, the type is all you need. The ``account_name`` property is going to default to the ``username`` of the ``account``.
 
+.. only:: csharp
+
+  .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
+      :language: csharp
+
+.. only:: vbnet
+
+  .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
+      :language: vbnet
+
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4393,7 +4364,7 @@ To add an additional Google Authenticator Factor to this Account, you must send 
         :language: php
 
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   You will then get back the response:
 
@@ -4429,23 +4400,8 @@ To add an additional Google Authenticator Factor to this Account, you must send 
   .. literalinclude:: code/ruby/authentication/mfa_add_ga_factor_resp.rb
     :language: ruby
 
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_add_ga_factor_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_add_ga_factor_resp.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4457,7 +4413,15 @@ To add an additional Google Authenticator Factor to this Account, you must send 
         :language: php
 
 
-The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code. Stormpath makes this easy by giving you the QR Code in the ``base64_q_r_image`` field of the Google Authenticator Factor.
+The user now needs to get this information into their Google Authenticator (or `similar <https://www.authy.com/tutorials/how-use-authy-google-authenticator/>`__) application. The easiest way to do that is to use their app to scan a QR code.
+
+.. only:: not (csharp or vbnet)
+
+  Stormpath makes this easy by giving you the QR Code in the ``base64_q_r_image`` field of the Google Authenticator Factor.
+
+.. only:: csharp or vbnet
+
+  Stormpath makes this easy by giving you the QR Code in the ``Base64QrImage`` property of the ``IGoogleAuthenticatorFactor`` instance.
 
 You can now take this string and turn it into a QR Code image:
 
@@ -4477,7 +4441,7 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 At this point in the example you have a brand new Account with two additional Factors.
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   If you were to send a GET to the Account's ``/factors`` endpoint, you will see them:
 
@@ -4558,25 +4522,22 @@ At this point in the example you have a brand new Account with two additional Fa
   .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors1_resp.js
     :language: javascript
 
-  Note that it's also possible to ``search`` the ``factors`` collection by any attribute you desire.
+.. only:: csharp or vbnet
+
+  You can verify this by retrieving the Account's Factors collection. It's also possible to search the Factors collection using LINQ.
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_get_account_factors_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors_req.vb
+        :language: vbnet
+
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors1_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors1_resp.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4588,21 +4549,23 @@ At this point in the example you have a brand new Account with two additional Fa
         :language: php
 
 
-You will now challenge each of these factors.
+You can now challenge each of these factors.
 
 .. _mfa-challenge-after:
 
 Challenging After Factor Creation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This example covers challenging Factors that have already been created. To see an example of how to challenge a Factor at the same time as you are creating it, please see :ref:`below <mfa-challenge-after>`.
+.. note::
+
+  This example covers challenging Factors that have already been created. To see an example of how to challenge a Factor at the same time as you are creating it, please see :ref:`below <mfa-challenge-after>`.
 
 .. _mfa-challenge-after-sms:
 
 Challenging an SMS Factor
 """""""""""""""""""""""""
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   To challenge an SMS Factor, you send a request like this, with or without specifying a message.
 
@@ -4622,16 +4585,12 @@ Challenging an SMS Factor
 
   To challenge an SMS Factor, call ``factor.createChallenge(challenge);`` with or without setting a message.
 
-  This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
-
   .. literalinclude:: code/java/authentication/mfa_challenge_sms_factor_req.java
     :language: java
 
 .. only:: python
 
   To challenge an SMS Factor, call ``sms_factor.challenge_factor()`` with or without setting a message.
-
-  This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
 
   .. literalinclude:: code/python/authentication/mfa_challenge_sms_factor_req.py
     :language: python
@@ -4649,24 +4608,23 @@ Challenging an SMS Factor
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
       :language: javascript
+      
+.. only:: csharp or vbnet
+
+  To challenge an SMS Factor, call ``smsFactor.Challenges.AddAsync``, with or without specifying a ``ChallengeCreationOptions`` instance.
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
+        :language: vbnet
+
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4677,12 +4635,13 @@ Challenging an SMS Factor
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_factor_req.php
         :language: php
 
+This operation will automatically cause the factor to be challenged, meaning that the user will receive a code as soon as this operation is executed.
 
 .. note::
 
   If you do not specify a message, then Stormpath will just send the default message: ``"Your verification code is ${code}"``.
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   In response to this request you would get back a Challenge:
 
@@ -4714,22 +4673,6 @@ Challenging an SMS Factor
 
 .. todo::
 
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_factor_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_factor_resp.vb
-            :language: vbnet
-
   .. only:: php
 
     .. todo::
@@ -4751,15 +4694,15 @@ This code will remain valid for 300 seconds (5 minutes).
 
 Next, you must collect this code from the user.
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   .. note::
 
     The code has to be sent to the correct Challenge ``href``. If your application is stateless, you could include the Challenge ``href`` in a hidden field on your form. If your application has a session, then you will want to attach the Challenge ``href`` to that session.
 
-Once you have the code, you send it to the same Challenge you created above:
+Once you have the code, you submit it to the same Challenge you created above:
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4791,24 +4734,19 @@ Once you have the code, you send it to the same Challenge you created above:
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
       :language: javascript
+      
+.. only:: csharp
+
+  .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
+      :language: csharp
+
+.. only:: vbnet
+
+  .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
+      :language: vbnet
+
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4819,7 +4757,8 @@ Once you have the code, you send it to the same Challenge you created above:
       .. literalinclude:: code/php/authentication/mfa_challenge_sms_code.php
         :language: php
 
-.. only:: rest or csharp or nodejs or php or vbnet
+
+.. only:: rest or nodejs or php
 
   And then you would get back the response:
 
@@ -4843,6 +4782,10 @@ Once you have the code, you send it to the same Challenge you created above:
 
   For a full list of Challenge statuses, please see :ref:`the Reference chapter <challenge-status-values>`.
 
+.. only:: java
+
+  (java.todo) If you had sent the wrong code...
+
 .. only:: ruby
 
   And then you would get back the ``Stormpath::Resource::Challenge`` object as the response:
@@ -4850,23 +4793,15 @@ Once you have the code, you send it to the same Challenge you created above:
   .. literalinclude:: code/ruby/authentication/mfa_challenge_sms_code_success.rb
     :language: ruby
 
+  If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
+
+.. only:: csharp or vbnet
+
+  If the challenge is successful, the ``Status`` property will equal ``ChallengeStatus.Success``. If you submit the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
+
+  You can also use the ``ValidateAsync`` method to submit a code and return a boolean (equivalent to checking for ``ChallengeStatus.Success``).
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code_success.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_sms_code_success.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4876,8 +4811,6 @@ Once you have the code, you send it to the same Challenge you created above:
 
     .. literalinclude:: code/php/authentication/mfa_challenge_sms_code_success.php
       :language: php
-
-If you had sent the wrong code, the ``status`` would instead be ``FAILED``.
 
 .. note::
 
@@ -4890,11 +4823,13 @@ Challenging a Google Authenticator Factor
 
 When you created the Google Authenticator Factor, you also generated a QR Code image for your user to scan into their app. Challenging this factor now only requires you to prompt the user to enter in the code from their Authenticator app.
 
-Unlike the SMS challenge process, the Google Authenticator challenge process does not require you to create a Challenge resource. Instead, the Challenge is created and verified in one step. For more information about the Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
+.. only:: not (csharp or vbnet)
 
-Once you have collected the code from the user, send the code generated by your Google Authenticator app:
+  Unlike the SMS challenge process, the Google Authenticator challenge process does not require you to create a Challenge resource. Instead, the Challenge is created and verified in one step. For more information about the Challenge resource, see :ref:`the Reference chapter <ref-challenge>`.
 
-.. only:: rest or csharp or php or vbnet
+Once you have collected the code from the user, submit it:
+
+.. only:: rest or php
 
   .. code-block:: http
 
@@ -4926,24 +4861,19 @@ Once you have collected the code from the user, send the code generated by your 
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
     :language: javascript
+    
+.. only:: csharp
+
+  .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
+      :language: csharp
+
+.. only:: vbnet
+
+  .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
+      :language: vbnet
+
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -4955,9 +4885,9 @@ Once you have collected the code from the user, send the code generated by your 
         :language: php
 
 
-If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you:
+If the code is correct, Stormpath will now simultaneously create the Challenge resource and set its status to ``SUCCESS``, then return it back to you.
 
-.. only:: rest or csharp or nodejs or php or vbnet
+.. only:: rest or nodejs or php
 
   .. code-block:: json
 
@@ -4989,24 +4919,13 @@ If the code is correct, Stormpath will now simultaneously create the Challenge r
   .. literalinclude:: code/ruby/authentication/mfa_challenge_ga_factor_resp.rb
     :language: ruby
 
+.. only:: csharp or vbnet
+
+  If you submit the wrong code, the ``Status`` property will equal ``ChallengeStatus.Failed`` instead.
+
+  You can also use the ``ValidateAsync`` method to submit a code and return a boolean (equivalent to checking for ``ChallengeStatus.Success``).
 
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_challenge_ga_factor_resp.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -5027,7 +4946,7 @@ Challenging During Factor Creation
 
   For this example, we will use an SMS challenge. Challenging a Google Authenticator Factor during creation is not feasible because the user has to add the factor to their application before they can get a code.
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   To send a challenge at the same time as you create the SMS Factor, you need to POST to the Account's ``/factors`` endpoint with the additional ``?challenge=true`` parameter included. Then you must also add the ``challenge`` into the body of the JSON.
 
@@ -5071,7 +4990,7 @@ Challenging During Factor Creation
 
   This would create a Factor and a challenge with the default message.
 
-  If you wanted to specify a custom message instead, you would need :
+  If you wanted to specify a custom message instead, you would need:
 
   .. literalinclude:: code/python/authentication/mfa_create_and_challenge_message.py
     :language: python
@@ -5090,23 +5009,26 @@ Challenging During Factor Creation
   .. literalinclude:: code/nodejs/authentication/mfa_create_and_challenge_req.js
     :language: javascript
 
+.. only:: csharp or vbnet
+
+  To create a Challenge at the same time you create the SMS Factor, you can use these options on ``SmsFactorCreationOptions``:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
+        :language: vbnet
+
+  .. todo::
+
+    (dotnet.todo) Update these examples after the ability to specify the challenge message is added.
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_create_and_challenge_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_create_and_challenge_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -5118,7 +5040,7 @@ Challenging During Factor Creation
         :language: php
 
 
-You are telling Stormpath to send an SMS to the phone number ``122-233-34444`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
+You are telling Stormpath to send an SMS to the phone number ``267-555-5555`` along with the message ``"Welcome to the Example! Your authorization code is ${code}"``. The placeholder ``${code}`` will be replaced with a one-time password generated using the HOTP algorithm.
 
 .. only:: rest
 
@@ -5126,12 +5048,18 @@ You are telling Stormpath to send an SMS to the phone number ``122-233-34444`` a
 
     If you wanted Stormpath to send the default message, then you could just not include the ``challenge`` object or its ``message`` at all.
 
+.. only:: csharp or vbnet
+
+  .. todo::
+
+    (dotnet.todo)
+
 Challenging a Factor After Login
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. only:: rest or csharp or php or vbnet
+The first step is to authenticate the user.
 
-  The first step will be getting the user authenticated.
+.. only:: rest or nodejs or php
 
   In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
@@ -5148,28 +5076,25 @@ Challenging a Factor After Login
 
 .. only:: nodejs
 
-  The first step will be getting the user authenticated.
-
   .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
       :language: javascript
 
+.. only:: csharp or vbnet
+
+  In the .NET SDK, this means a call to ``AuthenticateAccountAsync``:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
+        :language: vbnet
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_auth_account_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -5183,13 +5108,11 @@ Challenging a Factor After Login
 
 .. only:: python
 
-  The first step will be getting the user authenticated.
-
   .. literalinclude:: code/python/authentication/mfa_auth_account_req.py
     :language: python
 
 
-.. only:: rest or csharp or nodejs or php or vbnet or ruby
+.. only:: rest or nodejs or php or ruby
 
   If authentication is successful, you will get back the Account:
 
@@ -5210,23 +5133,12 @@ Challenging a Factor After Login
       }
     }
 
+.. only:: csharp or vbnet
+
+  If the authentication is successful, ``account`` will contain the Account details.
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_auth_account_resp.cs
-          :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_auth_account_resp.vb
-          :language: vbnet
 
   .. only:: php
 
@@ -5237,7 +5149,7 @@ Challenging a Factor After Login
       .. literalinclude:: code/php/authentication/mfa_auth_account_resp.php
         :language: php
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   Next, you will need to retrieve the Account's ``factors`` collection:
 
@@ -5276,23 +5188,22 @@ Challenging a Factor After Login
   .. literalinclude:: code/nodejs/authentication/mfa_get_account_factors2_req.js
     :language: javascript
 
+.. only:: csharp or vbnet
+
+  Next, you will need to retrieve the Account's Factors collection. This will contain all the factors for the account:
+
+  .. only:: csharp
+
+    .. literalinclude:: code/csharp/authentication/mfa_get_account_factors_req.cs
+        :language: csharp
+
+  .. only:: vbnet
+
+    .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors_req.vb
+        :language: vbnet
+
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_req.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_req.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -5304,7 +5215,7 @@ Challenging a Factor After Login
         :language: php
 
 
-.. only:: rest or csharp or nodejs or php or vbnet or ruby
+.. only:: rest or nodejs or php or ruby
 
   .. code-block:: json
 
@@ -5337,23 +5248,8 @@ Challenging a Factor After Login
       ]
     }
 
+
 .. todo::
-
-  .. only:: csharp or vbnet
-
-    .. todo::
-
-      (dotnet.todo)
-
-      .. only:: csharp
-
-        .. literalinclude:: code/csharp/authentication/mfa_get_account_factors2_resp.cs
-            :language: csharp
-
-      .. only:: vbnet
-
-        .. literalinclude:: code/vbnet/authentication/mfa_get_account_factors2_resp.vb
-            :language: vbnet
 
   .. only:: php
 
@@ -5364,7 +5260,7 @@ Challenging a Factor After Login
       .. literalinclude:: code/php/authentication/mfa_get_account_factors2_resp.php
         :language: php
 
-.. only:: rest or csharp or php or vbnet
+.. only:: rest or php
 
   You would then send a POST to the ``challenges`` collection which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
@@ -5395,6 +5291,10 @@ Challenging a Factor After Login
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_existing_factor.js
   :language: javascript
+
+.. only:: csharp or vbnet
+
+  You would then pick one of the factors from the returned list and challenge it as described above in :ref:`mfa-challenge-after`.
 
 .. todo::
 
