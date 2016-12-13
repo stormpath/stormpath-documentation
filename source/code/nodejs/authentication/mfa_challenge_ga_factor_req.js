@@ -1,5 +1,4 @@
 var challenge; // A previously fetched Challenge object
-var code = '786393'; // The code extracted from the Google Authenticator QR code 
 
 challenge.verifyCode('786393', function(err, updatedChallenge){
   if (err) {

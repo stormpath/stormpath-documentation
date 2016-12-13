@@ -1,9 +1,9 @@
+var application; // An Application, fetched from Client.getApplication();
+
 var authRequest = {
   username: 'jakub+factorman@stormpath.com',
   password: 'first2shoot!'
 };
-
-var application; // An Application, fetched from Client.getApplication();
 
 application.authenticateAccount(authRequest, function(err, authResult) {
   if (err) {

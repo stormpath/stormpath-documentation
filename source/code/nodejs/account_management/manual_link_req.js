@@ -6,22 +6,26 @@ var rightAccount = {
   href: 'https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample'
 };
 
-// Link a current account with another account
+// You can link a current Account with another Account using Account.createAccountLink();
 
-var account; // A previously fetched account object
+var account; // A previously fetched Account object
 
 account.createAccountLink(rightAccount, function (err, accountLink) {
-  if (!err) {
-    console.log('Account Link Created', accountLink);
+  if (err) {
+    return console.error(err);
   }
+
+  console.log('Account Link Created', accountLink);
 });
 
-// Link two accounts
+// OR you can link two Accounts using Tenant.createAccountLink();
 
-var tenant; // A previously fetched tenant object
+var tenant; // A previously fetched Tenant object
 
 tenant.createAccountLink(leftAccount, rightAccount, function (err, accountLink) {
-  if (!err) {
-    console.log('Account Link Created', accountLink);
+  if (err) {
+    return console.error(err);
   }
+
+  console.log('Account Link Created', accountLink);
 });

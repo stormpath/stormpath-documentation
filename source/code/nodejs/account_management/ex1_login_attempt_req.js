@@ -1,16 +1,22 @@
-var facebookAuthRequest = {
-  providerData : {
+var application; // An Application, fetched from Client.getApplication();
+
+var providerAccountRequest = {
+  providerData: {
     providerId: 'facebook',
-    accessToken: facebookAccessToken
+    accessToken: 'abc1235'
   }
 };
 
-var application; // An application, fetched from Client.getApplication();
-
-application.getAccount(facebookAuthRequest, function (err, account) {
+application.getAccount(providerAccountRequest, function(err, providerAccountResult) {
   if (err) {
     return console.error(err);
   }
 
-  console.log('Authenticated with Facebook account', account.href);
+  // If the user is authenticating for the first time, a new Account is created in the Provider Directory
+  if (providerAccountResult.created) {
+    console.log('This user was newly created in the Directory.');
+  }
+
+  // The user is authenticated!
+  console.log(providerAccountResult.account);
 });

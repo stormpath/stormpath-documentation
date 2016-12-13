@@ -1,3 +1,5 @@
+var application; // An application, fetched from Client.getApplication();
+
 var accountData = {
   givenName: 'Joe',
   surname: 'Stormtrooper',
@@ -5,8 +7,6 @@ var accountData = {
   email: 'tk421@stormpath.com',
   password: 'Changeme1'
 };
-
-var application; // An application, fetched from Client.getApplication();
 
 application.createAccount(accountData, function (err, account) {
   if (err) {

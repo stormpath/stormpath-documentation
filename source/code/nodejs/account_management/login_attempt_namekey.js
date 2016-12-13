@@ -1,9 +1,12 @@
-var authRequest = {
-  username: 'han@newrepublic.gov',
-  password: 'first2shoot!'
-};
-
 var application; // An Application, fetched from Client.getApplication();
+
+var authRequest = {
+  username: 'user@example.com',
+  password: 'RawPassw0rd!',
+  accountStore: {
+    nameKey: 'app1'
+  }
+};
 
 application.authenticateAccount(authRequest, function (err, authResult) {
   if (err) {

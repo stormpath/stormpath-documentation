@@ -2675,7 +2675,7 @@ This would prevent a user from choosing a password that is the same as any of th
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
-.. only:: not rest
+.. only:: not (rest or nodejs)
 
   .. warning::
 
@@ -2750,6 +2750,28 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
       }
     }
 
+.. only:: nodejs
+
+  You can send a GET request to see your Directory's ``accountSchema`` resource:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_req.js
+    :language: javascript
+
+  This will return the following:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_resp.js
+    :language: javascript
+
+  To see the fields collection, you can make another GET request:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_fields_req.js
+    :language: javascript
+
+  This will return the following:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_fields_resp.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -2772,13 +2794,6 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 
     .. literalinclude:: code/java/account_management/get_account_schema.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/get_account_schema.js
-      :language: javascript
 
   .. only:: php
 
@@ -2818,6 +2833,11 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
       "password":"APassword1234"
     }
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/account_creation_default.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -2840,13 +2860,6 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
 
     .. literalinclude:: code/java/account_management/account_creation_default.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_creation_default.js
-      :language: javascript
 
   .. only:: php
 
@@ -2890,6 +2903,11 @@ If you wanted to set ``surname`` as required, you would send the following reque
       "required":"true"
     }
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/set_surname_required_req.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -2913,13 +2931,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/java/account_management/set_surname_required_req.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/set_surname_required_req.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -2941,7 +2952,7 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
       :language: ruby
 
-.. only:: rest
+.. only:: rest or nodejs
 
   And get back the following ``200 OK``:
 
@@ -2981,13 +2992,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/java/account_management/set_surname_required_resp.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/set_surname_required_resp.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -3009,7 +3013,7 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
       :language: ruby
 
-.. only:: rest
+.. only:: rest or nodejs
 
   If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
@@ -3046,13 +3050,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
 
     .. literalinclude:: code/java/account_management/account_creation_error.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_creation_error.js
-      :language: javascript
 
   .. only:: php
 
@@ -4220,7 +4217,7 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
 3.8. Account Linking
 ====================
 
-.. only:: not (rest or ruby)
+.. only:: not (rest or ruby or nodejs)
 
  .. warning::
 
@@ -4233,11 +4230,11 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
   - :ref:`How Login Works <how-login-works>`
   - :ref:`How Social Authentication Works <social-authn>`
 
-To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will have to go into a Facebook Directory, and so on.
+To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will be stored in a Facebook Directory, and so on.
 
 When a user chooses to log in with a non-Cloud Directory (e.g. Facebook, SAML, etc), Stormpath creates an Account resource to represent them in the appropriate Directory and then returns it upon successful login.
 
-What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
+What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well? The answer is that they will have 3 different Account resources, each one in a different Directory.
 
 To unify these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
 
@@ -4291,6 +4288,10 @@ First and foremost, both Applications and Organizations have Account Linking Pol
   .. literalinclude:: code/ruby/account_management/login_attempt_namekey.rb
     :language: ruby
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/login_attempt_namekey.js
+    :language: javascript
 
 .. todo::
 
@@ -4314,13 +4315,6 @@ First and foremost, both Applications and Organizations have Account Linking Pol
 
     .. literalinclude:: code/java/account_management/login_attempt_namekey.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/login_attempt_namekey.js
-      :language: javascript
 
   .. only:: php
 
@@ -4395,7 +4389,7 @@ Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. 
 
 In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
 
-.. only:: rest or ruby
+.. only:: rest or ruby or nodejs
 
   .. code-block:: json
 
@@ -4434,13 +4428,6 @@ In each of those Directories, there is an Account. One in our Cloud Directory, f
     .. literalinclude:: code/java/account_management/account_picard.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_picard.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -4458,7 +4445,7 @@ In each of those Directories, there is an Account. One in our Cloud Directory, f
 
 And one in the Facebook Directory for user Locutus:
 
-.. only:: rest or ruby
+.. only:: rest or ruby or node
 
   .. code-block:: json
 
@@ -4496,13 +4483,6 @@ And one in the Facebook Directory for user Locutus:
 
     .. literalinclude:: code/java/account_management/account_locutus.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_locutus.js
-      :language: javascript
 
   .. only:: php
 
@@ -4544,6 +4524,10 @@ You can link these two Accounts manually:
   .. literalinclude:: code/ruby/account_management/manual_link_req.rb
     :language: ruby
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/manual_link_req.js
+    :language: javascript
 
 .. todo::
 
@@ -4568,13 +4552,6 @@ You can link these two Accounts manually:
     .. literalinclude:: code/java/account_management/manual_link_req.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/manual_link_req.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -4591,7 +4568,7 @@ You can link these two Accounts manually:
 
 Which on success will return an Account Link:
 
-.. only:: rest or ruby
+.. only:: rest or ruby or nodejs
 
   .. code-block:: json
 
@@ -4630,13 +4607,6 @@ Which on success will return an Account Link:
     .. literalinclude:: code/java/account_management/manual_link_resp.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/manual_link_resp.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -4658,11 +4628,11 @@ This means that:
 
 .. note::
 
-  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`
+  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`.
 
-There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application needs to have an :ref:`Account Linking Policy <ref-account-linking-policy>` enabled:
 
-.. only:: rest or ruby
+.. only:: rest or ruby or nodejs
 
   .. code-block:: json
 
@@ -4677,6 +4647,13 @@ There is one more aspect to Account Linking, which regards login behavior (as al
           "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
       }
     }
+
+You can enable the Account Linking Policy like this:
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
+    :language: javascript
 
 .. todo::
 
@@ -4700,13 +4677,6 @@ There is one more aspect to Account Linking, which regards login behavior (as al
 
     .. literalinclude:: code/java/account_management/account_linking_policy.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
-      :language: javascript
 
   .. only:: php
 
@@ -4737,7 +4707,7 @@ This behavior exists only because the Account Linking Policy is set as ``enabled
 How to Link Accounts Automatically
 ------------------------------------
 
-So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy.
+So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy. See the above section to learn how to enable the Account Linking Policy for either an Application or an Organization.
 
 .. only:: ruby
 
@@ -4754,19 +4724,19 @@ What's in the Account Linking Policy
 
 Every Application and Organization has an Account Linking Policy resource.
 
-.. only:: rest
+.. only:: rest or nodejs
 
   In both cases the path is the same: ``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
 
 The Account Linking Policy has three attributes that control aspects of Account Linking behavior:
 
-**Status:**
+**Status**
 
 This attribute controls whether this Policy is in effect or not. If you would not like this policy to be in effect, set this to ``DISABLED``.
 
 If Account Linking is enabled then Stormpath will check linked Accounts on login and behave as described in :ref:`account-linking-login`. If it is disabled, you are still able to link Accounts manually, but Stormpath takes no actions based upon these links.
 
-**Automatic Provisioning:**
+**Automatic Provisioning**
 
 This attribute tells Stormpath whether you would like new Accounts to be automatically created in the default Account Store.
 
@@ -4860,7 +4830,7 @@ Account Matching and Account Verification
 
 Stormpath will only automatically link to and from Accounts that have had their email verified.
 
-.. only:: rest
+.. only:: rest or nodejs
 
   This means that the Account resource must have its ``emailVerificationStatus`` set to ``VERIFIED``.
 
@@ -4879,7 +4849,7 @@ This is probably the most common scenario, where you want to allow your users So
 
 Your Application's Account Linking Policy has:
 
-.. only:: rest
+.. only:: rest or nodejs
 
   .. code-block:: json
 
@@ -4917,13 +4887,6 @@ Your Application's Account Linking Policy has:
 
     .. literalinclude:: code/java/account_management/ex1_account_linking_policy.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/ex1_account_linking_policy.js
-      :language: javascript
 
   .. only:: php
 
@@ -4965,6 +4928,11 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
       }
     }
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4987,13 +4955,6 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
 
     .. literalinclude:: code/java/account_management/ex1_login_attempt_req.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
-      :language: javascript
 
   .. only:: php
 
@@ -5027,7 +4988,7 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-.. only:: rest
+.. only:: rest or nodejs
 
   .. code-block:: json
 
@@ -5061,13 +5022,6 @@ Stormpath will now return the Account from the Cloud Directory:
 
     .. literalinclude:: code/java/account_management/ex1_login_attempt_resp.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_resp.js
-      :language: javascript
 
   .. only:: php
 
@@ -5126,6 +5080,11 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
       }
     }
 
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -5148,13 +5107,6 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
 
     .. literalinclude:: code/java/account_management/ex2_login_attempt_req.java
       :language: java
-
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
-      :language: javascript
 
   .. only:: php
 

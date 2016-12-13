@@ -1,7 +1,6 @@
 var challenge; // A previously fetched Challenge object
-var code = '633559'; // The code sent via SMS
 
-challenge.verifyCode(code, function(err, updatedChallenge){
+challenge.verifyCode('633559', function(err, updatedChallenge){
   if (err) {
     // The challenge has expired or has already been verified
     return console.log(err);

@@ -1,11 +1,11 @@
+var account; // A previously fetched Account object
+
 var factor = {
   type: 'sms',
   phone: {
     number: '+12675555555'
   }
 };
-
-var account; // A previously fetched Account object
 
 account.createFactor(factor, function(err, smsFactor) {
   if (err) {

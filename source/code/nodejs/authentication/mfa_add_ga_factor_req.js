@@ -1,10 +1,10 @@
+var account; // A previously fetched Account object
+
 var factor = {
   type: 'google-authenticator',
   accountName: 'jakub@stormpath.com',
   issuer: 'Example App'
 };
-
-var account; // A previously fetched Account object
 
 account.createFactor(factor, function(err, googleAuthenticatorFactor) {
   if (err) {
