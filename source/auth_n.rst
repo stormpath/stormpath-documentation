@@ -5290,7 +5290,7 @@ The first step is to authenticate the user.
   You would then challenge the factor which would generate a new Challenge and send an SMS message to the number specified in the Factor's Phone resource.
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_existing_factor.js
-  :language: javascript
+    :language: javascript
 
 .. only:: csharp or vbnet
 
