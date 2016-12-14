@@ -2682,7 +2682,7 @@ This would prevent a user from choosing a password that is the same as any of th
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
-.. only:: not (rest or nodejs)
+.. only:: not rest and not nodejs
 
   .. warning::
 
@@ -2706,6 +2706,8 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
         "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
       }
     }
+
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
 
@@ -2827,7 +2829,7 @@ The two Account attributes (or ``fields``) that can be toggled here are ``givenN
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   .. code-block:: http
 
@@ -2896,7 +2898,7 @@ Any attributes that are in the ``fields`` collection can have ``required`` toggl
 
 If you wanted to set ``surname`` as required, you would send the following request to that particular field object:
 
-.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   .. code-block:: http
 
