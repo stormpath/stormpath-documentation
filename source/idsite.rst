@@ -175,6 +175,10 @@ A typical set of steps in your application are as follows:
       - No
       - The state of the application that you need to pass through ID Site back to your application through the callback. It is up to the developer to serialize/deserialize this value
 
+    * - ``require_mfa``
+      - No
+      - Use this value to require the user to use a second factor for authentication.  If the user has not enrolled in MFA, they will be required to setup a factor.  Supports an array of one or more factor types that the user may select from, e.g. ``['sms']`` or ``['google-authenticator']``
+
     * - ``onk``
       - No
       - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use ID Site.
