@@ -4064,7 +4064,7 @@ At this point your user is authenticated and able to use your app.
 
 .. _mfa:
 
-4.6. Using Multi-Factor Authentication
+4.6. Using Multi-Factor Authentication (MFA)
 ============================================
 
 .. only:: not (rest or java or python or ruby or nodejs or csharp or vbnet)
@@ -4211,8 +4211,8 @@ To add an additional SMS Factor to this Account, you send the following request:
 
 .. only:: nodejs
 
-    .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
-        :language: javascript
+  .. literalinclude:: code/nodejs/authentication/mfa_add_sms_factor_req.js
+    :language: javascript
 
   For now ``factor.verification_status`` will return ``UNVERIFIED`` and ``factor.most_recent_challenge`` will be ``nil``. If you were to create a challenge for this Factor, ``factor.most_recent_challenge`` would return the actual ``Challenge`` instance. If that challenge was successful, ``factor.verification_status`` would change to ``VERIFIED``.
 
@@ -4608,7 +4608,7 @@ Challenging an SMS Factor
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_factor_req.js
       :language: javascript
-      
+
 .. only:: csharp or vbnet
 
   To challenge an SMS Factor, call ``smsFactor.Challenges.AddAsync``, with or without specifying a ``ChallengeCreationOptions`` instance.
@@ -4734,7 +4734,7 @@ Once you have the code, you submit it to the same Challenge you created above:
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_sms_code.js
       :language: javascript
-      
+
 .. only:: csharp
 
   .. literalinclude:: code/csharp/authentication/mfa_challenge_sms_code.cs
@@ -4861,7 +4861,7 @@ Once you have collected the code from the user, submit it:
 
   .. literalinclude:: code/nodejs/authentication/mfa_challenge_ga_factor_req.js
     :language: javascript
-    
+
 .. only:: csharp
 
   .. literalinclude:: code/csharp/authentication/mfa_challenge_ga_factor_req.cs
@@ -5059,7 +5059,7 @@ Challenging a Factor After Login
 
 The first step is to authenticate the user.
 
-.. only:: rest or nodejs or php
+.. only:: rest or php
 
   In the case of REST, this means a ``POST`` to your Application resource's ``/loginAttempts`` endpoint. In this case it will be very helpful to also include ``expand=account``.
 
@@ -5075,6 +5075,8 @@ The first step is to authenticate the user.
     }
 
 .. only:: nodejs
+
+  In the Node SDK, this means a call to ``application.authenticateAccount()``:
 
   .. literalinclude:: code/nodejs/authentication/mfa_auth_account_req.js
       :language: javascript
@@ -5215,7 +5217,7 @@ The first step is to authenticate the user.
         :language: php
 
 
-.. only:: rest or nodejs or php or ruby
+.. only:: rest or php or ruby
 
   .. code-block:: json
 
