@@ -4664,6 +4664,11 @@ You can enable the Account Linking Policy like this:
   .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
     :language: javascript
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
