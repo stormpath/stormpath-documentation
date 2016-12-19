@@ -4667,7 +4667,7 @@ You can enable the Account Linking Policy like this:
 .. only:: ruby
 
   .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
-    :language: javascript
+    :language: ruby
 
 .. todo::
 
