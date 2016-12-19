@@ -4858,7 +4858,7 @@ This is probably the most common scenario, where you want to allow your users So
 
 Your Application's Account Linking Policy has:
 
-.. only:: rest or nodejs
+.. only:: rest or nodejs or ruby
 
   .. code-block:: json
 
@@ -4911,12 +4911,6 @@ Your Application's Account Linking Policy has:
     .. literalinclude:: code/python/account_management/ex1_account_linking_policy.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_account_linking_policy.rb
-      :language: ruby
 
 So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
 
@@ -4941,6 +4935,11 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
 
   .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
     :language: javascript
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
+    :language: ruby
 
 .. todo::
 
@@ -4979,12 +4978,6 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
     .. literalinclude:: code/python/account_management/ex1_login_attempt_req.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
-      :language: ruby
 
 After the credentials are validated, Stormpath will do a few things:
 
@@ -4997,7 +4990,7 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-.. only:: rest or nodejs
+.. only:: rest or nodejs or ruby
 
   .. code-block:: json
 
@@ -5046,12 +5039,6 @@ Stormpath will now return the Account from the Cloud Directory:
     .. literalinclude:: code/python/account_management/ex1_login_attempt_resp.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_resp.rb
-      :language: ruby
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -5094,6 +5081,12 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
   .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
     :language: javascript
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
+    :language: ruby
+
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -5131,12 +5124,6 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
     .. literalinclude:: code/python/account_management/ex2_login_attempt_req.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
-      :language: ruby
 
 This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
 
