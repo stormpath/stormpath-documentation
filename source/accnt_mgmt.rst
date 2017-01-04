@@ -2820,8 +2820,6 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/get_account_schema.rb
       :language: ruby
 
@@ -2885,8 +2883,6 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
       :language: python
 
   .. only:: ruby
-
-    (ruby.todo)
 
     .. literalinclude:: code/ruby/account_management/account_creation_default.rb
       :language: ruby
@@ -2956,8 +2952,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
       :language: ruby
 
@@ -3015,14 +3009,8 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/set_surname_required_resp.py
       :language: python
 
-  .. only:: ruby
 
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
-      :language: ruby
-
-.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
+.. only:: rest or csharp or vbnet or java or nodejs or php or python
 
   If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
@@ -3036,6 +3024,14 @@ If you wanted to set ``surname`` as required, you would send the following reque
       "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
       "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
     }
+
+.. only:: ruby
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``Stormpath::Error`` response
+
+    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
+      :language: ruby
+
 
 .. todo::
 
@@ -3074,12 +3070,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/account_creation_error.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
-      :language: ruby
 
 .. _verify-account-email:
 
@@ -3691,7 +3681,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
   .. todo::
 
-    This (ruby.todo)
+    Customizing SMTP server (ruby.todo)
 
 .. only:: rest or csharp or vbnet or php or python or java or ruby
 
