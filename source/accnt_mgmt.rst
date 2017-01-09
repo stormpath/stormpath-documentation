@@ -3133,7 +3133,7 @@ If you were to click this URL now, it would simply open up a page telling us tha
 
   The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
 
-    /v1/accounts/emailVerificationsToken/$VERIFICATION_TOKEN
+    /v1/accounts/emailVerificationTokens/$VERIFICATION_TOKEN
 
   To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
