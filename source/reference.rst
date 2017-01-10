@@ -5991,17 +5991,40 @@
       - *(See Description)*
       - Contains an identifying string for the source of this Account's information. This will match the ``providerId`` of :ref:`the Directory that owns this Account <ref-provider>`.
 
-  **Provider Data Example (Google)**
+    * - ``userInfo``
+      - Object
+      - N/A
+      - Contains additional information passed along with the social Account. What is returned will depend on configured scopes for that Social Directory.
+
+  **Provider Data Example (Facebook)**
 
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/accounts/1Voi7LQ6NGnTPskexample/providerData",
-      "createdAt": "2016-04-29T17:31:23.676Z",
-      "modifiedAt": "2016-04-29T17:31:23.686Z",
-      "accessToken": "ya29.CjHTAlCOmTwdjexDp-CwCbP2wGMExampleo-on6Ce79eR9Qd_Oq3nm3Zv6ForExample",
-      "providerId": "google",
-      "refreshToken": null
+      "href":"https://api.stormpath.com/v1/accounts/1pzzOTNj6DgdQzIpbTd4qr/providerData",
+      "createdAt":"2016-09-28T19:39:14.062Z",
+      "modifiedAt":"2016-11-10T19:49:54.379Z",
+      "accessToken":"EAAT68kWX3nQBAITB3QB4oy4J9eGt3BxoHoy6yei3jcR7p9ZCIXBPKvNT0fu2dKAXbAaPppwxjZCxvc2pTLiMbbaqV7oYHj0TSInJiSdTLqBI3oT3lZAD13wjUPsjs0OlxCGxOKecZB6NhzGdGL3aKHPwiwouaaKJP0hrXFPm1wZDZD",
+      "providerId":"facebook",
+      "userInfo":{
+        "extraData":{
+          "security_settings":{
+            "secure_browsing":{
+              "enabled":true
+            }
+          },
+        },
+        "...":"...",
+        "cover":{
+          "extraData":{
+            "id":"10157515627190034"
+          },
+          "id":null,
+          "offsetX":0,
+          "offsetY":20,
+          "...":"...",
+        "favoriteAtheletes":null
+      }
     }
 
   **Provider Data Example (SAML)**
