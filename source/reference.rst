@@ -3175,6 +3175,21 @@
       - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
       - Specifies the type of Provider for the associated Directory.
 
+    * - ``providerType``
+      - String
+      - (See description)
+      - For generic providers, the value will be ``oauth``. For all others, the value will match the ``providerId``.
+
+    * - ``scope``
+      - Array
+      - N/A
+      - (Social only) An array of the scopes that are configured for this Social Provider. These are the scopes that will be requested as part of the OAuth 2.0 token retrieval.
+
+    * - ``userInfoMappingRules``
+      - Link
+      - N/A
+      - A link to the User Info Mapping Rules for this Provider. These rules define any custom mapping between the user info that is returned from the Social Provider and Stormpath Account attributes. Each rule has a ``name`` and an ``accountAttributes`` array. The ``name`` is the item of user info sent by the Social Provider (e.g. ``ageRange``), and ``accountAttributes`` are any Stormpath Account (or Account Custom Data) attributes that you would like to take on the given value. For more information see :ref:`the Authentication chapter <social_authn-mappings>`.
+
     * - ``clientId``
       - String
       - N/A
@@ -3231,12 +3246,21 @@
   .. code-block:: json
 
     {
-      "href": "https://api.stormpath.com/v1/directories/2TL06yrJ05EAM9gEXAMpLe/provider",
-      "createdAt": "2014-03-28T22:21:32.937Z",
-      "modifiedAt": "2014-03-28T22:21:32.949Z",
-      "clientId": "5014174166example",
-      "clientSecret": "e7c1274966b0844913953281example",
-      "providerId": "facebook"
+      "href":"https://api.stormpath.com/v1/directories/4LL10Q3FNkiMLexampleXfFQ1OU/provider",
+      "createdAt":"2015-12-08T16:55:59.835Z",
+      "modifiedAt":"2017-01-10T21:58:32.295Z",
+      "clientId":"213219663828081",
+      "clientSecret":"2beaf850secret893eac17d2590",
+      "providerId":"facebook",
+      "providerType":"facebook",
+      "scope":[
+        "email",
+        "public_profile",
+        "user_relationship_details"
+      ],
+      "userInfoMappingRules":{
+        "href":"https://api.stormpath.com/v1/userInfoMappingRules/4LL10Q3exampleMLWmXfFQ1OU"
+      }
     }
 
   **Provider Example (SAML)**

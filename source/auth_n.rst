@@ -1428,6 +1428,8 @@ As a developer, integrating Social Login into your application with Stormpath on
 
 3. Include the appropriate social login button for that Provider, linking it to the Stormpath Client API's ``/authorize`` endpoint. For more information about this, see below, or go to `the Client API Guide <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__.
 
+.. _social_authn-mappings:
+
 Attribute Mappings
 ------------------
 
