@@ -1546,7 +1546,7 @@ Before you integrate Google Login with Stormpath, you must complete the followin
 
 - Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
 
 .. note::
 
@@ -1658,6 +1658,8 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 
 - Add your application's private and public root URLs
 
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
 Step 1: Create a Social Directory for Facebook
@@ -1751,7 +1753,8 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 
 - Create an application in the `GitHub Developer Site <https://developer.github.com/>`_
 
-- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application
+- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
 
@@ -1848,7 +1851,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 
 - Create an application in the `LinkedIn Developer Site <https://www.linkedin.com/secure/developer?newapp=>`_
 
-- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication.
+- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
 
 - Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
 
