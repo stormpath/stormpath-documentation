@@ -1389,6 +1389,7 @@ Social authentication essentially means using the "Log in with x" button in your
 - :ref:`Facebook <authn-facebook>`
 - :ref:`Github <authn-github>`
 - :ref:`LinkedIn <authn-linkedin>`
+- :ref:`Twitter <authn-twitter>`
 
 Social Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath Social Directory if they are mirrored in from the external Social provider. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
 
@@ -1636,7 +1637,7 @@ To access or create an Account in your new Google Directory you use the Client A
 
 At a high level, the process works as follows:
 
-#. The user clicks on a “Login with Google” link pointing at your Google Directory's ``/authorize`` endpoint
+#. The user clicks on a “Login with Google” link pointing at your application's ``/authorize`` endpoint
 #. Stormpath handles the login to Google and redirects the user back to your app with a Stormpath Token JWT response
 
 You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
@@ -1735,7 +1736,7 @@ To access or create an Account in your new Facebook Directory you use the Client
 
 At a high level, the process works as follows:
 
-#. The user clicks on a “Login with Facebook" link pointing at your Facebook Directory's ``/authorize`` endpoint
+#. The user clicks on a “Login with Facebook" link pointing at your application's ``/authorize`` endpoint
 #. Stormpath handles the login to Facebook and redirects the user back to your app with a Stormpath Token JWT response
 
 You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
@@ -1833,7 +1834,7 @@ To access or create an Account in your new GitHub Directory you use the Client A
 
 At a high level, the process works as follows:
 
-#. The user clicks on a “Login with GitHub” link pointing at your GitHub Directory's ``/authorize`` endpoint
+#. The user clicks on a “Login with GitHub” link pointing at your application's ``/authorize`` endpoint
 #. Stormpath handles the login to GitHub and redirects the user back to your app with a Stormpath Token JWT response
 
 You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
@@ -1930,7 +1931,7 @@ To access or create an Account in your new LinkedIn Directory you use the Client
 
 At a high level, the process works as follows:
 
-#. The user clicks on a “Login with LinkedIn” link pointing at your GitHub Directory's ``/authorize`` endpoint
+#. The user clicks on a “Login with LinkedIn” link pointing at your application's ``/authorize`` endpoint
 #. Stormpath handles the login to LinkedIn and redirects the user back to your app with a Stormpath Token JWT response
 
 You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
@@ -1938,6 +1939,60 @@ You can then, for example, pass that Stormpath token to the ``/oauth/token`` end
 .. note::
 
   The older, alternate way of handling this login is documented :ref:`here <authn-github-old>`.
+
+.. _authn-twitter:
+
+4.3.5. Twitter
+^^^^^^^^^^^^^^
+
+Before you integrate Twitter Login with Stormpath, you must complete the following steps:
+
+- Create an application on the `Twitter Application Management Site <https://apps.twitter.com/>`_
+
+- Retrieve your OAuth credentials (App ID and App Secret)
+
+- Add your application's "Callback URL", which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+
+For more information, please see the `Twitter documentation <https://dev.twitter.com/oauth/overview/application-owner-access-tokens>`_.
+
+Step 1: Create a Social Directory for Twitter
+"""""""""""""""""""""""""""""""""""""""""""""
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/directories HTTP/1.1
+    Authorization: Basic NVdYRVp...
+    Content-Type: application/json; charset=utf-8
+    Host: api.stormpath.com
+
+    {
+      "name":"Twitter",
+      "description":"A Twitter directory",
+      "provider":{
+        "providerId":"twitter",
+        "clientId":"OybhZeT6uncdBX3KVmIExample",
+        "clientSecret":"d2hzXTBZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
+      }
+    }
+
+Step 2: Map the Twitter Directory as an Account Store for Your Application
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Creating an Account Store Mapping between your new Twitter Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
+
+Step 3: Access an Account with Twitter Tokens
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+To access or create an Account in your new Twitter Directory you use the Client API's ``/authorize`` endpoint. Full documentation of this endpoint can be found in `the Client API Product Guide <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__.
+
+At a high level, the process works as follows:
+
+#. The user clicks on a “Login with Twitter" link pointing at your application's ``/authorize`` endpoint
+#. Stormpath handles the login to Twitter and redirects the user back to your app with a Stormpath Token JWT response
+
+You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
 
 .. _ldap-dir-authn:
 
