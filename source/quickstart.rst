@@ -42,18 +42,31 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
 
 .. note::
 
-  We recommend that you rename the file to remove the Key ID, and then store it in a secure location. For example, you could place it in a hidden ``stormpath`` directory:
+  We recommend that you rename the file ``apiKey.properties`` to remove the Key ID, and then store it in a secure location. For example, you could place it in a hidden ``.stormpath`` directory in your private user profile directory.
+
+  On Mac and Linux, you could run these commands in bash or the Terminal:
 
   .. code-block:: bash
 
     $ mkdir ~/.stormpath
     $ mv ~/Downloads/apiKey-{$API_KEY_ID}.properties ~/.stormpath/apiKey.properties
-
-  We also recommend that you change the file's permissions to prevent access by other users. You can do this by running:
-
-  .. code-block:: bash
-
     $ chmod go-rwx ~/.stormpath/apiKey.properties
+    
+
+  On Windows, you could run these commands in the Command Prompt:
+
+  .. code-block:: none
+
+    mkdir %homepath%\.stormpath
+    copy %homepath%\Downloads\apikey-{$API_KEY_ID}.properties %homepath%\.stormpath\apiKey.properties
+
+  Or in PowerShell:
+
+  .. code-block:: powershell
+
+    mkdir $Home\.stormpath
+    cp $Home\Downloads\apiKey-{$API_KEY_ID}.properties $Home\.stormpath\apiKey.properties
+
 
 .. _quickstart-install-sdk:
 
