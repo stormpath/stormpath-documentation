@@ -3172,7 +3172,7 @@
 
     * - ``providerId``
       - String
-      - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github`` or ``linkedin`` (for Social Directories); ``saml`` (for SAML Directories)
+      - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github``, ``linkedin``, or ``twitter`` (for Social Directories); ``saml`` (for SAML Directories)
       - Specifies the type of Provider for the associated Directory.
 
     * - ``providerType``
