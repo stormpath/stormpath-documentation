@@ -1958,24 +1958,70 @@ For more information, please see the `Twitter documentation <https://dev.twitter
 Step 1: Create a Social Directory for Twitter
 """""""""""""""""""""""""""""""""""""""""""""
 
-.. only:: rest
+Creating this Directory requires that you provide information from Twitter as a Provider resource. This can be accomplished by creating a new Directory:
 
-  .. code-block:: http
+.. only:: not rest
 
-    POST /v1/directories HTTP/1.1
-    Authorization: Basic NVdYRVp...
-    Content-Type: application/json; charset=utf-8
-    Host: api.stormpath.com
+  .. note::
 
-    {
-      "name":"Twitter",
-      "description":"A Twitter directory",
-      "provider":{
-        "providerId":"twitter",
-        "clientId":"OybhZeT6uncdBX3KVmIExample",
-        "clientSecret":"d2hzXTBZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
-      }
+    This feature is not yet supported in the |language| SDK. A REST example has been included below.
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/authentication/create_directory_twitter.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/authentication/create_directory_twitter.vb
+        :language: vbnet
+
+  .. only:: java
+
+    .. literalinclude:: code/java/authentication/create_directory_twitter.java
+      :language: java
+
+  .. only:: nodejs
+
+    .. literalinclude:: code/nodejs/authentication/create_directory_twitter.js
+      :language: javascript
+
+  .. only:: php
+
+    .. literalinclude:: code/php/authentication/create_directory_twitter.php
+      :language: php
+
+  .. only:: python
+
+    .. literalinclude:: code/python/authentication/create_directory_twitter.py
+      :language: python
+
+  .. only:: ruby
+
+    .. literalinclude:: code/ruby/authentication/create_directory_twitter.rb
+      :language: ruby
+
+.. code-block:: http
+
+  POST /v1/directories HTTP/1.1
+  Authorization: Basic NVdYRVp...
+  Content-Type: application/json; charset=utf-8
+  Host: api.stormpath.com
+
+  {
+    "name":"Twitter",
+    "description":"A Twitter directory",
+    "provider":{
+      "providerId":"twitter",
+      "clientId":"OybhZeT6uncdBX3KVmIExample",
+      "clientSecret":"d2hzXTBZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
     }
+  }
+
 
 Step 2: Map the Twitter Directory as an Account Store for Your Application
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
