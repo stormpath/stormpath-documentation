@@ -12,6 +12,10 @@ If you already have Sphinx, then just upgrade:
 
 `pip install -U Sphinx`
 
+If you want to be able to generate Live Docs (mentioned below), you'll also need to install `sphinx-autobuild`:
+
+`pip install sphinx-autobuild`
+
 Then clone this repo.
 
 `git clone --recursive ...`

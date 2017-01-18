@@ -20,6 +20,13 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2017-01-18
+  ==========
+
+  - **New:** :ref:`appendix` Chapter added to contain deprecated methods of generating OAuth tokens and Social Login. These have now been superceded by the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/>`__.
+  - **Modified:** :ref:`Authentication chapter <authn>` has been updated to reflect the above change.
+  - The Directory's :ref:`Provider <ref-provider-data>` resource now contains ``providerType``, ``scope``, and ``userInfoMappingRules`` attributes.
+
   2016-10-14
   ==========
 

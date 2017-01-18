@@ -70,7 +70,7 @@ In order to use the Stormpath API, you will need an API key. To get one, follow 
   - `PHP <https://docs.stormpath.com/php/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Python <https://docs.stormpath.com/python/product-guide/latest/quickstart.html#installing-the-sdk>`__
   - `Ruby <https://docs.stormpath.com/ruby/product-guide/latest/quickstart.html#installing-the-sdk>`__
-  - `VB.net <https://docs.stormpath.com/vbnet/product-guide/latest/quickstart.html#installing-the-sdk>`__
+  - `Visual Basic <https://docs.stormpath.com/vbnet/product-guide/latest/quickstart.html#installing-the-sdk>`__
 
 .. only:: csharp or vbnet
 

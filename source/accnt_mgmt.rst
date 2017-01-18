@@ -2820,8 +2820,6 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/get_account_schema.rb
       :language: ruby
 
@@ -2885,8 +2883,6 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
       :language: python
 
   .. only:: ruby
-
-    (ruby.todo)
 
     .. literalinclude:: code/ruby/account_management/account_creation_default.rb
       :language: ruby
@@ -2956,8 +2952,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
       :language: ruby
 
@@ -3015,14 +3009,8 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/set_surname_required_resp.py
       :language: python
 
-  .. only:: ruby
 
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
-      :language: ruby
-
-.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
+.. only:: rest or csharp or vbnet or java or nodejs or php or python
 
   If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
@@ -3036,6 +3024,14 @@ If you wanted to set ``surname`` as required, you would send the following reque
       "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
       "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
     }
+
+.. only:: ruby
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``Stormpath::Error`` response
+
+    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
+      :language: ruby
+
 
 .. todo::
 
@@ -3074,12 +3070,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/account_creation_error.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
-      :language: ruby
 
 .. _verify-account-email:
 
@@ -3143,7 +3133,7 @@ If you were to click this URL now, it would simply open up a page telling us tha
 
   The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
 
-    /v1/accounts/emailVerificationsToken/$VERIFICATION_TOKEN
+    /v1/accounts/emailVerificationTokens/$VERIFICATION_TOKEN
 
   To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
@@ -3691,7 +3681,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
   .. todo::
 
-    This (ruby.todo)
+    Customizing SMTP server (ruby.todo)
 
 .. only:: rest or csharp or vbnet or php or python or java or ruby
 
@@ -4664,6 +4654,11 @@ You can enable the Account Linking Policy like this:
   .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
     :language: javascript
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
+    :language: ruby
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -4858,7 +4853,7 @@ This is probably the most common scenario, where you want to allow your users So
 
 Your Application's Account Linking Policy has:
 
-.. only:: rest or nodejs
+.. only:: rest or nodejs or ruby
 
   .. code-block:: json
 
@@ -4911,12 +4906,6 @@ Your Application's Account Linking Policy has:
     .. literalinclude:: code/python/account_management/ex1_account_linking_policy.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_account_linking_policy.rb
-      :language: ruby
 
 So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
 
@@ -4941,6 +4930,11 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
 
   .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
     :language: javascript
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
+    :language: ruby
 
 .. todo::
 
@@ -4979,12 +4973,6 @@ So when Janelle, a new user of your application, clicks on the "Login with Faceb
     .. literalinclude:: code/python/account_management/ex1_login_attempt_req.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
-      :language: ruby
 
 After the credentials are validated, Stormpath will do a few things:
 
@@ -4997,7 +4985,7 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-.. only:: rest or nodejs
+.. only:: rest or nodejs or ruby
 
   .. code-block:: json
 
@@ -5046,12 +5034,6 @@ Stormpath will now return the Account from the Cloud Directory:
     .. literalinclude:: code/python/account_management/ex1_login_attempt_resp.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex1_login_attempt_resp.rb
-      :language: ruby
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -5094,6 +5076,12 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
   .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
     :language: javascript
 
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
+    :language: ruby
+
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -5131,12 +5119,6 @@ So a login attempt to a Facebook Directory would look like the one above, but wi
     .. literalinclude:: code/python/account_management/ex2_login_attempt_req.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
-      :language: ruby
 
 This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
 
