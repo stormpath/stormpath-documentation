@@ -1373,6 +1373,13 @@ For example, you could add information about this user's current location, like 
 
     Any Custom Data changes you make are not preserved until you call ``save`` on the Account resource to send the updates to the Stormpath API.
 
+  .. note::
+
+    Note that all the associations on fetched objects are not eager loaded. Instead, they hold a reference to the associated resources, meaning only a ``href`` attribute is present.
+
+    When trying to access or set another property, the resource will be materialized and all the other attributes will be pulled down from the server (or from the cache).
+
+
 .. only:: rest
 
   Which returns the following:
@@ -2675,7 +2682,7 @@ This would prevent a user from choosing a password that is the same as any of th
 
 Every Directory has its own Account Schema. This Schema allows you to control which Account attributes (referred to as ``fields`` within the Account Schema) must be passed as part of new Account creation.
 
-.. only:: not rest
+.. only:: not rest and not nodejs
 
   .. warning::
 
@@ -2684,7 +2691,7 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 3.5.1. Retrieving your Directory's Account Schema
 -------------------------------------------------
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   You will find a link to the ``accountSchema`` resource in your Directory:
 
@@ -2699,6 +2706,8 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
         "href": "https://api.stormpath.com/v1/schemas/ivVhIkQVLGSLnExample"
       }
     }
+
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   You can send a ``GET`` to that URL, with an ``expand`` parameter for the ``fields`` collection:
 
@@ -2750,6 +2759,28 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
       }
     }
 
+.. only:: nodejs
+
+  You can send a GET request to see your Directory's ``accountSchema`` resource:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_req.js
+    :language: javascript
+
+  This will return the following:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_resp.js
+    :language: javascript
+
+  To see the fields collection, you can make another GET request:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_fields_req.js
+    :language: javascript
+
+  This will return the following:
+
+  .. literalinclude:: code/nodejs/account_management/get_account_schema_fields_resp.js
+    :language: javascript
+
 .. todo::
 
   .. only:: csharp or vbnet
@@ -2773,13 +2804,6 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
     .. literalinclude:: code/java/account_management/get_account_schema.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/get_account_schema.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -2796,8 +2820,6 @@ Every Directory has its own Account Schema. This Schema allows you to control wh
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/get_account_schema.rb
       :language: ruby
 
@@ -2805,7 +2827,7 @@ The two Account attributes (or ``fields``) that can be toggled here are ``givenN
 
 This means that (providing your Directory was created after ``2016-08-13``) you can create a new Account by passing only two attributes, ``email`` and ``password``:
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   .. code-block:: http
 
@@ -2817,6 +2839,11 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
       "email":"test123@email.com",
       "password":"APassword1234"
     }
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/account_creation_default.js
+    :language: javascript
 
 .. todo::
 
@@ -2841,13 +2868,6 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
     .. literalinclude:: code/java/account_management/account_creation_default.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_creation_default.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -2864,8 +2884,6 @@ This means that (providing your Directory was created after ``2016-08-13``) you 
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/account_creation_default.rb
       :language: ruby
 
@@ -2876,7 +2894,7 @@ Any attributes that are in the ``fields`` collection can have ``required`` toggl
 
 If you wanted to set ``surname`` as required, you would send the following request to that particular field object:
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or php or python or ruby
 
   .. code-block:: http
 
@@ -2889,6 +2907,11 @@ If you wanted to set ``surname`` as required, you would send the following reque
     {
       "required":"true"
     }
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/set_surname_required_req.js
+    :language: javascript
 
 .. todo::
 
@@ -2913,13 +2936,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/java/account_management/set_surname_required_req.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/set_surname_required_req.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -2936,12 +2952,10 @@ If you wanted to set ``surname`` as required, you would send the following reque
 
   .. only:: ruby
 
-    (ruby.todo)
-
     .. literalinclude:: code/ruby/account_management/set_surname_required_req.rb
       :language: ruby
 
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
 
   And get back the following ``200 OK``:
 
@@ -2981,13 +2995,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/java/account_management/set_surname_required_resp.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/set_surname_required_resp.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -3002,14 +3009,8 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/set_surname_required_resp.py
       :language: python
 
-  .. only:: ruby
 
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/set_surname_required_resp.rb
-      :language: ruby
-
-.. only:: rest
+.. only:: rest or csharp or vbnet or java or nodejs or php or python
 
   If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``400 Bad Request`` with `Error 2000 <https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000>`__:
 
@@ -3023,6 +3024,14 @@ If you wanted to set ``surname`` as required, you would send the following reque
       "moreInfo": "https://docs.stormpath.com/rest/product-guide/latest/errors.html#error-2000",
       "requestId": "49bd7a31-6650-11e6-9e22-22000befd8bd"
     }
+
+.. only:: ruby
+
+  If you now tried to create another Account by passing only an ``email`` and ``password``, you would get back a ``Stormpath::Error`` response
+
+    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
+      :language: ruby
+
 
 .. todo::
 
@@ -3047,13 +3056,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/java/account_management/account_creation_error.java
       :language: java
 
-  .. only:: nodejs
-
-    (node.todo)
-
-    .. literalinclude:: code/nodejs/account_management/account_creation_error.js
-      :language: javascript
-
   .. only:: php
 
     (php.todo)
@@ -3068,12 +3070,6 @@ If you wanted to set ``surname`` as required, you would send the following reque
     .. literalinclude:: code/python/account_management/account_creation_error.py
       :language: python
 
-  .. only:: ruby
-
-    (ruby.todo)
-
-    .. literalinclude:: code/ruby/account_management/account_creation_error.rb
-      :language: ruby
 
 .. _verify-account-email:
 
@@ -3137,7 +3133,7 @@ If you were to click this URL now, it would simply open up a page telling us tha
 
   The token you capture from the query string is used to form the full ``href`` for a special email verification endpoint used to verify the Account::
 
-    /v1/accounts/emailVerificationsToken/$VERIFICATION_TOKEN
+    /v1/accounts/emailVerificationTokens/$VERIFICATION_TOKEN
 
   To verify the Account, you use the token from the query string to form the above URL and POST a body-less request against the fully-qualified end point:
 
@@ -3685,7 +3681,7 @@ Normally, the emails that Stormpath sends as a part of processes like Account cr
 
   .. todo::
 
-    This (ruby.todo)
+    Customizing SMTP server (ruby.todo)
 
 .. only:: rest or csharp or vbnet or php or python or java or ruby
 
@@ -4220,7 +4216,7 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
 3.8. Account Linking
 ====================
 
-.. only:: not rest
+.. only:: not (rest or ruby or nodejs)
 
  .. warning::
 
@@ -4233,11 +4229,11 @@ Working with the Blacklist is exactly the same, except you add entries to the ``
   - :ref:`How Login Works <how-login-works>`
   - :ref:`How Social Authentication Works <social-authn>`
 
-To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will have to go into a Facebook Directory, and so on.
+To quickly recap: Every source of user Accounts requires its own Directory in Stormpath. This means that users who directly register through your app will probably be stored inside a Cloud Directory, users who choose to login with Facebook will be stored in a Facebook Directory, and so on.
 
 When a user chooses to log in with a non-Cloud Directory (e.g. Facebook, SAML, etc), Stormpath creates an Account resource to represent them in the appropriate Directory and then returns it upon successful login.
 
-What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well. The answer is that they will have 3 different Account resources, each one in a different Directory.
+What happens if a user logs in directly with your application one day, then with Facebook the next day, and then with Google as well? The answer is that they will have 3 different Account resources, each one in a different Directory.
 
 To unify these Accounts, Stormpath offers Account Linking. Account Linking allows you to ensure that the Account that is returned on authentication is always the same Account found in the :ref:`default Account Store <add-to-app-or-org>`.
 
@@ -4267,22 +4263,71 @@ There are a number of different scenarios which can occur during login.
 Application vs Organization Account Linking Policies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login.
+First and foremost, both Applications and Organizations have Account Linking Policies. Stormpath will default to the Application's Policy if you do not specify an Organization during login. This is an example of a login attempt that specifies an Organization:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
+  .. code-block:: http
 
-  {
-    "type": "basic",
-    "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
-    "accountStore": {
-      "nameKey":"tenantOneTwoThree"
+    POST /v1/applications/1gk4Dxzi6o4PbdleXaMPLE/loginAttempts HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
+
+    {
+      "type": "basic",
+      "value": "YWxhbkBzbWl0aGVlZS5jb206UGFzcexample",
+      "accountStore": {
+        "nameKey":"tenantOneTwoThree"
+      }
     }
-  }
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/login_attempt_namekey.rb
+    :language: ruby
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/login_attempt_namekey.js
+    :language: javascript
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/login_attempt_namekey.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/login_attempt_namekey.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/login_attempt_namekey.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/login_attempt_namekey.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/login_attempt_namekey.py
+      :language: python
 
 For an example of how this works, please see :ref:`below <account-linking-automatic-ex2>`.
 
@@ -4343,69 +4388,237 @@ Let's say we have two Directories: a Cloud Directory, and a Facebook Directory. 
 
 In each of those Directories, there is an Account. One in our Cloud Directory, for user Picard:
 
-.. code-block:: json
+.. only:: rest or ruby or nodejs
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample",
-    "username": "jlpicard",
-    "email": "capt@enterprise.com",
-    "givenName": "Jean-Luc",
-    "middleName": null,
-    "surname": "Picard",
-    "fullName": "Jean-Luc Picard",
-    "thisExample": "isTruncated",
-    "...": "..."
-  }
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample",
+      "username": "jlpicard",
+      "email": "capt@enterprise.com",
+      "givenName": "Jean-Luc",
+      "middleName": null,
+      "surname": "Picard",
+      "fullName": "Jean-Luc Picard",
+      "thisExample": "isTruncated",
+      "...": "..."
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/account_picard.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/account_picard.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/account_picard.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/account_picard.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/account_picard.py
+      :language: python
+
 
 And one in the Facebook Directory for user Locutus:
 
-.. code-block:: json
+.. only:: rest or ruby or nodejs
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample",
-    "username": "locutus",
-    "email": "locutus@b.org",
-    "givenName": "Locutus",
-    "middleName": "",
-    "surname": "Ofborg",
-    "fullName": "Locutus Ofborg",
-    "thisExample": "isTruncated",
-    "...": "..."
-  }
+  .. code-block:: json
 
-You can link these two Accounts with a simple POST:
-
-.. code-block:: http
-
-  POST /v1/accountLinks HTTP/1.1
-  Host: api.stormpath.com
-  Authorization: Basic MlpG...
-  Content-Type: application/json
-
-  {
-    "leftAccount":{
-      "href":"https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
-    },
-    "rightAccount":{
-      "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+    {
+      "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample",
+      "username": "locutus",
+      "email": "locutus@b.org",
+      "givenName": "Locutus",
+      "middleName": "",
+      "surname": "Ofborg",
+      "fullName": "Locutus Ofborg",
+      "thisExample": "isTruncated",
+      "...": "..."
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/account_locutus.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/account_locutus.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/account_locutus.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/account_locutus.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/account_locutus.py
+      :language: python
+
+
+You can link these two Accounts manually:
+
+.. only:: rest
+
+  .. code-block:: http
+
+    POST /v1/accountLinks HTTP/1.1
+    Host: api.stormpath.com
+    Authorization: Basic MlpG...
+    Content-Type: application/json
+
+    {
+      "leftAccount":{
+        "href":"https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+      },
+      "rightAccount":{
+        "href":"https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+      }
+    }
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/manual_link_req.rb
+    :language: ruby
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/manual_link_req.js
+    :language: javascript
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/manual_link_req.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/manual_link_req.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/manual_link_req.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/manual_link_req.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/manual_link_req.py
+      :language: python
 
 Which on success will return an Account Link:
 
-.. code-block:: json
+.. only:: rest or ruby or nodejs
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb42cnj8HH",
-    "createdAt": "2016-09-28T17:32:32.327Z",
-    "modifiedAt": "2016-09-28T17:32:32.327Z",
-    "leftAccount": {
-        "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
-    },
-    "rightAccount": {
-        "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinks/4BK2fG2nW4G0cb42cnj8HH",
+      "createdAt": "2016-09-28T17:32:32.327Z",
+      "modifiedAt": "2016-09-28T17:32:32.327Z",
+      "leftAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/7hOYWCzhhKDFHFzExample"
+      },
+      "rightAccount": {
+          "href": "https://api.stormpath.com/v1/accounts/raxBrEj2lkxJeQExample"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/manual_link_resp.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/manual_link_resp.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/manual_link_resp.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/manual_link_resp.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/manual_link_resp.py
+      :language: python
 
 This means that:
 
@@ -4414,23 +4627,74 @@ This means that:
 
 .. note::
 
-  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`
+  Account Links can be created and deleted, but they cannot be updated. For information about Account Links, please see the :ref:`Reference chapter <ref-accountlink>`.
 
-There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application has an :ref:`Account Linking Policy <ref-account-linking-policy>`, which is enabled:
+There is one more aspect to Account Linking, which regards login behavior (as already summarized :ref:`above <account-linking-login>`). The Application needs to have an :ref:`Account Linking Policy <ref-account-linking-policy>` enabled:
 
-.. code-block:: json
+.. only:: rest or ruby or nodejs
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
-    "createdAt": "2016-07-21T01:03:49.813Z",
-    "modifiedAt": "2016-09-28T18:19:09.572Z",
-    "status": "ENABLED",
-    "automaticProvisioning": "DISABLED",
-    "matchingProperty": null,
-    "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+      "createdAt": "2016-07-21T01:03:49.813Z",
+      "modifiedAt": "2016-09-28T18:19:09.572Z",
+      "status": "ENABLED",
+      "automaticProvisioning": "DISABLED",
+      "matchingProperty": null,
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+      }
     }
-  }
+
+You can enable the Account Linking Policy like this:
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/account_linking_policy.js
+    :language: javascript
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/account_linking_policy.rb
+    :language: ruby
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/account_linking_policy.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/account_linking_policy.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/account_linking_policy.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/account_linking_policy.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/account_linking_policy.py
+      :language: python
 
 .. note::
 
@@ -4447,26 +4711,36 @@ This behavior exists only because the Account Linking Policy is set as ``enabled
 How to Link Accounts Automatically
 ------------------------------------
 
-So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy.
+So far we have covered how to link Accounts manually. However, it is also possible to link Accounts automatically at login time. This linking behavior is controlled by an Account Linking Policy. See the above section to learn how to enable the Account Linking Policy for either an Application or an Organization.
+
+.. only:: ruby
+
+  .. warning::
+
+    This feature is not yet available in the Ruby SDK. Please use the Stormpath Admin Console, or see below for the REST API instructions.
+
+    For updates, you can follow `ticket #180 <https://github.com/stormpath/stormpath-sdk-ruby/issues/180>`_ on Github.
 
 .. _about-alp:
 
 What's in the Account Linking Policy
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Every Application and Organization has an Account Linking Policy resource. In both cases the path is the same:
+Every Application and Organization has an Account Linking Policy resource.
 
-``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
+.. only:: rest or nodejs
+
+  In both cases the path is the same: ``/v1/accountLinkingPolicies/$ACCOUNT_LINKING_POLICY_ID``
 
 The Account Linking Policy has three attributes that control aspects of Account Linking behavior:
 
-**Status:**
+**Status**
 
 This attribute controls whether this Policy is in effect or not. If you would not like this policy to be in effect, set this to ``DISABLED``.
 
 If Account Linking is enabled then Stormpath will check linked Accounts on login and behave as described in :ref:`account-linking-login`. If it is disabled, you are still able to link Accounts manually, but Stormpath takes no actions based upon these links.
 
-**Automatic Provisioning:**
+**Automatic Provisioning**
 
 This attribute tells Stormpath whether you would like new Accounts to be automatically created in the default Account Store.
 
@@ -4560,7 +4834,7 @@ Account Matching and Account Verification
 
 Stormpath will only automatically link to and from Accounts that have had their email verified.
 
-.. only:: rest
+.. only:: rest or nodejs
 
   This means that the Account resource must have its ``emailVerificationStatus`` set to ``VERIFIED``.
 
@@ -4579,36 +4853,126 @@ This is probably the most common scenario, where you want to allow your users So
 
 Your Application's Account Linking Policy has:
 
-.. code-block:: json
+.. only:: rest or nodejs or ruby
 
-  {
-    "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
-    "createdAt": "2016-07-21T01:03:49.813Z",
-    "modifiedAt": "2016-09-28T18:19:09.572Z",
-    "status": "ENABLED",
-    "automaticProvisioning": "ENABLED",
-    "matchingProperty": "email",
-    "tenant": {
-        "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accountLinkingPolicies/3xX7u47eCrJTN7l6nLTMTa",
+      "createdAt": "2016-07-21T01:03:49.813Z",
+      "modifiedAt": "2016-09-28T18:19:09.572Z",
+      "status": "ENABLED",
+      "automaticProvisioning": "ENABLED",
+      "matchingProperty": "email",
+      "tenant": {
+          "href": "https://api.stormpath.com/v1/tenants/Ftlhx6oq2PwScGW3RsXeF"
+      }
     }
-  }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/ex1_account_linking_policy.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/ex1_account_linking_policy.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/ex1_account_linking_policy.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/ex1_account_linking_policy.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/ex1_account_linking_policy.py
+      :language: python
+
 
 So when Janelle, a new user of your application, clicks on the "Login with Facebook" button on your login page, you have it send a login attempt:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
-  Authorization: Basic NjUxW...
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "facebook",
-      "accessToken": "EAAT68k[...]T8TAZDZD"
+    POST /v1/applications/560ySU9jUOCFMXsIM1fcGC/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+    Authorization: Basic NjUxW...
+    Cache-Control: no-cache
+
+    {
+      "providerData": {
+        "providerId": "facebook",
+        "accessToken": "EAAT68k[...]T8TAZDZD"
+      }
     }
-  }
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/ex1_login_attempt_req.js
+    :language: javascript
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex1_login_attempt_req.rb
+    :language: ruby
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/ex1_login_attempt_req.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/ex1_login_attempt_req.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/ex1_login_attempt_req.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/ex1_login_attempt_req.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/ex1_login_attempt_req.py
+      :language: python
+
 
 After the credentials are validated, Stormpath will do a few things:
 
@@ -4621,15 +4985,55 @@ Your user Janelle now has an Account in the Facebook Directory, an Account in th
 
 Stormpath will now return the Account from the Cloud Directory:
 
-.. code-block:: json
+.. only:: rest or nodejs or ruby
 
-  {
-    "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
-    "username": "jkallday@email.com",
-    "email": "jkallday@email.com",
-    "givenName": "Janelle",
-    "...":"..."
-  }
+  .. code-block:: json
+
+    {
+      "href": "https://api.stormpath.com/v1/accounts/4Ne98Nh3OscHLuBexample",
+      "username": "jkallday@email.com",
+      "email": "jkallday@email.com",
+      "givenName": "Janelle",
+      "...":"..."
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/ex1_login_attempt_resp.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/ex1_login_attempt_resp.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/ex1_login_attempt_resp.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/ex1_login_attempt_resp.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/ex1_login_attempt_resp.py
+      :language: python
+
 
 If at a later date she were to choose to login via Google, then (assuming her Facebook and Google use the same email) Stormpath would create an Account for her in the Google Directory, link it to the Cloud Directory Account, and then return that Cloud Account.
 
@@ -4647,23 +5051,74 @@ In this example we will show a :ref:`multi-tenant application <multitenancy>` th
 
 So a login attempt to a Facebook Directory would look like the one above, but with an Account Store specified as well, in this case an Organization ``nameKey``:
 
-.. code-block:: http
+.. only:: rest
 
-  POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
-  Host: api.stormpath.com
-  Content-Type: application/json
-  Authorization: Basic NjUxW...
-  Cache-Control: no-cache
+  .. code-block:: http
 
-  {
-    "providerData": {
-      "providerId": "facebook",
-      "accessToken": "EAAT68k[...]T8TAZDZD"
-      "accountStore": {
-        "nameKey": "OrganizationA"
+    POST /v1/applications/1FxaAPbyW3JqNLbsPaH26R/accounts HTTP/1.1
+    Host: api.stormpath.com
+    Content-Type: application/json
+    Authorization: Basic NjUxW...
+    Cache-Control: no-cache
+
+    {
+      "providerData": {
+        "providerId": "facebook",
+        "accessToken": "EAAT68k[...]T8TAZDZD"
+        "accountStore": {
+          "nameKey": "OrganizationA"
+        }
       }
     }
-  }
+
+.. only:: nodejs
+
+  .. literalinclude:: code/nodejs/account_management/ex2_login_attempt_req.js
+    :language: javascript
+
+.. only:: ruby
+
+  .. literalinclude:: code/ruby/account_management/ex2_login_attempt_req.rb
+    :language: ruby
+
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+      .. literalinclude:: code/csharp/account_management/ex2_login_attempt_req.cs
+        :language: csharp
+
+    .. only:: vbnet
+
+      .. literalinclude:: code/vbnet/account_management/ex2_login_attempt_req.vb
+        :language: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+    .. literalinclude:: code/java/account_management/ex2_login_attempt_req.java
+      :language: java
+
+  .. only:: php
+
+    (php.todo)
+
+    .. literalinclude:: code/php/account_management/ex2_login_attempt_req.php
+      :language: php
+
+  .. only:: python
+
+    (python.todo)
+
+    .. literalinclude:: code/python/account_management/ex2_login_attempt_req.py
+      :language: python
+
 
 This targeted login attempt would tell Stormpath to go to that specific Organization's Directories to find the Account. From that point on, any Account creation and linking policies would be enacted based on the policies associated with that particular Organization's Directories.
 

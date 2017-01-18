@@ -5773,7 +5773,7 @@
   Challenge Operations
   """"""""""""""""""""""""""
 
-  An Account's Challenges can only be created via a POST. The Challenge resource does not support any other operations. To attempt verification of a challenge, sending a ``POST`` to to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
+  An Account's Challenges can only be created via a POST. The Challenge resource does not support any other operations. To attempt a verification of a challenge, send a ``POST`` to ``/v1/challenges/$CHALLENGE_ID`` with the correct ``code`` in the body of the request.
 
   Creating a Challenge
   +++++++++++++++++++++
@@ -5786,7 +5786,7 @@
       - Attributes
       - Description
 
-    * - POST /v1/accounts/$ACCOUNT_ID/challenges
+    * - POST /v1/factors/$FACTOR_ID/challenges
       - N/A
       - Generates a new Challenge.
 
@@ -5801,9 +5801,9 @@
       - Optional Query Parameters
       - Description
 
-    * - GET /v1/accounts/$ACCOUNT_ID/challenges
+    * - GET /v1/factors/$FACTOR_ID/challenges
       - ``expand``
-      - Retrieves a collection of Challenges for the specified Account.
+      - Retrieves a collection of Challenges for the specified Factor.
 
   Updating a Challenge
   ++++++++++++++++++++++

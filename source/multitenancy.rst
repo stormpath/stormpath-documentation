@@ -761,6 +761,13 @@ When a login attempt is made against an Application’s ``/loginAttempts`` endpo
 
 If the login attempt does specify an Organization, then we simply jump to that point in the steps, and the Organization's Account Stores are iterated through as described above.
 
+.. only:: nodejs
+
+  In the Node SDK, you can specify an Organization in your login request like this:
+
+  .. literalinclude:: code/nodejs/account_management/login_attempt_namekey.js
+      :language: javascript
+
 .. _multitenancy-routing-users:
 
 6.4 Routing Users to their Tenant
