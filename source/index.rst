@@ -18,5 +18,6 @@ Welcome to Stormpath's |language| documentation!
    idsite
    reference
    configuration
+   appendix
    errors
    changelog
