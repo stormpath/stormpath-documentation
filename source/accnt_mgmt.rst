@@ -3355,7 +3355,7 @@ For more information about this, see :ref:`password-reset-flow`.
 3.7.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
+The emails that Stormpath sends to users can be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
 
 **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory’s **Account Creation Policies**:
 
