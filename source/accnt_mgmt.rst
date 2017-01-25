@@ -2322,7 +2322,7 @@ So the user would then receive something that looked like this::
 
   To reset your password please click on this link or cut and paste this
   URL into your browser (link expires in 24 hours):
-  https://api.stormpath.com/passwordReset?sptoken=eyJraWQiOiIxZ0JUbmNXc[...]
+  http://yoursite.com/path/to/reset/page?sptoken=eyJraWQiOiIxZ0JUbmNXc[...]
 
   This link takes you to a secure page where you can change your password.
 
@@ -3355,7 +3355,7 @@ For more information about this, see :ref:`password-reset-flow`.
 3.7.2. Customizing Stormpath Email Templates
 --------------------------------------------
 
-The emails that Stormpath sends to users be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
+The emails that Stormpath sends to users can be customized by modifying the `Email Templates <https://docs.stormpath.com/rest/product-guide/latest/reference.html#email-templates>`__ resource. This can be done either via the "Directory Workflows" section of the `Stormpath Admin Console <https://api.stormpath.com/login>`__, or as explained below.
 
 **Verification**, **Verification Success**, and **Welcome** Email Templates can all be found under the Directory’s **Account Creation Policies**:
 
