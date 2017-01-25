@@ -1,3 +1,3 @@
-oauthPolicy.setAccessTokenTtl("P8D");
-oauthPolicy.setRefreshTokenTtl("PT2M");
+oauthPolicy.setAccessTokenTtl("PT30M");
+oauthPolicy.setRefreshTokenTtl("P7D");
 oauthPolicy.save();
