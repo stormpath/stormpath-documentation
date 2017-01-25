@@ -1,4 +1,4 @@
-OAuthPasswordGrantRequestAuthentication request =
+OAuthRefreshTokenRequestAuthentication request =
     OAuthRequests.OAUTH_REFRESH_TOKEN_REQUEST
         .builder()
         .setRefreshToken(refreshTokenString)

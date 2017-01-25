@@ -2712,7 +2712,7 @@ Step 5: Configure Your Application
 
 Your Stormpath Application Resource has two parts that are relevant to SAML:
 
-1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to. These should be URIs that you host yourself.
+1. An ``authorizedCallbackUri`` Array that defines the authorized URIs that the IdP can return your user to with the authentication result. These should be URIs that you host yourself.
 
 You should create any URIs here that you would like included as authorized callback URIs, to a maximum of 4000 characters in total length.
 
@@ -3484,7 +3484,7 @@ The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body
 
   * - ``cb_uri``
     - No
-    - The callback URI to use once the user takes an action on the ID Site or Identity provider. This must match a Authorized Callback URI on Application resource, otherwise the flow will default to the first Callback URI that does not contain a wildcard.
+    - The callback URI to use once the user takes an action on the ID Site or Identity provider. This URI will be passed a secure JWT as a URL parameter, and it's job will be to validate that JWT and return the Stormpath Account. This URI must match a Authorized Callback URI on an Application resource, otherwise the flow will default to the first Callback URI that does not contain a wildcard.
 
   * - ``jti``
     - Yes

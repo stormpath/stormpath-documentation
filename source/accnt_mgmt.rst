@@ -1237,7 +1237,7 @@ If your passwords are hashed with MD5 or SHA, you can import them by creating a 
 
   * - ``BASE64_SALT``
     - The salt byte array used to salt the first hash iteration.
-    - String (Base64). If your password hashes do not have salt, you can omit it entirely.
+    - String (Base64). If your password hashes were not salted, this must be the empty string (such that the two dollar-sign delimiters appear right next to each other in the MCF String).
 
   * - ``BASE64_PASSWORD_HASH``
     - The computed hash byte array.
@@ -1924,10 +1924,6 @@ This query will match Accounts with a ``startDate`` value between ``2012-01-01``
 .. only:: rest
 
   For a full description please see :ref:`the Reference chapter <search-customdata>`.
-
-.. note::
-
-  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
 
 .. _managing-account-pwd:
 
