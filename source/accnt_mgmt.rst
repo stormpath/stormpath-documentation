@@ -1925,10 +1925,6 @@ This query will match Accounts with a ``startDate`` value between ``2012-01-01``
 
   For a full description please see :ref:`the Reference chapter <search-customdata>`.
 
-.. note::
-
-  This feature is currently in beta. If you have any questions, comments, or suggestions, reach out to us at support@stormpath.com.
-
 .. _managing-account-pwd:
 
 3.4. How to Manage an Account's Password
