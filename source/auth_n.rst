@@ -2209,7 +2209,6 @@ Amazon
       "profile"
     ],
     "tokenEndpoint": "https://api.amazon.com/auth/o2/token"
-    }
   }
 
 .. note::
@@ -2275,6 +2274,8 @@ StackExchange
 .. note::
 
   In order for the flow to succeed, you must configure Stormpath to request the ``no_expiry`` scope.
+
+  Also the Resource Endpoint requires you to include a ``key`` that is found on your StackApp's configuration page.
 
 Twitch
 ++++++++
