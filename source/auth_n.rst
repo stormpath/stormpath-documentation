@@ -2068,7 +2068,7 @@ While Stormpath supports any provider that offers login via an OAuth 2.0 flow, t
 - StackExchange
 - Twitch
 
-The instructions below should allow you to integrate with any other OAuth provider not listed here. If you have any questions about integrating with an OAuth provider not listed here, feel free to contact us at support@stormpath.com and we will help as best as we can.
+You can find example configurations for these providers :ref:`below <generic-oauth-config>`. The instructions below should allow you to integrate with any other OAuth provider not listed here. If you have any questions about integrating with an OAuth provider not listed here, feel free to contact us at support@stormpath.com and we will help as best as we can.
 
 Before you integrate your OAuth provider with Stormpath, you must complete the following steps:
 
@@ -2087,8 +2087,7 @@ You will also need to gather the following information from the provider:
 - **Access Token Type:** This is the format of the token that is passed by Stormpath to the provider in order to retrieve the user data. Most providers support all three formats: ``bearer``, ``oauth_token``, ``access_token``. ``bearer`` means that the token is passed as part of a Bearer Authentication header, while ``oauth_token`` and ``access_token`` are both URL parameters. Most providers support all three, but this is not always true.
 - **ID Field:** This is the field that contains the user ID in the user data that is retrieved by Stormpath from the Resource Endpoint.
 
-Example configurations can be found :ref:`below <generic-oauth-config>`.
-
+Example configurations can be found :ref:`below <generic-oauth-config>`. Information about actually initiating Social Login can be found in `the Client API documentation <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html#initiate-social-login>`__.
 
 Step 1: Create a Directory for your OAuth provider
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
