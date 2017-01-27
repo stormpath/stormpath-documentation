@@ -1383,13 +1383,15 @@ Revoking Access and Refresh Tokens
   :local:
   :depth: 2
 
-Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. The Social Login Providers currently supported by Stormpath are:
+Social authentication essentially means using the "Log in with x" button in your application, where "x" is a Social Login Provider of some kind. There are a number of Social Login Providers that Stormpath supports out-of-the-box:
 
 - :ref:`Google <authn-google>`
 - :ref:`Facebook <authn-facebook>`
 - :ref:`Github <authn-github>`
 - :ref:`LinkedIn <authn-linkedin>`
 - :ref:`Twitter <authn-twitter>`
+
+However, Stormpath also supports the creation of Social Directories for so-called Generic OAuth Providers. These Directories should work with any Social Login Provider that provides an OAuth 2.0 flow. For more information about this, see :ref:`below <authn-generic-oauth>`.
 
 Social Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath Social Directory if they are mirrored in from the external Social provider. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
 
@@ -1529,7 +1531,20 @@ The Directory's Provider now has a ``scope`` array where you can define what Sco
     - ``r_basicprofile``, ``r_emailaddress``
     - `LinkedIn Profile Fields <LinkedIn’s “Profile Fields” documentation>`__
 
-Additional scopes can be selected by going to the Directory's page in the Stormpath Admin Console and clicking on the **Scopes** tab found under "Provider Configuration".
+Additional scopes can be selected by going to the Directory's page in the Stormpath Admin Console and clicking on the **Scopes** tab found under "Provider Configuration" or by passing a ``scopes`` array to the Directory's Provider resource:
+
+.. code-block:: http
+
+  POST /v1/directories/4LL10Q3FNkiMLWmXfFQ1OU/provider HTTP/1.1
+  Authorization: Basic NVdYR...
+  Content-Type: application/json; charset=utf-8
+  Host: api.stormpath.com
+
+  {
+    "scopes":[
+      "user_about_me"
+    ]
+  }
 
 Social Login Providers
 -----------------------
@@ -1541,13 +1556,13 @@ Social Login Providers
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
-- Create an application in the `Google Developer Console <https://console.developers.google.com/start>`_
+- Create an application in the `Google Developer Console <https://consoleelopers.google.com/start>`_
 
 - Enable Google Login for your Google application
 
 - Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 .. note::
 
@@ -1659,7 +1674,7 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 
 - Add your application's private and public root URLs
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
@@ -1754,7 +1769,7 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 
 - Create an application in the `GitHub Developer Site <https://developer.github.com/>`_
 
-- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
@@ -1852,7 +1867,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 
 - Create an application in the `LinkedIn Developer Site <https://www.linkedin.com/secure/developer?newapp=>`_
 
-- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.dev.stormpath.io/authorize/callback``).
+- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 - Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
 
@@ -2039,6 +2054,245 @@ At a high level, the process works as follows:
 #. Stormpath handles the login to Twitter and redirects the user back to your app with a Stormpath Token JWT response
 
 You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in :ref:`generate-oauth-token`.
+
+.. _authn-generic-oauth:
+
+4.3.6. Generic OAuth 2.0 Login
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While Stormpath supports any provider that offers login via an OAuth 2.0 flow, the following providers have been tested and confirmed as working:
+
+- Amazon
+- Imgur
+- Instagram
+- StackExchange
+- Twitch
+
+You can find example configurations for these providers :ref:`below <generic-oauth-config>`. The instructions below should allow you to integrate with any other OAuth provider not listed here. If you have any questions about integrating with an OAuth provider not listed here, feel free to contact us at support@stormpath.com and we will help as best as we can.
+
+Before you integrate your OAuth provider with Stormpath, you must complete the following steps:
+
+- Create an application with that provider
+
+- Enable OAuth 2.0 login with that provider
+
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://endless-winter.apps.stormpath.io/authorize/callback``).
+
+You will also need to gather the following information from the provider:
+
+- **Client ID & Secret:** These are the OAuth credentials that Stormpath will need in order to communicate with the provider.
+- **Authorization Endpoint:** Used to retrieve the Authorization Code from the provider. This endpoint will often end with ``/authorize``.
+- **Token Endpoint:** Accepts the Authorization Code you retrieve from the Authorization Endpoint and returns an Access Token. This endpoint will often end with ``/token``.
+- **Resource Endpoint:** Accepts the Access Token you got from the Token Endpoint and returns the user data. This is usually the endpoint that is used to retrieve the user object.
+- **Access Token Type:** This is the format of the token that is passed by Stormpath to the provider in order to retrieve the user data. Most providers support all three formats: ``bearer``, ``oauth_token``, ``access_token``. ``bearer`` means that the token is passed as part of a Bearer Authentication header, while ``oauth_token`` and ``access_token`` are both URL parameters. Most providers support all three, but this is not always true.
+- **ID Field:** This is the field that contains the user ID in the user data that is retrieved by Stormpath from the Resource Endpoint.
+
+Example configurations can be found :ref:`below <generic-oauth-config>`. Information about actually initiating Social Login can be found in `the Client API documentation <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html#initiate-social-login>`__.
+
+Step 1: Create a Directory for your OAuth provider
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Creating this Directory requires that you provide information about your Provider resource. This can be accomplished by creating a new Directory:
+
+.. only:: not rest
+
+  .. note::
+
+    This feature is currently not supported in the |language| SDK. An example of a REST request has been included instead.
+
+.. only:: rest or csharp or vbnet or java or nodejs or php or python or ruby
+
+  .. code-block:: http
+
+    POST /v1/directories HTTP/1.1
+    Authorization: Basic NVdYR...
+    Content-Type: application/json; charset=utf-8
+    Host: api.stormpath.com
+
+    {
+      "name":"Amazon",
+      "description":"A generic OAuth directory for Amazon",
+      "provider":{
+        "providerId":"amazon",
+        "clientId":"amzn1.application-oa2-client.99daa08example302d144a8ea",
+        "clientSecret":"93342d47bbecbexample0655228fced82"
+        "authorizationEndpoint":"https://www.amazon.com/ap/oa",
+        "tokenEndpoint":"https://api.amazon.com/auth/o2/token",
+        "resourceEndpoint":"https://api.amazon.com/user/profile",
+        "idField":"user_id",
+        "accessTokenType":"bearer",
+        "scope":[
+          "profile"
+        ]
+      }
+    }
+
+.. todo::
+
+  .. only:: csharp or vbnet
+
+    (dotnet.todo)
+
+    .. only:: csharp
+
+    .. only:: vbnet
+
+  .. only:: java
+
+    (java.todo)
+
+  .. only:: nodejs
+
+    (node.todo)
+
+  .. only:: php
+
+    (php.todo)
+
+  .. only:: python
+
+    (python.todo)
+
+
+Step 2: Map the Directory as an Account Store for Your Application
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Creating an Account Store Mapping between your new Google Directory and your Stormpath Application can be done as described in :ref:`create-asm`.
+
+Step 3: Access an Account with the Client API
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+To access or create an Account in your new Directory you use the Client API's ``/authorize`` endpoint. Full documentation of this endpoint can be found in `the Client API Product Guide <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__.
+
+At a high level, the process works as follows:
+
+#. The user clicks on a “Login with ______” link pointing at your application's ``/authorize`` endpoint
+#. Stormpath handles the login and redirects the user back to your app with a Stormpath Token JWT response
+
+You can then, for example, pass that Stormpath token to the ``/oauth/token`` endpoint and receive back OAuth 2.0 access and refresh tokens as described in `the Client API Guide <https://docs.stormpath.com/client-api/product-guide/latest/authentication.html#oauth-2-0-login>`__.
+
+.. _generic-oauth-config:
+
+Example Configurations
+""""""""""""""""""""""
+
+This section contains examples of Providers configured for 5 common OAuth login providers, though we have removed irrelevant values (e.g. ``createdAt``), which means that you can copy this JSON and simply fill-in your own values where necessary.
+
+*ID Field*
+
+ID Field must refer to the location of the user's ID as found within the user object returned from the Resource Endpoint. If not specified, the default value for this field is simply ``id``.
+
+Some providers return the ID field nested inside other objects. In this case, you must indicate the nesting using a period. For example, Imgur returns the ``id`` within a ``data`` object. This means that the value of ``idField`` should be ``data.id``.
+
+*Provider ID*
+
+The provider ID can contain any string value that you like, but your Application cannot have more than one Directory with any given ``providerId`` value.
+
+.. _config-amazon:
+
+Amazon
+++++++++
+
+.. code-block:: json
+
+  {
+    "accessTokenType": "bearer",
+    "authorizationEndpoint": "https://www.amazon.com/ap/oa",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "idField": "user_id",
+    "providerId": "amazon",
+    "providerType": "oauth2",
+    "resourceEndpoint": "https://api.amazon.com/user/profile",
+    "scope": [
+      "profile"
+    ],
+    "tokenEndpoint": "https://api.amazon.com/auth/o2/token"
+  }
+
+.. note::
+
+  In order for the flow to succeed, you must configure Stormpath to request the ``profile`` scope.
+
+Imgur
+++++++++
+
+.. code-block:: json
+
+  {
+    "accessTokenType": "bearer",
+    "authorizationEndpoint": "https://api.imgur.com/oauth2/authorize",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "idField": "data.id",
+    "providerId": "imgur",
+    "providerType": "oauth2",
+    "resourceEndpoint": "https://api.imgur.com/3/account/me",
+    "scope": [],
+    "tokenEndpoint": "https://api.imgur.com/oauth2/token"
+  }
+
+Instagram
+++++++++++
+
+.. code-block:: json
+
+  {
+    "accessTokenType": "access_token",
+    "authorizationEndpoint": "https://api.instagram.com/oauth/authorize",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "idField": "data.id",
+    "providerId": "instagram",
+    "providerType": "oauth2",
+    "resourceEndpoint": "https://api.instagram.com/v1/users/self",
+    "scope": [],
+    "tokenEndpoint": "https://api.instagram.com/oauth/access_token"
+  }
+
+StackExchange
+++++++++++++++++
+
+.. code-block:: json
+
+  {
+    "accessTokenType": "access_token",
+    "authorizationEndpoint": "https://stackexchange.com/oauth",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "idField": "items[0].user_id",
+    "providerId": "stackexchange",
+    "providerType": "oauth2",
+    "resourceEndpoint": "https://api.stackexchange.com/2.2/me?order=desc&sort=reputation&site=stackapps&key=YOUR_APP_KEY",
+    "scope": [
+      "no_expiry"
+    ],
+    "tokenEndpoint": "https://stackexchange.com/oauth/access_token"
+  }
+
+.. note::
+
+  In order for the flow to succeed, you must configure Stormpath to request the ``no_expiry`` scope.
+
+  Also the Resource Endpoint requires you to include a ``key`` that is found on your StackApp's configuration page.
+
+Twitch
+++++++++
+
+.. code-block:: json
+
+  {
+    "accessTokenType": "oauth_token",
+    "authorizationEndpoint": "https://api.twitch.tv/kraken/oauth2/authorize",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "idField": "_id",
+    "providerId": "twitch",
+    "providerType": "oauth2",
+    "resourceEndpoint": "https://api.twitch.tv/kraken/user",
+    "scope": [],
+    "tokenEndpoint": "https://api.twitch.tv/kraken/oauth2/token"
+  }
 
 .. _ldap-dir-authn:
 

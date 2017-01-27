@@ -3168,18 +3168,18 @@
 
     * - ``providerId``
       - String
-      - ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github``, ``linkedin``, or ``twitter`` (for Social Directories); ``saml`` (for SAML Directories)
-      - Specifies the type of Provider for the associated Directory.
+      - See description
+      - Specifies the type of Provider for the associated Directory. This is an arbitrary value in the case of Generic OAuth Directories. Otherwise: ``stormpath`` (for a Cloud Directory); ``ad`` or ``ldap`` (for LDAP Directories); ``facebook``, ``google``, ``github``, ``linkedin``, or ``twitter`` (for Social Directories); ``saml`` (for SAML Directories).
 
     * - ``providerType``
       - String
       - (See description)
-      - For generic providers, the value will be ``oauth``. For all others, the value will match the ``providerId``.
+      - For Generic OAuth Directories, the value will be ``oauth``. For all others, the value will match the ``providerId``.
 
     * - ``scope``
       - Array
       - N/A
-      - (Social only) An array of the scopes that are configured for this Social Provider. These are the scopes that will be requested as part of the OAuth 2.0 token retrieval.
+      - (Social or Generic OAuth only) An array of the scopes that are configured for this Social Provider. These are the scopes that will be requested as part of the OAuth 2.0 token retrieval.
 
     * - ``userInfoMappingRules``
       - Link
@@ -3189,17 +3189,42 @@
     * - ``clientId``
       - String
       - N/A
-      - (Social only) The OAuth 2.0 Client ID for this Provider.
+      - (Social or Generic OAuth only) The OAuth 2.0 Client ID for this Provider.
 
     * - ``clientSecret``
       - String
       - N/A
-      - (Social only) The OAuth 2.0 Client Secret for this Provider.
+      - (Social or Generic OAuth only) The OAuth 2.0 Client Secret for this Provider.
+
+    * - ``accessTokenType``
+      - String
+      - ``bearer``, ``access_token``, ``oauth_token``
+      - The format in which the OAuth Token is passed to the provider.
+
+    * - ``authorizationEndpoint``
+      - String
+      - Valid URL
+      - (Generic OAuth only) The endpoint used to retrieve the Authorization Code.
+
+    * - ``idField``
+      - String
+      - N/A
+      - (Generic OAuth only) The field in the provider's user object that contains the user ID.
+
+    * - ``resourceEndpoint``
+      - String
+      - Valid URL
+      - (Generic OAuth only) The endpoint used to retrieve the User data from the provider.
+
+    * - ``tokenEndpoint``
+      - String
+      - Valid URL
+      - (Generic OAuth only) The endpoint used to exchange the Authorization Code for an OAuth token.
 
     * - ``redirectURL``
       - String
       - A valid URL
-      - (Social only) The URL to redirect to after the user has authenticated. Currently only used for the Google providers.
+      - (Google only) The URL to redirect to after the user has authenticated.
 
     * - ``agent``
       - Link
