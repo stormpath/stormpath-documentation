@@ -1401,7 +1401,7 @@ In general, the social login process works as follows:
 
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
-2. The user authenticates and i asked by the Provider to accept the permissions required by your app.
+2. The user authenticates and is asked by the Provider to accept the permissions required by your app.
 
 3. Once the user accepts the permissions, the Provider sends back the user's information
 
