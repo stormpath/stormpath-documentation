@@ -1562,7 +1562,7 @@ Before you integrate Google Login with Stormpath, you must complete the followin
 
 - Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 .. note::
 
@@ -1674,7 +1674,7 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 
 - Add your application's private and public root URLs
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
@@ -1769,7 +1769,7 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 
 - Create an application in the `GitHub Developer Site <https://developer.github.com/>`_
 
-- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
@@ -1867,7 +1867,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 
 - Create an application in the `LinkedIn Developer Site <https://www.linkedin.com/secure/developer?newapp=>`_
 
-- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 - Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
 
@@ -1966,7 +1966,7 @@ Before you integrate Twitter Login with Stormpath, you must complete the followi
 
 - Retrieve your OAuth credentials (App ID and App Secret)
 
-- Add your application's "Callback URL", which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's "Callback URL", which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 For more information, please see the `Twitter documentation <https://dev.twitter.com/oauth/overview/application-owner-access-tokens>`_.
 
@@ -2076,7 +2076,7 @@ Before you integrate your OAuth provider with Stormpath, you must complete the f
 
 - Enable OAuth 2.0 login with that provider
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://endless-winter.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://endless-winter.apps.stormpath.io/authorize/callback``).
 
 You will also need to gather the following information from the provider:
 
@@ -2212,7 +2212,7 @@ Amazon
 
 .. note::
 
-  In order for the flow to succeed, you must configure Stormpath to request the ``profile`` scope.
+  In order for the flow to succeed, Amazon requires that you  specify a scope. This example only shows one of the possible scopes. For more information see the `Amazon Documentation <https://developer.amazon.com/public/apis/engage/login-with-amazon/docs/customer_profile.html>`__.
 
 Imgur
 ++++++++
@@ -2272,7 +2272,7 @@ StackExchange
 
 .. note::
 
-  In order for the flow to succeed, you must configure Stormpath to request the ``no_expiry`` scope.
+  In order for the flow to succeed, you must configure Stormpath to request a scope. This example uses the ``no_expiry`` scope. For more information, see the `StackExchange documentation <https://api.stackexchange.com/docs/authentication#scope>`__.
 
   Also the Resource Endpoint requires you to include a ``key`` that is found on your StackApp's configuration page.
 
