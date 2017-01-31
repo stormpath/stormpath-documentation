@@ -1033,7 +1033,7 @@ Validating the Token Locally
 
   .. only:: rest
 
-    This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
+    This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of our `Integration Guides <https://docs.stormpath.com/home/>`_.
 
   .. only:: csharp or vbnet
 
