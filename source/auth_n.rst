@@ -1556,7 +1556,7 @@ Social Login Providers
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
-- Create an application in the `Google Developer Console <https://consoleelopers.google.com/start>`_
+- Create an application in the `Google Developer Console <https://console.developers.google.com/start>`_
 
 - Enable Google Login for your Google application
 
