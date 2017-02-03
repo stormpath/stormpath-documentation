@@ -2032,8 +2032,8 @@ Creating this Directory requires that you provide information from Twitter as a 
     "description":"A Twitter directory",
     "provider":{
       "providerId":"twitter",
-      "clientId":"OybhZeT6uncdBX3KVmIExample",
-      "clientSecret":"d2hzXTBZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
+      "clientId":"OybhZelDAuncdBX3KVmIExample",
+      "clientSecret":"d2hzXHLZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
     }
   }
 
@@ -2115,7 +2115,7 @@ Creating this Directory requires that you provide information about your Provide
       "provider":{
         "providerId":"amazon",
         "clientId":"amzn1.application-oa2-client.99daa08example302d144a8ea",
-        "clientSecret":"93342d47bbecbexample0655228fced82"
+        "clientSecret":"93342d47bbecbexample0655228fced82",
         "authorizationEndpoint":"https://www.amazon.com/ap/oa",
         "tokenEndpoint":"https://api.amazon.com/auth/o2/token",
         "resourceEndpoint":"https://api.amazon.com/user/profile",
