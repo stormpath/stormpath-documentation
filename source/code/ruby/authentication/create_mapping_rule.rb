@@ -1,10 +1,7 @@
-mappings = Stormpath::Provider::SamlMappingRules.new(
-  items: [
-    {
-      name: 'uid',
-      account_attributes: ['username']
-    }
-  ]
-)
+rule = {
+  'name' => 'uid',
+  'accountAttributes' => ['username']
+}
 
-response = directory.create_attribute_mappings(mappings)
+directory.attribute_statement_mapping_rules.items = [rule]
+directory.attribute_statement_mapping_rules.save
