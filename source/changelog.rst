@@ -20,6 +20,13 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2017-01-27
+  ==========
+
+  - **New:** Information about creating `Social Directories for Twitter <authn-twitter>`.
+  - **New:** Also added information about :ref:`Generic OAuth 2.0 Directories <authn-generic-oauth>`.
+  - **Modified:** Updated :ref:`Provider resource <ref-provider>` in Reference chapter.
+
   2017-01-18
   ==========
 

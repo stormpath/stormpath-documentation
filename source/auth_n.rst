@@ -1556,13 +1556,13 @@ Social Login Providers
 
 Before you integrate Google Login with Stormpath, you must complete the following steps:
 
-- Create an application in the `Google Developer Console <https://consoleelopers.google.com/start>`_
+- Create an application in the `Google Developer Console <https://console.developers.google.com/start>`_
 
 - Enable Google Login for your Google application
 
 - Retrieve the OAuth Credentials (Client ID and Secret) for your Google application
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 .. note::
 
@@ -1674,7 +1674,7 @@ Before you integrate Facebook Login with Stormpath, you must complete the follow
 
 - Add your application's private and public root URLs
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 For more information, please see the `Facebook documentation <https://developers.facebook.com/docs/apps/register>`_.
 
@@ -1769,7 +1769,7 @@ Before you integrate GitHub Login with Stormpath, you must complete the followin
 
 - Create an application in the `GitHub Developer Site <https://developer.github.com/>`_
 
-- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Retrieve OAuth Credentials (Client ID and Secret) for your GitHub application. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 
 - Add your application's redirect URL, which is the URL the user will be returned to after successful authentication.
@@ -1867,7 +1867,7 @@ Before you integrate LinkedIn Login with Stormpath, you must complete the follow
 
 - Create an application in the `LinkedIn Developer Site <https://www.linkedin.com/secure/developer?newapp=>`_
 
-- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URLs, which are the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 - Retrieve OAuth Credentials (Client ID and Secret) for your LinkedIn application
 
@@ -1966,7 +1966,7 @@ Before you integrate Twitter Login with Stormpath, you must complete the followi
 
 - Retrieve your OAuth credentials (App ID and App Secret)
 
-- Add your application's "Callback URL", which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
+- Add your application's "Callback URL", which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://cold-diver.apps.stormpath.io/authorize/callback``).
 
 For more information, please see the `Twitter documentation <https://dev.twitter.com/oauth/overview/application-owner-access-tokens>`_.
 
@@ -2032,8 +2032,8 @@ Creating this Directory requires that you provide information from Twitter as a 
     "description":"A Twitter directory",
     "provider":{
       "providerId":"twitter",
-      "clientId":"OybhZeT6uncdBX3KVmIExample",
-      "clientSecret":"d2hzXTBZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
+      "clientId":"OybhZelDAuncdBX3KVmIExample",
+      "clientSecret":"d2hzXHLZsJs4FdDX0l5Queen8Ww21v9L2T1YrOJAE2lLfExample"
     }
   }
 
@@ -2076,7 +2076,7 @@ Before you integrate your OAuth provider with Stormpath, you must complete the f
 
 - Enable OAuth 2.0 login with that provider
 
-- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the Client API, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://endless-winter.apps.stormpath.io/authorize/callback``).
+- Add your application's redirect URL, which is the URL the user will be returned to after successful authentication. If you are using the `Client API <https://docs.stormpath.com/client-api/product-guide/latest/social_login.html>`__, then this will be your Application's ``/authorize`` endpoint (e.g. ``https://endless-winter.apps.stormpath.io/authorize/callback``).
 
 You will also need to gather the following information from the provider:
 
@@ -2115,7 +2115,7 @@ Creating this Directory requires that you provide information about your Provide
       "provider":{
         "providerId":"amazon",
         "clientId":"amzn1.application-oa2-client.99daa08example302d144a8ea",
-        "clientSecret":"93342d47bbecbexample0655228fced82"
+        "clientSecret":"93342d47bbecbexample0655228fced82",
         "authorizationEndpoint":"https://www.amazon.com/ap/oa",
         "tokenEndpoint":"https://api.amazon.com/auth/o2/token",
         "resourceEndpoint":"https://api.amazon.com/user/profile",
@@ -2212,7 +2212,7 @@ Amazon
 
 .. note::
 
-  In order for the flow to succeed, you must configure Stormpath to request the ``profile`` scope.
+  In order for the flow to succeed, Amazon requires that you  specify a scope. This example only shows one of the possible scopes. For more information see the `Amazon Documentation <https://developer.amazon.com/public/apis/engage/login-with-amazon/docs/customer_profile.html>`__.
 
 Imgur
 ++++++++
@@ -2272,7 +2272,7 @@ StackExchange
 
 .. note::
 
-  In order for the flow to succeed, you must configure Stormpath to request the ``no_expiry`` scope.
+  In order for the flow to succeed, you must configure Stormpath to request a scope. This example uses the ``no_expiry`` scope. For more information, see the `StackExchange documentation <https://api.stackexchange.com/docs/authentication#scope>`__.
 
   Also the Resource Endpoint requires you to include a ``key`` that is found on your StackApp's configuration page.
 
@@ -2532,24 +2532,214 @@ The log-in process will now proceed as it would for :ref:`any other kind of Dire
   :local:
   :depth: 1
 
-SAML is an XML-based standard for exchanging authentication and authorization data between security domains. Stormpath enables you to allow customers to log-in by authenticating with an external SAML Identity Provider. Stormpath supports both the Service Provider initiated flow and the Identity Provider initiated flow.
+SAML is an XML-based standard for exchanging authentication and authorization data between security domains. The security domains are the Service Provider and the Identity Provider. The **Service Provider** is the service that the user is trying to access, but access requires authentication. This authentication is done with the **Identity Provider**, which is the canonical source of user information.
 
-SAML Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath SAML Directory if they are mirrored in from the external SAML IdP. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
-
-If you'd like a high-level description of Stormpath's SAML support, see :ref:`Stormpath as a Service Provider <saml-overview>`.
-
-If you want a step-by-step guide to configuring Stormpath to work with Identity Providers like Salesforce, OneLogin and Okta, as well as with your ADFS or Azure AD deployment, see the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__.
-
-If you'd like to know about how to configure SAML using just the REST API, please see :ref:`Configuring SAML via REST <saml-configuration-rest>`.
+Stormpath is able to function as either end of the SAML authentication. This means that your Stormpath-powered application could either be the Identity Provider, and provide authentication for a third-party application such as Zendesk, or it could be the Service Provider, and require authentication with a third-party Identity Provider like Okta.
 
 If you'd like to understand the steps involved in a SAML login, see the :ref:`SAML Login Flow section <saml-flow>`.
 
-.. _saml-overview:
+If you'd like to know more about using Stormpath as an Identity Provider, see :ref:`saml-idp`.
 
-4.5.1. Stormpath as a Service Provider
---------------------------------------
+If you'd like to know more about using Stormpath as a Service Provider, see :ref:`saml-sp`.
 
-As mentioned above, Stormpath supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**.
+If you want a step-by-step guide to configuring Stormpath to work as a Service Provider with Identity Providers like Salesforce, OneLogin and Okta, as well as with your ADFS or Azure AD deployment, see the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__.
+
+.. note::
+
+  Configuring Stormpath as an Identity Provider is currently not supported in the Admin Console.
+
+If you'd like to know about how to configure SAML using just the REST API, please see either:
+
+- :ref:`Configuring Stormpath as an Identity Provider via REST <saml-idp-configuration-rest>`
+- :ref:`Configuring Stormpath as a Service Provider via REST <saml-sp-configuration-rest>`
+
+.. _saml-idp:
+
+4.5.1. Stormpath as the Identity Provider
+-----------------------------------------
+
+In this case, Stormpath is serving as the IdP, which is the repository for user data. A request is first made to the Service Provider, who redirects to Stormpath. Authentication is done against Stormpath, and then the user is passed back to the Service Provider in an authenticated state.
+
+For example:
+
+#. A user tries to access Zendesk: ``https://samlexample.zendesk.com/``
+#. The user is redirected to your Stormpath ID Site page: ``https://iron-troop.id.stormpath.io/#/``
+#. The user authenticates with Stormpath
+#. On successful authentication, the user is redirected back to Zendesk
+
+The steps below will use Zendesk as an example, although any Service Provider that supports SAML should be compatible.
+
+.. note::
+
+  Stormpath as an Identity Provider (IdP) supports only the Service Provider initiated flow.
+
+.. _saml-idp-configuration-rest:
+
+Configuring Stormpath as an Identity Provider via REST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Here you will find the steps that are required to configure Stormpath as a SAML Identity Provider using only the REST API.
+
+.. note::
+
+  Currently Stormpath as an Identity Provider can only be configured via REST.
+
+Step 1: Gather IdP Data from Stormpath
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+The Stormpath IdP data can be found in your Application's SAML Policy, inside the ``identityProvider`` object:
+
+.. code-block:: http
+
+  GET /v1/samlIdentityProviders/$SAML_IDP_ID HTTP/1.1
+  Host: api.stormpath.com
+  Authorization: Basic MlpG...
+  Content-Type: application/xml
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7",
+    "createdAt": "2017-01-31T23:28:39.595Z",
+    "modifiedAt": "2017-01-31T23:28:39.595Z",
+    "status": "ENABLED",
+    "ssoLoginEndpoint": {
+      "href": "https://wise-galaxy.apps.stormpath.io/saml/sso"
+    },
+    "signatureAlgorithm": "RSA-SHA256",
+    "shaFingerprint": "412f20963b65114d7301350274b66b935c70e702",
+    "x509SigningCert": {
+      "href": "https://api.stormpath.com/v1/x509certificates/7l4YOyYSiX0Noaas18Oifd"
+    },
+    "metadata": {
+      "href": "https://api.stormpath.com/v1/samlIdentityProviderMetadatas/7l4yLLddka8cIYDXRB4zbB"
+    },
+    "attributeStatementMappingRules": {
+      "href": "https://api.stormpath.com/v1/attributeStatementMappingRules/7l4phBjC8AtDigHPUzc3Xx"
+    },
+    "registeredSamlServiceProviders": {
+      "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7/registeredSamlServiceProviders"
+    },
+    "samlServiceProviderRegistrations": {
+      "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7/samlServiceProviderRegistrations"
+    }
+  }
+
+Your Service Provider will require some of the information in this resource:
+
+- **SSO Login Endpoint:** The URL at the IdP to which SAML authentication requests should be sent.
+- **Signature Algorithm:** The algorithm used to encode the x.509 certificate.
+- **SHA Fingerprint:** A short identifier for the x.509 certificate
+- **x509 Signing Certificate:** This certificate is used to sign the requests sent by your Service Provider to Stormpath.
+
+Some or all of this information needs to be entered into your Service Provider's SAML configuration.
+
+Step 2: Configure your Service Provider inside Stormpath
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+You will need the following information from your SAML Service Provider:
+
+- **Assertion Consumer Service (ACS) URL:** The Service Provider endpoint to which SAML responses are sent.
+- **Entity ID:** The unique identifier for the Service Provider.
+- **Name ID Format:** The unique identifier used by the Service Provider for its user entities.
+
+.. note::
+
+  Be especially careful with these values. Even a minor change can cause an error. For example, adding a slash at the end of the Zendesk ``entityId`` like so: ``https://YourSubdomain.zendesk.com/`` will result in an error. Removing the final slash will fix the error.
+
+The Name ID Format can have three possible values in Stormpath:
+
+- ``EMAIL``
+- ``PERSISTENT``
+- ``TRANSIENT``
+
+Your Service Provider's documentation likely has the Name ID Format as a URN, in which case the end of that URN will tell you which value to use.
+
+For example, Zendesk's SAML metadata specifies this: ``<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>``, which means that for a Zendesk configuration in Stormpath you would give ``nameIdFormat`` as ``EMAIL``.
+
+This information is passed to Stormpath to create a new Registered SAML Service Provider:
+
+.. code-block:: http
+
+  POST /v1/registeredSamlServiceProviders HTTP/1.1
+  Authorization: Basic NVdY...
+  Content-Type: application/json; charset=utf-8
+  Host: api.stormpath.com
+
+  {
+    "name":"Zendesk Example",
+    "assertionConsumerServiceURL":"https://jakubsamltest.zendesk.com/access/saml",
+    "entityId":"https://jakubsamltest.zendesk.com",
+    "nameIdFormat":"EMAIL"
+  }
+
+On success, you will get back the SAML Service Provider resource:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/registeredSamlServiceProviders/2wXFkagK2s52nJKFtCZoa4",
+    "createdAt": "2017-02-01T22:32:56.523Z",
+    "modifiedAt": "2017-02-01T22:32:56.523Z",
+    "name": "Zendesk Example",
+    "description": "A description",
+    "assertionConsumerServiceUrl": "https://jakubsamltest.zendesk.com/access/saml",
+    "nameIdFormat": "EMAIL",
+    "entityId": "https://jakubsamltest.zendesk.com/",
+    "encodedX509Certificate": null,
+    "tenant": {
+      "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+    }
+  }
+
+Step 3: Map the Service Provider to an Identity Provider
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+As the final step in your Stormpath configuration, you will need to map the Service Provider resource that you just created to an existing SAML Identity Provider. Specifically, you want to map it to the SAML Identity Provider resource that you retrieved in Step 1.
+
+.. code-block:: http
+
+  POST /v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7/samlServiceProviderRegistrations HTTP/1.1
+  Authorization: Basic NVdY...
+  Content-Type: application/json; charset=utf-8
+  Host: api.stormpath.com
+
+  {
+    "serviceProvider": {
+      "href": "https://api.stormpath.com/v1/registeredSamlServiceProviders/2wXFkagK2s52nJKFtCZoa4"
+    }
+  }
+
+On success you will get back the mapping object:
+
+.. code-block:: json
+
+  {
+    "href": "https://api.stormpath.com/v1/samlServiceProviderRegistrations/uwpZw2A23ARPvxGSuBYUO",
+    "createdAt": "2017-02-01T22:38:14.359Z",
+    "modifiedAt": "2017-02-01T22:38:14.359Z",
+    "status": "ENABLED",
+    "defaultRelayState": null,
+    "serviceProvider": {
+      "href": "https://api.stormpath.com/v1/registeredSamlServiceProviders/2wXFkagK2s52nJKFtCZoa4"
+    },
+    "identityProvider": {
+      "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7"
+    }
+  }
+
+At this point, all you need to do is visit your Service Provider. You should be directed to the Stormpath ID Site, and upon logging-in, you will arrive back at your Service Provider in an authenticated state.
+
+.. _saml-sp:
+
+4.5.2. Stormpath as the Service Provider
+-----------------------------------------
+
+Stormpath as a Service Provider supports both Service Provider (SP) initiated and Identity Provider (IdP) initiated SAML authentication.  In SAML terminology, the user is the **User Agent**, your application (along with Stormpath) is the **Service Provider**, and the third-party SAML authentication site is the **Identity Provider** or **IdP**.
+
+.. note::
+
+  When Stormpath is functioning as the Service Provider, SAML Directories are a kind of mirrored Directory, in that they are used to mirror user information found in an external database. This means that entities like Groups can only exist in a your Stormpath SAML Directory if they are mirrored in from the external SAML IdP. For more information, please see the :ref:`Account Management chapter <about-mirror-dir>`.
 
 Identity Provider Initiated SAML Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2582,61 +2772,61 @@ For a more detailed step-by-step account of SAML login, see :ref:`below <saml-fl
 
 .. _saml-configuration:
 
-4.5.2. Configuring SAML
------------------------
+Configuring Stormpath as the Service Provider
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SAML configuration instructions can be found in the `SAML Appendix <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__ of the Stormpath Admin Console Guide.
 
 .. _salesforce:
 
 Salesforce
-^^^^^^^^^^
+"""""""""""
 
 Instructions for configuring Salesforce SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#salesforce>`__.
 
 .. _onelogin:
 
 OneLogin
-^^^^^^^^
+"""""""""""
 
 Instructions for configuring OneLogin SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#onelogin>`__.
 
 .. _okta:
 
 Okta
-^^^^
+"""""""""""
 
 Instructions for configuring Okta SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#okta>`__.
 
 .. _ping:
 
 Ping
-^^^^^^^^^^
+"""""""""""
 
 Instructions for configuring Ping SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#ping>`__.
 
 .. _adfs:
 
 Active Directory Federation Services
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""
 
 Instructions for configuring ADFS SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#active-directory-federation-services>`__.
 
 .. _azure:
 
 Azure Active Directory
-^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""
 
 Instructions for configuring ADFS SAML can be found in the `Stormpath Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html#azure-active-directory>`__.
 
-.. _saml-configuration-rest:
+.. _saml-sp-configuration-rest:
 
-4.5.3. Configuring SAML via REST
---------------------------------
+Configuring Stormpath as a Service Provider via REST
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Here you will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
+Here we will explain to you the steps that are required to configure Stormpath as a SAML Service Provider using only the REST API.
 
-It is recommend that you configure SAML using the Stormpath Admin console, as explained in the above :ref:`IdP-specific configuration instructions <saml-configuration>`. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires.
+It is recommend that you configure SAML using the Stormpath Admin console, as explained in the `Client API documentation <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__. However, understanding the REST underpinnings of those instructions will allow you to automate some or all of the configuration process, if that is something that your application requires.
 
 Also, currently the IdP-initiated flow can only be configured via REST, and not yet via the Stormpath Admin Console.
 
@@ -2646,8 +2836,9 @@ SAML configuration data is stored in the Directory's :ref:`Provider resource <re
 
   The steps here are nearly identical regardless of whether you are configuring Service Provider initiated or IdP initiated authentication. The only difference is in :ref:`Step 5a <saml-restconfig-5a>`.
 
+
 Step 1: Gather IDP Data
-^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 You will need the following information from your IdP:
 
@@ -2657,7 +2848,7 @@ You will need the following information from your IdP:
 - **Signing Algorithm** - You will need the name of the signing algorithm that your IdP uses. It will be either "RSA-SHA256" or "RSA-SHA1".
 
 Step 2: Configure Your SAML Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Input the data you gathered in Step 1 above into your Directory's Provider resource, and then pass that along as part of the Directory creation request:
 
@@ -2734,7 +2925,7 @@ Input the data you gathered in Step 1 above into your Directory's Provider resou
 .. _configure-sp-in-idp:
 
 Step 3: Retrieve Your Service Provider Metadata
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Next you will have to configure your Stormpath-powered application as a Service Provider in your Identity Provider. This means that you will need to retrieve the correct metadata from Stormpath.
 
@@ -2957,12 +3148,12 @@ You will also need two other values, which will always be the same:
 - **SAML Response Binding:** Set to ``HTTP-Post``.
 
 Step 4: Configure Your Service Provider in Your Identity Provider
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Log-in to your Identity Provider (Salesforce, OneLogin, etc) and enter the information you retrieved in the previous step into the relevant application configuration fields. The specific steps to follow here will depend entirely on what Identity Provider you use, and for more information you should consult your Identity Provider's SAML documentation.
 
 Step 5: Configure Your Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Your Stormpath Application Resource has two parts that are relevant to SAML:
 
@@ -3094,7 +3285,8 @@ You should create any URIs here that you would like included as authorized callb
 .. _saml-restconfig-5a:
 
 Step 5a: Generate defaultRelayState (IdP-initiated Authentication Only)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 .. only:: not nodejs
 
   To configure your IdP for IdP-initiated authentication, you will need to get a ``defaultRelayState`` JWT:
@@ -3282,14 +3474,14 @@ A request including these optional properties looks like this:
       :language: ruby
 
 Step 6: Add the SAML Directory as an Account Store
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Now the last thing you have to do is map the new Directory to your Application with an Account Store Mapping as described in :ref:`create-asm`.
 
 .. _saml-mapping:
 
 Step 7: Configure SAML Attribute Mapping (Optional)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 The Identity Provider's SAML response contains assertions about the user's identity, which Stormpath can use to create and populate a new Account resource.
 
@@ -3312,7 +3504,7 @@ The Attribute Assertions (``<saml:AttributeStatement>``) are brought into Stormp
 SAML Attribute mapping is defined in an **attributeStatementMappingRules** object found inside the Directory's Provider object, or directly: ``/v1/attributeStatementMappingRules/$RULES_ID``.
 
 Mapping Rules
-"""""""""""""
+++++++++++++++++
 
 The rules have three different components:
 
@@ -3493,23 +3685,46 @@ The rules have three different components:
       ]
     }
 
-Now that we've configured everything, you can take a look at what the actual SAML authentication flow looks like.
 
 .. _saml-flow:
 
 4.5.4. The Stormpath SAML Flow
 ------------------------------
 
-.. todo::
+There are three kinds of SAML flows that are possible:
 
-  This is probably most irrelevant to the SDKs.
+1. Service Provider-initiated, with Stormpath as the Identity Provider
+2. Service Provider-initiated, with Stormpath as the Service Provider
+3. Identity Provider-initiated, with Stormpath as the Service Provider
+
+With Stormpath as the Identity Provider
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The flow that has Stormpath as your Identity Provider is more simplified than the other two because it makes use of the new Client API endpoints.
+
+
+.. figure:: images/auth_n/SamlFlow_SaSIdP.png
+    :align: center
+    :scale: 100%
+    :alt: IdP Initiated SAML Flow
+
+    *Stormpath as the SAML IdP*
+
+.. note::
+
+  Depending on the Service Provider, the redirect may not happen automatically. The user may need to click on a "Login with x" link before they are redirected to the Stormpath Client API.
+
+Since Stormpath handles the majority of these steps automatically, no further information is required to get this process working.
+
+With Stormpath as the Service Provider
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The two SAML authentication flows that Stormpath supports differ primarily in their starting points, and so :ref:`the Service Provider (SP) initiated flow <saml-sp-init-flow>` is really just the Identity Provider (IdP) initiated flow with a different starting point.
 
 .. _saml-idp-init-flow:
 
 The Identity Provider Initiated Flow
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""
 
 In the Identity Provider Initiated flow, the user starts at the Identity Provider (IdP). After logging-in to the IdP, the user selects the Stormpath-enabled web application from within the IdP's site, and is redirected to the application in an authenticated state.
 
@@ -3539,12 +3754,12 @@ In the Identity Provider Initiated flow, the user starts at the Identity Provide
   sp->ua: Respond with requested resource
 
 Step 1: Identity Provider Login
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++++++++++++
 
 First the user will have to authenticate with the Identity Provider. They will then be provided with a list of configured applications that they are able to log in to. If they choose to log in to your Stormpath-enabled application, this will result in the IdP redirecting them to Stormpath.
 
 Step 2: Redirect to Assertion Consumer Service URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``) that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already).
 
@@ -3553,7 +3768,7 @@ The user is redirected to the Assertion Consumer Service URL (``/saml/sso/post``
   Account matching is done on the basis of the returned email address.
 
 Step 3: Stormpath Response with JWT
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++++++++++
 
 The user will now be redirected by Stormpath back to your Application along with a JSON Web Token.
 
@@ -3639,7 +3854,7 @@ At this point your user is authenticated and able to use your app.
 .. _saml-sp-init-flow:
 
 The Service Provider Initiated Flow
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""
 
 In the Service Provider Initiated flow, the user starts at a login page (either ID Site or one inside a Stormpath-powered application), then is redirected to the Identity Provider. After authenticating with the Identity Provider, the user is returned to the application in an authenticate state.
 
@@ -3675,7 +3890,7 @@ In the Service Provider Initiated flow, the user starts at a login page (either 
 
 
 Step 1: Generate a JWT
-^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""
 
 The user agent will request to login with SAML. You will need to generate a JWT using an approved JWT library.
 
@@ -3690,7 +3905,7 @@ Below are language specific JWT libraries that Stormpath has sanity tested with 
 - Node JWT - https://github.com/jwtk/njwt
 
 SAML Authentication JWT
-"""""""""""""""""""""""
++++++++++++++++++++++++
 
 .. note::
 
@@ -3757,7 +3972,7 @@ The `claims <https://tools.ietf.org/html/rfc7519#section-4.1>`_ for the JWT body
     - The string representing the ``nameKey`` for an Organization that is an Account Store for your application. This is used for multitenant applications that use SAML.
 
 Step 2: Initiate the flow
-^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""
 
 Once the JWT is generated by your server, you initiate the SAML flow by sending a GET to the value found in the ``ssoInitiationEndpoint``, which is ``/v1/applications/$APPLICATION_ID/saml/sso/idpRedirect`` along with the JWT you just generated:
 
@@ -3768,7 +3983,7 @@ Once the JWT is generated by your server, you initiate the SAML flow by sending 
   Content-Type: application/json;charset=UTF-8
 
 Step 3: Redirection
-^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""
 
 This GET will result in a redirection to the IdP Login URL that you specified during configuration:
 
@@ -3778,12 +3993,12 @@ This GET will result in a redirection to the IdP Login URL that you specified du
   Location: https://idp.whatever.com/saml2/sso/login?SAMLRequest=fZFfa8IwFMXfBb9DyXvaJtZ1BqsURRC2Mabbw95ivc5Am3TJrXPffmmLY3%2F...
 
 Step 4: Identity Provider Login
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""
 
 At this point the IdP will render their login page, and the user will authenticate.
 
 Step 5: Redirect to Assertion Consumer Service URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 After authentication the user is redirected back to the Assertion Consumer Service URL that is found in the Service Provider Metadata. At this point, an Account will either be retrieved (if it already exists) or created (if it doesn't exist already).
 
@@ -3792,7 +4007,7 @@ After authentication the user is redirected back to the Assertion Consumer Servi
   Account matching is done on the basis of the returned email address.
 
 Step 6: Stormpath Response with JWT
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""
 
 The user will now be redirected by Stormpath back to your Application along with a JSON Web Token.
 
