@@ -2381,18 +2381,8 @@ Step 1: Create an LDAP Directory
 
 .. only:: ruby
 
-  .. warning::
-
-    This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
-
-    In the meantime, please use the Stormpath Admin Console. Please see `the Agents section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/agents.html#creating-an-ldap-directory>`_.
-
-  .. todo::
-
-    Add LDAP directory creation Ruby example (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
-      :language: ruby
+  .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
+    :language: ruby
 
 .. only:: rest or vbnet or csharp or php
 
