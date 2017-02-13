@@ -1,6 +1,6 @@
 rule = {
-  'name' => 'uid',
-  'accountAttributes' => ['username']
+  name: 'uid',
+  account_attributes: ['username']
 }
 
 directory.attribute_statement_mapping_rules.items = [rule]
