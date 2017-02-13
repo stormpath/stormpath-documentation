@@ -317,15 +317,12 @@ How to Make an LDAP Directory
 
 .. only:: ruby
 
-  .. warning::
+  LDAP Directories can be made using the Stormpath Admin Console, or using the Ruby SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
 
-    This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
+  Here's how you can create a LDAP directory:
 
-    In the meantime, please use the Stormpath Admin Console. Please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_ for more information.
-
-  .. todo::
-
-    Add LDAP directory creation Ruby example (ruby.todo)
+  .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
+    :language: ruby
 
 .. only:: rest or csharp or vbnet or php
 
@@ -383,7 +380,7 @@ How to Make a SAML Directory
 
 .. only:: rest
 
-  SAML Directories can be made using the :ref:`Stormpath Admin Console <saml-configuration>` or the REST API.
+  SAML Directories can be made using the `Stormpath Admin Console <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__ or the REST API.
 
 .. only:: not rest
 
@@ -414,13 +411,9 @@ How to Make a SAML Directory
   .. literalinclude:: code/java/account_management/create_saml_dir_req.java
       :language: java
 
-.. only:: (python or php or nodejs or ruby)
+.. only:: rest or csharp or vbnet or python or php or nodejs or ruby
 
-  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
-
-.. only:: rest or csharp or vbnet
-
-  For more information about creating them using the REST API, see :ref:`saml-configuration-rest`.
+  For more information about creating them using the REST API, see `SAML Appendix <https://docs.stormpath.com/console/product-guide/latest/appendix-saml.html>`__ of the Stormpath Admin Console Guide.
 
 .. _group-mgmt:
 
@@ -443,7 +436,7 @@ The other type of Account Store is the Group resource, which can either be imagi
 
 .. only:: php
 
-  For more information about creating them using the |language| SDK, see :ref:`saml-configuration-rest`.
+  (php.todo)
 
 .. only:: python
 
