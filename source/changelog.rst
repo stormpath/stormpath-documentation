@@ -20,6 +20,11 @@
 
       Link to Tweet or blog post announcing changes (if applicable)
 
+  2017-02-10
+  ==========
+
+  - **New:** Information about configuring Stormpath as a SAML Identity Provider added to `Authentication chapter <saml-authn>`.
+
   2017-01-27
   ==========
 

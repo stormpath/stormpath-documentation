@@ -1033,7 +1033,7 @@ Validating the Token Locally
 
   .. only:: rest
 
-    This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of your `Integration Guides <https://docs.stormpath.com/home/>`_.
+    This means that you can use a JWT library for your specific language to validate the token locally if necessary. For more information, please see one of our `Integration Guides <https://docs.stormpath.com/home/>`_.
 
   .. only:: csharp or vbnet
 
@@ -1401,7 +1401,7 @@ In general, the social login process works as follows:
 
 1. The user who wishes to authenticate will click a "Log in with x" link.
 
-2. The user authenticates and i asked by the Provider to accept the permissions required by your app.
+2. The user authenticates and is asked by the Provider to accept the permissions required by your app.
 
 3. Once the user accepts the permissions, the Provider sends back the user's information
 
@@ -2381,18 +2381,8 @@ Step 1: Create an LDAP Directory
 
 .. only:: ruby
 
-  .. warning::
-
-    This feature is not yet available in the Ruby SDK. For updates, you can follow `ticket #161 <https://github.com/stormpath/stormpath-sdk-ruby/issues/161>`_ on Github.
-
-    In the meantime, please use the Stormpath Admin Console. Please see `the Agents section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/agents.html#creating-an-ldap-directory>`_.
-
-  .. todo::
-
-    Add LDAP directory creation Ruby example (ruby.todo)
-
-    .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
-      :language: ruby
+  .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
+    :language: ruby
 
 .. only:: rest or vbnet or csharp or php
 

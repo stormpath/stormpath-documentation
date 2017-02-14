@@ -167,7 +167,7 @@ Here is an example implementation that uses Directories to model tenants. It is 
 
 The scenario demonstrates a multi-tenant userbase with two tenants, each of which is represented by their own Organization resource. Each tenant Organization in turn uses a Directory as its Account Store. There are a few points to highlight in this diagram:
 
-- The ability to log into the "Lighting Banking" application is controlled by the Account Store Mappings that exist between the Application resource and the Organization resources. To enable or disable a tenant (and its userbase) from logging-in, all you would have to do is enable or disable this Account Store Mapping.
+- The ability to log into the "Lightning Banking" application is controlled by the Account Store Mappings that exist between the Application resource and the Organization resources. To enable or disable a tenant (and its userbase) from logging-in, all you would have to do is enable or disable this Account Store Mapping.
 - If Claire wanted to create another Account with Bank of B using the same email address, she would be allowed to, since email uniqueness is enforced only inside a Directory.
 - Any role Groups must be created separately, on a per-Directory basis. If you decided to create a new role, a new Group resource representing that role would have to be added to each of your tenant Directories if you wanted the Accounts in that Directory to be able to be assigned that role.
 - In order to allow Application Administrators to log in to the app, you'd have to create a new Directory just for them, which is separately mapped to the Application as an Account Store. Since this Directory does not represent a tenant, no Organization resource is created.

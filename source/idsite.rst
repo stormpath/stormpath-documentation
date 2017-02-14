@@ -113,7 +113,7 @@ A typical set of steps in your application are as follows:
 
   .. note::
 
-    This key must be signed with your API Key Secret.
+    This JWT must be signed with your API Key Secret.
 
   The token itself will contain two parts, a Header and a Body that itself contains claims. You will have to add all of these into the JWT that you generate:
 
