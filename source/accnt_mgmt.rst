@@ -308,7 +308,7 @@ How to Make an LDAP Directory
 
 .. only:: python
 
-  LDAP Directories can be made using the Stormpath Admin Console, or using the Python SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+  LDAP Directories can be made using the Stormpath Admin Console, or using the Python SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`__.
 
   Here's how you can create an LDAP Directory:
 
@@ -317,14 +317,14 @@ How to Make an LDAP Directory
 
 .. only:: ruby
 
-  LDAP Directories can be made using the Stormpath Admin Console, or using the Ruby SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+  LDAP Directories can be made using the Stormpath Admin Console, or using the Ruby SDK. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`__.
 
   .. literalinclude:: code/ruby/authentication/create_directory_ldap.rb
     :language: ruby
 
 .. only:: rest or csharp or vbnet or php
 
-  LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`_.
+  LDAP Directories can be made using the Stormpath Admin Console, or using the REST API. If you'd like to do it with the Admin Console, please see `the Directory Creation section of the Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/directories.html#create-a-directory>`__.
 
   For more information about creating them using REST API, please see :ref:`ldap-dir-authn`.
 
