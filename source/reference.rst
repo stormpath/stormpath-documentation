@@ -373,7 +373,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The collection's fully qualified location URL.
 
     * - ``createdAt``
@@ -2015,25 +2015,90 @@
         - N/A
         - The resource's fully qualified location URL.
 
+      * - ``createdAt``
+        - String
+        - ISO-8601 Datetime
+        - Indicates when this resource was created.
+
+      * - ``modifiedAt``
+        - String
+        - ISO-8601 Datetime
+        - Indicates when this resource’s attributes were last modified.
+
       * - ``serviceProvider``
-        - Object
-        - N/A
-        - The embedded Service Provider resource. This contains the ``ssoInitiationEndpoint`` URL that is used in the Service Provider initiated SAML flow, as well as the ``defaultRelayStates`` endpoint used for IdP-initiated SAML authentication.
+        - String
+        - Link
+        - A link to this Policy's Service Provider resource.
+
+      * - ``identityProvider``
+        - String
+        - Link
+        - A link to this Policy's Identity Provider resource.
 
   **samlPolicy Example**
 
   .. code-block:: json
 
     {
-      "href":"https://api.stormpath.com/v1/samlPolicies/$APPLICATION_ID",
-      "createdAt":"2016-01-18T21:02:24.504Z",
-      "modifiedAt":"2016-01-18T21:02:24.504Z",
-      "serviceProvider":{
-        "href":"https://api.stormpath.com/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID"
+      "href": "https://api.stormpath.com/v1/samlPolicies/7kEFp8b7fPfPgORcDhZ5O9",
+      "createdAt": "2017-01-31T23:28:39.595Z",
+      "modifiedAt": "2017-01-31T23:28:39.595Z",
+      "serviceProvider": {
+        "href": "https://api.stormpath.com/v1/samlServiceProviders/7kVY2MecDsoIOu4xHAlEKD"
+      },
+      "identityProvider": {
+        "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7"
       }
     }
 
-  **serviceProvider Example**
+  .. _ref-saml-sp:
+
+  SAML Service Provider
+  ^^^^^^^^^^^^^^^^^^^^^^
+
+  This resource contains this Application's Service Provider information. It is used if Stormpath is functioning as the Service Provider in a SAML Authentication flow.
+
+  **Service Provider URL**
+
+  ``/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID``
+
+  **SAML Service Provider Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - String
+      - Link
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``ssoInitiationEndpoint``
+      - Object
+      - N/A
+      - Contains an ``href`` that is used in the :ref:`Service-Provider initiated flow <saml-sp-init-flow>`.
+
+    * - ``defaultRelayStates``
+      - Object
+      - N/A
+      - Contains an ``href`` to the endpoint that is used for :ref:`the Identity Provider-initiated flow <saml-idp-init-flow>`.
+
+  **SAML Service Provider Example**
 
   .. code-block:: json
 
@@ -2046,6 +2111,159 @@
       },
       "defaultRelayStates":{
         "href":"https://api.stormpath.com/v1/samlServiceProviders/$SAML_SERVICE_PROVIDER_ID/defaultRelayStates"
+      }
+    }
+
+  .. _ref-saml-idp:
+
+  SAML Identity Provider
+  ^^^^^^^^^^^^^^^^^^^^^^
+
+  This resource contains this Application's Identity Provider Provider information. It is used if Stormpath is functioning as the Identity Provider in a SAML Authentication flow.
+
+
+  **SAML Identity Provider URL**
+
+  ``/v1/samlidentityProviders/$APPLICATION_ID``
+
+  **SAML Identity Provider Attributes**
+
+  .. list-table::
+    :widths: 15 10 20 60
+    :header-rows: 1
+
+    * - Attribute
+      - Type
+      - Valid Value(s)
+      - Description
+
+    * - ``href``
+      - String
+      - Link
+      - The resource's fully qualified location URL.
+
+    * - ``createdAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource was created.
+
+    * - ``modifiedAt``
+      - String
+      - ISO-8601 Datetime
+      - Indicates when this resource’s attributes were last modified.
+
+    * - ``status``
+      - String
+      - ``enabled``, ``disabled``
+      - Indicates whether this Identity Provider is enabled or not. jakub.todo What are the consequences of it being (dis)abled?
+
+    * - ``ssoLoginEndpoint``
+      - String
+      - N/A
+      - The Stormpath URL to which SAML authentication requests should be sent.
+
+    * - ``signatureAlgorithm``
+      - String
+      - N/A
+      - The algorithm used to encode the x.509 certificate.
+
+    * - ``shaFingerprint``
+      - String
+      - N/A
+      - A short identifier for the x.509 certificate.
+
+    * - ``x509SigningCert``
+      - String
+      - Link
+      - A link to the certificate that should be used to sign the requests sent by your Service Provider to Stormpath.
+
+    * - ``metadata``
+      - String
+      - Link
+      - A link to the Identity Provider metadata in XML format.
+
+    * - ``attributeStatementMappingRules``
+      - String
+      - Link
+      - A link to the object that contains the rules that map Stormpath attributes to SAML attributes. For more information see :ref:`ref-attribute-mapping`.
+
+    * - ``registeredSamlServiceProviders``
+      - String
+      - Link
+      - A link to a list of the SAML Service Providers registered for this Identity Provider.
+
+    * - ``samlServiceProviderRegistrations``
+      - String
+      - Link
+      - A link to the Service Provider Registrations for this Identity Provider. These registrations map the Service Providers found in ``registeredSamlServiceProviders`` to this Identity Provider.
+
+
+  **SAML Identity Provider Example** (with ``registeredSamlServiceProviders`` and ``samlServiceProviderRegistrations`` expanded)
+
+  .. code-block:: json
+
+
+    {
+      "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7",
+      "createdAt": "2017-01-31T23:28:39.595Z",
+      "modifiedAt": "2017-01-31T23:28:39.595Z",
+      "status": "ENABLED",
+      "ssoLoginEndpoint": {
+        "href": "https://wise-galaxy.apps.stormpath.io/saml/sso"
+      },
+      "signatureAlgorithm": "RSA-SHA256",
+      "shaFingerprint": "412f20963b65114d7301350274b66b935c70e702",
+      "x509SigningCert": {
+        "href": "https://api.stormpath.com/v1/x509certificates/7l4YOyYSiX0Noaas18Oifd"
+      },
+      "metadata": {
+        "href": "https://api.stormpath.com/v1/samlIdentityProviderMetadatas/7l4yLLddka8cIYDXRB4zbB"
+      },
+      "attributeStatementMappingRules": {
+        "href": "https://api.stormpath.com/v1/attributeStatementMappingRules/7l4phBjC8AtDigHPUzc3Xx"
+      },
+      "registeredSamlServiceProviders": {
+        "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7/registeredSamlServiceProviders",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/registeredSamlServiceProviders/2wXFkagK2s52nJKFtCZoa4",
+            "createdAt": "2017-02-01T22:32:56.523Z",
+            "modifiedAt": "2017-02-01T22:44:08.593Z",
+            "name": "Zendesk Test 2",
+            "description": null,
+            "assertionConsumerServiceUrl": "https://jakubsamltest.zendesk.com/access/saml",
+            "nameIdFormat": "EMAIL",
+            "entityId": "https://jakubsamltest.zendesk.com",
+            "encodedX509Certificate": null,
+            "tenant": {
+              "href": "https://api.stormpath.com/v1/tenants/1gBTncWsp2ObQGgDn9R91R"
+            }
+          }
+        ]
+      },
+      "samlServiceProviderRegistrations": {
+        "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7/samlServiceProviderRegistrations",
+        "offset": 0,
+        "limit": 25,
+        "size": 1,
+        "items": [
+          {
+            "href": "https://api.stormpath.com/v1/samlServiceProviderRegistrations/uwpZw2A23ARPvxGSuBYUO",
+            "createdAt": "2017-02-01T22:38:14.359Z",
+            "modifiedAt": "2017-02-01T22:44:08.594Z",
+            "status": "ENABLED",
+            "defaultRelayState": null,
+            "serviceProvider": {
+              "href": "https://api.stormpath.com/v1/registeredSamlServiceProviders/2wXFkagK2s52nJKFtCZoa4"
+            },
+            "identityProvider": {
+              "href": "https://api.stormpath.com/v1/samlIdentityProviders/7l4yLIJYpzpdfj7gEvDiz7"
+            }
+          }
+        ]
       }
     }
 
@@ -2267,8 +2485,8 @@
       - Description
 
     * - ``href``
+      - String
       - Link
-      - N/A
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -2405,7 +2623,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``name``
@@ -2693,7 +2911,7 @@
       - Description
 
     * - ``href``
-      - String
+      - String (Link) (Link)
       - N/A
       - The resource's fully qualified location URL.
 
@@ -2786,7 +3004,7 @@
       - Description
 
     * - ``href``
-      - String
+      - String (Link) (Link)
       - N/A
       - The resource's fully qualified location URL.
 
@@ -2875,7 +3093,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``resetTokenTtl``
@@ -3066,7 +3284,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``minLength``
@@ -3153,7 +3371,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -3344,7 +3562,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``id``
@@ -3622,7 +3840,7 @@
   Attribute Statement Mapping Rules
   """""""""""""""""""""""""""""""""
 
-  This is an object that contains an array of mapping rules. Each of these rules maps an SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`.
+  This is an object that contains an array of mapping rules. Each of these rules maps a SAML attribute passed by the SAML Identity Provider to one or more Stormpath Account or Account customData attributes. These are used both when Stormpath is functioning as the Service Provider and the Identity Provider. That is, it either defines the SAML Attributes that the external IdP sends, or that Stormpath sends in its role as Identity Provider. For more detailed information about how these rules are configured, see :ref:`the Authentication chapter <saml-mapping>`.
 
   **Attribute Statement Mapping Rules URL**
 
@@ -3641,7 +3859,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -3731,7 +3949,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -3825,7 +4043,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``name``
@@ -4065,7 +4283,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``account``
@@ -4224,7 +4442,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -4690,7 +4908,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``username``
@@ -4931,7 +5149,7 @@
 
     **Note 2**
 
-    The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`.
+    The ``registrationWorkflowEnabled=false`` parameter disables the default Registration Workflow. For more information about Workflows, please see the `Admin Console Guide <https://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__. The ``passwordFormat=mcf`` parameter is used for :ref:`importing-mcf`.
 
   Retrieve an Account
   ^^^^^^^^^^^^^^^^^^^
@@ -5006,7 +5224,7 @@
              "status" : "ENABLED",
     }'
 
-  This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <http://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__.
+  This query would create an Account with the specified attributes, while also suppressing the configured `Registration Workflow <https://docs.stormpath.com/console/product-guide/latest/directories.html#set-up-workflows>`__.
 
   **Example Description**
 
@@ -5466,8 +5684,8 @@
       - Description
 
     * - ``href``
+      - String
       - Link
-      - N/A
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -5695,8 +5913,8 @@
       - Description
 
     * - ``href``
+      - String
       - Link
-      - N/A
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -5861,8 +6079,8 @@
       - Description
 
     * - ``href``
+      - String
       - Link
-      - N/A
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -6018,7 +6236,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -6222,8 +6440,8 @@
       - Description
 
     * - ``href``
+      - String
       - Link
-      - N/A
       - The resource's fully qualified location URL.
 
     * - ``createdAt``
@@ -6364,7 +6582,7 @@
 
     * - ``href``
       - String
-      - N/A
+      - Link
       - The resource's fully qualified location URL.
 
     * - ``createdAt``

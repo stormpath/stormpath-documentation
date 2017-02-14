@@ -4390,7 +4390,7 @@ Once the image is generated, the user will scan it into their Authenticator app.
 
 .. note::
 
-  Many authenticator apps are compatible with Google Authenticator QR codes. Apps we like include `Authy <https://www.authy.com/app/>`__ and `Duo Mobile <https://duo.com/solutions/features/two-factor-authentication-methods/duo-mobile>`__.
+  Many authenticator apps are compatible with Google Authenticator QR codes. Apps we like include `Authy <https://www.authy.com/app/>`__ and `Duo Mobile <https://duo.com/product/trusted-users/two-factor-authentication/duo-mobile>`__.
 
 .. _mfa-challenge:
 
