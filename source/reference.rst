@@ -2992,7 +2992,7 @@
 
   ``/v1/schemas/$SCHEMA_ID``
 
-  **passwordPolicy Attributes**
+  **Account Schema Attributes**
 
   .. list-table::
     :widths: 15 10 20 60
