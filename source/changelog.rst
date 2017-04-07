@@ -18,8 +18,6 @@
       - Modified:
       - New:
 
-      Link to Tweet or blog post announcing changes (if applicable)
-
   2017-02-10
   ==========
 
